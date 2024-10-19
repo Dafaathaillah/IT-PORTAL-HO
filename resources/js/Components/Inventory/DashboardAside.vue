@@ -1,0 +1,478 @@
+<script setup>
+import NavLink from "@/Components/NavLink.vue";
+import SideNavItems from "./SideNavItems.vue";
+import { ref, onMounted, watch } from "vue";
+
+// Toggle Site Ho
+// State for controlling the visibility of submenus
+const level1OpenHo = ref(false);
+const level2OpenHo = ref(false);
+const level3OpenHo = ref(false);
+const level3KomputerOpenHo = ref(false);
+const level3CctvOpenHo = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenHo.value = localStorage.getItem("level1OpenHo") === "true";
+    level2OpenHo.value = localStorage.getItem("level2OpenHo") === "true";
+    level3OpenHo.value = localStorage.getItem("level3OpenHo") === "true";
+    level3KomputerOpenHo.value =
+        localStorage.getItem("level3KomputerOpenHo") === "true";
+    level3CctvOpenHo.value =
+        localStorage.getItem("level3CctvOpenHo") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenHo,
+        level2OpenHo,
+        level3OpenHo,
+        level3KomputerOpenHo,
+        level3CctvOpenHo,
+    ],
+    () => {
+        localStorage.setItem("level1OpenHo", level1OpenHo.value);
+        localStorage.setItem("level2OpenHo", level2OpenHo.value);
+        localStorage.setItem("level3OpenHo", level3OpenHo.value);
+        localStorage.setItem(
+            "level3KomputerOpenHo",
+            level3KomputerOpenHo.value
+        );
+        localStorage.setItem("level3CctvOpenHo", level3CctvOpenHo.value);
+    }
+);
+
+// Toggle functions for each level
+const toggleLevel1Ho = () => {
+    level1OpenHo.value = !level1OpenHo.value;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenHo.value) {
+        level2OpenHo.value = false;
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3CctvOpenHo.value = false;
+    }
+};
+
+const toggleLevel2Ho = () => {
+    console.log(level1OpenHo.value);
+    if (!level2OpenHo.value) {
+        level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3CctvOpenHo.value = false;
+    }
+    level2OpenHo.value = !level2OpenHo.value;
+};
+
+const toggleLevel3LaptopHo = () => {
+    if (!level3OpenHo.value) {
+        level2OpenHo.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+    }
+    level3OpenHo.value = !level3OpenHo.value;
+};
+
+const toggleLevel3KomputerHo = () => {
+    if (!level3KomputerOpenHo.value) {
+        level2OpenHo.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+    }
+    level3KomputerOpenHo.value = !level3KomputerOpenHo.value;
+};
+
+const toggleLevel3CctvHo = () => {
+    if (!level3CctvOpenHo.value) {
+        level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+    }
+    level3CctvOpenHo.value = !level3CctvOpenHo.value;
+};
+</script>
+
+<template>
+    <!-- sidenav  -->
+    <aside
+        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+        aria-expanded="false"
+    >
+        <div class="h-19">
+            <i
+                class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
+                sidenav-close
+            ></i>
+            <div
+                class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
+            >
+                <img
+                    src="/assets/img/logoppa.png"
+                    class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
+                    alt="main_logo"
+                />
+                <span
+                    class="ml-1 font-semibold transition-all duration-200 ease-nav-brand"
+                    >ICT - PPA INVENTORY</span
+                >
+            </div>
+        </div>
+
+        <hr
+            class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+        />
+
+        <div class="items-center block w-auto max-h-screen grow basis-full">
+            <ul class="flex flex-col pl-0 mb-0">
+                <li
+                    v-if="$page.props.auth.user.role === 'ict_developer'"
+                    class="mt-0.5 w-full"
+                >
+                    <NavLink
+                        :href="route('developerDashboard')"
+                        :active="route().current('developerDashboard')"
+                    >
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Dashboard</span
+                        >
+                    </NavLink>
+                </li>
+                <li
+                    v-if="$page.props.auth.user.role === 'ict_group_leader'"
+                    class="mt-0.5 w-full"
+                >
+                    <NavLink
+                        :href="route('groupLeaderDashboard')"
+                        :active="route().current('groupLeaderDashboard')"
+                    >
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Dashboard</span
+                        >
+                    </NavLink>
+                </li>
+                <li
+                    v-if="$page.props.auth.user.role === 'ict_section'"
+                    class="mt-0.5 w-full"
+                >
+                    <NavLink :href="route('sectionDashboard')">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Dashboard</span
+                        >
+                    </NavLink>
+                </li>
+                <li
+                    v-if="$page.props.auth.user.role === 'ict_technician'"
+                    class="mt-0.5 w-full"
+                >
+                    <NavLink :href="route('technicianDashboard')">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Dashboard</span
+                        >
+                    </NavLink>
+                </li>
+                <li
+                    v-if="$page.props.auth.user.role === 'ict_admin'"
+                    class="mt-0.5 w-full"
+                >
+                    <NavLink :href="route('adminDashboard')">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Dashboard</span
+                        >
+                    </NavLink>
+                </li>
+
+                <li>
+                    <div
+                        @click="toggleLevel1Ho"
+                        style="cursor: pointer"
+                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                    >
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Head Office PPA</span
+                        >
+                        <i
+                            v-if="!level1OpenHo"
+                            class="ms-3 fas fa-angle-right"
+                        ></i>
+                        <i v-else class="ms-3 fas fa-angle-down"></i>
+                    </div>
+                    <ul v-if="level1OpenHo">
+                        <li>
+                            <NavLink
+                                :href="route('aduan.page')"
+                                :active="route().current('aduan.page')"
+                            >
+                                <div
+                                    class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Aduan</span
+                                >
+                            </NavLink>
+
+                            <div
+                                @click="toggleLevel2Ho"
+                                style="cursor: pointer"
+                                class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                            >
+                                <div
+                                    class="ml-4 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Inventory</span
+                                >
+                                <i
+                                    v-if="!level2OpenHo"
+                                    class="ms-3 fas fa-angle-right"
+                                ></i>
+                                <i v-else class="ms-3 fas fa-angle-down"></i>
+                            </div>
+                            <ul v-if="level2OpenHo">
+                                <NavLink
+                                    :href="route('accessPoint.page')"
+                                    :active="
+                                        route().current('accessPoint.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Access Point</span
+                                    >
+                                </NavLink>
+                                <NavLink
+                                    :href="route('switch.page')"
+                                    :active="route().current('switch.page')"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Switch</span
+                                    >
+                                </NavLink>
+                                <NavLink
+                                    :href="route('wirelless.page')"
+                                    :active="route().current('wirelless.page')"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Wirelless</span
+                                    >
+                                </NavLink>
+                                <div
+                                    @click="toggleLevel3LaptopHo"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Laptop</span
+                                    >
+                                    <i
+                                        v-if="!level3OpenHo"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <li v-if="level3OpenHo">
+                                    <NavLink
+                                        :href="route('laptop.page')"
+                                        :active="route().current('laptop.page')"
+                                    >
+                                        <div
+                                            class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Laptop Fixed</span
+                                        >
+                                    </NavLink>
+                                </li>
+
+                                <div
+                                    @click="toggleLevel3KomputerHo"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Komputer</span
+                                    >
+                                    <i
+                                        v-if="!level3KomputerOpenHo"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <li v-if="level3KomputerOpenHo">
+                                    <NavLink
+                                        :href="route('komputer.page')"
+                                        :active="
+                                            route().current('komputer.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Komputer Fixed</span
+                                        >
+                                    </NavLink>
+                                </li>
+
+                                <div
+                                    @click="toggleLevel3CctvHo"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Cctv</span
+                                    >
+                                    <i
+                                        v-if="!level3CctvOpenHo"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <li v-if="level3CctvOpenHo">
+                                    <NavLink
+                                        :href="route('cctv.page')"
+                                        :active="route().current('cctv.page')"
+                                    >
+                                        <div
+                                            class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Data Cctv</span
+                                        >
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- end sidenav -->
+</template>
