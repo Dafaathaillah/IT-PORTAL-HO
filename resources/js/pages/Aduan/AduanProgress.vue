@@ -8,7 +8,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps({
     crew: {
@@ -19,38 +19,56 @@ const props = defineProps({
     },
 });
 const form = useForm({
-    complaint_name: "",
-    complaint_code: props.aduan.complaint_code,
-    nrp: "",
-    phone_number: "",
-    inventory_number: "",
-    category_name: "",
-    crew: "",
-    date_of_complaint: "",
-    location: "",
-    complaint_note: "",
-    location_detail: "",
+    location: props.aduan.location,
+    location_detail: props.aduan.detail_location,
+    status: props.aduan.status,
+    complaint_note: props.aduan.complaint_note,
+    action_repair: "",
+    repair_note: "",
 });
 
 const isDisabled = ref(true);
-const file = ref(null);
 
-const handleFileUpload = (event) => {
-    file.value = event.target.files[0];
+const dateOfComplaint = ref(props.aduan.date_of_complaint);
+const startResponse = ref(null);
+const startProgress = ref(null);
+const endProgress = ref(null);
+
+const selectedValues = ref([]); // Awalnya array kosong
+const crewString = computed(() => {
+    return selectedValues.value.map((option) => option.name).join(", ");
+});
+
+const customFormat = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
+
 const save = () => {
     const formData = new FormData();
-    formData.append("image", file.value);
-    formData.append("complaint_name", form.complaint_name);
-    formData.append("complaint_code", form.complaint_code);
-    formData.append("nrp", form.nrp);
-    formData.append("phone_number", form.phone_number);
-    formData.append("inventory_number", form.inventory_number);
-    formData.append("category_name", form.category_name);
+    const formattedDateDateOfComplaint = customFormat(dateOfComplaint.value);
+    const formattedDateStartResponse = customFormat(startResponse.value);
+    const formattedDateStartProgress = customFormat(startProgress.value);
+    const formattedDateEndProgress = customFormat(endProgress.value);
     formData.append("crew", form.crew);
-    formData.append("date_of_complaint", form.date_of_complaint);
+    formData.append("actionRepair", form.actionRepair);
+    formData.append("dateOfComplaint", formattedDateDateOfComplaint);
+    formData.append("startResponse", formattedDateStartResponse);
+    formData.append("startProgress", formattedDateStartProgress);
+    formData.append("endProgress", formattedDateEndProgress);
+    formData.append("status", form.status);
     formData.append("location", form.location);
-    formData.append("complaint_note", form.complaint_note);
+    formData.append("location_detail", form.location_detail);
+    formData.append("location_detail", form.location_detail);
+    formData.append("location_detail", form.location_detail);
+    formData.append("location_detail", form.location_detail);
     formData.append("location_detail", form.location_detail);
     Inertia.post(route("aduan.store"), formData, {
         forceFormData: true,
@@ -79,6 +97,7 @@ const save = () => {
 function handleCategoryChange(event) {
     form.category_name = event.target.value;
 }
+const options = props.crew;
 </script>
 
 <template>
@@ -212,13 +231,13 @@ function handleCategoryChange(event) {
                                                 Crew</label
                                             >
                                             <VueMultiselect
-                                                v-model="form.crew"
-                                                :options="props.crew"
+                                               v-model="selectedValues"
+                                                :options="options"
                                                 :multiple="true"
                                                 :close-on-select="true"
-                                                placeholder="Select Crew"
-                                                label="name"
+                                                placeholder="Select For Update Crew"
                                                 track-by="name"
+                                                label="name"
                                             />
                                         </div>
                                     </div>
@@ -250,15 +269,11 @@ function handleCategoryChange(event) {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Date & Time Complaint</label
                                             >
-                                            <!-- <input
-                                                required
-                                                type="date"
-                                                v-model="form.date_of_complaint"
-                                                name="date_of_complaint"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                            /> -->
                                             <VueDatePicker
-                                                v-model="form.date_of_complaint"
+                                                required
+                                                v-model="dateOfComplaint"
+                                                :format="customFormat"
+                                                placeholder="Select a date and time"
                                             />
                                         </div>
                                     </div>
@@ -279,7 +294,7 @@ function handleCategoryChange(event) {
                                                 name="status"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="OPEN">
+                                                <option value="OPEN">
                                                     OPEN
                                                 </option>
                                                 <option value="PROGRESS">
@@ -303,14 +318,11 @@ function handleCategoryChange(event) {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Start Response</label
                                             >
-                                            <!-- <input
-                                                type="date"
-                                                v-model="form.start_response"
-                                                name="start_response"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                            /> -->
                                             <VueDatePicker
-                                                v-model="form.start_response"
+                                                required
+                                                v-model="startResponse"
+                                                :format="customFormat"
+                                                placeholder="Select Strat Response"
                                             />
                                         </div>
                                     </div>
@@ -323,14 +335,11 @@ function handleCategoryChange(event) {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Start Progress</label
                                             >
-                                            <!-- <input
-                                                type="date"
-                                                v-model="form.start_progress"
-                                                name="start_progress"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                            /> -->
                                             <VueDatePicker
-                                                v-model="form.start_progress"
+                                                required
+                                                v-model="startProgress"
+                                                :format="customFormat"
+                                                placeholder="Select Start Progress"
                                             />
                                         </div>
                                     </div>
@@ -343,15 +352,11 @@ function handleCategoryChange(event) {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >End Progress</label
                                             >
-                                            <!-- <input
-                                                required
-                                                type="date"
-                                                v-model="form.end_progress"
-                                                name="end_progress"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                            /> -->
                                             <VueDatePicker
-                                                v-model="form.end_progress"
+                                                required
+                                                v-model="endProgress"
+                                                :format="customFormat"
+                                                placeholder="Select End Progress"
                                             />
                                         </div>
                                     </div>
@@ -367,8 +372,8 @@ function handleCategoryChange(event) {
                                             <textarea
                                                 required
                                                 id="message"
-                                                name="action_repair"
-                                                v-model="form.action_repair"
+                                                name="actionRepair"
+                                                v-model="form.actionRepair"
                                                 rows="4"
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Aksi Perbaikan"
@@ -401,7 +406,7 @@ function handleCategoryChange(event) {
                                             <label
                                                 for="issue"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Issue</label
+                                                >Issue/Complaint Note</label
                                             >
                                             <textarea
                                                 required

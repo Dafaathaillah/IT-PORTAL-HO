@@ -61,7 +61,6 @@ const customFormat = (date) => {
 const save = () => {
     const formData = new FormData();
     const formattedDate = customFormat(selectedDate.value);
-    console.log(crewString);
     formData.append("image", file.value);
     formData.append("complaint_name", form.complaint_name);
     formData.append("complaint_code", form.complaint_code);

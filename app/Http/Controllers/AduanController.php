@@ -61,7 +61,7 @@ class AduanController extends Controller
             'phone_number' => $request['phone_number'],
             'date_of_complaint' => $request['date_of_complaint'],
             'location' => $request['location'],
-            'detail_location' => $request['detail_location'],
+            'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'crew' => $request['crew'],
         ];
