@@ -107,5 +107,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/uploadCsvCu', [AduanController::class, 'uploadCsv'])->name('aduan.import');
     });
 });
-Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home']);
+Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('dashboard');
+
 require __DIR__ . '/auth.php';
