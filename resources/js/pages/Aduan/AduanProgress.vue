@@ -1,3 +1,4 @@
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
@@ -5,11 +6,18 @@ import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import Select2 from 'vue3-select2-component';
+import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
-const props = defineProps(["aduan"]);
 
+const props = defineProps({
+    crew: {
+        type: Array,
+    },
+    aduan: {
+        type: Array,
+    },
+});
 const form = useForm({
     complaint_name: "",
     complaint_code: props.aduan.complaint_code,
@@ -71,16 +79,6 @@ const save = () => {
 function handleCategoryChange(event) {
     form.category_name = event.target.value;
 }
-
-function myChangeEvent($event) {
-    console.log(val);
-}
-
-function mySelectEvent($event) {
-    console.log({id, text})
-}
-
-const  myOptions= ['op1', 'op2', 'op3'] ;
 </script>
 
 <template>
@@ -213,27 +211,15 @@ const  myOptions= ['op1', 'op2', 'op3'] ;
                                             >
                                                 Crew</label
                                             >
-                                            <!-- <select
-                                                required
-                                                id="crew"
+                                            <VueMultiselect
                                                 v-model="form.crew"
-                                                name="crew"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option selected value="DAFA">
-                                                    DAFA
-                                                </option>
-                                                <option value="IBNU">
-                                                    IBNU
-                                                </option>
-                                                <option value="JAKIR">
-                                                    JAKIR
-                                                </option>
-                                                <option value="FAJAR">
-                                                    FAJAR
-                                                </option>
-                                            </select> -->
-                                              <Select2 v-model="form.crew" :options="myOptions" :settings="{ settingOption: value, settingOption: value }" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+                                                :options="props.crew"
+                                                :multiple="true"
+                                                :close-on-select="true"
+                                                placeholder="Select Crew"
+                                                label="name"
+                                                track-by="name"
+                                            />
                                         </div>
                                     </div>
                                     <div
@@ -271,7 +257,9 @@ const  myOptions= ['op1', 'op2', 'op3'] ;
                                                 name="date_of_complaint"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                             /> -->
-                                            <VueDatePicker  v-model="form.date_of_complaint" /> 
+                                            <VueDatePicker
+                                                v-model="form.date_of_complaint"
+                                            />
                                         </div>
                                     </div>
                                     <div
@@ -321,7 +309,9 @@ const  myOptions= ['op1', 'op2', 'op3'] ;
                                                 name="start_response"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                             /> -->
-                                            <VueDatePicker v-model="form.start_response" /> 
+                                            <VueDatePicker
+                                                v-model="form.start_response"
+                                            />
                                         </div>
                                     </div>
                                     <div
@@ -339,7 +329,9 @@ const  myOptions= ['op1', 'op2', 'op3'] ;
                                                 name="start_progress"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                             /> -->
-                                            <VueDatePicker v-model="form.start_progress" /> 
+                                            <VueDatePicker
+                                                v-model="form.start_progress"
+                                            />
                                         </div>
                                     </div>
                                     <div
@@ -358,7 +350,9 @@ const  myOptions= ['op1', 'op2', 'op3'] ;
                                                 name="end_progress"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                             /> -->
-                                            <VueDatePicker v-model="form.end_progress" /> 
+                                            <VueDatePicker
+                                                v-model="form.end_progress"
+                                            />
                                         </div>
                                     </div>
                                     <div

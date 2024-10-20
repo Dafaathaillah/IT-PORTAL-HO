@@ -15,7 +15,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueDatePicker from '@vuepic/vue-datepicker';
-import Select2 from 'vue3-select2-component';
+import VueMultiselect from 'vue-multiselect';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -28,7 +28,7 @@ createInertiaApp({
             .use(ZiggyVue)
             .component('DataTable', DataTable) 
             .component('vueDatePicker', VueDatePicker) 
-            .component('Select2', Select2) 
+            .component('VueMultiselect', VueMultiselect) 
             .mount(el);
     },
     progress: {

@@ -1,12 +1,23 @@
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import VueMultiselect from "vue-multiselect";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const props = defineProps(["ticket"]);
+const props = defineProps({
+    crew: {
+        type: Array,
+    },
+    ticket: {
+        type: Object,
+    },
+});
 
 const form = useForm({
     complaint_name: "",
@@ -16,7 +27,6 @@ const form = useForm({
     inventory_number: "",
     category_name: "",
     crew: "",
-    date_of_complaint: "",
     location: "",
     complaint_note: "",
     location_detail: "",
@@ -28,8 +38,30 @@ const file = ref(null);
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
+
+const selectedValues = ref([]); // Awalnya array kosong
+const crewString = computed(() => {
+    return selectedValues.value.map((option) => option.name).join(", ");
+});
+
+const selectedDate = ref(null);
+
+const customFormat = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 const save = () => {
     const formData = new FormData();
+    const formattedDate = customFormat(selectedDate.value);
+    console.log(crewString);
     formData.append("image", file.value);
     formData.append("complaint_name", form.complaint_name);
     formData.append("complaint_code", form.complaint_code);
@@ -37,8 +69,8 @@ const save = () => {
     formData.append("phone_number", form.phone_number);
     formData.append("inventory_number", form.inventory_number);
     formData.append("category_name", form.category_name);
-    formData.append("crew", form.crew);
-    formData.append("date_of_complaint", form.date_of_complaint);
+    formData.append("crew", crewString.value);
+    formData.append("date_of_complaint", formattedDate);
     formData.append("location", form.location);
     formData.append("complaint_note", form.complaint_note);
     formData.append("location_detail", form.location_detail);
@@ -69,6 +101,8 @@ const save = () => {
 function handleCategoryChange(event) {
     form.category_name = event.target.value;
 }
+
+const options = props.crew;
 </script>
 
 <template>
@@ -271,26 +305,15 @@ function handleCategoryChange(event) {
                                             >
                                                 Crew</label
                                             >
-                                            <select
-                                                required
-                                                id="crew"
-                                                v-model="form.crew"
-                                                name="crew"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option selected value="DAFA">
-                                                    DAFA
-                                                </option>
-                                                <option value="IBNU">
-                                                    IBNU
-                                                </option>
-                                                <option value="JAKIR">
-                                                    JAKIR
-                                                </option>
-                                                <option value="FAJAR">
-                                                    FAJAR
-                                                </option>
-                                            </select>
+                                            <VueMultiselect
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                :multiple="true"
+                                                :close-on-select="true"
+                                                placeholder="Select Crew"
+                                                track-by="name"
+                                                label="name"
+                                            />
                                         </div>
                                     </div>
                                     <div
@@ -302,12 +325,11 @@ function handleCategoryChange(event) {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Date & Time Complaint</label
                                             >
-                                            <input
+                                            <VueDatePicker
                                                 required
-                                                type="date"
-                                                v-model="form.date_of_complaint"
-                                                name="date_of_complaint"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                v-model="selectedDate"
+                                                :format="customFormat"
+                                                placeholder="Select a date and time"
                                             />
                                         </div>
                                     </div>

@@ -35,25 +35,36 @@ class AduanController extends Controller
 
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
+        $crew = UserAll::pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+        // return response()->json($crew);
         // end generate code
-
-        return Inertia::render('Aduan/AduanCreate', ['ticket' => $uniqueString]);
+        return Inertia::render('Aduan/AduanCreate', ['ticket' => $uniqueString, 'crew' => $crew]);
     }
 
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'nrp' => 'required|string|max:255',
-            'complaint_name' => 'nullable|string',
-            'complaint_note' => 'nullable|string',
-            'phone_number' => 'nullable|string',
-            'date_of_complaint' => 'nullable|date_format:Y-m-d',
-            'complaint_image' => 'nullable|string',
-            'location' => 'nullable|string',
-            'detail_location' => 'nullable|string',
-            'category_name' => 'nullable|string',
-            'crew' => 'nullable|string',
-        ]);
+        // dd($request);
+        $maxId = Aduan::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
+        } else {
+            $maxId = $maxId + 1;
+        }
+
+        $data = [
+            'max_id' => $maxId,
+            'nrp' => $request['nrp'],
+            'complaint_name' => $request['complaint_name'],
+            'complaint_note' => $request['complaint_note'],
+            'phone_number' => $request['phone_number'],
+            'date_of_complaint' => $request['date_of_complaint'],
+            'location' => $request['location'],
+            'detail_location' => $request['detail_location'],
+            'category_name' => $request['category_name'],
+            'crew' => $request['crew'],
+        ];
         
         if ($request->file('image') != null) {
             $documentation_image = $request->file('image');
@@ -61,25 +72,26 @@ class AduanController extends Controller
             $path_documentation_image = $documentation_image->store('images', 'public');
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
-
-            $validate['complaint_image'] =  url($new_path_documentation_image);
+            
+            $data['complaint_image'] =  url($new_path_documentation_image);
         }
         
-        $validate['complaint_code'] = $request->complaint_code;
-        $validate['created_date'] = Carbon::parse($request->date_of_complaint)->toDateString();
+        $data['complaint_code'] = $request->complaint_code;
+        $data['created_date'] = Carbon::parse($request->date_of_complaint)->toDateString();
         
         if (!empty($request->inventory_number)) {
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
-            $validate['complaint_position'] = $aduan_get_data_user['position'];
-            $validate['inventory_number'] = $request->inventory_number;
-            $validate['status'] = 'OPEN';
-            // dd($validate);
-            $aduan = Aduan::create($validate);
+            $data['complaint_position'] = $aduan_get_data_user['position'];
+            $data['inventory_number'] = $request->inventory_number;
+            $data['status'] = 'OPEN';
+            // return response()->json($data);
+            $aduan = Aduan::create($data);
         } else {
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
-            $validate['complaint_position'] = $aduan_get_data_user['position'];
+            $data['complaint_position'] = $aduan_get_data_user['position'];
+            $data['status'] = 'OPEN';
 
-            $aduan = Aduan::create($validate);
+            $aduan = Aduan::create($data);
         }
         return redirect()->route('aduan.page');
     }
@@ -87,9 +99,15 @@ class AduanController extends Controller
     public function progress($id)
     {
         $aduan = Aduan::find($id);
-        // dd($aduan);
+        $crew = UserAll::pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        // return response()->json($crew);
+        // dd($crew);
         return Inertia::render('Aduan/AduanProgress', [
             'aduan' => $aduan,
+            'crew' => $crew,
         ]);
     }
 
