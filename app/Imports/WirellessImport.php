@@ -21,18 +21,28 @@ class WirellessImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+        $maxId = InvWirelless::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
+        }else{
+            $maxId = $maxId + 1;
+        }
+
         return new InvWirelless([
-            'max_id' => $row[0],
+            'max_id' => $maxId,
             'device_name' => $row[1],
-            'inventory_number' => $row[2],
-            'serial_number' => $row[3],
-            'ip_address' => $row[4],
-            'device_brand' => $row[5],
-            'device_type' => $row[6],
-            'device_model' => $row[7],
-            'location' => $row[8],
-            'status' => $row[9],
-            'note' => $row[10],
+            'asset_ho_number' => $row[2],
+            'inventory_number' => $row[3],
+            'serial_number' => $row[4],
+            'frequency' => $row[5],
+            'ip_address' => $row[6],
+            'mac_address' => $row[7],
+            'device_brand' => $row[8],
+            'device_type' => $row[9],
+            'device_model' => $row[10],
+            'location' => $row[11],
+            'status' => $row[12],
+            'note' => $row[13],
         ]);
     }
 }

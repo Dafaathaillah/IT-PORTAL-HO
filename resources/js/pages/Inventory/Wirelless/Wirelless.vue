@@ -57,7 +57,7 @@ const editData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't edit this data?",
+        text: "You want edit this data?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -77,6 +77,16 @@ const handleFileUpload = (event) => {
 };
 
 const submitCsv = () => {
+    let timerInterval;
+        Swal.fire({
+        title: 'Mengimport Data...',
+        text: 'Mohon tunggu sebentar...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     const formData = new FormData();
     formData.append("file", file.value);
     Inertia.post(route("wirelless.import"), formData, {
@@ -105,7 +115,7 @@ const submitCsv = () => {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Inv Wirelless" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -228,7 +238,7 @@ const submitCsv = () => {
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Device Name
+                                                        Serial Number
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -339,7 +349,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                wirellesses.device_name
+                                                                wirellesses.serial_number
                                                             }}
                                                         </p>
                                                     </td>

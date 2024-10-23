@@ -81,6 +81,16 @@ const handleFileUpload = (event) => {
 };
 
 const submitCsv = () => {
+    let timerInterval;
+        Swal.fire({
+        title: 'Mengimport Data...',
+        text: 'Mohon tunggu sebentar...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     const formData = new FormData();
     formData.append("file", file.value);
     Inertia.post(route("laptop.import"), formData, {
@@ -114,7 +124,7 @@ function formatData(text) {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Inv Laptop" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -490,7 +500,7 @@ function formatData(text) {
                                                             class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                formatData(
+                                                                laptops.note == null ? '' : formatData(
                                                                     laptops.note
                                                                 )
                                                             }}

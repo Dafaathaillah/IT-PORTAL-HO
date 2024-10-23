@@ -25,19 +25,28 @@ class SwitchImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+
+        $maxId = InvSwitch::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
+        }else{
+            $maxId = $maxId + 1;
+        }
+
         return new InvSwitch([
-            'max_id' => $row[0],
+            'max_id' => $maxId,
             'device_name' => $row[1],
-            'inventory_number' => $row[2],
-            'serial_number' => $row[3],
-            'ip_address' => $row[4],
-            'mac_address' => $row[5],
-            'device_brand' => $row[6],
-            'device_type' => $row[7],
-            'device_model' => $row[8],
-            'location' => $row[9],
-            'status' => $row[10],
-            'note' => $row[11],
+            'asset_ho_number' => $row[2],
+            'inventory_number' => $row[3],
+            'serial_number' => $row[4],
+            'ip_address' => $row[5],
+            'mac_address' => $row[6],
+            'device_brand' => $row[7],
+            'device_type' => $row[8],
+            'device_model' => $row[9],
+            'location' => $row[10],
+            'status' => strtoupper($row[11]),
+            'note' => $row[12],
         ]);
     }
 }

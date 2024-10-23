@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 
 class InvSwitchController extends Controller
 {
@@ -75,6 +76,7 @@ class InvSwitchController extends Controller
         try {
 
             Excel::import(new SwitchImport, $request->file('file'));
+            // return redirect()->route('switch.page')->with('message', 'Data berhasil ditambahkan');
             return redirect()->route('switch.page');
         } catch (\Exception $ex) {
             Log::info($ex);

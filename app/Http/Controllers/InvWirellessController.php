@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 
 class InvWirellessController extends Controller
 {
@@ -34,7 +35,7 @@ class InvWirellessController extends Controller
             $maxId = 0;
         }
 
-        $uniqueString = 'PPABIBSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPABIBBB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 

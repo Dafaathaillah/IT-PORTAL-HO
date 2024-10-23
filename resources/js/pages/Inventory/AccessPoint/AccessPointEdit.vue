@@ -76,7 +76,7 @@ const save = () => {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Edit Data Device" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -135,10 +135,11 @@ const save = () => {
                                                 >Device Name</label
                                             >
                                             <input
+                                                :disabled="isDisabled"
                                                 type="text"
                                                 name="device_name"
                                                 v-model="form.device_name"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Device Name"
                                             />
                                         </div>
@@ -177,7 +178,7 @@ const save = () => {
                                                 v-model="form.asset_ho_number"
                                                 name="asset_ho_number"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="12xx"
                                             />
                                         </div>
                                     </div>
@@ -231,7 +232,7 @@ const save = () => {
                                                 v-model="form.frequency"
                                                 name="frequency"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="5GHz"
                                             />
                                         </div>
                                     </div>
@@ -249,7 +250,7 @@ const save = () => {
                                                 v-model="form.mac_address"
                                                 name="mac_address"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="10.1.x.xx"
+                                                placeholder="00:04:xx:xx:xx:xx"
                                             />
                                         </div>
                                     </div>
@@ -343,17 +344,17 @@ const save = () => {
                                             >
                                                 <option
                                                     selected
-                                                    value="Ready_Used"
+                                                    value="READY_USED"
                                                 >
                                                     Ready Used
                                                 </option>
-                                                <option value="Ready_Stanby">
+                                                <option value="READY_STANDBY">
                                                     Ready Standby
                                                 </option>
-                                                <option value="Scrap">
+                                                <option value="SCRAP">
                                                     Scrap
                                                 </option>
-                                                <option value="Breakdown">
+                                                <option value="BREAKDOWN">
                                                     Breakdown
                                                 </option>
                                             </select>
@@ -382,17 +383,7 @@ const save = () => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-end">
-                                    <button
-                                        type="submit"
-                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-                                    >
-                                        <span
-                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
-                                        >
-                                            Save Changes
-                                        </span>
-                                    </button>
+                                <div class="flex flex-nowrap mt-6 justify-between">
                                     <Link
                                         :href="route('accessPoint.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
@@ -403,6 +394,17 @@ const save = () => {
                                             Cancel
                                         </span>
                                     </Link>
+
+                                    <button
+                                        type="submit"
+                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+                                    >
+                                        <span
+                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+                                        >
+                                            Save Changes
+                                        </span>
+                                    </button>
                                 </div>
                             </form>
                         </div>

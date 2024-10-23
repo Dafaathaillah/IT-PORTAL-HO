@@ -61,7 +61,7 @@ const editData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't edit this data?",
+        text: "You want edit this data?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -81,6 +81,16 @@ const handleFileUpload = (event) => {
 };
 
 const submitCsv = () => {
+    let timerInterval;
+        Swal.fire({
+        title: 'Mengimport Data...',
+        text: 'Mohon tunggu sebentar...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     const formData = new FormData();
     formData.append("file", file.value);
     Inertia.post(route("switch.import"), formData, {
@@ -89,7 +99,7 @@ const submitCsv = () => {
             // Show SweetAlert2 success notification
             Swal.fire({
                 title: "Success!",
-                text: "Data has been successfully created!",
+                text: "Data has been successfully import!",
                 icon: "success",
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
@@ -109,7 +119,7 @@ const submitCsv = () => {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Inv Switch" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -200,9 +210,13 @@ const submitCsv = () => {
                                     New Data
                                 </Link>
                             </div>
+                            
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0 overflow-x-auto">
                                     <div class="p-6 text-gray-900">
+                                        <div v-if="$page.props.flash.message" class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300">
+                                            {{ $page.props.flash.message }}
+                                        </div>
                                         <table
                                             id="tableData"
                                             class="table table-striped"
@@ -232,7 +246,7 @@ const submitCsv = () => {
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Device Name
+                                                        Serial Number
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -338,7 +352,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                switchs.device_name
+                                                                switchs.serial_number
                                                             }}
                                                         </p>
                                                     </td>

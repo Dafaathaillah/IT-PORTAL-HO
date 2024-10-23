@@ -7,9 +7,11 @@ use App\Models\Aduan;
 use App\Models\InspeksiLaptop;
 use App\Models\InvLaptop;
 use App\Models\UnscheduleJob;
+use App\Models\UserAll;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
@@ -40,7 +42,11 @@ class InvLaptopController extends Controller
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        return Inertia::render('Inventory/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString]);
+        $pengguna = UserAll::pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('Inventory/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna]);
     }
 
     public function store(Request $request)
@@ -60,6 +66,8 @@ class InvLaptopController extends Controller
         $new_path_documentation_image = $path_documentation_image;
         $documentation_image->move($destinationPath, $new_path_documentation_image);
 
+        $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+
         $data = [
             'max_id' => $maxId,
             'laptop_name' => $params['laptop_name'],
@@ -78,7 +86,7 @@ class InvLaptopController extends Controller
             'condition' => $params['condition'],
             'note' => $params['note'],
             'link_documentation_asset_image' => url($new_path_documentation_image),
-            'user_alls_id' => $params['user_alls_id'],
+            'user_alls_id' => $aduan_get_data_user['id'],
         ];
 
         InvLaptop::create($data);
