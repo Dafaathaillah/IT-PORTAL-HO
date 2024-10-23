@@ -102,6 +102,17 @@ function handleCategoryChange(event) {
 }
 
 const options = props.crew;
+
+// Computed property untuk mendapatkan placeholder
+const getPlaceholder = computed(() => {
+    if (form.category_name === "PC/LAPTOP") {
+        return "Masukkan No Inventory PC/Laptop";
+    } else if (form.category_name === "NETWORK") {
+        return "Masukkan No Inventory AP/Switch";
+    } else if (form.category_name === "CCTV") {
+        return "Masukkan No Inventory CCTV";
+    }
+});
 </script>
 
 <template>
@@ -254,15 +265,15 @@ const options = props.crew;
                                             >
                                                 <option
                                                     selected
-                                                    value="WEBSITE"
+                                                    value="PRINTER"
                                                 >
-                                                    WEBSITE
+                                                    PRINTER
                                                 </option>
                                                 <option value="NETWORK">
                                                     NETWORK
                                                 </option>
-                                                <option value="RADIO">
-                                                    RADIO
+                                                <option value="CCTV">
+                                                    CCTV
                                                 </option>
                                                 <option value="PC/LAPTOP">
                                                     PC/LAPTOP
@@ -271,7 +282,11 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        v-if="form.category_name == 'PC/LAPTOP'"
+                                        v-if="
+                                            form.category_name == 'PC/LAPTOP' ||
+                                            form.category_name == 'NETWORK' ||
+                                            form.category_name == 'CCTV'
+                                        "
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -286,13 +301,16 @@ const options = props.crew;
                                                 name="inventory_number"
                                                 v-model="form.inventory_number"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Nomer Inventory PC/LAPTOP"
+                                                :placeholder="getPlaceholder"
                                             />
                                         </div>
                                     </div>
                                     <div
                                         :class="
-                                            form.category_name === 'PC/LAPTOP'
+                                            form.category_name ===
+                                                'PC/LAPTOP' ||
+                                            form.category_name == 'NETWORK' ||
+                                            form.category_name == 'CCTV'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                         "
