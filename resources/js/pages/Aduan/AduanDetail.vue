@@ -99,10 +99,16 @@ const mount = onMounted(() => {
                                 </div>
                                 <div class="flex flex-row mb-3">
                                     <div class="basis-1/2">
-                                        Complaint Note
-                                        <span class="ml-4.5">
-                                            : {{ props.aduan.complaint_note }}
-                                        </span>
+                                        <div class="basis-1/2">
+                                            Complaint Date
+                                            <span class="ml-4.5">
+                                                :
+                                                {{
+                                                    props.aduan
+                                                        .date_of_complaint
+                                                }}
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class="basis-1/2">
                                         WhatsApp Number
@@ -110,16 +116,6 @@ const mount = onMounted(() => {
                                             : {{ props.aduan.phone_number }}
                                         </span>
                                     </div>
-                                </div>
-                                <div class="flex flex-row mb-3">
-                                    <div class="basis-1/2">
-                                        Complaint Date
-                                        <span class="ml-4.5">
-                                            :
-                                            {{ props.aduan.date_of_complaint }}
-                                        </span>
-                                    </div>
-                                    <div class="basis-1/2"></div>
                                 </div>
                                 <div class="flex flex-row mb-3">
                                     <div class="basis-1/2">
@@ -173,7 +169,9 @@ const mount = onMounted(() => {
                                         <p class="text-base">Start Response</p>
                                     </div>
                                     <div>
-                                        <p>: {{ props.aduan.start_response }}</p>
+                                        <p>
+                                            : {{ props.aduan.start_response }}
+                                        </p>
                                     </div>
                                 </div>
                                 <hr
@@ -184,7 +182,9 @@ const mount = onMounted(() => {
                                         <p class="text-base">Start Progress</p>
                                     </div>
                                     <div>
-                                        <p>: {{ props.aduan.start_progress }}</p>
+                                        <p>
+                                            : {{ props.aduan.start_progress }}
+                                        </p>
                                     </div>
                                 </div>
                                 <hr
@@ -203,10 +203,14 @@ const mount = onMounted(() => {
                                 />
                                 <div class="grid grid-cols-2">
                                     <div>
-                                        <p class="text-base">Issue/Complaint Note</p>
+                                        <p class="text-base">
+                                            Issue/Complaint Note
+                                        </p>
                                     </div>
                                     <div>
-                                        <p>: {{ props.aduan.complaint_note }}</p>
+                                        <p>
+                                            : {{ props.aduan.complaint_note }}
+                                        </p>
                                     </div>
                                 </div>
                                 <hr
