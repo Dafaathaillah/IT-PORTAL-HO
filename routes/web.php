@@ -99,12 +99,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/aduan', [AduanController::class, 'index'])->name('aduan.page');
         Route::get('/aduan/create', [AduanController::class, 'create'])->name('aduan.create');
         Route::post('/aduan/create', [AduanController::class, 'store'])->name('aduan.store');
+        Route::post('/aduan/updateProgress', [AduanController::class, 'update_aduan_progress'])->name('aduan.updateProgress');
         Route::get('/aduan/{id}/edit', [AduanController::class, 'edit'])->name('aduan.edit');
         Route::get('/aduan/{id}/progress', [AduanController::class, 'progress'])->name('aduan.progress');
         Route::delete('/aduan/{id}/delete', [AduanController::class, 'destroy'])->name('aduan.delete');
-        Route::post('/aduan/update', [AduanController::class, 'update'])->name('aduan.update');
+        Route::post('/aduan/update', [AduanController::class, 'update_aduan'])->name('aduan.update');
         Route::get('/aduan/{id}/detail', [AduanController::class, 'detail'])->name('aduan.detail');
-        Route::post('/uploadCsvCu', [AduanController::class, 'uploadCsv'])->name('aduan.import');
     });
 });
 Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('dashboard');

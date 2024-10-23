@@ -1,73 +1,109 @@
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const props = defineProps([
-    "cctv",
-]);
+const props = defineProps(["aduan", "crew", "selectCrew"]);
 
 const form = useForm({
-    id: props.cctv.id,
-    max_id: props.cctv.max_id,
-    cctv_name: props.cctv.cctv_name,
-    cctv_code: props.cctv.cctv_code,
-    asset_ho_number: props.cctv.asset_ho_number,
-    cctv_model: props.cctv.cctv_model,
-    cctv_brand: props.cctv.cctv_brand,
-    type_cctv: props.cctv.type_cctv,
-    mac_address: props.cctv.mac_address,
-    ip_address: props.cctv.ip_address,
-    nvr_id: props.cctv.nvr_id,
-    switch_id: props.cctv.switch_id,
-    status: props.cctv.status,
-    date_of_inventory: props.cctv.date_of_inventory,
-    location: props.cctv.location,
-    note: props.cctv.note,
-    
-    location_detail: props.cctv.location_detail,
-    uplink: props.cctv.uplink,
-    vlan: props.cctv.vlan,
+    id: props.aduan.id,
+    complaint_name: props.aduan.complaint_name,
+    complaint_code: props.aduan.complaint_code,
+    nrp: props.aduan.nrp,
+    phone_number: props.aduan.phone_number,
+    inventory_number: props.aduan.inventory_number,
+    category_name: props.aduan.category_name,
+    complaint_image: props.aduan.complaint_image,
+    crew: props.selectCrew,
+    status: props.aduan.status,
+    location: props.aduan.location,
+    action_repair: props.aduan.action_repair,
+    repair_note: props.aduan.repair_note,
+    complaint_note: props.aduan.complaint_note,
+    detail_location: props.aduan.detail_location,
 });
 
 const isDisabled = ref(true);
 const file = ref(null);
 
+const dateOfComplaint = ref(props.aduan.date_of_complaint);
+const startResponse = ref(props.aduan.start_response);
+const startProgress = ref(props.aduan.start_progress);
+const endProgress = ref(props.aduan.end_progress);
+
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
+const options = props.crew;
+
+const selectedValues = ref(
+    props.crew.filter((option) => props.selectCrew.includes(option.name))
+);
+
+const crewString = computed(() => {
+    return selectedValues.value.map((option) => option.name).join(", ");
+});
+
+const customFormat = (date) => {
+    if (!date) {
+        // Jika date null atau kosong, kembalikan null
+        return "";
+    }
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 const update = () => {
     const formData = new FormData();
+    const formattedDateDateOfComplaint = customFormat(dateOfComplaint.value);
+    const formattedDateStartResponse = customFormat(startResponse.value);
+    const formattedDateStartProgress = customFormat(startProgress.value);
+    const formattedDateEndProgress = customFormat(endProgress.value);
     formData.append("id", form.id);
-    formData.append("cctv_name", form.cctv_name);
-    formData.append("cctv_code", form.cctv_code);
-    formData.append("asset_ho_number", form.asset_ho_number);
-    formData.append("cctv_model", form.cctv_model);
-    formData.append("cctv_brand", form.cctv_brand);
-    formData.append("type_cctv", form.type_cctv);
-    formData.append("mac_address", form.mac_address);
-    formData.append("ip_address", form.ip_address);
-    formData.append("nvr_id", form.nvr_id);
-    formData.append("switch_id", form.switch_id);
-    formData.append("status", form.status);
-    formData.append("date_of_inventory", form.date_of_inventory);
+    formData.append("complaint_name", form.complaint_name);
+    formData.append("nrp", form.nrp);
+    formData.append("phone_number", form.phone_number);
+    formData.append("category_name", form.category_name);
+    formData.append("inventory_number", form.inventory_number);
+    formData.append("crew", crewString.value);
+    formData.append("image", file.value);
     formData.append("location", form.location);
-    formData.append("note", form.note);
-    formData.append("location_detail", form.location_detail);
-    formData.append("uplink", form.uplink);
-    formData.append("vlan", form.vlan);
+    formData.append("detail_location", form.detail_location);
+    formData.append("dateOfComplaint", formattedDateDateOfComplaint);
+    formData.append("startResponse", formattedDateStartResponse);
+    formData.append("startProgress", formattedDateStartProgress);
+    formData.append("endProgress", formattedDateEndProgress);
+    formData.append("status", form.status);
+    formData.append("complaint_note", form.complaint_note);
+    formData.append("action_repair", form.action_repair);
+    formData.append("repair_note", form.repair_note);
 
-    Inertia.post(route("cctv.update", props.cctv.id), formData, {
+    Inertia.post(route("aduan.update", props.aduan.id), formData, {
         // Use route name here
         onProgress: (progress) => {
             console.log(formData.append); // Track the upload progress
         },
     });
 };
+
+function handleCategoryChange(event) {
+    form.category_name = event.target.value;
+}
 </script>
 
 <template>
@@ -84,15 +120,15 @@ const update = () => {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('cctv.page')"
+                        :href="route('aduan.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Komputer
+                        Aduan
                     </Link>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Komputer Edit Pages
+                    Aduan Edit Pages
                 </h6>
             </nav>
         </template>
@@ -110,12 +146,12 @@ const update = () => {
                         >
                             <div class="flex items-center">
                                 <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Edit Komputer
+                                    Form Edit Aduan
                                 </p>
                             </div>
                         </div>
                         <div class="flex-auto p-6">
-                                                        <form @submit.prevent="update">
+                            <form @submit.prevent="update">
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
@@ -125,17 +161,17 @@ const update = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="cctv-name"
+                                                for="complaint-name"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Cctv Name</label
+                                                >Complaint Name</label
                                             >
                                             <input
                                                 required
                                                 type="text"
-                                                name="cctv_name"
-                                                v-model="form.cctv_name"
+                                                name="complaint_name"
+                                                v-model="form.complaint_name"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Cctv Name"
+                                                placeholder="Nama Pelapor"
                                             />
                                         </div>
                                     </div>
@@ -144,38 +180,18 @@ const update = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="cctv-code"
+                                                for="ticket-code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Cctv Code</label
+                                                >Ticket Code</label
                                             >
                                             <input
                                                 :disabled="isDisabled"
                                                 required
                                                 type="text"
-                                                name="cctv_code"
-                                                v-model="form.cctv_code"
-                                                value="1"
+                                                name="complaint_code"
+                                                v-model="form.complaint_code"
                                                 class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Auto Generate Cctv Code"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="number-asset-ho"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Asset Ho Number</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.asset_ho_number"
-                                                name="asset_ho_number"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Auto Generate Ticket Code"
                                             />
                                         </div>
                                     </div>
@@ -185,200 +201,120 @@ const update = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="cctv-model"
+                                                for="nrp"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Cctv Model</label
+                                                >NRP</label
                                             >
                                             <input
                                                 required
                                                 type="text"
-                                                v-model="form.cctv_model"
-                                                name="cctv_model"
+                                                v-model="form.nrp"
+                                                name="nrp"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="NRP Pelapor"
                                             />
                                         </div>
                                     </div>
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="cctv-brand"
+                                                for="phone-number"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Cctv Brand</label
+                                                >Active WhatsApp Number</label
                                             >
                                             <input
                                                 required
                                                 type="text"
-                                                v-model="form.cctv_brand"
-                                                name="cctv_brand"
+                                                name="phone_number"
+                                                v-model="form.phone_number"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Nomer Hp"
                                             />
                                         </div>
                                     </div>
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="type-cctv"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Type Cctv</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.type_cctv"
-                                                name="type_cctv"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="mac-address"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Mac Address</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.mac_address"
-                                                name="mac_address"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="ip-address"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Ip Address</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.ip_address"
-                                                name="ip_address"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
                                                 for="nvr-id"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                             >
-                                                Nvr</label
+                                                Category Aduan</label
                                             >
                                             <select
+                                                @change="handleCategoryChange"
                                                 required
-                                                id="nvr_id"
-                                                v-model="form.nvr_id"
-                                                name="nvr_id"
+                                                id="category_name"
+                                                v-model="form.category_name"
+                                                name="category_name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
                                                 <option
                                                     selected
-                                                    value="Ready_Used"
+                                                    value="WEBSITE"
                                                 >
-                                                    Ready Used
+                                                    WEBSITE
                                                 </option>
-                                                <option value="Ready_Stanby">
-                                                    Ready Standby
+                                                <option value="NETWORK">
+                                                    NETWORK
                                                 </option>
-                                                <option value="Scrap">
-                                                    Scrap
+                                                <option value="RADIO">
+                                                    RADIO
                                                 </option>
-                                                <option value="Breakdown">
-                                                    Breakdown
+                                                <option value="PC/LAPTOP">
+                                                    PC/LAPTOP
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
-
-                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    <div
+                                        v-if="form.category_name == 'PC/LAPTOP'"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="switch-id"
+                                                for="inventory-number"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Inventory Number</label
                                             >
-                                                Switch</label
-                                            >
-                                            <select
+                                            <input
                                                 required
-                                                id="switch_id"
-                                                v-model="form.switch_id"
-                                                name="switch_id"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option
-                                                    selected
-                                                    value="Ready_Used"
-                                                >
-                                                    Ready Used
-                                                </option>
-                                                <option value="Ready_Stanby">
-                                                    Ready Standby
-                                                </option>
-                                                <option value="Scrap">
-                                                    Scrap
-                                                </option>
-                                                <option value="Breakdown">
-                                                    Breakdown
-                                                </option>
-                                            </select>
+                                                type="text"
+                                                name="inventory_number"
+                                                v-model="form.inventory_number"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="Nomer Inventory PC/LAPTOP"
+                                            />
                                         </div>
                                     </div>
-                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    <div
+                                        :class="
+                                            form.category_name === 'PC/LAPTOP'
+                                                ? 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
+                                                : 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
+                                        "
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="status"
+                                                for="nvr-id"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                             >
-                                                Status</label
+                                                Crew</label
                                             >
-                                            <select
-                                                required
-                                                id="status"
-                                                v-model="form.status"
-                                                name="status"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option
-                                                    selected
-                                                    value="Ready_Used"
-                                                >
-                                                    Ready Used
-                                                </option>
-                                                <option value="Ready_Stanby">
-                                                    Ready Standby
-                                                </option>
-                                                <option value="Scrap">
-                                                    Scrap
-                                                </option>
-                                                <option value="Breakdown">
-                                                    Breakdown
-                                                </option>
-                                            </select>
+                                            <VueMultiselect
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                :multiple="true"
+                                                :close-on-select="true"
+                                                placeholder="Select Crew"
+                                                track-by="name"
+                                                label="name"
+                                            />
                                         </div>
                                     </div>
                                     <div
@@ -386,55 +322,33 @@ const update = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="date-of-inventory"
+                                                for="complaint_image"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Date Of Inventory</label
+                                                >Complaint Image</label
                                             >
                                             <input
-                                                required
-                                                type="date"
-                                                v-model="form.date_of_inventory"
-                                                name="date_of_inventory"
+                                                type="file"
+                                                ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Ubixxxxx"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                                @change="handleFileUpload"
                                             />
                                         </div>
                                     </div>
-                                     <div
+
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="vlan"
+                                                for="link_documentation_asset_image"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Vlan</label
+                                                >Previous Complaint Image</label
                                             >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.vlan"
-                                                name="vlan"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
-                                            />
-                                        </div>
-                                    </div>
-                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="uplink"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Uplink</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.uplink"
-                                                name="uplink"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                            <img
+                                                :src="form.complaint_image"
+                                                alt="documentation image"
+                                                class="w-60 h-30 shadow-2xl rounded-xl"
                                             />
                                         </div>
                                     </div>
@@ -453,45 +367,186 @@ const update = () => {
                                                 v-model="form.location"
                                                 name="location"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="Lokasi Pelapor"
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="location-detail"
+                                                for="nvr-id"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Location Detail</label
+                                            >
+                                                Status</label
+                                            >
+                                            <select
+                                                required
+                                                id="status"
+                                                v-model="form.status"
+                                                name="status"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option value="OPEN">
+                                                    OPEN
+                                                </option>
+                                                <option value="PROGRESS">
+                                                    PROGRESS
+                                                </option>
+                                                <option value="CANCEL">
+                                                    CANCEL
+                                                </option>
+                                                <option value="CLOSED">
+                                                    CLOSED
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="date-of-complaint"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Date & Time Complaint</label
+                                            >
+                                            <VueDatePicker
+                                                required
+                                                v-model="dateOfComplaint"
+                                                :format="customFormat"
+                                                placeholder="Select a date and time"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="start-response"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Start Response</label
+                                            >
+                                            <VueDatePicker
+                                                required
+                                                v-model="startResponse"
+                                                :format="customFormat"
+                                                placeholder="Select Strat Response"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="start-progress"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Start Progress</label
+                                            >
+                                            <VueDatePicker
+                                                :required="isDateRequired"
+                                                v-model="startProgress"
+                                                :format="customFormat"
+                                                placeholder="Select Start Progress"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="end-progress"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >End Progress</label
+                                            >
+                                            <VueDatePicker
+                                                :required="isDateRequired"
+                                                v-model="endProgress"
+                                                :format="customFormat"
+                                                placeholder="Select End Progress"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="issue"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Issue</label
+                                            >
+                                            <textarea
+                                                required
+                                                id="message"
+                                                name="complaint_note"
+                                                v-model="form.complaint_note"
+                                                rows="4"
+                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Complaint Issue"
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="location_-detail"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Detail Location</label
                                             >
                                             <textarea
                                                 id="message"
-                                                name="location_detail"
-                                                v-model="form.location_detail"
+                                                name="detail_location"
+                                                v-model="form.detail_location"
                                                 rows="4"
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="detail location..."
+                                                placeholder="Detail Location"
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="action-repair"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Action Repair</label
+                                            >
+                                            <textarea
+                                                required
+                                                id="message"
+                                                name="action_repair"
+                                                v-model="form.action_repair"
+                                                rows="4"
+                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Action Repair"
                                             ></textarea>
                                         </div>
                                     </div>
                                      <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="note"
+                                                for="repair-note"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Note</label
+                                                >Repair Note</label
                                             >
                                             <textarea
+                                                required
                                                 id="message"
-                                                name="note"
-                                                v-model="form.note"
+                                                name="repair_note"
+                                                v-model="form.repair_note"
                                                 rows="4"
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Leave a note..."
+                                                placeholder="Action Repair"
                                             ></textarea>
                                         </div>
                                     </div>
@@ -511,7 +566,7 @@ const update = () => {
                                         </span>
                                     </button>
                                     <Link
-                                        :href="route('cctv.page')"
+                                        :href="route('aduan.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

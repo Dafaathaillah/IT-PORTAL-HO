@@ -19,6 +19,7 @@ const props = defineProps({
     },
 });
 const form = useForm({
+    id: props.aduan.id,
     location: props.aduan.location,
     location_detail: props.aduan.detail_location,
     status: props.aduan.status,
@@ -29,10 +30,18 @@ const form = useForm({
 
 const isDisabled = ref(true);
 
+const file = ref(null);
+
+const handleFileUpload = (event) => {
+    file.value = event.target.files[0];
+};
+
 const dateOfComplaint = ref(props.aduan.date_of_complaint);
-const startResponse = ref(null);
+const startResponse = ref(props.aduan.start_response);
 const startProgress = ref(null);
 const endProgress = ref(null);
+
+const isDateRequired = computed(() => props.aduan.start_response !== null);
 
 const selectedValues = ref([]); // Awalnya array kosong
 const crewString = computed(() => {
@@ -40,6 +49,10 @@ const crewString = computed(() => {
 });
 
 const customFormat = (date) => {
+    if (!date) {
+        // Jika date null atau kosong, kembalikan null
+        return "";
+    }
     const d = new Date(date);
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -51,13 +64,15 @@ const customFormat = (date) => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
-const save = () => {
+const updateProgress = () => {
     const formData = new FormData();
     const formattedDateDateOfComplaint = customFormat(dateOfComplaint.value);
     const formattedDateStartResponse = customFormat(startResponse.value);
     const formattedDateStartProgress = customFormat(startProgress.value);
     const formattedDateEndProgress = customFormat(endProgress.value);
-    formData.append("crew", form.crew);
+    formData.append("id", form.id);
+    formData.append("crew", crewString.value);
+    formData.append("image", file.value);
     formData.append("actionRepair", form.actionRepair);
     formData.append("dateOfComplaint", formattedDateDateOfComplaint);
     formData.append("startResponse", formattedDateStartResponse);
@@ -65,12 +80,10 @@ const save = () => {
     formData.append("endProgress", formattedDateEndProgress);
     formData.append("status", form.status);
     formData.append("location", form.location);
-    formData.append("location_detail", form.location_detail);
-    formData.append("location_detail", form.location_detail);
-    formData.append("location_detail", form.location_detail);
-    formData.append("location_detail", form.location_detail);
-    formData.append("location_detail", form.location_detail);
-    Inertia.post(route("aduan.store"), formData, {
+    formData.append("detail_location", form.location_detail);
+    formData.append("repair_note", form.repair_note);
+    formData.append("complaint_note", form.complaint_note);
+    Inertia.post(route("aduan.updateProgress"), formData, {
         forceFormData: true,
         onSuccess: () => {
             // Show SweetAlert2 success notification
@@ -145,7 +158,7 @@ const options = props.crew;
                             </div>
                         </div>
                         <div class="flex-auto p-6">
-                            <form @submit.prevent="save">
+                            <form @submit.prevent="updateProgress">
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
@@ -200,7 +213,7 @@ const options = props.crew;
                                             {{ props.aduan.date_of_complaint }}
                                         </span>
                                     </div>
-                                    <!-- <div class="basis-1/2">WhatsApp Number</div> -->
+                                    <div class="basis-1/2"></div>
                                 </div>
                                 <div class="flex flex-row mb-3">
                                     <div class="basis-1/2">
@@ -210,7 +223,19 @@ const options = props.crew;
                                             {{ props.aduan.crew }}
                                         </span>
                                     </div>
-                                    <!-- <div class="basis-1/2">WhatsApp Number</div> -->
+                                    <div class="basis-1/2">
+                                        Complaint Image
+                                        <span class="ml-4.5">
+                                            :
+                                            <img
+                                                :src="
+                                                    props.aduan.complaint_image
+                                                "
+                                                alt="documentation image"
+                                                class="ml-40 w-50 h-30 shadow-2xl rounded-xl"
+                                            />
+                                        </span>
+                                    </div>
                                 </div>
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
@@ -231,7 +256,7 @@ const options = props.crew;
                                                 Crew</label
                                             >
                                             <VueMultiselect
-                                               v-model="selectedValues"
+                                                v-model="selectedValues"
                                                 :options="options"
                                                 :multiple="true"
                                                 :close-on-select="true"
@@ -336,7 +361,7 @@ const options = props.crew;
                                                 >Start Progress</label
                                             >
                                             <VueDatePicker
-                                                required
+                                                :required="isDateRequired"
                                                 v-model="startProgress"
                                                 :format="customFormat"
                                                 placeholder="Select Start Progress"
@@ -353,7 +378,7 @@ const options = props.crew;
                                                 >End Progress</label
                                             >
                                             <VueDatePicker
-                                                required
+                                                :required="isDateRequired"
                                                 v-model="endProgress"
                                                 :format="customFormat"
                                                 placeholder="Select End Progress"
@@ -370,7 +395,7 @@ const options = props.crew;
                                                 >Action Repair</label
                                             >
                                             <textarea
-                                                required
+                                                :required="isDateRequired"
                                                 id="message"
                                                 name="actionRepair"
                                                 v-model="form.actionRepair"
@@ -400,7 +425,7 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -420,7 +445,7 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -436,6 +461,25 @@ const options = props.crew;
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Detail Location"
                                             ></textarea>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="complaint_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Repair Image</label
+                                            >
+                                            <input
+                                                required
+                                                type="file"
+                                                ref="fileInput"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                                @change="handleFileUpload"
+                                            />
                                         </div>
                                     </div>
                                 </div>
