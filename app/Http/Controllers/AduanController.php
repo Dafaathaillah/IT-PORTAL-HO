@@ -94,7 +94,11 @@ class AduanController extends Controller
 
         if (!empty($request->inventory_number)) {
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
-            $data['complaint_position'] = $aduan_get_data_user['position'];
+            if (!empty($aduan_get_data_user)) {
+                $data['complaint_position'] = $aduan_get_data_user['position'];
+            }else{
+                $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
+            }
             $data['inventory_number'] = $request->inventory_number;
             $data['status'] = 'OPEN';
             // return response()->json($data);

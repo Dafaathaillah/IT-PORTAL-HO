@@ -142,6 +142,17 @@ const mount = onMounted(() => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
+                                 <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">Coplaint Position</p>
+                                    </div>
+                                    <div>
+                                        <p>: {{ props.aduan.complaint_position }}</p>
+                                    </div>
+                                </div>
+                                <hr
+                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                />
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Status</p>

@@ -48,6 +48,8 @@ const selectedValues = ref(
     props.crew.filter((option) => props.selectCrew.includes(option.name))
 );
 
+const formSubmitted = ref(false);
+
 const crewString = computed(() => {
     return selectedValues.value.map((option) => option.name).join(", ");
 });
@@ -70,6 +72,13 @@ const customFormat = (date) => {
 
 const update = () => {
     const formData = new FormData();
+
+    if (selectedValues.value == "") {
+        formSubmitted.value = true;
+        console.log("ga oke");
+        return; // Stop execution if validation fails
+    }
+
     const formattedDateDateOfComplaint = customFormat(dateOfComplaint.value);
     const formattedDateStartResponse = customFormat(startResponse.value);
     const formattedDateStartProgress = customFormat(startProgress.value);
@@ -323,6 +332,13 @@ function handleCategoryChange(event) {
                                                 label="name"
                                             />
                                         </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption && formSubmitted
+                                            "
+                                            class="text-red-500"
+                                            >Crew Has Required!</span
+                                        >
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
@@ -537,7 +553,7 @@ function handleCategoryChange(event) {
                                             ></textarea>
                                         </div>
                                     </div>
-                                     <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">

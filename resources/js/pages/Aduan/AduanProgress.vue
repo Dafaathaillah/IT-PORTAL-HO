@@ -213,7 +213,13 @@ const options = props.crew;
                                             {{ props.aduan.date_of_complaint }}
                                         </span>
                                     </div>
-                                    <div class="basis-1/2"></div>
+                                    <div class="basis-1/2">
+                                        Complaint Position
+                                        <span class="ml-0.5">
+                                            :
+                                            {{ props.aduan.complaint_position }}
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="flex flex-row mb-3">
                                     <div class="basis-1/2">
@@ -225,7 +231,7 @@ const options = props.crew;
                                     </div>
                                     <div class="basis-1/2">
                                         Complaint Image
-                                        <span class="ml-4.5">
+                                        <span class="ml-4">
                                             :
                                             <img
                                                 :src="

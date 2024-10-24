@@ -44,6 +44,8 @@ const crewString = computed(() => {
     return selectedValues.value.map((option) => option.name).join(", ");
 });
 
+const formSubmitted = ref(false);
+
 const selectedDate = ref(null);
 
 const customFormat = (date) => {
@@ -59,6 +61,11 @@ const customFormat = (date) => {
 };
 
 const save = () => {
+    if (selectedValues.value == '') {
+        formSubmitted.value = true;
+        console.log('ga oke')
+        return; // Stop execution if validation fails
+    }
     const formData = new FormData();
     const formattedDate = customFormat(selectedDate.value);
     formData.append("image", file.value);
@@ -332,6 +339,13 @@ const getPlaceholder = computed(() => {
                                                 label="name"
                                             />
                                         </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption && formSubmitted
+                                            "
+                                            class="text-red-500"
+                                            >Crew Has Required!</span
+                                        >
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
@@ -360,7 +374,6 @@ const getPlaceholder = computed(() => {
                                                 >Complaint Image</label
                                             >
                                             <input
-                                                required
                                                 type="file"
                                                 ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
