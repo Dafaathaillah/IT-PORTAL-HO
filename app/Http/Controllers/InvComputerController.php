@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Imports\ImportComputer;
 use App\Models\Aduan;
 use App\Models\InvComputer;
+use App\Models\UserAll;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,7 +19,7 @@ class InvComputerController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::all();
+        $dataInventory = InvComputer::with('pengguna')->get();
         return Inertia::render('Inventory/Komputer/Komputer', ['komputer' => $dataInventory]);
     }
 
@@ -39,7 +41,11 @@ class InvComputerController extends Controller
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        return Inertia::render('Inventory/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString]);
+        $pengguna = UserAll::pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('Inventory/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna]);
     }
 
     public function store(Request $request)
@@ -60,6 +66,8 @@ class InvComputerController extends Controller
         $new_path_documentation_image = $path_documentation_image;
         $documentation_image->move($destinationPath, $new_path_documentation_image);
 
+        $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+
         $data = [
             'max_id' => $maxId,
             'computer_name' => $params['computer_name'],
@@ -78,7 +86,7 @@ class InvComputerController extends Controller
             'condition' => $params['condition'],
             'note' => $params['note'],
             'link_documentation_asset_image' => url($new_path_documentation_image),
-            'user_alls_id' => $params['user_alls_id'],
+            'user_alls_id' => $aduan_get_data_user['id'],
         ];
 
         InvComputer::create($data);
@@ -100,6 +108,15 @@ class InvComputerController extends Controller
     public function edit($id)
     {
         $komputer = InvComputer::find($id);
+
+        $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->username;
+
+        $pengguna_selected = array($aduan_get_data_user);
+
+        $pengguna_all = UserAll::pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         $spesifikasi = explode(',', $komputer->spesifikasi);
         $model = trim($spesifikasi[0]);
         $processor = trim($spesifikasi[1]);
@@ -120,6 +137,8 @@ class InvComputerController extends Controller
             'vga' => $vga,
             'warna_komputer' => $warna_komputer,
             'os_komputer' => $os_komputer,
+            'pengguna_selected' => $pengguna_selected,
+            'pengguna_all' => $pengguna_all
         ]);
     }
 
@@ -141,6 +160,9 @@ class InvComputerController extends Controller
             $path_documentation_image = $documentation_image->store('images', 'public');
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
+
+            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+
             $data = [
                 'max_id' => $request->max_id,
                 'computer_name' => $request->computer_name,
@@ -159,9 +181,12 @@ class InvComputerController extends Controller
                 'condition' => $request->condition,
                 'note' => $request->note,
                 'link_documentation_asset_image' => url($new_path_documentation_image),
-                'user_alls_id' => null,
+                'user_alls_id' => $aduan_get_data_user['id'],
             ];
         } else {
+
+            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+
             $data = [
                 'max_id' => $request->max_id,
                 'computer_name' => $request->computer_name,
@@ -179,7 +204,7 @@ class InvComputerController extends Controller
                 'status' => $request->status,
                 'condition' => $request->condition,
                 'note' => $request->note,
-                'user_alls_id' => null,
+                'user_alls_id' => $aduan_get_data_user['id'],
             ];
     }
 

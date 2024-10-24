@@ -57,7 +57,7 @@ const editData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't edit this data?",
+        text: "You want edit this data?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -240,7 +240,12 @@ function formatData(text) {
                                                     <th
                                                         class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Laptop Name
+                                                        Pengguna
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Brand
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -354,6 +359,17 @@ function formatData(text) {
                                                         >
                                                             {{
                                                                 laptops.number_asset_ho
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                laptops.pengguna.username
                                                             }}
                                                         </p>
                                                     </td>

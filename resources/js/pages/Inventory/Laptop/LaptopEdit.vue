@@ -1,10 +1,14 @@
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps([
     "laptop",
@@ -17,6 +21,8 @@ const props = defineProps([
     "vga",
     "warna_laptop",
     "os_laptop",
+    "pengguna_all",
+    "pengguna_selected"
 ]);
 
 const form = useForm({
@@ -45,18 +51,47 @@ const form = useForm({
     condition: props.laptop.condition,
     note: props.laptop.note,
     link_documentation_asset_image: props.laptop.link_documentation_asset_image,
-    user_alls_id: props.laptop.user_alls_id,
+    user_alls_id: props.pengguna_all,
 });
 
 const isDisabled = ref(true);
 const file = ref(null);
 
+const selectedDateInv = ref(props.laptop.date_of_inventory);
+const selectedDateDeploy = ref(props.laptop.date_of_deploy);
+
+const customFormat = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
+const options = props.pengguna_all;
+
+const selectedValues = ref(
+    props.pengguna_all.filter((option) => props.pengguna_selected.includes(option.name))
+);
+
+const penggunaString = computed(() => {
+    return selectedValues.value.map((option) => option.name).join("");
+});
+
 const update = () => {
     const formData = new FormData();
+
+    const fixTanggalInv = customFormat(selectedDateInv.value);
+    const fixTanggalDeploy = customFormat(selectedDateDeploy.value);
+
     formData.append("id", form.id);
     formData.append("max_id", form.max_id);
     formData.append("laptop_name", form.laptop_name);
@@ -75,13 +110,13 @@ const update = () => {
     formData.append("aplikasi", form.aplikasi);
     formData.append("license", form.license);
     formData.append("ip_address", form.ip_address);
-    formData.append("date_of_inventory", form.date_of_inventory);
-    formData.append("date_of_deploy", form.date_of_deploy);
+    formData.append("date_of_inventory", fixTanggalInv);
+    formData.append("date_of_deploy", fixTanggalDeploy);
     formData.append("location", form.location);
     formData.append("status", form.status);
     formData.append("condition", form.condition);
     formData.append("note", form.note);
-    formData.append("user_alls_id", form.user_alls_id);
+    formData.append("user_alls_id", penggunaString.value);
 
     if (file.value) {
         formData.append("image", file.value); // Append the file
@@ -120,7 +155,7 @@ const update = () => {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Edit data Laptop" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -172,26 +207,7 @@ const update = () => {
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
-                                        <div class="mb-4">
-                                            <label
-                                                for="device-name"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Laptop Name</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                name="laptop_name"
-                                                v-model="form.laptop_name"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Laptop Name"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
+                                    <div class="mb-4">
                                             <label
                                                 for="laptop-code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
@@ -212,6 +228,25 @@ const update = () => {
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
+                                    <div class="mb-4">
+                                            <label
+                                                for="device-name"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Brand Laptop</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                name="laptop_name"
+                                                v-model="form.laptop_name"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="Lenovo"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
                                             <label
                                                 for="number-asset-ho"
@@ -224,7 +259,7 @@ const update = () => {
                                                 v-model="form.number_asset_ho"
                                                 name="number_asset_ho"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="14414xxx"
                                             />
                                         </div>
                                     </div>
@@ -235,7 +270,7 @@ const update = () => {
                                             <label
                                                 for="assets-category"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Catgeory</label
+                                                >Kategori Aset</label
                                             >
                                             <select
                                                 required
@@ -244,13 +279,13 @@ const update = () => {
                                                 name="assets_category"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="Baru">
+                                                <option selected value="BARU">
                                                     BARU
                                                 </option>
-                                                <option value="Lama">
+                                                <option value="LAMA">
                                                     LAMA
                                                 </option>
-                                                <option value="Mutasian">
+                                                <option value="MUTASI">
                                                     MUTASI (dari site lain)
                                                 </option>
                                             </select>
@@ -272,7 +307,7 @@ const update = () => {
                                                 v-model="form.model"
                                                 name="model"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Legixx 12"
                                             />
                                         </div>
                                     </div>
@@ -291,7 +326,7 @@ const update = () => {
                                                 v-model="form.processor"
                                                 name="processor"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Intel Core I7-1xxx0HX"
                                             />
                                         </div>
                                     </div>
@@ -310,7 +345,7 @@ const update = () => {
                                                 v-model="form.hdd"
                                                 name="hdd"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="1 xx"
                                             />
                                         </div>
                                     </div>
@@ -329,7 +364,7 @@ const update = () => {
                                                 v-model="form.ssd"
                                                 name="ssd"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="1 xx"
                                             />
                                         </div>
                                     </div>
@@ -348,7 +383,7 @@ const update = () => {
                                                 v-model="form.ram"
                                                 name="ram"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="16 xx"
                                             />
                                         </div>
                                     </div>
@@ -367,7 +402,7 @@ const update = () => {
                                                 v-model="form.vga"
                                                 name="vga"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="NVIDIA GEFORCE RTX 4Xxx"
                                             />
                                         </div>
                                     </div>
@@ -386,7 +421,7 @@ const update = () => {
                                                 v-model="form.warna_laptop"
                                                 name="warna_laptop"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Hitxx"
                                             />
                                         </div>
                                     </div>
@@ -405,7 +440,7 @@ const update = () => {
                                                 v-model="form.os_laptop"
                                                 name="os_laptop"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="WINDOWS 1x PRO"
                                             />
                                         </div>
                                     </div>
@@ -424,7 +459,7 @@ const update = () => {
                                                 v-model="form.serial_number"
                                                 name="serial_number"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="423424242xxx"
                                             />
                                         </div>
                                     </div>
@@ -443,7 +478,7 @@ const update = () => {
                                                 v-model="form.aplikasi"
                                                 name="aplikasi"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Standart Progxx"
                                             />
                                         </div>
                                     </div>
@@ -462,7 +497,7 @@ const update = () => {
                                                 v-model="form.license"
                                                 name="license"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Office xx"
                                             />
                                         </div>
                                     </div>
@@ -494,13 +529,12 @@ const update = () => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Date Of Inventory</label
                                             >
-                                            <input
+                                            <VueDatePicker
                                                 required
-                                                type="date"
-                                                v-model="form.date_of_inventory"
+                                                v-model="selectedDateInv"
+                                                :format="customFormat"
                                                 name="date_of_inventory"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Ubixxxxx"
+                                                placeholder="Select a date and time"
                                             />
                                         </div>
                                     </div>
@@ -513,13 +547,11 @@ const update = () => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Date Of Deploy</label
                                             >
-                                            <input
-                                                required
-                                                type="date"
-                                                v-model="form.date_of_deploy"
+                                            <VueDatePicker
+                                                v-model="selectedDateDeploy"
+                                                :format="customFormat"
                                                 name="date_of_deploy"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Ubixxxxx"
+                                                placeholder="Select a date and time"
                                             />
                                         </div>
                                     </div>
@@ -538,7 +570,7 @@ const update = () => {
                                                 v-model="form.location"
                                                 name="location"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="Markas ICT"
                                             />
                                         </div>
                                     </div>
@@ -592,7 +624,7 @@ const update = () => {
                                                 v-model="form.condition"
                                                 name="condition"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="2.4 / 5.8 Ghz"
+                                                placeholder="Bagus / Rusak"
                                             />
                                         </div>
                                     </div>
@@ -604,31 +636,19 @@ const update = () => {
                                                 for="user_id"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                             >
-                                                Select User</label
+                                                Select Pengguna</label
                                             >
-                                            <select
+                                            <VueMultiselect
                                                 required
-                                                id="user_id"
-                                                v-model="form.user_id"
-                                                name="user_id"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option
-                                                    selected
-                                                    value="Ready_Used"
-                                                >
-                                                    Ready Used
-                                                </option>
-                                                <option value="Ready_Stanby">
-                                                    Ready Standby
-                                                </option>
-                                                <option value="Scrap">
-                                                    Scrap
-                                                </option>
-                                                <option value="Breakdown">
-                                                    Breakdown
-                                                </option>
-                                            </select>
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                :multiple="true"
+                                                :close-on-select="true"
+                                                placeholder="Select Pengguna"
+                                                track-by="name"
+                                                label="name"
+                                                :max="1"
+                                            />
                                         </div>
                                     </div>
                                     <div
@@ -665,7 +685,7 @@ const update = () => {
                                                     form.link_documentation_asset_image
                                                 "
                                                 alt="documentation image"
-                                                class="w-200 shadow-2xl rounded-xl"
+                                                class="w-100 shadow-2xl rounded-xl"
                                             />
                                         </div>
                                     </div>
@@ -692,17 +712,8 @@ const update = () => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-end">
-                                    <button
-                                        type="submit"
-                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-                                    >
-                                        <span
-                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
-                                        >
-                                            Save
-                                        </span>
-                                    </button>
+                                <div class="flex flex-nowrap mt-6 justify-between">
+                                    
                                     <Link
                                         :href="route('laptop.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
@@ -713,6 +724,19 @@ const update = () => {
                                             Cancel
                                         </span>
                                     </Link>
+
+                                    <button
+                                        type="submit"
+                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+                                    >
+                                        <span
+                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+                                        >
+                                            Save
+                                        </span>
+                                    </button>
+
+
                                 </div>
                             </form>
                         </div>

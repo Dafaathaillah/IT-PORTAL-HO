@@ -20,7 +20,8 @@ class InvLaptopController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::all();
+        $dataInventory = InvLaptop::with('pengguna')->get();
+        // dd($dataInventory);
         return Inertia::render('Inventory/Laptop/Laptop', ['laptop' => $dataInventory]);
     }
 
@@ -108,6 +109,17 @@ class InvLaptopController extends Controller
     public function edit($id)
     {
         $laptop = InvLaptop::find($id);
+
+        $aduan_get_data_user = UserAll::where('id', $laptop->user_alls_id)->first()->username;
+
+        $pengguna_selected = array($aduan_get_data_user);
+
+        $pengguna_all = UserAll::pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        // dd($aduan_get_data_user);
+
         $spesifikasi = explode(',', $laptop->spesifikasi);
         $model = trim($spesifikasi[0]);
         $processor = trim($spesifikasi[1]);
@@ -128,6 +140,8 @@ class InvLaptopController extends Controller
             'vga' => $vga,
             'warna_laptop' => $warna_laptop,
             'os_laptop' => $os_laptop,
+            'pengguna_selected' => $pengguna_selected,
+            'pengguna_all' => $pengguna_all
         ]);
     }
 
@@ -160,6 +174,9 @@ class InvLaptopController extends Controller
             $path_documentation_image = $documentation_image->store('images', 'public');
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
+
+            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+
             $data = [
                 'max_id' => $request->max_id,
                 'laptop_name' => $request->laptop_name,
@@ -178,9 +195,12 @@ class InvLaptopController extends Controller
                 'condition' => $request->condition,
                 'note' => $request->note,
                 'link_documentation_asset_image' => url($new_path_documentation_image),
-                'user_alls_id' => null,
+                'user_alls_id' => $aduan_get_data_user['id'],
             ];
         } else {
+
+            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+
             $data = [
                 'max_id' => $request->max_id,
                 'laptop_name' => $request->laptop_name,
@@ -198,7 +218,7 @@ class InvLaptopController extends Controller
                 'status' => $request->status,
                 'condition' => $request->condition,
                 'note' => $request->note,
-                'user_alls_id' => null,
+                'user_alls_id' => $aduan_get_data_user['id'],
             ];
         }
 

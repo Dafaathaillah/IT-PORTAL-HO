@@ -266,13 +266,13 @@ const options = props.pengguna;
                                                 name="assets_category"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="Baru">
+                                                <option selected value="BARU">
                                                     BARU
                                                 </option>
-                                                <option value="Lama">
+                                                <option value="LAMA">
                                                     LAMA
                                                 </option>
-                                                <option value="Mutasian">
+                                                <option value="MUTASI">
                                                     MUTASI (dari site lain)
                                                 </option>
                                             </select>
@@ -644,6 +644,7 @@ const options = props.pengguna;
                                                 Select User</label
                                             >
                                             <VueMultiselect
+                                                required
                                                 v-model="selectedValues"
                                                 :options="options"
                                                 :multiple="true"
@@ -652,6 +653,7 @@ const options = props.pengguna;
                                                 placeholder="Select Pengguna"
                                                 track-by="name"
                                                 label="name"
+                                                :allow-empty="required"
                                             />
                                         </div>
                                     </div>
@@ -665,6 +667,7 @@ const options = props.pengguna;
                                                 >Note</label
                                             >
                                             <textarea
+                                                required
                                                 id="message"
                                                 name="note"
                                                 v-model="form.note"

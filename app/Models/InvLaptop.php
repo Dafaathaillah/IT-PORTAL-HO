@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InvLaptop extends Model
 {
@@ -29,4 +30,9 @@ class InvLaptop extends Model
         'link_documentation_asset_image',
         'user_alls_id',
     ];
+
+    public function pengguna(): BelongsTo
+    {
+        return $this->belongsTo(UserAll::class,foreignKey: 'user_alls_id');
+    }
 }

@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
-import { Link } from "@inertiajs/vue3";
+import {Head, Link } from "@inertiajs/vue3";
 import moment from "moment";
 import { onMounted } from "vue";
 
@@ -21,7 +21,7 @@ const mount = onMounted(() => {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Inv Laptop" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -210,18 +210,18 @@ const mount = onMounted(() => {
                                             Documentation Asset
                                         </p>
                                     </div>
-                                    <div>
-                                        <p>
-                                            :
-                                            <img
-                                                :src="
-                                                    laptop.link_documentation_asset_image
-                                                "
-                                                alt="documentation image"
-                                                class="h-200 w-200 shadow-2xl rounded-xl"
-                                            />
-                                        </p>
-                                    </div>
+                                </div>
+                                <div>
+                                    <p>
+                                        
+                                        <img
+                                            :src="
+                                                laptop.link_documentation_asset_image
+                                            "
+                                            alt="documentation image"
+                                            class="w-100 shadow-2xl rounded-xl"
+                                        />
+                                    </p>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div>
