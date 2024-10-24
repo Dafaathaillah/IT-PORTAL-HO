@@ -36,4 +36,9 @@ class InvCctv extends Model
     {
         return $this->belongsTo(InvSwitch::class, 'switch_id', 'id');
     }
+
+    // public function getInventoryAttribute()
+    // {
+    //     return $this->switch ? $this->switch->inventory_number : 'Data asli telah dihapus';
+    // }
 }

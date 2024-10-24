@@ -5,9 +5,10 @@ namespace App\Imports;
 use App\Models\InvCctv;
 use App\Models\UserAll;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithLimit;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class ImportCctv implements ToModel, WithStartRow
+class ImportCctv implements ToModel, WithStartRow, WithLimit
 {
     /**
      * @param array $row
@@ -22,13 +23,17 @@ class ImportCctv implements ToModel, WithStartRow
 
     public function model(array $row)
     {
-        return dd($row);
         return new UserAll([
             'nrp' => $row[1],
             'username' => $row[2],
             'department' => $row[3],
             'position' => $row[4],
-            'position' => $row[6],
+            'email' => $row[6],
         ]);
+    }
+
+    public function limit(): int
+    {
+        return 113; // Menghentikan impor setelah 100 baris
     }
 }

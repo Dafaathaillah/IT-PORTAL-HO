@@ -34,7 +34,7 @@ const deleteData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        text: "Menghapus data ini akan berdampak pada table yang berelasi dengan data ini!, data pada table yang berelasi akan ikut terhapus!. salah satu table yang berelasi dengan data ini adalah data cctv.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

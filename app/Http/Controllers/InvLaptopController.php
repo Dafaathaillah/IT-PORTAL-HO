@@ -38,7 +38,7 @@ class InvLaptopController extends Controller
             $maxId = 0;
         }
 
-        $uniqueString = 'PPABIBNB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAHONB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 

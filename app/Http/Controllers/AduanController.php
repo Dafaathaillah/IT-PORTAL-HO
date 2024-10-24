@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aduan;
+use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
@@ -48,7 +49,7 @@ class AduanController extends Controller
 
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
-        $crew = UserAll::pluck('username')->map(function ($name) {
+        $crew = User::pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return response()->json($crew);
@@ -116,7 +117,7 @@ class AduanController extends Controller
     public function progress($id)
     {
         $aduan = Aduan::find($id);
-        $crew = UserAll::pluck('username')->map(function ($name) {
+        $crew = User::pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -181,7 +182,7 @@ class AduanController extends Controller
         $aduan = Aduan::find($id);
         $selectCrew = explode(', ', $aduan->crew);
         // return dd($aduan);
-        $crew = UserAll::pluck('username')->map(function ($name) {
+        $crew = User::pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         return Inertia::render('Aduan/AduanEdit', [

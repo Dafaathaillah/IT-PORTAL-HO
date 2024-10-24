@@ -36,7 +36,7 @@ class InvCctvController extends Controller
             $maxId = 0;
         }
 
-        $uniqueString = 'PPABIBCCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAHOCCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
