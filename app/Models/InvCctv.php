@@ -31,4 +31,9 @@ class InvCctv extends Model
         'last_status_ping',
         'last_update_ping',
     ];
+
+    public function switch()
+    {
+        return $this->belongsTo(InvSwitch::class, 'switch_id', 'id');
+    }
 }

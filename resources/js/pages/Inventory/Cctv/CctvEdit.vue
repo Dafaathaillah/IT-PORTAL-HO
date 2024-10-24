@@ -1,14 +1,16 @@
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
-const props = defineProps([
-    "cctv",
-]);
+const props = defineProps(["cctv", "switch", "selectSwitch"]);
 
 const form = useForm({
     id: props.cctv.id,
@@ -24,10 +26,9 @@ const form = useForm({
     nvr_id: props.cctv.nvr_id,
     switch_id: props.cctv.switch_id,
     status: props.cctv.status,
-    date_of_inventory: props.cctv.date_of_inventory,
     location: props.cctv.location,
     note: props.cctv.note,
-    
+
     location_detail: props.cctv.location_detail,
     uplink: props.cctv.uplink,
     vlan: props.cctv.vlan,
@@ -36,12 +37,50 @@ const form = useForm({
 const isDisabled = ref(true);
 const file = ref(null);
 
+const dateOfInventory = ref(props.cctv.date_of_inventory);
+
+const customFormat = (date) => {
+    if (!date) {
+        // Jika date null atau kosong, kembalikan null
+        return "";
+    }
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
+const options = props.switch;
+
+const selectedValues = ref(null);
+
+onMounted(() => {
+   if (props.switch && props.switch.length > 0) { 
+    console.log('Options:', props.switch) // Debug opsi yang diterima
+    console.log('SelectedOptionId:', props.selectSwitch) // Debug ID yang diterima
+
+    // Pastikan options sudah terdefinisi dan tidak kosong
+    const selectedOption = props.switch.find(option => option.id === props.selectSwitch)
+
+    console.log('SelectedOption:', selectedOption) // Debug opsi yang ditemukan
+    selectedValues.value = selectedOption || null
+  } else {
+    console.error('Options are not available or empty')
+  }
+});
+
 const update = () => {
     const formData = new FormData();
+    const formattedDateOfInventory = customFormat(dateOfInventory.value);
     formData.append("id", form.id);
     formData.append("cctv_name", form.cctv_name);
     formData.append("cctv_code", form.cctv_code);
@@ -52,9 +91,9 @@ const update = () => {
     formData.append("mac_address", form.mac_address);
     formData.append("ip_address", form.ip_address);
     formData.append("nvr_id", form.nvr_id);
-    formData.append("switch_id", form.switch_id);
+    formData.append("switch_id", selectedValues.value.id);
     formData.append("status", form.status);
-    formData.append("date_of_inventory", form.date_of_inventory);
+    formData.append("date_of_inventory", formattedDateOfInventory);
     formData.append("location", form.location);
     formData.append("note", form.note);
     formData.append("location_detail", form.location_detail);
@@ -115,7 +154,7 @@ const update = () => {
                             </div>
                         </div>
                         <div class="flex-auto p-6">
-                                                        <form @submit.prevent="update">
+                            <form @submit.prevent="update">
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
@@ -275,7 +314,7 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div
+                                    <!-- <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -309,10 +348,10 @@ const update = () => {
                                                 </option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -321,33 +360,19 @@ const update = () => {
                                             >
                                                 Switch</label
                                             >
-                                            <select
-                                                required
-                                                id="switch_id"
-                                                v-model="form.switch_id"
-                                                name="switch_id"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option
-                                                    selected
-                                                    value="Ready_Used"
-                                                >
-                                                    Ready Used
-                                                </option>
-                                                <option value="Ready_Stanby">
-                                                    Ready Standby
-                                                </option>
-                                                <option value="Scrap">
-                                                    Scrap
-                                                </option>
-                                                <option value="Breakdown">
-                                                    Breakdown
-                                                </option>
-                                            </select>
+                                            <VueMultiselect
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                :multiple="false"
+                                                placeholder="Select Switch"
+                                                track-by="id"
+                                                label="inventory_number"
+                                                :clear-on-select="false"
+                                            />
                                         </div>
                                     </div>
-                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -390,17 +415,15 @@ const update = () => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Date Of Inventory</label
                                             >
-                                            <input
+                                            <VueDatePicker
                                                 required
-                                                type="date"
-                                                v-model="form.date_of_inventory"
-                                                name="date_of_inventory"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Ubixxxxx"
+                                                v-model="dateOfInventory"
+                                                :format="customFormat"
+                                                placeholder="Select a date and time"
                                             />
                                         </div>
                                     </div>
-                                     <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -419,7 +442,7 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
-                                     <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -476,7 +499,7 @@ const update = () => {
                                             ></textarea>
                                         </div>
                                     </div>
-                                     <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">

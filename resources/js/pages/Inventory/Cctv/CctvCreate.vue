@@ -1,12 +1,16 @@
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const props = defineProps(["inventoryNumber"]);
+const props = defineProps(["inventoryNumber", "switch"]);
 
 const form = useForm({
     cctv_name: "",
@@ -20,10 +24,9 @@ const form = useForm({
     nvr_id: "",
     switch_id: "",
     status: "",
-    date_of_inventory: "",
     location: "",
     note: "",
-    
+
     location_detail: "",
     uplink: "",
     vlan: "",
@@ -31,12 +34,33 @@ const form = useForm({
 
 const isDisabled = ref(true);
 const file = ref(null);
+const dateOfInventory = ref(null);
+
+const customFormat = (date) => {
+    if (!date) {
+        // Jika date null atau kosong, kembalikan null
+        return "";
+    }
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
+
+const selectedValues = ref([]); // Awalnya array kosong
+
 const save = () => {
     const formData = new FormData();
+    const formattedDateOfInventory = customFormat(dateOfInventory.value);
     formData.append("image", file.value);
     formData.append("cctv_name", form.cctv_name);
     formData.append("cctv_code", form.cctv_code);
@@ -46,10 +70,10 @@ const save = () => {
     formData.append("type_cctv", form.type_cctv);
     formData.append("mac_address", form.mac_address);
     formData.append("ip_address", form.ip_address);
-    formData.append("nvr_id", form.nvr_id);
-    formData.append("switch_id", form.switch_id);
+    // formData.append("nvr_id", form.nvr_id);
+    formData.append("switch_id", selectedValues.value.id);
     formData.append("status", form.status);
-    formData.append("date_of_inventory", form.date_of_inventory);
+    formData.append("date_of_inventory", formattedDateOfInventory);
     formData.append("location", form.location);
     formData.append("note", form.note);
     formData.append("location_detail", form.location_detail);
@@ -78,6 +102,7 @@ const save = () => {
         },
     });
 };
+const options = props.switch;
 </script>
 
 <template>
@@ -285,7 +310,7 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div
+                                    <!-- <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -319,10 +344,10 @@ const save = () => {
                                                 </option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -331,33 +356,17 @@ const save = () => {
                                             >
                                                 Switch</label
                                             >
-                                            <select
-                                                required
-                                                id="switch_id"
-                                                v-model="form.switch_id"
-                                                name="switch_id"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option
-                                                    selected
-                                                    value="Ready_Used"
-                                                >
-                                                    Ready Used
-                                                </option>
-                                                <option value="Ready_Stanby">
-                                                    Ready Standby
-                                                </option>
-                                                <option value="Scrap">
-                                                    Scrap
-                                                </option>
-                                                <option value="Breakdown">
-                                                    Breakdown
-                                                </option>
-                                            </select>
+                                            <VueMultiselect
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                placeholder="Select Switch"
+                                                track-by="id"
+                                                label="inventory_number"
+                                            />
                                         </div>
                                     </div>
-                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -400,17 +409,15 @@ const save = () => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Date Of Inventory</label
                                             >
-                                            <input
+                                            <VueDatePicker
                                                 required
-                                                type="date"
-                                                v-model="form.date_of_inventory"
-                                                name="date_of_inventory"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Ubixxxxx"
+                                                v-model="dateOfInventory"
+                                                :format="customFormat"
+                                                placeholder="Select a date and time"
                                             />
                                         </div>
                                     </div>
-                                     <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -429,7 +436,7 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
-                                     <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -486,7 +493,7 @@ const save = () => {
                                             ></textarea>
                                         </div>
                                     </div>
-                                     <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">

@@ -257,11 +257,11 @@ function formatData(text) {
                                                     >
                                                         Ip Address
                                                     </th>
-                                                    <th
+                                                    <!-- <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Nvr
-                                                    </th>
+                                                    </th> -->
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
@@ -403,7 +403,7 @@ function formatData(text) {
                                                             }}
                                                         </span>
                                                     </td>
-                                                    <td
+                                                    <!-- <td
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
@@ -413,7 +413,7 @@ function formatData(text) {
                                                                 cctvs.nvr_id
                                                             }}
                                                         </span>
-                                                    </td>
+                                                    </td> -->
                                                     <td
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
@@ -421,7 +421,7 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                cctvs.switch_id
+                                                                cctvs.switch.inventory_number
                                                             }}
                                                         </span>
                                                     </td>

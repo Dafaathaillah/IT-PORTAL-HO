@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\ImportCctv;
 use App\Models\Aduan;
 use App\Models\InvCctv;
+use App\Models\InvSwitch;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class InvCctvController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::all();
+        $dataInventory = InvCctv::with('switch')->get();
+        // return response()->json($dataInventory);
         return Inertia::render('Inventory/Cctv/Cctv', ['cctv' => $dataInventory]);
     }
 
@@ -38,11 +40,15 @@ class InvCctvController extends Controller
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        return Inertia::render('Inventory/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString]);
+        $switch = InvSwitch::select('id', 'inventory_number')->get();
+
+
+        return Inertia::render('Inventory/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
     }
 
     public function store(Request $request)
     {
+        // return dd($request);
         $maxId = InvCctv::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
@@ -64,7 +70,7 @@ class InvCctvController extends Controller
             'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
             'nvr_id' => null,
-            'switch_id' => null,
+            'switch_id' =>  $params['switch_id'],
             'date_of_inventory' => $params['date_of_inventory'],
             'vlan' => $params['vlan'],
             'uplink' => $params['uplink'],
@@ -91,8 +97,13 @@ class InvCctvController extends Controller
     public function edit($id)
     {
         $cctv = InvCctv::find($id);
+        $selectSwitch = $cctv->switch_id;
+        $switch = InvSwitch::select('id', 'inventory_number')->get();
+
         return Inertia::render('Inventory/Cctv/CctvEdit', [
             'cctv' => $cctv,
+            'switch' => $switch,
+            'selectSwitch' => $selectSwitch
         ]);
     }
 
@@ -123,7 +134,7 @@ class InvCctvController extends Controller
             'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
             'nvr_id' => null,
-            'switch_id' => null,
+            'switch_id' => $params['switch_id'],
             'date_of_inventory' => $params['date_of_inventory'],
             'vlan' => $params['vlan'],
             'uplink' => $params['uplink'],
