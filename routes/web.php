@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/cctv/{id}/delete', [InvCctvController::class, 'destroy'])->name('cctv.delete');
         Route::post('/cctv/update', [InvCctvController::class, 'update'])->name('cctv.update');
         Route::get('/cctv/{id}/detail', [InvCctvController::class, 'detail'])->name('cctv.detail');
-        Route::post('/uploadCsvCu', [InvCctvController::class, 'uploadCsv'])->name('cctv.import');
+        Route::post('/uploadCsvCctv', [InvCctvController::class, 'uploadCsv'])->name('cctv.import');
     });
 
     Route::prefix('itportal')->group(function () {
