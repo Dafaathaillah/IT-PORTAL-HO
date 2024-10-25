@@ -147,7 +147,7 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                     <div>
-                                        <p v-if="date_of_inventory">
+                                        <p v-if="laptop.date_of_inventory">
                                             :
                                             {{
                                                 formattedDate(
@@ -166,7 +166,7 @@ const mount = onMounted(() => {
                                         <p class="text-base">Date Of Deploy</p>
                                     </div>
                                     <div>
-                                          <p v-if="date_of_deploy">
+                                          <p v-if="laptop.date_of_deploy">
                                             :
                                             {{
                                                 formattedDate(
@@ -218,7 +218,6 @@ const mount = onMounted(() => {
                                             Documentation Asset
                                         </p>
                                     </div>
-                                </div>
                                 <div>
                                     <p>
                                         
@@ -227,9 +226,10 @@ const mount = onMounted(() => {
                                                 laptop.link_documentation_asset_image
                                             "
                                             alt="documentation image"
-                                            class="w-100 shadow-2xl rounded-xl"
+                                            class="w-50 h-30 shadow-2xl rounded-xl"
                                         />
                                     </p>
+                                </div>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div>
