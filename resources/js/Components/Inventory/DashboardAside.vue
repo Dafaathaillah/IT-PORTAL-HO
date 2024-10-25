@@ -9,6 +9,7 @@ const level1OpenHo = ref(false);
 const level2OpenHo = ref(false);
 const level3OpenHo = ref(false);
 const level3KomputerOpenHo = ref(false);
+const level3PrinterOpenHo = ref(false);
 const level3CctvOpenHo = ref(false);
 
 // Load initial state from localStorage
@@ -16,6 +17,7 @@ onMounted(() => {
     level1OpenHo.value = localStorage.getItem("level1OpenHo") === "true";
     level2OpenHo.value = localStorage.getItem("level2OpenHo") === "true";
     level3OpenHo.value = localStorage.getItem("level3OpenHo") === "true";
+    level3PrinterOpenHo.value = localStorage.getItem("level3PrinterOpenHo") === "true";
     level3KomputerOpenHo.value =
         localStorage.getItem("level3KomputerOpenHo") === "true";
     level3CctvOpenHo.value =
@@ -28,6 +30,7 @@ watch(
         level1OpenHo,
         level2OpenHo,
         level3OpenHo,
+        level3PrinterOpenHo,
         level3KomputerOpenHo,
         level3CctvOpenHo,
     ],
@@ -39,6 +42,7 @@ watch(
             "level3KomputerOpenHo",
             level3KomputerOpenHo.value
         );
+            localStorage.setItem("level3PrinterOpenHo", level3PrinterOpenHo.value);
         localStorage.setItem("level3CctvOpenHo", level3CctvOpenHo.value);
     }
 );
@@ -52,6 +56,7 @@ const toggleLevel1Ho = () => {
         level2OpenHo.value = false;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
 };
@@ -62,6 +67,7 @@ const toggleLevel2Ho = () => {
         level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
     level2OpenHo.value = !level2OpenHo.value;
@@ -87,12 +93,19 @@ const toggleLevel3CctvHo = () => {
     }
     level3CctvOpenHo.value = !level3CctvOpenHo.value;
 };
+
+const toggleLevel3PrinterHo = () => {
+    if (!level3PrinterOpenHo.value) {
+        level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+    }
+    level3PrinterOpenHo.value = !level3PrinterOpenHo.value;
+};
 </script>
 
 <template>
     <!-- sidenav  -->
     <aside
-    class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-8 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-8 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
         aria-expanded="false"
     >
         <div class="h-19">
@@ -266,7 +279,7 @@ const toggleLevel3CctvHo = () => {
                                 class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
                             >
                                 <div
-                                    class="ml-4 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                 >
                                     <i
                                         class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
@@ -419,6 +432,50 @@ const toggleLevel3CctvHo = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Komputer Fixed</span
+                                        >
+                                    </NavLink>
+                                </li>
+
+                                <div
+                                    @click="toggleLevel3PrinterHo"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Printer</span
+                                    >
+                                    <i
+                                        v-if="!level3PrinterOpenHo"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <li v-if="level3PrinterOpenHo">
+                                    <NavLink
+                                        :href="route('laptop.page')"
+                                        :active="route().current('laptop.page')"
+                                    >
+                                        <div
+                                            class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Printer Fixed</span
                                         >
                                     </NavLink>
                                 </li>

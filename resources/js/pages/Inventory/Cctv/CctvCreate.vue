@@ -16,7 +16,6 @@ const form = useForm({
     cctv_name: "",
     cctv_code: props.inventoryNumber,
     asset_ho_number: "",
-    cctv_model: "",
     cctv_brand: "",
     type_cctv: "",
     mac_address: "",
@@ -65,7 +64,6 @@ const save = () => {
     formData.append("cctv_name", form.cctv_name);
     formData.append("cctv_code", form.cctv_code);
     formData.append("asset_ho_number", form.asset_ho_number);
-    formData.append("cctv_model", form.cctv_model);
     formData.append("cctv_brand", form.cctv_brand);
     formData.append("type_cctv", form.type_cctv);
     formData.append("mac_address", form.mac_address);
@@ -215,25 +213,6 @@ const options = props.switch;
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="cctv-model"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Cctv Model</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.cctv_model"
-                                                name="cctv_model"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
-                                            />
-                                        </div>
-                                    </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -437,7 +416,7 @@ const options = props.switch;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -456,7 +435,7 @@ const options = props.switch;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

@@ -24,8 +24,6 @@ const props = defineProps({
     },
 });
 
-const form = useForm({});
-
 const deleteData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
@@ -135,9 +133,7 @@ function formatData(text) {
                         Cctv Pages
                     </li>
                 </ol>
-                <h6 class="mb-0 font-bold text-white capitalize">
-                    Cctv Data
-                </h6>
+                <h6 class="mb-0 font-bold text-white capitalize">Cctv Data</h6>
             </nav>
         </template>
 
@@ -175,7 +171,7 @@ function formatData(text) {
                                 class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                             >
                                 <a
-                                    href="/cctv.xlsx"
+                                    href="/sampleCctv.xlsx"
                                     download="Format-Import-Data-cctv.xlsx"
                                     target="_blank"
                                     type="button"
@@ -236,11 +232,6 @@ function formatData(text) {
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Cctv Brand
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Cctv Model
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -366,17 +357,6 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                cctvs.cctv_model
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
                                                                 cctvs.type_cctv
                                                             }}
                                                         </span>
@@ -421,7 +401,8 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                cctvs.switch.inventory_number
+                                                                cctvs.switch
+                                                                    .inventory_number
                                                             }}
                                                         </span>
                                                     </td>
@@ -429,6 +410,7 @@ function formatData(text) {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
+                                                        v-if="cctvs.date_of_inventory"
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
@@ -437,6 +419,12 @@ function formatData(text) {
                                                                 )
                                                             }}
                                                         </span>
+                                                          <span
+                                                        v-else
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit untuk setting tanggal !
+                                                        </span>
                                                     </td>
                                                     <td
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
@@ -444,9 +432,7 @@ function formatData(text) {
                                                         <span
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.location
-                                                            }}
+                                                            {{ cctvs.location }}
                                                         </span>
                                                     </td>
                                                     <td

@@ -17,7 +17,6 @@ class InvCctv extends Model
         'location_detail',
         'cctv_name',
         'cctv_brand',
-        'cctv_model',
         'type_cctv',
         'mac_address',
         'ip_address',
@@ -34,11 +33,8 @@ class InvCctv extends Model
 
     public function switch()
     {
-        return $this->belongsTo(InvSwitch::class, 'switch_id', 'id');
+        return $this->belongsTo(InvSwitch::class, 'switch_id', 'id')->withDefault([
+            'inventory_number' => 'Data switch tidak ditemukan !',
+        ]);;
     }
-
-    // public function getInventoryAttribute()
-    // {
-    //     return $this->switch ? $this->switch->inventory_number : 'Data asli telah dihapus';
-    // }
 }

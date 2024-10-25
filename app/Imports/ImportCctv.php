@@ -3,12 +3,10 @@
 namespace App\Imports;
 
 use App\Models\InvCctv;
-use App\Models\UserAll;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithLimit;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class ImportCctv implements ToModel, WithStartRow, WithLimit
+class ImportCctv implements ToModel, WithStartRow
 {
     /**
      * @param array $row
@@ -17,23 +15,37 @@ class ImportCctv implements ToModel, WithStartRow, WithLimit
      */
     public function startRow(): int
     {
-        return 2;
+        return 20;
     }
 
 
     public function model(array $row)
     {
-        return new UserAll([
-            'nrp' => $row[1],
-            'username' => $row[2],
-            'department' => $row[3],
-            'position' => $row[4],
-            'email' => $row[6],
+        // return dd($row);
+        $maxId = InvCctv::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
+        }else{
+            $maxId = $maxId + 1;
+        }
+        // return dd($maxId);
+        return new InvCctv([
+            'max_id' => $maxId,
+            'asset_ho_number' => $row[1],
+            'cctv_code' => $row[2],
+            'cctv_name' => $row[3],
+            'cctv_brand' => $row[4],
+            'type_cctv' => $row[5],
+            'ip_address' => $row[6],
+            'mac_address' => $row[7],
+            'location' => $row[8],
+            'location_detail' => $row[9],
+            'vlan' => $row[10],
+            'uplink' => $row[11],
+            'status' => $row[12],
+            'note' => $row[13],
+            'nvr_id' => null,
+            'switch_id' => null,
         ]);
-    }
-
-    public function limit(): int
-    {
-        return 113; // Menghentikan impor setelah 100 baris
     }
 }
