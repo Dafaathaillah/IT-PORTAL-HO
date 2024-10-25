@@ -115,7 +115,7 @@ class InvLaptopController extends Controller
     
             $pengguna_selected = array($aduan_get_data_user);
         }else{
-            $pengguna_selected = array('data tidak ada');
+            $pengguna_selected = array('data tidak ada !');
         }
 
         $pengguna_all = UserAll::pluck('username')->map(function ($name) {

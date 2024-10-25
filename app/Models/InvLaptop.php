@@ -34,7 +34,7 @@ class InvLaptop extends Model
     public function pengguna(): BelongsTo
     {
         return $this->belongsTo(UserAll::class,foreignKey: 'user_alls_id')->withDefault([
-            'username' => 'Edit user !',
+            'username' => 'Edit untuk menambahkan user !',
         ]);
     }
 }
