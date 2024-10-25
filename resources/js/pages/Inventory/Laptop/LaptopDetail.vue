@@ -147,13 +147,17 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                     <div>
-                                        <p>
+                                        <p v-if="date_of_inventory">
                                             :
                                             {{
                                                 formattedDate(
                                                     laptop.date_of_inventory
                                                 )
                                             }}
+                                        </p>
+                                         <p v-else>
+                                            :
+                                             Edit untuk setting tanggal !
                                         </p>
                                     </div>
                                 </div>
@@ -162,13 +166,17 @@ const mount = onMounted(() => {
                                         <p class="text-base">Date Of Deploy</p>
                                     </div>
                                     <div>
-                                        <p>
+                                          <p v-if="date_of_deploy">
                                             :
                                             {{
                                                 formattedDate(
                                                     laptop.date_of_deploy
                                                 )
                                             }}
+                                        </p>
+                                         <p v-else>
+                                            :
+                                             Edit untuk setting tanggal !
                                         </p>
                                     </div>
                                 </div>

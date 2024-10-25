@@ -110,9 +110,13 @@ class InvLaptopController extends Controller
     {
         $laptop = InvLaptop::find($id);
 
-        $aduan_get_data_user = UserAll::where('id', $laptop->user_alls_id)->first()->username;
-
-        $pengguna_selected = array($aduan_get_data_user);
+        if (!empty($laptop->user_alls_id)) {
+            $aduan_get_data_user = UserAll::where('id', $laptop->user_alls_id)->first()->username;
+    
+            $pengguna_selected = array($aduan_get_data_user);
+        }else{
+            $pengguna_selected = array('data tidak ada');
+        }
 
         $pengguna_all = UserAll::pluck('username')->map(function ($name) {
             return ['name' => $name];
