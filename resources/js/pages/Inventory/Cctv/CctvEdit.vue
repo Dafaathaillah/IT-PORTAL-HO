@@ -18,7 +18,6 @@ const form = useForm({
     cctv_name: props.cctv.cctv_name,
     cctv_code: props.cctv.cctv_code,
     asset_ho_number: props.cctv.asset_ho_number,
-    cctv_model: props.cctv.cctv_model,
     cctv_brand: props.cctv.cctv_brand,
     type_cctv: props.cctv.type_cctv,
     mac_address: props.cctv.mac_address,
@@ -85,7 +84,6 @@ const update = () => {
     formData.append("cctv_name", form.cctv_name);
     formData.append("cctv_code", form.cctv_code);
     formData.append("asset_ho_number", form.asset_ho_number);
-    formData.append("cctv_model", form.cctv_model);
     formData.append("cctv_brand", form.cctv_brand);
     formData.append("type_cctv", form.type_cctv);
     formData.append("mac_address", form.mac_address);
@@ -159,25 +157,6 @@ const update = () => {
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
                                 <div class="flex flex-wrap -mx-3">
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="cctv-name"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Cctv Name</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                name="cctv_name"
-                                                v-model="form.cctv_name"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Cctv Name"
-                                            />
-                                        </div>
-                                    </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -443,7 +422,7 @@ const update = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -462,7 +441,7 @@ const update = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

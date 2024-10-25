@@ -9,6 +9,7 @@ use App\Models\InvSwitch;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
@@ -65,7 +66,6 @@ class InvCctvController extends Controller
             'location_detail' => $params['location_detail'],
             'cctv_name' => $params['cctv_name'],
             'cctv_brand' => $params['cctv_brand'],
-            'cctv_model' => $params['cctv_model'],
             'type_cctv' => $params['type_cctv'],
             'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
@@ -85,7 +85,6 @@ class InvCctvController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
             Excel::import(new ImportCctv, $request->file('file'));
             return redirect()->route('cctv.page');
         } catch (\Exception $ex) {
@@ -129,7 +128,6 @@ class InvCctvController extends Controller
             'location_detail' => $params['location_detail'],
             'cctv_name' => $params['cctv_name'],
             'cctv_brand' => $params['cctv_brand'],
-            'cctv_model' => $params['cctv_model'],
             'type_cctv' => $params['type_cctv'],
             'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
