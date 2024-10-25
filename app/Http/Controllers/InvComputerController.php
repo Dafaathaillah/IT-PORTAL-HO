@@ -109,9 +109,13 @@ class InvComputerController extends Controller
     {
         $komputer = InvComputer::find($id);
 
-        $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->username;
+        if (!empty($komputer->user_alls_id)) {
+            $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->username;
 
-        $pengguna_selected = array($aduan_get_data_user);
+            $pengguna_selected = array($aduan_get_data_user);
+        } else {
+            $pengguna_selected = array('data tidak ada !');
+        }
 
         $pengguna_all = UserAll::pluck('username')->map(function ($name) {
             return ['name' => $name];
@@ -206,7 +210,7 @@ class InvComputerController extends Controller
                 'note' => $request->note,
                 'user_alls_id' => $aduan_get_data_user['id'],
             ];
-    }
+        }
 
         InvComputer::firstWhere('id', $request->id)->update($data);
         return redirect()->route('komputer.page');

@@ -82,13 +82,13 @@ const handleFileUpload = (event) => {
 
 const submitCsv = () => {
     let timerInterval;
-        Swal.fire({
-        title: 'Mengimport Data...',
-        text: 'Mohon tunggu sebentar...',
+    Swal.fire({
+        title: "Mengimport Data...",
+        text: "Mohon tunggu sebentar...",
         allowOutsideClick: false,
         didOpen: () => {
             Swal.showLoading();
-        }
+        },
     });
 
     const formData = new FormData();
@@ -369,7 +369,9 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                komputers.pengguna.username
+                                                                komputers
+                                                                    .pengguna
+                                                                    .username
                                                             }}
                                                         </p>
                                                     </td>
@@ -456,6 +458,9 @@ function formatData(text) {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
+                                                            v-if="
+                                                                komputers.date_of_inventory
+                                                            "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
@@ -464,11 +469,21 @@ function formatData(text) {
                                                                 )
                                                             }}
                                                         </span>
+                                                        <span
+                                                            v-else
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit untuk setting
+                                                            tanggal !
+                                                        </span>
                                                     </td>
                                                     <td
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
+                                                            v-if="
+                                                                komputers.date_of_deploy
+                                                            "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
@@ -476,6 +491,13 @@ function formatData(text) {
                                                                     komputers.date_of_deploy
                                                                 )
                                                             }}
+                                                        </span>
+                                                        <span
+                                                            v-else
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit untuk setting
+                                                            tanggal !
                                                         </span>
                                                     </td>
                                                     <td
@@ -495,7 +517,9 @@ function formatData(text) {
                                                         <span
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{ komputers.status }}
+                                                            {{
+                                                                komputers.status
+                                                            }}
                                                         </span>
                                                     </td>
                                                     <td
@@ -516,9 +540,12 @@ function formatData(text) {
                                                             class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                komputers.note == null ? '' : formatData(
-                                                                    komputers.note
-                                                                )
+                                                                komputers.note ==
+                                                                null
+                                                                    ? ""
+                                                                    : formatData(
+                                                                          komputers.note
+                                                                      )
                                                             }}
                                                         </span>
                                                     </td>

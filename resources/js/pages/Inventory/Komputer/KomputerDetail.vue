@@ -60,7 +60,10 @@ const mount = onMounted(() => {
                                 <h6 class="mb-0 mr-3 dark:text-white">
                                     Detail Komputer
                                 </h6>
-                                <NavLinkCustom class="text-red-700" :href="route('komputer.page')">
+                                <NavLinkCustom
+                                    class="text-red-700"
+                                    :href="route('komputer.page')"
+                                >
                                     Move to home page
                                 </NavLinkCustom>
                             </div>
@@ -144,13 +147,16 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                     <div>
-                                        <p>
+                                        <p v-if="komputer.date_of_inventory">
                                             :
                                             {{
                                                 formattedDate(
                                                     komputer.date_of_inventory
                                                 )
                                             }}
+                                        </p>
+                                        <p v-else>
+                                            : Edit untuk setting tanggal !
                                         </p>
                                     </div>
                                 </div>
@@ -159,13 +165,16 @@ const mount = onMounted(() => {
                                         <p class="text-base">Date Of Deploy</p>
                                     </div>
                                     <div>
-                                        <p>
+                                        <p v-if="komputer.date_of_deploy">
                                             :
                                             {{
                                                 formattedDate(
                                                     komputer.date_of_deploy
                                                 )
                                             }}
+                                        </p>
+                                        <p v-else>
+                                            : Edit untuk setting tanggal !
                                         </p>
                                     </div>
                                 </div>
@@ -207,7 +216,6 @@ const mount = onMounted(() => {
                                             Documentation Asset
                                         </p>
                                     </div>
-                                </div>
                                 <div>
                                     <p>
                                         <img
@@ -215,9 +223,10 @@ const mount = onMounted(() => {
                                                 komputer.link_documentation_asset_image
                                             "
                                             alt="documentation image"
-                                            class="w-100 shadow-2xl rounded-xl"
+                                            class="w-50 h-30 shadow-2xl rounded-xl"
                                         />
                                     </p>
+                                </div>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div>
@@ -227,7 +236,9 @@ const mount = onMounted(() => {
                                         <p>
                                             :
                                             {{
-                                                formattedDate(komputer.updated_at)
+                                                formattedDate(
+                                                    komputer.updated_at
+                                                )
                                             }}
                                         </p>
                                     </div>

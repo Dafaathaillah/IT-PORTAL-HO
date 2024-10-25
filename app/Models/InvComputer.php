@@ -33,6 +33,8 @@ class InvComputer extends Model
 
     public function pengguna(): BelongsTo
     {
-        return $this->belongsTo(UserAll::class,foreignKey: 'user_alls_id');
+        return $this->belongsTo(UserAll::class,foreignKey: 'user_alls_id')->withDefault([
+            'username' => 'Edit untuk menambahkan user !',
+        ]);;
     }
 }
