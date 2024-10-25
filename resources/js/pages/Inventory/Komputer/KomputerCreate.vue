@@ -53,6 +53,8 @@ const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
+const formSubmitted = ref(false);
+
 const selectedDateInv = ref(null);
 const selectedDateDeploy = ref(null);
 
@@ -75,6 +77,12 @@ const penggunaString = computed(() => {
 });
 
 const save = () => {
+    if (selectedValues.value == '') {
+        formSubmitted.value = true;
+        // console.log('ga oke')
+        return; // Stop execution if validation fails
+    }
+
     const formData = new FormData();
 
     const fixTanggalInv = customFormat(selectedDateInv.value);
@@ -323,7 +331,7 @@ const options = props.pengguna;
                                                 >Hdd</label
                                             >
                                             <input
-                                                required
+                                                
                                                 type="text"
                                                 v-model="form.hdd"
                                                 name="hdd"
@@ -641,18 +649,22 @@ const options = props.pengguna;
                                                 Select User</label
                                             >
                                             <VueMultiselect
-                                                required
                                                 v-model="selectedValues"
                                                 :options="options"
                                                 :multiple="true"
-                                                :max="1"
                                                 :close-on-select="true"
-                                                placeholder="Select Pengguna"
+                                                placeholder="Pilih Pengguna"
                                                 track-by="name"
                                                 label="name"
-                                                :allow-empty="required"
                                             />
                                         </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption && formSubmitted
+                                            "
+                                            class="text-red-500"
+                                            >Pengguna Tidak boleh kosong!</span
+                                        >
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"

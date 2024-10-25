@@ -76,6 +76,8 @@ const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
+const formSubmitted = ref(false);
+
 const options = props.pengguna_all;
 
 const selectedValues = ref(
@@ -87,6 +89,11 @@ const penggunaString = computed(() => {
 });
 
 const update = () => {
+    if (selectedValues.value == '') {
+        formSubmitted.value = true;
+        // console.log('ga oke')
+        return; // Stop execution if validation fails
+    }
 
     const fixTanggalInv = customFormat(selectedDateInv.value);
     const fixTanggalDeploy = customFormat(selectedDateDeploy.value);
@@ -319,7 +326,7 @@ const update = () => {
                                                 >Hdd</label
                                             >
                                             <input
-                                                required
+                                                
                                                 type="text"
                                                 v-model="form.hdd"
                                                 name="hdd"
@@ -338,7 +345,7 @@ const update = () => {
                                                 >Ssd</label
                                             >
                                             <input
-                                                required
+                                                
                                                 type="text"
                                                 v-model="form.ssd"
                                                 name="ssd"
@@ -618,17 +625,22 @@ const update = () => {
                                                 Select User</label
                                             >
                                             <VueMultiselect
-                                                required
                                                 v-model="selectedValues"
                                                 :options="options"
                                                 :multiple="true"
                                                 :close-on-select="true"
-                                                placeholder="Select Pengguna"
+                                                placeholder="Pilih Pengguna"
                                                 track-by="name"
                                                 label="name"
-                                                :max="1"
                                             />
                                         </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption && formSubmitted
+                                            "
+                                            class="text-red-500"
+                                            >Pengguna Tidak boleh kosong!</span
+                                        >
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"

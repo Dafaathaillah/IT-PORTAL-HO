@@ -36,7 +36,10 @@
 @auth
 
     <body
-        class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
+        class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-white text-slate-500">
+        <!-- class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-white text-slate-500" style="background: url(http://127.0.0.1:8000/bg.jpg) ;
+  background-size: cover;
+  background-blend-mode: multiply;"> -->
     @else
 
         <body class="m-0 font-sans antialiased font-normal bg-white text-start text-base leading-default text-slate-500">
