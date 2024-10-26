@@ -35,6 +35,6 @@ class InvCctv extends Model
     {
         return $this->belongsTo(InvSwitch::class, 'switch_id', 'id')->withDefault([
             'inventory_number' => 'Data switch tidak ditemukan !',
-        ]);;
+        ]);
     }
 }

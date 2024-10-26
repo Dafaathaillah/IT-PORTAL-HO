@@ -4,7 +4,7 @@ import { Head, Link, useForm } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
 
@@ -23,6 +23,8 @@ const props = defineProps({
         type: Array,
     },
 });
+
+const form = useForm({});
 
 const deleteData = (id) => {
     // Call SweetAlert for confirmation
@@ -109,6 +111,13 @@ function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
+
+// const formattedText = computed(() => formatText(dynamicText.value))
+
+// function formatText(text, limit) {
+//   const regex = new RegExp(`(.{1,${limit}})(\\s|$)`, 'g');
+//   return (text.match(regex)?.map(line => line.trim()).join('\n') || '');
+// }
 </script>
 
 <template>
@@ -448,12 +457,11 @@ function formatData(text) {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
-                                                            class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            class="break-normal mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                formatData(
-                                                                    cctvs.note
-                                                                )
+                                                                formatData(cctvs.note)
+                                                                
                                                             }}
                                                         </span>
                                                     </td>

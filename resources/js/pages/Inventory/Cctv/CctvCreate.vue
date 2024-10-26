@@ -208,7 +208,7 @@ const options = props.switch;
                                                 v-model="form.asset_ho_number"
                                                 name="asset_ho_number"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="01234xxxx"
                                             />
                                         </div>
                                     </div>
@@ -228,7 +228,7 @@ const options = props.switch;
                                                 v-model="form.cctv_brand"
                                                 name="cctv_brand"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Hikvision"
                                             />
                                         </div>
                                     </div>
@@ -247,7 +247,7 @@ const options = props.switch;
                                                 v-model="form.type_cctv"
                                                 name="type_cctv"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Bullet"
                                             />
                                         </div>
                                     </div>
@@ -285,7 +285,7 @@ const options = props.switch;
                                                 v-model="form.ip_address"
                                                 name="ip_address"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="10.10.xx.xx"
                                             />
                                         </div>
                                     </div>
@@ -411,7 +411,7 @@ const options = props.switch;
                                                 v-model="form.vlan"
                                                 name="vlan"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="107"
                                             />
                                         </div>
                                     </div>
@@ -430,7 +430,7 @@ const options = props.switch;
                                                 v-model="form.uplink"
                                                 name="uplink"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="-"
                                             />
                                         </div>
                                     </div>
@@ -449,7 +449,7 @@ const options = props.switch;
                                                 v-model="form.location"
                                                 name="location"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="Main Office Lantai 1"
                                             />
                                         </div>
                                     </div>

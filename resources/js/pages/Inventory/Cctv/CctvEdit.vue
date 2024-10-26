@@ -63,18 +63,20 @@ const options = props.switch;
 const selectedValues = ref(null);
 
 onMounted(() => {
-   if (props.switch && props.switch.length > 0) { 
-    console.log('Options:', props.switch) // Debug opsi yang diterima
-    console.log('SelectedOptionId:', props.selectSwitch) // Debug ID yang diterima
+    if (props.switch && props.switch.length > 0) {
+        console.log("Options:", props.switch); // Debug opsi yang diterima
+        console.log("SelectedOptionId:", props.selectSwitch); // Debug ID yang diterima
 
-    // Pastikan options sudah terdefinisi dan tidak kosong
-    const selectedOption = props.switch.find(option => option.id === props.selectSwitch)
+        // Pastikan options sudah terdefinisi dan tidak kosong
+        const selectedOption = props.switch.find(
+            (option) => option.id === props.selectSwitch
+        );
 
-    console.log('SelectedOption:', selectedOption) // Debug opsi yang ditemukan
-    selectedValues.value = selectedOption || null
-  } else {
-    console.error('Options are not available or empty')
-  }
+        console.log("SelectedOption:", selectedOption); // Debug opsi yang ditemukan
+        selectedValues.value = selectedOption || null;
+    } else {
+        console.error("Options are not available or empty");
+    }
 });
 
 const update = () => {
@@ -162,6 +164,25 @@ const update = () => {
                                     >
                                         <div class="mb-4">
                                             <label
+                                                for="cctv-name"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Cctv Name</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                name="cctv_name"
+                                                v-model="form.cctv_name"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="Cctv Name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
                                                 for="cctv-code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Cctv Code</label
@@ -193,30 +214,11 @@ const update = () => {
                                                 v-model="form.asset_ho_number"
                                                 name="asset_ho_number"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="01234xxxx"
                                             />
                                         </div>
                                     </div>
 
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="cctv-model"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Cctv Model</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.cctv_model"
-                                                name="cctv_model"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
-                                            />
-                                        </div>
-                                    </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -232,7 +234,7 @@ const update = () => {
                                                 v-model="form.cctv_brand"
                                                 name="cctv_brand"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Hikvision"
                                             />
                                         </div>
                                     </div>
@@ -251,7 +253,7 @@ const update = () => {
                                                 v-model="form.type_cctv"
                                                 name="type_cctv"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="Bullet"
                                             />
                                         </div>
                                     </div>
@@ -289,7 +291,7 @@ const update = () => {
                                                 v-model="form.ip_address"
                                                 name="ip_address"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="10.10.xx.xx"
                                             />
                                         </div>
                                     </div>
@@ -342,11 +344,9 @@ const update = () => {
                                             <VueMultiselect
                                                 v-model="selectedValues"
                                                 :options="options"
-                                                :multiple="false"
                                                 placeholder="Select Switch"
                                                 track-by="id"
                                                 label="inventory_number"
-                                                :clear-on-select="false"
                                             />
                                         </div>
                                     </div>
@@ -369,17 +369,17 @@ const update = () => {
                                             >
                                                 <option
                                                     selected
-                                                    value="Ready_Used"
+                                                    value="READY_USED"
                                                 >
                                                     Ready Used
                                                 </option>
-                                                <option value="Ready_Stanby">
+                                                <option value="READY_STANBY">
                                                     Ready Standby
                                                 </option>
-                                                <option value="Scrap">
+                                                <option value="SCRAP">
                                                     Scrap
                                                 </option>
-                                                <option value="Breakdown">
+                                                <option value="BREAKDOWN">
                                                     Breakdown
                                                 </option>
                                             </select>
@@ -417,7 +417,7 @@ const update = () => {
                                                 v-model="form.vlan"
                                                 name="vlan"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="107"
                                             />
                                         </div>
                                     </div>
@@ -436,7 +436,7 @@ const update = () => {
                                                 v-model="form.uplink"
                                                 name="uplink"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="-"
                                             />
                                         </div>
                                     </div>
@@ -455,7 +455,7 @@ const update = () => {
                                                 v-model="form.location"
                                                 name="location"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="UAP-xx-MESH"
+                                                placeholder="Main Office Lantai 1"
                                             />
                                         </div>
                                     </div>
