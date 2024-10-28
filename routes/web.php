@@ -117,6 +117,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/aduan/{id}/detail', [AduanController::class, 'detail'])->name('aduan.detail');
     });
 });
-Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('dashboard');
+Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('home');
 
 require __DIR__ . '/auth.php';
