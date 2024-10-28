@@ -19,17 +19,17 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home']);
 
-    Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod,ict_section_head'], function () {
         Route::get('/dashboard', function () {
             return Inertia::render('Inventory/Dashboard');
         })->name('developerDashboard');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_section'], function () {
-        Route::get('/sectionDashboard', function () {
-            return Inertia::render('Inventory/DashboardSection');
-        })->name('sectionDashboard');
-    });
+    // Route::group(['middleware' => 'checkRole:ict_section'], function () {
+    //     Route::get('/sectionDashboard', function () {
+    //         return Inertia::render('Inventory/DashboardSection');
+    //     })->name('sectionDashboard');
+    // });
 
     Route::group(['middleware' => 'checkRole:ict_group_leader'], function () {
         Route::get('/groupLeaderDashboard', function () {
