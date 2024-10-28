@@ -95,7 +95,11 @@ const submitCsv = () => {
         file: file.value
     });
 
-        formx.post(route("cctv.import"), {
+    function reloadPage() {
+      window.location.reload();
+    }
+
+    formx.post(route("cctv.import"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -105,6 +109,11 @@ const submitCsv = () => {
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
             });
+
+            setTimeout(function() {
+                reloadPage();
+            }, 2000);
+
         },
         onError: () => {
             Swal.fire({
