@@ -73,7 +73,7 @@ const updateProgress = () => {
     formData.append("id", form.id);
     formData.append("crew", crewString.value);
     formData.append("image", file.value);
-    formData.append("actionRepair", form.actionRepair);
+    formData.append("actionRepair", form.action_repair);
     formData.append("dateOfComplaint", formattedDateDateOfComplaint);
     formData.append("startResponse", formattedDateStartResponse);
     formData.append("startProgress", formattedDateStartProgress);
@@ -479,7 +479,6 @@ const options = props.crew;
                                                 >Repair Image</label
                                             >
                                             <input
-                                                required
                                                 type="file"
                                                 ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
