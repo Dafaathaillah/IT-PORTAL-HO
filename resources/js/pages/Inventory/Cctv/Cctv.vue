@@ -81,10 +81,21 @@ const handleFileUpload = (event) => {
 };
 
 const submitCsv = () => {
-    const formData = new FormData();
-    formData.append("file", file.value);
-    Inertia.post(route("cctv.import"), formData, {
-        forceFormData: true,
+    let timerInterval;
+        Swal.fire({
+        title: 'Mengimport Data...',
+        text: 'Mohon tunggu sebentar...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    const formx = useForm({
+        file: file.value
+    });
+
+        formx.post(route("cctv.import"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({

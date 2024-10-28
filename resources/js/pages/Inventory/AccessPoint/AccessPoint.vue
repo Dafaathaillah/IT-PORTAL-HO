@@ -88,11 +88,11 @@ const submitCsv = () => {
         }
     });
 
-    const formData = new FormData();
-    formData.append("file", file.value);
-    Inertia.post(route("accessPoint.import"), formData, {
-        forceFormData: true,
+    const formx = useForm({
+        file: file.value
+    });
 
+    formx.post(route("accessPoint.import"), {
         onSuccess: () => {
             Swal.fire({
                 title: "Success!",

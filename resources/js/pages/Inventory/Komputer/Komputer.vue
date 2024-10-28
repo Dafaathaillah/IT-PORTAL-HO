@@ -91,10 +91,11 @@ const submitCsv = () => {
         },
     });
 
-    const formData = new FormData();
-    formData.append("file", file.value);
-    Inertia.post(route("komputer.import"), formData, {
-        forceFormData: true,
+    const formx = useForm({
+        file: file.value
+    });
+
+    formx.post(route("komputer.import"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
