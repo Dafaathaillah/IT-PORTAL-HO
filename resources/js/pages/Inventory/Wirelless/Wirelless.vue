@@ -87,10 +87,11 @@ const submitCsv = () => {
         }
     });
 
-    const formData = new FormData();
-    formData.append("file", file.value);
-    Inertia.post(route("wirelless.import"), formData, {
-        forceFormData: true,
+    const formx = useForm({
+        file: file.value
+    });
+
+    formx.post(route("wirelless.import"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
