@@ -79,17 +79,17 @@ const handleFileUpload = (event) => {
 
 const submitCsv = () => {
     let timerInterval;
-        Swal.fire({
-        title: 'Mengimport Data...',
-        text: 'Mohon tunggu sebentar...',
+    Swal.fire({
+        title: "Mengimport Data...",
+        text: "Mohon tunggu sebentar...",
         allowOutsideClick: false,
         didOpen: () => {
             Swal.showLoading();
-        }
+        },
     });
 
     const formx = useForm({
-        file: file.value
+        file: file.value,
     });
 
     formx.post(route("accessPoint.import"), {
@@ -164,7 +164,7 @@ const submitCsv = () => {
                                     />
                                 </div>
                             </div>
-                                <div class="max-w-full shrink-0">
+                            <div class="max-w-full shrink-0">
                                 <button
                                     type="submit"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -319,7 +319,7 @@ const submitCsv = () => {
                                                             }}
                                                         </p>
                                                     </td>
-                                                       <td
+                                                    <td
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <p
@@ -433,7 +433,20 @@ const submitCsv = () => {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
-                                                            class="bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"
+                                                            :class="{
+                                                                'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    accessPoints.status ===
+                                                                    'READY_USED',
+                                                                'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    accessPoints.status ===
+                                                                    'READY_STANDBY',
+                                                                'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    accessPoints.status ===
+                                                                    'SCRAP',
+                                                                'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    accessPoints.status ===
+                                                                    'BREAKDOWN',
+                                                            }"
                                                         >
                                                             {{
                                                                 accessPoints.status
