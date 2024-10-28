@@ -73,7 +73,7 @@ const updateProgress = () => {
     formData.append("id", form.id);
     formData.append("crew", crewString.value);
     formData.append("image", file.value);
-    formData.append("actionRepair", form.actionRepair);
+    formData.append("actionRepair", form.action_repair);
     formData.append("dateOfComplaint", formattedDateDateOfComplaint);
     formData.append("startResponse", formattedDateStartResponse);
     formData.append("startProgress", formattedDateStartProgress);
