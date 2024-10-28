@@ -135,7 +135,7 @@ const toggleLevel3PrinterHo = () => {
         <div class="items-center block w-auto max-h-screen grow basis-full">
             <ul class="flex flex-col pl-0 mb-0">
                 <li
-                    v-if="$page.props.auth.user.role === 'ict_developer' || $page.props.auth.user.role === 'ict_bod' || $page.props.auth.user.role === 'ict_ho'"
+                    v-if="$page.props.auth.user.role === 'ict_developer' || $page.props.auth.user.role === 'ict_bod' || $page.props.auth.user.role === 'ict_ho' || $page.props.auth.user.role === 'ict_section_head'"
                     class="mt-0.5 w-full"
                 >
                     <NavLink
