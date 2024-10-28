@@ -16,7 +16,7 @@ class AduanController extends Controller
 {
     public function index()
     {
-        $aduan = Aduan::all();
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->get();
         $countOpen = Aduan::where('status', 'OPEN')->count();
         $countClosed = Aduan::where('status', 'CLOSED')->count();
         $countProgress = Aduan::where('status', 'PROGRESS')->count();
