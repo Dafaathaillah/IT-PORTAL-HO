@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
     // Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home']);
 
     Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod'], function () {
-        Route::get('/developerDashboard', function () {
+        Route::get('/dashboard', function () {
             return Inertia::render('Inventory/Dashboard');
         })->name('developerDashboard');
     });
