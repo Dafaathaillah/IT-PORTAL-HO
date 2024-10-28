@@ -135,7 +135,7 @@ const toggleLevel3PrinterHo = () => {
         <div class="items-center block w-auto max-h-screen grow basis-full">
             <ul class="flex flex-col pl-0 mb-0">
                 <li
-                    v-if="$page.props.auth.user.role === 'ict_developer'"
+                    v-if="$page.props.auth.user.role === 'ict_developer' || $page.props.auth.user.role === 'ict_bod' || $page.props.auth.user.role === 'ict_ho'"
                     class="mt-0.5 w-full"
                 >
                     <NavLink
@@ -463,8 +463,8 @@ const toggleLevel3PrinterHo = () => {
                                 </div>
                                 <li v-if="level3PrinterOpenHo">
                                     <NavLink
-                                        :href="route('laptop.page')"
-                                        :active="route().current('laptop.page')"
+                                        :href="route('printer.page')"
+                                        :active="route().current('printer.page')"
                                     >
                                         <div
                                             class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"

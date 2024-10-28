@@ -7,6 +7,7 @@ use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
+use App\Http\Controllers\InvPrinterController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
@@ -18,7 +19,7 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home']);
 
-    Route::group(['middleware' => 'checkRole:ict_developer'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod'], function () {
         Route::get('/developerDashboard', function () {
             return Inertia::render('Inventory/Dashboard');
         })->name('developerDashboard');
@@ -84,6 +85,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/komputer/update', [InvComputerController::class, 'update'])->name('komputer.update');
         Route::get('/komputer/{id}/detail', [InvComputerController::class, 'detail'])->name('komputer.detail');
         Route::post('/uploadCsvCu', [InvComputerController::class, 'uploadCsv'])->name('komputer.import');
+
+        Route::get('/printer', [InvPrinterController::class, 'index'])->name('printer.page');
+        Route::get('/printer/create', [InvPrinterController::class, 'create'])->name('printer.create');
+        Route::post('/printer/create', [InvPrinterController::class, 'store'])->name('printer.store');
+        Route::get('/printer/{id}/edit', [InvPrinterController::class, 'edit'])->name('printer.edit');
+        Route::delete('/printer/{id}/delete', [InvPrinterController::class, 'destroy'])->name('printer.delete');
+        Route::post('/printer/update', [InvPrinterController::class, 'update'])->name('printer.update');
+        Route::get('/printer/{id}/detail', [InvPrinterController::class, 'detail'])->name('printer.detail');
+        Route::post('/uploadCsvPrt', [InvPrinterController::class, 'uploadCsv'])->name('printer.import');
 
         Route::get('/cctv', [InvCctvController::class, 'index'])->name('cctv.page');
         Route::get('/cctv/create', [InvCctvController::class, 'create'])->name('cctv.create');
