@@ -92,6 +92,10 @@ const submitCsv = () => {
         file: file.value,
     });
 
+    function reloadPage() {
+      window.location.reload();
+    }
+
     formx.post(route("accessPoint.import"), {
         onSuccess: () => {
             Swal.fire({
@@ -101,6 +105,10 @@ const submitCsv = () => {
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
             });
+
+            setTimeout(function() {
+                reloadPage();
+            }, 2000);
         },
         onError: () => {
             Swal.fire({
