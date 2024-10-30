@@ -10,17 +10,20 @@ class InvPrinter extends Model
     use HasFactory;
 
     protected $fillable = [
+        'max_id',
+        'item_name',
         'printer_code',
+        'asset_ho_number',
         'serial_number',
         'ip_address',
-        'item_name',
+        'mac_address',
         'printer_brand',
         'printer_type',
+        'division',
+        'department',
         'location',
         'date_of_inventory',
         'status',
         'note',
-        'division',
-        'department',
     ];
 }

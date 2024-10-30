@@ -2,45 +2,97 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PrinterImport;
 use App\Models\InvPrinter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 
 class InvPrinterController extends Controller
 {
     public function index()
     {
         $invPrinter = InvPrinter::all();
-        return response()->json($invPrinter);
+        return Inertia::render('Inventory/Printer/Printer', ['printer' => $invPrinter]);
     }
 
-    public function store(Request $request)
+    public function create()
     {
-
         // start generate code
-        $currentDate = Carbon::now();
+        $currentDate = Carbon::tomorrow();
         $year = $currentDate->format('y');
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvPrinter::max('id');
+        $maxId = InvPrinter::max('max_id');
 
         if (is_null($maxId)) {
             $maxId = 0;
         }
 
-        $uniqueString = 'PPABIBPRT' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAHOPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['printer_code'] = $uniqueString;
+        
         // end generate code
 
-        $invPrinter_get_data = InvPrinter::find($request->id);
-        if (empty($invPrinter_get_data)) {
-            $invPrinter = InvPrinter::create($request->all());
-            return response()->json($invPrinter, 201);
-        } else {
-            $invPrinter = InvPrinter::firstWhere('id', $request->id)->update($request->all());
-            return response()->json($invPrinter, 201);
+        return Inertia::render('Inventory/Printer/PrinterCreate', ['printer_code' => $uniqueString]);
+    }
+
+    public function store(Request $request)
+    {
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('y');
+        $month = $currentDate->month;
+        $day = $currentDate->day;
+
+        $maxId = InvPrinter::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
+        }else{
+            $maxId = $maxId + 1;
         }
+        $params = $request->all();
+        $data = [
+            'max_id' => $maxId,
+            'item_name' => $params['item_name'],
+            'printer_code' => $params['printer_code'],
+            'asset_ho_number' => $params['asset_ho_number'],
+            'serial_number' => $params['serial_number'],
+            'mac_address' => $params['mac_address'],
+            'ip_address' => $params['ip_address'],
+            'printer_brand' => $params['device_brand'],
+            'printer_type' => $params['device_type'],
+            'division' => $params['divisi'],
+            'department' => $params['dept'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'note' => $params['note'],
+            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s')
+        ];
+        // DB::table('inv_aps')->insert($data);
+        InvPrinter::create($data);
+        return redirect()->route('printer.page');
+    }
+
+    public function uploadCsv(Request $request)
+    {
+        try {
+
+            Excel::import(new PrinterImport, $request->file('file'));
+            return redirect()->route('printer.page');
+        } catch (\Exception $ex) {
+            Log::info($ex);
+            return response()->json(['data' => 'Some error has occur.', 400]);
+        }
+    }
+
+    public function edit($printerId)
+    {
+        $printer = InvPrinter::find($printerId);
+        // return response()->json(['ap' => $accessPoint]);
+        return Inertia::render('Inventory/Printer/PrinterEdit', ['printer' => $printer]);
     }
 
     public function show($id)
@@ -52,6 +104,29 @@ class InvPrinterController extends Controller
         return response()->json($invPrinter);
     }
 
+    public function update(Request $request)
+    {
+        $params = $request->all();
+        $data = [
+            'item_name' => $params['item_name'],
+            'printer_code' => $params['printer_code'],
+            'asset_ho_number' => $params['asset_ho_number'],
+            'serial_number' => $params['serial_number'],
+            'mac_address' => $params['mac_address'],
+            'ip_address' => $params['ip_address'],
+            'printer_brand' => $params['printer_brand'],
+            'printer_type' => $params['printer_type'],
+            'division' => $params['divisi'],
+            'department' => $params['dept'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'note' => $params['note']
+        ];
+        // DB::table('inv_aps')->insert($data);
+        InvPrinter::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('printer.page');
+    }
+
     public function destroy($id)
     {
         $invPrinter = InvPrinter::find($id);
@@ -59,6 +134,6 @@ class InvPrinterController extends Controller
             return response()->json(['message' => 'Printers Data not found'], 404);
         }
         $invPrinter->delete();
-        return response()->json(null, 204);
+        return redirect()->back();
     }
 }
