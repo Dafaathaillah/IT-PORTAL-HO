@@ -1,11 +1,13 @@
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const props = defineProps(["inventoryNumber"]);
+const props = defineProps(["department"]);
 
 const form = useForm({
     nrp: "",
@@ -16,8 +18,13 @@ const form = useForm({
 });
 
 const isDisabled = ref(true);
+const selectedValues = ref(null); // Awalnya array kosong
+
+const options = props.department;
 
 const save = () => {
+    
+    form.department = selectedValues.value.name;
     form.post(route("pengguna.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
@@ -92,7 +99,7 @@ const save = () => {
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
                                 <div class="flex flex-wrap -mx-3">
-                                 <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -139,18 +146,19 @@ const save = () => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Department</label
                                             >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.department"
-                                                name="department"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="COE"
+                                            <VueMultiselect
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                :multiple="false"
+                                                :close-on-select="true"
+                                                placeholder="Select Department"
+                                                track-by="name"
+                                                label="name"
                                             />
                                         </div>
                                     </div>
 
-                                       <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -192,7 +200,9 @@ const save = () => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
                                         :href="route('pengguna.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
@@ -214,7 +224,6 @@ const save = () => {
                                             Save
                                         </span>
                                     </button>
-                                    
                                 </div>
                             </form>
                         </div>

@@ -1,11 +1,13 @@
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const props = defineProps(["pengguna"]);
+const props = defineProps(["pengguna", "department", "department_select"]);
 
 const form = useForm({
     id: props.pengguna.id,
@@ -17,8 +19,14 @@ const form = useForm({
 });
 
 const isDisabled = ref(true);
+const selectedValues = ref(
+    props.department.filter((option) => props.department_select.includes(option.name))
+);
+
+const options = props.department;
 
 const save = () => {
+    form.department = selectedValues.value.name;
     form.post(route("pengguna.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
@@ -140,13 +148,14 @@ const save = () => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Department</label
                                             >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.department"
-                                                name="department"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="COE"
+                                            <VueMultiselect
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                :multiple="false"
+                                                :close-on-select="true"
+                                                placeholder="Select Department"
+                                                track-by="name"
+                                                label="name"
                                             />
                                         </div>
                                     </div>
