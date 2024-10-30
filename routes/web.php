@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvComputerController;
@@ -123,7 +124,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/pengguna/{id}/edit', [UserAllController::class, 'edit'])->name('pengguna.edit');
         Route::put('/pengguna/{id}/update', [UserAllController::class, 'update'])->name('pengguna.update');
         Route::delete('/pengguna/{id}/delete', [UserAllController::class, 'destroy'])->name('pengguna.delete');
-        Route::post('/uploadCsvAp', [UserAllController::class, 'uploadCsv'])->name('pengguna.import');
+
+        Route::get('department', [DepartmentController::class, 'index'])->name('department.page');
+        Route::get('department/create', [DepartmentController::class, 'create'])->name('department.create');
+        Route::post('department/create', [DepartmentController::class, 'store'])->name('department.store');
+        Route::get('department/{id}/edit', [DepartmentController::class, 'edit'])->name('department.edit');
+        Route::put('department/{id}/update', [DepartmentController::class, 'update'])->name('department.update');
+        Route::delete('department/{id}/delete', [DepartmentController::class, 'destroy'])->name('department.delete');
     });
 });
 Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('home');
