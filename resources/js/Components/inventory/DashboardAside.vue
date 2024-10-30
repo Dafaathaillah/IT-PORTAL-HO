@@ -7,6 +7,7 @@ import { ref, onMounted, watch } from "vue";
 // State for controlling the visibility of submenus
 const level1OpenHo = ref(false);
 const level2OpenHo = ref(false);
+const level2OpenSettingHo = ref(false);
 const level3OpenHo = ref(false);
 const level3KomputerOpenHo = ref(false);
 const level3PrinterOpenHo = ref(false);
@@ -16,8 +17,10 @@ const level3CctvOpenHo = ref(false);
 onMounted(() => {
     level1OpenHo.value = localStorage.getItem("level1OpenHo") === "true";
     level2OpenHo.value = localStorage.getItem("level2OpenHo") === "true";
+    level2OpenSettingHo.value = localStorage.getItem("level2OpenHo") === "true";
     level3OpenHo.value = localStorage.getItem("level3OpenHo") === "true";
-    level3PrinterOpenHo.value = localStorage.getItem("level3PrinterOpenHo") === "true";
+    level3PrinterOpenHo.value =
+        localStorage.getItem("level3PrinterOpenHo") === "true";
     level3KomputerOpenHo.value =
         localStorage.getItem("level3KomputerOpenHo") === "true";
     level3CctvOpenHo.value =
@@ -28,7 +31,7 @@ onMounted(() => {
 watch(
     [
         level1OpenHo,
-        level2OpenHo,
+        level2OpenSettingHo,
         level3OpenHo,
         level3PrinterOpenHo,
         level3KomputerOpenHo,
@@ -37,12 +40,13 @@ watch(
     () => {
         localStorage.setItem("level1OpenHo", level1OpenHo.value);
         localStorage.setItem("level2OpenHo", level2OpenHo.value);
+        localStorage.setItem("level2OpenSettingHo", level2OpenSettingHo.value);
         localStorage.setItem("level3OpenHo", level3OpenHo.value);
         localStorage.setItem(
             "level3KomputerOpenHo",
             level3KomputerOpenHo.value
         );
-            localStorage.setItem("level3PrinterOpenHo", level3PrinterOpenHo.value);
+        localStorage.setItem("level3PrinterOpenHo", level3PrinterOpenHo.value);
         localStorage.setItem("level3CctvOpenHo", level3CctvOpenHo.value);
     }
 );
@@ -65,6 +69,7 @@ const toggleLevel2Ho = () => {
     console.log(level1OpenHo.value);
     if (!level2OpenHo.value) {
         level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingHo.value = false;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
@@ -73,9 +78,25 @@ const toggleLevel2Ho = () => {
     level2OpenHo.value = !level2OpenHo.value;
 };
 
+const toggleLevel2SettingHo = () => {
+    console.log(level1OpenHo.value);
+    if (!level2OpenSettingHo.value) {
+        level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
+        level3CctvOpenHo.value = false;
+    }
+    level2OpenSettingHo.value = !level2OpenSettingHo.value;
+};
+
 const toggleLevel3LaptopHo = () => {
     if (!level3OpenHo.value) {
         level2OpenHo.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
+        level3CctvOpenHo.value = false;
     }
     level3OpenHo.value = !level3OpenHo.value;
 };
@@ -83,6 +104,9 @@ const toggleLevel3LaptopHo = () => {
 const toggleLevel3KomputerHo = () => {
     if (!level3KomputerOpenHo.value) {
         level2OpenHo.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenHo.value = false;
+        level3PrinterOpenHo.value = false;
+        level3CctvOpenHo.value = false;
     }
     level3KomputerOpenHo.value = !level3KomputerOpenHo.value;
 };
@@ -90,6 +114,9 @@ const toggleLevel3KomputerHo = () => {
 const toggleLevel3CctvHo = () => {
     if (!level3CctvOpenHo.value) {
         level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
     }
     level3CctvOpenHo.value = !level3CctvOpenHo.value;
 };
@@ -97,6 +124,9 @@ const toggleLevel3CctvHo = () => {
 const toggleLevel3PrinterHo = () => {
     if (!level3PrinterOpenHo.value) {
         level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3CctvOpenHo.value = false;
     }
     level3PrinterOpenHo.value = !level3PrinterOpenHo.value;
 };
@@ -135,7 +165,12 @@ const toggleLevel3PrinterHo = () => {
         <div class="items-center block w-auto max-h-screen grow basis-full">
             <ul class="flex flex-col pl-0 mb-0">
                 <li
-                    v-if="$page.props.auth.user.role === 'ict_developer' || $page.props.auth.user.role === 'ict_bod' || $page.props.auth.user.role === 'ict_ho' || $page.props.auth.user.role === 'ict_section_head'"
+                    v-if="
+                        $page.props.auth.user.role === 'ict_developer' ||
+                        $page.props.auth.user.role === 'ict_bod' ||
+                        $page.props.auth.user.role === 'ict_ho' ||
+                        $page.props.auth.user.role === 'ict_section_head'
+                    "
                     class="mt-0.5 w-full"
                 >
                     <NavLink
@@ -464,7 +499,9 @@ const toggleLevel3PrinterHo = () => {
                                 <li v-if="level3PrinterOpenHo">
                                     <NavLink
                                         :href="route('printer.page')"
-                                        :active="route().current('printer.page')"
+                                        :active="
+                                            route().current('printer.page')
+                                        "
                                     >
                                         <div
                                             class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -523,6 +560,64 @@ const toggleLevel3PrinterHo = () => {
                                         >
                                     </NavLink>
                                 </li>
+                            </ul>
+
+                            <div
+                                @click="toggleLevel2SettingHo"
+                                style="cursor: pointer"
+                                class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                            >
+                                <div
+                                    class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Setting</span
+                                >
+                                <i
+                                    v-if="!level2OpenSettingHo"
+                                    class="ms-3 fas fa-angle-right"
+                                ></i>
+                                <i v-else class="ms-3 fas fa-angle-down"></i>
+                            </div>
+                            <ul v-if="level2OpenSettingHo">
+                                <NavLink
+                                    :href="route('pengguna.page')"
+                                    :active="route().current('pengguna.page')"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting Pengguna</span
+                                    >
+                                </NavLink>
+
+                                 <NavLink
+                                    :href="route('department.page')"
+                                    :active="route().current('department.page')"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting Department</span
+                                    >
+                                </NavLink>
                             </ul>
                         </li>
                     </ul>
