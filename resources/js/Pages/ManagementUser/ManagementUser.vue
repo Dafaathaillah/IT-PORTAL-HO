@@ -20,7 +20,7 @@ const mount = onMounted(() => {
 });
 
 const props = defineProps({
-    accessPoint: {
+    pengguna: {
         type: Array,
     },
 });
@@ -40,7 +40,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("accessPoint.delete", { id: id }), {
+            form.delete(route("pengguna.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -66,7 +66,7 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("accessPoint.edit", { id: id }));
+            form.get(route("pengguna.edit", { id: id }));
         }
     });
 };
@@ -77,54 +77,10 @@ const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
-const submitCsv = () => {
-    let timerInterval;
-    Swal.fire({
-        title: "Mengimport Data...",
-        text: "Mohon tunggu sebentar...",
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        },
-    });
-
-    const formx = useForm({
-        file: file.value,
-    });
-
-    function reloadPage() {
-      window.location.reload();
-    }
-
-    formx.post(route("accessPoint.import"), {
-        onSuccess: () => {
-            Swal.fire({
-                title: "Success!",
-                text: "Data has been successfully import!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-
-            setTimeout(function() {
-                reloadPage();
-            }, 2000);
-        },
-        onError: () => {
-            Swal.fire({
-                title: "error!",
-                text: "Data not created!",
-                icon: "waring",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-        },
-    });
-};
 </script>
 
 <template>
-    <Head title="Inv Access Point" />
+    <Head title="Management Pengguna" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -142,11 +98,11 @@ const submitCsv = () => {
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Access Point Pages
+                        Management Pengguna Pages
                     </li>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Access Point Data
+                    Management Pengguna Data
                 </h6>
             </nav>
         </template>
@@ -154,50 +110,6 @@ const submitCsv = () => {
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
-                    <form
-                        @submit.prevent="submitCsv"
-                        enctype="multipart/form-data"
-                    >
-                        <div class="flex">
-                            <div
-                                class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0"
-                            >
-                                <div class="mb-4">
-                                    <input
-                                        type="file"
-                                        ref="fileInput"
-                                        enctype="multipart/form-data"
-                                        class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                        @change="handleFileUpload"
-                                    />
-                                </div>
-                            </div>
-                            <div class="max-w-full shrink-0">
-                                <button
-                                    type="submit"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                >
-                                    <i class="fas fa-file-import"></i>
-                                    Import
-                                </button>
-                            </div>
-                            <div
-                                class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                            >
-                                <a
-                                    href="/sampleAP.xlsx"
-                                    download="Format-Import-Data-AP.xlsx"
-                                    target="_blank"
-                                    type="button"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                >
-                                    <i class="fas fa-download"></i>
-                                    Format Excel Data
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
@@ -206,7 +118,7 @@ const submitCsv = () => {
                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <Link
-                                    :href="route('accessPoint.create')"
+                                    :href="route('pengguna.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                 >
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
@@ -226,6 +138,11 @@ const submitCsv = () => {
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         #
+                                                    </th>
+                                                     <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        NRP
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -262,8 +179,8 @@ const submitCsv = () => {
                                             <tbody>
                                                 <tr
                                                     v-for="(
-                                                        accessPoints, index
-                                                    ) in accessPoint"
+                                                        penggunas, index
+                                                    ) in pengguna"
                                                     :key="index"
                                                 >
                                                     <td
@@ -282,7 +199,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                accessPoints.inventory_number
+                                                                penggunas.nrp
                                                             }}
                                                         </p>
                                                     </td>
@@ -293,7 +210,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                accessPoints.asset_ho_number
+                                                                penggunas.username
                                                             }}
                                                         </p>
                                                     </td>
@@ -304,7 +221,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                accessPoints.ip_address
+                                                                penggunas.department
                                                             }}
                                                         </p>
                                                     </td>
@@ -315,7 +232,18 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                accessPoints.serial_number
+                                                                penggunas.position
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                penggunas.email
                                                             }}
                                                         </p>
                                                     </td>
@@ -327,7 +255,7 @@ const submitCsv = () => {
                                                         >
                                                             {{
                                                                 formattedDate(
-                                                                    accessPoints.updated_at
+                                                                    penggunas.updated_at
                                                                 )
                                                             }}
                                                         </span>
@@ -338,7 +266,7 @@ const submitCsv = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 editData(
-                                                                    accessPoints.id
+                                                                    penggunas.id
                                                                 )
                                                             "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -349,7 +277,7 @@ const submitCsv = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 deleteData(
-                                                                    accessPoints.id
+                                                                    penggunas.id
                                                                 )
                                                             "
                                                             class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
