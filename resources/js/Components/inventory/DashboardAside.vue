@@ -7,6 +7,7 @@ import { ref, onMounted, watch } from "vue";
 // State for controlling the visibility of submenus
 const level1OpenHo = ref(false);
 const level2OpenHo = ref(false);
+const level2OpenAduanHo = ref(false);
 const level2OpenSettingHo = ref(false);
 const level3OpenHo = ref(false);
 const level3KomputerOpenHo = ref(false);
@@ -17,7 +18,10 @@ const level3CctvOpenHo = ref(false);
 onMounted(() => {
     level1OpenHo.value = localStorage.getItem("level1OpenHo") === "true";
     level2OpenHo.value = localStorage.getItem("level2OpenHo") === "true";
-    level2OpenSettingHo.value = localStorage.getItem("level2OpenHo") === "true";
+    level2OpenAduanHo.value =
+        localStorage.getItem("level2OpenAduanHo") === "true";
+    level2OpenSettingHo.value =
+        localStorage.getItem("level2OpenSettingHo") === "true";
     level3OpenHo.value = localStorage.getItem("level3OpenHo") === "true";
     level3PrinterOpenHo.value =
         localStorage.getItem("level3PrinterOpenHo") === "true";
@@ -31,8 +35,9 @@ onMounted(() => {
 watch(
     [
         level1OpenHo,
+        level2OpenHo,
         level2OpenSettingHo,
-        level3OpenHo,
+        level2OpenAduanHo,
         level3PrinterOpenHo,
         level3KomputerOpenHo,
         level3CctvOpenHo,
@@ -40,6 +45,7 @@ watch(
     () => {
         localStorage.setItem("level1OpenHo", level1OpenHo.value);
         localStorage.setItem("level2OpenHo", level2OpenHo.value);
+        localStorage.setItem("level2OpenAduanHo", level2OpenAduanHo.value);
         localStorage.setItem("level2OpenSettingHo", level2OpenSettingHo.value);
         localStorage.setItem("level3OpenHo", level3OpenHo.value);
         localStorage.setItem(
@@ -76,6 +82,19 @@ const toggleLevel2Ho = () => {
         level3CctvOpenHo.value = false;
     }
     level2OpenHo.value = !level2OpenHo.value;
+};
+
+const toggleLevel2AduanHo = () => {
+    console.log(level1OpenHo.value);
+    if (!level2OpenAduanHo.value) {
+        level2OpenHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
+        level3CctvOpenHo.value = false;
+    }
+    level2OpenAduanHo.value = !level2OpenAduanHo.value;
 };
 
 const toggleLevel2SettingHo = () => {
@@ -292,6 +311,7 @@ const toggleLevel3PrinterHo = () => {
                     <ul v-if="level1OpenHo">
                         <li>
                             <NavLink
+                                @click="toggleLevel2AduanHo"
                                 :href="route('aduan.page')"
                                 :active="route().current('aduan.page')"
                             >
@@ -602,7 +622,7 @@ const toggleLevel3PrinterHo = () => {
                                     >
                                 </NavLink>
 
-                                 <NavLink
+                                <NavLink
                                     :href="route('department.page')"
                                     :active="route().current('department.page')"
                                 >
