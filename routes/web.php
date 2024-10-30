@@ -11,6 +11,7 @@ use App\Http\Controllers\InvPrinterController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserAllController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
@@ -115,6 +116,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('/aduan/{id}/delete', [AduanController::class, 'destroy'])->name('aduan.delete');
         Route::post('/aduan/update', [AduanController::class, 'update_aduan'])->name('aduan.update');
         Route::get('/aduan/{id}/detail', [AduanController::class, 'detail'])->name('aduan.detail');
+
+        Route::get('/pengguna', [UserAllController::class, 'index'])->name('pengguna.page');
+        Route::get('/pengguna/create', [UserAllController::class, 'create'])->name('pengguna.create');
+        Route::post('/pengguna/create', [UserAllController::class, 'store'])->name('pengguna.store');
+        Route::get('/pengguna/{id}/edit', [UserAllController::class, 'edit'])->name('pengguna.edit');
+        Route::put('/pengguna/{id}/update', [UserAllController::class, 'update'])->name('pengguna.update');
+        Route::delete('/pengguna/{id}/delete', [UserAllController::class, 'destroy'])->name('pengguna.delete');
+        Route::post('/uploadCsvAp', [UserAllController::class, 'uploadCsv'])->name('pengguna.import');
     });
 });
 Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('home');
