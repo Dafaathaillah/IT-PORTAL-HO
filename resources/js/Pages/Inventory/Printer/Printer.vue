@@ -74,6 +74,10 @@ const editData = (id) => {
     });
 };
 
+const detailData = (id) => {
+    form.get(route("printer.detail", { id: id }));
+};
+
 const file = ref(null);
 
 const handleFileUpload = (event) => {
@@ -426,11 +430,22 @@ const submitCsv = () => {
                                                     >
                                                         <NavLinkCustom
                                                             @click="
-                                                                editData(
+                                                                detailData(
                                                                     printers.id
                                                                 )
                                                             "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Detail
+                                                        </NavLinkCustom>
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                editData(
+                                                                    printers.id
+                                                                )
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Edit
                                                         </NavLinkCustom>

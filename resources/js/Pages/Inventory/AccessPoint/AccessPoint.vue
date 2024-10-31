@@ -71,6 +71,10 @@ const editData = (id) => {
     });
 };
 
+const detailData = (id) => {
+    form.get(route("accessPoint.detail", { id: id }));
+};
+
 const file = ref(null);
 
 const handleFileUpload = (event) => {
@@ -477,13 +481,25 @@ const submitCsv = () => {
                                                     <td
                                                         class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                detailData(
+                                                                    accessPoints.id
+                                                                )
+                                                            "
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Detail
+                                                        </NavLinkCustom>
+
                                                         <NavLinkCustom
                                                             @click="
                                                                 editData(
                                                                     accessPoints.id
                                                                 )
                                                             "
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Edit
                                                         </NavLinkCustom>

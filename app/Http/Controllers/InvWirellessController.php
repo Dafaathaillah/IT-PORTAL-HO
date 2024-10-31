@@ -84,6 +84,15 @@ class InvWirellessController extends Controller
         }
     }
 
+    public function detail($id)
+    {
+        $wirelless = InvWirelless::where('id', $id)->first();
+        
+        return Inertia::render('Inventory/Wirelless/WirellessDetail', [
+            'wirelless' => $wirelless,
+        ]);
+    }
+
     public function edit($id)
     {
         $wirelless = InvWirelless::find($id);

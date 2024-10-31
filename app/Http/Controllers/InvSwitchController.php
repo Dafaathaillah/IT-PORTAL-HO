@@ -90,6 +90,15 @@ class InvSwitchController extends Controller
         return Inertia::render('Inventory/Switch/SwitchEdit', ['switch' => $switch]);
     }
 
+    public function detail($id)
+    {
+        $switch = InvSwitch::where('id', $id)->first();
+        
+        return Inertia::render('Inventory/Switch/SwitchDetail', [
+            'switchs' => $switch,
+        ]);
+    }
+
     public function update(Request $request)
     {
         $params = $request->all();

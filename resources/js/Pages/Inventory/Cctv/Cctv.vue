@@ -514,16 +514,6 @@ function formatData(text) {
                                                     <td
                                                         class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                editData(
-                                                                    cctvs.id
-                                                                )
-                                                            "
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Edit
-                                                        </NavLinkCustom>
 
                                                         <NavLinkCustom
                                                             @click="
@@ -531,9 +521,20 @@ function formatData(text) {
                                                                     cctvs.cctv_code
                                                                 )
                                                             "
-                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Detail
+                                                        </NavLinkCustom>
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                editData(
+                                                                    cctvs.id
+                                                                )
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit
                                                         </NavLinkCustom>
 
                                                         <NavLinkCustom

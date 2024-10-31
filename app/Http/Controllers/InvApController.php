@@ -149,6 +149,15 @@ class InvApController extends Controller
         return Inertia::render('Inventory/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
     }
 
+    public function detail($id)
+    {
+        $accessPoint = InvAp::where('id', $id)->first();
+        
+        return Inertia::render('Inventory/AccessPoint/AccessPointDetail', [
+            'accessPoints' => $accessPoint,
+        ]);
+    }
+
     public function show($id)
     {
         $invap = InvAp::find($id);

@@ -24,6 +24,10 @@ const props = defineProps({
     },
 });
 
+const detailData = (id) => {
+    form.get(route("wirelless.detail", { id: id }));
+};
+
 const form = useForm({});
 
 const deleteData = (id) => {
@@ -482,11 +486,22 @@ const submitCsv = () => {
                                                     >
                                                         <NavLinkCustom
                                                             @click="
-                                                                editData(
+                                                                detailData(
                                                                     wirellesses.id
                                                                 )
                                                             "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Detail
+                                                        </NavLinkCustom>
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                editData(
+                                                                    wirellesses.id
+                                                                )
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Edit
                                                         </NavLinkCustom>
