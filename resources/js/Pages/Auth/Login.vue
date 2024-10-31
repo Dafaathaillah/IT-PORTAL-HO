@@ -44,7 +44,7 @@ const submit = () => {
                 class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none lg:py4 dark:bg-gray-950 rounded-2xl bg-clip-border">
                 <div class="p-6 pb-0 mb-0">
                     <h4 class="font-bold">Sign In</h4>
-                    <p class="mb-0">Enter your email and password to sign in</p>
+                    <p class="mb-0">Enter your username and password to sign in</p>
                 </div>
                 <div class="flex-auto p-6">
                     <form @submit.prevent="submit">
