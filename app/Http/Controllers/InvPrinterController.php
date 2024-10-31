@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\PrinterImport;
+use App\Models\Department;
 use App\Models\InvPrinter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,7 +38,12 @@ class InvPrinterController extends Controller
         
         // end generate code
 
-        return Inertia::render('Inventory/Printer/PrinterCreate', ['printer_code' => $uniqueString]);
+        $department = Department::pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+        
+
+        return Inertia::render('Inventory/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
     }
 
     public function store(Request $request)
@@ -54,6 +60,7 @@ class InvPrinterController extends Controller
             $maxId = $maxId + 1;
         }
         $params = $request->all();
+        // return dd($params);
         $data = [
             'max_id' => $maxId,
             'item_name' => $params['item_name'],
@@ -91,8 +98,20 @@ class InvPrinterController extends Controller
     public function edit($printerId)
     {
         $printer = InvPrinter::find($printerId);
+
+        
+        if (!empty($printer->department)) {
+            $department_select = array($printer->department);
+        }else{
+            $department_select = array('data tidak ada !');
+        }
+
+        $department = Department::pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         // return response()->json(['ap' => $accessPoint]);
-        return Inertia::render('Inventory/Printer/PrinterEdit', ['printer' => $printer]);
+        return Inertia::render('Inventory/Printer/PrinterEdit', ['printer' => $printer, 'department' => $department, 'department_select' => $department_select]);
     }
 
     public function show($id)
