@@ -549,10 +549,9 @@ function formatData(text) {
                                                         <span
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            nama pengadu
-                                                            <!-- {{
-                                                                aduans.category_name
-                                                            }} -->
+                                                            {{
+                                                                aduans.complaint_name
+                                                            }}
                                                         </span>
                                                     </td>
                                                     <td
@@ -584,7 +583,7 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                aduans.complaint_name
+                                                                aduans.complaint_note
                                                             }}
                                                         </span>
                                                     </td>
