@@ -208,6 +208,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/pengguna/{id}/edit', [UserAllController::class, 'edit'])->name('pengguna.edit');
         Route::put('/pengguna/{id}/update', [UserAllController::class, 'update'])->name('pengguna.update');
         Route::delete('/pengguna/{id}/delete', [UserAllController::class, 'destroy'])->name('pengguna.delete');
+        Route::post('/uploadCsvPengguna', [UserAllController::class, 'uploadCsv'])->name('pengguna.import');
 
         Route::get('department', [DepartmentController::class, 'index'])->name('department.page');
         Route::get('department/create', [DepartmentController::class, 'create'])->name('department.create');

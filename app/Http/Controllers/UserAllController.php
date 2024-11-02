@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UserPenggunaImport;
+use App\Models\Department;
 use App\Models\UserAll;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use League\Csv\Reader;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserAllController extends Controller
 {
@@ -16,7 +21,11 @@ class UserAllController extends Controller
 
     public function create()
     {
-        return Inertia::render('ManagementUser/ManagementUserCreate');
+        $department = Department::pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('ManagementUser/ManagementUserCreate', ['department' => $department]);
     }
 
     public function store(Request $request)
@@ -47,11 +56,31 @@ class UserAllController extends Controller
         return redirect()->route('pengguna.page');
     }
 
+    public function uploadCsv(Request $request)
+    {
+        try {
+            Excel::import(new UserPenggunaImport, $request->file('file'));
+            return redirect()->route('pengguna.page');
+        } catch (\Exception $ex) {
+            Log::info($ex);
+            return response()->json(['data' => 'Some error has occur.', 400]);
+        }
+    }
+
     public function edit($apId)
     {
         $managementUser = UserAll::find($apId);
-        // return response()->json(['ap' => $managementUser]);
-        return Inertia::render('ManagementUser/ManagementUserEdit', ['pengguna' => $managementUser]);
+
+        if (!empty($managementUser->department)) {
+            $department_select = array($managementUser->department);
+        }else{
+            $department_select = array('data tidak ada !');
+        }
+        
+        $department = Department::pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+        return Inertia::render('ManagementUser/ManagementUserEdit', ['pengguna' => $managementUser, 'department' => $department, 'department_select' => $department_select]);
     }
 
     // public function show($id)
