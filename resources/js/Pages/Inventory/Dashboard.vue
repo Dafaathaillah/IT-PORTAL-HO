@@ -1,6 +1,96 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
+import { ref, onMounted } from 'vue';
+import Highcharts from 'highcharts';
+
+const props = defineProps({
+    aduan: {
+        type: Array,
+    },
+    open: {
+        type: Object,
+    },
+    closed: {
+        type: Object,
+    },
+    progress: {
+        type: Object,
+    },
+    cancel: {
+        type: Object,
+    },
+    breakdown_array: {
+        type: Array,
+    },
+    scrap_array: {
+        type: Array,
+    },
+    readyStandby_array: {
+        type: Array,
+    },
+    readyUsed_array: {
+        type: Array,
+    },
+});
+
+
+const chartContainer = ref(null);
+
+onMounted(() => {
+  Highcharts.chart(chartContainer.value, {
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: '',
+        align: 'left'
+    },
+    xAxis: {
+        categories: [
+            'Access Point', 'Switch', 'Wirelless', 'Printer', 'CCTV', 'Komputer', 'Laptop'
+        ]
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: ''
+        }
+    },
+    legend: {
+        reversed: true
+    },
+    plotOptions: {
+        series: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    series: [{
+        name: 'Breakdown',
+        color: '#F64865',
+        data: props.breakdown_array
+    }, {
+        name: 'Scrap',
+        color: '#FA7B3A',
+        data: props.scrap_array
+    }, {
+        name: 'Ready Stanby',
+        color: '#FBCB33',
+        data: props.readyStandby_array
+    },{
+        name: 'Ready Used',
+        color: '#2FCFA4',
+        data: props.readyUsed_array
+    }],
+    credits: {
+        enabled: false
+    },
+  });
+});
+
 </script>
 
 <template>
@@ -61,7 +151,7 @@ import { Head } from "@inertiajs/vue3";
         <!-- cards -->
         <div class="w-full px-6 py-6 mx-auto">
             <!-- row 1 -->
-            <div class="flex flex-wrap -mx-3">
+            <div class="flex flex-wrap -mx-3 mb-8">
                 <!-- card1 -->
                 <div
                     class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
@@ -71,19 +161,21 @@ import { Head } from "@inertiajs/vue3";
                     >
                         <div class="flex-auto p-4">
                             <div class="flex flex-row -mx-3">
-                                <div class="flex-none w-2/3 max-w-full px-3">
+                                <div
+                                    class="flex-none w-2/3 max-w-full px-3"
+                                >
                                     <div>
                                         <p
                                             class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                         >
-                                            Today's Money
+                                            ALL ADUAN OPEN
                                         </p>
                                         <h5
                                             class="mb-2 font-bold dark:text-white"
                                         >
-                                            $53,000
+                                            {{ props.open }}
                                         </h5>
-                                        <p
+                                        <!-- <p
                                             class="mb-0 dark:text-white dark:opacity-60"
                                         >
                                             <span
@@ -91,7 +183,7 @@ import { Head } from "@inertiajs/vue3";
                                                 >+55%</span
                                             >
                                             since yesterday
-                                        </p>
+                                        </p> -->
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
@@ -99,7 +191,7 @@ import { Head } from "@inertiajs/vue3";
                                         class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500"
                                     >
                                         <i
-                                            class="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"
+                                            class="fas fa-envelope-open text-lg relative top-2.5 text-white"
                                         ></i>
                                     </div>
                                 </div>
@@ -117,19 +209,21 @@ import { Head } from "@inertiajs/vue3";
                     >
                         <div class="flex-auto p-4">
                             <div class="flex flex-row -mx-3">
-                                <div class="flex-none w-2/3 max-w-full px-3">
+                                <div
+                                    class="flex-none w-2/3 max-w-full px-3"
+                                >
                                     <div>
                                         <p
                                             class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                         >
-                                            Today's Users
+                                            ALL ADUAN CLOSED
                                         </p>
                                         <h5
                                             class="mb-2 font-bold dark:text-white"
                                         >
-                                            2,300
+                                            {{ props.closed }}
                                         </h5>
-                                        <p
+                                        <!-- <p
                                             class="mb-0 dark:text-white dark:opacity-60"
                                         >
                                             <span
@@ -137,15 +231,15 @@ import { Head } from "@inertiajs/vue3";
                                                 >+3%</span
                                             >
                                             since last week
-                                        </p>
+                                        </p> -->
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
                                     <div
-                                        class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-600 to-orange-600"
+                                        class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-green-600 to-green-600"
                                     >
                                         <i
-                                            class="ni leading-none ni-world text-lg relative top-3.5 text-white"
+                                            class="fas fa-check-square text-lg relative top-2.5 text-white"
                                         ></i>
                                     </div>
                                 </div>
@@ -163,19 +257,21 @@ import { Head } from "@inertiajs/vue3";
                     >
                         <div class="flex-auto p-4">
                             <div class="flex flex-row -mx-3">
-                                <div class="flex-none w-2/3 max-w-full px-3">
+                                <div
+                                    class="flex-none w-2/3 max-w-full px-3"
+                                >
                                     <div>
                                         <p
                                             class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                         >
-                                            New Clients
+                                            ALL ADUAN PROGRESS
                                         </p>
                                         <h5
                                             class="mb-2 font-bold dark:text-white"
                                         >
-                                            +3,462
+                                            {{ props.progress }}
                                         </h5>
-                                        <p
+                                        <!-- <p
                                             class="mb-0 dark:text-white dark:opacity-60"
                                         >
                                             <span
@@ -183,15 +279,15 @@ import { Head } from "@inertiajs/vue3";
                                                 >-2%</span
                                             >
                                             since last quarter
-                                        </p>
+                                        </p> -->
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
                                     <div
-                                        class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-emerald-500 to-teal-400"
+                                        class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-400"
                                     >
                                         <i
-                                            class="ni leading-none ni-paper-diploma text-lg relative top-3.5 text-white"
+                                            class="fas fa-clock text-lg relative top-2.5 text-white"
                                         ></i>
                                     </div>
                                 </div>
@@ -209,19 +305,21 @@ import { Head } from "@inertiajs/vue3";
                     >
                         <div class="flex-auto p-4">
                             <div class="flex flex-row -mx-3">
-                                <div class="flex-none w-2/3 max-w-full px-3">
+                                <div
+                                    class="flex-none w-2/3 max-w-full px-3"
+                                >
                                     <div>
                                         <p
                                             class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                         >
-                                            Sales
+                                            ALL ADUN CANCEL
                                         </p>
                                         <h5
                                             class="mb-2 font-bold dark:text-white"
                                         >
-                                            $103,430
+                                            {{ props.cancel }}
                                         </h5>
-                                        <p
+                                        <!-- <p
                                             class="mb-0 dark:text-white dark:opacity-60"
                                         >
                                             <span
@@ -229,15 +327,15 @@ import { Head } from "@inertiajs/vue3";
                                                 >+5%</span
                                             >
                                             than last month
-                                        </p>
+                                        </p> -->
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
                                     <div
-                                        class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-orange-500 to-yellow-500"
+                                        class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-500 to-red-500"
                                     >
                                         <i
-                                            class="ni leading-none ni-cart text-lg relative top-3.5 text-white"
+                                            class="fas fa-ban text-lg relative top-2.5 text-white"
                                         ></i>
                                     </div>
                                 </div>
@@ -251,7 +349,7 @@ import { Head } from "@inertiajs/vue3";
 
             <div class="flex flex-wrap mt-6 -mx-3">
                 <div
-                    class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-6/12 lg:flex-none"
+                    class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-12/12 lg:flex-none"
                 >
                     <div
                         class="relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border"
@@ -259,755 +357,18 @@ import { Head } from "@inertiajs/vue3";
                         <div class="p-4 pb-0 mb-0 rounded-t-4">
                             <div class="flex justify-between">
                                 <h6 class="mb-2 dark:text-white">
-                                    Table Monitoring Device PPA - BIB
+                                    Table Monitoring Device PPA
                                 </h6>
                             </div>
                         </div>
                         <div class="overflow-x-auto">
-                            <table
-                                class="items-center w-full mb-4 align-top border-collapse border-gray-200 dark:border-white/40"
-                            >
-                                <tbody>
-                                    <tr>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div
-                                                class="flex items-center px-2 py-1"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/assets/img/logoppa.png"
-                                                        alt="Country flag"
-                                                        class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                                                    />
-                                                </div>
-                                                <div class="ml-6">
-                                                    <h6
-                                                        class="mb-0 text-sm leading-normal dark:text-white"
-                                                    >
-                                                        Access Point
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Used:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    100
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Stanby:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    30
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Scrap:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    10
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Breakdown:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    15
-                                                </h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div
-                                                class="flex items-center px-2 py-1"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/assets/img/logoppa.png"
-                                                        alt="Country flag"
-                                                        class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                                                    />
-                                                </div>
-                                                <div class="ml-6">
-                                                    <h6
-                                                        class="mb-0 text-sm leading-normal dark:text-white"
-                                                    >
-                                                        Switch
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Used:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    100
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Stanby:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    30
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Scrap:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    10
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Breakdown:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    15
-                                                </h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div
-                                                class="flex items-center px-2 py-1"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/assets/img/logoppa.png"
-                                                        alt="Country flag"
-                                                        class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                                                    />
-                                                </div>
-                                                <div class="ml-6">
-                                                    <h6
-                                                        class="mb-0 text-sm leading-normal dark:text-white"
-                                                    >
-                                                        Wirelless
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Used:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    100
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Stanby:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    30
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Scrap:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    10
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Breakdown:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    15
-                                                </h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div
-                                                class="flex items-center px-2 py-1"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/assets/img/logoppa.png"
-                                                        alt="Country flag"
-                                                        class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                                                    />
-                                                </div>
-                                                <div class="ml-6">
-                                                    <h6
-                                                        class="mb-0 text-sm leading-normal dark:text-white"
-                                                    >
-                                                        Printer
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Used:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    100
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Stanby:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    30
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Scrap:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    10
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Breakdown:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    15
-                                                </h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-full max-w-full px-3 mt-0 lg:w-6/12 lg:flex-none">
-                    <div
-                        class="border-black/12.5 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border"
-                    >
-                        <div class="p-4 pb-0 mb-0 rounded-t-4">
-                            <div class="flex justify-between">
-                                <h6 class="mb-2 dark:text-white">
-                                    Table Monitoring Device PPA - MIFA
-                                </h6>
-                            </div>
-                        </div>
-                         <div class="overflow-x-auto">
-                            <table
-                                class="items-center w-full mb-4 align-top border-collapse border-gray-200 dark:border-white/40"
-                            >
-                                <tbody>
-                                    <tr>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div
-                                                class="flex items-center px-2 py-1"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/assets/img/logoppa.png"
-                                                        alt="Country flag"
-                                                        class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                                                    />
-                                                </div>
-                                                <div class="ml-6">
-                                                    <h6
-                                                        class="mb-0 text-sm leading-normal dark:text-white"
-                                                    >
-                                                        Access Point
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Used:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    100
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Stanby:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    30
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Scrap:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    10
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Breakdown:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    15
-                                                </h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div
-                                                class="flex items-center px-2 py-1"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/assets/img/logoppa.png"
-                                                        alt="Country flag"
-                                                        class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                                                    />
-                                                </div>
-                                                <div class="ml-6">
-                                                    <h6
-                                                        class="mb-0 text-sm leading-normal dark:text-white"
-                                                    >
-                                                        Switch
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Used:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    100
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Stanby:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    30
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Scrap:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    10
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Breakdown:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    15
-                                                </h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div
-                                                class="flex items-center px-2 py-1"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/assets/img/logoppa.png"
-                                                        alt="Country flag"
-                                                        class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                                                    />
-                                                </div>
-                                                <div class="ml-6">
-                                                    <h6
-                                                        class="mb-0 text-sm leading-normal dark:text-white"
-                                                    >
-                                                        Wirelless
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Used:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    100
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Stanby:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    30
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Scrap:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    10
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Breakdown:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    15
-                                                </h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div
-                                                class="flex items-center px-2 py-1"
-                                            >
-                                                <div>
-                                                    <img
-                                                        src="/assets/img/logoppa.png"
-                                                        alt="Country flag"
-                                                        class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                                                    />
-                                                </div>
-                                                <div class="ml-6">
-                                                    <h6
-                                                        class="mb-0 text-sm leading-normal dark:text-white"
-                                                    >
-                                                        Printer
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Used:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    100
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Ready Stanby:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    30
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Scrap:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    10
-                                                </h6>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40"
-                                        >
-                                            <div class="flex-1 text-center">
-                                                <p
-                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60"
-                                                >
-                                                    Breakdown:
-                                                </p>
-                                                <h6
-                                                    class="mb-0 text-sm leading-normal dark:text-white"
-                                                >
-                                                    15
-                                                </h6>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div ref="chartContainer" style="width: 100%; height: 400px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-wrap mt-6 -mx-3">
+            <!-- <div class="flex flex-wrap mt-6 -mx-3">
                 <div
                     class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-6/12 lg:flex-none"
                 >
@@ -1763,7 +1124,7 @@ import { Head } from "@inertiajs/vue3";
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- end cards -->
     </AuthenticatedLayout>

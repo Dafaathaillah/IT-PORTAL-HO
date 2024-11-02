@@ -96,18 +96,18 @@ const yearxyz = new Date().getFullYear();
                             <div
                                 class="relative flex flex-col justify-center h-full bg-cover px-24 m-4 overflow-hidden bg-[url('/images/Asset_1.jpg')] rounded-xl"
                             >
-                                <!-- <span
-                           class="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-blue-500 to-violet-500 opacity-60"></span> -->
+                                <span
+                           class="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-orange-900 to-rose-900 opacity-40"></span>
                                 <h4 class="z-20 mt-12 font-bold text-red-600">
                                     PPA <i class="text-white">values</i>
                                 </h4>
                                 <div class="flex justify-center">
-                                    <p class="p-2 text-green-600">Devotion</p>
-                                    <p class="p-2 text-blue-600">Integrity</p>
-                                    <p class="p-2 text-white">Teamwork</p>
-                                    <p class="p-2 text-orange-400">Creativity</p>
-                                    <p class="p-2 text-red-500">Winner</p>
-                                    <p class="p-2 text-purple-600">Perfection</p>
+                                    <p class="p-2 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-green-600">Devotion</p>
+                                    <p class="p-2 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-blue-600">Integrity</p>
+                                    <p class="p-2 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white">Teamwork</p>
+                                    <p class="p-2 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-orange-400">Creativity</p>
+                                    <p class="p-2 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-red-600">Winner</p>
+                                    <p class="p-2 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-sky-600">Perfection</p>
                                 </div>
                             </div>
                         </div>

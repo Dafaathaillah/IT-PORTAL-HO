@@ -28,7 +28,7 @@ createInertiaApp({
             .use(ZiggyVue)
             .component('DataTable', DataTable) 
             .component('vueDatePicker', VueDatePicker) 
-            .component('VueMultiselect', VueMultiselect) 
+            .component('VueMultiselect', VueMultiselect)
             .mount(el);
     },
     progress: {

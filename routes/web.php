@@ -13,6 +13,14 @@ use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserAllController;
+use App\Models\Aduan;
+use App\Models\InvAp;
+use App\Models\InvCctv;
+use App\Models\InvComputer;
+use App\Models\InvLaptop;
+use App\Models\InvPrinter;
+use App\Models\InvSwitch;
+use App\Models\InvWirelless;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
@@ -23,7 +31,80 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod,ict_section_head'], function () {
         Route::get('/dashboard', function () {
-            return Inertia::render('Inventory/Dashboard');
+
+            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->get();
+            $countOpen = Aduan::where('status', 'OPEN')->count();
+            $countClosed = Aduan::where('status', 'CLOSED')->count();
+            $countProgress = Aduan::where('status', 'PROGRESS')->count();
+            $countCancel = Aduan::where('status', 'CANCEL')->count();
+
+            // access point
+            $countAPreadyused = InvAp::where('status', 'READY_USED')->count();
+            $countAPstandby = InvAp::where('status', 'READY_STANDBY')->count();
+            $countAPBreakdown = InvAp::where('status', 'BREAKDOWN')->count();
+            $countAPScrap = InvAp::where('status', 'SCRAP')->count();
+
+            // Switch
+            $countSwitchreadyused = InvSwitch::where('status', 'READY_USED')->count();
+            $countSwitchstandby = InvSwitch::where('status', 'READY_STANDBY')->count();
+            $countSwitchBreakdown = InvSwitch::where('status', 'BREAKDOWN')->count();
+            $countSwitchScrap = InvSwitch::where('status', 'SCRAP')->count();
+
+            // Wirelless
+            $countWirellessreadyused = InvWirelless::where('status', 'READY_USED')->count();
+            $countWirellessstandby = InvWirelless::where('status', 'READY_STANDBY')->count();
+            $countWirellessBreakdown = InvWirelless::where('status', 'BREAKDOWN')->count();
+            $countWirellessScrap = InvWirelless::where('status', 'SCRAP')->count();
+
+            // Printer
+            $countPrinterreadyused = InvPrinter::where('status', 'READY_USED')->count();
+            $countPrinterstandby = InvPrinter::where('status', 'READY_STANDBY')->count();
+            $countPrinterBreakdown = InvPrinter::where('status', 'BREAKDOWN')->count();
+            $countPrinterScrap = InvPrinter::where('status', 'SCRAP')->count();
+
+            // CCTV
+            $countCCTVreadyused = InvCctv::where('status', 'READY_USED')->count();
+            $countCCTVstandby = InvCctv::where('status', 'READY_STANDBY')->count();
+            $countCCTVBreakdown = InvCctv::where('status', 'BREAKDOWN')->count();
+            $countCCTVScrap = InvCctv::where('status', 'SCRAP')->count();
+
+            // Komputer
+            $countKomputerreadyused = InvComputer::where('status', 'READY_USED')->count();
+            $countKomputerstandby = InvComputer::where('status', 'READY_STANDBY')->count();
+            $countKomputerBreakdown = InvComputer::where('status', 'BREAKDOWN')->count();
+            $countKomputerScrap = InvComputer::where('status', 'SCRAP')->count();
+
+            // Laptop
+            $countLaptopreadyused = InvLaptop::where('status', 'READY_USED')->count();
+            $countLaptopstandby = InvLaptop::where('status', 'READY_STANDBY')->count();
+            $countLaptopBreakdown = InvLaptop::where('status', 'BREAKDOWN')->count();
+            $countLaptopScrap = InvLaptop::where('status', 'SCRAP')->count();
+
+            // AP,SW,BB,PRT,CCTV,KOMP,Laptop
+
+            $breakdown_array = [$countAPBreakdown, $countSwitchBreakdown, $countWirellessBreakdown, $countPrinterBreakdown, $countCCTVBreakdown, $countKomputerBreakdown, $countLaptopBreakdown];
+
+            $scrap_array = [$countAPScrap, $countSwitchScrap, $countWirellessScrap, $countPrinterScrap, $countCCTVScrap, $countKomputerScrap, $countLaptopScrap];
+
+            $readyStandby_array = [$countAPstandby, $countSwitchstandby, $countWirellessstandby, $countPrinterstandby, $countCCTVstandby, $countKomputerstandby, $countLaptopstandby];
+
+            $readyUsed_array = [$countAPreadyused, $countSwitchreadyused, $countWirellessreadyused, $countPrinterreadyused, $countCCTVreadyused, $countKomputerreadyused, $countLaptopreadyused];
+
+
+            return Inertia::render(
+                'Inventory/Dashboard',
+                [
+                    'aduan' => $aduan,
+                    'open' => $countOpen,
+                    'closed' => $countClosed,
+                    'progress' => $countProgress,
+                    'cancel' => $countCancel,
+                    'breakdown_array' => $breakdown_array,
+                    'scrap_array' => $scrap_array,
+                    'readyStandby_array' => $readyStandby_array,
+                    'readyUsed_array' => $readyUsed_array,
+                ]
+            );
         })->name('developerDashboard');
     });
 
