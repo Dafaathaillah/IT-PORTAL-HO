@@ -5,22 +5,33 @@ namespace App\Imports;
 use App\Models\InvScanner;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Carbon\Carbon;
 
 class ScannerImport implements ToModel, WithStartRow
 {
     /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
+    * @param array $row
+    *
+    * @return \Illuminate\Database\Eloquent\Model|null
+    */
+    // public function startCell(): string
+    // {
+    //     return 'B3';
+    // }
 
     public function startRow(): int
     {
-        return 17; // Mulai dari baris kedua
+        return 17;  
     }
 
     public function model(array $row)
     {
+
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('y');
+        $month = $currentDate->month;
+        $day = $currentDate->day;
+
         $maxId = InvScanner::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
@@ -30,19 +41,20 @@ class ScannerImport implements ToModel, WithStartRow
 
         return new InvScanner([
             'max_id' => $maxId,
-            'device_name' => $row[1],
+            'item_name' => $row[1],
             'asset_ho_number' => $row[2],
-            'inventory_number' => $row[3],
+            'scanner_code' => $row[3],
             'serial_number' => $row[4],
-            'frequency' => $row[5],
-            'ip_address' => $row[6],
-            'mac_address' => $row[7],
-            'device_brand' => $row[8],
-            'device_type' => $row[9],
-            'device_model' => $row[10],
+            'ip_address' => $row[5],
+            'mac_address' => $row[6],
+            'scanner_brand' => $row[7],
+            'scanner_type' => $row[8],
+            'division' => $row[9],
+            'department' => $row[10],
             'location' => $row[11],
-            'status' => $row[12],
+            'status' => strtoupper($row[12]),
             'note' => $row[13],
+            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s')
         ]);
     }
 }

@@ -196,7 +196,7 @@ const submitCsv = () => {
                                 class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                             >
                                 <a
-                                    href="/samplescanner.xlsx"
+                                    href="/sampleScanner.xlsx"
                                     download="Format-Import-Data-scanner.xlsx"
                                     target="_blank"
                                     type="button"
