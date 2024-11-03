@@ -3,6 +3,7 @@
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvComputerController;
@@ -24,6 +25,12 @@ use App\Models\InvWirelless;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
+
+
+Route::get('/complaint', [GuestReportController::class, 'index'])->name('guestAduan.page');
+Route::get('/complaint/create', [GuestReportController::class, 'create'])->name('guestAduan.create');
+Route::post('/complaint/create', [GuestReportController::class, 'store'])->name('guestAduan.store');
+Route::delete('/complaint/{id}/delete', [GuestReportController::class, 'destroy'])->name('guestAduan.delete');
 
 Route::middleware('auth')->group(function () {
 
