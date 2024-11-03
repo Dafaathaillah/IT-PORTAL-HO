@@ -7,11 +7,11 @@ import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 
-const props = defineProps(["printer_code", "department"]);
+const props = defineProps(["scanner_code", "department"]);
 
 const form = useForm({
-    item_name: "printer",
-    printer_code: props.printer_code,
+    item_name: "scanner",
+    scanner_code: props.scanner_code,
     asset_ho_number: "",
     serial_number: "",
     mac_address: "",
@@ -32,7 +32,7 @@ const options = props.department;
 
 const save = () => {
     form.dept = selectedValues.value.name;
-    form.post(route("printer.store"), {
+    form.post(route("scanner.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -57,7 +57,7 @@ const save = () => {
 </script>
 
 <template>
-    <Head title="Tambah Data Printer" />
+    <Head title="Tambah Data Scanner" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -70,15 +70,15 @@ const save = () => {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('printer.page')"
+                        :href="route('scanner.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Printer
+                        Scanner
                     </Link>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Printer Create Pages
+                    Scanner Create Pages
                 </h6>
             </nav>
         </template>
@@ -96,7 +96,7 @@ const save = () => {
                         >
                             <div class="flex items-center">
                                 <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Create Printer
+                                    Form Create Scanner
                                 </p>
                             </div>
                         </div>
@@ -120,7 +120,7 @@ const save = () => {
                                                 required
                                                 type="text"
                                                 name="item_name"
-                                                value="printer"
+                                                value="scanner"
                                                 v-model="form.item_name"
                                                 class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Device Name"
@@ -140,8 +140,8 @@ const save = () => {
                                                 :disabled="isDisabled"
                                                 required
                                                 type="text"
-                                                name="printer_code"
-                                                v-model="form.printer_code"
+                                                name="scanner_code"
+                                                v-model="form.scanner_code"
                                                 class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Auto Generate Inventory Number"
                                             />
@@ -229,7 +229,7 @@ const save = () => {
                                             <label
                                                 for="device-brand"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Printer Brand</label
+                                                >Scanner Brand</label
                                             >
                                             <input
                                                 required
@@ -248,7 +248,7 @@ const save = () => {
                                             <label
                                                 for="device-type"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Printer Type</label
+                                                >Scanner Type</label
                                             >
                                             <input
                                                 required
@@ -380,7 +380,7 @@ const save = () => {
                                     class="flex flex-nowrap mt-6 justify-between"
                                 >
                                     <Link
-                                        :href="route('printer.page')"
+                                        :href="route('scanner.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

@@ -10,6 +10,7 @@ use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
 use App\Http\Controllers\InvPrinterController;
+use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
@@ -179,7 +180,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/komputer/{id}/detail', [InvComputerController::class, 'detail'])->name('komputer.detail');
         Route::post('/uploadCsvCu', [InvComputerController::class, 'uploadCsv'])->name('komputer.import');
 
-        Route::get('/printer', [InvPrinterController::class, 'index'])->name('printer.page');
+        Route::get('/printer', [InvPrinterController::class, 'index'])->name(name: 'printer.page');
         Route::get('/printer/create', [InvPrinterController::class, 'create'])->name('printer.create');
         Route::post('/printer/create', [InvPrinterController::class, 'store'])->name('printer.store');
         Route::get('/printer/{id}/edit', [InvPrinterController::class, 'edit'])->name('printer.edit');
@@ -187,6 +188,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/printer/update', [InvPrinterController::class, 'update'])->name('printer.update');
         Route::get('/printer/{id}/detail', [InvPrinterController::class, 'detail'])->name('printer.detail');
         Route::post('/uploadCsvPrt', [InvPrinterController::class, 'uploadCsv'])->name('printer.import');
+
+        Route::get('/scanner', [InvScannerController::class, 'index'])->name('scanner.page');
+        Route::get('/scanner/create', [InvScannerController::class, 'create'])->name('scanner.create');
+        Route::post('/scanner/create', [InvScannerController::class, 'store'])->name('scanner.store');
+        Route::get('/scanner/{id}/edit', [InvScannerController::class, 'edit'])->name('scanner.edit');
+        Route::delete('/scanner/{id}/delete', [InvScannerController::class, 'destroy'])->name('scanner.delete');
+        Route::post('/scanner/update', [InvScannerController::class, 'update'])->name('scanner.update');
+        Route::get('/scanner/{id}/detail', [InvScannerController::class, 'detail'])->name('scanner.detail');
+        Route::post('/uploadCsvScn', [InvScannerController::class, 'uploadCsv'])->name('scanner.import');
 
         Route::get('/cctv', [InvCctvController::class, 'index'])->name('cctv.page');
         Route::get('/cctv/create', [InvCctvController::class, 'create'])->name('cctv.create');

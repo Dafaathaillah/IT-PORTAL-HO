@@ -7,23 +7,23 @@ import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 
-const props = defineProps(["printer", "department", "department_select"]);
+const props = defineProps(["scanner", "department", "department_select"]);
 
 const form = useForm({
-    id: props.printer.id,
-    item_name: props.printer.item_name,
-    printer_code: props.printer.printer_code,
-    asset_ho_number: props.printer.asset_ho_number,
-    serial_number: props.printer.serial_number,
-    mac_address: props.printer.mac_address,
-    ip_address: props.printer.ip_address,
-    printer_brand: props.printer.printer_brand,
-    printer_type: props.printer.printer_type,
-    divisi: props.printer.division,
-    dept: props.printer.department,
-    location: props.printer.location,
-    status: props.printer.status,
-    note: props.printer.note,
+    id: props.scanner.id,
+    item_name: props.scanner.item_name,
+    scanner_code: props.scanner.scanner_code,
+    asset_ho_number: props.scanner.asset_ho_number,
+    serial_number: props.scanner.serial_number,
+    mac_address: props.scanner.mac_address,
+    ip_address: props.scanner.ip_address,
+    scanner_brand: props.scanner.scanner_brand,
+    scanner_type: props.scanner.scanner_type,
+    divisi: props.scanner.division,
+    dept: props.scanner.department,
+    location: props.scanner.location,
+    status: props.scanner.status,
+    note: props.scanner.note,
 });
 
 const isDisabled = ref(true);
@@ -37,7 +37,7 @@ const options = props.department;
 
 const update = () => {
     form.dept = selectedValues.value.name;
-    form.post(route("printer.update", props.printer.id), {
+    form.post(route("scanner.update", props.scanner.id), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -61,7 +61,7 @@ const update = () => {
 };
 
 const save = () => {
-    form.post(route("printer.store"), {
+    form.post(route("scanner.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -99,15 +99,15 @@ const save = () => {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('printer.page')"
+                        :href="route('scanner.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Printer
+                        Scanner
                     </Link>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Printer Edit Pages
+                    Scanner Edit Pages
                 </h6>
             </nav>
         </template>
@@ -125,7 +125,7 @@ const save = () => {
                         >
                             <div class="flex items-center">
                                 <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Edit Printer
+                                    Form Edit Scanner
                                 </p>
                             </div>
                         </div>
@@ -160,7 +160,7 @@ const save = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="printer_code"
+                                                for="scanner_code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Inventory Number</label
                                             >
@@ -168,8 +168,8 @@ const save = () => {
                                                 :disabled="isDisabled"
                                                 required
                                                 type="text"
-                                                name="printer_code"
-                                                v-model="form.printer_code"
+                                                name="scanner_code"
+                                                v-model="form.scanner_code"
                                                 class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Auto Generate Inventory Number"
                                             />
@@ -260,13 +260,13 @@ const save = () => {
                                             <label
                                                 for="device-brand"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Printer Brand</label
+                                                >Scanner Brand</label
                                             >
                                             <input
                                                 type="text"
                                                 required
-                                                v-model="form.printer_brand"
-                                                name="printer_brand"
+                                                v-model="form.scanner_brand"
+                                                name="scanner_brand"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="Epxxxxx"
                                             />
@@ -279,13 +279,13 @@ const save = () => {
                                             <label
                                                 for="device-type"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Printer Type</label
+                                                >Scanner Type</label
                                             >
                                             <input
                                                 type="text"
                                                 required
-                                                v-model="form.printer_type"
-                                                name="printer_type"
+                                                v-model="form.scanner_type"
+                                                name="scanner_type"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="UAP-xx-MESH"
                                             />
@@ -411,7 +411,7 @@ const save = () => {
                                     class="flex flex-nowrap mt-6 justify-between"
                                 >
                                     <Link
-                                        :href="route('printer.page')"
+                                        :href="route('scanner.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

@@ -69,7 +69,7 @@ const editData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't edit this data?",
+        text: "You want edit this data?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -635,17 +635,6 @@ function formatData(text) {
 
                                                         <NavLinkCustom
                                                             @click="
-                                                                editData(
-                                                                    aduans.id
-                                                                )
-                                                            "
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Edit
-                                                        </NavLinkCustom>
-
-                                                        <NavLinkCustom
-                                                            @click="
                                                                 detailData(
                                                                     aduans.id
                                                                 )
@@ -653,6 +642,17 @@ function formatData(text) {
                                                             class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Detail
+                                                        </NavLinkCustom>
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                editData(
+                                                                    aduans.id
+                                                                )
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit
                                                         </NavLinkCustom>
 
                                                         <NavLinkCustom

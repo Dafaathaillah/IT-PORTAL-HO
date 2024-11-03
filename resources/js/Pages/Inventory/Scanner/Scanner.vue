@@ -23,7 +23,7 @@ const mount = onMounted(() => {
 });
 
 const props = defineProps({
-    printer: {
+    scanner: {
         type: Array,
     },
 });
@@ -43,7 +43,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("printer.delete", { id: id }), {
+            form.delete(route("scanner.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -69,13 +69,13 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("printer.edit", { id: id }));
+            form.get(route("scanner.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("printer.detail", { id: id }));
+    form.get(route("scanner.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -103,7 +103,7 @@ const submitCsv = () => {
       window.location.reload();
     }
 
-    formx.post(route("printer.import"), {
+    formx.post(route("scanner.import"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -133,7 +133,7 @@ const submitCsv = () => {
 </script>
 
 <template>
-    <Head title="Inv Printer" />
+    <Head title="Inv Scanner" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -151,11 +151,11 @@ const submitCsv = () => {
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Printer Pages
+                        Scanner Pages
                     </li>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Printer Data
+                    Scanner Data
                 </h6>
             </nav>
         </template>
@@ -196,8 +196,8 @@ const submitCsv = () => {
                                 class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                             >
                                 <a
-                                    href="/samplePrinter.xlsx"
-                                    download="Format-Import-Data-printer.xlsx"
+                                    href="/samplescanner.xlsx"
+                                    download="Format-Import-Data-scanner.xlsx"
                                     target="_blank"
                                     type="button"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -217,7 +217,7 @@ const submitCsv = () => {
                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <Link
-                                    :href="route('printer.create')"
+                                    :href="route('scanner.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                 >
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
@@ -255,12 +255,12 @@ const submitCsv = () => {
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Printer Brand
+                                                        Scanner Brand
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Printer Type
+                                                        Scanner Type
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -298,8 +298,8 @@ const submitCsv = () => {
                                             <tbody>
                                                 <tr
                                                     v-for="(
-                                                        printers, index
-                                                    ) in printer"
+                                                        scanners, index
+                                                    ) in scanner"
                                                     :key="index"
                                                 >
                                                     <td
@@ -318,7 +318,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.printer_code
+                                                                scanners.scanner_code
                                                             }}
                                                         </p>
                                                     </td>
@@ -329,7 +329,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.asset_ho_number
+                                                                scanners.asset_ho_number
                                                             }}
                                                         </p>
                                                     </td>
@@ -340,7 +340,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.printer_brand
+                                                                scanners.scanner_brand
                                                             }}
                                                         </span>
                                                     </td>
@@ -351,7 +351,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.printer_type
+                                                                scanners.scanner_type
                                                             }}
                                                         </span>
                                                     </td>
@@ -362,7 +362,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.location
+                                                                scanners.location
                                                             }}
                                                         </span>
                                                     </td>
@@ -373,7 +373,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.note
+                                                                scanners.note
                                                             }}
                                                         </span>
                                                     </td>
@@ -384,7 +384,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.inspection_remark
+                                                                scanners.inspection_remark
                                                             }}
                                                         </span>
                                                     </td>
@@ -394,21 +394,21 @@ const submitCsv = () => {
                                                         <span
                                                             :class="{
                                                                 'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    printers.status ===
+                                                                    scanners.status ===
                                                                     'READY_USED',
                                                                 'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    printers.status ===
+                                                                    scanners.status ===
                                                                     'READY_STANDBY',
                                                                 'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    printers.status ===
+                                                                    scanners.status ===
                                                                     'SCRAP',
                                                                 'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    printers.status ===
+                                                                    scanners.status ===
                                                                     'BREAKDOWN',
                                                             }"
                                                         >
                                                             {{
-                                                                printers.status
+                                                                scanners.status
                                                             }}
                                                         </span>
                                                     </td>
@@ -420,7 +420,7 @@ const submitCsv = () => {
                                                         >
                                                             {{
                                                                 formattedDate(
-                                                                    printers.updated_at
+                                                                    scanners.updated_at
                                                                 )
                                                             }}
                                                         </span>
@@ -431,7 +431,7 @@ const submitCsv = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 detailData(
-                                                                    printers.id
+                                                                    scanners.id
                                                                 )
                                                             "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -442,7 +442,7 @@ const submitCsv = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 editData(
-                                                                    printers.id
+                                                                    scanners.id
                                                                 )
                                                             "
                                                             class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -453,7 +453,7 @@ const submitCsv = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 deleteData(
-                                                                    printers.id
+                                                                    scanners.id
                                                                 )
                                                             "
                                                             class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"

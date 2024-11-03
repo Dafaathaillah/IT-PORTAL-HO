@@ -12,6 +12,7 @@ const level2OpenSettingHo = ref(false);
 const level3OpenHo = ref(false);
 const level3KomputerOpenHo = ref(false);
 const level3PrinterOpenHo = ref(false);
+const level3ScannerOpenHo = ref(false);
 const level3CctvOpenHo = ref(false);
 
 // Load initial state from localStorage
@@ -25,6 +26,8 @@ onMounted(() => {
     level3OpenHo.value = localStorage.getItem("level3OpenHo") === "true";
     level3PrinterOpenHo.value =
         localStorage.getItem("level3PrinterOpenHo") === "true";
+    level3ScannerOpenHo.value =
+        localStorage.getItem("level3ScannerOpenHo") === "true";
     level3KomputerOpenHo.value =
         localStorage.getItem("level3KomputerOpenHo") === "true";
     level3CctvOpenHo.value =
@@ -39,6 +42,7 @@ watch(
         level2OpenSettingHo,
         level2OpenAduanHo,
         level3PrinterOpenHo,
+        level3ScannerOpenHo,
         level3KomputerOpenHo,
         level3CctvOpenHo,
     ],
@@ -53,6 +57,7 @@ watch(
             level3KomputerOpenHo.value
         );
         localStorage.setItem("level3PrinterOpenHo", level3PrinterOpenHo.value);
+        localStorage.setItem("level3ScannerOpenHo", level3ScannerOpenHo.value);
         localStorage.setItem("level3CctvOpenHo", level3CctvOpenHo.value);
     }
 );
@@ -67,6 +72,7 @@ const toggleLevel1Ho = () => {
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
 };
@@ -79,6 +85,7 @@ const toggleLevel2Ho = () => {
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
     level2OpenHo.value = !level2OpenHo.value;
@@ -92,6 +99,7 @@ const toggleLevel2AduanHo = () => {
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
     level2OpenAduanHo.value = !level2OpenAduanHo.value;
@@ -105,6 +113,7 @@ const toggleLevel2SettingHo = () => {
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
     level2OpenSettingHo.value = !level2OpenSettingHo.value;
@@ -115,6 +124,7 @@ const toggleLevel3LaptopHo = () => {
         level2OpenHo.value = true; // pastikan level 1 terbuka jika level 3 dibuka
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
     level3OpenHo.value = !level3OpenHo.value;
@@ -125,6 +135,7 @@ const toggleLevel3KomputerHo = () => {
         level2OpenHo.value = true; // pastikan level 1 terbuka jika level 3 dibuka
         level3OpenHo.value = false;
         level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
     level3KomputerOpenHo.value = !level3KomputerOpenHo.value;
@@ -136,6 +147,7 @@ const toggleLevel3CctvHo = () => {
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
     }
     level3CctvOpenHo.value = !level3CctvOpenHo.value;
 };
@@ -148,6 +160,16 @@ const toggleLevel3PrinterHo = () => {
         level3CctvOpenHo.value = false;
     }
     level3PrinterOpenHo.value = !level3PrinterOpenHo.value;
+};
+
+const toggleLevel3ScannerHo = () => {
+    if (!level3ScannerOpenHo.value) {
+        level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3CctvOpenHo.value = false;
+    }
+    level3ScannerOpenHo.value = !level3ScannerOpenHo.value;
 };
 </script>
 
@@ -536,6 +558,51 @@ const toggleLevel3PrinterHo = () => {
                                         >
                                     </NavLink>
                                 </li>
+
+                                <div
+                                    @click="toggleLevel3ScannerHo"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Scanner</span
+                                    >
+                                    <i
+                                        v-if="!level3ScannerOpenHo"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <li v-if="level3ScannerOpenHo">
+                                    <NavLink
+                                        :href="route('scanner.page')"
+                                        :active="route().current('scanner.page')"
+                                    >
+                                        <div
+                                            class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Data Scanner</span
+                                        >
+                                    </NavLink>
+                                </li>
+                                
 
                                 <div
                                     @click="toggleLevel3CctvHo"
