@@ -61,7 +61,7 @@ const showingNavigationDropdown = ref(false);
                             <span class="hidden sm:inline">LogOut</span>
                         </a> -->
 
-                            <ResponsiveNavLink
+                            <!-- <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"
                                 as="button"
@@ -69,7 +69,7 @@ const showingNavigationDropdown = ref(false);
                             >
                                 <i class="fa fa-user sm:mr-1"></i>
                                 <span class="hidden sm:inline">LogOut</span>
-                            </ResponsiveNavLink>
+                            </ResponsiveNavLink> -->
                         </li>
                     </ul>
                 </div>

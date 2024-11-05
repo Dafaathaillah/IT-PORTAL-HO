@@ -36,6 +36,48 @@ const props = defineProps({
     },
 });
 
+// State pencarian
+const formSearch = useForm({
+    search: "",
+});
+
+// Fungsi untuk melakukan pencarian
+const search = () => {
+    Swal.fire({
+        title: "Sedang Mencari Data...",
+        text: "Mohon tunggu sebentar...",
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+    formSearch.get(route("guestAduan.page"), {
+        preserveState: true,
+         onSuccess: () => {
+            Swal.fire({
+                title: "Success",
+                text: "Data pencarian ditemukan!",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+
+            setTimeout(function() {
+                reloadPage();
+            }, 2000);
+        },
+        onError: () => {
+            Swal.fire({
+                title: "error!",
+                text: "Data tidak ditemukan!",
+                icon: "waring",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+        },
+        });
+};
+
 const form = useForm({});
 
 const deleteData = (id) => {
@@ -65,62 +107,10 @@ const deleteData = (id) => {
     });
 };
 
-const editData = (id) => {
-    // Call SweetAlert for confirmation
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't edit this data?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form.get(route("aduan.edit", { id: id }));
-        }
-    });
-};
-
-const progressAduan = (id) => {
-    form.get(route("aduan.progress", { id: id }));
-};
-
-const detailData = (id) => {
-    form.get(route("aduan.detail", { id: id }));
-};
-
 const file = ref(null);
 
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
-};
-
-const submitCsv = () => {
-    const formData = new FormData();
-    formData.append("file", file.value);
-    Inertia.post(route("aduan.import"), formData, {
-        forceFormData: true,
-        onSuccess: () => {
-            // Show SweetAlert2 success notification
-            Swal.fire({
-                title: "Success!",
-                text: "Data has been successfully created!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-        },
-        onError: () => {
-            Swal.fire({
-                title: "error!",
-                text: "Data not created!",
-                icon: "waring",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-        },
-    });
 };
 
 function formatData(text) {
@@ -157,198 +147,45 @@ function formatData(text) {
 
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex flex-wrap -mx-3 mb-8">
-                    <!-- card1 -->
-                    <div
-                        class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
+                <div class="flex flex-wrap -mx-3 mb-3">
+                    <form
+                        @submit.prevent="search"
+                        enctype="multipart/form-data"
                     >
-                        <div
-                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-                        >
-                            <div class="flex-auto p-4">
-                                <div class="flex flex-row -mx-3">
+                        <div class="flex">
+                            <div
+                                class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                            >
+                                <div
+                                    class="flex items-center md:ml-auto md:pr-4"
+                                >
                                     <div
-                                        class="flex-none w-2/3 max-w-full px-3"
+                                        class="h-11 relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease"
                                     >
-                                        <div>
-                                            <p
-                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
-                                            >
-                                                ALL ADUAN OPEN
-                                            </p>
-                                            <h5
-                                                class="mb-2 font-bold dark:text-white"
-                                            >
-                                                {{ props.open }}
-                                            </h5>
-                                            <!-- <p
-                                                class="mb-0 dark:text-white dark:opacity-60"
-                                            >
-                                                <span
-                                                    class="text-sm font-bold leading-normal text-emerald-500"
-                                                    >+55%</span
-                                                >
-                                                since yesterday
-                                            </p> -->
-                                        </div>
-                                    </div>
-                                    <div class="px-3 text-right basis-1/3">
-                                        <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500"
+                                        <span
+                                            class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
                                         >
-                                            <i
-                                                class="fas fa-envelope-open text-lg relative top-2.5 text-white"
-                                            ></i>
-                                        </div>
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            v-model="formSearch.search"
+                                            class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                            placeholder="Type here..."
+                                        />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- card2 -->
-                    <div
-                        class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
-                    >
-                        <div
-                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-                        >
-                            <div class="flex-auto p-4">
-                                <div class="flex flex-row -mx-3">
-                                    <div
-                                        class="flex-none w-2/3 max-w-full px-3"
-                                    >
-                                        <div>
-                                            <p
-                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
-                                            >
-                                                ALL ADUAN CLOSED
-                                            </p>
-                                            <h5
-                                                class="mb-2 font-bold dark:text-white"
-                                            >
-                                                {{ props.closed }}
-                                            </h5>
-                                            <!-- <p
-                                                class="mb-0 dark:text-white dark:opacity-60"
-                                            >
-                                                <span
-                                                    class="text-sm font-bold leading-normal text-emerald-500"
-                                                    >+3%</span
-                                                >
-                                                since last week
-                                            </p> -->
-                                        </div>
-                                    </div>
-                                    <div class="px-3 text-right basis-1/3">
-                                        <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-green-600 to-green-600"
-                                        >
-                                            <i
-                                                class="fas fa-check-square text-lg relative top-2.5 text-white"
-                                            ></i>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="max-w-full shrink-0">
+                                <button
+                                    type="submit"
+                                    class="h-11 htext-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    Search
+                                </button>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- card3 -->
-                    <div
-                        class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
-                    >
-                        <div
-                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-                        >
-                            <div class="flex-auto p-4">
-                                <div class="flex flex-row -mx-3">
-                                    <div
-                                        class="flex-none w-2/3 max-w-full px-3"
-                                    >
-                                        <div>
-                                            <p
-                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
-                                            >
-                                                ALL ADUAN PROGRESS
-                                            </p>
-                                            <h5
-                                                class="mb-2 font-bold dark:text-white"
-                                            >
-                                                {{ props.progress }}
-                                            </h5>
-                                            <!-- <p
-                                                class="mb-0 dark:text-white dark:opacity-60"
-                                            >
-                                                <span
-                                                    class="text-sm font-bold leading-normal text-red-600"
-                                                    >-2%</span
-                                                >
-                                                since last quarter
-                                            </p> -->
-                                        </div>
-                                    </div>
-                                    <div class="px-3 text-right basis-1/3">
-                                        <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-400"
-                                        >
-                                            <i
-                                                class="fas fa-clock text-lg relative top-2.5 text-white"
-                                            ></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- card4 -->
-                    <div
-                        class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4"
-                    >
-                        <div
-                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-                        >
-                            <div class="flex-auto p-4">
-                                <div class="flex flex-row -mx-3">
-                                    <div
-                                        class="flex-none w-2/3 max-w-full px-3"
-                                    >
-                                        <div>
-                                            <p
-                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
-                                            >
-                                                ALL ADUN CANCEL
-                                            </p>
-                                            <h5
-                                                class="mb-2 font-bold dark:text-white"
-                                            >
-                                                {{ props.cancel }}
-                                            </h5>
-                                            <!-- <p
-                                                class="mb-0 dark:text-white dark:opacity-60"
-                                            >
-                                                <span
-                                                    class="text-sm font-bold leading-normal text-emerald-500"
-                                                    >+5%</span
-                                                >
-                                                than last month
-                                            </p> -->
-                                        </div>
-                                    </div>
-                                    <div class="px-3 text-right basis-1/3">
-                                        <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-500 to-red-500"
-                                        >
-                                            <i
-                                                class="fas fa-ban text-lg relative top-2.5 text-white"
-                                            ></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="flex flex-wrap -mx-3">
                     <div class="flex-none w-full max-w-full px-3">

@@ -10,21 +10,25 @@ use Inertia\Inertia;
 
 class GuestReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->get();
-        $countOpen = Aduan::where('status', 'OPEN')->count();
-        $countClosed = Aduan::where('status', 'CLOSED')->count();
-        $countProgress = Aduan::where('status', 'PROGRESS')->count();
-        $countCancel = Aduan::where('status', 'CANCEL')->count();
+        $search = $request->search;
+        // return dd($search);
+        $aduan = Aduan::query()
+        ->when(!$search, function($query) {
+            return $query->whereDate('date_of_complaint', Carbon::today())
+                         ->orderBy('date_of_complaint', 'desc');
+        })
+        ->when($search, function($query, $search) {
+            return $query->where('complaint_code', 'like', '%' . $search . '%');
+        })
+        ->get();
+
+        // $aduan = Aduan::whereDate('created_date', Carbon::today())->orderBy('date_of_complaint', 'desc')->get();
         return Inertia::render(
             'Guest/GuestAduan',
             [
                 'aduan' => $aduan,
-                'open' => $countOpen,
-                'closed' => $countClosed,
-                'progress' => $countProgress,
-                'cancel' => $countCancel,
             ]
         );
     }
@@ -48,7 +52,7 @@ class GuestReportController extends Controller
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
 
-         $complaintDataNrp = UserAll::select('nrp', 'username')->get()->toArray();
+        $complaintDataNrp = UserAll::select('nrp', 'username')->get()->toArray();
 
         // return response()->json($crew);
         // end generate code
@@ -78,7 +82,7 @@ class GuestReportController extends Controller
 
         if (empty($request['complaint_name'])) {
             $data['complaint_name'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
-        }else{
+        } else {
             $data['complaint_name'] = $request['complaint_name'];
         }
 
@@ -99,7 +103,7 @@ class GuestReportController extends Controller
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            }else{
+            } else {
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['inventory_number'] = $request->inventory_number;
@@ -110,7 +114,7 @@ class GuestReportController extends Controller
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            }else{
+            } else {
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['status'] = 'OPEN';
@@ -118,7 +122,7 @@ class GuestReportController extends Controller
             $aduan = Aduan::create($data);
         }
         // return dd($data);
-        return redirect()->route('guestAduan.page');
+        // return redirect()->route('guestAduan.page');
     }
 
     public function destroy($id)

@@ -20,23 +20,26 @@ const props = defineProps({
 });
 
 const form = useForm({
+    nrp: "",
     complaint_code: props.ticket,
+    complaint_name: "",
     phone_number: "",
     inventory_number: "",
     category_name: "",
     location: "",
     complaint_note: "",
     location_detail: "",
+    image: "",
 });
 
 //start auto generate nama by nik
 const complaintDataNrp = props.complaintDataNrp;
-const nrp = ref('');
-const complaintName = ref('');
+const nrp = ref("");
+const complaintName = ref("");
 
 watch(nrp, (newNrp) => {
-  const found = complaintDataNrp.find((data) => data.nrp === newNrp);
-  complaintName.value = found ? found.username : '';
+    const found = complaintDataNrp.find((data) => data.nrp === newNrp);
+    complaintName.value = found ? found.username : "";
 });
 // end auto generate nama by nik
 
@@ -50,28 +53,24 @@ const handleFileUpload = (event) => {
 const formSubmitted = ref(false);
 
 const save = () => {
-    console.log(nrp.value)
     const formData = new FormData();
-    formData.append("image", file.value);
-    formData.append("complaint_name", complaintName.value);
-    formData.append("complaint_code", form.complaint_code);
-    formData.append("nrp", nrp.value);
-    formData.append("phone_number", form.phone_number);
-    formData.append("inventory_number", form.inventory_number);
-    formData.append("category_name", form.category_name);
-    formData.append("location", form.location);
-    formData.append("complaint_note", form.complaint_note);
-    formData.append("location_detail", form.location_detail);
-    Inertia.post(route("guestAduan.store"), formData, {
-        forceFormData: true,
+    form.image = file.value;
+    form.nrp = nrp.value;
+    form.complaint_name = complaintName.value;
+    form.post(route("guestAduan.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
-                title: "Success!",
-                text: "Data has been successfully created!",
+                title: "Complaint has been submited!",
+                text: "Terima kasih telah menghubungi ict centre, aduan anda akan segera ditangani oleh tim.",
                 icon: "success",
-                confirmButtonText: "OK",
+                showCancelButton: false,
                 confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.get(route("guestAduan.page"));
+                }
             });
         },
         onError: () => {
@@ -100,7 +99,6 @@ const getPlaceholder = computed(() => {
         return "Masukkan No Inventory CCTV";
     }
 });
-
 </script>
 
 <template>
@@ -153,7 +151,7 @@ const getPlaceholder = computed(() => {
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
                                 <div class="flex flex-wrap -mx-3">
-                                 <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -204,7 +202,7 @@ const getPlaceholder = computed(() => {
                                             >
                                             <input
                                                 required
-                                                 :disabled="isDisabled"
+                                                :disabled="isDisabled"
                                                 type="text"
                                                 name="complaint_name"
                                                 v-model="complaintName"
@@ -295,7 +293,7 @@ const getPlaceholder = computed(() => {
                                         </div>
                                     </div>
                                     <div
-                                     :class="
+                                        :class="
                                             form.category_name ===
                                                 'PC/LAPTOP' ||
                                             form.category_name == 'NETWORK' ||
@@ -320,7 +318,7 @@ const getPlaceholder = computed(() => {
                                         </div>
                                     </div>
                                     <div
-                                     :class="
+                                        :class="
                                             form.category_name ===
                                                 'PC/LAPTOP' ||
                                             form.category_name == 'NETWORK' ||
@@ -388,8 +386,9 @@ const getPlaceholder = computed(() => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
-                                    
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
                                         :href="route('guestAduan.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
