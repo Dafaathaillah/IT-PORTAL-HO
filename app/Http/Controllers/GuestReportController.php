@@ -12,14 +12,19 @@ class GuestReportController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->search;
+        if (empty($request->search) || $request->search == null) {
+            $search = 'errordata';
+        }else{
+            $search = $request->search;
+        }
+
         // return dd($search);
         $aduan = Aduan::query()
-        ->when(!$search, function($query) {
+        ->when(!$request->search, function($query) {
             return $query->whereDate('date_of_complaint', Carbon::today())
                          ->orderBy('date_of_complaint', 'desc');
         })
-        ->when($search, function($query, $search) {
+        ->when($request->search, function($query, $search) {
             return $query->where('complaint_code', 'like', '%' . $search . '%');
         })
         ->get();

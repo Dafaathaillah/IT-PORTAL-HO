@@ -53,18 +53,27 @@ const search = () => {
     });
     formSearch.get(route("guestAduan.page"), {
         preserveState: true,
-         onSuccess: () => {
-            Swal.fire({
-                title: "Success",
-                text: "Data pencarian ditemukan!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-
-            setTimeout(function() {
-                reloadPage();
-            }, 2000);
+        onSuccess: (response) => {
+            console.log(response.props.aduan.length);
+            if (response.props.aduan.length === 1) {
+                Swal.fire({
+                    title: "Success",
+                    text: "Data complaint ditemukan!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#3085d6",
+                });
+            } else {
+                Swal.fire({
+                    title: "error!",
+                    text: "Data tidak ditemukan!",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#3085d6",
+                }).then(() => {
+                    Inertia.get(route("guestAduan.page")); // Reload halaman setelah konfirmasi SweetAlert
+                });
+            }
         },
         onError: () => {
             Swal.fire({
@@ -75,7 +84,7 @@ const search = () => {
                 confirmButtonColor: "#3085d6",
             });
         },
-        });
+    });
 };
 
 const form = useForm({});
