@@ -141,7 +141,7 @@ function formatData(text) {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Inv Cctv" />
 
     <AuthenticatedLayout>
         <template #header>

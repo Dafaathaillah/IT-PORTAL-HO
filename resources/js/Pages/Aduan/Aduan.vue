@@ -130,7 +130,7 @@ function formatData(text) {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Complaint" />
 
     <AuthenticatedLayout>
         <template #header>
