@@ -9,6 +9,7 @@ const level1OpenHo = ref(false);
 const level2OpenHo = ref(false);
 const level2OpenAduanHo = ref(false);
 const level2OpenSettingHo = ref(false);
+const level2OpenInspeksiHo = ref(false);
 const level3OpenHo = ref(false);
 const level3KomputerOpenHo = ref(false);
 const level3PrinterOpenHo = ref(false);
@@ -23,6 +24,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanHo") === "true";
     level2OpenSettingHo.value =
         localStorage.getItem("level2OpenSettingHo") === "true";
+    level2OpenInspeksiHo.value =
+        localStorage.getItem("level2OpenInspeksiHo") === "true";
     level3OpenHo.value = localStorage.getItem("level3OpenHo") === "true";
     level3PrinterOpenHo.value =
         localStorage.getItem("level3PrinterOpenHo") === "true";
@@ -40,6 +43,7 @@ watch(
         level1OpenHo,
         level2OpenHo,
         level2OpenSettingHo,
+        level2OpenInspeksiHo,
         level2OpenAduanHo,
         level3PrinterOpenHo,
         level3ScannerOpenHo,
@@ -51,6 +55,7 @@ watch(
         localStorage.setItem("level2OpenHo", level2OpenHo.value);
         localStorage.setItem("level2OpenAduanHo", level2OpenAduanHo.value);
         localStorage.setItem("level2OpenSettingHo", level2OpenSettingHo.value);
+        localStorage.setItem("level2OpenInspeksiHo", level2OpenInspeksiHo.value);
         localStorage.setItem("level3OpenHo", level3OpenHo.value);
         localStorage.setItem(
             "level3KomputerOpenHo",
@@ -82,6 +87,7 @@ const toggleLevel2Ho = () => {
     if (!level2OpenHo.value) {
         level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingHo.value = false;
+        level2OpenInspeksiHo.value = false;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
@@ -96,6 +102,7 @@ const toggleLevel2AduanHo = () => {
     if (!level2OpenAduanHo.value) {
         level2OpenHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
@@ -117,6 +124,20 @@ const toggleLevel2SettingHo = () => {
         level3CctvOpenHo.value = false;
     }
     level2OpenSettingHo.value = !level2OpenSettingHo.value;
+};
+
+const toggleLevel2InspeksiHo = () => {
+    console.log(level1OpenHo.value);
+    if (!level2OpenInspeksiHo.value) {
+        level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
+        level3CctvOpenHo.value = false;
+    }
+    level2OpenInspeksiHo.value = !level2OpenInspeksiHo.value;
 };
 
 const toggleLevel3LaptopHo = () => {
@@ -648,6 +669,64 @@ const toggleLevel3ScannerHo = () => {
                                     </NavLink>
                                 </li>
                             </ul>
+                            
+                            <div
+                                @click="toggleLevel2InspeksiHo"
+                                style="cursor: pointer"
+                                class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                            >
+                                <div
+                                    class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Inspeksi</span
+                                >
+                                <i
+                                    v-if="!level2OpenInspeksiHo"
+                                    class="ms-3 fas fa-angle-right"
+                                ></i>
+                                <i v-else class="ms-3 fas fa-angle-down"></i>
+                            </div>
+                            <ul v-if="level2OpenInspeksiHo">
+                                <NavLink
+                                    :href="route('pengguna.page')"
+                                    :active="route().current('pengguna.page')"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi Laptop</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
+                                    :href="route('department.page')"
+                                    :active="route().current('department.page')"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi Komputer</span
+                                    >
+                                </NavLink>
+                            </ul>
 
                             <div
                                 @click="toggleLevel2SettingHo"
@@ -706,6 +785,7 @@ const toggleLevel3ScannerHo = () => {
                                     >
                                 </NavLink>
                             </ul>
+
                         </li>
                     </ul>
                 </li>
