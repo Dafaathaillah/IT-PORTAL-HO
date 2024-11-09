@@ -7,6 +7,10 @@ use App\Models\InvLaptop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+
+use function PHPUnit\Framework\isEmpty;
 
 class InspeksiLaptopController extends Controller
 {
@@ -24,8 +28,13 @@ class InspeksiLaptopController extends Controller
     }
     public function index()
     {
-        $inspeksi_laptop = InspeksiLaptop::all();
-        return response()->json($inspeksi_laptop);
+
+        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->get();
+
+        return Inertia::render(
+            'Inspeksi/Laptop/InspeksiLaptopView',
+            ['inspeksiLaptopx' => $inspeksi_laptop]
+        );
     }
 
     public function store(Request $request)
@@ -217,7 +226,7 @@ class InspeksiLaptopController extends Controller
             }
             $data['udpateInspeksiApproval'] = InspeksiLaptop::where('id', $request->id)->update($dataApproval);
             return response()->json($data);
-        }else{
+        } else {
             return response()->json(['message' => 'data ini belum di inspeksi']);
         }
     }

@@ -30,13 +30,25 @@ class ImportInventoryToInspeksiLaptop extends Command
     {
         // Retrieve data from inventory
         $inventories_laptop = InvLaptop::get();
+        $currentDate = Carbon::now();
 
         // Insert data into inspeksi
         foreach ($inventories_laptop as $inventory_laptop) {
-            InspeksiLaptop::create([
-                'inv_laptop_id' => $inventory_laptop->id,
-                'year' => Carbon::now()->format('Y'),
-            ]);
+            $cek = InspeksiLaptop::where('inv_laptop_id',  $inventory_laptop->id)
+            ->where('year', $currentDate->format('Y'))
+            ->get();
+
+            if($cek->isEmpty())
+            {
+                InspeksiLaptop::create([
+                    'inv_laptop_id' => $inventory_laptop->id,
+                    'created_date' => $currentDate->format('Y-m-d H:i:s'),
+                    'year' => $currentDate->format('Y'),
+                    'inspection_status' => 'N',
+                    'inventory_status' => $inventory_laptop->status,
+                    'created_at' => $currentDate->format('Y-m-d H:i:s')
+                ]);
+            }
         }
 
         $this->info('Data successfully imported from inventory to inspeksi.');

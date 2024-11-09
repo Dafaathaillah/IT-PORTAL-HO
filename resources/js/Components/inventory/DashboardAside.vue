@@ -694,14 +694,14 @@ const toggleLevel3ScannerHo = () => {
                             </div>
                             <ul v-if="level2OpenInspeksiHo">
                                 <NavLink
-                                    :href="route('pengguna.page')"
-                                    :active="route().current('pengguna.page')"
+                                    :href="route('inspeksiLaptop.page')"
+                                    :active="route().current('inspeksiLaptop.page')"
                                 >
                                     <div
                                         class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
                                         ></i>
                                     </div>
                                     <span
@@ -718,7 +718,7 @@ const toggleLevel3ScannerHo = () => {
                                         class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
                                         ></i>
                                     </div>
                                     <span

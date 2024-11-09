@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspeksiComputerController;
+use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvComputerController;
@@ -241,6 +242,13 @@ Route::middleware('auth')->group(function () {
         Route::get('inspeksi-komputer/{id}/edit', [InspeksiComputerController::class, 'edit'])->name('inspeksiKomputer.edit');
         Route::put('inspeksi-komputer/{id}/update', [InspeksiComputerController::class, 'update'])->name('inspeksiKomputer.update');
         Route::delete('inspeksi-komputer/{id}/delete', [InspeksiComputerController::class, 'destroy'])->name('inspeksiKomputer.delete');
+
+        Route::get('inspeksi-laptop', [InspeksiLaptopController::class, 'index'])->name('inspeksiLaptop.page');
+        Route::get('inspeksi-laptop/create', [InspeksiLaptopController::class, 'create'])->name('inspeksiLaptop.create');
+        Route::post('inspeksi-laptop/create', [InspeksiLaptopController::class, 'store'])->name('inspeksiLaptop.store');
+        Route::get('inspeksi-laptop/{id}/edit', [InspeksiLaptopController::class, 'edit'])->name('inspeksiLaptop.edit');
+        Route::put('inspeksi-laptop/{id}/update', [InspeksiLaptopController::class, 'update'])->name('inspeksiLaptop.update');
+        Route::delete('inspeksi-laptop/{id}/delete', [InspeksiLaptopController::class, 'destroy'])->name('inspeksiLaptop.delete');
     });
 });
 Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('home');
