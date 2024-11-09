@@ -4,6 +4,7 @@ use App\Http\Controllers\AduanController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\GuestReportController;
+use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvComputerController;
@@ -28,9 +29,9 @@ use Inertia\Inertia;
 use Illuminate\Foundation\Application;
 
 
-Route::get('/complaint', [GuestReportController::class, 'index'])->name('guestAduan.page');
-Route::get('/complaint/create', [GuestReportController::class, 'create'])->name('guestAduan.create');
-Route::post('/complaint/create', [GuestReportController::class, 'store'])->name('guestAduan.store');
+Route::get('/complaint/dashboard', [GuestReportController::class, 'index'])->name('guestAduan.page');
+Route::get('/complaint', [GuestReportController::class, 'create'])->name('guestAduan.create');
+Route::post('/complaint', [GuestReportController::class, 'store'])->name('guestAduan.store');
 Route::delete('/complaint/{id}/delete', [GuestReportController::class, 'destroy'])->name('guestAduan.delete');
 
 Route::middleware('auth')->group(function () {
@@ -233,6 +234,13 @@ Route::middleware('auth')->group(function () {
         Route::get('department/{id}/edit', [DepartmentController::class, 'edit'])->name('department.edit');
         Route::put('department/{id}/update', [DepartmentController::class, 'update'])->name('department.update');
         Route::delete('department/{id}/delete', [DepartmentController::class, 'destroy'])->name('department.delete');
+        
+        Route::get('inspeksi-komputer', [InspeksiComputerController::class, 'index'])->name('inspeksiKomputer.page');
+        Route::get('inspeksi-komputer/create', [InspeksiComputerController::class, 'create'])->name('inspeksiKomputer.create');
+        Route::post('inspeksi-komputer/create', [InspeksiComputerController::class, 'store'])->name('inspeksiKomputer.store');
+        Route::get('inspeksi-komputer/{id}/edit', [InspeksiComputerController::class, 'edit'])->name('inspeksiKomputer.edit');
+        Route::put('inspeksi-komputer/{id}/update', [InspeksiComputerController::class, 'update'])->name('inspeksiKomputer.update');
+        Route::delete('inspeksi-komputer/{id}/delete', [InspeksiComputerController::class, 'destroy'])->name('inspeksiKomputer.delete');
     });
 });
 Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('home');
