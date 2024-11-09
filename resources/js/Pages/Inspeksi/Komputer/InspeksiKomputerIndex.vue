@@ -16,14 +16,12 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-      buttons: [
-        'copy', 'csv', 'excel', 'pdf', 'print'
-      ],
+        buttons: ["copy", "csv", "excel", "pdf", "print"],
     });
 });
 
 const props = defineProps({
-    printer: {
+    computer: {
         type: Array,
     },
 });
@@ -86,21 +84,21 @@ const handleFileUpload = (event) => {
 
 const submitCsv = () => {
     let timerInterval;
-        Swal.fire({
-        title: 'Mengimport Data...',
-        text: 'Mohon tunggu sebentar...',
+    Swal.fire({
+        title: "Mengimport Data...",
+        text: "Mohon tunggu sebentar...",
         allowOutsideClick: false,
         didOpen: () => {
             Swal.showLoading();
-        }
+        },
     });
 
     const formx = useForm({
-        file: file.value
+        file: file.value,
     });
 
     function reloadPage() {
-      window.location.reload();
+        window.location.reload();
     }
 
     formx.post(route("printer.import"), {
@@ -114,10 +112,9 @@ const submitCsv = () => {
                 confirmButtonColor: "#3085d6",
             });
 
-            setTimeout(function() {
+            setTimeout(function () {
                 reloadPage();
             }, 2000);
-
         },
         onError: () => {
             Swal.fire({
@@ -133,7 +130,7 @@ const submitCsv = () => {
 </script>
 
 <template>
-    <Head title="Inv Printer" />
+    <Head title="Inspeksi Komputer" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -151,11 +148,11 @@ const submitCsv = () => {
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Printer Pages
+                        Inspeksi Komputer Pages
                     </li>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Printer Data
+                    Inspeksi Komputer Data
                 </h6>
             </nav>
         </template>
@@ -163,7 +160,7 @@ const submitCsv = () => {
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
-                    <form
+                    <!-- <form
                         @submit.prevent="submitCsv"
                         enctype="multipart/form-data"
                     >
@@ -181,9 +178,7 @@ const submitCsv = () => {
                                     />
                                 </div>
                             </div>
-                             <div
-                                class="max-w-full shrink-0"
-                            >
+                            <div class="max-w-full shrink-0">
                                 <button
                                     type="submit"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -192,7 +187,7 @@ const submitCsv = () => {
                                     Import
                                 </button>
                             </div>
-                             <div
+                            <div
                                 class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                             >
                                 <a
@@ -207,7 +202,7 @@ const submitCsv = () => {
                                 </a>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
 
                     <div class="flex-none w-full max-w-full px-3">
                         <div
@@ -224,11 +219,14 @@ const submitCsv = () => {
                                     New Data
                                 </Link>
                             </div>
-                            
+
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0 overflow-x-auto">
                                     <div class="p-6 text-gray-900">
-                                        <div v-if="$page.props.flash.message" class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300">
+                                        <div
+                                            v-if="$page.props.flash.message"
+                                            class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300"
+                                        >
                                             {{ $page.props.flash.message }}
                                         </div>
                                         <table
@@ -250,17 +248,32 @@ const submitCsv = () => {
                                                     <th
                                                         class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Asset Ho Number
+                                                        User
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Inspector
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Printer Brand
+                                                        Inspection Status
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Printer Type
+                                                        Finding Status
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Inventory Status
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Ip Address
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -270,17 +283,7 @@ const submitCsv = () => {
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Note
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Inspection remark
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Device Status
+                                                        Remark
                                                     </th>
 
                                                     <th
@@ -298,8 +301,8 @@ const submitCsv = () => {
                                             <tbody>
                                                 <tr
                                                     v-for="(
-                                                        printers, index
-                                                    ) in printer"
+                                                        computers, index
+                                                    ) in computer"
                                                     :key="index"
                                                 >
                                                     <td
@@ -318,18 +321,29 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.printer_code
+                                                                computers.computer.computer_code
                                                             }}
                                                         </p>
                                                     </td>
-                                                       <td
+                                                          <td
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <p
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.asset_ho_number
+                                                                computers.computer.pengguna.username
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                computers.Inspector
                                                             }}
                                                         </p>
                                                     </td>
@@ -340,7 +354,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.printer_brand
+                                                                computers.inspection_status
                                                             }}
                                                         </span>
                                                     </td>
@@ -351,7 +365,7 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.printer_type
+                                                                computers.findings_status
                                                             }}
                                                         </span>
                                                     </td>
@@ -362,7 +376,27 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.location
+                                                                computers.inventory_status
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{ computers.ip_address }}
+                                                        </span>
+                                                    </td>
+                                                      <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                computers.location
                                                             }}
                                                         </span>
                                                     </td>
@@ -373,45 +407,34 @@ const submitCsv = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                printers.note
+                                                                computers.remarks
                                                             }}
                                                         </span>
                                                     </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                printers.inspection_remark
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
+                                                    <!-- <td
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
                                                             :class="{
                                                                 'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    printers.status ===
+                                                                    computers.status ===
                                                                     'READY_USED',
                                                                 'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    printers.status ===
+                                                                    computers.status ===
                                                                     'READY_STANDBY',
                                                                 'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    printers.status ===
+                                                                    computers.status ===
                                                                     'SCRAP',
                                                                 'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    printers.status ===
+                                                                    computers.status ===
                                                                     'BREAKDOWN',
                                                             }"
                                                         >
                                                             {{
-                                                                printers.status
+                                                                computers.status
                                                             }}
                                                         </span>
-                                                    </td>
+                                                    </td> -->
                                                     <td
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
@@ -420,7 +443,7 @@ const submitCsv = () => {
                                                         >
                                                             {{
                                                                 formattedDate(
-                                                                    printers.updated_at
+                                                                    computers.updated_at
                                                                 )
                                                             }}
                                                         </span>
@@ -431,7 +454,7 @@ const submitCsv = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 detailData(
-                                                                    printers.id
+                                                                    computers.id
                                                                 )
                                                             "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -442,7 +465,7 @@ const submitCsv = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 editData(
-                                                                    printers.id
+                                                                    computers.id
                                                                 )
                                                             "
                                                             class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -453,7 +476,7 @@ const submitCsv = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 deleteData(
-                                                                    printers.id
+                                                                    computers.id
                                                                 )
                                                             "
                                                             class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"

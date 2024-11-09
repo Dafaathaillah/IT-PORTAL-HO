@@ -7,6 +7,7 @@ use App\Models\InvComputer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class InspeksiComputerController extends Controller
 {
@@ -25,8 +26,12 @@ class InspeksiComputerController extends Controller
     }
     public function index()
     {
-        $inspeksi_computer = InspeksiComputer::all();
-        return response()->json($inspeksi_computer);
+        $inspeksiKomputer = InspeksiComputer::with('computer.pengguna')->get();
+        // return dd($inspeksiKomputer);
+        return Inertia::render(
+            'Inspeksi/Komputer/InspeksiKomputerIndex',
+            ['computer' => $inspeksiKomputer]
+        );
     }
 
     public function store(Request $request)

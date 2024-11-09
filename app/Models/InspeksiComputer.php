@@ -41,4 +41,12 @@ class InspeksiComputer extends Model
         'approved_by',
         'status_approval',
     ];
+
+    
+    public function computer()
+    {
+        return $this->belongsTo(InvComputer::class, 'inv_computer_id', 'id')->withDefault([
+            'computer_code' => 'Data komputer tidak ditemukan !',
+        ]);
+    }
 }
