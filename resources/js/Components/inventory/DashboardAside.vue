@@ -718,7 +718,7 @@ const toggleLevel3ScannerHo = () => {
                                         class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
                                         ></i>
                                     </div>
                                     <span
