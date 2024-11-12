@@ -237,8 +237,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('department/{id}/delete', [DepartmentController::class, 'destroy'])->name('department.delete');
         
         Route::get('inspeksi-komputer', [InspeksiComputerController::class, 'index'])->name('inspeksiKomputer.page');
-        Route::get('inspeksi-komputer/create', [InspeksiComputerController::class, 'create'])->name('inspeksiKomputer.create');
-        Route::post('inspeksi-komputer/create', [InspeksiComputerController::class, 'store'])->name('inspeksiKomputer.store');
+        Route::get('inspeksi-komputer/{id}/inspection', [InspeksiComputerController::class, 'doInspection'])->name('inspeksiKomputer.inspection');
+        Route::post('inspeksi-komputer/inspection', [InspeksiComputerController::class, 'store'])->name('inspeksiKomputer.store');
         Route::get('inspeksi-komputer/{id}/edit', [InspeksiComputerController::class, 'edit'])->name('inspeksiKomputer.edit');
         Route::put('inspeksi-komputer/{id}/update', [InspeksiComputerController::class, 'update'])->name('inspeksiKomputer.update');
         Route::delete('inspeksi-komputer/{id}/delete', [InspeksiComputerController::class, 'destroy'])->name('inspeksiKomputer.delete');
