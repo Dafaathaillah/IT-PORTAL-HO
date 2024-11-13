@@ -28,7 +28,6 @@ class InspeksiComputerController extends Controller
     }
     public function index()
     {
-
         $inspeksiKomputer = InspeksiComputer::with('computer.pengguna')->get();
         // return dd($inspeksiKomputer);
         return Inertia::render(
@@ -87,7 +86,7 @@ class InspeksiComputerController extends Controller
 
                 $dataInspection = [
                     'inspection_status' => 'Y',
-                    'inspector' => 'user login',
+                    'inspector' => Auth::user()->name,
                     'physique_condition_cpu' => $request->cpu,
                     'physique_condition_monitor' => $request->monitor,
                     'software_license' => $request->license,
@@ -125,7 +124,7 @@ class InspeksiComputerController extends Controller
 
                 $dataInspection = [
                     'inspection_status' => 'Y',
-                    'inspector' => 'user login',
+                    'inspector' => Auth::user()->name,
                     'physique_condition_cpu' => $request->cpu,
                     'physique_condition_monitor' => $request->monitor,
                     'software_license' => $request->license,
@@ -163,7 +162,7 @@ class InspeksiComputerController extends Controller
 
                 $dataInspection = [
                     'inspection_status' => 'Y',
-                    'inspector' => 'user login',
+                    'inspector' => Auth::user()->name,
                     'physique_condition_cpu' => $request->cpu,
                     'physique_condition_monitor' => $request->monitor,
                     'software_license' => $request->license,
@@ -195,7 +194,7 @@ class InspeksiComputerController extends Controller
 
                 $dataInspection = [
                     'inspection_status' => 'Y',
-                    'inspector' => 'user login',
+                    'inspector' => Auth::user()->name,
                     'physique_condition_cpu' => $request->cpu,
                     'physique_condition_monitor' => $request->monitor,
                     'software_license' => $request->license,

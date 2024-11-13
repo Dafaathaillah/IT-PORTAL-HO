@@ -4,35 +4,116 @@ import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import VueMultiselect from "vue-multiselect";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import Swal from "sweetalert2";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-const props = defineProps(["printer_code", "department"]);
+const props = defineProps(["inspeksi", "crew"]);
 
 const form = useForm({
-    item_name: "printer",
-    printer_code: props.printer_code,
-    asset_ho_number: "",
-    serial_number: "",
-    mac_address: "",
-    ip_address: "",
-    device_brand: "",
-    device_type: "",
-    divisi: "",
-    dept: "",
-    location: "",
+    id: props.inspeksi.id,
+    cpu: "",
+    monitor: "",
+    license: "",
+    standaritation: "",
+    cache: "",
+    restore: "",
+    defrag: "",
+    hard_maintenance: "",
+    change_user_pass: "",
+    autolock: "",
+    enter_password: "",
+    findings: "",
+    findings_image: "",
+    action: "",
+    action_image: "",
+    inspection_image: "",
+    remark: "",
+    due_date: "",
+    kondisi: "",
+    inventory_status: "",
     status: "",
-    note: "",
+    ip_address: "",
+    location: "",
+    crew: "",
+    ip_address: props.inspeksi.computer.ip_address,
+    location: props.inspeksi.computer.location,
 });
 
 const isDisabled = ref(true);
 const selectedValues = ref(null); // Awalnya array kosong
+const selectedOptionCondition = ref("");
+const selectedOptionInventoryStatus = ref(props.inspeksi.computer.status);
+const selectedOptionStatus = ref("");
+const fileFindings = ref(null);
+const fileAction = ref(null);
+const fileInspection = ref(null);
+const selectedDate = ref(null);
 
-const options = props.department;
+const findings = ref("");
+const findingImageIsRequired = ref(false);
+const findingStatusIsRequired = ref(false);
+const findingDuedateIsRequired = ref(false);
+const action = ref("");
+const actionImageIsRequired = ref(false);
+
+const checkRequiredImageFinding = () => {
+    findingImageIsRequired.value = findings.value.trim() !== "";
+    findingStatusIsRequired.value = findings.value.trim() !== "";
+    findingDuedateIsRequired.value = findings.value.trim() !== "";
+};
+
+const checkRequiredImageAction = () => {
+    actionImageIsRequired.value = action.value.trim() !== "";
+};
+
+const handleFileUploadFindings = (event) => {
+    fileFindings.value = event.target.files[0];
+};
+
+const handleFileUploadAction = (event) => {
+    fileAction.value = event.target.files[0];
+};
+
+const handleFileUploadInspection = (event) => {
+    fileInspection.value = event.target.files[0];
+};
+
+const crewString = computed(() => {
+    return selectedValues.value.map((option) => option.name).join(", ");
+});
+
+const options = props.crew;
+
+const customFormat = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    const seconds = String(d.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+};
 
 const save = () => {
-    form.dept = selectedValues.value.name;
-    form.post(route("printer.store"), {
+    if (fileAction) {
+        form.action_image = fileAction.value;
+    }
+    if (fileFindings) {
+        form.findings_image = fileFindings.value;
+    }
+    form.crew = selectedValues.value.name;
+    form.kondisi = selectedOptionCondition.value;
+    form.inventory_status = selectedOptionInventoryStatus.value;
+    form.status = selectedOptionStatus.value;
+    form.findings = findings.value;
+    form.action = action.value;
+    form.inspection_image = fileInspection.value;
+    form.due_date = customFormat(selectedDate.value);
+    form.post(route("inspeksiKomputer.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -57,7 +138,7 @@ const save = () => {
 </script>
 
 <template>
-    <Head title="Tambah Data Printer" />
+    <Head title="Form Inspeksi Komputer" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -69,22 +150,167 @@ const save = () => {
                     <li class="text-sm leading-normal">
                         <a class="text-white opacity-50">Pages</a>
                     </li>
-                    <Link
-                        :href="route('printer.page')"
+                    <!-- <Link
+                        :href="route('InspeksiKomputer.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Printer
-                    </Link>
+                        Inspeksi Komputer
+                    </Link> -->
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Printer Create Pages
+                    Computer Inspection Pages
                 </h6>
             </nav>
         </template>
 
         <div class="w-full p-6 mx-auto">
             <div class="flex flex-wrap -mx-3 justify-center">
+                <div class="w-full max-w-full px-3 md:w-8/12 md:flex-none mb-5">
+                    <div
+                        class="mb-5 relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                    >
+                        <div
+                            class="flex flex-row p-6 px-4 pb-0 mb-0 border-b-0 rounded-t-2xl"
+                        >
+                            <h6 class="mb-0 mr-3 dark:text-white">
+                                Data Komputer
+                            </h6>
+                        </div>
+                        <div class="flex-auto p-4 pt-6">
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Iventory Number</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.computer_code }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Asset Ho Number</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.number_asset_ho }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Komputer Name</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.computer_name }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Category Asset</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.assets_category }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Spesifikasi</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.spesifikasi }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Serial Number</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.serial_number }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Aplikasi</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.aplikasi }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">License</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.license }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Ip Address</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.ip_address }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Location</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.location }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Status</p>
+                                </div>
+                                <div>
+                                    <p>: {{ inspeksi.computer.status }}</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div>
+                                    <p class="text-base">Condition</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        :
+                                        {{ inspeksi.computer.condition }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div
                     class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0"
                 >
@@ -96,202 +322,690 @@ const save = () => {
                         >
                             <div class="flex items-center">
                                 <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Create Printer
+                                    Form Inspeksi Komputer
                                 </p>
                             </div>
                         </div>
+
                         <div class="flex-auto p-6">
                             <form @submit.prevent="save">
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
+                                <div class="max-w-md mx-auto p-4">
+                                    <h2
+                                        class="text-lg text-center font-bold mb-4"
+                                    >
+                                        Kondisi Fisik
+                                    </h2>
+                                </div>
+                                <div class="flex flex-wrap p-4 -mx-3">
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    ></div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            CPU
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.cpu"
+                                                    type="radio"
+                                                    name="cpu"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.cpu"
+                                                    type="radio"
+                                                    name="cpu"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    ></div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Monitor
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.monitor"
+                                                    type="radio"
+                                                    name="monitor"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.monitor"
+                                                    type="radio"
+                                                    name="monitor"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="max-w-md mx-auto p-4">
+                                    <h2
+                                        class="text-lg text-center font-bold mb-4"
+                                    >
+                                        Software
+                                    </h2>
+                                </div>
+                                <div class="flex flex-wrap p-4 -mx-3">
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            License
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.license"
+                                                    type="radio"
+                                                    name="license"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.license"
+                                                    type="radio"
+                                                    name="license"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Standaritation
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.standaritation"
+                                                    type="radio"
+                                                    name="standaritation"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.standaritation"
+                                                    type="radio"
+                                                    name="standaritation"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Clear Cache
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.cache"
+                                                    type="radio"
+                                                    name="cache"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.cache"
+                                                    type="radio"
+                                                    name="cache"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            System Restore
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.restore"
+                                                    type="radio"
+                                                    name="restore"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.restore"
+                                                    type="radio"
+                                                    name="restore"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="max-w-md mx-auto p-4">
+                                    <h2
+                                        class="text-lg text-center font-bold mb-4"
+                                    >
+                                        Defrag
+                                    </h2>
+                                </div>
+                                <div class="flex flex-wrap p-4 -mx-3">
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    ></div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Defrag
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.defrag"
+                                                    type="radio"
+                                                    name="defrag"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.defrag"
+                                                    type="radio"
+                                                    name="defrag"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    ></div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Maintenance Berat
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.hard_maintenance"
+                                                    type="radio"
+                                                    name="hard_maintenance"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.hard_maintenance"
+                                                    type="radio"
+                                                    name="hard_maintenance"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="max-w-md mx-auto p-4">
+                                    <h2
+                                        class="text-lg text-center font-bold mb-4"
+                                    >
+                                        Security
+                                    </h2>
+                                </div>
+                                <div class="flex flex-wrap p-4 -mx-3">
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Change The User Password According
+                                            To The Computer Unit Name
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.change_user_pass"
+                                                    type="radio"
+                                                    name="change_user_pass"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.change_user_pass"
+                                                    type="radio"
+                                                    name="change_user_pass"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Computer Autoolock and Sleep After
+                                            10 Minutes Standby
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.autolock"
+                                                    type="radio"
+                                                    name="autolock"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.autolock"
+                                                    type="radio"
+                                                    name="autolock"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Make Sure To Enter Password After
+                                            Locking
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.enter_password"
+                                                    type="radio"
+                                                    name="enter_password"
+                                                    value="aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Aman</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                required
+                                                v-model="form.enter_password"
+                                                    type="radio"
+                                                    name="enter_password"
+                                                    value="tidak_aman"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak Aman</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr
+                                    class="mb-10 h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                />
+
                                 <div class="flex flex-wrap -mx-3">
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="device-name"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Device Name</label
-                                            >
-                                            <input
-                                                :disabled="isDisabled"
-                                                required
-                                                type="text"
-                                                name="item_name"
-                                                value="printer"
-                                                v-model="form.item_name"
-                                                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Device Name"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="inventory-number"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Inventory Number</label
-                                            >
-                                            <input
-                                                :disabled="isDisabled"
-                                                required
-                                                type="text"
-                                                name="printer_code"
-                                                v-model="form.printer_code"
-                                                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Auto Generate Inventory Number"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="asset-ho-number"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Asset Ho Number</label
-                                            >
-                                            <input
-                                                type="text"
-                                                v-model="form.asset_ho_number"
-                                                name="asset_ho_number"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="1021xxx"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
                                                 for="serial-number"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Serial Number</label
+                                                >Findings</label
                                             >
                                             <input
-                                                required
                                                 type="text"
-                                                v-model="form.serial_number"
+                                                name="serial_number"
+                                                v-model="findings"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="Temuan Inspeksi"
+                                                @input="
+                                                    checkRequiredImageFinding
+                                                "
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Findings Image</label
+                                            >
+                                            <input
+                                                :required="
+                                                    findingImageIsRequired
+                                                "
+                                                type="file"
+                                                ref="fileInput"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                                @change="
+                                                    handleFileUploadFindings
+                                                "
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="serial-number"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Action Findings</label
+                                            >
+                                            <input
+                                                type="text"
+                                                v-model="action"
                                                 name="serial_number"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="3252352xxxx"
+                                                placeholder="Action Temuan Inspeksi"
+                                                @input="
+                                                    checkRequiredImageAction
+                                                "
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="mac-address"
+                                                for="link_documentation_asset_image"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Mac Address</label
+                                                >Action Image</label
                                             >
                                             <input
-                                                required
-                                                type="text"
-                                                v-model="form.mac_address"
-                                                name="mac_address"
+                                                :required="
+                                                    actionImageIsRequired
+                                                "
+                                                type="file"
+                                                ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="00:04:xx:xx:xx:xx"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                                @change="handleFileUploadAction"
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="ip-address"
+                                                for="status"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Ip Address</label
                                             >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.ip_address"
-                                                name="ip_address"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="10.1.x.xx"
-                                            />
+                                                Finding Status</label
+                                            >
+                                            <select
+                                                :required="
+                                                    findingStatusIsRequired
+                                                "
+                                                v-model="selectedOptionStatus"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option value="" disabled>
+                                                    Select Condition
+                                                </option>
+                                                <option value="OPEN">
+                                                    OPEN
+                                                </option>
+                                                <option value="CLOSED">
+                                                    CLOSED
+                                                </option>
+                                                <option value="SCRAP">
+                                                    SCRAP
+                                                </option>
+                                                <option value="MUTASI">
+                                                    MUTASI
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="device-brand"
+                                                for="link_documentation_asset_image"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Printer Brand</label
+                                                >Inspection Image</label
                                             >
                                             <input
                                                 required
-                                                type="text"
-                                                v-model="form.device_brand"
-                                                name="device_brand"
+                                                type="file"
+                                                ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Epxxxxx"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                                @change="
+                                                    handleFileUploadInspection
+                                                "
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="device-type"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Printer Type</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.device_type"
-                                                name="device_type"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Allinxxx"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="divisi"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Divisi</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.divisi"
-                                                name="divisi"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="ICT"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
                                                 for="dept"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Departement</label
+                                                >Crew</label
                                             >
                                             <VueMultiselect
                                                 v-model="selectedValues"
                                                 :options="options"
-                                                :multiple="false"
+                                                :multiple="true"
                                                 :close-on-select="true"
                                                 placeholder="Select Departement"
                                                 track-by="name"
@@ -300,45 +1014,99 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="device-location"
+                                                for="remark"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Device Location</label
+                                                >Remark Inspection</label
                                             >
                                             <input
-                                                required
                                                 type="text"
-                                                v-model="form.location"
-                                                name="location"
+                                                v-model="form.remark"
+                                                name="remark"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Markas ICT"
+                                                placeholder="Remark Inspection"
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="status"
+                                                for="date-of-complaint"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Due Date</label
+                                            >
+                                            <VueDatePicker
+                                                :required="
+                                                    findingDuedateIsRequired
+                                                "
+                                                v-model="selectedDate"
+                                                :format="customFormat"
+                                                placeholder="Select a date and time"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="kondisi"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                             >
-                                                Status</label
+                                                Condition</label
                                             >
                                             <select
                                                 required
-                                                id="status"
-                                                v-model="form.status"
-                                                name="status"
+                                                v-model="
+                                                    selectedOptionCondition
+                                                "
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option
-                                                    selected
-                                                    value="READY_USED"
-                                                >
+                                                <option value="" disabled>
+                                                    Select Condition
+                                                </option>
+                                                <option value="BAGUS">
+                                                    BAGUS
+                                                </option>
+                                                <option value="RUSAK">
+                                                    RUSAK
+                                                </option>
+                                                <option value="SCRAP">
+                                                    SCRAP
+                                                </option>
+                                                <option value="MUTASI">
+                                                    MUTASI
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="inventory-status"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                Inventory Status</label
+                                            >
+                                            <select
+                                                required
+                                                v-model="
+                                                    selectedOptionInventoryStatus
+                                                "
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option value="" disabled>
+                                                    Select Condition
+                                                </option>
+                                                <option value="READY_USED">
                                                     Ready Used
                                                 </option>
                                                 <option value="READY_STANDBY">
@@ -354,22 +1122,41 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="device-location"
+                                                for="ip-address"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Note</label
+                                                >Ip Address</label
                                             >
-                                            <textarea
-                                                id="message"
-                                                name="note"
-                                                v-model="form.note"
-                                                rows="4"
-                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Leave a note..."
-                                            ></textarea>
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.ip_address"
+                                                name="ip_address"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="10.1.xx.xxx"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="location"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Location</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.location"
+                                                name="location"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="Main Office"
+                                            />
                                         </div>
                                     </div>
                                 </div>

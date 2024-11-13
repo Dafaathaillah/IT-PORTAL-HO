@@ -56,20 +56,7 @@ const deleteData = (id) => {
 };
 
 const editData = (id) => {
-    // Call SweetAlert for confirmation
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You want edit this data?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form.get(route("printer.edit", { id: id }));
-        }
-    });
+    form.get(route("inspeksiKomputer.inspection", { id: id }));
 };
 
 const detailData = (id) => {
@@ -430,13 +417,13 @@ const getBadgeTextStatusInventory = (status) => {
                                                     >
                                                         <NavLinkCustom
                                                             @click="
-                                                                detailData(
+                                                                editData(
                                                                     computers.id
                                                                 )
                                                             "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Detail
+                                                            Do Inspection
                                                         </NavLinkCustom>
 
                                                         <NavLinkCustom
@@ -452,13 +439,13 @@ const getBadgeTextStatusInventory = (status) => {
 
                                                         <NavLinkCustom
                                                             @click="
-                                                                deleteData(
+                                                                detailData(
                                                                     computers.id
                                                                 )
                                                             "
                                                             class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Delete
+                                                            Detail
                                                         </NavLinkCustom>
                                                     </td>
                                                 </tr>
