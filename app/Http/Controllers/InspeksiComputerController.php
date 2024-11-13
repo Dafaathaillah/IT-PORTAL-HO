@@ -28,6 +28,7 @@ class InspeksiComputerController extends Controller
     }
     public function index()
     {
+
         $inspeksiKomputer = InspeksiComputer::with('computer.pengguna')->get();
         // return dd($inspeksiKomputer);
         return Inertia::render(

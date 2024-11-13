@@ -244,10 +244,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('inspeksi-komputer/{id}/delete', [InspeksiComputerController::class, 'destroy'])->name('inspeksiKomputer.delete');
 
         Route::get('inspeksi-laptop', [InspeksiLaptopController::class, 'index'])->name('inspeksiLaptop.page');
-        Route::get('inspeksi-laptop/create', [InspeksiLaptopController::class, 'create'])->name('inspeksiLaptop.create');
-        Route::post('inspeksi-laptop/create', [InspeksiLaptopController::class, 'store'])->name('inspeksiLaptop.store');
+        Route::get('inspeksi-laptop/{id}/process', [InspeksiLaptopController::class, 'process'])->name('inspeksiLaptop.process');
+        Route::post('inspeksi-laptop/process', [InspeksiLaptopController::class, 'store'])->name('inspeksiLaptop.store');
         Route::get('inspeksi-laptop/{id}/edit', [InspeksiLaptopController::class, 'edit'])->name('inspeksiLaptop.edit');
-        Route::put('inspeksi-laptop/{id}/update', [InspeksiLaptopController::class, 'update'])->name('inspeksiLaptop.update');
+        Route::post('inspeksi-laptop/update', [InspeksiLaptopController::class, 'update'])->name('inspeksiLaptop.update');
+        Route::get('/inspeksi-laptop/{id}/detail', [InspeksiLaptopController::class, 'detail'])->name('inspeksiLaptop.detail');
         Route::delete('inspeksi-laptop/{id}/delete', [InspeksiLaptopController::class, 'destroy'])->name('inspeksiLaptop.delete');
     });
 });

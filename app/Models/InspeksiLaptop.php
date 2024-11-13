@@ -12,8 +12,8 @@ class InspeksiLaptop extends Model
     protected $fillable = [
         'inv_laptop_id',
         'pica_number',
-        'condition',
         'created_date',
+        'condition',
         'inspection_at',
         'year',
         'inspection_status',
@@ -29,6 +29,7 @@ class InspeksiLaptop extends Model
         'software_update_sinology',
         'software_turn_off_windows_update',
         'software_cheking_ssd_health',
+        'software_percentage_ssd_health',
         'software_standaritation_device_name',
         'hardware_fan_cleaning',
         'hardware_change_pasta',
@@ -44,6 +45,7 @@ class InspeksiLaptop extends Model
         'inventory_status',
         'approved_by',
         'status_approval',
+        'inspection_image',
     ];
 
     public function inventory()

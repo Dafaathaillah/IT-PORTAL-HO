@@ -10,7 +10,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 
-Schedule::command('inspeksiTower:cron')->everyMinute(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
+Schedule::command('inspeksiTower:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
 
 Schedule::command('inspeksiMobileTower:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
 Schedule::command('inspeksiTower:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //

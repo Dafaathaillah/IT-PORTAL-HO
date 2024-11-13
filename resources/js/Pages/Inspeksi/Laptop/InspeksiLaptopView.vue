@@ -10,7 +10,7 @@ import { onMounted } from "vue";
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
-    return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
+    return moment(date).format("MMMM Do, YYYY HH:mm"); // Sesuaikan format sesuai kebutuhan
 }
 
 const mount = onMounted(() => {
@@ -25,33 +25,6 @@ const props = defineProps({
 });
 
 const form = useForm({});
-
-const deleteData = (id) => {
-    // Call SweetAlert for confirmation
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("inspeksiLaptop.delete", { id: id }), {
-                onSuccess: () => {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        icon: "success",
-                        confirmButtonColor: "#3085d6",
-                    });
-                },
-            });
-        }
-    });
-};
 
 const editData = (id) => {
     // Call SweetAlert for confirmation
@@ -72,6 +45,10 @@ const editData = (id) => {
 
 const detailData = (id) => {
     form.get(route("inspeksiLaptop.detail", { id: id }));
+};
+
+const processData = (id) => {
+    form.get(route("inspeksiLaptop.process", { id: id }));
 };
 
 
@@ -117,17 +94,7 @@ function formatData(text) {
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
-                            <div
-                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
-                            >
-                                <Link
-                                    :href="route('inspeksiLaptop.create')"
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </Link>
-                            </div>
+                            
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0 overflow-x-auto">
                                     <div class="p-6 text-gray-900">
@@ -270,6 +237,10 @@ function formatData(text) {
                                                         <p
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
+
+                                                            {{
+                                                                inspeksiLaptops.inventory.pengguna.department
+                                                            }}
                                                             
                                                         </p>
                                                     </td>
@@ -315,7 +286,7 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{ 
-                                                                formattedDate(
+                                                                inspeksiLaptops.inspection_at == null ? '-' : formattedDate(
                                                                     inspeksiLaptops.inspection_at
                                                                 )
                                                             }}
@@ -379,13 +350,27 @@ function formatData(text) {
                                                     <td
                                                         class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                processData(
+                                                                    inspeksiLaptops.id
+                                                                )
+                                                            "
+                                                            v-if="inspeksiLaptops.inspection_status === 'N'"
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Process
+                                                        </NavLinkCustom>
+
                                                         <NavLinkCustom
                                                             @click="
                                                                 detailData(
                                                                     inspeksiLaptops.id
                                                                 )
                                                             "
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            v-if="inspeksiLaptops.inspection_status === 'Y'"
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Detail
                                                         </NavLinkCustom>
@@ -396,20 +381,10 @@ function formatData(text) {
                                                                     inspeksiLaptops.id
                                                                 )
                                                             "
-                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            v-if="inspeksiLaptops.inspection_status === 'Y'"
+                                                            class="ml-3 mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Edit
-                                                        </NavLinkCustom>
-
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                deleteData(
-                                                                    inspeksiLaptops.id
-                                                                )
-                                                            "
-                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Delete
                                                         </NavLinkCustom>
                                                     </td>
                                                 </tr>

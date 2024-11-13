@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InspeksiLaptop;
 use App\Models\InvLaptop;
+use App\Models\UserAll;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,13 +38,28 @@ class InspeksiLaptopController extends Controller
         );
     }
 
+    public function process($id)
+    {
+        $dataInspeksix = InspeksiLaptop::find($id);
+
+        $laptopx = InvLaptop::with('pengguna')->where('inv_laptops.id', $dataInspeksix->inv_laptop_id)->first();
+
+        // dd($laptopx);
+
+        $penggunax = UserAll::pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('Inspeksi/Laptop/InspeksiLaptopCreate', ['dataInspeksi' => $dataInspeksix, 'pengguna' => $penggunax, 'laptop' => $laptopx]);
+    }
+
     public function store(Request $request)
     {
-        // start generate code
+        $params = $request->all();
         $currentDate = Carbon::now();
         $year = $currentDate->format('Y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+
+        // dd($request->file('image_temuan'));
 
         $maxId = InspeksiLaptop::max('id');
 
@@ -51,162 +67,186 @@ class InspeksiLaptopController extends Controller
             $maxId = 0;
         }
 
-        $uniqueString = 'PICA/NB/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
-        // end generate code
+        $no_pica = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
 
-        if (!empty($request->file('findings_image'))) {
-            if (!empty($request->file('action_image'))) {
-                //upload image
-                $findings_image = $request->file('findings_image');
-                $path_findings_image = $findings_image->store('images', 'public');
-                $new_path_findings = 'storage/' . $path_findings_image;
+        $data = [
+            'software_defrag' => $params['software_defrag'],
+            'software_check_system_restore' => $params['software_check_system_restore'],
+            'software_clean_cache_data' => $params['software_clean_cache_data'],
+            'software_check_ilegal_software' => $params['software_check_ilegal_software'],
+            'software_change_password' => $params['software_change_password'],
+            'software_windows_license' => $params['software_windows_license'],
+            'software_office_license' => $params['software_office_license'],
+            'software_standaritation_software' => $params['software_standaritation_software'],
+            'software_update_sinology' => $params['software_update_sinology'],
+            'software_turn_off_windows_update' => $params['software_turn_off_windows_update'],
+            'software_cheking_ssd_health' => $params['software_cheking_ssd_health'],
+            'software_standaritation_device_name' => $params['software_standaritation_device_name'],
+            'hardware_fan_cleaning' => $params['hardware_fan_cleaning'],
+            'hardware_change_pasta' => $params['hardware_change_pasta'],
+            'hardware_any_maintenance' => $params['hardware_any_maintenance'],
+            'software_percentage_ssd_health' => $params['ssd_persen'],
+            'condition' => $params['condition'],
+            'inventory_status' => $params['status_inv'],
+            'hardware_any_maintenance_explain' => $params['hardware_any_maintenance_explain'],
+            'findings' => $params['temuan'],
+            'findings_action' => $params['tindakan'],
+            'due_date' => $params['due_date'],
+            'findings_status' => $params['findings_status'],
+            'remarks' => $params['remark'],
+            'inspector' => $params['inspector'],
+            'inspection_status' => $params['inspection_status'],
+            'inspection_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ];
 
-                $action_image = $request->file('action_image');
-                $path_action_image = $action_image->store('images', 'public');
-                $new_path_action = 'storage/' . $path_action_image;
+        if ($params['temuan'] != null || $params['temuan'] != '') {
+            $data['pica_number'] = $no_pica;
+        }
 
-                $dataInspection = [
-                    'inspection_status' => 'sudah_inspeksi',
-                    'inspector' => 'user login',
-                    'condition' => $request->condition,
-                    'software_defrag' => $request->software_defrag,
-                    'software_check_system_restore' => $request->software_check_system_restore,
-                    'software_clean_cache_data' => $request->software_clean_cache_data,
-                    'software_check_ilegal_software' => $request->software_check_ilegal_software,
-                    'software_change_password' => $request->software_change_password,
-                    'software_windows_license' => $request->software_windows_license,
-                    'software_office_license' => $request->software_office_license,
-                    'software_update_sinology' => $request->software_update_sinology,
-                    'software_turn_off_windows_update' => $request->software_turn_off_windows_update,
-                    'software_cheking_ssd_health' => $request->software_cheking_ssd_health,
-                    'software_standaritation_device_name' => $request->software_standaritation_device_name,
-                    'hardware_fan_cleaning' => $request->hardware_fan_cleaning,
-                    'hardware_change_pasta' => $request->hardware_change_pasta,
-                    'hardware_any_maintenance' => $request->hardware_any_maintenance,
-                    'hardware_any_maintenance_explain' => $request->hardware_any_maintenance_explain,
-                    'findings' => $request->findings,
-                    'findings_action' => $request->findings_action,
-                    'findings_status' => $request->findings_status,
-                    'findings_image' => url($new_path_findings),
-                    'action_image' => url($new_path_action),
-                    'remarks' => $request->remarks,
-                    'due_date' => $request->due_date,
-                    'inventory_status' => $request->inventory_status,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
-                $data['udpateInspeksi'] = InspeksiLaptop::firstWhere('id', $request->id)->update($dataInspection);
-            } else {
-                //upload image
-                $findings_image = $request->file('findings_image');
-                $path_findings_image = $findings_image->store('images', 'public');
-                $new_path_findings = 'storage/' . $path_findings_image;
+        if ($request->file('image_temuan') != null) {
+            $document_image = $request->file('image_temuan');
+            $destinationPath = 'images/';
+            $path_document_image = $document_image->store('images', 'public');
+            $new_path_document_image = $path_document_image;
+            $document_image->move($destinationPath, $new_path_document_image);
 
-                $dataInspection = [
-                    'inspection_status' => 'sudah_inspeksi',
-                    'inspector' => 'user login',
-                    'condition' => $request->condition,
-                    'software_defrag' => $request->software_defrag,
-                    'software_check_system_restore' => $request->software_check_system_restore,
-                    'software_clean_cache_data' => $request->software_clean_cache_data,
-                    'software_check_ilegal_software' => $request->software_check_ilegal_software,
-                    'software_change_password' => $request->software_change_password,
-                    'software_windows_license' => $request->software_windows_license,
-                    'software_office_license' => $request->software_office_license,
-                    'software_update_sinology' => $request->software_update_sinology,
-                    'software_turn_off_windows_update' => $request->software_turn_off_windows_update,
-                    'software_cheking_ssd_health' => $request->software_cheking_ssd_health,
-                    'software_standaritation_device_name' => $request->software_standaritation_device_name,
-                    'hardware_fan_cleaning' => $request->hardware_fan_cleaning,
-                    'hardware_change_pasta' => $request->hardware_change_pasta,
-                    'hardware_any_maintenance' => $request->hardware_any_maintenance,
-                    'hardware_any_maintenance_explain' => $request->hardware_any_maintenance_explain,
-                    'findings' => $request->findings,
-                    'findings_status' => $request->findings_status,
-                    'findings_image' => url($new_path_findings),
-                    'remarks' => $request->remarks,
-                    'due_date' => $request->due_date,
-                    'inventory_status' => $request->inventory_status,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
-            }
-            $data['udpateInspeksi'] = InspeksiLaptop::firstWhere('id', $request->id)->update($dataInspection);
+            $data['findings_image'] =  url($new_path_document_image);
+        }
+
+        if ($request->file('image_tindakan') != null) {
+            $document_image = $request->file('image_tindakan');
+            $destinationPath = 'images/';
+            $path_document_image = $document_image->store('images', 'public');
+            $new_path_document_image = $path_document_image;
+            $document_image->move($destinationPath, $new_path_document_image);
+
+            $data['action_image'] =  url($new_path_document_image);
+        }
+
+        if ($request->file('image_inspeksi') != null) {
+            $document_image = $request->file('image_inspeksi');
+            $destinationPath = 'images/';
+            $path_document_image = $document_image->store('images', 'public');
+            $new_path_document_image = $path_document_image;
+            $document_image->move($destinationPath, $new_path_document_image);
+
+            $data['inspection_image'] =  url($new_path_document_image);
+        }
+
+
+        InspeksiLaptop::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('inspeksiLaptop.page');
+    }
+
+    public function edit($id)
+    {
+        $dataInspeksix = InspeksiLaptop::find($id);
+
+        $laptopx = InvLaptop::with('pengguna')->where('inv_laptops.id', $dataInspeksix->inv_laptop_id)->first();
+
+        // dd($laptopx);
+
+        if (!empty($dataInspeksix->inspector)) {
+            
+            $pengguna_selected = array($dataInspeksix->inspector);
         } else {
-            if (!empty($request->file('action_image'))) {
-                //upload image
-                $action_image = $request->file('action_image');
-                $path_action_image = $action_image->store('images', 'public');
-                $new_path_action = 'storage/' . $path_action_image;
+            $pengguna_selected = array('data tidak ada !');
+        }
 
-                $dataInspection = [
-                    'inspection_status' => 'sudah_inspeksi',
-                    'inspector' => 'user login',
-                    'condition' => $request->condition,
-                    'software_defrag' => $request->software_defrag,
-                    'software_check_system_restore' => $request->software_check_system_restore,
-                    'software_clean_cache_data' => $request->software_clean_cache_data,
-                    'software_check_ilegal_software' => $request->software_check_ilegal_software,
-                    'software_change_password' => $request->software_change_password,
-                    'software_windows_license' => $request->software_windows_license,
-                    'software_office_license' => $request->software_office_license,
-                    'software_update_sinology' => $request->software_update_sinology,
-                    'software_turn_off_windows_update' => $request->software_turn_off_windows_update,
-                    'software_cheking_ssd_health' => $request->software_cheking_ssd_health,
-                    'software_standaritation_device_name' => $request->software_standaritation_device_name,
-                    'hardware_fan_cleaning' => $request->hardware_fan_cleaning,
-                    'hardware_change_pasta' => $request->hardware_change_pasta,
-                    'hardware_any_maintenance' => $request->hardware_any_maintenance,
-                    'hardware_any_maintenance_explain' => $request->hardware_any_maintenance_explain,
-                    'findings_action' => $request->findings_action,
-                    'findings_status' => $request->findings_status,
-                    'action_image' => url($new_path_action),
-                    'remarks' => $request->remarks,
-                    'due_date' => $request->due_date,
-                    'inventory_status' => $request->inventory_status,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
-                $data['udpateInspeksi'] = InspeksiLaptop::firstWhere('id', $request->id)->update($dataInspection);
-            } else {
+        $penggunax = UserAll::pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
-                $dataInspection = [
-                    'inspection_status' => 'sudah_inspeksi',
-                    'inspector' => 'user login',
-                    'condition' => $request->condition,
-                    'software_defrag' => $request->software_defrag,
-                    'software_check_system_restore' => $request->software_check_system_restore,
-                    'software_clean_cache_data' => $request->software_clean_cache_data,
-                    'software_check_ilegal_software' => $request->software_check_ilegal_software,
-                    'software_change_password' => $request->software_change_password,
-                    'software_windows_license' => $request->software_windows_license,
-                    'software_office_license' => $request->software_office_license,
-                    'software_update_sinology' => $request->software_update_sinology,
-                    'software_turn_off_windows_update' => $request->software_turn_off_windows_update,
-                    'software_cheking_ssd_health' => $request->software_cheking_ssd_health,
-                    'software_standaritation_device_name' => $request->software_standaritation_device_name,
-                    'hardware_fan_cleaning' => $request->hardware_fan_cleaning,
-                    'hardware_change_pasta' => $request->hardware_change_pasta,
-                    'hardware_any_maintenance' => $request->hardware_any_maintenance,
-                    'hardware_any_maintenance_explain' => $request->hardware_any_maintenance_explain,
-                    'remarks' => $request->remarks,
-                    'inventory_status' => $request->inventory_status,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
+        return Inertia::render('Inspeksi/Laptop/InspeksiLaptopEdit', ['dataInspeksi' => $dataInspeksix, 'pengguna' => $penggunax, 'laptop' => $laptopx, 'pengguna_selected' => $pengguna_selected]);
+    }
+
+    public function update(Request $request)
+    {
+        $params = $request->all();
+        // dd($params);
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('Y');
+
+        // dd($request->file('image_temuan'));
+
+        $maxId = InspeksiLaptop::max('id');
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        }
+
+        $no_pica = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+
+        $data = [
+            'software_defrag' => $params['software_defrag'],
+            'software_check_system_restore' => $params['software_check_system_restore'],
+            'software_clean_cache_data' => $params['software_clean_cache_data'],
+            'software_check_ilegal_software' => $params['software_check_ilegal_software'],
+            'software_change_password' => $params['software_change_password'],
+            'software_windows_license' => $params['software_windows_license'],
+            'software_office_license' => $params['software_office_license'],
+            'software_standaritation_software' => $params['software_standaritation_software'],
+            'software_update_sinology' => $params['software_update_sinology'],
+            'software_turn_off_windows_update' => $params['software_turn_off_windows_update'],
+            'software_cheking_ssd_health' => $params['software_cheking_ssd_health'],
+            'software_standaritation_device_name' => $params['software_standaritation_device_name'],
+            'hardware_fan_cleaning' => $params['hardware_fan_cleaning'],
+            'hardware_change_pasta' => $params['hardware_change_pasta'],
+            'hardware_any_maintenance' => $params['hardware_any_maintenance'],
+            'software_percentage_ssd_health' => $params['ssd_persen'],
+            'condition' => $params['condition'],
+            'inventory_status' => $params['status_inv'],
+            'hardware_any_maintenance_explain' => $params['hardware_any_maintenance_explain'],
+            'findings' => $params['temuan'],
+            'findings_action' => $params['tindakan'],
+            'due_date' => $params['due_date'],
+            'findings_status' => $params['findings_status'],
+            'remarks' => $params['remark'],
+            'inspector' => $params['inspector'],
+            'inspection_status' => $params['inspection_status'],
+            'inspection_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ];
+
+        if ($params['temuan'] != null || $params['temuan'] != '') {
+            $dataInspeksix = InspeksiLaptop::find($request->id);
+            if ($dataInspeksix->pica_number != null){
+                $data['pica_number'] = $no_pica;
             }
-            $data['udpateInspeksi'] = InspeksiLaptop::firstWhere('id', $request->id)->update($dataInspection);
         }
 
-        if (!empty($request->inventory_status)) {
-            $getDataInspeksi = InspeksiLaptop::where('id', $request->id)->first();
-            $getDataInventory = InvLaptop::where('id', $getDataInspeksi->inv_laptop_id)->first();
-            $dataInventory = [
-                'status' => $request->inventory_status,
-            ];
-            $data['udpateInspeksi'] = InvLaptop::firstWhere('id', $getDataInventory->id)->update($dataInventory);
+        if ($request->file('image_temuan') != null) {
+            $document_image = $request->file('image_temuan');
+            $destinationPath = 'images/';
+            $path_document_image = $document_image->store('images', 'public');
+            $new_path_document_image = $path_document_image;
+            $document_image->move($destinationPath, $new_path_document_image);
+
+            $data['findings_image'] =  url($new_path_document_image);
         }
-        return response()->json($dataInspection, 201);
+
+        if ($request->file('image_tindakan') != null) {
+            $document_image = $request->file('image_tindakan');
+            $destinationPath = 'images/';
+            $path_document_image = $document_image->store('images', 'public');
+            $new_path_document_image = $path_document_image;
+            $document_image->move($destinationPath, $new_path_document_image);
+
+            $data['action_image'] =  url($new_path_document_image);
+        }
+
+        if ($request->file('image_inspeksi') != null) {
+            $document_image = $request->file('image_inspeksi');
+            $destinationPath = 'images/';
+            $path_document_image = $document_image->store('images', 'public');
+            $new_path_document_image = $path_document_image;
+            $document_image->move($destinationPath, $new_path_document_image);
+
+            $data['inspection_image'] =  url($new_path_document_image);
+        }
+
+
+        InspeksiLaptop::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('inspeksiLaptop.page');
     }
 
     public function approval(Request $request)
@@ -257,6 +297,17 @@ class InspeksiLaptopController extends Controller
             return response()->json(['message' => 'Panelbox Data not found'], 404);
         }
         return response()->json($inspeksi_laptop);
+    }
+
+    public function detail($id)
+    {
+        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('inspeksi_laptops.id', $id)->first();
+
+        // dd($inspeksi_laptop);
+
+        return Inertia::render('Inspeksi/Laptop/InspeksiLaptopDetail', [
+            'inspeksi' => $inspeksi_laptop
+        ]);
     }
 
     public function destroy($id)
