@@ -337,17 +337,17 @@ const save = () => {
                                             >
                                                 <option
                                                     selected
-                                                    value="Ready_Used"
+                                                    value="READY_USED"
                                                 >
                                                     Ready Used
                                                 </option>
-                                                <option value="Ready_Stanby">
+                                                <option value="READY_STANBY">
                                                     Ready Standby
                                                 </option>
-                                                <option value="Scrap">
+                                                <option value="SCRAP">
                                                     Scrap
                                                 </option>
-                                                <option value="Breakdown">
+                                                <option value="BREAKDOWN">
                                                     Breakdown
                                                 </option>
                                             </select>
