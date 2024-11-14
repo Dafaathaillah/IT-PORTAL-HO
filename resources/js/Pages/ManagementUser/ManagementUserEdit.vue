@@ -23,10 +23,14 @@ const selectedValues = ref(
     props.department.filter((option) => props.department_select.includes(option.name))
 );
 
+const departmentString = computed(() => {
+    return selectedValues.value.map((option) => option.name).join("");
+});
+
 const options = props.department;
 
 const save = () => {
-    form.department = selectedValues.value.name;
+    form.department = departmentString.value;
     form.post(route("pengguna.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
