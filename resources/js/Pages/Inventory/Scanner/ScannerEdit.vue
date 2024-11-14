@@ -39,9 +39,25 @@ const dept_select = computed(() => {
 
 const options = props.department;
 
+const formSubmitted = ref(false);
+
 const update = () => {
-    form.dept = dept_select.value;
-    console.log(dept_select.value);
+    if (selectedValues.value == '') {
+        formSubmitted.value = true;
+        return; 
+    }else{
+        if(props.department_select.includes('data tidak ada !')){
+            form.dept = selectedValues.value.name;
+        }else{
+
+            if(props.department_select.includes(selectedValues.value.name) == false && selectedValues.value.name != undefined) {
+                form.dept = selectedValues.value.name;
+            }else{
+                form.dept = dept_select.value;
+            }
+
+        }
+    }
     form.post(route("scanner.update", props.scanner.id), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
@@ -334,6 +350,13 @@ const save = () => {
                                                 label="name"
                                             />
                                         </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption && formSubmitted
+                                            "
+                                            class="text-red-500"
+                                            >Dept Tidak boleh kosong!</span
+                                        >
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
