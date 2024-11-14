@@ -5,7 +5,7 @@ import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
-import { ref } from "vue";
+import { ref , computed } from "vue";
 
 const props = defineProps(["scanner", "department", "department_select"]);
 
@@ -33,10 +33,15 @@ const selectedValues = ref(
     )
 );
 
+const dept_select = computed(() => {
+    return selectedValues.value.map((option) => option.name).join("");
+});
+
 const options = props.department;
 
 const update = () => {
-    form.dept = selectedValues.value.name;
+    form.dept = dept_select.value;
+    console.log(dept_select.value);
     form.post(route("scanner.update", props.scanner.id), {
         onSuccess: () => {
             // Show SweetAlert2 success notification

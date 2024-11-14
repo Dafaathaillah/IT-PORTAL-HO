@@ -125,6 +125,7 @@ class InvScannerController extends Controller
     public function update(Request $request)
     {
         $params = $request->all();
+        // dd($params);
         $data = [
             'item_name' => $params['item_name'],
             'scanner_code' => $params['scanner_code'],

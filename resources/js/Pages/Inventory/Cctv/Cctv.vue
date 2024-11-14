@@ -57,7 +57,7 @@ const editData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't edit this data?",
+        text: "You want edit this data?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

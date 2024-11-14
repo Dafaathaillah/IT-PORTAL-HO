@@ -22,7 +22,7 @@ const mount = onMounted(() => {
 
 <template>
 
-    <Head title="Inv Laptop" />
+    <Head title="Detail Inspeksi" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -66,6 +66,8 @@ const mount = onMounted(() => {
                                         <p class="mb-0 dark:text-white/80 font-semibold">
                                             SOFTWARE
                                         </p>
+                                        <hr
+                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
                                     </div>
                                 </div>
 
@@ -255,6 +257,8 @@ const mount = onMounted(() => {
                                         <p class="mb-0 dark:text-white/80 font-semibold">
                                             HARDWARE
                                         </p>
+                                        <hr
+                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
                                     </div>
                                 </div>
                                 
@@ -369,6 +373,8 @@ const mount = onMounted(() => {
                                         <p class="mb-0 dark:text-white/80 font-semibold">
                                             Temuan
                                         </p>
+                                        <hr
+                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
                                     </div>
                                 </div>
 
@@ -481,7 +487,7 @@ const mount = onMounted(() => {
                                     <div class="mb-4">
                                         <label for="select_pic"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">
-                                            Select PIC</label>
+                                            PIC</label>
 
                                     </div>
                                 </div>

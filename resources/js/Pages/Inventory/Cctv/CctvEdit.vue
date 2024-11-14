@@ -33,6 +33,8 @@ const form = useForm({
     vlan: props.cctv.vlan,
 });
 
+const formSubmitted = ref(false);
+
 const isDisabled = ref(true);
 const file = ref(null);
 
@@ -80,6 +82,12 @@ onMounted(() => {
 });
 
 const update = () => {
+    if (selectedValues.value == null) {
+        formSubmitted.value = true;
+        // console.log('ga oke')
+        return; // Stop execution if validation fails
+    }
+
     const formData = new FormData();
     const formattedDateOfInventory = customFormat(dateOfInventory.value);
     formData.append("id", form.id);
@@ -110,7 +118,7 @@ const update = () => {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Edit Data Inv CCTV" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -349,6 +357,13 @@ const update = () => {
                                                 label="inventory_number"
                                             />
                                         </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption && formSubmitted
+                                            "
+                                            class="text-red-500"
+                                            >Switch Tidak boleh kosong!</span
+                                        >
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
@@ -368,7 +383,6 @@ const update = () => {
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
                                                 <option
-                                                    selected
                                                     value="READY_USED"
                                                 >
                                                     Ready Used
@@ -501,17 +515,8 @@ const update = () => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-end">
-                                    <button
-                                        type="submit"
-                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-                                    >
-                                        <span
-                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
-                                        >
-                                            Save
-                                        </span>
-                                    </button>
+                                <div class="flex flex-nowrap mt-6 justify-between">
+                                    
                                     <Link
                                         :href="route('cctv.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
@@ -522,6 +527,18 @@ const update = () => {
                                             Cancel
                                         </span>
                                     </Link>
+
+                                    <button
+                                        type="submit"
+                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+                                    >
+                                        <span
+                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+                                        >
+                                            Save
+                                        </span>
+                                    </button>
+
                                 </div>
                             </form>
                         </div>
