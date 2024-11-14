@@ -28,39 +28,12 @@ const props = defineProps({
 
 const form = useForm({});
 
-const deleteData = (id) => {
-    // Call SweetAlert for confirmation
-    Swal.fire({
-        title: "Are you sure?",
-        text: "Menghapus data ini akan berdampak pada table yang berelasi dengan data ini!, data pada table yang berelasi akan ikut terhapus!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("printer.delete", { id: id }), {
-                onSuccess: () => {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        icon: "success",
-                        confirmButtonColor: "#3085d6",
-                    });
-                },
-            });
-        }
-    });
-};
-
 const editData = (id) => {
     form.get(route("inspeksiKomputer.inspection", { id: id }));
 };
 
 const detailData = (id) => {
-    form.get(route("printer.detail", { id: id }));
+    form.get(route("inspeksiKomputer.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -439,16 +412,6 @@ const getBadgeTextStatusInventory = (status) => {
                                                             Detail
                                                         </NavLinkCustom>
 
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                deleteData(
-                                                                    computers.id
-                                                                )
-                                                            "
-                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Delete
-                                                        </NavLinkCustom>
                                                     </td>
                                                 </tr>
                                             </tbody>

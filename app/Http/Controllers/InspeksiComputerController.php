@@ -285,6 +285,17 @@ class InspeksiComputerController extends Controller
         return response()->json($inspeksi_computer);
     }
 
+    public function detail($id)
+    {
+        $inspeksi_komputer = InspeksiComputer::with('computer.pengguna')->where('inspeksi_computers.id', $id)->first();
+
+        // dd($inspeksi_komputer);
+
+        return Inertia::render('Inspeksi/Komputer/InspeksiKomputerDetail', [
+            'inspeksi' => $inspeksi_komputer
+        ]);
+    }
+
     public function destroy($id)
     {
         $inspeksi_computer = InspeksiComputer::find($id);
