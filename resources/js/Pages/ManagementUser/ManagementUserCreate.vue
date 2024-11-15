@@ -22,7 +22,14 @@ const selectedValues = ref(null); // Awalnya array kosong
 
 const options = props.department;
 
+const formSubmitted = ref(false);
+
 const save = () => {
+
+    if (selectedValues.value == null) {
+        formSubmitted.value = true;
+        return; 
+    }
     
     form.department = selectedValues.value.name;
     form.post(route("pengguna.store"), {
@@ -156,6 +163,13 @@ const save = () => {
                                                 label="name"
                                             />
                                         </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption && formSubmitted
+                                            "
+                                            class="text-red-500"
+                                            >Dept Tidak boleh kosong!</span
+                                        >
                                     </div>
 
                                     <div

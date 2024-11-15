@@ -61,6 +61,10 @@ const selectedDateInv = ref(props.komputer.date_of_inventory);
 const selectedDateDeploy = ref(props.komputer.date_of_deploy);
 
 const customFormat = (date) => {
+    if (!date) {
+        // Jika date null atau kosong, kembalikan null
+        return "";
+    }
     const d = new Date(date);
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -89,16 +93,28 @@ const penggunaString = computed(() => {
 });
 
 const update = () => {
-    if (selectedValues.value == '') {
+    const formData = new FormData();
+
+    if (selectedValues.value == null) {
         formSubmitted.value = true;
-        // console.log('ga oke')
-        return; // Stop execution if validation fails
+        return; 
+    }else{
+        if(props.pengguna_selected.includes('data tidak ada !')){
+            formData.append("user_alls_id", selectedValues.value.name);
+        }else{
+
+            if(props.pengguna_selected.includes(selectedValues.value.name) == false && selectedValues.value.name != undefined) {
+                formData.append("user_alls_id", selectedValues.value.name);
+            }else{
+                formData.append("user_alls_id", penggunaString.value);
+            }
+
+        }
     }
 
     const fixTanggalInv = customFormat(selectedDateInv.value);
     const fixTanggalDeploy = customFormat(selectedDateDeploy.value);
 
-    const formData = new FormData();
     formData.append("id", form.id);
     formData.append("max_id", form.max_id);
     formData.append("computer_name", form.computer_name);
@@ -123,7 +139,6 @@ const update = () => {
     formData.append("status", form.status);
     formData.append("condition", form.condition);
     formData.append("note", form.note);
-    formData.append("user_alls_id", penggunaString.value);
 
     if (file.value) {
         formData.append("image", file.value); // Append the file
@@ -627,7 +642,7 @@ const update = () => {
                                             <VueMultiselect
                                                 v-model="selectedValues"
                                                 :options="options"
-                                                :multiple="true"
+                                                :multiple="false"
                                                 :close-on-select="true"
                                                 placeholder="Pilih Pengguna"
                                                 track-by="name"

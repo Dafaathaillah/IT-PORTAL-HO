@@ -59,6 +59,11 @@ const selectedDateInv = ref(null);
 const selectedDateDeploy = ref(null);
 
 const customFormat = (date) => {
+    if (!date) {
+        // Jika date null atau kosong, kembalikan null
+        return "";
+    }
+    
     const d = new Date(date);
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -70,18 +75,16 @@ const customFormat = (date) => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
-const selectedValues = ref([]);
-
-const penggunaString = computed(() => {
-    return selectedValues.value.map((option) => option.name).join("");
-});
+const selectedValues = ref(null);
 
 const save = () => {
-    if (selectedValues.value == '') {
+    if (selectedValues.value == null) {
         formSubmitted.value = true;
-        // console.log('ga oke')
         return; // Stop execution if validation fails
     }
+
+    // console.log(selectedValues.value.name);
+    // return
 
     const formData = new FormData();
 
@@ -115,7 +118,7 @@ const save = () => {
         "link_documentation_asset_image",
         form.link_documentation_asset_image
     );
-    formData.append("user_alls_id", penggunaString.value);
+    formData.append("user_alls_id", selectedValues.value.name);
     Inertia.post(route("laptop.store"), formData, {
         forceFormData: true,
         onSuccess: () => {
@@ -655,8 +658,7 @@ const options = props.pengguna;
                                                 
                                                 v-model="selectedValues"
                                                 :options="options"
-                                                :multiple="true"
-                                                :max="1"
+                                                :multiple="false"
                                                 :close-on-select="true"
                                                 placeholder="Pilih Pengguna"
                                                 track-by="name"
