@@ -32,6 +32,24 @@ const editData = (id) => {
     form.get(route("inspeksiKomputer.inspection", { id: id }));
 };
 
+const editDataInspeksi = (id) => {
+    // Call SweetAlert for confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want edit this data?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.get(route("inspeksiKomputer.edit", { id: id }));
+        }
+    });
+};
+
+
 const detailData = (id) => {
     form.get(route("inspeksiKomputer.detail", { id: id }));
 };
@@ -398,6 +416,17 @@ const getBadgeTextStatusInventory = (status) => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Do Inspection
+                                                        </NavLinkCustom>
+
+                                                         <NavLinkCustom
+                                                            @click="
+                                                                editDataInspeksi(
+                                                                    computers.id
+                                                                )
+                                                            "
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit
                                                         </NavLinkCustom>
 
                                                         <NavLinkCustom

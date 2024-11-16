@@ -53,7 +53,7 @@ class InspeksiComputerController extends Controller
         // }else{
         //     return 'KOSONG';
         // }
-        // return dd($request->file('findings_image'));
+        // return dd($request);
         // start generate code
         $currentDate = Carbon::now();
         $year = $currentDate->format('Y');
@@ -68,21 +68,26 @@ class InspeksiComputerController extends Controller
 
         $uniqueString = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         // end generate code
+        $destinationPath = 'images/';
 
         if (!empty($request->file('findings_image'))) {
             if (!empty($request->file('action_image'))) {
                 //upload image
+
                 $findings_image = $request->file('findings_image');
                 $path_findings_image = $findings_image->store('images', 'public');
-                $new_path_findings = 'storage/' . $path_findings_image;
+                $new_path_findings = $path_findings_image;
+                $findings_image->move($destinationPath, $new_path_findings);
 
                 $action_image = $request->file('action_image');
                 $path_action_image = $action_image->store('images', 'public');
-                $new_path_action = 'storage/' . $path_action_image;
+                $new_path_action = $path_action_image;
+                $action_image->move($destinationPath, $new_path_action);
 
                 $inspection_image = $request->file('inspection_image');
                 $path_inspection_image = $inspection_image->store('images', 'public');
-                $new_path_inspection = 'storage/' . $path_inspection_image;
+                $new_path_inspection = $path_inspection_image;
+                $inspection_image->move($destinationPath, $new_path_inspection);
 
                 $dataInspection = [
                     'inspection_status' => 'Y',
@@ -95,13 +100,16 @@ class InspeksiComputerController extends Controller
                     'software_system_restore' => $request->restore,
                     'defrag' => $request->defrag,
                     'hard_maintenance' => $request->hard_maintenance,
+                    'change_user_pass' => $request->change_user_pass,
+                    'autolock' => $request->autolock,
+                    'enter_password' => $request->enter_password,
                     'crew' => $request->crew,
                     'findings' => $request->findings,
                     'findings_action' => $request->action,
                     'findings_status' => $request->status,
                     'findings_image' => url($new_path_findings),
                     'action_image' => url($new_path_action),
-                    'remarks' => $request->remark,                    
+                    'remarks' => $request->remark,
                     'inspection_image' => url($new_path_inspection),
                     'due_date' => $request->due_date,
                     'conditions' => $request->kondisi,
@@ -113,109 +121,231 @@ class InspeksiComputerController extends Controller
                 ];
                 $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
             } else {
-                //upload image
-                $inspection_image = $request->file('inspection_image');
-                $path_inspection_image = $inspection_image->store('images', 'public');
-                $new_path_inspection = 'storage/' . $path_inspection_image;
+                if (!empty($request->file('inspection_image'))) {
+                    //upload image
+                    $inspection_image = $request->file('inspection_image');
+                    $path_inspection_image = $inspection_image->store('images', 'public');
+                    $new_path_inspection = $path_inspection_image;
+                    $inspection_image->move($destinationPath, $new_path_inspection);
 
-                $findings_image = $request->file('findings_image');
-                $path_findings_image = $findings_image->store('images', 'public');
-                $new_path_findings = 'storage/' . $path_findings_image;
+                    $findings_image = $request->file('findings_image');
+                    $path_findings_image = $findings_image->store('images', 'public');
+                    $new_path_findings = $path_findings_image;
+                    $findings_image->move($destinationPath, $new_path_findings);
 
-                $dataInspection = [
-                    'inspection_status' => 'Y',
-                    'inspector' => Auth::user()->name,
-                    'physique_condition_cpu' => $request->cpu,
-                    'physique_condition_monitor' => $request->monitor,
-                    'software_license' => $request->license,
-                    'software_standaritation' => $request->standaritation,
-                    'software_clear_cache' => $request->cache,
-                    'software_system_restore' => $request->restore,
-                    'defrag' => $request->defrag,
-                    'hard_maintenance' => $request->hard_maintenance,
-                    'crew' => $request->crew,
-                    'findings' => $request->findings,
-                    'findings_status' => $request->findings_status,
-                    'findings_image' => url($new_path_findings),
-                    'remarks' => $request->remark,                    
-                    'inspection_image' => url($new_path_inspection),
-                    'due_date' => $request->due_date,
-                    'conditions' => $request->conditions,
-                    'inventory_status' => $request->inventory_status,
-                    'ip_address' => $request->ip_address,
-                    'location' => $request->location,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
+                    $dataInspection = [
+                        'inspection_status' => 'Y',
+                        'inspector' => Auth::user()->name,
+                        'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_monitor' => $request->monitor,
+                        'software_license' => $request->license,
+                        'software_standaritation' => $request->standaritation,
+                        'software_clear_cache' => $request->cache,
+                        'software_system_restore' => $request->restore,
+                        'defrag' => $request->defrag,
+                        'hard_maintenance' => $request->hard_maintenance,
+                        'change_user_pass' => $request->change_user_pass,
+                        'autolock' => $request->autolock,
+                        'enter_password' => $request->enter_password,
+                        'crew' => $request->crew,
+                        'findings' => $request->findings,
+                        'findings_action' => $request->action,
+                        'findings_status' => $request->status,
+                        'findings_image' => url($new_path_findings),
+                        'remarks' => $request->remark,
+                        'inspection_image' => url($new_path_inspection),
+                        'due_date' => $request->due_date,
+                        'conditions' => $request->kondisi,
+                        'inventory_status' => $request->inventory_status,
+                        'ip_address' => $request->ip_address,
+                        'location' => $request->location,
+                        'pica_number' => $uniqueString,
+                        'created_date' => Carbon::now()->format('Y-m-d'),
+                    ];
+                } else {
+                    //upload image
+                    $findings_image = $request->file('findings_image');
+                    $path_findings_image = $findings_image->store('images', 'public');
+                    $new_path_findings = $path_findings_image;
+                    $findings_image->move($destinationPath, $new_path_findings);
+
+                    $dataInspection = [
+                        'inspection_status' => 'Y',
+                        'inspector' => Auth::user()->name,
+                        'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_monitor' => $request->monitor,
+                        'software_license' => $request->license,
+                        'software_standaritation' => $request->standaritation,
+                        'software_clear_cache' => $request->cache,
+                        'software_system_restore' => $request->restore,
+                        'defrag' => $request->defrag,
+                        'hard_maintenance' => $request->hard_maintenance,
+                        'change_user_pass' => $request->change_user_pass,
+                        'autolock' => $request->autolock,
+                        'enter_password' => $request->enter_password,
+                        'crew' => $request->crew,
+                        'findings' => $request->findings,
+                        'findings_action' => $request->action,
+                        'findings_status' => $request->status,
+                        'findings_image' => url($new_path_findings),
+                        'remarks' => $request->remark,
+                        'due_date' => $request->due_date,
+                        'conditions' => $request->kondisi,
+                        'inventory_status' => $request->inventory_status,
+                        'ip_address' => $request->ip_address,
+                        'location' => $request->location,
+                        'pica_number' => $uniqueString,
+                        'created_date' => Carbon::now()->format('Y-m-d'),
+                    ];
+                }
             }
             $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
         } else {
             if (!empty($request->file('action_image'))) {
-                $inspection_image = $request->file('inspection_image');
-                $path_inspection_image = $inspection_image->store('images', 'public');
-                $new_path_inspection = 'storage/' . $path_inspection_image;
+                if (!empty($request->file('inspection_image'))) {
+                    $inspection_image = $request->file('inspection_image');
+                    $path_inspection_image = $inspection_image->store('images', 'public');
+                    $new_path_inspection = $path_inspection_image;
+                    $inspection_image->move($destinationPath, $new_path_inspection);
 
-                //upload image
-                $action_image = $request->file('action_image');
-                $path_action_image = $action_image->store('images', 'public');
-                $new_path_action = 'storage/' . $path_action_image;
+                    //upload image
+                    $action_image = $request->file('action_image');
+                    $path_action_image = $action_image->store('images', 'public');
+                    $new_path_action = $path_action_image;
+                    $action_image->move($destinationPath, $new_path_action);
 
-                $dataInspection = [
-                    'inspection_status' => 'Y',
-                    'inspector' => Auth::user()->name,
-                    'physique_condition_cpu' => $request->cpu,
-                    'physique_condition_monitor' => $request->monitor,
-                    'software_license' => $request->license,
-                    'software_standaritation' => $request->standaritation,
-                    'software_clear_cache' => $request->cache,
-                    'software_system_restore' => $request->restore,
-                    'defrag' => $request->defrag,
-                    'hard_maintenance' => $request->hard_maintenance,
-                    'crew' => $request->crew,
-                    'findings_action' => $request->action,
-                    'findings_status' => $request->findings_status,
-                    'action_image' => url($new_path_action),
-                    'remarks' => $request->remark,                    
-                    'inspection_image' => url($new_path_inspection),
-                    'due_date' => $request->due_date,
-                    'conditions' => $request->conditions,
-                    'inventory_status' => $request->inventory_status,
-                    'ip_address' => $request->ip_address,
-                    'location' => $request->location,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
-                $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
+                    $dataInspection = [
+                        'inspection_status' => 'Y',
+                        'inspector' => Auth::user()->name,
+                        'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_monitor' => $request->monitor,
+                        'software_license' => $request->license,
+                        'software_standaritation' => $request->standaritation,
+                        'software_clear_cache' => $request->cache,
+                        'software_system_restore' => $request->restore,
+                        'defrag' => $request->defrag,
+                        'hard_maintenance' => $request->hard_maintenance,
+                        'change_user_pass' => $request->change_user_pass,
+                        'autolock' => $request->autolock,
+                        'enter_password' => $request->enter_password,
+                        'crew' => $request->crew,
+                        'findings' => $request->findings,
+                        'findings_action' => $request->action,
+                        'findings_status' => $request->status,
+                        'action_image' => url($new_path_action),
+                        'remarks' => $request->remark,
+                        'inspection_image' => url($new_path_inspection),
+                        'due_date' => $request->due_date,
+                        'conditions' => $request->kondisi,
+                        'inventory_status' => $request->inventory_status,
+                        'ip_address' => $request->ip_address,
+                        'location' => $request->location,
+                        'pica_number' => $uniqueString,
+                        'created_date' => Carbon::now()->format('Y-m-d'),
+                    ];
+                    $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
+                } else {
+                    //upload image
+                    $action_image = $request->file('action_image');
+                    $path_action_image = $action_image->store('images', 'public');
+                    $new_path_action = $path_action_image;
+                    $action_image->move($destinationPath, $new_path_action);
+
+                    $dataInspection = [
+                        'inspection_status' => 'Y',
+                        'inspector' => Auth::user()->name,
+                        'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_monitor' => $request->monitor,
+                        'software_license' => $request->license,
+                        'software_standaritation' => $request->standaritation,
+                        'software_clear_cache' => $request->cache,
+                        'software_system_restore' => $request->restore,
+                        'defrag' => $request->defrag,
+                        'hard_maintenance' => $request->hard_maintenance,
+                        'change_user_pass' => $request->change_user_pass,
+                        'autolock' => $request->autolock,
+                        'enter_password' => $request->enter_password,
+                        'crew' => $request->crew,
+                        'findings' => $request->findings,
+                        'findings_action' => $request->action,
+                        'findings_status' => $request->status,
+                        'action_image' => url($new_path_action),
+                        'remarks' => $request->remark,
+                        'due_date' => $request->due_date,
+                        'conditions' => $request->kondisi,
+                        'inventory_status' => $request->inventory_status,
+                        'ip_address' => $request->ip_address,
+                        'location' => $request->location,
+                        'pica_number' => $uniqueString,
+                        'created_date' => Carbon::now()->format('Y-m-d'),
+                    ];
+                    $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
+                }
             } else {
                 // return dd($request->file('inspection_image'));
-                $inspection_image = $request->file('inspection_image');
-                $path_inspection_image = $inspection_image->store('images', 'public');
-                $new_path_inspection = 'storage/' . $path_inspection_image;
+                if (!empty($request->file('inspection_image'))) {
+                    # code...
+                    $inspection_image = $request->file('inspection_image');
+                    $path_inspection_image = $inspection_image->store('images', 'public');
+                    $new_path_inspection = $path_inspection_image;
+                    $inspection_image->move($destinationPath, $new_path_inspection);
 
-                $dataInspection = [
-                    'inspection_status' => 'Y',
-                    'inspector' => Auth::user()->name,
-                    'physique_condition_cpu' => $request->cpu,
-                    'physique_condition_monitor' => $request->monitor,
-                    'software_license' => $request->license,
-                    'software_standaritation' => $request->standaritation,
-                    'software_clear_cache' => $request->cache,
-                    'software_system_restore' => $request->restore,
-                    'defrag' => $request->defrag,
-                    'hard_maintenance' => $request->hard_maintenance,
-                    'crew' => $request->crew,
-                    'remarks' => $request->remark,                    
-                    'inspection_image' => url($new_path_inspection),
-                    'due_date' => $request->due_date,
-                    'conditions' => $request->conditions,
-                    'inventory_status' => $request->inventory_status,
-                    'ip_address' => $request->ip_address,
-                    'location' => $request->location,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
+                    $dataInspection = [
+                        'inspection_status' => 'Y',
+                        'inspector' => Auth::user()->name,
+                        'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_monitor' => $request->monitor,
+                        'software_license' => $request->license,
+                        'software_standaritation' => $request->standaritation,
+                        'software_clear_cache' => $request->cache,
+                        'software_system_restore' => $request->restore,
+                        'defrag' => $request->defrag,
+                        'hard_maintenance' => $request->hard_maintenance,
+                        'change_user_pass' => $request->change_user_pass,
+                        'autolock' => $request->autolock,
+                        'enter_password' => $request->enter_password,
+                        'crew' => $request->crew,
+                        'remarks' => $request->remark,
+                        'inspection_image' => url($new_path_inspection),
+                        'due_date' => $request->due_date,
+                        'conditions' => $request->kondisi,
+                        'inventory_status' => $request->inventory_status,
+                        'ip_address' => $request->ip_address,
+                        'location' => $request->location,
+                        'pica_number' => $uniqueString,
+                        'created_date' => Carbon::now()->format('Y-m-d'),
+                    ];
+                } else {
+                    $dataInspection = [
+                        'inspection_status' => 'Y',
+                        'inspector' => Auth::user()->name,
+                        'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_monitor' => $request->monitor,
+                        'software_license' => $request->license,
+                        'software_standaritation' => $request->standaritation,
+                        'software_clear_cache' => $request->cache,
+                        'software_system_restore' => $request->restore,
+                        'defrag' => $request->defrag,
+                        'hard_maintenance' => $request->hard_maintenance,
+                        'change_user_pass' => $request->change_user_pass,
+                        'autolock' => $request->autolock,
+                        'enter_password' => $request->enter_password,
+                        'crew' => $request->crew,
+                        'findings' => $request->findings,
+                        'findings_action' => $request->action,
+                        'findings_status' => $request->status,
+                        'remarks' => $request->remark,
+                        'due_date' => $request->due_date,
+                        'conditions' => $request->kondisi,
+                        'inventory_status' => $request->inventory_status,
+                        'ip_address' => $request->ip_address,
+                        'location' => $request->location,
+                        'pica_number' => $uniqueString,
+                        'created_date' => Carbon::now()->format('Y-m-d'),
+                    ];
+                }
+                $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
             }
-            $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
         }
 
         if (!empty($request->inventory_status)) {
@@ -229,6 +359,22 @@ class InspeksiComputerController extends Controller
         return redirect()->route('inspeksiKomputer.page');
         // return response()->json($dataInspection, 201);
     }
+
+    public function edit($id)
+    {
+        $dataInspeksi = InspeksiComputer::with('computer.pengguna')->where('id', $id)->first();
+        // return dd($dataInspeksi);
+        // $crew_select = array($dataInspeksi->crew);
+        $crew_select = explode(', ', $dataInspeksi->crew);
+
+        $crew = User::pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+        // return dd($crew_select);
+        return Inertia::render('Inspeksi/Komputer/InspeksiKomputerFormEdit', ['inspeksi' => $dataInspeksi, 'crew' => $crew, 'crew_select' => $crew_select]);
+    }
+
+
 
     public function approval(Request $request)
     {
