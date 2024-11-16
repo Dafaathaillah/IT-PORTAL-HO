@@ -99,6 +99,10 @@ class InvScannerController extends Controller
     public function detail($id)
     {
         $scanner = InvScanner::where('id', $id)->first();
+
+        if (empty($scanner)) {
+            abort(404, 'Data not found');
+        }
         
         return Inertia::render('Inventory/Scanner/ScannerDetail', [
             'scanners' => $scanner,
@@ -108,6 +112,9 @@ class InvScannerController extends Controller
     public function edit($id)
     {
         $scanner = InvScanner::find($id);
+        if (empty($scanner)) {
+            abort(404, 'Data not found');
+        }
 
         if (!empty($scanner->department)) {
             $department_select = array($scanner->department);
@@ -150,6 +157,9 @@ class InvScannerController extends Controller
     public function destroy($id)
     {
         $scanner = InvScanner::find($id);
+        if (empty($scanner)) {
+            abort(404, 'Data not found');
+        }
         // return response()->json(['ap' => $scanner]);
         $scanner->delete();
         return redirect()->back();
