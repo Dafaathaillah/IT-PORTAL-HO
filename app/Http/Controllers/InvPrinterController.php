@@ -35,10 +35,14 @@ class InvPrinterController extends Controller
 
         $uniqueString = 'PPAHOPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['printer_code'] = $uniqueString;
+
+        $department = Department::pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
         
         // end generate code
 
-        return Inertia::render('Inventory/Printer/PrinterCreate', ['printer_code' => $uniqueString]);
+        return Inertia::render('Inventory/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
     }
 
     public function store(Request $request)
