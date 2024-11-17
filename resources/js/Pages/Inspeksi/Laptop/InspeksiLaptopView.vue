@@ -43,6 +43,56 @@ const editData = (id) => {
     });
 };
 
+const getBadgeClassStatusInspeksi = (status) => {
+    return status === "Y"
+        ? "bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"
+        : "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
+};
+
+const getBadgeTextStatusInspeksi = (status) => {
+    return status === "Y" ? "INSPECTED" : "NOT INSPECTED YET";
+};
+
+const getBadgeClassStatusInventory = (status) => {
+    if (status === "READY_USED") {
+        return "bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
+    } else if (status === "READY_STANBY") {
+        return "bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
+    } else if (status === "SCRAP") {
+        return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
+    } else if (status === "BREAKDOWN") {
+        return "bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
+    }
+};
+
+const getBadgeTextStatusInventory = (status) => {
+    if (status === "READY_USED") {
+        return "READY_USED";
+    } else if (status === "READY_STANDBY") {
+        return "READY_STANDBY";
+    } else if (status === "SCRAP") {
+        return "SCRAP";
+    } else if (status === "BREAKDOWN") {
+        return "BREAKDOWN";
+    }
+};
+
+const getBadgeClassStatusFindings = (temuan) => {
+    if (temuan === "" || temuan === null) {
+        return "bg-gradient-to-tl from-cyan-500 to-sky-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
+    }else {
+        return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"; // Default untuk status yang tidak dikenal
+    }
+};
+
+const getBadgeTextStatusFindings = (temuan) => {
+    if (temuan === "" || temuan === null) {
+        return "Tidak ada temuan";
+    }else {
+        return temuan; // Default teks untuk status yang tidak dikenal
+    }
+};
+
 const detailData = (id) => {
     form.get(route("inspeksiLaptop.detail", { id: id }));
 };
@@ -114,11 +164,7 @@ function formatData(text) {
                                                     >
                                                         Inventory Number
                                                     </th>
-                                                    <th
-                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Asset Ho Number
-                                                    </th>
+                                                    
                                                     <th
                                                         class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
@@ -129,20 +175,11 @@ function formatData(text) {
                                                     >
                                                         Department
                                                     </th>
+                                                    
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Serial Number
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Brand
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Location
+                                                        Temuan
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -209,17 +246,7 @@ function formatData(text) {
                                                             }}
                                                         </p>
                                                     </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                inspeksiLaptops.inventory.number_asset_ho
-                                                            }}
-                                                        </p>
-                                                    </td>
+                                                    
                                                     <td
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
@@ -244,38 +271,22 @@ function formatData(text) {
                                                             
                                                         </p>
                                                     </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                inspeksiLaptops.inventory.serial_number
-                                                            }}
-                                                        </p>
-                                                    </td>
+                                                    
+                                                    
                                                     <td
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                formatData(
-                                                                    inspeksiLaptops.inventory.laptop_name
+                                                            :class="
+                                                                getBadgeClassStatusFindings(
+                                                                    inspeksiLaptops.findings
                                                                 )
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            "
                                                         >
                                                             {{
-                                                                inspeksiLaptops.inventory.location
+                                                                getBadgeTextStatusFindings(
+                                                                    inspeksiLaptops.findings
+                                                                )
                                                             }}
                                                         </span>
                                                     </td>
@@ -296,10 +307,16 @@ function formatData(text) {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            :class="
+                                                                getBadgeClassStatusInspeksi(
+                                                                    inspeksiLaptops.inspection_status
+                                                                )
+                                                            "
                                                         >
                                                             {{
-                                                                inspeksiLaptops.inspection_status
+                                                                getBadgeTextStatusInspeksi(
+                                                                    inspeksiLaptops.inspection_status
+                                                                )
                                                             }}
                                                         </span>
                                                     </td>
@@ -307,10 +324,16 @@ function formatData(text) {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            :class="
+                                                                getBadgeClassStatusInventory(
+                                                                    inspeksiLaptops.inventory_status
+                                                                )
+                                                            "
                                                         >
                                                             {{
-                                                                inspeksiLaptops.inventory.status
+                                                                getBadgeTextStatusInventory(
+                                                                    inspeksiLaptops.inventory_status
+                                                                )
                                                             }}
                                                         </span>
                                                     </td>
@@ -332,7 +355,7 @@ function formatData(text) {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                inspeksiLaptops.remark
+                                                                inspeksiLaptops.remarks
                                                             }}
                                                         </span>
                                                     </td>
@@ -360,7 +383,7 @@ function formatData(text) {
                                                             v-if="inspeksiLaptops.inspection_status === 'N'"
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Process
+                                                        Do Inspection
                                                         </NavLinkCustom>
 
                                                         <NavLinkCustom
