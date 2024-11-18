@@ -11,36 +11,32 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inv_scanners', function (Blueprint $table) {
+        Schema::create('inv_switches', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('max_id');
 
-            $table->string('asset_ho_number', 255)->nullable();
-            $table->string('mac_address', 255)->nullable();
-            $table->string('scanner_code', 255)->nullable();
+            $table->string('device_name', 255);
+            $table->string('inventory_number', 255);
+            $table->string('asset_ho_number', 255);
             $table->string('serial_number', 255)->nullable();
             $table->string('ip_address', 255)->nullable();
-            $table->string('item_name', 255)->nullable();
-            $table->string('scanner_brand', 255)->nullable();
-            $table->string('scanner_type', 255)->nullable();
+            $table->string('mac_address', 255)->nullable();
+            $table->string('device_brand', 255)->nullable();
+            $table->string('device_type', 255)->nullable();
+            $table->string('device_model', 255)->nullable();
             $table->string('location', 255)->nullable();
-            $table->dateTime('date_of_inventory')->nullable();
             $table->string('status', 255)->nullable();
             $table->longText('note')->nullable();
-            $table->string('division', 255)->nullable();
-            $table->string('department', 255)->nullable();
             $table->string('inspection_remark', 255)->nullable();
-
-            $table->timestamps();            
-            
+            $table->timestamps();
         });
     }
- 
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('inv_scanners');
+        Schema::dropIfExists('inv_switches');
     }
 };

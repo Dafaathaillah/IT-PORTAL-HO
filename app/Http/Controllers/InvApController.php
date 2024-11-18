@@ -145,6 +145,10 @@ class InvApController extends Controller
     public function edit($apId)
     {
         $accessPoint = InvAp::find($apId);
+        if (empty($accessPoint)) {
+            abort(404, 'Data not found');
+        }
+        
         // return response()->json(['ap' => $accessPoint]);
         return Inertia::render('Inventory/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
     }
@@ -152,6 +156,9 @@ class InvApController extends Controller
     public function detail($id)
     {
         $accessPoint = InvAp::where('id', $id)->first();
+        if (empty($accessPoint)) {
+            abort(404, 'Data not found');
+        }
         
         return Inertia::render('Inventory/AccessPoint/AccessPointDetail', [
             'accessPoints' => $accessPoint,
@@ -193,6 +200,10 @@ class InvApController extends Controller
     public function destroy($apId)
     {
         $accessPoint = InvAp::find($apId);
+        if (empty($accessPoint)) {
+            abort(404, 'Data not found');
+        }
+        
         // return response()->json(['ap' => $accessPoint]);
         $accessPoint->delete();
         return redirect()->back();

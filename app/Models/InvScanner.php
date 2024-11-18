@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Guid\Guid;
+use Ramsey\Uuid\Guid\GuidInterface;
+use Ramsey\Uuid\Guid\Guid\Guid7;
 
 class InvScanner extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'max_id',

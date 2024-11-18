@@ -87,6 +87,10 @@ class InvWirellessController extends Controller
     public function detail($id)
     {
         $wirelless = InvWirelless::where('id', $id)->first();
+
+        if (empty($wirelless)) {
+            abort(404, 'Data not found');
+        }
         
         return Inertia::render('Inventory/Wirelless/WirellessDetail', [
             'wirelless' => $wirelless,
@@ -96,6 +100,9 @@ class InvWirellessController extends Controller
     public function edit($id)
     {
         $wirelless = InvWirelless::find($id);
+        if (empty($wirelless)) {
+            abort(404, 'Data not found');
+        }
         return Inertia::render('Inventory/Wirelless/WirellessEdit', ['wirelless' => $wirelless]);
     }
 
@@ -124,6 +131,9 @@ class InvWirellessController extends Controller
     public function destroy($id)
     {
         $wirelless = InvWirelless::find($id);
+        if (empty($wirelless)) {
+            abort(404, 'Data not found');
+        }
         // return response()->json(['ap' => $wirelless]);
         $wirelless->delete();
         return redirect()->back();

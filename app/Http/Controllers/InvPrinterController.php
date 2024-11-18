@@ -96,6 +96,9 @@ class InvPrinterController extends Controller
     public function detail($id)
     {
         $printer = InvPrinter::where('id', $id)->first();
+        if (empty($printer)) {
+            abort(404, 'Data not found');
+        }
         
         return Inertia::render('Inventory/Printer/PrinterDetail', [
             'printers' => $printer,
@@ -105,6 +108,10 @@ class InvPrinterController extends Controller
     public function edit($printerId)
     {
         $printer = InvPrinter::find($printerId);
+
+        if (empty($printer)) {
+            abort(404, 'Data not found');
+        }
 
         if (!empty($printer->department)) {
             $department_select = array($printer->department);
@@ -123,6 +130,11 @@ class InvPrinterController extends Controller
     public function show($id)
     {
         $invPrinter = InvPrinter::find($id);
+
+        if (empty($invPrinter)) {
+            abort(404, 'Data not found');
+        }
+        
         if (is_null($invPrinter)) {
             return response()->json(['message' => 'Printers Data not found'], 404);
         }
@@ -155,6 +167,11 @@ class InvPrinterController extends Controller
     public function destroy($id)
     {
         $invPrinter = InvPrinter::find($id);
+
+        if (empty($invPrinter)) {
+            abort(404, 'Data not found');
+        }
+
         if (is_null($invPrinter)) {
             return response()->json(['message' => 'Printers Data not found'], 404);
         }

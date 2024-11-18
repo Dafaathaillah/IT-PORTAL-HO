@@ -87,12 +87,18 @@ class InvSwitchController extends Controller
     public function edit($swId)
     {
         $switch = InvSwitch::find($swId);
+        if (empty($switch)) {
+            abort(404, 'Data not found');
+        }
         return Inertia::render('Inventory/Switch/SwitchEdit', ['switch' => $switch]);
     }
 
     public function detail($id)
     {
         $switch = InvSwitch::where('id', $id)->first();
+        if (empty($switch)) {
+            abort(404, 'Data not found');
+        }
         
         return Inertia::render('Inventory/Switch/SwitchDetail', [
             'switchs' => $switch,
@@ -123,6 +129,9 @@ class InvSwitchController extends Controller
     public function destroy($swId)
     {
         $switch = InvSwitch::find($swId);
+        if (empty($switch)) {
+            abort(404, 'Data not found');
+        }
         // return response()->json(['ap' => $switch]);
         $switch->delete();
         return redirect()->back();

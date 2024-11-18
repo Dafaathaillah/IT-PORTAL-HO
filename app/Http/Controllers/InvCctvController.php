@@ -96,6 +96,11 @@ class InvCctvController extends Controller
     public function edit($id)
     {
         $cctv = InvCctv::find($id);
+
+        if (empty($cctv)) {
+            abort(404, 'Data not found');
+        }
+
         $selectSwitch = $cctv->switch_id;
         $switch = InvSwitch::select('id', 'inventory_number')->get();
 
@@ -145,9 +150,12 @@ class InvCctvController extends Controller
     }
     public function destroy($id)
     {
-        $laptop = InvCctv::find($id);
+        $cctv = InvCctv::find($id);
+        if (empty($cctv)) {
+            abort(404, 'Data not found');
+        }
         // return response()->json(['ap' => $laptop]);
-        $laptop->delete();
+        $cctv->delete();
         return redirect()->back();
     }
 }
