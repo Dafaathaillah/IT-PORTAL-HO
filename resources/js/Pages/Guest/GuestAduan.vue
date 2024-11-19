@@ -62,6 +62,8 @@ const search = () => {
                     icon: "success",
                     confirmButtonText: "OK",
                     confirmButtonColor: "#3085d6",
+                }).then(() => {
+                    window.location.reload();
                 });
             } else {
                 Swal.fire({
