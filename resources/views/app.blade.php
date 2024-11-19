@@ -14,7 +14,7 @@
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/27c970a153.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('../assets/js/fontAwesome27c970a153.js') }}" crossorigin="anonymous"></script>
     <!-- Nucleo Icons -->
     <link href="{{ asset('../assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('../assets/css/nucleo-svg.css') }}" rel="stylesheet" />
