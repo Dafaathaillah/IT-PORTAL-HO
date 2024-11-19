@@ -41,7 +41,7 @@ class AduanController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->max('id');
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->max('max_id');
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -121,6 +121,9 @@ class AduanController extends Controller
     public function progress($id)
     {
         $aduan = Aduan::find($id);
+        if (empty($aduan)) {
+            abort(404, 'Data not found');
+        }
         $crew = User::pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
@@ -184,6 +187,10 @@ class AduanController extends Controller
     public function edit($id)
     {
         $aduan = Aduan::find($id);
+        if (empty($aduan)) {
+            abort(404, 'Data not found');
+        }
+        
         $selectCrew = explode(', ', $aduan->crew);
         // return dd($aduan);
         $crew = User::pluck('name')->map(function ($name) {
@@ -259,6 +266,9 @@ class AduanController extends Controller
     public function show($id)
     {
         $aduan = Aduan::find($id);
+        if (empty($aduan)) {
+            abort(404, 'Data not found');
+        }
         if (is_null($aduan)) {
             return response()->json(['message' => 'Aduan Data not found'], 404);
         }
@@ -268,6 +278,9 @@ class AduanController extends Controller
     public function detail($id)
     {
         $aduan = Aduan::where('id', $id)->first();
+        if (empty($aduan)) {
+            abort(404, 'Data not found');
+        }
         return Inertia::render('Aduan/AduanDetail', [
             'aduan' => $aduan,
         ]);
@@ -276,6 +289,9 @@ class AduanController extends Controller
     public function destroy($id)
     {
         $aduan = Aduan::find($id);
+        if (empty($aduan)) {
+            abort(404, 'Data not found');
+        }
         // return response()->json(['ap' => $aduan]);
         $aduan->delete();
         return redirect()->back();

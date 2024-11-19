@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Aduan extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
     
     protected $fillable = [
         'complaint_code',
@@ -25,6 +26,7 @@ class Aduan extends Model
         'complaint_position',
         'phone_number',
         'nrp',
+        'max_id',
         'location',
         'detail_location',
         'repair_note',

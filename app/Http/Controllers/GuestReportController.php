@@ -48,7 +48,7 @@ class GuestReportController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->max('id');
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->max('max_id');
 
         if (is_null($maxId)) {
             $maxId = 0;
