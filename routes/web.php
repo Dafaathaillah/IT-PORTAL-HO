@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AduanController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\GuestReportController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestingAuthApiController;
 use App\Http\Controllers\UserAllController;
 use App\Models\Aduan;
 use App\Models\InvAp;
@@ -251,8 +253,10 @@ Route::middleware('auth')->group(function () {
         Route::post('inspeksi-laptop/update', [InspeksiLaptopController::class, 'update'])->name('inspeksiLaptop.update');
         Route::get('/inspeksi-laptop/{id}/detail', [InspeksiLaptopController::class, 'detail'])->name('inspeksiLaptop.detail');
         Route::delete('inspeksi-laptop/{id}/delete', [InspeksiLaptopController::class, 'destroy'])->name('inspeksiLaptop.delete');
+        
     });
 });
 Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('home');
+Route::post('login-handling', [TestingAuthApiController::class, 'index'])->name('auth.loginHandling');
 
 require __DIR__ . '/auth.php';

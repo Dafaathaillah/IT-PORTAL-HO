@@ -19,114 +19,19 @@ defineProps({
     },
 });
 
-const form = ref({
-    nrp: "23002073",
-    password: "23002073",
-    // remember: false,
+const form = useForm({
+    nrp: "",
+    password: "",
 });
-
-// const submit = () => {
-//     form.post(route('login'), {
-//         onFinish: () => form.reset('password'),
-//     });
-// };
 
 const message = ref("");
 const messageClass = ref("");
 
-function getCookieValue(name) {
-    const cookies = document.cookie.split(";");
-    for (let cookie of cookies) {
-        const [key, value] = cookie.split("=").map((c) => c.trim());
-        if (key === name) {
-            return decodeURIComponent(value);
-        }
-    }
-    return null;
-}
-
-const accessToken = ref(null);
-
-// Fungsi untuk mendapatkan token dari cookie
-const fetchAccessToken = () => {
-    accessToken.value = getCookieValue("access_token"); // Ganti 'access_token' dengan nama cookie Anda
+const submit = () => {
+    form.post(route("login"), {
+        onFinish: () => form.reset("password"),
+    });
 };
-
-// Panggil fungsi saat komponen di-mount
-fetchAccessToken();
-
-const submit = async () => {
-    try {
-        message.value = "";
-        messageClass.value = "";
-
-        const response = await axios.post(
-            "https://apikong.transformore.net/ict/auth/v1/auth",
-            form.value
-        );
-
-        if (response.status === 200) {
-            message.value = "Login successful!";
-            messageClass.value = "text-green-500";
-            // form.get(route('jwt.page'));
-            // if (token) {
-            //     const payload = token.split(".")[1]; // Ambil bagian payload
-            //     const decodedPayload = JSON.parse(atob(payload)); // Decode base64 dan parse JSON
-            //     console.log(decodedPayload);
-            // }
-            console.log(accessToken.value);
-            console.log(response);
-        }
-    } catch (error) {
-        if (error.response) {
-            if (response.status === 400) {
-                message.value = "Incorrect password.";
-                messageClass.value = "text-red-500";
-            } else if (response.status === 500) {
-                message.value = "User not found.";
-                messageClass.value = "text-red-500";
-            }
-        } else {
-            // Handle network errors
-            console.error("Error:", error);
-            message.value = "Failed to connect to the server.";
-            messageClass.value = "text-red-500";
-        }
-    }
-};
-
-// const submit = async () => {
-//     try {
-//         message.value = "";
-//         messageClass.value = "";
-//         const response = await fetch(
-//             "https://apikong.transformore.net/ict/auth/v1/api",
-//             {
-//                 method: "POST",
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                 },
-//                 body: JSON.stringify(form.value),
-//             }
-//         );
-
-//         if (response.status === 200) {
-//             message.value = "Login successful!";
-//             messageClass.value = "text-green-500";
-//             // Redirect or handle successful login
-//         } else if (response.status === 400) {
-//             message.value = "Incorrect password.";
-//             messageClass.value = "text-red-500";
-//         } else if (response.status === 500) {
-//             message.value = "User not found.";
-//             messageClass.value = "text-red-500";
-//         }
-//     } catch (error) {
-//         console.error("Error:", error);
-//         message.value = "Failed to connect to the server.";
-//         messageClass.value = "text-red-500";
-//     }
-// };
 </script>
 
 <template>

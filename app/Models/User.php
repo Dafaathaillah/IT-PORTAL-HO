@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'nrp',
         'position',
+        'department',
+        'site',
         'role',
         'last_login',
         'password',

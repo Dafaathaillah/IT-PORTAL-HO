@@ -1,60 +1,47 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Inertia\Response;
-
 
 function decodeJWT($token)
 {
     try {
+        // Replace dengan secret key atau public key sesuai kebutuhan
         $secretKey = '81d39ca86a907e014d6784a219f563f5c9d578139c5a1ece9c09927b55843ea1';
+
+        // Decode token (gunakan algoritma yang sesuai, misalnya HS256 atau RS256)
         $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
+        // Jika menggunakan RS256
+        // $decoded = JWT::decode($token, new Key($publicKey, 'RS256'));
+
+        // Ubah hasil menjadi array
         return (array) $decoded;
     } catch (\Exception $e) {
+        // Tangani error jika terjadi kesalahan saat decoding
         return ['error' => $e->getMessage()];
     }
 }
-class AuthenticatedSessionController extends Controller
+class TestingAuthApiController extends Controller
 {
-    /**
-     * Display the login view.
-     */
-    public function create(): Response
-    {
-        return Inertia::render('Auth/Login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => session('status'),
-        ]);
-    }
 
-    /**
-     * Handle an incoming authentication request.
-     */
-    public function store(LoginRequest $request): RedirectResponse
+    public function index(Request $request): RedirectResponse
     {
         $dataLogin = [
             'nrp' => $request->nrp,
             'password' => $request->password,
         ];
-        
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Access-Control-Allow-Origin' => '*',
         ])->post('https://apikong.transformore.net/ict/auth/v1/auth', $dataLogin);
-
         if ($response['statusCode'] == 200) {
             $cookies = $response->cookies();
             foreach ($cookies as $cookie) {
@@ -111,19 +98,5 @@ class AuthenticatedSessionController extends Controller
 
             return redirect()->intended(route('home', absolute: false));
         }
-    }
-
-    /**
-     * Destroy an authenticated session.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/login');
     }
 }
