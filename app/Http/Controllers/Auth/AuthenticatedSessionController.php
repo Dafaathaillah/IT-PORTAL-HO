@@ -20,7 +20,7 @@ use Inertia\Response;
 function decodeJWT($token)
 {
     try {
-        $secretKey = '81d39ca86a907e014d6784a219f563f5c9d578139c5a1ece9c09927b55843ea1';
+        $secretKey = env('JWT_SECRET');
         $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
         return (array) $decoded;
     } catch (\Exception $e) {
@@ -49,7 +49,7 @@ class AuthenticatedSessionController extends Controller
             'nrp' => $request->nrp,
             'password' => $request->password,
         ];
-        
+
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Access-Control-Allow-Origin' => '*',
