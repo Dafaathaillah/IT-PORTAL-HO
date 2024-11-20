@@ -118,12 +118,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/login');
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Access-Control-Allow-Origin' => '*',
+        ])->delete('https://apikong.transformore.net/ict/auth/v1/auth/logout');
+        if ($response['statusCode'] == 401) {
+            Auth::guard('web')->logout();
+    
+            $request->session()->invalidate();
+    
+            $request->session()->regenerateToken();
+    
+            return redirect('/login');
+        }
     }
 }
