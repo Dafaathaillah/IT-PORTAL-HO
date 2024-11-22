@@ -6,15 +6,25 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
+import Swal from "sweetalert2";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-defineProps({
+const props = defineProps({
     canResetPassword: {
         type: Boolean,
     },
     status: {
+        type: String,
+    },
+    errorMessage: {
+        type: String,
+    },
+    errorLoginUnamePasswr: {
+        type: String,
+    },
+    errorLoginUnamePassnf: {
         type: String,
     },
 });
@@ -32,14 +42,39 @@ const submit = () => {
         onFinish: () => form.reset("password"),
     });
 };
+
+onMounted(() => {
+    console.log(props.errorLoginUnamePassnf);
+    if (props.errorMessage) {
+        Swal.fire({
+            position: "top-end",
+            icon: "warning",
+            title: "Terlalu Banyak Melakukan Percobaan! Silahkan Refresh Halaman.",
+            showConfirmButton: false,
+            timer: 3600,
+        });
+    }
+
+    // if (props.errorLoginUnamePassnf != null) {
+    //     Swal.fire({
+    //         position: "top-end",
+    //         icon: "warning",
+    //         title: "User tidak ditemukan!",
+    //         showConfirmButton: false,
+    //         timer: 3600,
+    //     });
+    // }
+});
+
+onMounted(() => {});
 </script>
 
 <template>
     <GuestLayout>
         <Head title="Log in" />
 
-        <div v-if="status" class="font-medium text-sm text-green-600">
-            {{ status }}
+        <div v-if="props.status" class="font-medium text-sm text-green-600">
+            {{ props.status }}
         </div>
 
         <div
@@ -74,7 +109,7 @@ const submit = () => {
                                 class="mt-2"
                                 :message="form.errors.nrp"
                             /> -->
-                        </div>
+                </div>
 
                         <div class="mb-4">
                             <InputLabel for="password" value="Password" />
@@ -101,6 +136,21 @@ const submit = () => {
                             >
                                 {{ message }}
                             </p>
+                            <p v-if="errorMessage" class="text-red-500">
+                                {{ errorMessage }}
+                            </p>
+                            <p
+                                v-if="errorLoginUnamePasswr"
+                                class="text-red-500"
+                            >
+                                {{ errorLoginUnamePasswr }}
+                            </p>
+                                 <p
+                                v-if="errorLoginUnamePassnf"
+                                class="text-red-500"
+                            >
+                                {{ errorLoginUnamePassnf }}
+                            </p>
                         </div>
 
                         <div
@@ -119,7 +169,7 @@ const submit = () => {
 
                             <div>
                                 <Link
-                                    v-if="canResetPassword"
+                                    v-if="props.canResetPassword"
                                     :href="route('password.request')"
                                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
