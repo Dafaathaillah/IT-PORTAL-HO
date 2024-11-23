@@ -15,5 +15,6 @@ class UserAll extends Model
         'department',
         'position',
         'email',
+        'site',
     ];
 }

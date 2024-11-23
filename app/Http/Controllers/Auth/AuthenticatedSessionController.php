@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use App\Models\UserAll;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
@@ -77,6 +78,7 @@ class AuthenticatedSessionController extends Controller
                 $dataToArray = decodeJWT($token); // Panggil fungsi decode JWT
 
                 $dataUser = User::where('nrp', $dataToArray['nrp'])->first();
+                $dataUserAll = UserAll::where('nrp', $dataToArray['nrp'])->first();
                 if ($dataUser) {
                     $dataUpdate = [
                         'password' => Hash::make($request->password),
@@ -86,7 +88,27 @@ class AuthenticatedSessionController extends Controller
                         'site' => $dataToArray['site'],
                     ];
                     $updateDatauser = User::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdate);
-
+                    if ($dataUserAll) {
+                        $dataUpdateUserAll = [
+                            'nrp' => $dataToArray['nrp'],
+                            'username' => $dataToArray['nama'],
+                            'position' => $dataToArray['posisi'],
+                            'department' => $dataToArray['dept'],
+                            'email' => $dataToArray['email'],
+                            'site' => $dataToArray['site'],
+                        ];
+                        $updateDatauserAll = UserAll::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdateUserAll);
+                    } else {
+                        $dataCreatedUserAll = [
+                            'nrp' => $dataToArray['nrp'],
+                            'username' => $dataToArray['nama'],
+                            'position' => $dataToArray['posisi'],
+                            'department' => $dataToArray['dept'],
+                            'email' => $dataToArray['email'],
+                            'site' => $dataToArray['site'],
+                        ];
+                        UserAll::create($dataCreatedUserAll);
+                    }
                     $request->authenticate();
 
                     $request->session()->regenerate();
@@ -101,9 +123,31 @@ class AuthenticatedSessionController extends Controller
                         'department' => $dataToArray['dept'],
                         'email' => $dataToArray['email'],
                         'site' => $dataToArray['site'],
-                        'role' => 'ict_developer', //masih default developer role
+                        'role' => 'guest', //masih default developer role
                     ];
                     User::create($dataCreate);
+
+                    if (!$dataUserAll) {
+                        $dataCreatedUserAll = [
+                            'nrp' => $dataToArray['nrp'],
+                            'username' => $dataToArray['nama'],
+                            'position' => $dataToArray['posisi'],
+                            'department' => $dataToArray['dept'],
+                            'email' => $dataToArray['email'],
+                            'site' => $dataToArray['site'],
+                        ];
+                        UserAll::create($dataCreatedUserAll);
+                    } else {
+                        $dataUpdateUserAll = [
+                            'nrp' => $dataToArray['nrp'],
+                            'username' => $dataToArray['nama'],
+                            'position' => $dataToArray['posisi'],
+                            'department' => $dataToArray['dept'],
+                            'email' => $dataToArray['email'],
+                            'site' => $dataToArray['site'],
+                        ];
+                        $updateDatauserAll = UserAll::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdateUserAll);
+                    }
 
                     $request->authenticate();
 
