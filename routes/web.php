@@ -4,6 +4,7 @@ use App\Http\Controllers\AduanController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InspeksiLaptopController;
@@ -27,6 +28,7 @@ use App\Models\InvLaptop;
 use App\Models\InvPrinter;
 use App\Models\InvSwitch;
 use App\Models\InvWirelless;
+use App\Models\UserAll;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
@@ -124,10 +126,10 @@ Route::middleware('auth')->group(function () {
         })->name('groupLeaderDashboard');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_guest'], function () {
-        Route::get('/groupLeaderDashboard', function () {
-            return Inertia::render('Inventory/DashboardGroupLeader');
-        })->name('groupLeaderDashboard');
+    Route::group(['middleware' => 'checkRole:guest'], function () {
+        Route::get('/asetDashboard', [GuestAllController::class, 'index'])->name('asetDashboard');
+        Route::get('/asetDashboard/pengajuanAkses', [GuestAllController::class, 'pengajuanAkses'])->name('pengajuanAkses');
+        
     });
 
     Route::group(['middleware' => 'checkRole:ict_technician'], function () {
