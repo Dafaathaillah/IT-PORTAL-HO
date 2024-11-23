@@ -32,11 +32,17 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): Response
+    public function create(Request $request): Response
     {
+        $errorLoginUnamePasswr = $request->session()->get('errorLoginUnamePasswr', null);
+        $errorMessage = $request->session()->get('errorMessage', null);
+        $errorLoginUnamePassnf = $request->session()->get('errorLoginUnamePassnf', null);
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'errorLoginUnamePasswr' => session('errorLoginUnamePasswr'),
+            'errorMessage' => session('errorMessage'),
+            'errorLoginUnamePassnf' => session('errorLoginUnamePassnf'),
         ]);
     }
 
@@ -104,6 +110,15 @@ class AuthenticatedSessionController extends Controller
                     return redirect()->intended(route('home', absolute: false));
                 }
             }
+        } elseif ($response['statusCode'] == 400) {
+            $request->session()->flash('errorLoginUnamePasswr', 'NRP atau Password anda salah!');
+            return redirect('/login');
+        } elseif ($response['statusCode'] == 429) {
+            $request->session()->flash('errorMessage', 'Terlalu banyak melakukan percobaan!');
+            return redirect('/login');
+        } elseif ($response['statusCode'] == 500) {
+            $request->session()->flash('errorLoginUnamePassnf', 'Nrp tidak terdaftar!');
+            return redirect('/login');
         } else {
             $request->authenticate();
 
@@ -124,11 +139,11 @@ class AuthenticatedSessionController extends Controller
         ])->delete('https://apikong.transformore.net/ict/auth/v1/auth/logout');
         if ($response['statusCode'] == 401) {
             Auth::guard('web')->logout();
-    
+
             $request->session()->invalidate();
-    
+
             $request->session()->regenerateToken();
-    
+
             return redirect('/login');
         }
     }

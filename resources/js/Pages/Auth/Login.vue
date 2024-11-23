@@ -54,16 +54,6 @@ onMounted(() => {
             timer: 3600,
         });
     }
-
-    // if (props.errorLoginUnamePassnf != null) {
-    //     Swal.fire({
-    //         position: "top-end",
-    //         icon: "warning",
-    //         title: "User tidak ditemukan!",
-    //         showConfirmButton: false,
-    //         timer: 3600,
-    //     });
-    // }
 });
 
 onMounted(() => {});
