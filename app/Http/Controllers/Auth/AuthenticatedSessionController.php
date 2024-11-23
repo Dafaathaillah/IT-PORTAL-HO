@@ -36,12 +36,14 @@ class AuthenticatedSessionController extends Controller
     {
         $errorLoginUnamePasswr = $request->session()->get('errorLoginUnamePasswr', null);
         $errorMessage = $request->session()->get('errorMessage', null);
+        $errorMessagePE = $request->session()->get('errorMessagePE', null);
         $errorLoginUnamePassnf = $request->session()->get('errorLoginUnamePassnf', null);
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
             'errorLoginUnamePasswr' => session('errorLoginUnamePasswr'),
             'errorMessage' => session('errorMessage'),
+            'errorMessagePE' => session('errorMessagePE'),
             'errorLoginUnamePassnf' => session('errorLoginUnamePassnf'),
         ]);
     }
@@ -113,18 +115,12 @@ class AuthenticatedSessionController extends Controller
         } elseif ($response['statusCode'] == 400) {
             $request->session()->flash('errorLoginUnamePasswr', 'NRP atau Password anda salah!');
             return redirect('/login');
-        } elseif ($response['statusCode'] == 429) {
-            $request->session()->flash('errorMessage', 'Terlalu banyak melakukan percobaan!');
+        } elseif ($response['statusCode'] == 419) {
+            $request->session()->flash('errorMessagePE', 'Terlalu banyak melakukan percobaan!');
             return redirect('/login');
         } elseif ($response['statusCode'] == 500) {
             $request->session()->flash('errorLoginUnamePassnf', 'Nrp tidak terdaftar!');
             return redirect('/login');
-        } else {
-            $request->authenticate();
-
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('home', absolute: false));
         }
     }
 
@@ -138,6 +134,15 @@ class AuthenticatedSessionController extends Controller
             'Access-Control-Allow-Origin' => '*',
         ])->delete('https://apikong.transformore.net/ict/auth/v1/auth/logout');
         if ($response['statusCode'] == 401) {
+            Auth::guard('web')->logout();
+
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
+
+            return redirect('/login');
+        } elseif ($response['statusCode'] == 429) {
+            $request->session()->flash('errorMessage', 'Terlalu banyak melakukan percobaan!');
             Auth::guard('web')->logout();
 
             $request->session()->invalidate();
