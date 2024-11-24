@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPengajuanRoleController;
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
@@ -238,6 +239,11 @@ Route::middleware('auth')->group(function () {
             Route::get('department/{id}/edit', [DepartmentController::class, 'edit'])->name('department.edit');
             Route::put('department/{id}/update', [DepartmentController::class, 'update'])->name('department.update');
             Route::delete('department/{id}/delete', [DepartmentController::class, 'destroy'])->name('department.delete');
+
+            Route::get('akses', [AdminPengajuanRoleController::class, 'index'])->name('akses.page');
+            Route::get('akses/{id}/edit', [AdminPengajuanRoleController::class, 'edit'])->name('akses.edit');
+            Route::post('akses/update', [AdminPengajuanRoleController::class, 'update'])->name('akses.update');
+            Route::delete('akses/{id}/delete', [AdminPengajuanRoleController::class, 'destroy'])->name('akses.delete');
 
             Route::get('inspeksi-komputer', [InspeksiComputerController::class, 'index'])->name('inspeksiKomputer.page');
             Route::get('inspeksi-komputer/{id}/inspection', [InspeksiComputerController::class, 'doInspection'])->name('inspeksiKomputer.inspection');

@@ -784,6 +784,23 @@ const toggleLevel3ScannerHo = () => {
                                         >Setting Department</span
                                     >
                                 </NavLink>
+                                
+                                <NavLink
+                                    :href="route('akses.page')"
+                                    :active="route().current('akses.page')"
+                                >
+                                    <div
+                                        class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Pengajuan Akses Role</span
+                                    >
+                                </NavLink>
                             </ul>
 
                         </li>
