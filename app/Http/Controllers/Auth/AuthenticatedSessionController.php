@@ -62,7 +62,7 @@ class AuthenticatedSessionController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Access-Control-Allow-Origin' => '*',
-        ])->post('https://apikong.transformore.net/ict/auth/v1/auth', $dataLogin);
+        ])->post('https://ict-auth.ppa-ho.net/auth', $dataLogin);
 
         if ($response['statusCode'] == 200) {
             $cookies = $response->cookies();
@@ -176,7 +176,7 @@ class AuthenticatedSessionController extends Controller
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Access-Control-Allow-Origin' => '*',
-        ])->delete('https://apikong.transformore.net/ict/auth/v1/auth/logout');
+        ])->delete('https://ict-auth.ppa-ho.net/auth/logout');
         if ($response['statusCode'] == 401) {
             Auth::guard('web')->logout();
 
