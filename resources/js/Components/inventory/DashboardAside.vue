@@ -1,7 +1,25 @@
 <script setup>
+import { usePage } from '@inertiajs/vue3';
 import NavLink from "@/Components/NavLink.vue";
 import SideNavItems from "./SideNavItems.vue";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
+
+const url = usePage().props.url;
+
+const isMobileSidebar = defineModel('isMobileSidebar', {
+    type: Boolean,
+    default: false,
+});
+
+const handleSidebarClose = () => {
+    isMobileSidebar.value = !isMobileSidebar.value;
+};
+
+const classes = computed(() =>
+    isMobileSidebar.value
+        ? 'xl:ml-6 ps translate-x-0 ml-6'
+        : 'shadow-xl xl:ml-6'
+);
 
 // Toggle Site Ho
 // State for controlling the visibility of submenus
@@ -199,11 +217,12 @@ const toggleLevel3ScannerHo = () => {
     <aside
         class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-8 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
         aria-expanded="false"
+        :class="classes"
     >
         <div class="h-19">
             <i
                 class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
-                sidenav-close
+                @click="handleSidebarClose"
             ></i>
             <div
                 class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"

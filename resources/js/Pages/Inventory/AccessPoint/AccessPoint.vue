@@ -1,12 +1,16 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import DashboardBreadcrumb from "@/Components/inventory/DashboardBreadcrumb.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+
+const pages = ref("Pages");
+const subMenu = ref("Access Point Pages");
+const mainMenu = ref("Access Point");
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -97,7 +101,7 @@ const submitCsv = () => {
     });
 
     function reloadPage() {
-      window.location.reload();
+        window.location.reload();
     }
 
     formx.post(route("accessPoint.import"), {
@@ -110,7 +114,7 @@ const submitCsv = () => {
                 confirmButtonColor: "#3085d6",
             });
 
-            setTimeout(function() {
+            setTimeout(function () {
                 reloadPage();
             }, 2000);
         },
@@ -130,31 +134,11 @@ const submitCsv = () => {
 <template>
     <Head title="Inv Access Point" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <nav>
-                <!-- breadcrumb -->
-                <ol
-                    class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16"
-                >
-                    <li class="text-sm leading-normal">
-                        <a class="text-white opacity-50" href="javascript:;"
-                            >Pages</a
-                        >
-                    </li>
-                    <li
-                        class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
-                        aria-current="page"
-                    >
-                        Access Point Pages
-                    </li>
-                </ol>
-                <h6 class="mb-0 font-bold text-white capitalize">
-                    Access Point Data
-                </h6>
-            </nav>
-        </template>
-
+    <AuthenticatedLayout
+        v-model:pages="pages"
+        v-model:subMenu="subMenu"
+        v-model:mainMenu="mainMenu"
+    >
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
@@ -481,7 +465,6 @@ const submitCsv = () => {
                                                     <td
                                                         class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
-
                                                         <NavLinkCustom
                                                             @click="
                                                                 detailData(

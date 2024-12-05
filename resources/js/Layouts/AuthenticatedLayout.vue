@@ -1,5 +1,7 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
+import { usePage } from "@inertiajs/vue3";
+import { onClickOutside } from "@vueuse/core";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
@@ -10,75 +12,109 @@ import DashboardAside from "@/Components/inventory/DashboardAside.vue";
 import DashboardNavbar from "@/Components/inventory/DashboardNavbar.vue";
 import DashboardFooter from "@/Components/inventory/DashboardFooter.vue";
 import DashboardConfig from "@/Components/inventory/DashboardConfig.vue";
+import Swal from "sweetalert2";
 
 const showingNavigationDropdown = ref(false);
+
+//Mobile Sidebar
+const isActive = ref(false);
+const handleMobileSidebar = () => {
+    // alert(isActive.value);
+    isActive.value = !isActive.value;
+};
+
+//Argon Configurator
+const configurator = ref(null);
+const isConfiguratorActive = ref(false);
+const handleConfigurator = () => {
+    isConfiguratorActive.value = !isConfiguratorActive.value;
+};
+
+onClickOutside(configurator, (event) => (isConfiguratorActive.value = false));
+
+// Flash Messages
+// watchEffect(() => {
+//     let flashMessage = usePage().props.flashMessage;
+
+//     if (flashMessage.success) {
+//         Swal.fire({
+//             html: flashMessage.success,
+//             icon: "success",
+//             buttonsStyling: false,
+//             confirmButtonText: "Ok, got it!",
+//             customClass: {
+//                 confirmButton:
+//                     "inline-flex px-7 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25",
+//             },
+//         });
+//     }
+
+//     if (flashMessage.error || Object.keys(usePage().props.errors).length > 0) {
+//         if (flashMessage.error) {
+//             Swal.fire({
+//                 title: "Server Error",
+//                 html: flashMessage.error,
+//                 icon: "error",
+//                 buttonsStyling: false,
+//                 confirmButtonText: "Ok, got it!",
+//                 customClass: {
+//                     confirmButton:
+//                         "inline-flex mt-5 mb-10 items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150",
+//                 },
+//             });
+//         } else {
+//             Swal.fire({
+//                 title: "Validation Error",
+//                 html: Object.keys(usePage().props.errors),
+//                 icon: "error",
+//                 buttonsStyling: false,
+//                 confirmButtonText: "Ok, got it!",
+//                 customClass: {
+//                     confirmButton:
+//                         "inline-flex my-5 items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150",
+//                 },
+//             });
+//         }
+//     }
+// });
+
+const pages = defineModel('pages', {
+    type: String,
+});
+
+const subMenu = defineModel('subMenu', {
+    type: String,
+});
+
+const mainMenu = defineModel('mainMenu', {
+    type: String,
+});
+
 </script>
 
 <template>
     <div class="absolute w-full bg-red-700 dark:hidden min-h-75"></div>
 
-    <DashboardAside />
+    <DashboardAside v-model:isMobileSidebar="isActive" />
 
     <!-- Page Content -->
     <main
         class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl"
     >
-        <nav
-            class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start"
-            navbar-main
-            navbar-scroll="false"
-        >
-            <div
-                class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit"
-            >
-                <nav>
-                    <!-- breadcrumb -->
-                    <slot name="header" />
-                    <!-- <h6 class="mb-0 font-bold text-white capitalize">Dashboard Group Leader</h6> -->
-                </nav>
-
-                <slot name="menu"></slot>
-
-                <div
-                    class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto"
-                >
-                    <div class="flex items-center md:ml-auto md:pr-4">
-                        <div  class="block text-sm font-semibold text-white transition-all ease-nav-brand">
-                        <span>
-                         Hello! {{ $page.props.auth.user.name }}
-                        </span>
-                        </div>
-                    </div>
-                    <ul
-                        class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full"
-                    >
-                        <!-- online builder btn  -->
-                        <!-- <li class="flex items-center">
-                <a class="inline-block px-8 py-2 mb-0 mr-4 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer leading-pro hover:-translate-y-px active:shadow-xs hover:border-blue-500 active:bg-blue-500 active:hover:text-blue-500 hover:text-blue-500 tracking-tight-rem hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
-              </li> -->
-                        <li class="flex items-center">
-                            <!-- <a :href="route('logout')" method="post" as="button" class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
-                            <i class="fa fa-user sm:mr-1"></i>
-                            <span class="hidden sm:inline">LogOut</span>
-                        </a> -->
-
-                            <ResponsiveNavLink
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                                class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand"
-                            >
-                                <i class="fa fa-user sm:mr-1"></i>
-                                <span class="hidden sm:inline">LogOut</span>
-                            </ResponsiveNavLink>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <DashboardNavbar
+            @toggleMobileSidebar="handleMobileSidebar"
+            @toggleConfig="handleConfigurator"
+            v-model:isCollapseIconActive="isActive"
+            v-model:pages="pages"
+            v-model:subMenu="subMenu"
+            v-model:mainMenu="mainMenu"
+        />
 
         <slot />
-    <DashboardFooter />
+        <DashboardFooter />
     </main>
-    <DashboardConfig />
+    <DashboardConfig
+        ref="configurator"
+        v-model:isConfiguratorActive="isConfiguratorActive"
+    />
 </template>
