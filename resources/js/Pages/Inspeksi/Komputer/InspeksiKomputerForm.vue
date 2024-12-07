@@ -162,16 +162,15 @@ const save = () => {
                     <li class="text-sm leading-normal">
                         <a class="text-white opacity-50">Pages</a>
                     </li>
-                    <!-- <Link
-                        :href="route('InspeksiKomputer.page')"
+                       <li
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Inspeksi Komputer
-                    </Link> -->
+                        Computer Inspection Pages
+                    </li>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Computer Inspection Pages
+                    Computer Inspection
                 </h6>
             </nav>
         </template>

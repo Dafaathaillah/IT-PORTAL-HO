@@ -8,6 +8,10 @@ import { ref, computed } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
 
+const pages = ref("Pages");
+const subMenu = ref("Cctv Pages");
+const mainMenu = ref("Cctv Data");
+
 // Fungsi untuk format tanggal
 function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
@@ -82,21 +86,21 @@ const handleFileUpload = (event) => {
 
 const submitCsv = () => {
     let timerInterval;
-        Swal.fire({
-        title: 'Mengimport Data...',
-        text: 'Mohon tunggu sebentar...',
+    Swal.fire({
+        title: "Mengimport Data...",
+        text: "Mohon tunggu sebentar...",
         allowOutsideClick: false,
         didOpen: () => {
             Swal.showLoading();
-        }
+        },
     });
 
     const formx = useForm({
-        file: file.value
+        file: file.value,
     });
 
     function reloadPage() {
-      window.location.reload();
+        window.location.reload();
     }
 
     formx.post(route("cctv.import"), {
@@ -110,10 +114,9 @@ const submitCsv = () => {
                 confirmButtonColor: "#3085d6",
             });
 
-            setTimeout(function() {
+            setTimeout(function () {
                 reloadPage();
             }, 2000);
-
         },
         onError: () => {
             Swal.fire({
@@ -143,28 +146,11 @@ function formatData(text) {
 <template>
     <Head title="Inv Cctv" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <nav>
-                <!-- breadcrumb -->
-                <ol
-                    class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16"
-                >
-                    <li class="text-sm leading-normal">
-                        <a class="text-white opacity-50" href="javascript:;"
-                            >Pages</a
-                        >
-                    </li>
-                    <li
-                        class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
-                        aria-current="page"
-                    >
-                        Cctv Pages
-                    </li>
-                </ol>
-                <h6 class="mb-0 font-bold text-white capitalize">Cctv Data</h6>
-            </nav>
-        </template>
+    <AuthenticatedLayout
+        v-model:pages="pages"
+        v-model:subMenu="subMenu"
+        v-model:mainMenu="mainMenu"
+    >
 
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -439,7 +425,9 @@ function formatData(text) {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
-                                                        v-if="cctvs.date_of_inventory"
+                                                            v-if="
+                                                                cctvs.date_of_inventory
+                                                            "
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
@@ -448,11 +436,12 @@ function formatData(text) {
                                                                 )
                                                             }}
                                                         </span>
-                                                          <span
-                                                        v-else
+                                                        <span
+                                                            v-else
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Edit untuk setting tanggal !
+                                                            Edit untuk setting
+                                                            tanggal !
                                                         </span>
                                                     </td>
                                                     <td
@@ -467,7 +456,7 @@ function formatData(text) {
                                                     <td
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
-                                                          <span
+                                                        <span
                                                             :class="{
                                                                 'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
                                                                     cctvs.status ===
@@ -493,8 +482,9 @@ function formatData(text) {
                                                             class="break-normal mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                formatData(cctvs.note)
-                                                                
+                                                                formatData(
+                                                                    cctvs.note
+                                                                )
                                                             }}
                                                         </span>
                                                     </td>
@@ -514,7 +504,6 @@ function formatData(text) {
                                                     <td
                                                         class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
-
                                                         <NavLinkCustom
                                                             @click="
                                                                 detailData(

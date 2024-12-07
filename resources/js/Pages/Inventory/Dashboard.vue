@@ -6,7 +6,7 @@ import Highcharts from 'highcharts';
 
 const pages = ref("Pages");
 const subMenu = ref("Dashboard Pages");
-const mainMenu = ref("Dashboard Developer");
+const mainMenu = ref("Dashboard");
 
 const props = defineProps({
     aduan: {

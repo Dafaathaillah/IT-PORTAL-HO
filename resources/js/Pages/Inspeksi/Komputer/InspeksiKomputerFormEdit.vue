@@ -156,16 +156,15 @@ const save = () => {
                     <li class="text-sm leading-normal">
                         <a class="text-white opacity-50">Pages</a>
                     </li>
-                    <!-- <Link
-                        :href="route('InspeksiKomputer.page')"
+                    <li
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Inspeksi Komputer
-                    </Link> -->
+                        Computer Inspection Pages
+                    </li>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Computer Inspection Pages
+                    Computer Inspection Edit
                 </h6>
             </nav>
         </template>
@@ -894,7 +893,7 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
-                                           <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -904,9 +903,7 @@ const save = () => {
                                                 >Preview Findings Image</label
                                             >
                                             <img
-                                                :src="
-                                                    form.findings_image
-                                                "
+                                                :src="form.findings_image"
                                                 alt="documentation image"
                                                 class="min-w-72 max-w-72 h-30 shadow-2xl rounded-xl"
                                             />
@@ -956,7 +953,7 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
-                                           <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -966,9 +963,7 @@ const save = () => {
                                                 >Preview Action Image</label
                                             >
                                             <img
-                                                :src="
-                                                    form.action_image
-                                                "
+                                                :src="form.action_image"
                                                 alt="documentation image"
                                                 class="min-w-72 max-w-72 h-30 shadow-2xl rounded-xl"
                                             />
@@ -1040,9 +1035,7 @@ const save = () => {
                                                 >Preview Inspection Image</label
                                             >
                                             <img
-                                                :src="
-                                                    form.inspection_image
-                                                "
+                                                :src="form.inspection_image"
                                                 alt="documentation image"
                                                 class="min-w-72 max-w-72 h-30 shadow-2xl rounded-xl"
                                             />
@@ -1058,7 +1051,7 @@ const save = () => {
                                                 >Inspection Image</label
                                             >
                                             <input
-                                                 :required="
+                                                :required="
                                                     inspectionImageIsRequired
                                                 "
                                                 type="file"

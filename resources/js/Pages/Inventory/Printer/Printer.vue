@@ -8,6 +8,10 @@ import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
 
+const pages = ref("Pages");
+const subMenu = ref("Printer Pages");
+const mainMenu = ref("Printer Data");
+
 // Fungsi untuk format tanggal
 function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
@@ -16,9 +20,7 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-      buttons: [
-        'copy', 'csv', 'excel', 'pdf', 'print'
-      ],
+        buttons: ["copy", "csv", "excel", "pdf", "print"],
     });
 });
 
@@ -86,21 +88,21 @@ const handleFileUpload = (event) => {
 
 const submitCsv = () => {
     let timerInterval;
-        Swal.fire({
-        title: 'Mengimport Data...',
-        text: 'Mohon tunggu sebentar...',
+    Swal.fire({
+        title: "Mengimport Data...",
+        text: "Mohon tunggu sebentar...",
         allowOutsideClick: false,
         didOpen: () => {
             Swal.showLoading();
-        }
+        },
     });
 
     const formx = useForm({
-        file: file.value
+        file: file.value,
     });
 
     function reloadPage() {
-      window.location.reload();
+        window.location.reload();
     }
 
     formx.post(route("printer.import"), {
@@ -114,10 +116,9 @@ const submitCsv = () => {
                 confirmButtonColor: "#3085d6",
             });
 
-            setTimeout(function() {
+            setTimeout(function () {
                 reloadPage();
             }, 2000);
-
         },
         onError: () => {
             Swal.fire({
@@ -135,30 +136,11 @@ const submitCsv = () => {
 <template>
     <Head title="Inv Printer" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <nav>
-                <!-- breadcrumb -->
-                <ol
-                    class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16"
-                >
-                    <li class="text-sm leading-normal">
-                        <a class="text-white opacity-50" href="javascript:;"
-                            >Pages</a
-                        >
-                    </li>
-                    <li
-                        class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
-                        aria-current="page"
-                    >
-                        Printer Pages
-                    </li>
-                </ol>
-                <h6 class="mb-0 font-bold text-white capitalize">
-                    Printer Data
-                </h6>
-            </nav>
-        </template>
+    <AuthenticatedLayout
+        v-model:pages="pages"
+        v-model:subMenu="subMenu"
+        v-model:mainMenu="mainMenu"
+    >
 
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -181,9 +163,7 @@ const submitCsv = () => {
                                     />
                                 </div>
                             </div>
-                             <div
-                                class="max-w-full shrink-0"
-                            >
+                            <div class="max-w-full shrink-0">
                                 <button
                                     type="submit"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -192,7 +172,7 @@ const submitCsv = () => {
                                     Import
                                 </button>
                             </div>
-                             <div
+                            <div
                                 class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                             >
                                 <a
@@ -224,11 +204,14 @@ const submitCsv = () => {
                                     New Data
                                 </Link>
                             </div>
-                            
+
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0 overflow-x-auto">
                                     <div class="p-6 text-gray-900">
-                                        <div v-if="$page.props.flash.message" class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300">
+                                        <div
+                                            v-if="$page.props.flash.message"
+                                            class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300"
+                                        >
                                             {{ $page.props.flash.message }}
                                         </div>
                                         <table
@@ -322,7 +305,7 @@ const submitCsv = () => {
                                                             }}
                                                         </p>
                                                     </td>
-                                                       <td
+                                                    <td
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <p
@@ -372,9 +355,7 @@ const submitCsv = () => {
                                                         <span
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                printers.note
-                                                            }}
+                                                            {{ printers.note }}
                                                         </span>
                                                     </td>
                                                     <td

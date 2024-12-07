@@ -8,6 +8,10 @@ import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
 
+const pages = ref("Pages");
+const subMenu = ref("Inspeksi Laptop Pages");
+const mainMenu = ref("Inspeksi Laptop");
+
 // Fungsi untuk format tanggal
 function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY HH:mm"); // Sesuaikan format sesuai kebutuhan
@@ -111,30 +115,11 @@ function formatData(text) {
 <template>
     <Head title="Inspeksi Laptop" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <nav>
-                <!-- breadcrumb -->
-                <ol
-                    class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16"
-                >
-                    <li class="text-sm leading-normal">
-                        <a class="text-white opacity-50" href="javascript:;"
-                            >Pages</a
-                        >
-                    </li>
-                    <li
-                        class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
-                        aria-current="page"
-                    >
-                        Inspeksi Laptop Pages
-                    </li>
-                </ol>
-                <h6 class="mb-0 font-bold text-white capitalize">
-                    Inspeksi Laptop Data
-                </h6>
-            </nav>
-        </template>
+    <AuthenticatedLayout
+      v-model:pages="pages"
+        v-model:subMenu="subMenu"
+        v-model:mainMenu="mainMenu"
+        >
 
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
