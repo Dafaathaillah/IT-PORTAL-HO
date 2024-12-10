@@ -103,6 +103,7 @@ Route::middleware('auth')->group(function () {
 
             $readyUsed_array = [$countAPreadyused, $countSwitchreadyused, $countWirellessreadyused, $countPrinterreadyused, $countCCTVreadyused, $countKomputerreadyused, $countLaptopreadyused];
 
+            $loginSession =  'tes';
 
             return Inertia::render(
                 'Inventory/Dashboard',
@@ -116,6 +117,7 @@ Route::middleware('auth')->group(function () {
                     'scrap_array' => $scrap_array,
                     'readyStandby_array' => $readyStandby_array,
                     'readyUsed_array' => $readyUsed_array,
+                    'loginSession' => $loginSession,
                 ]
             );
         })->name('developerDashboard');

@@ -109,8 +109,9 @@ const mainMenu = defineModel('mainMenu', {
             v-model:subMenu="subMenu"
             v-model:mainMenu="mainMenu"
         />
-
+        <div class="w-full px-6 py-6 mx-auto">
         <slot />
+        </div>
         <DashboardFooter />
     </main>
     <DashboardConfig

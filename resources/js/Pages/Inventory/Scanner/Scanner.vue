@@ -148,9 +148,9 @@ const submitCsv = () => {
                         @submit.prevent="submitCsv"
                         enctype="multipart/form-data"
                     >
-                        <div class="flex">
+                        <div class="flex flex-wrap">
                             <div
-                                class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0"
+                                class="max-w-full px-3"
                             >
                                 <div class="mb-4">
                                     <input
@@ -162,7 +162,7 @@ const submitCsv = () => {
                                     />
                                 </div>
                             </div>
-                            <div class="max-w-full shrink-0">
+                            <div class="max-w-full pl-3">
                                 <button
                                     type="submit"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -172,7 +172,7 @@ const submitCsv = () => {
                                 </button>
                             </div>
                             <div
-                                class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                class="max-w-full px-3"
                             >
                                 <a
                                     href="/sampleScanner.xlsx"

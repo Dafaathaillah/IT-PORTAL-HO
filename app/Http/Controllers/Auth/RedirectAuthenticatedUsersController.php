@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class RedirectAuthenticatedUsersController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
-        if (auth()->user()->role == 'ict_developer' || auth()->user()->role == 'ict_ho' || auth()->user()->role == 'ict_bod' || auth()->user()->role == 'ict_section_head') {
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB' || auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $session = $request->session()->flash('login', 'Anda Berhasil Login!');
             return redirect('dashboard');
         } elseif (auth()->user()->role == 'ict_section') {
             return redirect('sectionDashboard');
@@ -21,7 +22,7 @@ class RedirectAuthenticatedUsersController extends Controller
             return redirect('adminDashboard');
         } elseif (auth()->user()->role == 'guest') {
             return redirect('asetDashboard');
-        } else{
+        }else{
             return redirect('/login');
         }
     }

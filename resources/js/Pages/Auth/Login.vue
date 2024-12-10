@@ -27,6 +27,9 @@ const props = defineProps({
     errorLoginUnamePassnf: {
         type: String,
     },
+    login: {
+        type: String,
+    },
 });
 
 const form = useForm({
@@ -44,7 +47,7 @@ const submit = () => {
 };
 
 onMounted(() => {
-    console.log(props.errorLoginUnamePassnf);
+    console.log(props.login);
     if (props.errorMessage) {
         Swal.fire({
             position: "top-end",
@@ -55,8 +58,6 @@ onMounted(() => {
         });
     }
 });
-
-onMounted(() => {});
 </script>
 
 <template>

@@ -229,7 +229,7 @@ const toggleLevel3ScannerHo = () => {
             >
                 <img
                     src="/assets/img/logoppa.png"
-                    class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
+                    class="inline transition-all duration-200 ease-nav-brand max-h-8 mr-2"
                     alt="main_logo"
                 />
                 <span
