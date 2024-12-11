@@ -27,6 +27,9 @@ const props = defineProps({
     errorLoginUnamePassnf: {
         type: String,
     },
+    errorLoginKoneksi: {
+        type: String,
+    },
     login: {
         type: String,
     },
@@ -142,6 +145,14 @@ onMounted(() => {
                             >
                                 {{ errorLoginUnamePassnf }}
                             </p>
+                            <p
+                                v-if="errorLoginKoneksi"
+                                class="text-red-500"
+                            >
+                                {{ errorLoginKoneksi }}
+                            </p>
+
+                            
                         </div>
 
                         <div

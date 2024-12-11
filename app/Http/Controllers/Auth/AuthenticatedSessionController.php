@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
@@ -39,6 +40,7 @@ class AuthenticatedSessionController extends Controller
         $errorMessage = $request->session()->get('errorMessage', null);
         $errorMessagePE = $request->session()->get('errorMessagePE', null);
         $errorLoginUnamePassnf = $request->session()->get('errorLoginUnamePassnf', null);
+        $errorLoginKoneksi = $request->session()->get('errorLoginKoneksi', null);
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
@@ -46,6 +48,7 @@ class AuthenticatedSessionController extends Controller
             'errorMessage' => session('errorMessage'),
             'errorMessagePE' => session('errorMessagePE'),
             'errorLoginUnamePassnf' => session('errorLoginUnamePassnf'),
+            'errorLoginKoneksi' => session('errorLoginKoneksi'),
         ]);
     }
 
@@ -59,111 +62,130 @@ class AuthenticatedSessionController extends Controller
             'password' => $request->password,
         ];
 
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'Access-Control-Allow-Origin' => '*',
-        ])->post('https://ict-auth.ppa-ho.net/auth', $dataLogin);
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Access-Control-Allow-Origin' => '*',
+            ])->post('https://ict-auth.ppa-ho.net/auth', $dataLogin);
 
-        if ($response['statusCode'] == 200) {
-            $cookies = $response->cookies();
-            foreach ($cookies as $cookie) {
-                if ($cookie->getName() === 'access_token') {
-                    $accessToken = $cookie->getValue();
-                    break;
-                }
-            }
-            if (isset($accessToken)) {
-                // return dd($accessToken);
-                $token = str_replace('Bearer ', '', $accessToken); // Hilangkan prefix "Bearer"
-                $dataToArray = decodeJWT($token); // Panggil fungsi decode JWT
-
-                $dataUser = User::where('nrp', $dataToArray['nrp'])->first();
-                $dataUserAll = UserAll::where('nrp', $dataToArray['nrp'])->first();
-                if ($dataUser) {
-                    $dataUpdate = [
-                        'password' => Hash::make($request->password),
-                        'position' => $dataToArray['posisi'],
-                        'department' => $dataToArray['dept'],
-                        'email' => $dataToArray['email'],
-                        'site' => $dataToArray['site'],
-                    ];
-                    $updateDatauser = User::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdate);
-                    if ($dataUserAll) {
-                        $dataUpdateUserAll = [
-                            'nrp' => $dataToArray['nrp'],
-                            'username' => $dataToArray['nama'],
-                            'position' => $dataToArray['posisi'],
-                            'department' => $dataToArray['dept'],
-                            'email' => $dataToArray['email'],
-                            'site' => $dataToArray['site'],
-                        ];
-                        $updateDatauserAll = UserAll::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdateUserAll);
-                    } else {
-                        $dataCreatedUserAll = [
-                            'nrp' => $dataToArray['nrp'],
-                            'username' => $dataToArray['nama'],
-                            'position' => $dataToArray['posisi'],
-                            'department' => $dataToArray['dept'],
-                            'email' => $dataToArray['email'],
-                            'site' => $dataToArray['site'],
-                        ];
-                        UserAll::create($dataCreatedUserAll);
+            if ($response['statusCode'] == 200) {
+                $cookies = $response->cookies();
+                foreach ($cookies as $cookie) {
+                    if ($cookie->getName() === 'access_token') {
+                        $accessToken = $cookie->getValue();
+                        break;
                     }
-                    $request->authenticate();
-
-                    $request->session()->regenerate();
-
-                    return redirect()->intended(route('home', absolute: false));
-                } else {
-                    $dataCreate = [
-                        'name' => $dataToArray['nama'],
-                        'nrp' => $dataToArray['nrp'],
-                        'password' => Hash::make($request->password),
-                        'position' => $dataToArray['posisi'],
-                        'department' => $dataToArray['dept'],
-                        'email' => $dataToArray['email'],
-                        'site' => $dataToArray['site'],
-                        'role' => 'guest', //masih default developer role
-                    ];
-                    User::create($dataCreate);
-
-                    if (!$dataUserAll) {
-                        $dataCreatedUserAll = [
-                            'nrp' => $dataToArray['nrp'],
-                            'username' => $dataToArray['nama'],
-                            'position' => $dataToArray['posisi'],
-                            'department' => $dataToArray['dept'],
-                            'email' => $dataToArray['email'],
-                            'site' => $dataToArray['site'],
-                        ];
-                        UserAll::create($dataCreatedUserAll);
-                    } else {
-                        $dataUpdateUserAll = [
-                            'nrp' => $dataToArray['nrp'],
-                            'username' => $dataToArray['nama'],
-                            'position' => $dataToArray['posisi'],
-                            'department' => $dataToArray['dept'],
-                            'email' => $dataToArray['email'],
-                            'site' => $dataToArray['site'],
-                        ];
-                        $updateDatauserAll = UserAll::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdateUserAll);
-                    }
-
-                    $request->authenticate();
-
-                    $request->session()->regenerate();
-
-                    return redirect()->intended(route('home', absolute: false));
                 }
+                if (isset($accessToken)) {
+                    // return dd($accessToken);
+                    $token = str_replace('Bearer ', '', $accessToken); // Hilangkan prefix "Bearer"
+                    $dataToArray = decodeJWT($token); // Panggil fungsi decode JWT
+    
+                    // dd($dataToArray['error']);
+    
+                    if (!empty($dataToArray['error'])) {
+                        $request->authenticate();
+    
+                        $request->session()->regenerate();
+    
+                        return redirect()->intended(route('home', absolute: false));
+                    } else {
+                        $dataUser = User::where('nrp', $dataToArray['nrp'])->first();
+                        $dataUserAll = UserAll::where('nrp', $dataToArray['nrp'])->first();
+                        if ($dataUser) {
+                            $dataUpdate = [
+                                'password' => Hash::make($request->password),
+                                'position' => $dataToArray['posisi'],
+                                'department' => $dataToArray['dept'],
+                                'email' => $dataToArray['email'],
+                                'site' => $dataToArray['site'],
+                            ];
+                            $updateDatauser = User::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdate);
+                            if ($dataUserAll) {
+                                $dataUpdateUserAll = [
+                                    'nrp' => $dataToArray['nrp'],
+                                    'username' => $dataToArray['nama'],
+                                    'position' => $dataToArray['posisi'],
+                                    'department' => $dataToArray['dept'],
+                                    'email' => $dataToArray['email'],
+                                    'site' => $dataToArray['site'],
+                                ];
+                                $updateDatauserAll = UserAll::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdateUserAll);
+                            } else {
+                                $dataCreatedUserAll = [
+                                    'nrp' => $dataToArray['nrp'],
+                                    'username' => $dataToArray['nama'],
+                                    'position' => $dataToArray['posisi'],
+                                    'department' => $dataToArray['dept'],
+                                    'email' => $dataToArray['email'],
+                                    'site' => $dataToArray['site'],
+                                ];
+                                UserAll::create($dataCreatedUserAll);
+                            }
+                            $request->authenticate();
+    
+                            $request->session()->regenerate();
+    
+                            return redirect()->intended(route('home', absolute: false));
+                        } else {
+                            $dataCreate = [
+                                'name' => $dataToArray['nama'],
+                                'nrp' => $dataToArray['nrp'],
+                                'password' => Hash::make($request->password),
+                                'position' => $dataToArray['posisi'],
+                                'department' => $dataToArray['dept'],
+                                'email' => $dataToArray['email'],
+                                'site' => $dataToArray['site'],
+                                'role' => 'guest', //masih default developer role
+                            ];
+                            User::create($dataCreate);
+    
+                            if (!$dataUserAll) {
+                                $dataCreatedUserAll = [
+                                    'nrp' => $dataToArray['nrp'],
+                                    'username' => $dataToArray['nama'],
+                                    'position' => $dataToArray['posisi'],
+                                    'department' => $dataToArray['dept'],
+                                    'email' => $dataToArray['email'],
+                                    'site' => $dataToArray['site'],
+                                ];
+                                UserAll::create($dataCreatedUserAll);
+                            } else {
+                                $dataUpdateUserAll = [
+                                    'nrp' => $dataToArray['nrp'],
+                                    'username' => $dataToArray['nama'],
+                                    'position' => $dataToArray['posisi'],
+                                    'department' => $dataToArray['dept'],
+                                    'email' => $dataToArray['email'],
+                                    'site' => $dataToArray['site'],
+                                ];
+                                $updateDatauserAll = UserAll::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdateUserAll);
+                            }
+    
+                            $request->authenticate();
+    
+                            $request->session()->regenerate();
+    
+                            return redirect()->intended(route('home', absolute: false));
+                        }
+                    }
+                }
+            } elseif ($response['statusCode'] == 400) {
+                $request->session()->flash('errorLoginUnamePasswr', 'NRP atau Password anda salah!');
+                return redirect('/login');
+            } elseif ($response['statusCode'] == 419) {
+                $request->session()->flash('errorMessagePE', 'Terlalu banyak melakukan percobaan!');
+                return redirect('/login');
+            } elseif ($response['statusCode'] == 500) {
+                $request->session()->flash('errorLoginUnamePassnf', 'Nrp tidak terdaftar!');
+                return redirect('/login');
             }
-        } elseif ($response['statusCode'] == 400) {
-            $request->session()->flash('errorLoginUnamePasswr', 'NRP atau Password anda salah!');
+
+        } catch (RequestException $e) {
+            $request->session()->flash('errorLoginKoneksi', 'Internet anda tidak stabil untuk mengakses halaman ini!');
             return redirect('/login');
-        } elseif ($response['statusCode'] == 419) {
-            $request->session()->flash('errorMessagePE', 'Terlalu banyak melakukan percobaan!');
-            return redirect('/login');
-        } elseif ($response['statusCode'] == 500) {
-            $request->session()->flash('errorLoginUnamePassnf', 'Nrp tidak terdaftar!');
+        } catch (\Exception $e) {
+            $request->session()->flash('errorLoginKoneksi', 'Internet anda tidak stabil untuk mengakses halaman ini!');
             return redirect('/login');
         }
     }
