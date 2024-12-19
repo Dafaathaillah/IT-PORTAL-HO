@@ -28,6 +28,12 @@ const props = defineProps({
     switch: {
         type: Array,
     },
+    site: {
+        type: Object,
+    },
+    role: {
+        type: Object,
+    },
 });
 
 const form = useForm({});
@@ -172,6 +178,18 @@ const submitCsv = () => {
                             <div class="max-w-full px-3">
                                 <a
                                     href="/sampleSW.xlsx"
+                                    v-if="props.site === ''"
+                                    download="Format-Import-Data-Switch.xlsx"
+                                    target="_blank"
+                                    type="button"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Format Excel Data
+                                </a>
+                                <a
+                                    href="/sampleSW-ba.xlsx"
+                                    v-if="props.site === 'BA'"
                                     download="Format-Import-Data-Switch.xlsx"
                                     target="_blank"
                                     type="button"
@@ -478,6 +496,7 @@ const submitCsv = () => {
                                                                     switchs.id
                                                                 )
                                                             "
+                                                            v-if="props.role !== 'ict_technician'"
                                                             class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Delete

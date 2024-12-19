@@ -33,6 +33,8 @@ class ImportAp implements ToModel, WithStartRow
             $maxId = $maxId + 1;
         }
 
+        // dd(auth()->user()->site);
+
         return new InvAp([
             'max_id' => $maxId,
             'device_name' => $row[1],
@@ -48,6 +50,7 @@ class ImportAp implements ToModel, WithStartRow
             'location' => $row[11],
             'status' => strtoupper($row[12]),
             'note' => $row[13],
+            'site' => auth()->user()->site
         ]);
     }
 }

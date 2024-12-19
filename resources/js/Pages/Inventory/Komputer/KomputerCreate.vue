@@ -44,6 +44,7 @@ const form = useForm({
     note: "",
     link_documentation_asset_image: "",
     user_alls_id: "",
+    roterx: "create"
 });
 
 const isDisabled = ref(true);
@@ -111,6 +112,7 @@ const save = () => {
     formData.append("status", form.status);
     formData.append("condition", form.condition);
     formData.append("note", form.note);
+    formData.append("roterx", form.roterx);
     formData.append(
         "link_documentation_asset_image",
         form.link_documentation_asset_image
@@ -203,6 +205,7 @@ const options = props.pengguna;
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Komputer Code</label
                                             >
+                                            <input type="hidden" name="roterx" value="create">
                                             <input
                                                 :disabled="isDisabled"
                                                 required

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class InspeksiComputer extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'inv_computer_id',
@@ -44,6 +46,8 @@ class InspeksiComputer extends Model
         'location',
         'approved_by',
         'status_approval',
+        'site',
+        'last_edited_by'
     ];
 
     

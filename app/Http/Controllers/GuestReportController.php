@@ -22,6 +22,7 @@ class GuestReportController extends Controller
         $aduan = Aduan::query()
         ->when(!$request->search, function($query) {
             return $query->whereDate('date_of_complaint', Carbon::today())
+                         ->where('site','HO')
                          ->orderBy('date_of_complaint', 'desc');
         })
         ->when($request->search, function($query, $search) {
@@ -48,7 +49,7 @@ class GuestReportController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->max('max_id');
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site','HO')->max('max_id');
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -83,6 +84,7 @@ class GuestReportController extends Controller
             'location' => $request['location'],
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
+            'site' => 'HO'
         ];
 
         if (empty($request['complaint_name'])) {

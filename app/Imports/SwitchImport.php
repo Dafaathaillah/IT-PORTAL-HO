@@ -47,6 +47,7 @@ class SwitchImport implements ToModel, WithStartRow
             'location' => $row[10],
             'status' => strtoupper($row[11]),
             'note' => $row[12],
+            'site' => auth()->user()->site
         ]);
     }
 }

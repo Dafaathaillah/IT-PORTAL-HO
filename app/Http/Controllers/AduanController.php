@@ -16,11 +16,11 @@ class AduanController extends Controller
 {
     public function index()
     {
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->get();
-        $countOpen = Aduan::where('status', 'OPEN')->count();
-        $countClosed = Aduan::where('status', 'CLOSED')->count();
-        $countProgress = Aduan::where('status', 'PROGRESS')->count();
-        $countCancel = Aduan::where('status', 'CANCEL')->count();
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site',auth()->user()->site)->get();
+        $countOpen = Aduan::where('status', 'OPEN')->where('site',auth()->user()->site)->count();
+        $countClosed = Aduan::where('status', 'CLOSED')->where('site',auth()->user()->site)->count();
+        $countProgress = Aduan::where('status', 'PROGRESS')->where('site',auth()->user()->site)->count();
+        $countCancel = Aduan::where('status', 'CANCEL')->where('site',auth()->user()->site)->count();
         return Inertia::render(
             'Aduan/Aduan',
             [
@@ -41,7 +41,7 @@ class AduanController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->max('max_id');
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site',auth()->user()->site)->max('max_id');
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -49,7 +49,7 @@ class AduanController extends Controller
 
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
-        $crew = User::pluck('name')->map(function ($name) {
+        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return response()->json($crew);
@@ -78,6 +78,7 @@ class AduanController extends Controller
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'crew' => $request['crew'],
+            'site' => auth()->user()->site
         ];
 
         if ($request->file('image') != null) {
@@ -124,7 +125,7 @@ class AduanController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        $crew = User::pluck('name')->map(function ($name) {
+        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -193,7 +194,7 @@ class AduanController extends Controller
         
         $selectCrew = explode(', ', $aduan->crew);
         // return dd($aduan);
-        $crew = User::pluck('name')->map(function ($name) {
+        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         return Inertia::render('Aduan/AduanEdit', [

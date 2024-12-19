@@ -29,5 +29,6 @@ class InvScanner extends Model
         'date_of_inventory',
         'status',
         'note',
+        'site'
     ];
 }

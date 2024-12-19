@@ -30,23 +30,42 @@ class InspeksiLaptopController extends Controller
     public function index()
     {
 
-        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->get();
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->get();
+            $site = '';
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site',null)->orWhere('site','HO')->get();
+
+            $site = '';
+        }else{
+            $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site',auth()->user()->site)->get();
+
+            $site = auth()->user()->site;
+        }
+
+        $role = auth()->user()->role;
 
         return Inertia::render(
             'Inspeksi/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop]
+            ['inspeksiLaptopx' => $inspeksi_laptop,'site' => $site,'role' => $role]
         );
     }
 
     public function process($id)
     {
         $dataInspeksix = InspeksiLaptop::find($id);
+        if (empty($dataInspeksix)) {
+            abort(404, 'Data not found');
+        }
 
         $laptopx = InvLaptop::with('pengguna')->where('inv_laptops.id', $dataInspeksix->inv_laptop_id)->first();
+        if (empty($laptopx)) {
+            abort(404, 'Data not found');
+        }
 
         // dd($laptopx);
 
-        $penggunax = UserAll::pluck('username')->map(function ($name) {
+        $penggunax = UserAll::where('site',auth()->user()->site)->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -61,13 +80,15 @@ class InspeksiLaptopController extends Controller
 
         // dd($request->file('image_temuan'));
 
-        $maxId = InspeksiLaptop::max('id');
+        // $maxId = InspeksiLaptop::where('site',auth()->user()->site)->where('year', $year)->get()->count();
+        $maxId = InspeksiLaptop::where('site',auth()->user()->site)->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
         }
 
-        $no_pica = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        // $no_pica = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $no_pica = $maxId + 1;
 
         $data = [
             'software_defrag' => $params['software_defrag'],
@@ -97,6 +118,7 @@ class InspeksiLaptopController extends Controller
             'inspector' => $params['inspector'],
             'inspection_status' => $params['inspection_status'],
             'inspection_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'last_edited_by' => auth()->user()->nrp
         ];
 
         if ($params['temuan'] != null || $params['temuan'] != '') {
@@ -141,6 +163,9 @@ class InspeksiLaptopController extends Controller
     public function edit($id)
     {
         $dataInspeksix = InspeksiLaptop::find($id);
+        if (empty($dataInspeksix)) {
+            abort(404, 'Data not found');
+        }
 
         $laptopx = InvLaptop::with('pengguna')->where('inv_laptops.id', $dataInspeksix->inv_laptop_id)->first();
 
@@ -153,7 +178,7 @@ class InspeksiLaptopController extends Controller
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $penggunax = UserAll::pluck('username')->map(function ($name) {
+        $penggunax = UserAll::where('site',auth()->user()->site)->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -169,13 +194,15 @@ class InspeksiLaptopController extends Controller
 
         // dd($request->file('image_temuan'));
 
-        $maxId = InspeksiLaptop::max('id');
+        // $maxId = InspeksiLaptop::max('id');
+        $maxId = InspeksiLaptop::where('site',auth()->user()->site)->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
         }
 
-        $no_pica = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        // $no_pica = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $no_pica = $maxId + 1;
 
         $data = [
             'software_defrag' => $params['software_defrag'],
@@ -205,11 +232,12 @@ class InspeksiLaptopController extends Controller
             'inspector' => $params['inspector'],
             'inspection_status' => $params['inspection_status'],
             'inspection_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'last_edited_by' => auth()->user()->nrp
         ];
 
         if ($params['temuan'] != null || $params['temuan'] != '') {
             $dataInspeksix = InspeksiLaptop::find($request->id);
-            if ($dataInspeksix->pica_number != null){
+            if ($dataInspeksix->pica_number == null){
                 $data['pica_number'] = $no_pica;
             }
         }
@@ -303,6 +331,10 @@ class InspeksiLaptopController extends Controller
     {
         $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('inspeksi_laptops.id', $id)->first();
 
+        if (empty($inspeksi_laptop)) {
+            abort(404, 'Data not found');
+        }
+
         // dd($inspeksi_laptop);
 
         return Inertia::render('Inspeksi/Laptop/InspeksiLaptopDetail', [
@@ -313,6 +345,9 @@ class InspeksiLaptopController extends Controller
     public function destroy($id)
     {
         $inspeksi_laptop = InspeksiLaptop::find($id);
+        if (empty($inspeksi_laptop)) {
+            abort(404, 'Data not found');
+        }
         if (is_null($inspeksi_laptop)) {
             return response()->json(['message' => 'Panelbox Data not found'], 404);
         }

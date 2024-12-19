@@ -18,8 +18,21 @@ class InvScannerController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::all();
-        return Inertia::render('Inventory/Scanner/Scanner', ['scanner' => $dataInventory]);
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $dataInventory = InvScanner::all();
+            $site = '';
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $dataInventory = InvScanner::where('site',null)->orWhere('site','HO')->get();
+
+            $site = '';
+        }else{
+            $dataInventory = InvScanner::where('site',auth()->user()->site)->get();
+
+            $site = auth()->user()->site;
+        }
+
+        $role = auth()->user()->role;
+        return Inertia::render('Inventory/Scanner/Scanner', ['scanner' => $dataInventory,'site' => $site,'role' => $role]);
     }
 
     public function create()
@@ -30,13 +43,42 @@ class InvScannerController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvScanner::max('max_id');
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $maxId = InvScanner::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
 
-        if (is_null($maxId)) {
-            $maxId = 0;
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->scanner_code, 9, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABIBSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $maxId = InvScanner::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->scanner_code, 8, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPAHOSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $maxId = InvScanner::where('site','BA')->orderBy('max_id', 'desc')->first();
+            // dd($maxId->scanner_code);
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->scanner_code, 8, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABASCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         }
 
-        $uniqueString = 'PPAHOSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['scanner_code'] = $uniqueString;
 
         $department = Department::pluck('department_name')->map(function ($name) {
@@ -77,7 +119,8 @@ class InvScannerController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s')
+            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s'),
+            'site' => auth()->user()->site
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::create($data);
@@ -146,7 +189,8 @@ class InvScannerController extends Controller
             'department' => $params['dept'],
             'location' => $params['location'],
             'status' => $params['status'],
-            'note' => $params['note']
+            'note' => $params['note'],
+            'site' => auth()->user()->site
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::firstWhere('id', $request->id)->update($data);

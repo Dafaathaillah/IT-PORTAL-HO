@@ -18,9 +18,23 @@ class InvCctvController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::with('switch')->get();
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $dataInventory = InvCctv::with('switch')->get();
+            $site = '';
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $dataInventory = InvCctv::with('switch')->where('site',null)->orWhere('site','HO')->get();
+
+            $site = '';
+        }else{
+            $dataInventory = InvCctv::with('switch')->where('site',auth()->user()->site)->get();
+
+            $site = auth()->user()->site;
+        }
+
+        $role = auth()->user()->role;
+
         // return response()->json($dataInventory);
-        return Inertia::render('Inventory/Cctv/Cctv', ['cctv' => $dataInventory]);
+        return Inertia::render('Inventory/Cctv/Cctv', ['cctv' => $dataInventory,'site' => $site,'role' => $role]);
     }
 
     public function create()
@@ -31,13 +45,42 @@ class InvCctvController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvCctv::max('max_id');
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $maxId = InvCctv::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
 
-        if (is_null($maxId)) {
-            $maxId = 0;
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->cctv_code, 10, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABIBCCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $maxId = InvCctv::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->cctv_code, 9, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPAHOCCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $maxId = InvCctv::where('site','BA')->orderBy('max_id', 'desc')->first();
+            // dd($maxId->cctv_code);
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->cctv_code, 9, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABACCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         }
 
-        $uniqueString = 'PPAHOCCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
@@ -76,6 +119,7 @@ class InvCctvController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
+            'site' => auth()->user()->site
         ];
         // dd($data);
         InvCctv::create($data);
@@ -143,6 +187,7 @@ class InvCctvController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
+            'site' => auth()->user()->site
         ];
 
         InvCctv::firstWhere('id', $request->id)->update($data);

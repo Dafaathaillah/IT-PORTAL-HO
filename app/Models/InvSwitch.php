@@ -24,5 +24,6 @@ class InvSwitch extends Model
         'location',
         'status',
         'note',
+        'site'
     ];
 }

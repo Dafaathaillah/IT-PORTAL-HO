@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class InspeksiLaptop extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'inv_laptop_id',
@@ -46,6 +48,8 @@ class InspeksiLaptop extends Model
         'approved_by',
         'status_approval',
         'inspection_image',
+        'site',
+        'last_edited_by'
     ];
 
     public function inventory()

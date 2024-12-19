@@ -54,7 +54,8 @@ class PrinterImport implements ToModel, WithStartRow
             'location' => $row[11],
             'status' => strtoupper($row[12]),
             'note' => $row[13],
-            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s')
+            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s'),
+            'site' => auth()->user()->site
         ]);
     }
 }

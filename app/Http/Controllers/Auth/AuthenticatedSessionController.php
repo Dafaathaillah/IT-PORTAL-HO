@@ -66,7 +66,7 @@ class AuthenticatedSessionController extends Controller
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
                 'Access-Control-Allow-Origin' => '*',
-            ])->post('https://ict-auth.ppa-ho.net/auth', $dataLogin);
+            ])->timeout(10)->post('https://ict-auth.ppa-ho.net/auth', $dataLogin);
 
             if ($response['statusCode'] == 200) {
                 $cookies = $response->cookies();

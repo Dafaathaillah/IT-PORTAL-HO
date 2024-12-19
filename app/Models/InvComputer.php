@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InvComputer extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         'max_id',
@@ -29,6 +31,8 @@ class InvComputer extends Model
         'note',
         'link_documentation_asset_image',
         'user_alls_id',
+        'site',
+        'dept'
     ];
 
     public function pengguna(): BelongsTo

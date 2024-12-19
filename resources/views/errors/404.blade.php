@@ -8,7 +8,7 @@
         <p>Sorry, the page you are looking for could not be found.</p>
         
         <!-- Custom button that redirects to the homepage -->
-        <a href="{{ url()->previous() ?: url('/') }}" class="btn btn-primary">
+        <a href="{{ url('/') }}" class="btn btn-primary">
             Go Back to Home
         </a>
 

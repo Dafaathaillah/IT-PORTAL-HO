@@ -246,7 +246,7 @@ const mount = onMounted(() => {
                                         class="max-w-full px-3 md:w-1/2 md:flex-none"
                                     >
                                         <h6 class="mb-0 dark:text-white">
-                                            History Trouble Laptop by Complaint
+                                            History Trouble Komputer by Complaint
                                         </h6>
                                     </div>
                                     <div

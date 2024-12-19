@@ -104,7 +104,19 @@ const customFormat = (date) => {
     return `${year}-${month}-${day}`;
 };
 
+const formSubmittedCrew = ref(false);
+
 const save = () => {
+    if (selectedValues.value == '') {
+        formSubmittedCrew.value = true;
+        // console.log('ga oke')
+        return; // Stop execution if validation fails
+    }
+
+    if (selectedDate.value != null) {
+        form.due_date = customFormat(selectedDate.value);
+    }
+
     if (fileAction) {
         form.action_image = fileAction.value;
     }
@@ -118,7 +130,6 @@ const save = () => {
     form.findings = findings.value;
     form.action = action.value;
     form.inspection_image = fileInspection.value;
-    form.due_date = customFormat(selectedDate.value);
     form.post(route("inspeksiKomputer.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
@@ -1083,6 +1094,9 @@ const save = () => {
                                                 label="name"
                                             />
                                         </div>
+                                        <span v-if="
+                                            !selectedOption && formSubmittedCrew
+                                        " class="text-red-500">Crew Tidak boleh kosong!</span>
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"

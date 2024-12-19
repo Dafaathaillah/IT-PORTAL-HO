@@ -30,6 +30,7 @@ class InvCctv extends Model
         'note',
         'last_status_ping',
         'last_update_ping',
+        'site'
     ];
 
     public function switch()
