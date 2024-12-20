@@ -35,6 +35,7 @@ class Aduan extends Model
         'root_cause',
         'action_repair',
         'crew',
-        'site'
+        'site',
+        'site_pelapor'
     ];
 }

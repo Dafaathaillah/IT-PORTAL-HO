@@ -3,46 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aduan;
+use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
+use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use League\Csv\Reader;
+use Maatwebsite\Excel\Facades\Excel;
 
-class GuestReportController extends Controller
+class AduanHoController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if (empty($request->search) || $request->search == null) {
-            $search = 'errordata';
-        }else{
-            $search = $request->search;
-        }
-
-        // return dd($search);
-        $aduan = Aduan::query()
-        ->when(!$request->search, function($query) {
-            return $query->whereDate('date_of_complaint', Carbon::today())
-                         ->where('site','HO')
-                         ->orderBy('date_of_complaint', 'desc');
-        })
-        ->when($request->search, function($query, $search) {
-            return $query->where('complaint_code', 'like', '%' . $search . '%');
-        })
-        ->get();
-
-        // $aduan = Aduan::whereDate('created_date', Carbon::today())->orderBy('date_of_complaint', 'desc')->get();
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site','HO')->where('site_pelapor', auth()->user()->site )->get();
+        $countOpen = Aduan::where('status', 'OPEN')->where('site','HO')->where('site_pelapor', auth()->user()->site )->count();
+        $countClosed = Aduan::where('status', 'CLOSED')->where('site','HO')->where('site_pelapor', auth()->user()->site )->count();
+        $countProgress = Aduan::where('status', 'PROGRESS')->where('site','HO')->where('site_pelapor', auth()->user()->site )->count();
+        $countCancel = Aduan::where('status', 'CANCEL')->where('site','HO')->where('site_pelapor', auth()->user()->site )->count();
         return Inertia::render(
-            'Guest/GuestAduan',
+            'Aduan/AduanHo',
             [
                 'aduan' => $aduan,
+                'open' => $countOpen,
+                'closed' => $countClosed,
+                'progress' => $countProgress,
+                'cancel' => $countCancel,
             ]
         );
     }
 
     public function create()
     {
-        // return dd($complaintDataNrp);
-
         // start generate code
         $currentDate = Carbon::now();
         $year = $currentDate->format('y');
@@ -61,16 +53,19 @@ class GuestReportController extends Controller
 
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
-
-        $complaintDataNrp = UserAll::select('nrp', 'username')->get()->toArray();
-
         // return response()->json($crew);
         // end generate code
-        return Inertia::render('Guest/GuestAduanCreate', ['ticket' => $uniqueString, 'complaintDataNrp' => $complaintDataNrp]);
+
+        $nrp = auth()->user()->nrp;
+        $nama = auth()->user()->name;
+
+        return Inertia::render('Aduan/AduanCreateHo', ['ticket' => $uniqueString, 'nrp' => $nrp, 'nama' => $nama]);
     }
 
     public function store(Request $request)
     {
+        $currentDate = Carbon::now();
+
         // dd($request);
         $maxId = Aduan::max('max_id');
         if (is_null($maxId)) {
@@ -82,21 +77,16 @@ class GuestReportController extends Controller
         $data = [
             'max_id' => $maxId,
             'nrp' => $request['nrp'],
+            'complaint_name' => $request['complaint_name'],
             'complaint_note' => $request['complaint_note'],
             'phone_number' => $request['phone_number'],
-            'date_of_complaint' => Carbon::now('Asia/Ujung_Pandang')->format('Y-m-d H:i:s'),
+            'date_of_complaint' => $currentDate->format('Y-m-d H:i:s'),
             'location' => $request['location'],
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'site' => 'HO',
             'site_pelapor' => auth()->user()->site
         ];
-
-        if (empty($request['complaint_name'])) {
-            $data['complaint_name'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
-        } else {
-            $data['complaint_name'] = $request['complaint_name'];
-        }
 
         if ($request->file('image') != null) {
             $documentation_image = $request->file('image');
@@ -109,13 +99,13 @@ class GuestReportController extends Controller
         }
 
         $data['complaint_code'] = $request->complaint_code;
-        $data['created_date'] = Carbon::now()->format('Y-m-d');
+        $data['created_date'] = Carbon::parse($request->date_of_complaint)->toDateString();
 
         if (!empty($request->inventory_number)) {
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            } else {
+            }else{
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['inventory_number'] = $request->inventory_number;
@@ -126,22 +116,37 @@ class GuestReportController extends Controller
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            } else {
+            }else{
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['status'] = 'OPEN';
 
             $aduan = Aduan::create($data);
         }
-        // return dd($data);
-        // return redirect()->route('guestAduan.page');
+        return redirect()->route('aduan-ho.page');
     }
 
-    public function destroy($id)
+    public function show($id)
     {
         $aduan = Aduan::find($id);
-        // return response()->json(['ap' => $aduan]);
-        $aduan->delete();
-        return redirect()->back();
+        if (empty($aduan)) {
+            abort(404, 'Data not found');
+        }
+        if (is_null($aduan)) {
+            return response()->json(['message' => 'Aduan Data not found'], 404);
+        }
+        return response()->json($aduan);
     }
+
+    public function detail($id)
+    {
+        $aduan = Aduan::where('id', $id)->first();
+        if (empty($aduan)) {
+            abort(404, 'Data not found');
+        }
+        return Inertia::render('Aduan/AduanDetailHo', [
+            'aduan' => $aduan,
+        ]);
+    }
+
 }

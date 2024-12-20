@@ -836,6 +836,24 @@ const toggleLevel3ScannerHo = () => {
                                     >
                                 </NavLink>
                             </ul>
+                            
+                            <NavLink
+                                v-if="$page.props.auth.user.role === 'ict_developer' || $page.props.auth.user.role === 'ict_group_leader'"
+                                :href="route('aduan-ho.page')"
+                                :active="route().current('aduan-ho.page')"
+                            >
+                                <div
+                                    class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    > Pengaduan HO</span
+                                >
+                            </NavLink>
 
                         </li>
                     </ul>

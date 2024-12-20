@@ -41,14 +41,19 @@ class AduanController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site',auth()->user()->site)->max('max_id');
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site',auth()->user()->site)->orderBy('max_id', 'desc')->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
+        }else{
+            $split = explode('-', $maxId->complaint_code);
+            $noUrut = (int) $split[2];
+            $maxId = $noUrut;
         }
 
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
+
         $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
@@ -78,7 +83,8 @@ class AduanController extends Controller
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'crew' => $request['crew'],
-            'site' => auth()->user()->site
+            'site' => auth()->user()->site,
+            'site_pelapor' => auth()->user()->site
         ];
 
         if ($request->file('image') != null) {

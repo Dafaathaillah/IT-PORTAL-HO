@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminPengajuanRoleController;
 use App\Http\Controllers\AduanController;
+use App\Http\Controllers\AduanHoController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\DepartmentController;
@@ -201,6 +202,11 @@ Route::middleware('auth')->group(function () {
                 ]
             );
         })->name('groupLeaderDashboard');
+
+        Route::get('/aduan-ho', [AduanHoController::class, 'index'])->name('aduan-ho.page');
+        Route::get('/aduan-ho/create', [AduanHoController::class, 'create'])->name('aduan-ho.create');
+        Route::post('/aduan-ho/create', [AduanHoController::class, 'store'])->name('aduan-ho.store');
+        Route::get('/aduan-ho/{id}/detail', [AduanHoController::class, 'detail'])->name('aduan-ho.detail');
     });
 
     Route::group(['middleware' => 'checkRole:guest'], function () {
