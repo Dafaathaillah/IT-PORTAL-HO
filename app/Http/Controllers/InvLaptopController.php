@@ -24,22 +24,31 @@ class InvLaptopController extends Controller
         if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
             $dataInventory = InvLaptop::with('pengguna')->get();
             $site = '';
+
+            $department = Department::pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
+
         } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
             $dataInventory = InvLaptop::with('pengguna')->where('site', null)->orWhere('site', 'HO')->get();
 
             $site = '';
+
+            $department = Department::where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
         } else {
             $dataInventory = InvLaptop::with('pengguna')->where('site', auth()->user()->site)->get();
 
             $site = auth()->user()->site;
+
+            $department = Department::where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
         }
 
         $role = auth()->user()->role;
         // dd($dataInventory);
-
-        $department = Department::pluck('department_name')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
 
         return Inertia::render('Inventory/Laptop/Laptop', ['laptop' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
     }
@@ -63,10 +72,14 @@ class InvLaptopController extends Controller
 
             $dept = $params['dept'];
 
+            // dd($dept);
+
+            $code_dept = Department::where('department_name', $dept)->first();
+
             // if($dept) = 
 
             if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-                $maxId = InvLaptop::where('site', 'BIB')->where('dept', $dept)->orderBy('max_id', 'desc')->first();
+                $maxId = InvLaptop::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
 
                 if (is_null($maxId)) {
                     $maxId = 0;
@@ -75,9 +88,9 @@ class InvLaptopController extends Controller
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'BIB-NB-'. $dept . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'BIB-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-                $maxId = InvLaptop::where('site', 'HO')->where('dept', $dept)->orderBy('max_id', 'desc')->first();
+                $maxId = InvLaptop::where('site', 'HO')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
 
                 if (is_null($maxId)) {
                     $maxId = 0;
@@ -86,9 +99,9 @@ class InvLaptopController extends Controller
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'HO-NB-'. $dept . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'HO-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             } else {
-                $maxId = InvLaptop::where('site', 'BA')->where('dept', $dept)->orderBy('max_id', 'desc')->first();
+                $maxId = InvLaptop::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
                 // dd($maxId);
 
                 if (is_null($maxId)) {
@@ -98,7 +111,7 @@ class InvLaptopController extends Controller
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'BA-NB-'. $dept . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'BA-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             }
 
             $request['inventory_number'] = $uniqueString;
@@ -108,7 +121,7 @@ class InvLaptopController extends Controller
                 return ['name' => $name];
             })->toArray();
 
-            return Inertia::render('Inventory/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna]);
+            return Inertia::render('Inventory/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
         } else {
             $maxId = InvLaptop::max('max_id');
             if (is_null($maxId)) {
@@ -125,7 +138,7 @@ class InvLaptopController extends Controller
 
             $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
 
-            $dept = explode('-', $params['laptop_code']);
+            $dept = $params['dept'];
 
             $data = [
                 'max_id' => $maxId,
@@ -147,7 +160,7 @@ class InvLaptopController extends Controller
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
                 'site' => auth()->user()->site,
-                'dept' => $dept[2]
+                'dept' => $dept
             ];
 
             InvLaptop::create($data);

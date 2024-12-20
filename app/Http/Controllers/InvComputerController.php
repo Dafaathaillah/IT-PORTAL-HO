@@ -23,21 +23,31 @@ class InvComputerController extends Controller
         if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
             $dataInventory = InvComputer::with('pengguna')->get();
             $site = '';
+
+            $department = Department::pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
+
         } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
             $dataInventory = InvComputer::with('pengguna')->where('site', null)->orWhere('site', 'HO')->get();
 
             $site = '';
+
+            $department = Department::where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
+
         } else {
             $dataInventory = InvComputer::with('pengguna')->where('site', auth()->user()->site)->get();
 
             $site = auth()->user()->site;
+
+            $department = Department::where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
         }
 
         $role = auth()->user()->role;
-
-        $department = Department::pluck('department_name')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
 
         return Inertia::render('Inventory/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
     }
@@ -61,52 +71,42 @@ class InvComputerController extends Controller
 
             $dept = $params['dept'];
 
+            $code_dept = Department::where('department_name', $dept)->first();
+
             if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-                $maxId = InvComputer::where('site', 'HO')->where('dept', $dept)->orderBy('max_id', 'desc')->first();
+                $maxId = InvComputer::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
 
                 if (is_null($maxId)) {
                     $maxId = 0;
-                } else {
-                    $jumlah_char_dept = strlen($dept);
-
-                    $jumlah = 8+$jumlah_char_dept;
-                    // dd($jumlah);
-                    $noUrut = (int) substr($maxId->computer_code, $jumlah, 3);
+                } else {                    
+                    $noUrut = (int) substr($maxId->computer_code, 11, 3);
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'BIB-PC-'. $dept . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'BIB-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-                $maxId = InvComputer::where('site', 'HO')->where('dept', $dept)->orderBy('max_id', 'desc')->first();
+                $maxId = InvComputer::where('site', 'HO')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
 
                 if (is_null($maxId)) {
                     $maxId = 0;
-                } else {
-                    $jumlah_char_dept = strlen($dept);
-
-                    $jumlah = 7+$jumlah_char_dept;
-                    // dd($jumlah);
-                    $noUrut = (int) substr($maxId->computer_code, $jumlah, 3);
+                } else {                    
+                    $noUrut = (int) substr($maxId->computer_code, 10, 3);
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'HO-PC-'. $dept . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'HO-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             } else {
-                $maxId = InvComputer::where('site', 'BA')->where('dept', $dept)->orderBy('max_id', 'desc')->first();
-                // dd($maxId->computer_code);
+                $maxId = InvComputer::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+                // dd($maxId);
 
                 if (is_null($maxId)) {
                     $maxId = 0;
                 } else {
-                    $jumlah_char_dept = strlen($dept);
-
-                    $jumlah = 7+$jumlah_char_dept;
-                    // dd($jumlah);
-                    $noUrut = (int) substr($maxId->computer_code, $jumlah, 3);
+                    $noUrut = (int) substr($maxId->computer_code, 10, 3);
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'BA-PC-'. $dept . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'BA-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             }
 
             $request['inventory_number'] = $uniqueString;
@@ -116,7 +116,7 @@ class InvComputerController extends Controller
                 return ['name' => $name];
             })->toArray();
 
-            return Inertia::render('Inventory/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna]);
+            return Inertia::render('Inventory/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
         } else {
             // dd($request->all());
             $maxId = InvComputer::max('max_id');
@@ -134,7 +134,7 @@ class InvComputerController extends Controller
 
             $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
 
-            $dept = explode('-', $params['computer_code']);
+            $dept = $params['dept'];
 
             $data = [
                 'max_id' => $maxId,
@@ -156,7 +156,7 @@ class InvComputerController extends Controller
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
                 'site' => auth()->user()->site,
-                'dept' => $dept[2]
+                'dept' => $dept
             ];
 
             InvComputer::create($data);
