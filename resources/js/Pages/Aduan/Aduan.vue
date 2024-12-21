@@ -162,7 +162,7 @@ function formatData(text) {
                                             <p
                                                 class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                             >
-                                                ALL ADUAN OPEN
+                                                ADUAN OPEN
                                             </p>
                                             <h5
                                                 class="mb-2 font-bold dark:text-white"
@@ -210,7 +210,7 @@ function formatData(text) {
                                             <p
                                                 class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                             >
-                                                ALL ADUAN PROGRESS
+                                                ADUAN PROGRESS
                                             </p>
                                             <h5
                                                 class="mb-2 font-bold dark:text-white"
@@ -260,7 +260,7 @@ function formatData(text) {
                                             <p
                                                 class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                             >
-                                                ALL ADUAN CLOSED
+                                                ADUAN CLOSED
                                             </p>
                                             <h5
                                                 class="mb-2 font-bold dark:text-white"
@@ -308,7 +308,7 @@ function formatData(text) {
                                             <p
                                                 class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                             >
-                                                ALL ADUN CANCEL
+                                                ADUN CANCEL
                                             </p>
                                             <h5
                                                 class="mb-2 font-bold dark:text-white"
