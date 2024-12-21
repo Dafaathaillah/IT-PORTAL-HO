@@ -212,7 +212,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => 'checkRole:guest,ict_developer,ict_ho,ict_bod,ict_section_head,ict_group_leader'], function () {
         Route::get('/complaint/dashboard', [GuestReportController::class, 'index'])->name('guestAduan.page');
         Route::get('/complaint', [GuestReportController::class, 'create'])->name('guestAduan.create');
-        Route::post('/complaint', [GuestReportController::class, 'store'])->name('guestAduan.store');
+        Route::post('/complaint-store', [GuestReportController::class, 'store'])->name('guestAduan.store');
         Route::delete('/complaint/{id}/delete', [GuestReportController::class, 'destroy'])->name('guestAduan.delete');
     });
 
