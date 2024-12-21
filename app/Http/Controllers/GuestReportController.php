@@ -103,7 +103,7 @@ class GuestReportController extends Controller
             'location' => $request['location'],
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
-            'site' => 'HO',
+            'site' => auth()->user()->site,
             'site_pelapor' => auth()->user()->site
         ];
 
