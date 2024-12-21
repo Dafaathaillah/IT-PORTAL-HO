@@ -28,18 +28,35 @@ class InspeksiComputerController extends Controller
     }
     public function index()
     {
-        $inspeksiKomputer = InspeksiComputer::with('computer.pengguna')->get();
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->get();
+            $site = '';
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site',null)->orWhere('site','HO')->get();
+
+            $site = '';
+        }else{
+            $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site',auth()->user()->site)->get();
+
+            $site = auth()->user()->site;
+        }
+
+        $role = auth()->user()->role;
+
         // return dd($inspeksiKomputer);
         return Inertia::render(
             'Inspeksi/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksiKomputer]
+            ['computer' => $inspeksi_laptop,'site' => $site,'role' => $role]
         );
     }
 
     public function doInspection($id)
     {
         $dataInspeksi = InspeksiComputer::with('computer.pengguna')->where('id', $id)->first();
-        $crew = User::pluck('name')->map(function ($name) {
+        if (empty($dataInspeksi)) {
+            abort(404, 'Data not found');
+        }
+        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return dd($dataInspeksi);
@@ -60,13 +77,21 @@ class InspeksiComputerController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InspeksiComputer::max('id');
+        // $maxId = InspeksiComputer::where('site',auth()->user()->site)->where('year', $year)->get()->count();
+        $maxId = InspeksiComputer::where('site',auth()->user()->site)->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
         }
 
-        $uniqueString = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        // $uniqueString = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
+        $uniqueString = $maxId + 1;
+
+        $dataInspeksix = InspeksiComputer::find($request->id);
+        if ($dataInspeksix->pica_number != null){
+            $uniqueString = $dataInspeksix->pica_number;
+        }
+
         // end generate code
         $destinationPath = 'images/';
 
@@ -118,6 +143,7 @@ class InspeksiComputerController extends Controller
                     'location' => $request->location,
                     'pica_number' => $uniqueString,
                     'created_date' => Carbon::now()->format('Y-m-d'),
+                    'last_edited_by' => auth()->user()->nrp
                 ];
                 $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
             } else {
@@ -161,6 +187,7 @@ class InspeksiComputerController extends Controller
                         'location' => $request->location,
                         'pica_number' => $uniqueString,
                         'created_date' => Carbon::now()->format('Y-m-d'),
+                        'last_edited_by' => auth()->user()->nrp
                     ];
                 } else {
                     //upload image
@@ -196,6 +223,7 @@ class InspeksiComputerController extends Controller
                         'location' => $request->location,
                         'pica_number' => $uniqueString,
                         'created_date' => Carbon::now()->format('Y-m-d'),
+                        'last_edited_by' => auth()->user()->nrp
                     ];
                 }
             }
@@ -242,6 +270,7 @@ class InspeksiComputerController extends Controller
                         'location' => $request->location,
                         'pica_number' => $uniqueString,
                         'created_date' => Carbon::now()->format('Y-m-d'),
+                        'last_edited_by' => auth()->user()->nrp
                     ];
                     $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
                 } else {
@@ -278,6 +307,7 @@ class InspeksiComputerController extends Controller
                         'location' => $request->location,
                         'pica_number' => $uniqueString,
                         'created_date' => Carbon::now()->format('Y-m-d'),
+                        'last_edited_by' => auth()->user()->nrp
                     ];
                     $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
                 }
@@ -314,6 +344,7 @@ class InspeksiComputerController extends Controller
                         'location' => $request->location,
                         'pica_number' => $uniqueString,
                         'created_date' => Carbon::now()->format('Y-m-d'),
+                        'last_edited_by' => auth()->user()->nrp
                     ];
                 } else {
                     $dataInspection = [
@@ -342,6 +373,7 @@ class InspeksiComputerController extends Controller
                         'location' => $request->location,
                         'pica_number' => $uniqueString,
                         'created_date' => Carbon::now()->format('Y-m-d'),
+                        'last_edited_by' => auth()->user()->nrp
                     ];
                 }
                 $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
@@ -363,11 +395,14 @@ class InspeksiComputerController extends Controller
     public function edit($id)
     {
         $dataInspeksi = InspeksiComputer::with('computer.pengguna')->where('id', $id)->first();
+        if (empty($dataInspeksi)) {
+            abort(404, 'Data not found');
+        }
         // return dd($dataInspeksi);
         // $crew_select = array($dataInspeksi->crew);
         $crew_select = explode(', ', $dataInspeksi->crew);
 
-        $crew = User::pluck('name')->map(function ($name) {
+        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return dd($crew_select);
@@ -434,6 +469,9 @@ class InspeksiComputerController extends Controller
     public function detail($id)
     {
         $inspeksi_komputer = InspeksiComputer::with('computer.pengguna')->where('inspeksi_computers.id', $id)->first();
+        if (empty($inspeksi_komputer)) {
+            abort(404, 'Data not found');
+        }
 
         // dd($inspeksi_komputer);
 
@@ -445,6 +483,9 @@ class InspeksiComputerController extends Controller
     public function destroy($id)
     {
         $inspeksi_computer = InspeksiComputer::find($id);
+        if (empty($inspeksi_computer)) {
+            abort(404, 'Data not found');
+        }
         if (is_null($inspeksi_computer)) {
             return response()->json(['message' => 'Panelbox Data not found'], 404);
         }

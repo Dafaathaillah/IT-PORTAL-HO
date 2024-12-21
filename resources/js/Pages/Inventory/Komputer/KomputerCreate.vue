@@ -17,6 +17,9 @@ const props = defineProps({
     inventoryNumber: {
         type: Object,
     },
+    dept: {
+        type: Object,
+    },
 });
 
 const form = useForm({
@@ -44,6 +47,8 @@ const form = useForm({
     note: "",
     link_documentation_asset_image: "",
     user_alls_id: "",
+    roterx: "create",
+    dept: props.dept,
 });
 
 const isDisabled = ref(true);
@@ -111,6 +116,8 @@ const save = () => {
     formData.append("status", form.status);
     formData.append("condition", form.condition);
     formData.append("note", form.note);
+    formData.append("roterx", form.roterx);
+    formData.append("dept", form.dept);
     formData.append(
         "link_documentation_asset_image",
         form.link_documentation_asset_image
@@ -203,6 +210,8 @@ const options = props.pengguna;
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Komputer Code</label
                                             >
+                                            <input type="hidden" name="roterx" value="create">
+                                            <input type="hidden" name="roterx" v-model="form.dept">
                                             <input
                                                 :disabled="isDisabled"
                                                 required

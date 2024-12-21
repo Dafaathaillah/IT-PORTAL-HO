@@ -26,5 +26,6 @@ class InvPrinter extends Model
         'date_of_inventory',
         'status',
         'note',
+        'site'
     ];
 }

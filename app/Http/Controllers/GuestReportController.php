@@ -23,6 +23,7 @@ class GuestReportController extends Controller
 
         // return dd($search);
         $aduan = Aduan::query()
+<<<<<<< HEAD
             ->when(!$request->search, function ($query) {
                 return $query->whereDate('date_of_complaint', Carbon::today())
                     ->orderBy('date_of_complaint', 'desc');
@@ -31,6 +32,17 @@ class GuestReportController extends Controller
                 return $query->where('complaint_code', 'like', '%' . $search . '%');
             })
             ->get();
+=======
+        ->when(!$request->search, function($query) {
+            return $query->whereDate('date_of_complaint', Carbon::today())
+                         ->where('site','HO')
+                         ->orderBy('date_of_complaint', 'desc');
+        })
+        ->when($request->search, function($query, $search) {
+            return $query->where('complaint_code', 'like', '%' . $search . '%');
+        })
+        ->get();
+>>>>>>> origin/site-ba
 
         // $aduan = Aduan::whereDate('created_date', Carbon::today())->orderBy('date_of_complaint', 'desc')->get();
         return Inertia::render(
@@ -63,10 +75,14 @@ class GuestReportController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->max('max_id');
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site','HO')->orderBy('max_id', 'desc')->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
+        }else{
+            $split = explode('-', $maxId->complaint_code);
+            $noUrut = (int) $split[2];
+            $maxId = $noUrut;
         }
 
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
@@ -98,6 +114,8 @@ class GuestReportController extends Controller
             'location' => $request['location'],
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
+            'site' => 'HO',
+            'site_pelapor' => auth()->user()->site
         ];
 
         if (empty($request['complaint_name'])) {

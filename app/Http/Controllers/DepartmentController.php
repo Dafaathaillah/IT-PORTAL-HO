@@ -24,14 +24,28 @@ class DepartmentController extends Controller
         $params = $request->all();
         // return dd($params);
             if (empty($request->id)) {
+                if($params['is_site'] == 'N'){
+                    $is_site = null;
+                }else{
+                    $is_site = 'Y';
+                }
                 $data = [
                     'department_name' => $params['department_name'],
+                    'is_site' => $is_site,
+                    'code' => $params['singkatan'],
                 ];
                 // DB::table('inv_aps')->insert($data);
                 Department::create($data);
             } else {
+                if($params['is_site'] == 'N'){
+                    $is_site = null;
+                }else{
+                    $is_site = 'Y';
+                }
                 $data = [
                     'department_name' => $params['department_name'],
+                    'is_site' => $is_site,
+                    'code' => $params['code'],
                 ];
                 // DB::table('inv_aps')->insert($data);
                 Department::firstWhere('id', $request->id)->update($data);

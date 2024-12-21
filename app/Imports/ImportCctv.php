@@ -46,6 +46,7 @@ class ImportCctv implements ToModel, WithStartRow
             'note' => $row[13],
             'nvr_id' => null,
             'switch_id' => null,
+            'site' => auth()->user()->site
         ]);
     }
 }

@@ -361,8 +361,19 @@ const toggleLevel3ScannerHo = () => {
                             ></i>
                         </div>
                         <span
+                            v-if="$page.props.auth.user.site == 'HO' || $page.props.auth.user.role === 'ict_developer'"
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                             >Head Office PPA</span
+                        >
+                        <span
+                            v-if="$page.props.auth.user.site == 'BA'"
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Bukit Asam PPA</span
+                        >
+                        <span
+                            v-if="$page.props.auth.user.site != 'BA' && $page.props.auth.user.site != 'HO'"
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Putra Perkasa Abadi</span
                         >
                         <i
                             v-if="!level1OpenHo"
@@ -748,6 +759,7 @@ const toggleLevel3ScannerHo = () => {
                             </ul>
 
                             <div
+                                v-if="$page.props.auth.user.role === 'ict_developer'"
                                 @click="toggleLevel2SettingHo"
                                 style="cursor: pointer"
                                 class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
@@ -771,6 +783,7 @@ const toggleLevel3ScannerHo = () => {
                             </div>
                             <ul v-if="level2OpenSettingHo">
                                 <NavLink
+                                    v-if="$page.props.auth.user.role === 'ict_developer'"
                                     :href="route('pengguna.page')"
                                     :active="route().current('pengguna.page')"
                                 >
@@ -788,6 +801,7 @@ const toggleLevel3ScannerHo = () => {
                                 </NavLink>
 
                                 <NavLink
+                                    v-if="$page.props.auth.user.role === 'ict_developer'"
                                     :href="route('department.page')"
                                     :active="route().current('department.page')"
                                 >
@@ -805,6 +819,7 @@ const toggleLevel3ScannerHo = () => {
                                 </NavLink>
                                 
                                 <NavLink
+                                    v-if="$page.props.auth.user.role === 'ict_developer'"
                                     :href="route('akses.page')"
                                     :active="route().current('akses.page')"
                                 >
@@ -821,6 +836,24 @@ const toggleLevel3ScannerHo = () => {
                                     >
                                 </NavLink>
                             </ul>
+                            
+                            <NavLink
+                                v-if="$page.props.auth.user.role === 'ict_developer' || $page.props.auth.user.role === 'ict_group_leader'"
+                                :href="route('aduan-ho.page')"
+                                :active="route().current('aduan-ho.page')"
+                            >
+                                <div
+                                    class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    > Pengaduan HO</span
+                                >
+                            </NavLink>
 
                         </li>
                     </ul>

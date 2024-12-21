@@ -15,8 +15,21 @@ class InvPrinterController extends Controller
 {
     public function index()
     {
-        $invPrinter = InvPrinter::all();
-        return Inertia::render('Inventory/Printer/Printer', ['printer' => $invPrinter]);
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $dataInventory = InvPrinter::all();
+            $site = '';
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $dataInventory = InvPrinter::where('site',null)->orWhere('site','HO')->get();
+
+            $site = '';
+        }else{
+            $dataInventory = InvPrinter::where('site',auth()->user()->site)->get();
+
+            $site = auth()->user()->site;
+        }
+
+        $role = auth()->user()->role;
+        return Inertia::render('Inventory/Printer/Printer', ['printer' => $dataInventory,'site' => $site,'role' => $role]);
     }
 
     public function create()
@@ -27,13 +40,42 @@ class InvPrinterController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvPrinter::max('max_id');
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $maxId = InvPrinter::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
 
-        if (is_null($maxId)) {
-            $maxId = 0;
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->printer_code, 8, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABIBPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $maxId = InvPrinter::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->printer_code, 8, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPAHOPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $maxId = InvPrinter::where('site','BA')->orderBy('max_id', 'desc')->first();
+            // dd($maxId->printer_code);
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->printer_code, 8, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABAPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         }
 
-        $uniqueString = 'PPAHOPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['printer_code'] = $uniqueString;
 
         $department = Department::pluck('department_name')->map(function ($name) {
@@ -74,7 +116,8 @@ class InvPrinterController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s')
+            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s'),
+            'site' => auth()->user()->site
         ];
         // DB::table('inv_aps')->insert($data);
         InvPrinter::create($data);
@@ -157,7 +200,8 @@ class InvPrinterController extends Controller
             'department' => $params['dept'],
             'location' => $params['location'],
             'status' => $params['status'],
-            'note' => $params['note']
+            'note' => $params['note'],
+            'site' => auth()->user()->site
         ];
         // DB::table('inv_aps')->insert($data);
         InvPrinter::firstWhere('id', $request->id)->update($data);

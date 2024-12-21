@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\ImportLaptop;
 use App\Models\Aduan;
+use App\Models\Department;
 use App\Models\InspeksiLaptop;
 use App\Models\InvLaptop;
 use App\Models\UnscheduleJob;
@@ -20,78 +21,151 @@ class InvLaptopController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->get();
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $dataInventory = InvLaptop::with('pengguna')->get();
+            $site = '';
+
+            $department = Department::pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
+
+        } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $dataInventory = InvLaptop::with('pengguna')->where('site', null)->orWhere('site', 'HO')->get();
+
+            $site = '';
+
+            $department = Department::where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
+        } else {
+            $dataInventory = InvLaptop::with('pengguna')->where('site', auth()->user()->site)->get();
+
+            $site = auth()->user()->site;
+
+            $department = Department::where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
+        }
+
+        $role = auth()->user()->role;
         // dd($dataInventory);
-        return Inertia::render('Inventory/Laptop/Laptop', ['laptop' => $dataInventory]);
+
+        return Inertia::render('Inventory/Laptop/Laptop', ['laptop' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
     }
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::tomorrow();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
-
-        $maxId = InvLaptop::max('max_id');
-
-        if (is_null($maxId)) {
-            $maxId = 0;
-        }
-
-        $uniqueString = 'PPAHONB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        $request['inventory_number'] = $uniqueString;
-        // end generate code
-
-        $pengguna = UserAll::pluck('username')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
-
-        return Inertia::render('Inventory/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna]);
+        abort(404, 'Page not found');
     }
 
     public function store(Request $request)
     {
-        $maxId = InvLaptop::max('max_id');
-        if (is_null($maxId)) {
-            $maxId = 1;
-        } else {
-            $maxId = $maxId + 1;
-        }
 
         $params = $request->all();
 
-        $documentation_image = $request->file('image');
-        $destinationPath = 'images/';
-        $path_documentation_image = $documentation_image->store('images', 'public');
-        $new_path_documentation_image = $path_documentation_image;
-        $documentation_image->move($destinationPath, $new_path_documentation_image);
+        if ($params['roterx'] == 'index') {
+            // start generate code
+            $currentDate = Carbon::tomorrow();
+            $year = $currentDate->format('y');
+            $month = $currentDate->month;
+            $day = $currentDate->day;
 
-        $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+            $dept = $params['dept'];
 
-        $data = [
-            'max_id' => $maxId,
-            'laptop_name' => $params['laptop_name'],
-            'laptop_code' => $params['laptop_code'],
-            'number_asset_ho' => $params['number_asset_ho'],
-            'assets_category' => $params['assets_category'],
-            'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
-            'serial_number' => $params['serial_number'],
-            'aplikasi' => $params['aplikasi'],
-            'license' => $params['license'],
-            'ip_address' => $params['ip_address'],
-            'date_of_inventory' => $params['date_of_inventory'],
-            'date_of_deploy' => $params['date_of_deploy'],
-            'location' => $params['location'],
-            'status' => $params['status'],
-            'condition' => $params['condition'],
-            'note' => $params['note'],
-            'link_documentation_asset_image' => url($new_path_documentation_image),
-            'user_alls_id' => $aduan_get_data_user['id'],
-        ];
+            // dd($dept);
 
-        InvLaptop::create($data);
-        return redirect()->route('laptop.page');
+            $code_dept = Department::where('department_name', $dept)->first();
+
+            // if($dept) = 
+
+            if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+                $maxId = InvLaptop::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+
+                if (is_null($maxId)) {
+                    $maxId = 0;
+                } else {                    
+                    $noUrut = (int) substr($maxId->laptop_code, 11, 3);
+                    $maxId = $noUrut;
+                }
+
+                $uniqueString = 'BIB-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+                $maxId = InvLaptop::where('site', 'HO')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+
+                if (is_null($maxId)) {
+                    $maxId = 0;
+                } else {                    
+                    $noUrut = (int) substr($maxId->laptop_code, 10, 3);
+                    $maxId = $noUrut;
+                }
+
+                $uniqueString = 'HO-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            } else {
+                $maxId = InvLaptop::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+                // dd($maxId);
+
+                if (is_null($maxId)) {
+                    $maxId = 0;
+                } else {
+                    $noUrut = (int) substr($maxId->laptop_code, 10, 3);
+                    $maxId = $noUrut;
+                }
+
+                $uniqueString = 'BA-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            }
+
+            $request['inventory_number'] = $uniqueString;
+            // end generate code
+
+            $pengguna = UserAll::where('site',auth()->user()->site)->pluck('username')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
+
+            return Inertia::render('Inventory/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+        } else {
+            $maxId = InvLaptop::max('max_id');
+            if (is_null($maxId)) {
+                $maxId = 1;
+            } else {
+                $maxId = $maxId + 1;
+            }
+
+            $documentation_image = $request->file('image');
+            $destinationPath = 'images/';
+            $path_documentation_image = $documentation_image->store('images', 'public');
+            $new_path_documentation_image = $path_documentation_image;
+            $documentation_image->move($destinationPath, $new_path_documentation_image);
+
+            $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+
+            $dept = $params['dept'];
+
+            $data = [
+                'max_id' => $maxId,
+                'laptop_name' => $params['laptop_name'],
+                'laptop_code' => $params['laptop_code'],
+                'number_asset_ho' => $params['number_asset_ho'],
+                'assets_category' => $params['assets_category'],
+                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
+                'serial_number' => $params['serial_number'],
+                'aplikasi' => $params['aplikasi'],
+                'license' => $params['license'],
+                'ip_address' => $params['ip_address'],
+                'date_of_inventory' => $params['date_of_inventory'],
+                'date_of_deploy' => $params['date_of_deploy'],
+                'location' => $params['location'],
+                'status' => $params['status'],
+                'condition' => $params['condition'],
+                'note' => $params['note'],
+                'link_documentation_asset_image' => url($new_path_documentation_image),
+                'user_alls_id' => $aduan_get_data_user['id'],
+                'site' => auth()->user()->site,
+                'dept' => $dept
+            ];
+
+            InvLaptop::create($data);
+            return redirect()->route('laptop.page');
+        }
     }
 
     public function uploadCsv(Request $request)
@@ -109,16 +183,19 @@ class InvLaptopController extends Controller
     public function edit($id)
     {
         $laptop = InvLaptop::find($id);
+        if (empty($laptop)) {
+            abort(404, 'Data not found');
+        }
 
         if (!empty($laptop->user_alls_id)) {
             $aduan_get_data_user = UserAll::where('id', $laptop->user_alls_id)->first()->username;
-    
+
             $pengguna_selected = array($aduan_get_data_user);
-        }else{
+        } else {
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::pluck('username')->map(function ($name) {
+        $pengguna_all = UserAll::where('site',auth()->user()->site)->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -145,18 +222,21 @@ class InvLaptopController extends Controller
             'warna_laptop' => $warna_laptop,
             'os_laptop' => $os_laptop,
             'pengguna_selected' => $pengguna_selected,
-            'pengguna_all' => $pengguna_all
+            'pengguna_all' => $pengguna_all,
         ]);
     }
 
     public function detail($id)
     {
-        $laptop = InvLaptop::where('laptop_code', $id)->first();
-        $aduan = Aduan::where('inventory_number', $id)->get();
-        $unschedule = UnscheduleJob::where('inventory_number', $id)->get();
+        $laptop = InvLaptop::where('id', $id)->first();
+        if (empty($laptop)) {
+            abort(404, 'Data not found');
+        }
+        $aduan = Aduan::where('inventory_number', $laptop->laptop_code)->get();
+        $unschedule = UnscheduleJob::where('inventory_number', $laptop->laptop_code)->get();
         $inspeksi = InspeksiLaptop::with('inventory')
-        ->where('inv_laptop_id', $laptop->id) // Only get posts from user_id 1
-        ->get();
+            ->where('inv_laptop_id', $id) // Only get posts from user_id 1
+            ->get();
         // return response()->json($inspeksi);
         $merge = [
             'aduan' => $aduan,
@@ -200,6 +280,7 @@ class InvLaptopController extends Controller
                 'note' => $request->note,
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
+                'site' => auth()->user()->site
             ];
         } else {
 
@@ -223,6 +304,7 @@ class InvLaptopController extends Controller
                 'condition' => $request->condition,
                 'note' => $request->note,
                 'user_alls_id' => $aduan_get_data_user['id'],
+                'site' => auth()->user()->site
             ];
         }
 
@@ -232,6 +314,9 @@ class InvLaptopController extends Controller
     public function destroy($id)
     {
         $laptop = InvLaptop::find($id);
+        if (empty($laptop)) {
+            abort(404, 'Data not found');
+        }
         // return response()->json(['ap' => $laptop]);
         $laptop->delete();
         return redirect()->back();

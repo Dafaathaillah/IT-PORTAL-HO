@@ -25,5 +25,6 @@ class InvWirelless extends Model
         'location',
         'status',
         'note',
+        'site'
     ];
 }

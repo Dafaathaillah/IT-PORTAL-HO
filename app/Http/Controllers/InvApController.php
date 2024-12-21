@@ -23,8 +23,22 @@ class InvApController extends Controller
 
     public function index()
     {
-        $dataInventory = InvAp::all();
-        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory]);
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $dataInventory = InvAp::all();
+            $site = '';
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $dataInventory = InvAp::where('site',null)->orWhere('site','HO')->get();
+
+            $site = '';
+        }else{
+            $dataInventory = InvAp::where('site',auth()->user()->site)->get();
+
+            $site = auth()->user()->site;
+        }
+
+        $role = auth()->user()->role;
+        
+        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory,'site' => $site,'role' => $role]);
     }
 
     public function create()
@@ -35,13 +49,42 @@ class InvApController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvAp::max('max_id');
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $maxId = InvAp::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
 
-        if (is_null($maxId)) {
-            $maxId = 0;
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABIBAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $maxId = InvAp::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPAHOAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $maxId = InvAp::where('site','BA')->orderBy('max_id', 'desc')->first();
+            // dd($maxId->inventory_number);
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABAAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         }
 
-        $uniqueString = 'PPAHOAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
@@ -72,6 +115,7 @@ class InvApController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
+            'site' => auth()->user()->site
         ];
         // DB::table('inv_aps')->insert($data);
         InvAp::create($data);
@@ -191,6 +235,7 @@ class InvApController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
+            'site' => auth()->user()->site
         ];
         // DB::table('inv_aps')->insert($data);
         InvAp::firstWhere('id', $request->id)->update($data);

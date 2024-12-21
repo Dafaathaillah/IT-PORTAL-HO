@@ -17,7 +17,15 @@ class RedirectAuthenticatedUsersController extends Controller
         } elseif (auth()->user()->role == 'ict_group_leader') {
             return redirect('groupLeaderDashboard');
         } elseif (auth()->user()->role == 'ict_technician') {
-            return redirect('technicianDashboard');
+            if (auth()->user()->site == 'BIB' || auth()->user()->site == 'BA')
+            {
+                return redirect('technicianDashboard');
+            }elseif (auth()->user()->role == 'guest') {
+                return redirect('asetDashboard');
+            }else{
+                return redirect('/login');
+            }
+            
         } elseif (auth()->user()->role == 'ict_admin') {
             return redirect('adminDashboard');
         } elseif (auth()->user()->role == 'guest') {

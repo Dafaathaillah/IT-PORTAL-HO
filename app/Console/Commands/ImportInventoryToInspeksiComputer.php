@@ -51,7 +51,8 @@ class ImportInventoryToInspeksiComputer extends Command
                 'year' => Carbon::now()->format('Y'),
                 'inspection_status' => 'N',
                 'inventory_status' => $inventory_computer->status,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'site' => $inventory_computer->site
             ]);
         }
 

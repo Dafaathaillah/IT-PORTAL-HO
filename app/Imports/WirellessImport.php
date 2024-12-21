@@ -43,6 +43,7 @@ class WirellessImport implements ToModel, WithStartRow
             'location' => $row[11],
             'status' => $row[12],
             'note' => $row[13],
+            'site' => auth()->user()->site
         ]);
     }
 }

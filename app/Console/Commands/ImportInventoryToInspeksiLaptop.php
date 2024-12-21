@@ -46,7 +46,8 @@ class ImportInventoryToInspeksiLaptop extends Command
                     'year' => $currentDate->format('Y'),
                     'inspection_status' => 'N',
                     'inventory_status' => $inventory_laptop->status,
-                    'created_at' => $currentDate->format('Y-m-d H:i:s')
+                    'created_at' => $currentDate->format('Y-m-d H:i:s'),
+                    'site' => $inventory_laptop->site
                 ]);
             }
         }

@@ -17,8 +17,22 @@ class InvSwitchController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvSwitch::all();
-        return Inertia::render('Inventory/Switch/Switch', ['switch' => $dataInventory]);
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $dataInventory = InvSwitch::all();
+            $site = '';
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $dataInventory = InvSwitch::where('site',null)->orWhere('site','HO')->get();
+
+            $site = '';
+        }else{
+            $dataInventory = InvSwitch::where('site',auth()->user()->site)->get();
+
+            $site = auth()->user()->site;
+        }
+
+        $role = auth()->user()->role;
+
+        return Inertia::render('Inventory/Switch/Switch', ['switch' => $dataInventory,'site' => $site,'role' => $role]);
     }
 
     public function create()
@@ -29,13 +43,42 @@ class InvSwitchController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvSwitch::max('max_id');
+        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
+            $maxId = InvSwitch::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
 
-        if (is_null($maxId)) {
-            $maxId = 0;
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABIBSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $maxId = InvSwitch::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPAHOSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        }else{
+            $maxId = InvSwitch::where('site','BA')->orderBy('max_id', 'desc')->first();
+            // dd($maxId->inventory_number);
+
+            if (is_null($maxId)) {
+                $maxId = 0;
+            }else{
+                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
+                $maxId = $noUrut;
+            }
+
+            $uniqueString = 'PPABASW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         }
 
-        $uniqueString = 'PPAHOSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
@@ -65,6 +108,7 @@ class InvSwitchController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
+            'site' => auth()->user()->site
         ];
         // DB::table('inv_aps')->insert($data);
         InvSwitch::create($data);
@@ -121,6 +165,7 @@ class InvSwitchController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
+            'site' => auth()->user()->site
         ];
         InvSwitch::firstWhere('id', $request->id)->update($data);
         return redirect()->route('switch.page');

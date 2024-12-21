@@ -105,13 +105,19 @@ const customFormat = (date) => {
 //         form.due_date = customFormat(selectedDate.value);
 //     }
 // };
+const formSubmittedCrew = ref(false);
 
 const save = () => {
-    if (!selectedDate.value) {
-        form.due_date = null; // Set nilai ke null jika kosong
-    } else {
+    if (selectedValues.value == null) {
+        formSubmittedCrew.value = true;
+        // console.log('ga oke')
+        return; // Stop execution if validation fails
+    }
+    
+    if (selectedDate.value != null) {
         form.due_date = customFormat(selectedDate.value);
     }
+
     if (fileAction) {
         form.action_image = fileAction.value;
     }
@@ -1034,11 +1040,14 @@ const save = () => {
                                                 :options="options"
                                                 :multiple="true"
                                                 :close-on-select="true"
-                                                placeholder="Select Departement"
+                                                placeholder="Select Crew"
                                                 track-by="name"
                                                 label="name"
                                             />
                                         </div>
+                                        <span v-if="
+                                            !selectedOption && formSubmittedCrew
+                                        " class="text-red-500">Crew Tidak boleh kosong!</span>
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
