@@ -6,9 +6,13 @@ import { Head, useForm } from "@inertiajs/vue3";
 import VueMultiselect from "vue-multiselect";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import { usePage } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
 import { ref, computed, watch } from "vue";
+
+const page = usePage();
+const authUser = page.props.auth.user;
 
 const props = defineProps({
     complaintDataNrp: {
@@ -37,8 +41,8 @@ const form = useForm({
 
 //start auto generate nama by nik
 const complaintDataNrp = props.complaintDataNrp;
-const nrp = ref("");
-const complaintName = ref("");
+const nrp = ref(authUser.nrp);
+const complaintName = ref(authUser.name);
 
 watch(nrp, (newNrp) => {
     const found = complaintDataNrp.find((data) => data.nrp === newNrp);
@@ -162,10 +166,11 @@ const getPlaceholder = computed(() => {
                                             >
                                             <input
                                                 required
+                                                :disabled="isDisabled"
                                                 type="text"
                                                 v-model="nrp"
                                                 name="nrp"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="NRP Pelapor"
                                             />
                                         </div>
@@ -250,26 +255,25 @@ const getPlaceholder = computed(() => {
                                                 name="category_name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option
-                                                    selected
-                                                    value=""
-                                                >
+                                                <option selected value="">
                                                     SELECT CATEGORY
                                                 </option>
                                                 <option
                                                     v-for="category in categories"
                                                     :key="category.id"
-                                                    :value="category.category_root_cause"
+                                                    :value="
+                                                        category.category_root_cause
+                                                    "
                                                 >
-                                                    {{ category.category_root_cause }}
+                                                    {{
+                                                        category.category_root_cause
+                                                    }}
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div
-                                        v-if="
-                                            form.category_name == 'PC/NB'
-                                        "
+                                        v-if="form.category_name == 'PC/NB'"
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -290,8 +294,7 @@ const getPlaceholder = computed(() => {
                                     </div>
                                     <div
                                         :class="
-                                            form.category_name ===
-                                                'PC/NB'
+                                            form.category_name === 'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                         "
@@ -313,8 +316,7 @@ const getPlaceholder = computed(() => {
                                     </div>
                                     <div
                                         :class="
-                                            form.category_name ===
-                                                'PC/NB'
+                                            form.category_name === 'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                         "

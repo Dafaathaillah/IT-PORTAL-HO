@@ -14,6 +14,9 @@ const props = defineProps({
     crew: {
         type: Array,
     },
+    categories: {
+        type: Array,
+    },
     ticket: {
         type: Object,
     },
@@ -112,15 +115,10 @@ const options = props.crew;
 
 // Computed property untuk mendapatkan placeholder
 const getPlaceholder = computed(() => {
-    if (form.category_name === "PC/LAPTOP") {
-        return "Masukkan No Inventory PC/Laptop";
-    } else if (form.category_name === "NETWORK") {
-        return "Masukkan No Inventory AP/Switch";
-    } else if (form.category_name === "CCTV") {
-        return "Masukkan No Inventory CCTV";
+    if (form.category_name === "PC/NB") {
+        return "Masukkan No Inventory PC/NoteBook";
     }
 });
-
 </script>
 
 <template>
@@ -273,27 +271,23 @@ const getPlaceholder = computed(() => {
                                             >
                                                 <option
                                                     selected
-                                                    value="PRINTER"
+                                                    value=""
                                                 >
-                                                    PRINTER
+                                                    SELECT CATEGORY
                                                 </option>
-                                                <option value="NETWORK">
-                                                    NETWORK
-                                                </option>
-                                                <option value="CCTV">
-                                                    CCTV
-                                                </option>
-                                                <option value="PC/LAPTOP">
-                                                    PC/LAPTOP
+                                                <option
+                                                    v-for="category in categories"
+                                                    :key="category.id"
+                                                    :value="category.category_root_cause"
+                                                >
+                                                    {{ category.category_root_cause }}
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div
                                         v-if="
-                                            form.category_name == 'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                            form.category_name == 'PC/NB'
                                         "
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
@@ -316,9 +310,7 @@ const getPlaceholder = computed(() => {
                                     <div
                                         :class="
                                             form.category_name ===
-                                                'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                                'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                         "
@@ -445,8 +437,9 @@ const getPlaceholder = computed(() => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
-                                    
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
                                         :href="route('aduan.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"

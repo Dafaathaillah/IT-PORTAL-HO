@@ -8,6 +8,8 @@ use App\Models\UserAll;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
@@ -35,6 +37,19 @@ class AduanController extends Controller
 
     public function create()
     {
+        $site = Auth::user()->site;
+        if ($site != 'HO') {
+            $categories = DB::table('root_cause_categories')
+                ->select('id', 'category_root_cause')
+                ->where('site_type', 'SITE')
+                ->get();
+        } else {
+            $categories = DB::table('root_cause_categories')
+                ->select('id', 'category_root_cause')
+                ->where('site_type', 'HO')
+                ->get();
+        }
+
         // start generate code
         $currentDate = Carbon::now();
         $year = $currentDate->format('y');
@@ -59,7 +74,7 @@ class AduanController extends Controller
         })->toArray();
         // return response()->json($crew);
         // end generate code
-        return Inertia::render('Aduan/AduanCreate', ['ticket' => $uniqueString, 'crew' => $crew]);
+        return Inertia::render('Aduan/AduanCreate', ['ticket' => $uniqueString, 'crew' => $crew, 'categories' => $categories]);
     }
 
     public function store(Request $request)
