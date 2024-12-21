@@ -14,6 +14,9 @@ const props = defineProps({
     complaintDataNrp: {
         type: Array,
     },
+    categories: {
+        type: Array,
+    },
     ticket: {
         type: Object,
     },
@@ -57,6 +60,7 @@ const save = () => {
     form.image = file.value;
     form.nrp = nrp.value;
     form.complaint_name = complaintName.value;
+    // console.log(form);
     form.post(route("guestAduan.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
@@ -91,12 +95,8 @@ function handleCategoryChange(event) {
 
 // Computed property untuk mendapatkan placeholder
 const getPlaceholder = computed(() => {
-    if (form.category_name === "PC/LAPTOP") {
-        return "Masukkan No Inventory PC/Laptop";
-    } else if (form.category_name === "NETWORK") {
-        return "Masukkan No Inventory AP/Switch";
-    } else if (form.category_name === "CCTV") {
-        return "Masukkan No Inventory CCTV";
+    if (form.category_name === "PC/NB") {
+        return "Masukkan No Inventory PC/Note Bool";
     }
 });
 </script>
@@ -252,27 +252,23 @@ const getPlaceholder = computed(() => {
                                             >
                                                 <option
                                                     selected
-                                                    value="PRINTER"
+                                                    value=""
                                                 >
-                                                    PRINTER
+                                                    SELECT CATEGORY
                                                 </option>
-                                                <option value="NETWORK">
-                                                    NETWORK
-                                                </option>
-                                                <option value="CCTV">
-                                                    CCTV
-                                                </option>
-                                                <option value="PC/LAPTOP">
-                                                    PC/LAPTOP
+                                                <option
+                                                    v-for="category in categories"
+                                                    :key="category.id"
+                                                    :value="category.category_root_cause"
+                                                >
+                                                    {{ category.category_root_cause }}
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div
                                         v-if="
-                                            form.category_name == 'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                            form.category_name == 'PC/NB'
                                         "
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -295,9 +291,7 @@ const getPlaceholder = computed(() => {
                                     <div
                                         :class="
                                             form.category_name ===
-                                                'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                                'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                         "
@@ -320,9 +314,7 @@ const getPlaceholder = computed(() => {
                                     <div
                                         :class="
                                             form.category_name ===
-                                                'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                                'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                         "

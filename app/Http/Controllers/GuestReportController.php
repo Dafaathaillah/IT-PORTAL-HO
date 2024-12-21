@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aduan;
+use App\Models\RootCauseProblem;
 use App\Models\UserAll;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class GuestReportController extends Controller
@@ -14,20 +17,20 @@ class GuestReportController extends Controller
     {
         if (empty($request->search) || $request->search == null) {
             $search = 'errordata';
-        }else{
+        } else {
             $search = $request->search;
         }
 
         // return dd($search);
         $aduan = Aduan::query()
-        ->when(!$request->search, function($query) {
-            return $query->whereDate('date_of_complaint', Carbon::today())
-                         ->orderBy('date_of_complaint', 'desc');
-        })
-        ->when($request->search, function($query, $search) {
-            return $query->where('complaint_code', 'like', '%' . $search . '%');
-        })
-        ->get();
+            ->when(!$request->search, function ($query) {
+                return $query->whereDate('date_of_complaint', Carbon::today())
+                    ->orderBy('date_of_complaint', 'desc');
+            })
+            ->when($request->search, function ($query, $search) {
+                return $query->where('complaint_code', 'like', '%' . $search . '%');
+            })
+            ->get();
 
         // $aduan = Aduan::whereDate('created_date', Carbon::today())->orderBy('date_of_complaint', 'desc')->get();
         return Inertia::render(
@@ -40,7 +43,19 @@ class GuestReportController extends Controller
 
     public function create()
     {
-        // return dd($complaintDataNrp);
+        $site = Auth::user()->site;
+        if ($site != 'HO') {
+            $categories = DB::table('root_cause_categories')
+                ->select('id', 'category_root_cause')
+                ->where('site_type', 'SITE')
+                ->get();
+        } else {
+            $categories = DB::table('root_cause_categories')
+                ->select('id', 'category_root_cause')
+                ->where('site_type', 'HO')
+                ->get();
+        }
+        // return dd($categories);
 
         // start generate code
         $currentDate = Carbon::now();
@@ -61,7 +76,7 @@ class GuestReportController extends Controller
 
         // return response()->json($crew);
         // end generate code
-        return Inertia::render('Guest/GuestAduanCreate', ['ticket' => $uniqueString, 'complaintDataNrp' => $complaintDataNrp]);
+        return Inertia::render('Guest/GuestAduanCreate', ['ticket' => $uniqueString, 'complaintDataNrp' => $complaintDataNrp, 'categories' => $categories]);
     }
 
     public function store(Request $request)
@@ -114,6 +129,7 @@ class GuestReportController extends Controller
             $data['inventory_number'] = $request->inventory_number;
             $data['status'] = 'OPEN';
             // return response()->json($data);
+            // return dd($data);
             $aduan = Aduan::create($data);
         } else {
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();

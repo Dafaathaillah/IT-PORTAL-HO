@@ -1,5 +1,5 @@
 <script setup>
-import GuestLayoutCrud from "@/Layouts/GuestLayoutCrud.vue";
+import GuestLayoutCrud from "@/Layouts/GuestLayoutDashboard.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";

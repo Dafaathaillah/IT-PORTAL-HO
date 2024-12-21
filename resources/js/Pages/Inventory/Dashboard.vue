@@ -47,6 +47,7 @@ onMounted(() => {
     Highcharts.chart(chartContainer.value, {
         chart: {
             type: "bar",
+            backgroundColor: "#1e293b",
         },
         title: {
             text: "",
@@ -62,6 +63,11 @@ onMounted(() => {
                 "Komputer",
                 "Laptop",
             ],
+            labels: {
+                style: {
+                    color: "#fff",
+                },
+            },
         },
         yAxis: {
             min: 0,
@@ -315,7 +321,7 @@ onMounted(() => {
                             </h6>
                         </div>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto dark:bg-slate-850">
                         <div
                             ref="chartContainer"
                             style="width: 100%; height: 400px"

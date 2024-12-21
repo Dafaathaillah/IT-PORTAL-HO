@@ -205,6 +205,29 @@ const toggleLevel3PrinterHo = () => {
                         <li></li>
                     </ul>
                 </li>
+
+                <li>
+                    <NavLink
+                        @click="toggleLevel2AduanHo"
+                        :href="route('guestAduan.page')"
+                        :active="route().current('guestAduan.page')"
+                    >
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Aduan</span
+                        >
+                    </NavLink>
+                    <ul v-if="level1OpenHo">
+                        <li></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </aside>
