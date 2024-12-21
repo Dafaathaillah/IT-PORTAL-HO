@@ -838,7 +838,7 @@ const toggleLevel3ScannerHo = () => {
                             </ul>
                             
                             <NavLink
-                                v-if="$page.props.auth.user.role === 'ict_developer' || $page.props.auth.user.role === 'ict_group_leader'"
+                                v-if="$page.props.auth.user.role === 'ict_group_leader'"
                                 :href="route('aduan-ho.page')"
                                 :active="route().current('aduan-ho.page')"
                             >
