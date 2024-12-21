@@ -23,16 +23,6 @@ class GuestReportController extends Controller
 
         // return dd($search);
         $aduan = Aduan::query()
-<<<<<<< HEAD
-            ->when(!$request->search, function ($query) {
-                return $query->whereDate('date_of_complaint', Carbon::today())
-                    ->orderBy('date_of_complaint', 'desc');
-            })
-            ->when($request->search, function ($query, $search) {
-                return $query->where('complaint_code', 'like', '%' . $search . '%');
-            })
-            ->get();
-=======
         ->when(!$request->search, function($query) {
             return $query->whereDate('date_of_complaint', Carbon::today())
                          ->where('site','HO')
@@ -42,7 +32,6 @@ class GuestReportController extends Controller
             return $query->where('complaint_code', 'like', '%' . $search . '%');
         })
         ->get();
->>>>>>> origin/site-ba
 
         // $aduan = Aduan::whereDate('created_date', Carbon::today())->orderBy('date_of_complaint', 'desc')->get();
         return Inertia::render(
