@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
 import { ref, computed } from "vue";
 
-const props = defineProps(['ticket', 'nrp', 'nama']);
+const props = defineProps(['ticket', 'nrp', 'nama','categories']);
 
 const form = useForm({
     complaint_name: props.nama,
@@ -195,27 +195,23 @@ const getPlaceholder = computed(() => {
                                             >
                                                 <option
                                                     selected
-                                                    value="PRINTER"
+                                                    value=""
                                                 >
-                                                    PRINTER
+                                                    SELECT CATEGORY
                                                 </option>
-                                                <option value="NETWORK">
-                                                    NETWORK
-                                                </option>
-                                                <option value="CCTV">
-                                                    CCTV
-                                                </option>
-                                                <option value="PC/LAPTOP">
-                                                    PC/LAPTOP
+                                                <option
+                                                    v-for="category in categories"
+                                                    :key="category.id"
+                                                    :value="category.category_root_cause"
+                                                >
+                                                    {{ category.category_root_cause }}
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div
                                         v-if="
-                                            form.category_name == 'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                            form.category_name == 'PC/NB'
                                         "
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -238,9 +234,7 @@ const getPlaceholder = computed(() => {
                                     <div
                                         :class="
                                             form.category_name ===
-                                                'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                                'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                         "
@@ -262,7 +256,8 @@ const getPlaceholder = computed(() => {
                                     </div>
                                     <div
                                         :class="
-                                            form.category_name === 'PC/LAPTOP'
+                                            form.category_name ===
+                                                'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                         "

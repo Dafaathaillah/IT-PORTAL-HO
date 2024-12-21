@@ -8,6 +8,8 @@ use App\Models\UserAll;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,11 +18,11 @@ class AduanHoController extends Controller
 {
     public function index()
     {
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site','HO')->where('site_pelapor', auth()->user()->site )->get();
-        $countOpen = Aduan::where('status', 'OPEN')->where('site','HO')->where('site_pelapor', auth()->user()->site )->count();
-        $countClosed = Aduan::where('status', 'CLOSED')->where('site','HO')->where('site_pelapor', auth()->user()->site )->count();
-        $countProgress = Aduan::where('status', 'PROGRESS')->where('site','HO')->where('site_pelapor', auth()->user()->site )->count();
-        $countCancel = Aduan::where('status', 'CANCEL')->where('site','HO')->where('site_pelapor', auth()->user()->site )->count();
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->get();
+        $countOpen = Aduan::where('status', 'OPEN')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->count();
+        $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->count();
+        $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->count();
+        $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->count();
         return Inertia::render(
             'Aduan/AduanHo',
             [
@@ -35,17 +37,23 @@ class AduanHoController extends Controller
 
     public function create()
     {
+        $site = Auth::user()->site;
+        $categories = DB::table('root_cause_categories')
+            ->select('id', 'category_root_cause')
+            ->where('site_type', 'HO')
+            ->get();
+
         // start generate code
         $currentDate = Carbon::now();
         $year = $currentDate->format('y');
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site','HO')->orderBy('max_id', 'desc')->first();
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site', 'HO')->orderBy('max_id', 'desc')->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
-        }else{
+        } else {
             $split = explode('-', $maxId->complaint_code);
             $noUrut = (int) $split[2];
             $maxId = $noUrut;
@@ -59,7 +67,7 @@ class AduanHoController extends Controller
         $nrp = auth()->user()->nrp;
         $nama = auth()->user()->name;
 
-        return Inertia::render('Aduan/AduanCreateHo', ['ticket' => $uniqueString, 'nrp' => $nrp, 'nama' => $nama]);
+        return Inertia::render('Aduan/AduanCreateHo', ['ticket' => $uniqueString, 'nrp' => $nrp, 'nama' => $nama, 'categories' => $categories]);
     }
 
     public function store(Request $request)
@@ -105,7 +113,7 @@ class AduanHoController extends Controller
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            }else{
+            } else {
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['inventory_number'] = $request->inventory_number;
@@ -116,7 +124,7 @@ class AduanHoController extends Controller
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            }else{
+            } else {
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['status'] = 'OPEN';
@@ -148,5 +156,4 @@ class AduanHoController extends Controller
             'aduan' => $aduan,
         ]);
     }
-
 }
