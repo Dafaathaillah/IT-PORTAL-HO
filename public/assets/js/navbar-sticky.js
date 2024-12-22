@@ -2,9 +2,8 @@
 
 var navbar = document.querySelector("[navbar-main]");
 const white_elements = navbar.querySelectorAll(".text-white");
-const white_bg_elements = navbar.querySelectorAll("[sidenav-trigger] i.bg-white");
+const white_bg_elements = navbar.querySelectorAll("a[aria-expanded='false'] i.bg-white");
 const white_before_elements = navbar.querySelectorAll(".before\\:text-white");
-
 
 window.onscroll = function () {
   let blur = navbar.getAttribute("navbar-scroll");
@@ -13,7 +12,7 @@ window.onscroll = function () {
 
 function stickyNav() {
   if (window.scrollY >= 5) {
-    navbar.classList.add("sticky", "top-[1%]", "backdrop-saturate-200", "dark:bg-slate-850/80", "dark:shadow-dark-blur", "backdrop-blur-2xl", "bg-[hsla(0,0%,100%,0.8)]", "shadow-blur", "z-110");
+    navbar.classList.add("sticky", "top-[1%]", "backdrop-saturate-200", "dark:bg-slate-850/80", "dark:shadow-dark-blur", "backdrop-blur-2xl", "bg-white/80", "shadow-blur", "z-110");
     white_elements.forEach(element => {
       element.classList.remove("text-white")
       element.classList.add("dark:text-white")
@@ -28,7 +27,7 @@ function stickyNav() {
       element.classList.remove("before:text-white")
     });
   } else {
-    navbar.classList.remove("sticky", "top-[1%]", "backdrop-saturate-200", "dark:bg-slate-850/80", "dark:shadow-dark-blur", "backdrop-blur-2xl", "bg-[hsla(0,0%,100%,0.8)]", "shadow-blur", "z-110");
+    navbar.classList.remove("sticky", "top-[1%]", "backdrop-saturate-200", "dark:bg-slate-850/80", "dark:shadow-dark-blur", "backdrop-blur-2xl", "bg-white/80", "shadow-blur", "z-110");
     white_elements.forEach(element => {
       element.classList.add("text-white")
       element.classList.remove("dark:text-white")

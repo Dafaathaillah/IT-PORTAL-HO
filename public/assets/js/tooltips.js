@@ -2,7 +2,7 @@ var buttons = document.querySelectorAll("[data-target='tooltip_trigger']");
 
 buttons.forEach((button) => {
   var tooltip = button.nextElementSibling;
-  var placement = button.getAttribute("data-placement");
+  var placement = tooltip.getAttribute("data-popper-placement");
 
   const popperInstance = Popper.createPopper(button, tooltip, {
     modifiers: [
@@ -33,9 +33,8 @@ buttons.forEach((button) => {
 
   function hide() {
     // Hide the tooltip
-
-    tooltip.classList.remove("block");
     tooltip.classList.add("hidden");
+    tooltip.classList.remove("block");
 
     // Disable the event listeners
     popperInstance.setOptions((options) => ({

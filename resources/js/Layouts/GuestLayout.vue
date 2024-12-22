@@ -79,44 +79,110 @@ const yearxyz = new Date().getFullYear();
         </div>
     </div>
     <main class="mt-0 transition-all duration-200 ease-in-out">
-        <section>
-            <div
-                class="relative flex items-center min-h-screen p-0 overflow-hidden bg-center bg-cover"
-            >
-                <div class="container z-1">
+        <div
+            class="pb-0 pt-0 h-full min-h-screen items-start p-0 relative overflow-hidden flex bg-cover bg-center bg-[url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-basic.jpg')]"
+        >
+            <span
+                class="absolute top-0 left-0 w-full h-full bg-center bg-cover opacity-60 bg-gradient-to-tl from-zinc-800 to-zinc-700"
+            ></span>
+            <div class="container">
+                <div class="container mt-36">
+                    <h4
+                        class="flex justify-center z-20 mt-12 font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] text-red-600"
+                    >
+                        PPA
+                        <i
+                            class="font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] text-white"
+                            >values</i
+                        >
+                    </h4>
                     <div class="flex flex-wrap -mx-3">
-                        <!-- left -->
-                        <slot />
-                        <!-- end left -->
-                        <!-- right section -->
-
                         <div
-                            class="absolute top-0 right-0 flex-col justify-center hidden w-6/12 h-full max-w-full px-3 pr-0 my-auto text-center flex-0 lg:flex"
+                            class="w-full max-w-full px-3 mx-auto mb-6 text-center flex justify-center items-center flex-wrap lg:w-12/12"
+                        >
+                            <a
+                                href="javascript:;"
+                                target="_blank"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-green-600 sm:mb-0 xl:mr-12"
+                                >Devotion</a
+                            >
+                            <a
+                                href="javascript:;"
+                                target="_blank"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-blue-500 sm:mb-0 xl:mr-12"
+                                >Integrity</a
+                            >
+                            <a
+                                href="javascript:;"
+                                target="_blank"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white sm:mb-0 xl:mr-12"
+                                >Teamwork</a
+                            >
+                            <a
+                                href="javascript:;"
+                                target="_blank"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-orange-400 sm:mb-0 xl:mr-12"
+                                >Creativity</a
+                            >
+                            <a
+                                href="javascript:;"
+                                target="_blank"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-red-600 sm:mb-0 xl:mr-12"
+                                >Winner</a
+                            >
+                            <a
+                                href="javascript:;"
+                                target="_blank"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-sky-600 sm:mb-0 xl:mr-12"
+                                >Perfection</a
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-wrap justify-center mt-10 -mx-3"
+                >
+                    <div
+                        class="w-full max-w-full px-6 mx-auto shrink-0 md:flex-0 md:w-7/12 lg:w-5/12 xl:w-4/12"
+                    >
+                        <div
+                            class="relative z-0 flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
                             <div
-                                class="relative flex flex-col justify-center h-full bg-cover px-24 m-4 overflow-hidden bg-[url('/images/Asset_1.jpg')] rounded-xl"
+                                class="text-center border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6"
                             >
-                                <span
-                           class="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-orange-900 to-rose-900 opacity-40"></span>
-                                <h4 class="z-20 mt-12 font-bold text-red-600">
-                                    PPA <i class="text-white">values</i>
-                                </h4>
-                                <div class="flex justify-center ml-10 mr-10">
-                                    <p class="ml-10 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-green-600">Devotion</p>
-                                    <p class="p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-blue-600">Integrity</p>
-                                    <p class="p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white">Teamwork</p>
-                                    <p class="p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-orange-400">Creativity</p>
-                                    <p class="p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-red-600">Winner</p>
-                                    <p class="mr-10 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-sky-600">Perfection</p>
+                                <h5 class="mt-2 mb-4">Sign in</h5>
+                                <div class="text-center">
+                                    <!-- <a
+                                        href="javascript:;"
+                                        class="inline-block px-8 py-2 text-xs font-bold leading-normal text-center align-middle transition-all ease-in bg-transparent rounded-lg shadow-md cursor-pointer select-none active:-translate-y-px hover:-translate-y-px hover:shadow-xs text-slate-500 tracking-tight-rem"
+                                    >
+                                        <img
+                                            src="assets/img/logos/github.svg"
+                                            alt="social icon"
+                                            class="w-3/10"
+                                        />
+                                        Github
+                                    </a>
+                                    <a
+                                        href="javascript:;"
+                                        class="inline-block px-8 py-2 text-xs font-bold leading-normal text-center align-middle transition-all ease-in bg-transparent rounded-lg shadow-md cursor-pointer select-none active:-translate-y-px hover:-translate-y-px hover:shadow-xs text-slate-500 tracking-tight-rem"
+                                    >
+                                        <img
+                                            src="assets/img/logos/google.svg"
+                                            alt="social icon"
+                                            class="w-3/10"
+                                        />
+                                        Google
+                                    </a> -->
                                 </div>
                             </div>
+                            <slot />
                         </div>
-
-                        <!-- end right section -->
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
     <footer class="py-12">
         <div class="container">
