@@ -8,7 +8,7 @@ var fixedPluginCloseButton = document.querySelector("[fixed-plugin-close-button]
 
 var navbar = document.querySelector("[navbar-main]");
 
-var buttonNavbarFixed = document.querySelector("[navbarFixed]");
+var buttonNavbarFixed = document.querySelector("[navbar-fixed-toggle]");
 
 var sidenav = document.querySelector("aside");
 var sidenav_icons = sidenav.querySelectorAll("li a div");
@@ -21,18 +21,18 @@ var darkBtn = document.querySelector("[white-style-btn]");
 var non_active_style = ["bg-none", "bg-transparent", "text-blue-500", "border-blue-500"];
 var active_style = ["bg-gradient-to-tl", "from-blue-500", "to-violet-500", "bg-blue-500", "text-white", "border-transparent"];
 
-var white_sidenav_classes = ["bg-white", "shadow-xl"];
+var white_sidenav_classes = ["bg-white"];
 // var white_sidenav_highlighted = ["shadow-xl"];
 // var white_sidenav_icons = ["bg-white"];
 
-var black_sidenav_classes = ["bg-slate-850", "shadow-none"];
+var black_sidenav_classes = ["bg-slate-850"];
 // var black_sidenav_highlighted = ["shadow-none"];
 // var black_sidenav_icons = ["bg-gray-200"];
 
-var sidenav_highlight = document.querySelector("a[href=" + CSS.escape(sidenav_target) + "]");
+var sidenav_highlight = document.querySelector("a[active_primary]");
 
 // fixed plugin toggle
-if (pageName != "rtl") {
+if (pageName != "rtl-page") {
   fixedPluginButton.addEventListener("click", function () {
     fixedPluginCard.classList.toggle("-right-90");
     fixedPluginCard.classList.toggle("right-0");
@@ -91,7 +91,7 @@ function sidebarColor(a) {
 
   var checkedSidenavIconColor = "bg-" + color + "-500/30";
 
-  var sidenavIcon = document.querySelector("a[href=" + CSS.escape(sidenav_target) + "]");
+  var sidenavIcon = document.querySelector("[active_primary]");
 
   for (var i = 0; i < parent.length; i++) {
     if (parent[i].hasAttribute("active-color")) {
@@ -189,7 +189,6 @@ darkBtn.addEventListener("click", function () {
     sidenav.classList.add("dark");
   }
 });
-
 // navbar fixed plugin
 
 if (navbar) {
@@ -197,11 +196,13 @@ if (navbar) {
     buttonNavbarFixed.setAttribute("checked", "true");
   }
   const white_elements = navbar.querySelectorAll(".text-white");
-  const white_bg_elements = navbar.querySelectorAll("[sidenav-trigger] i.bg-white");
+  const white_bg_elements = navbar.querySelectorAll("a[aria-expanded='false'] i.bg-white");
   const white_before_elements = navbar.querySelectorAll(".before\\:text-white");
-  buttonNavbarFixed.addEventListener("change", function () {
 
+  buttonNavbarFixed.addEventListener("change", function () {
     if (this.checked) {
+      navbar.setAttribute("navbar-scroll", "true");
+      navbar.classList.add("sticky", "top-[1%]", "backdrop-saturate-200", "backdrop-blur-2xl", "bg-white/80", "shadow-blur", "z-110", "dark:bg-slate-850/80", "dark:shadow-dark-blur");
       white_elements.forEach(element => {
         element.classList.remove("text-white")
         element.classList.add("dark:text-white")
@@ -215,27 +216,9 @@ if (navbar) {
         element.classList.add("dark:before:text-white")
         element.classList.remove("before:text-white")
       });
-      navbar.setAttribute("navbar-scroll", "true");
-      navbar.classList.add("sticky");
-      navbar.classList.add("top-[1%]");
-      navbar.classList.add("backdrop-saturate-200");
-      navbar.classList.add("backdrop-blur-2xl");
-      navbar.classList.add("dark:bg-slate-850/80");
-      navbar.classList.add("dark:shadow-dark-blur");
-      navbar.classList.add("bg-[hsla(0,0%,100%,0.8)]");
-      navbar.classList.add("shadow-blur");
-      navbar.classList.add("z-110");
     } else {
       navbar.setAttribute("navbar-scroll", "false");
-      navbar.classList.remove("sticky");
-      navbar.classList.remove("top-[1%]");
-      navbar.classList.remove("backdrop-saturate-200");
-      navbar.classList.remove("backdrop-blur-2xl");
-      navbar.classList.remove("dark:bg-slate-850/80");
-      navbar.classList.remove("dark:shadow-dark-blur");
-      navbar.classList.remove("bg-[hsla(0,0%,100%,0.8)]");
-      navbar.classList.remove("shadow-blur");
-      navbar.classList.remove("z-110");
+      navbar.classList.remove("sticky", "top-[1%]", "backdrop-saturate-200", "backdrop-blur-2xl", "bg-white/80", "shadow-blur", "z-110", "dark:bg-slate-850/80", "dark:shadow-dark-blur");
       white_elements.forEach(element => {
         element.classList.add("text-white")
         element.classList.remove("dark:text-white")
@@ -256,6 +239,253 @@ if (navbar) {
   buttonNavbarFixed.setAttribute("disabled", "true");
 }
 
+var sidenav = document.querySelector("aside");
+var mini_sidenav_burger = document.querySelector("[mini-sidenav-burger]");
+var burger_mini = mini_sidenav_burger.firstElementChild;
+var top_bread_mini = burger_mini.firstElementChild;
+var main = document.querySelector("main");
+if (!main) {
+  var main = document.querySelector("[main-content]");
+}
+var bottom_bread_mini = burger_mini.lastElementChild;
+var normal_spans = sidenav.querySelectorAll("span:not(.opacity-0)");
+var mini_spans = sidenav.querySelectorAll("span.opacity-0");
+var primary_lists = sidenav.querySelectorAll("ul.ml-6");
+var secondary_lists = sidenav.querySelectorAll("ul.flex-col.pl-0");
+var primary_anchors = sidenav.querySelectorAll("a[collapse_trigger='primary']");
+var sidenav_card = sidenav.querySelector("[sidenav-card]");
+// var sidenav_card_icon = sidenav.querySelector("[sidenav-card-icon]").parentElement;
+// var sidenav_card_content = sidenav.querySelector("i[sidenav-card-icon]").parentElement.nextElementSibling;
+var mini_sidenav_toggle = document.querySelector("[sidenav-mini-toggle]");
+
+mini_sidenav_burger.addEventListener("click", function (e) {
+  mini_sidenav_toggle.click();
+});
+
+mini_sidenav_toggle.addEventListener("change", toggle_sidenav_mini);
+
+function toggle_sidenav_mini() {
+  if (pageName != "rtl-page") {
+    
+    if (sidenav.getAttribute("mini") == "true") {
+      normal_sidenav();
+      sidenav.setAttribute("mini", "false");
+    } else {
+      mini_sidenav();
+      sidenav.setAttribute("mini", "true");
+    }
+  } else {
+    
+    if (sidenav.getAttribute("mini") == "true") {
+      normal_sidenav_rtl();
+      sidenav.setAttribute("mini", "false");
+    } else {
+      mini_sidenav_rtl();
+      sidenav.setAttribute("mini", "true");
+    }
+  }
+}
+
+function mini_sidenav() {
+  sidenav.classList.add("max-w-24");
+  sidenav.classList.remove("max-w-64");
+  // setTimeout(function () {
+  sidenav.classList.add("overflow-hidden");
+  sidenav.classList.remove("overflow-y-auto");
+  //   your code to be executed after .1 second
+  // }, 100);
+  main.classList.add("xl:ml-30");
+  main.classList.remove("xl:ml-68");
+  primary_anchors.forEach((primary_anchor) => {
+    primary_anchor.classList.remove("after:content-['\\f107']");
+  });
+  primary_lists.forEach((primary_list) => {
+    primary_list.classList.add("pl-0", "ml-0");
+    primary_list.classList.remove("pl-4", "ml-6");
+  });
+  secondary_lists.forEach((secondary_list) => {
+    secondary_list.classList.add("ml-0");
+  });
+  normal_spans.forEach((normal_span) => {
+    normal_span.classList.add("opacity-0");
+    normal_span.classList.add("max-w-0");
+    normal_span.classList.remove("opacity-100");
+    if (normal_span.previousElementSibling.tagName.toLowerCase() == "span") {
+      normal_span.parentElement.classList.add("before:content-[none]");
+      normal_span.parentElement.classList.add("ml-2");
+      normal_span.parentElement.classList.remove("before:content-['']");
+      normal_span.parentElement.classList.remove("ml-5.4");
+    }
+  });
+
+  mini_spans.forEach((mini_span) => {
+    mini_span.classList.remove("opacity-0");
+    mini_span.classList.add("ml-0.75");
+    mini_span.classList.add("min-w-7");
+    mini_span.classList.add("opacity-100");
+  });
+  // sidenav_card_content.classList.add("opacity-0", "w-0", "h-0");
+  sidenav_card.classList.add("hidden");
+
+  top_bread_mini.classList.remove("translate-x-[5px]");
+  bottom_bread_mini.classList.remove("translate-x-[5px]");
+}
+
+function normal_sidenav() {
+  sidenav.classList.add("max-w-64");
+  sidenav.classList.remove("max-w-24");
+  main.classList.add("xl:ml-68");
+  main.classList.remove("xl:ml-30");
+  // sidenav_card_content.classList.remove("opacity-0", "w-0", "h-0");
+  sidenav_card.classList.remove("hidden");
+  primary_anchors.forEach((primary_anchor) => {
+    primary_anchor.classList.add("after:content-['\\f107']");
+  });
+  mini_spans.forEach((mini_span) => {
+    mini_span.classList.remove("opacity-100");
+    mini_span.classList.remove("min-w-7");
+    mini_span.classList.remove("ml-0.75");
+    mini_span.classList.add("opacity-0");
+  });
+  primary_lists.forEach((primary_list) => {
+    primary_list.classList.remove("pl-0", "ml-0");
+    primary_list.classList.add("pl-4", "ml-6");
+  });
+  secondary_lists.forEach((secondary_list) => {
+    secondary_list.classList.remove("ml-0");
+  });
+  normal_spans.forEach((normal_span) => {
+    normal_span.classList.remove("opacity-0");
+    normal_span.classList.add("opacity-100");
+    normal_span.classList.remove("max-w-0");
+    if (normal_span.previousElementSibling.tagName.toLowerCase() == "span") {
+      normal_span.parentElement.classList.remove("before:content-[none]");
+      normal_span.parentElement.classList.add("before:content-['']");
+      normal_span.parentElement.classList.add("ml-5.4");
+      normal_span.parentElement.classList.remove("ml-2");
+    } else if (normal_span.previousElementSibling.tagName.toLowerCase() != "img") {
+    }
+    normal_span.classList.add("opacity-100");
+  });
+  top_bread_mini.classList.add("translate-x-[5px]");
+  bottom_bread_mini.classList.add("translate-x-[5px]");
+  // setTimeout(function () {
+  sidenav.classList.remove("overflow-hidden");
+  sidenav.classList.add("overflow-y-auto");
+  //   your code to be executed after .1 second
+  // }, 100);
+}
+
+function mini_sidenav_rtl() {
+  sidenav.classList.add("max-w-24");
+  sidenav.classList.remove("max-w-64");
+  // setTimeout(function () {
+  sidenav.classList.add("overflow-hidden");
+  sidenav.classList.remove("overflow-y-auto");
+  //   your code to be executed after .1 second
+  // }, 100);
+  main.classList.add("xl:mr-30");
+  main.classList.remove("xl:mr-68");
+  primary_anchors.forEach((primary_anchor) => {
+    primary_anchor.classList.remove("after:content-['\\f107']");
+  });
+  primary_lists.forEach((primary_list) => {
+    primary_list.classList.add("pr-0", "mr-0");
+    primary_list.classList.remove("pr-4", "mr-6");
+  });
+  secondary_lists.forEach((secondary_list) => {
+    secondary_list.classList.add("mr-0");
+  });
+  normal_spans.forEach((normal_span) => {
+    normal_span.classList.add("opacity-0");
+    normal_span.classList.add("max-w-0");
+    normal_span.classList.remove("opacity-100");
+    if (normal_span.previousElementSibling.tagName.toLowerCase() == "span") {
+      normal_span.parentElement.classList.add("before:content-[none]");
+      normal_span.parentElement.classList.add("mr-4");
+      normal_span.parentElement.classList.remove("before:content-['']");
+      normal_span.parentElement.classList.remove("mr-5.4");
+    }
+  });
+
+  mini_spans.forEach((mini_span) => {
+    mini_span.classList.remove("opacity-0");
+    mini_span.classList.add("mr-0.6");
+    mini_span.classList.add("min-w-7");
+    mini_span.classList.add("opacity-100");
+  });
+  // sidenav_card_content.classList.add("opacity-0", "w-0", "h-0");
+  sidenav_card.classList.add("hidden");
+
+  top_bread_mini.classList.remove("-translate-x-[5px]");
+  bottom_bread_mini.classList.remove("-translate-x-[5px]");
+}
+
+function normal_sidenav_rtl() {
+  sidenav.classList.add("max-w-64");
+  sidenav.classList.remove("max-w-24");
+  main.classList.add("xl:mr-68");
+  main.classList.remove("xl:mr-30");
+  // sidenav_card_content.classList.remove("opacity-0", "w-0", "h-0");
+  sidenav_card.classList.remove("hidden");
+  primary_anchors.forEach((primary_anchor) => {
+    primary_anchor.classList.add("after:content-['\\f107']");
+  });
+  mini_spans.forEach((mini_span) => {
+    mini_span.classList.remove("opacity-100");
+    mini_span.classList.remove("min-w-7");
+    mini_span.classList.remove("mr-0.6");
+    mini_span.classList.add("opacity-0");
+  });
+  primary_lists.forEach((primary_list) => {
+    primary_list.classList.remove("pr-0", "mr-0");
+    primary_list.classList.add("pr-4", "mr-6");
+  });
+  secondary_lists.forEach((secondary_list) => {
+    secondary_list.classList.remove("mr-0");
+  });
+  normal_spans.forEach((normal_span) => {
+    normal_span.classList.remove("opacity-0");
+    normal_span.classList.add("opacity-100");
+    normal_span.classList.remove("max-w-0");
+    if (normal_span.previousElementSibling.tagName.toLowerCase() == "span") {
+      normal_span.parentElement.classList.remove("before:content-[none]");
+      normal_span.parentElement.classList.add("before:content-['']");
+      normal_span.parentElement.classList.add("mr-5.4");
+      normal_span.parentElement.classList.remove("mr-4");
+    } else if (normal_span.previousElementSibling.tagName.toLowerCase() != "img") {
+    }
+    normal_span.classList.add("opacity-100");
+  });
+  top_bread_mini.classList.add("-translate-x-[5px]");
+  bottom_bread_mini.classList.add("-translate-x-[5px]");
+  // setTimeout(function () {
+  sidenav.classList.remove("overflow-hidden");
+  sidenav.classList.add("overflow-y-auto");
+  //   your code to be executed after .1 second
+  // }, 100);
+}
+
+sidenav.addEventListener("mouseenter", () => {
+  if (sidenav.getAttribute("mini") == "true") {
+    if (pageName != "rtl-page") {
+      normal_sidenav();
+    } else {
+      normal_sidenav_rtl();
+    }
+  }
+});
+
+sidenav.addEventListener("mouseleave", () => {
+  if (sidenav.getAttribute("mini") == "true") {
+    if (pageName != "rtl-page") {
+      mini_sidenav();
+    } else {
+      mini_sidenav_rtl();
+    }
+  }
+});
+
 var dark_mode_toggle = document.querySelector("[dark-toggle]");
 var root_html = document.querySelector("html");
 
@@ -267,3 +497,25 @@ dark_mode_toggle.addEventListener("change", function () {
     root_html.classList.remove("dark");
   }
 });
+
+// function to set dark mode if user setting is for dark 
+
+// if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+//   if (!dark_mode_toggle.hasAttribute("manual") && !root_html.classList.contains("dark")) {
+//     dark_mode_toggle.click();
+//     dark_mode_toggle.removeAttribute("manual");
+//   }
+// }
+
+// function to automatically switch on dark mode
+
+// window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+//   const actual_color_scheme = event.matches ? "dark" : "light";
+//   if (actual_color_scheme == "dark" && !root_html.classList.contains("dark") && !dark_mode_toggle.hasAttribute("manual")) {
+//     dark_mode_toggle.click();
+//     dark_mode_toggle.removeAttribute("manual");
+//   } else if (actual_color_scheme == "light" && root_html.classList.contains("dark") && !dark_mode_toggle.hasAttribute("manual")) {
+//     dark_mode_toggle.click();
+//     dark_mode_toggle.removeAttribute("manual");
+//   }
+// });

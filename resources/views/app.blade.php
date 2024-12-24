@@ -53,6 +53,7 @@
     <!-- plugin for scrollbar  -->
     <script src="{{ asset('../assets/js/plugins/perfect-scrollbar.min.js') }}" async></script>
     <!-- main script file  -->
-    <script src="{{ asset('../assets/js/argon-dashboard-tailwind.js?v=1.0.1') }}" async></script>
+    <script src="{{ asset('../assets/js/argon-dashboard-pro-tailwind.js') }}" async></script>
+    <script src="{{ asset('../assets/js/argon-dashboard-pro-tailwind.min.js?v=1.0.1') }}" async></script>
 
 </html>
