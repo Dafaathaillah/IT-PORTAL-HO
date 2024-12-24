@@ -13,6 +13,7 @@ import DashboardNavbar from "@/Components/inventory/DashboardNavbar.vue";
 import DashboardFooter from "@/Components/inventory/DashboardFooter.vue";
 import DashboardConfig from "@/Components/inventory/DashboardConfig.vue";
 import Swal from "sweetalert2";
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const showingNavigationDropdown = ref(false);
 
@@ -99,23 +100,25 @@ const mainMenu = defineModel('mainMenu', {
 
     <!-- Page Content -->
     <main
-        class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl"
-    >
-        <DashboardNavbar
-            @toggleMobileSidebar="handleMobileSidebar"
-            @toggleConfig="handleConfigurator"
-            v-model:isCollapseIconActive="isActive"
-            v-model:pages="pages"
-            v-model:subMenu="subMenu"
-            v-model:mainMenu="mainMenu"
-        />
-        <div class="w-full px-6 py-6 mx-auto">
-        <slot />
-        </div>
-        <DashboardFooter />
+        class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl overflow-hidden">
+        <PerfectScrollbar>
+            <DashboardNavbar @toggleMobileSidebar="handleMobileSidebar" @toggleConfig="handleConfigurator"
+                v-model:isCollapseIconActive="isActive" v-model:pages="pages" v-model:subMenu="subMenu"
+                v-model:mainMenu="mainMenu" />
+            <div class="w-full px-6 py-6 mx-auto">
+
+                <slot />
+
+            </div>
+            <DashboardFooter />
+        </PerfectScrollbar>
     </main>
-    <DashboardConfig
-        ref="configurator"
-        v-model:isConfiguratorActive="isConfiguratorActive"
-    />
+    <DashboardConfig ref="configurator" v-model:isConfiguratorActive="isConfiguratorActive" />
 </template>
+<style>
+@import 'vue3-perfect-scrollbar/style.css';
+.ps {
+    max-height: 42em;
+    /* or height: 100px; */
+}
+</style>
