@@ -119,6 +119,13 @@ const getPlaceholder = computed(() => {
         return "Masukkan No Inventory PC/NoteBook";
     }
 });
+
+const showAlertTrue = () => {
+    Swal.fire({
+        title: 'Tabel Role Akses User!',
+        html: '<img src="/step_no_inv.jpg" class="inline transition-all duration-200 ease-nav-brand max-h-60 mr-2" alt="main_logo" />',
+    });
+}
 </script>
 
 <template>
@@ -297,6 +304,9 @@ const getPlaceholder = computed(() => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Inventory Number</label
                                             >
+                                            <a style="cursor: pointer;" class="icon-button" @click="showAlertTrue">
+                                                <i class="ms-3 mt-1 text-red-700 fas fa-question-circle"></i>
+                                            </a>
                                             <input
                                                 required
                                                 type="text"
