@@ -43,10 +43,10 @@ const showingNavigationDropdown = ref(false);
                     class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto"
                 >
                     <div class="flex items-center md:ml-auto md:pr-4">
-                        <div  class="block text-sm font-semibold text-white transition-all ease-nav-brand">
-                        <span>
-                         Hello! Guest
-                        </span>
+                        <div
+                            class="block text-sm font-semibold text-white transition-all ease-nav-brand"
+                        >
+                            <span> Hello! Guest </span>
                         </div>
                     </div>
                     <ul
@@ -76,9 +76,10 @@ const showingNavigationDropdown = ref(false);
                 </div>
             </div>
         </nav>
-
-        <slot />
-    <DashboardFooter />
+        <div class="w-full px-6 py-6 mx-auto">
+            <slot />
+        </div>
+        <DashboardFooter />
     </main>
     <DashboardConfig />
 </template>

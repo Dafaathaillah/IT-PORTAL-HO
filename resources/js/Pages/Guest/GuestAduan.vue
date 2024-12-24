@@ -163,31 +163,25 @@ function formatData(text) {
                         @submit.prevent="search"
                         enctype="multipart/form-data"
                     >
-                        <div class="flex">
-                            <div
-                                class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
-                            >
+                        <div class="flex flex-wrap">
+                            <div class="max-w-full sm:w-2/3 md:w-2/3 lg:w-2/3 px-3">
                                 <div
-                                    class="flex items-center md:ml-auto md:pr-4"
+                                    class="h-11 relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease"
                                 >
-                                    <div
-                                        class="h-11 relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease"
+                                    <span
+                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
                                     >
-                                        <span
-                                            class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
-                                        >
-                                            <i class="fas fa-search"></i>
-                                        </span>
-                                        <input
-                                            type="text"
-                                            v-model="formSearch.search"
-                                            class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                            placeholder="Cari Ticket Anda..."
-                                        />
-                                    </div>
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input
+                                        type="text"
+                                        v-model="formSearch.search"
+                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        placeholder="Cari Ticket Anda..."
+                                    />
                                 </div>
                             </div>
-                            <div class="max-w-full shrink-0">
+                            <div class="max-w-full mobile-sm:px-3 mobile-sm:mt-1">
                                 <button
                                     type="submit"
                                     class="h-11 htext-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"

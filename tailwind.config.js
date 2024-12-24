@@ -14,6 +14,7 @@ export default {
 
     theme: {
         screens: {
+            'mobile-sm': { max: '380px' },
             sm: '576px',
             'sm-max': { max: '576px' },
             md: '768px',
