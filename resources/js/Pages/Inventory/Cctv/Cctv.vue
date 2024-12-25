@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { ref, computed } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
 const subMenu = ref("Cctv Pages");
@@ -228,337 +229,339 @@ function formatData(text) {
                                 </Link>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <div class="p-0 overflow-x-auto">
-                                    <div class="p-6 text-gray-900">
-                                        <table
-                                            id="tableData"
-                                            class="table table-striped"
-                                        >
-                                            <thead class="align-bottom">
-                                                <tr>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        #
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Inventory Number
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Asset Ho Number
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Cctv Name
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Cctv Brand
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Type Cctv
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Mac Address
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Ip Address
-                                                    </th>
-                                                    <!-- <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Nvr
-                                                    </th> -->
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Switch
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Date Of Inventory
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Location
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Status
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Note
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Last Edit At
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Action
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr
-                                                    v-for="(
-                                                        cctvs, index
-                                                    ) in cctv"
-                                                    :key="index"
-                                                >
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                <PerfectScrollbar style="position: relative;">
+                                    <div class="p-0">
+                                        <div class="p-6 text-gray-900">
+                                            <table
+                                                id="tableData"
+                                                class="table table-striped"
+                                            >
+                                                <thead class="align-bottom">
+                                                    <tr>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{ index + 1 }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            #
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.cctv_code
-                                                            }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Inventory Number
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.asset_ho_number
-                                                            }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Asset Ho Number
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.cctv_name
-                                                            }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Cctv Name
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.cctv_brand
-                                                            }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Cctv Brand
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.type_cctv
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Type Cctv
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.mac_address
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Mac Address
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.ip_address
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <!-- <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Ip Address
+                                                        </th>
+                                                        <!-- <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.nvr_id
-                                                            }}
-                                                        </span>
-                                                    </td> -->
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Nvr
+                                                        </th> -->
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                cctvs.switch
-                                                                    .inventory_number
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            v-if="
-                                                                cctvs.date_of_inventory
-                                                            "
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Switch
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                formattedDate(
-                                                                    cctvs.date_of_inventory
-                                                                )
-                                                            }}
-                                                        </span>
-                                                        <span
-                                                            v-else
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Date Of Inventory
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Edit untuk setting
-                                                            tanggal !
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Location
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{ cctvs.location }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            :class="{
-                                                                'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    cctvs.status ===
-                                                                    'READY_USED',
-                                                                'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    cctvs.status ===
-                                                                    'READY_STANDBY',
-                                                                'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    cctvs.status ===
-                                                                    'SCRAP',
-                                                                'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    cctvs.status ===
-                                                                    'BREAKDOWN',
-                                                            }"
+                                                            Status
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{ cctvs.status }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="break-normal mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Note
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                        {{
-                                                                cctvs.note ==
-                                                                null
-                                                                    ? ""
-                                                                    : formatData(
-                                                                          cctvs.note
-                                                                      )
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            Last Edit At
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{
-                                                                formattedDate(
-                                                                    cctvs.updated_at
-                                                                )
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        v-for="(
+                                                            cctvs, index
+                                                        ) in cctv"
+                                                        :key="index"
                                                     >
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                detailData(
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{ index + 1 }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
                                                                     cctvs.cctv_code
-                                                                )
-                                                            "
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
-                                                            Detail
-                                                        </NavLinkCustom>
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.asset_ho_number
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.cctv_name
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.cctv_brand
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.type_cctv
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.mac_address
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.ip_address
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <!-- <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.nvr_id
+                                                                }}
+                                                            </span>
+                                                        </td> -->
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.switch
+                                                                        .inventory_number
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                v-if="
+                                                                    cctvs.date_of_inventory
+                                                                "
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    formattedDate(
+                                                                        cctvs.date_of_inventory
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                            <span
+                                                                v-else
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Edit untuk setting
+                                                                tanggal !
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{ cctvs.location }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                :class="{
+                                                                    'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        cctvs.status ===
+                                                                        'READY_USED',
+                                                                    'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        cctvs.status ===
+                                                                        'READY_STANDBY',
+                                                                    'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        cctvs.status ===
+                                                                        'SCRAP',
+                                                                    'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        cctvs.status ===
+                                                                        'BREAKDOWN',
+                                                                }"
+                                                            >
+                                                                {{ cctvs.status }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="break-normal mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                            {{
+                                                                    cctvs.note ==
+                                                                    null
+                                                                        ? ""
+                                                                        : formatData(
+                                                                            cctvs.note
+                                                                        )
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    formattedDate(
+                                                                        cctvs.updated_at
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    detailData(
+                                                                        cctvs.cctv_code
+                                                                    )
+                                                                "
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Detail
+                                                            </NavLinkCustom>
 
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                editData(
-                                                                    cctvs.id
-                                                                )
-                                                            "
-                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Edit
-                                                        </NavLinkCustom>
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    editData(
+                                                                        cctvs.id
+                                                                    )
+                                                                "
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Edit
+                                                            </NavLinkCustom>
 
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                deleteData(
-                                                                    cctvs.id
-                                                                )
-                                                            "
-                                                            v-if="props.role !== 'ict_technician'"
-                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Delete
-                                                        </NavLinkCustom>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    deleteData(
+                                                                        cctvs.id
+                                                                    )
+                                                                "
+                                                                v-if="props.role !== 'ict_technician'"
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Delete
+                                                            </NavLinkCustom>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
+                                </PerfectScrollbar>
                             </div>
                         </div>
                     </div>
@@ -567,3 +570,7 @@ function formatData(text) {
         </div>
     </AuthenticatedLayout>
 </template>
+<style>
+@import '/public/assets/css/perfect-scrollbar.css';
+
+</style>

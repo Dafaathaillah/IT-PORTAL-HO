@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
 const subMenu = ref("Scanner Pages");
@@ -223,248 +224,250 @@ const submitCsv = () => {
                             </div>
 
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <div class="p-0 overflow-x-auto">
-                                    <div class="p-6 text-gray-900">
-                                        <div
-                                            v-if="$page.props.flash.message"
-                                            class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300"
-                                        >
-                                            {{ $page.props.flash.message }}
+                                <PerfectScrollbar style="position: relative;">
+                                    <div class="p-0">
+                                        <div class="p-6 text-gray-900">
+                                            <div
+                                                v-if="$page.props.flash.message"
+                                                class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300"
+                                            >
+                                                {{ $page.props.flash.message }}
+                                            </div>
+                                            <table
+                                                id="tableData"
+                                                class="table table-striped"
+                                            >
+                                                <thead class="align-bottom">
+                                                    <tr>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            #
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inventory Number
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Asset Ho Number
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Scanner Brand
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Scanner Type
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Location
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Note
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inspection remark
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Device Status
+                                                        </th>
+
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Last Edit At
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        v-for="(
+                                                            scanners, index
+                                                        ) in scanner"
+                                                        :key="index"
+                                                    >
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{ index + 1 }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    scanners.scanner_code
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    scanners.asset_ho_number
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    scanners.scanner_brand
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    scanners.scanner_type
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    scanners.location
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{ scanners.note }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    scanners.inspection_remark
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                :class="{
+                                                                    'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        scanners.status ===
+                                                                        'READY_USED',
+                                                                    'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        scanners.status ===
+                                                                        'READY_STANDBY',
+                                                                    'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        scanners.status ===
+                                                                        'SCRAP',
+                                                                    'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        scanners.status ===
+                                                                        'BREAKDOWN',
+                                                                }"
+                                                            >
+                                                                {{
+                                                                    scanners.status
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    formattedDate(
+                                                                        scanners.updated_at
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    detailData(
+                                                                        scanners.id
+                                                                    )
+                                                                "
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Detail
+                                                            </NavLinkCustom>
+
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    editData(
+                                                                        scanners.id
+                                                                    )
+                                                                "
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Edit
+                                                            </NavLinkCustom>
+
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    deleteData(
+                                                                        scanners.id
+                                                                    )
+                                                                "
+                                                                v-if="props.role !== 'ict_technician'"
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Delete
+                                                            </NavLinkCustom>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <table
-                                            id="tableData"
-                                            class="table table-striped"
-                                        >
-                                            <thead class="align-bottom">
-                                                <tr>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        #
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Inventory Number
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Asset Ho Number
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Scanner Brand
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Scanner Type
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Location
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Note
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Inspection remark
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Device Status
-                                                    </th>
-
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Last Edit At
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Action
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr
-                                                    v-for="(
-                                                        scanners, index
-                                                    ) in scanner"
-                                                    :key="index"
-                                                >
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{ index + 1 }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                scanners.scanner_code
-                                                            }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                scanners.asset_ho_number
-                                                            }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                scanners.scanner_brand
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                scanners.scanner_type
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                scanners.location
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{ scanners.note }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                scanners.inspection_remark
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            :class="{
-                                                                'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    scanners.status ===
-                                                                    'READY_USED',
-                                                                'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    scanners.status ===
-                                                                    'READY_STANDBY',
-                                                                'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    scanners.status ===
-                                                                    'SCRAP',
-                                                                'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    scanners.status ===
-                                                                    'BREAKDOWN',
-                                                            }"
-                                                        >
-                                                            {{
-                                                                scanners.status
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <span
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                formattedDate(
-                                                                    scanners.updated_at
-                                                                )
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                detailData(
-                                                                    scanners.id
-                                                                )
-                                                            "
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Detail
-                                                        </NavLinkCustom>
-
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                editData(
-                                                                    scanners.id
-                                                                )
-                                                            "
-                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Edit
-                                                        </NavLinkCustom>
-
-                                                        <NavLinkCustom
-                                                            @click="
-                                                                deleteData(
-                                                                    scanners.id
-                                                                )
-                                                            "
-                                                            v-if="props.role !== 'ict_technician'"
-                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Delete
-                                                        </NavLinkCustom>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
-                                </div>
+                                </PerfectScrollbar>
                             </div>
                         </div>
                     </div>
@@ -473,3 +476,7 @@ const submitCsv = () => {
         </div>
     </AuthenticatedLayout>
 </template>
+<style>
+@import '/public/assets/css/perfect-scrollbar.css';
+
+</style>
