@@ -41,11 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod,ict_section_head'], function () {
         Route::get('/dashboard', function () {
 
-            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site',auth()->user()->site)->get();
-            $countOpen = Aduan::where('status', 'OPEN')->where('site',auth()->user()->site)->count();
-            $countClosed = Aduan::where('status', 'CLOSED')->where('site',auth()->user()->site)->count();
-            $countProgress = Aduan::where('status', 'PROGRESS')->where('site',auth()->user()->site)->count();
-            $countCancel = Aduan::where('status', 'CANCEL')->where('site',auth()->user()->site)->count();
+            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
+            $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
+            $countClosed = Aduan::where('status', 'CLOSED')->where('site', auth()->user()->site)->count();
+            $countProgress = Aduan::where('status', 'PROGRESS')->where('site', auth()->user()->site)->count();
+            $countCancel = Aduan::where('status', 'CANCEL')->where('site', auth()->user()->site)->count();
 
             // access point
             $countAPreadyused = InvAp::where('status', 'READY_USED')->count();
@@ -121,53 +121,53 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => 'checkRole:ict_group_leader'], function () {
         Route::get('/groupLeaderDashboard', function () {
-            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site',auth()->user()->site)->get();
-            $countOpen = Aduan::where('status', 'OPEN')->where('site',auth()->user()->site)->count();
-            $countClosed = Aduan::where('status', 'CLOSED')->where('site',auth()->user()->site)->count();
-            $countProgress = Aduan::where('status', 'PROGRESS')->where('site',auth()->user()->site)->count();
-            $countCancel = Aduan::where('status', 'CANCEL')->where('site',auth()->user()->site)->count();
+            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
+            $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
+            $countClosed = Aduan::where('status', 'CLOSED')->where('site', auth()->user()->site)->count();
+            $countProgress = Aduan::where('status', 'PROGRESS')->where('site', auth()->user()->site)->count();
+            $countCancel = Aduan::where('status', 'CANCEL')->where('site', auth()->user()->site)->count();
 
             // access point
-            $countAPreadyused = InvAp::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countAPstandby = InvAp::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countAPBreakdown = InvAp::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countAPScrap = InvAp::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countAPreadyused = InvAp::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countAPstandby = InvAp::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countAPBreakdown = InvAp::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countAPScrap = InvAp::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Switch
-            $countSwitchreadyused = InvSwitch::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countSwitchstandby = InvSwitch::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countSwitchBreakdown = InvSwitch::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countSwitchScrap = InvSwitch::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countSwitchreadyused = InvSwitch::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countSwitchstandby = InvSwitch::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countSwitchBreakdown = InvSwitch::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countSwitchScrap = InvSwitch::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Wirelless
-            $countWirellessreadyused = InvWirelless::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countWirellessstandby = InvWirelless::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countWirellessBreakdown = InvWirelless::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countWirellessScrap = InvWirelless::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countWirellessreadyused = InvWirelless::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countWirellessstandby = InvWirelless::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countWirellessBreakdown = InvWirelless::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countWirellessScrap = InvWirelless::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Printer
-            $countPrinterreadyused = InvPrinter::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countPrinterstandby = InvPrinter::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countPrinterBreakdown = InvPrinter::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countPrinterScrap = InvPrinter::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countPrinterreadyused = InvPrinter::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countPrinterstandby = InvPrinter::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countPrinterBreakdown = InvPrinter::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countPrinterScrap = InvPrinter::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // CCTV
-            $countCCTVreadyused = InvCctv::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countCCTVstandby = InvCctv::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countCCTVBreakdown = InvCctv::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countCCTVScrap = InvCctv::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countCCTVreadyused = InvCctv::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countCCTVstandby = InvCctv::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countCCTVBreakdown = InvCctv::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countCCTVScrap = InvCctv::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Komputer
-            $countKomputerreadyused = InvComputer::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countKomputerstandby = InvComputer::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countKomputerBreakdown = InvComputer::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countKomputerScrap = InvComputer::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countKomputerreadyused = InvComputer::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countKomputerstandby = InvComputer::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countKomputerBreakdown = InvComputer::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countKomputerScrap = InvComputer::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Laptop
-            $countLaptopreadyused = InvLaptop::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countLaptopstandby = InvLaptop::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countLaptopBreakdown = InvLaptop::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countLaptopScrap = InvLaptop::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countLaptopreadyused = InvLaptop::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countLaptopstandby = InvLaptop::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countLaptopBreakdown = InvLaptop::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countLaptopScrap = InvLaptop::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // AP,SW,BB,PRT,CCTV,KOMP,Laptop
 
@@ -218,53 +218,53 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => 'checkRole:ict_technician'], function () {
         Route::get('/technicianDashboard', function () {
-            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site',auth()->user()->site)->get();
-            $countOpen = Aduan::where('status', 'OPEN')->where('site',auth()->user()->site)->count();
-            $countClosed = Aduan::where('status', 'CLOSED')->where('site',auth()->user()->site)->count();
-            $countProgress = Aduan::where('status', 'PROGRESS')->where('site',auth()->user()->site)->count();
-            $countCancel = Aduan::where('status', 'CANCEL')->where('site',auth()->user()->site)->count();
+            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
+            $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
+            $countClosed = Aduan::where('status', 'CLOSED')->where('site', auth()->user()->site)->count();
+            $countProgress = Aduan::where('status', 'PROGRESS')->where('site', auth()->user()->site)->count();
+            $countCancel = Aduan::where('status', 'CANCEL')->where('site', auth()->user()->site)->count();
 
             // access point
-            $countAPreadyused = InvAp::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countAPstandby = InvAp::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countAPBreakdown = InvAp::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countAPScrap = InvAp::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countAPreadyused = InvAp::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countAPstandby = InvAp::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countAPBreakdown = InvAp::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countAPScrap = InvAp::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Switch
-            $countSwitchreadyused = InvSwitch::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countSwitchstandby = InvSwitch::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countSwitchBreakdown = InvSwitch::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countSwitchScrap = InvSwitch::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countSwitchreadyused = InvSwitch::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countSwitchstandby = InvSwitch::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countSwitchBreakdown = InvSwitch::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countSwitchScrap = InvSwitch::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Wirelless
-            $countWirellessreadyused = InvWirelless::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countWirellessstandby = InvWirelless::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countWirellessBreakdown = InvWirelless::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countWirellessScrap = InvWirelless::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countWirellessreadyused = InvWirelless::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countWirellessstandby = InvWirelless::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countWirellessBreakdown = InvWirelless::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countWirellessScrap = InvWirelless::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Printer
-            $countPrinterreadyused = InvPrinter::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countPrinterstandby = InvPrinter::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countPrinterBreakdown = InvPrinter::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countPrinterScrap = InvPrinter::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countPrinterreadyused = InvPrinter::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countPrinterstandby = InvPrinter::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countPrinterBreakdown = InvPrinter::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countPrinterScrap = InvPrinter::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // CCTV
-            $countCCTVreadyused = InvCctv::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countCCTVstandby = InvCctv::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countCCTVBreakdown = InvCctv::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countCCTVScrap = InvCctv::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countCCTVreadyused = InvCctv::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countCCTVstandby = InvCctv::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countCCTVBreakdown = InvCctv::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countCCTVScrap = InvCctv::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Komputer
-            $countKomputerreadyused = InvComputer::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countKomputerstandby = InvComputer::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countKomputerBreakdown = InvComputer::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countKomputerScrap = InvComputer::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countKomputerreadyused = InvComputer::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countKomputerstandby = InvComputer::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countKomputerBreakdown = InvComputer::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countKomputerScrap = InvComputer::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // Laptop
-            $countLaptopreadyused = InvLaptop::where('status', 'READY_USED')->where('site',auth()->user()->site)->count();
-            $countLaptopstandby = InvLaptop::where('status', 'READY_STANDBY')->where('site',auth()->user()->site)->count();
-            $countLaptopBreakdown = InvLaptop::where('status', 'BREAKDOWN')->where('site',auth()->user()->site)->count();
-            $countLaptopScrap = InvLaptop::where('status', 'SCRAP')->where('site',auth()->user()->site)->count();
+            $countLaptopreadyused = InvLaptop::where('status', 'READY_USED')->where('site', auth()->user()->site)->count();
+            $countLaptopstandby = InvLaptop::where('status', 'READY_STANDBY')->where('site', auth()->user()->site)->count();
+            $countLaptopBreakdown = InvLaptop::where('status', 'BREAKDOWN')->where('site', auth()->user()->site)->count();
+            $countLaptopScrap = InvLaptop::where('status', 'SCRAP')->where('site', auth()->user()->site)->count();
 
             // AP,SW,BB,PRT,CCTV,KOMP,Laptop
 
@@ -372,16 +372,6 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('itportal')->group(function () {
-            Route::get('/aduan', [AduanController::class, 'index'])->name('aduan.page');
-            Route::get('/aduan/create', [AduanController::class, 'create'])->name('aduan.create');
-            Route::post('/aduan/create', [AduanController::class, 'store'])->name('aduan.store');
-            Route::post('/aduan/updateProgress', [AduanController::class, 'update_aduan_progress'])->name('aduan.updateProgress');
-            Route::get('/aduan/{id}/edit', [AduanController::class, 'edit'])->name('aduan.edit');
-            Route::get('/aduan/{id}/progress', [AduanController::class, 'progress'])->name('aduan.progress');
-            Route::delete('/aduan/{id}/delete', [AduanController::class, 'destroy'])->name('aduan.delete');
-            Route::post('/aduan/update', [AduanController::class, 'update_aduan'])->name('aduan.update');
-            Route::get('/aduan/{id}/detail', [AduanController::class, 'detail'])->name('aduan.detail');
-
             Route::get('/pengguna', [UserAllController::class, 'index'])->name('pengguna.page');
             Route::get('/pengguna/create', [UserAllController::class, 'create'])->name('pengguna.create');
             Route::post('/pengguna/create', [UserAllController::class, 'store'])->name('pengguna.store');
@@ -417,6 +407,20 @@ Route::middleware('auth')->group(function () {
             Route::post('inspeksi-laptop/update', [InspeksiLaptopController::class, 'update'])->name('inspeksiLaptop.update');
             Route::get('/inspeksi-laptop/{id}/detail', [InspeksiLaptopController::class, 'detail'])->name('inspeksiLaptop.detail');
             Route::delete('inspeksi-laptop/{id}/delete', [InspeksiLaptopController::class, 'destroy'])->name('inspeksiLaptop.delete');
+        });
+    });
+    
+    Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod,ict_section_head,ict_group_leader,ict_technician,ict_group_leader,soc_ho'], function () {
+        Route::prefix('itportal')->group(function () {
+            Route::get('/aduan', [AduanController::class, 'index'])->name('aduan.page');
+            Route::get('/aduan/create', [AduanController::class, 'create'])->name('aduan.create');
+            Route::post('/aduan/create', [AduanController::class, 'store'])->name('aduan.store');
+            Route::post('/aduan/updateProgress', [AduanController::class, 'update_aduan_progress'])->name('aduan.updateProgress');
+            Route::get('/aduan/{id}/edit', [AduanController::class, 'edit'])->name('aduan.edit');
+            Route::get('/aduan/{id}/progress', [AduanController::class, 'progress'])->name('aduan.progress');
+            Route::delete('/aduan/{id}/delete', [AduanController::class, 'destroy'])->name('aduan.delete');
+            Route::post('/aduan/update', [AduanController::class, 'update_aduan'])->name('aduan.update');
+            Route::get('/aduan/{id}/detail', [AduanController::class, 'detail'])->name('aduan.detail');
         });
     });
 });

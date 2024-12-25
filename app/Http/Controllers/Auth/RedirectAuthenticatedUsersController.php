@@ -10,8 +10,11 @@ class RedirectAuthenticatedUsersController extends Controller
     public function home(Request $request)
     {
         if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB' || auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $session = $request->session()->flash('login', 'Anda Berhasil Login!');
-            return redirect('dashboard');
+            // return redirect()->route('aduan.page');
+                return redirect('dashboard');
+        } elseif (auth()->user()->role == 'soc_ho') {
+            // return dd(auth()->user());
+            return redirect()->route('aduan.page');
         } elseif (auth()->user()->role == 'ict_section') {
             return redirect('sectionDashboard');
         } elseif (auth()->user()->role == 'ict_group_leader') {
@@ -25,7 +28,6 @@ class RedirectAuthenticatedUsersController extends Controller
             }else{
                 return redirect('/login');
             }
-            
         } elseif (auth()->user()->role == 'ict_admin') {
             return redirect('adminDashboard');
         } elseif (auth()->user()->role == 'guest') {

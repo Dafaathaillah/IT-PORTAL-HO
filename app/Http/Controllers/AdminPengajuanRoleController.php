@@ -19,7 +19,7 @@ class AdminPengajuanRoleController extends Controller
     public function edit($id)
     {
         $data = pengajuanAksesUser::find($id);
-        
+        // dd($data);
         return Inertia::render('Guest/AksesRoleEdit', [
             'dataUsers' => $data
         ]);

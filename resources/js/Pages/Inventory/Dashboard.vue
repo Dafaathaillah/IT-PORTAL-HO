@@ -47,7 +47,7 @@ onMounted(() => {
     Highcharts.chart(chartContainer.value, {
         chart: {
             type: "bar",
-            backgroundColor: "#1e293b",
+            // backgroundColor: "#1e293b",
         },
         title: {
             text: "",
@@ -65,7 +65,7 @@ onMounted(() => {
             ],
             labels: {
                 style: {
-                    color: "#fff",
+                    // color: "#fff",
                 },
             },
         },

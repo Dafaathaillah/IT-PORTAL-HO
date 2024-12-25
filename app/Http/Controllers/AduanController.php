@@ -18,11 +18,21 @@ class AduanController extends Controller
 {
     public function index()
     {
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site',auth()->user()->site)->get();
-        $countOpen = Aduan::where('status', 'OPEN')->where('site',auth()->user()->site)->count();
-        $countClosed = Aduan::where('status', 'CLOSED')->where('site',auth()->user()->site)->count();
-        $countProgress = Aduan::where('status', 'PROGRESS')->where('site',auth()->user()->site)->count();
-        $countCancel = Aduan::where('status', 'CANCEL')->where('site',auth()->user()->site)->count();
+        $auth = auth()->user()->role;
+        if ($auth == 'soc_ho') {
+            # code...
+            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('category_name', 'SOC')->get();
+            $countOpen = Aduan::where('status', 'OPEN')->where('category_name', 'SOC')->count();
+            $countClosed = Aduan::where('status', 'CLOSED')->where('category_name', 'SOC')->count();
+            $countProgress = Aduan::where('status', 'PROGRESS')->where('category_name', 'SOC')->count();
+            $countCancel = Aduan::where('status', 'CANCEL')->where('category_name', 'SOC')->count();
+        }else{
+            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site',auth()->user()->site)->get();
+            $countOpen = Aduan::where('status', 'OPEN')->where('site',auth()->user()->site)->count();
+            $countClosed = Aduan::where('status', 'CLOSED')->where('site',auth()->user()->site)->count();
+            $countProgress = Aduan::where('status', 'PROGRESS')->where('site',auth()->user()->site)->count();
+            $countCancel = Aduan::where('status', 'CANCEL')->where('site',auth()->user()->site)->count();
+        }
         return Inertia::render(
             'Aduan/Aduan',
             [
