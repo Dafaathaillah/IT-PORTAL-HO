@@ -18,7 +18,7 @@ class AduanHoController extends Controller
 {
     public function index()
     {
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->get();
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('nrp', auth()->user()->nrp)->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->get();
         $countOpen = Aduan::where('status', 'OPEN')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->count();
         $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->count();
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'HO')->where('site_pelapor', auth()->user()->site)->count();

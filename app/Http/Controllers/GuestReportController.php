@@ -24,8 +24,7 @@ class GuestReportController extends Controller
         // return dd($search);
         $aduan = Aduan::query()
         ->when(!$request->search, function($query) {
-            return $query->whereDate('date_of_complaint', Carbon::today())
-                         ->where('nrp',auth()->user()->nrp)
+            return $query->where('nrp',auth()->user()->nrp)
                          ->orderBy('date_of_complaint', 'desc');
         })
         ->when($request->search, function($query, $search) {
