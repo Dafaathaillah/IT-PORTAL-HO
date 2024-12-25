@@ -117,8 +117,26 @@ const mainMenu = defineModel('mainMenu', {
 </template>
 <style>
 @import 'vue3-perfect-scrollbar/style.css';
-.ps {
-    max-height: 42em;
-    /* or height: 100px; */
+
+@media only screen and (max-width: 600px) {
+  /* For mobile: */
+  .ps {
+        max-height: 50em !important;
+        /* or height: 100px; */
+    }
+  
 }
+
+
+@media (max-width: 1800px) {
+  
+  /* CSS */
+  .ps {
+        max-height: 42em !important;
+        /* or height: 100px; */
+    }
+  
+}
+
+
 </style>

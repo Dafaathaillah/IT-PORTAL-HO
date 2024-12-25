@@ -481,6 +481,171 @@ const toggleLevel3ScannerHo = () => {
                                         </NavLink>
                                     </li>
                                 </ul>
+                                <div @click="toggleLevel2Ho" style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease">Inventory</span>
+                                    <i v-if="!level2OpenHo" class="ms-3 fas fa-angle-right"></i>
+                                    <i v-else class="ms-3 fas fa-angle-down"></i>
+                                </div>
+                                <ul v-if="level2OpenHo">
+                                    <NavLink :href="route('accessPoint.page')" :active="route().current('accessPoint.page')
+                                        ">
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"></i>
+                                        </div>
+                                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Access
+                                            Point</span>
+                                    </NavLink>
+                                    <NavLink :href="route('switch.page')" :active="route().current('switch.page')">
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease">Switch</span>
+                                    </NavLink>
+                                    <NavLink :href="route('wirelless.page')"
+                                        :active="route().current('wirelless.page')">
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease">Wirelless</span>
+                                    </NavLink>
+                                    <div @click="toggleLevel3LaptopHo" style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease">Laptop</span>
+                                        <i v-if="!level3OpenHo" class="ms-3 fas fa-angle-right"></i>
+                                        <i v-else class="ms-3 fas fa-angle-down"></i>
+                                    </div>
+                                    <li v-if="level3OpenHo">
+                                        <NavLink :href="route('laptop.page')" :active="route().current('laptop.page')">
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"></i>
+                                            </div>
+                                            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Laptop
+                                                Fixed</span>
+                                        </NavLink>
+                                    </li>
+
+                                    <div @click="toggleLevel3KomputerHo" style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                            <i class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease">Komputer</span>
+                                        <i v-if="!level3KomputerOpenHo" class="ms-3 fas fa-angle-right"></i>
+                                        <i v-else class="ms-3 fas fa-angle-down"></i>
+                                    </div>
+                                    <li v-if="level3KomputerOpenHo">
+                                        <NavLink :href="route('komputer.page')" :active="route().current('komputer.page')
+                                            ">
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease">Komputer
+                                                Fixed</span>
+                                        </NavLink>
+                                    </li>
+
+                                    <div @click="toggleLevel3PrinterHo" style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease">Printer</span>
+                                        <i v-if="!level3PrinterOpenHo" class="ms-3 fas fa-angle-right"></i>
+                                        <i v-else class="ms-3 fas fa-angle-down"></i>
+                                    </div>
+                                    <li v-if="level3PrinterOpenHo">
+                                        <NavLink :href="route('printer.page')" :active="route().current('printer.page')
+                                            ">
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"></i>
+                                            </div>
+                                            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Printer
+                                                Fixed</span>
+                                        </NavLink>
+                                    </li>
+
+                                    <div @click="toggleLevel3ScannerHo" style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease">Scanner</span>
+                                        <i v-if="!level3ScannerOpenHo" class="ms-3 fas fa-angle-right"></i>
+                                        <i v-else class="ms-3 fas fa-angle-down"></i>
+                                    </div>
+                                    <li v-if="level3ScannerOpenHo">
+                                        <NavLink :href="route('scanner.page')"
+                                            :active="route().current('scanner.page')">
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"></i>
+                                            </div>
+                                            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Data
+                                                Scanner</span>
+                                        </NavLink>
+                                    </li>
+
+
+                                    <div @click="toggleLevel3CctvHo" style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"></i>
+                                        </div>
+                                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Cctv</span>
+                                        <i v-if="!level3CctvOpenHo" class="ms-3 fas fa-angle-right"></i>
+                                        <i v-else class="ms-3 fas fa-angle-down"></i>
+                                    </div>
+                                    <li v-if="level3CctvOpenHo">
+                                        <NavLink :href="route('cctv.page')" :active="route().current('cctv.page')">
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"></i>
+                                            </div>
+                                            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Data
+                                                Cctv</span>
+                                        </NavLink>
+                                    </li>
+                                </ul>
 
                                 <div @click="toggleLevel2InspeksiHo" style="cursor: pointer"
                                     class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors">
@@ -585,11 +750,3 @@ const toggleLevel3ScannerHo = () => {
 
     <!-- end sidenav -->
 </template>
-<style>
-@import 'vue3-perfect-scrollbar/style.css';
-
-.ps {
-    max-height: 38em;
-    /* or height: 100px; */
-}
-</style>
