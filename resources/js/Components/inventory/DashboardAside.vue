@@ -216,8 +216,9 @@ const toggleLevel3ScannerHo = () => {
 <template>
     <!-- sidenav  -->
     <aside
-        class="fixed mb-4 inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-8 antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-8 antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
         aria-expanded="false" :class="classes">
+        <PerfectScrollbar>
         <div class="h-19">
             <i class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
                 @click="handleSidebarClose"></i>
@@ -230,9 +231,10 @@ const toggleLevel3ScannerHo = () => {
 
         <hr
             class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
-        <PerfectScrollbar>
-            <div class="items-center block w-auto max-h-screen grow basis-full">
-                <ul class="flex flex-col pl-0 mb-0">
+            
+        <div class="items-center block w-auto max-h-screen grow basis-full">
+            
+                <ul class="flex flex-col pl-0 mb-0 pb-10">
                     <li v-if="
                         $page.props.auth.user.role === 'ict_developer' ||
                         $page.props.auth.user.role === 'ict_bod' ||
@@ -292,8 +294,7 @@ const toggleLevel3ScannerHo = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                                 <i class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"></i>
                             </div>
-                            <span
-                                v-if="$page.props.auth.user.site == 'HO'"
+                            <span v-if="$page.props.auth.user.site == 'HO'"
                                 class="ml-1 duration-300 opacity-100 pointer-events-none ease">Head Office PPA</span>
                             <span v-if="$page.props.auth.user.site == 'BA'"
                                 class="ml-1 duration-300 opacity-100 pointer-events-none ease">Bukit Asam PPA</span>
@@ -577,8 +578,9 @@ const toggleLevel3ScannerHo = () => {
                         </ul>
                     </li>
                 </ul>
-            </div>
-        </PerfectScrollbar>
+            
+        </div>
+    </PerfectScrollbar>
     </aside>
 
     <!-- end sidenav -->
@@ -590,6 +592,4 @@ const toggleLevel3ScannerHo = () => {
     max-height: 38em;
     /* or height: 100px; */
 }
-
-
 </style>
