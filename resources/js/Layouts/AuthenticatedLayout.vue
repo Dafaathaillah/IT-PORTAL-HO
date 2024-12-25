@@ -116,7 +116,7 @@ const mainMenu = defineModel('mainMenu', {
     <DashboardConfig ref="configurator" v-model:isConfiguratorActive="isConfiguratorActive" />
 </template>
 <style>
-@import 'vue3-perfect-scrollbar/style.css';
+@import '/public/assets/css/perfect-scrollbar.css';
 
 @media only screen and (max-width: 600px) {
   /* For mobile: */

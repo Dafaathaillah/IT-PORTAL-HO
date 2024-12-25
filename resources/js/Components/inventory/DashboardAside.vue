@@ -918,3 +918,7 @@ const toggleLevel3ScannerHo = () => {
 
     <!-- end sidenav -->
 </template>
+<style>
+@import '/public/assets/css/perfect-scrollbar.css';
+
+</style>
