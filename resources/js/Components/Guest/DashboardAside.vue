@@ -198,7 +198,7 @@ const toggleLevel3PrinterHo = () => {
                         </div>
                         <span
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                            >Aduan</span
+                            >Complaint</span
                         >
                     </NavLink>
                     <ul v-if="level1OpenHo">

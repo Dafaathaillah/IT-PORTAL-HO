@@ -54,7 +54,7 @@ const showingNavigationDropdown = ref(false);
                         class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full"
                     >
                         <li
-                            class="flex items-center mobile-sm-logout-form:hidden"
+                            class="flex items-center"
                         >
                             <ResponsiveNavLink
                                 :href="route('guestAduan.page')"
@@ -62,7 +62,7 @@ const showingNavigationDropdown = ref(false);
                                 as="button"
                                 class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand"
                             >
-                                <i class="fas fa-home mr-1"></i>
+                                <i class="fas fa-home fa-beat mr-2" style="--fa-animation-duration: 2s;"></i>
                                 <span class="sm:inline">Home</span>
                             </ResponsiveNavLink>
                         </li>
