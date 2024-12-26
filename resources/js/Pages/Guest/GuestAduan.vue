@@ -149,10 +149,10 @@ function formatData(text) {
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Aduan Pages
+                        Complaint Pages
                     </li>
                 </ol>
-                <h6 class="mb-0 font-bold text-white capitalize">Aduan Data</h6>
+                <h6 class="mb-0 font-bold text-white capitalize">All Complaint</h6>
             </nav>
         </template>
 
@@ -177,7 +177,7 @@ function formatData(text) {
                                         type="text"
                                         v-model="formSearch.search"
                                         class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 dark:bg-slate-850 dark:text-white bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                        placeholder="Cari Ticket Anda..."
+                                        placeholder="Find Ticket Code..."
                                     />
                                 </div>
                             </div>

@@ -70,7 +70,7 @@ const save = () => {
             // Show SweetAlert2 success notification
             Swal.fire({
                 title: "Complaint has been submited!",
-                text: "Terima kasih telah menghubungi ict centre, aduan anda akan segera ditangani oleh tim.",
+                text: "Thank you for contacting the ICT centre, your complaint will be handled immediately by the team.",
                 icon: "success",
                 showCancelButton: false,
                 confirmButtonColor: "#3085d6",
@@ -113,7 +113,7 @@ const showAlertTrue = () => {
 </script>
 
 <template>
-    <Head title="Tambah Aduan" />
+    <Head title="Complaint Pages" />
 
     <GuestLayoutForm>
         <template #header>
@@ -130,11 +130,11 @@ const showAlertTrue = () => {
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Aduan
+                        Complaint
                     </Link>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Aduan Create Pages
+                    Complaint Create Pages
                 </h6>
             </nav>
         </template>
@@ -150,10 +150,23 @@ const showAlertTrue = () => {
                         <div
                             class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0"
                         >
-                            <div class="flex items-center">
+                            <div class="flex items-center justify-between">
                                 <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Create Aduan
+                                    Form Create Complaint
                                 </p>
+                                <div class="order-last">
+                                    <Link
+                                        :href="route('guestAduan.page')"
+                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200 group-hover:from-orange-200 group-hover:via-orange-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-orange-100 dark:focus:ring-orange-400"
+                                    >
+                                        <span
+                                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+                                        >
+                                            Complaint Status
+                                        </span>
+                                    </Link>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="flex-auto p-6">
@@ -252,7 +265,7 @@ const showAlertTrue = () => {
                                                 for="nvr-id"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                             >
-                                                Category Aduan</label
+                                                Category Complaint</label
                                             >
                                             <select
                                                 @change="handleCategoryChange"

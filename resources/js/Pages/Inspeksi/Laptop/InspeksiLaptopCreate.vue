@@ -231,7 +231,7 @@ const options = props.pengguna;
                                     </div>
                                 </div>
                                 <div class="w-full max-w-full px-3 mt-6 md:w-12/12 md:flex-none">
-                                    <div class="px-4 pb-0 grid grid-cols-2 gap-12">
+                                    <div class="px-4 pb-0 grid grid-cols-1 gap-12 md:grid-cols-2">
 
                                         <div class="grid grid-cols-2">
                                             <div>

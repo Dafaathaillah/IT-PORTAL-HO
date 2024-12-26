@@ -53,7 +53,7 @@ function formattedDate(date) {
                                     </NavLinkCustom>
                                 </div>
                                 <div
-                                    class="p-6 px-4 pb-0 grid grid-cols-2 gap-4"
+                                    class="p-6 px-4 pb-0 grid grid-cols-1 gap-4 md:grid-cols-2"
                                 >
                                     <div class="grid grid-cols-2">
                                         <div>

@@ -52,76 +52,115 @@ const mount = onMounted(() => {
                                     Move to home page
                                 </NavLinkCustom>
                             </div>
-                            <div class="flex-auto p-12 pt-6">
-                                <div class="flex flex-row mb-3">
-                                    <div class="basis-1/2">
-                                        Ticket Code
-                                        <span class="ml-12">
-                                            : {{ props.aduan.complaint_code }}
-                                        </span>
-                                    </div>
-                                    <div class="basis-1/2">
-                                        NRP
-                                        <span class="ml-28">
-                                            :
-                                            {{ props.aduan.nrp }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row mb-3">
-                                    <div class="basis-1/2">
-                                        Category Aduan
-                                        <span class="ml-4">
-                                            : {{ props.aduan.category_name }}
-                                        </span>
-                                    </div>
-                                    <div class="basis-1/2">
-                                        Complaint Name
-                                        <span class="ml-4.5">
-                                            : {{ props.aduan.complaint_name }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row mb-3">
-                                    <div class="basis-1/2">
-                                        <div class="basis-1/2">
-                                            Complaint Date
-                                            <span class="ml-4.5">
-                                                :
-                                                {{
-                                                    props.aduan
-                                                        .date_of_complaint
-                                                }}
-                                            </span>
+                            <div class="flex-auto p-12 pt-6 gap-4">
+                                <div
+                                    class="pb-4 grid grid-cols-1 md:grid-cols-2"
+                                >
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                Ticket Code
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                : {{ props.aduan.complaint_code }}
+                                                
+                                            </p>
                                         </div>
                                     </div>
-                                    <div class="basis-1/2">
-                                        WhatsApp Number
-                                        <span>
-                                            : {{ props.aduan.phone_number }}
-                                        </span>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                NRP
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                : {{ props.aduan.nrp }}
+                                                
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="flex flex-row mb-3">
-                                    <div class="basis-1/2">
-                                        Crew
-                                        <span class="ml-24">
-                                            :
-                                            {{ props.aduan.crew }}
-                                        </span>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">Category Aduan</p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                : {{ props.aduan.category_name }}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="basis-1/2">
-                                        Complaint Image
-                                        <span class="ml-4.5">
-                                            :
-                                            <img
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                
+                                                Complaint Name
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                : {{ props.aduan.complaint_name }}
+                                                
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">Complaint Date</p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                : {{
+                                                props.aduan
+                                                    .date_of_complaint
+                                            }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                WhatsApp Number
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>: {{ props.aduan.phone_number }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">Crew </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                : {{ props.aduan.crew }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                Complaint Image
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p 
+                                            v-if="props.aduan.complaint_image != null"
+                                            >
+                                                : <img
                                                 :src="
                                                     props.aduan.complaint_image
                                                 "
                                                 alt="documentation image"
                                                 class="ml-40 w-50 h-30 shadow-2xl rounded-xl"
                                             />
-                                        </span>
+                                                
+                                            </p>
+                                            <p v-if="props.aduan.complaint_image == null">: - </p>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr
@@ -140,9 +179,7 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Status</p>
@@ -151,9 +188,7 @@ const mount = onMounted(() => {
                                         <p>: {{ props.aduan.status }}</p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Response Time</p>
@@ -162,9 +197,7 @@ const mount = onMounted(() => {
                                         <p>: {{ props.aduan.response_time }}</p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Start Response</p>
@@ -175,9 +208,7 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Start Progress</p>
@@ -188,9 +219,7 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">End Progress</p>
@@ -199,9 +228,7 @@ const mount = onMounted(() => {
                                         <p>: {{ props.aduan.end_progress }}</p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">
@@ -214,18 +241,14 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                                 <div class="grid grid-cols-2">
                                     <div>Action Repair</div>
                                     <div>
                                         <p>: {{ props.aduan.action_repair }}</p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Repair Note</p>
@@ -234,9 +257,7 @@ const mount = onMounted(() => {
                                         <p>: {{ props.aduan.repair_note }}</p>
                                     </div>
                                 </div>
-                                <hr
-                                    class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                />
+                                
                             </div>
                         </div>
                     </div>
