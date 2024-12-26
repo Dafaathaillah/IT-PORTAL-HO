@@ -111,8 +111,8 @@ const user = computed(() => page.props.auth.user);
                             as="button"
                             class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand"
                         >
-                            <i class="fa fa-user sm:mr-1"></i>
-                            <span class="hidden sm:inline">LogOut</span>
+                            <i class="fa fa-user sm:mr-1 max-mobile-sm-logout-form:hidden"></i>
+                            <span class="sm:inline">LogOut</span>
                         </ResponsiveNavLink>
                     </li>
                 </ul>

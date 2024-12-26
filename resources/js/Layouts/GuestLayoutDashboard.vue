@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
@@ -15,12 +15,27 @@ const showingNavigationDropdown = ref(false);
 const logout = () => {
     localStorage.removeItem("hasLoaded");
 };
+
+//Mobile Sidebar
+const isActive = ref(false);
+const handleMobileSidebar = () => {
+    // alert(isActive.value);
+    isActive.value = !isActive.value;
+};
+
+const collapseIconClasses = computed(() =>
+    isActive.value ? "translate-x-[5px]" : ""
+);
+
+onMounted(() => {
+    console.log(isActive.value);
+});
 </script>
 
 <template>
     <div class="absolute w-full bg-red-700 dark:hidden min-h-75"></div>
 
-    <DashboardAside />
+    <DashboardAside v-model:isMobileSidebar="isActive" />
 
     <!-- Page Content -->
     <main
@@ -61,6 +76,26 @@ const logout = () => {
                         <!-- <li class="flex items-center">
                 <a class="inline-block px-8 py-2 mb-0 mr-4 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer leading-pro hover:-translate-y-px active:shadow-xs hover:border-blue-500 active:bg-blue-500 active:hover:text-blue-500 hover:text-blue-500 tracking-tight-rem hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
               </li> -->
+                        <li class="flex items-center pl-4 xl:hidden">
+                            <a
+                                class="block p-0 text-sm text-white transition-all ease-nav-brand"
+                                @click="handleMobileSidebar"
+                            >
+                                <div class="w-4.5 overflow-hidden">
+                                    <i
+                                        class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"
+                                        :class="collapseIconClasses"
+                                    ></i>
+                                    <i
+                                        class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"
+                                    ></i>
+                                    <i
+                                        class="ease relative block h-0.5 rounded-sm bg-white transition-all"
+                                        :class="collapseIconClasses"
+                                    ></i>
+                                </div>
+                            </a>
+                        </li>
                         <li class="flex items-center">
                             <!-- <a :href="route('logout')" method="post" as="button" class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
                             <i class="fa fa-user sm:mr-1"></i>
@@ -74,8 +109,10 @@ const logout = () => {
                                 as="button"
                                 class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand"
                             >
-                                <i class="fa fa-user sm:mr-1"></i>
-                                <span class="hidden sm:inline">LogOut</span>
+                                <i
+                                    class="fa fa-user sm:mr-1 max-mobile-sm-logout-form:hidden"
+                                ></i>
+                                <span class="sm:inline">LogOut</span>
                             </ResponsiveNavLink>
                         </li>
                     </ul>

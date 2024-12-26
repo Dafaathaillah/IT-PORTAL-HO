@@ -14,6 +14,8 @@ export default {
 
     theme: {
         screens: {
+            'max-mobile-sm-logout-form': { max: '1024px' },
+            'mobile-sm-logout-form': { min: '1024px' },
             'mobile-sm': { max: '380px' },
             sm: '576px',
             'sm-max': { max: '576px' },
