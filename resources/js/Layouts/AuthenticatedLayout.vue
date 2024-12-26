@@ -118,16 +118,43 @@ const mainMenu = defineModel('mainMenu', {
 <style>
 @import '/public/assets/css/perfect-scrollbar.css';
 
-@media only screen and (min-width: 300px) {
+@media only screen and (min-width: 150px) {
   /* For mobile: */
   .ps {
-        max-height: 55em !important;
+        max-height: 38em !important;
+        /* or height: 100px; */
+    }
+  
+}
+
+@media only screen and (min-width: 415px) {
+  /* For mobile: */
+  .ps {
+        max-height: 48em !important;
         /* or height: 100px; */
     }
   
 }
 
 @media only screen and (min-width: 600px) {
+  /* For laptop: */
+  .ps {
+        max-height: 42em !important;
+        /* or height: 100px; */
+    }
+  
+}
+
+@media only screen and (min-width: 700px) {
+  /* For laptop: */
+  .ps {
+        max-height: 95% !important;
+        /* or height: 100px; */
+    }
+  
+}
+
+@media only screen and (min-width: 1400px) {
   /* For laptop: */
   .ps {
         max-height: 42em !important;
