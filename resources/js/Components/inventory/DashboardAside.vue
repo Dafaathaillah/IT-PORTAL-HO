@@ -1471,8 +1471,8 @@ const toggleLevel3ScannerBib = () => {
                                         >
                                     </NavLink>
                                     <NavLink
-                                        :href="route('switch.page')"
-                                        :active="route().current('switch.page')"
+                                        :href="route('switchBa.page')"
+                                        :active="route().current('switchBa.page')"
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -1487,9 +1487,9 @@ const toggleLevel3ScannerBib = () => {
                                         >
                                     </NavLink>
                                     <NavLink
-                                        :href="route('wirelless.page')"
+                                        :href="route('wirellessBa.page')"
                                         :active="
-                                            route().current('wirelless.page')
+                                            route().current('wirellessBa.page')
                                         "
                                     >
                                         <div
