@@ -25,7 +25,7 @@ class InvLaptopController extends Controller
             $dataInventory = InvLaptop::with('pengguna')->get();
             $site = '';
 
-            $department = Department::pluck('department_name')->map(function ($name) {
+            $department = Department::orderBy('department_name')->pluck('department_name')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
 
@@ -34,7 +34,7 @@ class InvLaptopController extends Controller
 
             $site = '';
 
-            $department = Department::where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
+            $department = Department::orderBy('department_name')->where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
         } else {
@@ -42,7 +42,7 @@ class InvLaptopController extends Controller
 
             $site = auth()->user()->site;
 
-            $department = Department::where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
         }

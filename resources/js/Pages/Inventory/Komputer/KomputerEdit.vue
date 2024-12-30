@@ -245,25 +245,7 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="number-asset-ho"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Asset Ho Number</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.number_asset_ho"
-                                                name="number_asset_ho"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="14414xxx"
-                                            />
-                                        </div>
-                                    </div>
+                                    
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -280,14 +262,11 @@ const update = () => {
                                                 name="assets_category"
                                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="BARU">
-                                                    BARU
+                                                <option selected value="standart">
+                                                    standart
                                                 </option>
-                                                <option value="LAMA">
-                                                    LAMA
-                                                </option>
-                                                <option value="MUTASI">
-                                                    MUTASI (dari site lain)
+                                                <option value="non_standart">
+                                                    non_standart
                                                 </option>
                                             </select>
                                         </div>
@@ -312,6 +291,28 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="number-asset-ho"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Asset Ho Number</label
+                                            >
+                                            <input
+                                                required
+                                                :disabled="isDisabled"
+                                                type="text"
+                                                v-model="form.number_asset_ho"
+                                                name="number_asset_ho"
+                                                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="10700xxx"
+                                            />
+                                        </div>
+                                    </div>
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -629,34 +630,7 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="user_id"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >
-                                                Select User</label
-                                            >
-                                            <VueMultiselect
-                                                v-model="selectedValues"
-                                                :options="options"
-                                                :multiple="false"
-                                                :close-on-select="true"
-                                                placeholder="Pilih Pengguna"
-                                                track-by="name"
-                                                label="name"
-                                            />
-                                        </div>
-                                        <span
-                                            v-if="
-                                                !selectedOption && formSubmitted
-                                            "
-                                            class="text-red-500"
-                                            >Pengguna Tidak boleh kosong!</span
-                                        >
-                                    </div>
+                                    
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -676,6 +650,36 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="user_id"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                Select User</label
+                                            >
+                                            <VueMultiselect
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                :multiple="false"
+                                                :close-on-select="true"
+                                                placeholder="pick name of user"
+                                                track-by="name"
+                                                label="name"
+                                            />
+                                        </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption && formSubmitted
+                                            "
+                                            class="text-red-500"
+                                            >Pengguna Tidak boleh kosong!</span
+                                        >
+                                    </div>
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
