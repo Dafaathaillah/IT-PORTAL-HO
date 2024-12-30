@@ -1,8 +1,11 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect, nextTick  } from "vue";
 import Highcharts from "highcharts";
+import brandDark from "highcharts/themes/brand-dark";
+import brandLight from "highcharts/themes/brand-light";
+import { useDark } from '@vueuse/core';
 
 const pages = ref("Pages");
 const subMenu = ref("Dashboard Pages");
@@ -43,80 +46,183 @@ const props = defineProps({
 
 const chartContainer = ref(null);
 
-onMounted(() => {
-    Highcharts.chart(chartContainer.value, {
-        chart: {
-            type: "bar",
-            // backgroundColor: "#1e293b",
-        },
-        title: {
-            text: "",
-            align: "left",
-        },
-        xAxis: {
-            categories: [
-                "Access Point",
-                "Switch",
-                "Wirelless",
-                "Printer",
-                "CCTV",
-                "Komputer",
-                "Laptop",
-            ],
-            labels: {
-                style: {
-                    // color: "#fff",
-                },
-            },
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: "",
-            },
-        },
-        legend: {
-            reversed: true,
-        },
-        plotOptions: {
-            series: {
-                stacking: "normal",
-                dataLabels: {
-                    enabled: true,
-                },
-            },
-        },
-        series: [
-            {
-                name: "Breakdown",
-                color: "#F64865",
-                data: props.breakdown_array,
-            },
-            {
-                name: "Scrap",
-                color: "#FA7B3A",
-                data: props.scrap_array,
-            },
-            {
-                name: "Ready Stanby",
-                color: "#FBCB33",
-                data: props.readyStandby_array,
-            },
-            {
-                name: "Ready Used",
-                color: "#2FCFA4",
-                data: props.readyUsed_array,
-            },
-        ],
-        credits: {
-            enabled: false,
-        },
-    });
+const theme = ref(null);
+
+const isDark = useDark();
+
+watchEffect(() => {
+  
+    if (isDark.value === true) {
+        // dark
+        theme.value = 'dark';
+        
+        nextTick(() => {
+            initChartDark();
+        });
+        
+    }else{
+        // light
+        theme.value = 'light';
+        nextTick(() => {
+            initChartLight();
+        });
+    }
+    
 });
 
-onMounted(() => {
-    console.log(props.loginSession);
-});
+
+const initChartDark = () => {
+    Highcharts.chart(chartContainer.value, {
+            chart: {
+                type: "bar",
+                backgroundColor: "#111C44"
+            },
+            title: {
+                text: "",
+                align: "left",
+            },
+            xAxis: {
+                categories: [
+                    "Access Point",
+                    "Switch",
+                    "Wirelless",
+                    "Printer",
+                    "CCTV",
+                    "Komputer",
+                    "Laptop",
+                ],
+                labels: {
+                    style: {
+                        color: "#fff",
+                    },
+                },
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: "",
+                },
+                labels: {
+                    style: {
+                        color: "#fff",
+                    },
+                },
+            },
+            legend: {
+                reversed: true,
+                itemStyle: {
+                "color": "#fff",
+                "hover": "#fff",
+                "cursor": "pointer",
+                
+                }
+            },
+            plotOptions: {
+                series: {
+                    stacking: "normal",
+                    dataLabels: {
+                        enabled: true,
+                    },
+                },
+            },
+            series: [
+                {
+                    name: "Breakdown",
+                    color: "#F64865",
+                    data: props.breakdown_array,
+                },
+                {
+                    name: "Scrap",
+                    color: "#FA7B3A",
+                    data: props.scrap_array,
+                },
+                {
+                    name: "Ready Stanby",
+                    color: "#FBCB33",
+                    data: props.readyStandby_array,
+                },
+                {
+                    name: "Ready Used",
+                    color: "#2FCFA4",
+                    data: props.readyUsed_array,
+                },
+            ],
+            credits: {
+                enabled: false,
+            },
+        });
+    
+}
+const initChartLight = () => {
+    Highcharts.chart(chartContainer.value, {
+            chart: {
+                type: "bar",
+            },
+            title: {
+                text: "",
+                align: "left",
+            },
+            xAxis: {
+                categories: [
+                    "Access Point",
+                    "Switch",
+                    "Wirelless",
+                    "Printer",
+                    "CCTV",
+                    "Komputer",
+                    "Laptop",
+                ],
+                labels: {
+                    style: {
+                        // color: "#fff",
+                    },
+                },
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: "",
+                },
+            },
+            legend: {
+                reversed: true,
+            },
+            plotOptions: {
+                series: {
+                    stacking: "normal",
+                    dataLabels: {
+                        enabled: true,
+                    },
+                },
+            },
+            series: [
+                {
+                    name: "Breakdown",
+                    color: "#F64865",
+                    data: props.breakdown_array,
+                },
+                {
+                    name: "Scrap",
+                    color: "#FA7B3A",
+                    data: props.scrap_array,
+                },
+                {
+                    name: "Ready Stanby",
+                    color: "#FBCB33",
+                    data: props.readyStandby_array,
+                },
+                {
+                    name: "Ready Used",
+                    color: "#2FCFA4",
+                    data: props.readyUsed_array,
+                },
+            ],
+            credits: {
+                enabled: false,
+            },
+        });
+    
+}
 </script>
 
 <template>
@@ -143,6 +249,7 @@ onMounted(() => {
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
+                                        
                                     >
                                         ALL ADUAN OPEN
                                     </p>
@@ -276,20 +383,11 @@ onMounted(() => {
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
                                     >
-                                        ALL ADUN CANCEL
+                                        ALL ADUAN CANCEL
                                     </p>
                                     <h5 class="mb-2 font-bold dark:text-white">
                                         {{ props.cancel }}
                                     </h5>
-                                    <!-- <p
-                                            class="mb-0 dark:text-white dark:opacity-60"
-                                        >
-                                            <span
-                                                class="text-sm font-bold leading-normal text-emerald-500"
-                                                >+5%</span
-                                            >
-                                            than last month
-                                        </p> -->
                                 </div>
                             </div>
                             <div class="px-3 text-right basis-1/3">
@@ -323,11 +421,12 @@ onMounted(() => {
                             </h6>
                         </div>
                     </div>
-                    <div class="overflow-x-auto dark:bg-slate-850">
+                    <div class="overflow-x-auto">
                         <div
                             ref="chartContainer"
                             style="width: 100%; height: 400px"
                         ></div>
+                        
                     </div>
                 </div>
             </div>

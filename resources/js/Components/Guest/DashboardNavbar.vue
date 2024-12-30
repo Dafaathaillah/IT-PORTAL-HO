@@ -89,7 +89,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
                             as="button"
                             class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand"
                         >
-                            <span class="hidden sm:inline">LogOut</span>
+                            <span class="hidden sm:inline">Log Out</span>
                         </ResponsiveNavLink>
                     </li>
                     <li class="flex items-center pl-4 xl:hidden">

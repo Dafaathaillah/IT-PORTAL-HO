@@ -95,6 +95,7 @@ const mainMenu = defineModel('mainMenu', {
 
 <template>
     <div class="absolute w-full bg-red-700 dark:hidden min-h-75"></div>
+    <div class="hidden absolute w-full bg-slate-900 dark:block min-h-75"></div>
 
     <DashboardAside v-model:isMobileSidebar="isActive" />
 
@@ -114,6 +115,7 @@ const mainMenu = defineModel('mainMenu', {
         </PerfectScrollbar>
     </main>
     <DashboardConfig ref="configurator" v-model:isConfiguratorActive="isConfiguratorActive" />
+    
 </template>
 <style>
 @import '/public/assets/css/perfect-scrollbar.css';
