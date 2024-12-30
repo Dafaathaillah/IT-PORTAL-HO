@@ -83,6 +83,7 @@ onMounted(() => {
                         id="nrp"
                         type="nrp"
                         class="mt-1 block w-full"
+                        style="color: black !important;"
                         v-model="form.nrp"
                         required
                         autofocus
@@ -97,6 +98,7 @@ onMounted(() => {
                         id="password"
                         type="password"
                         class="mt-1 block w-full"
+                        style="color: black !important;"
                         v-model="form.password"
                         required
                         autocomplete="current-password"

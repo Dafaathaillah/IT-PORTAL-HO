@@ -14,7 +14,7 @@ const yearxyz = new Date().getFullYear();
                     class="absolute top-0 left-0 right-0 z-30 flex flex-wrap items-center px-4 py-2 m-6 mb-0 shadow-sm rounded-xl bg-white/80 backdrop-blur-2xl backdrop-saturate-200 lg:flex-nowrap lg:justify-start"
                 >
                     <div
-                        class="flex items-center justify-between w-full p-0 px-6 mx-auto flex-wrap-inherit"
+                        class="flex items-center justify-between w-full p-0 px-0 md:px-6 lg:px-6 mx-auto flex-wrap-inherit"
                     >
                         <img
                             src="/images/logoppa.png"
