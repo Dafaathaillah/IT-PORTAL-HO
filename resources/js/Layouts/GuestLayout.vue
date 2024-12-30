@@ -19,68 +19,29 @@ const yearxyz = new Date().getFullYear();
                         <img
                             src="/images/logoppa.png"
                             alt="message placeholder image"
-                            width="50"
+                            class="size-8 md:size-16 lg:size-16"
                         />
-                        <button
-                            navbar-trigger
-                            class="px-3 py-1 ml-2 leading-none transition-all ease-in-out bg-transparent border border-transparent border-solid rounded-lg shadow-none cursor-pointer text-lg lg:hidden"
-                            type="button"
-                            aria-controls="navigation"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
+                        <span
+                            class="py-1.75 mr-4 ml-4 whitespace-nowrap font-bold text-slate-700 lg:ml-0 text-base lg:text-2xl"
+                            >PORTAL ICT CENTER</span
                         >
-                            <span
-                                class="inline-block mt-2 align-middle bg-center bg-no-repeat bg-cover w-6 h-6 bg-none"
-                            >
-                                <span
-                                    bar1
-                                    class="w-5.5 rounded-xs relative my-0 mx-auto block h-px bg-gray-600 transition-all duration-300"
-                                ></span>
-                                <span
-                                    bar2
-                                    class="w-5.5 rounded-xs mt-1.75 relative my-0 mx-auto block h-px bg-gray-600 transition-all duration-300"
-                                ></span>
-                                <span
-                                    bar3
-                                    class="w-5.5 rounded-xs mt-1.75 relative my-0 mx-auto block h-px bg-gray-600 transition-all duration-300"
-                                ></span>
-                            </span>
-                        </button>
-                        <div
-                            navbar-menu
-                            class="items-center flex-grow transition-all duration-500 lg-max:overflow-hidden ease lg-max:max-h-0 basis-full lg:flex lg:basis-auto"
-                        >
-                            <ul
-                                class="flex flex-col pl-0 mx-auto mb-0 list-none lg:flex-row xl:ml-auto"
-                            >
-                                <li>
-                                    <span
-                                        class="py-1.75 mr-4 ml-4 whitespace-nowrap font-bold text-slate-700 lg:ml-0 text-2xl"
-                                        >ICT PPA CENTRE</span
-                                    >
-                                </li>
-                            </ul>
-
-                            <ul
-                                class="hidden pl-0 mb-0 list-none lg:block lg:flex-row"
-                            >
-                                <li>
-                                    <img
-                                        src="/images/sinergyppa.png"
-                                        alt="message placeholder image"
-                                        width="80"
-                                    />
-                                </li>
-                            </ul>
-                        </div>
+                        <img
+                            src="/images/POLICE_LOGO2.png"
+                            alt="message placeholder image"
+                            class="size-12 md:size-24 lg:size-24"
+                        />
+                        
                     </div>
                 </nav>
             </div>
         </div>
     </div>
     <main class="mt-0 transition-all duration-200 ease-in-out">
-        <div
+        <!-- <div
             class="pb-0 pt-0 h-full min-h-screen items-start p-0 relative overflow-hidden flex bg-cover bg-center bg-[url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-basic.jpg')]"
+        > -->
+        <div
+            class="pb-4 pt-0 h-full min-h-screen items-start p-0 relative overflow-hidden flex bg-cover bg-center bg-[url('/IJZ_2751.jpg')]"
         >
             <span
                 class="absolute top-0 left-0 w-full h-full bg-center bg-cover opacity-60 bg-gradient-to-tl from-zinc-800 to-zinc-700"
@@ -102,38 +63,32 @@ const yearxyz = new Date().getFullYear();
                         >
                             <a
                                 href="javascript:;"
-                                target="_blank"
-                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-green-600 sm:mb-0 xl:mr-12"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white sm:mb-0 xl:mr-12"
                                 >Devotion</a
                             >
                             <a
                                 href="javascript:;"
-                                target="_blank"
-                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-blue-500 sm:mb-0 xl:mr-12"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white sm:mb-0 xl:mr-12"
                                 >Integrity</a
                             >
                             <a
                                 href="javascript:;"
-                                target="_blank"
                                 class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white sm:mb-0 xl:mr-12"
                                 >Teamwork</a
                             >
                             <a
                                 href="javascript:;"
-                                target="_blank"
-                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-orange-400 sm:mb-0 xl:mr-12"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white sm:mb-0 xl:mr-12"
                                 >Creativity</a
                             >
                             <a
                                 href="javascript:;"
-                                target="_blank"
-                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-red-600 sm:mb-0 xl:mr-12"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white sm:mb-0 xl:mr-12"
                                 >Winner</a
                             >
                             <a
                                 href="javascript:;"
-                                target="_blank"
-                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-sky-600 sm:mb-0 xl:mr-12"
+                                class="mb-2 mr-4 p-1 font-black drop-shadow-[0_1.2px_1.2px_rgba(0,0,0.8)] uppercase text-white sm:mb-0 xl:mr-12"
                                 >Perfection</a
                             >
                         </div>
