@@ -782,10 +782,19 @@ const toggleLevel3ScannerBib = () => {
                         </NavLink>
                     </li>
                     <hr
+                        v-if="
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
                         class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                     />
                     <!-- start HO -->
-                    <li>
+                    <li
+                        v-if="
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
                         <div
                             @click="toggleLevel1Ho"
                             style="cursor: pointer"
@@ -799,17 +808,18 @@ const toggleLevel3ScannerBib = () => {
                                 ></i>
                             </div>
                             <span
-                                v-if="$page.props.auth.user.site == 'HO'"
+                                v-if="
+                                    $page.props.auth.user.site == 'HO'
+                                "
                                 class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                 >Head Office PPA</span
                             >
                             <span
                                 v-if="
-                                    $page.props.auth.user.site != 'BA' &&
                                     $page.props.auth.user.site != 'HO'
                                 "
                                 class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                >Putra Perkasa Abadi</span
+                                >ICT - PPA HO</span
                             >
                             <i
                                 v-if="!level1OpenHo"
@@ -1345,10 +1355,20 @@ const toggleLevel3ScannerBib = () => {
                     </li>
                     <!-- end HO -->
                     <hr
+                        v-if="
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'BA'
+                        "
                         class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                     />
                     <!-- start BA -->
-                    <li>
+                    <li
+                        v-if="
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'BA' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
                         <div
                             @click="toggleLevel1Ba"
                             style="cursor: pointer"
@@ -1431,9 +1451,11 @@ const toggleLevel3ScannerBib = () => {
                                 </div>
                                 <ul v-if="level2OpenBa">
                                     <NavLink
-                                        :href="route('accessPoint.page')"
+                                        :href="route('accessPointBa.page')"
                                         :active="
-                                            route().current('accessPoint.page')
+                                            route().current(
+                                                'accessPointBa.page'
+                                            )
                                         "
                                     >
                                         <div
@@ -1909,10 +1931,21 @@ const toggleLevel3ScannerBib = () => {
                     </li>
                     <!-- end BA -->
                     <hr
+                        v-if="
+                            $page.props.auth.user.site == 'BIB' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
                         class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                     />
                     <!-- start BIB -->
-                    <li>
+                    <li
+                        v-if="
+                            $page.props.auth.user.site == 'BIB' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
                         <div
                             @click="toggleLevel1Bib"
                             style="cursor: pointer"
