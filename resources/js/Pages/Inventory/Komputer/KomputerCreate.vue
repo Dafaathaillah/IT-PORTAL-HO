@@ -149,6 +149,23 @@ const save = () => {
 
 const options = props.pengguna;
 
+const isDisabled_asetnoho = ref(false);
+
+const onInput = (data, some) => {
+
+form.assets_category = data;
+
+if(data == 'non_standart') {
+    isDisabled_asetnoho.value = true;
+    form.number_asset_ho = 'unidentified';
+}else{
+    isDisabled_asetnoho.value = false;
+    form.number_asset_ho = null;
+}
+
+console.log(data);
+};
+
 </script>
 
 <template>
@@ -244,25 +261,7 @@ const options = props.pengguna;
                                             />
                                         </div>
                                     </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="number-asset-ho"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Asset Ho Number</label
-                                            >
-                                            <input
-                                                required
-                                                type="text"
-                                                v-model="form.number_asset_ho"
-                                                name="number_asset_ho"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="14414xxx"
-                                            />
-                                        </div>
-                                    </div>
+                                    
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -277,16 +276,14 @@ const options = props.pengguna;
                                                 id="assets_category"
                                                 v-model="form.assets_category"
                                                 name="assets_category"
+                                                @update:model-value="onInput"
                                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="BARU">
-                                                    BARU
+                                                <option selected value="standart">
+                                                    standart
                                                 </option>
-                                                <option value="LAMA">
-                                                    LAMA
-                                                </option>
-                                                <option value="MUTASI">
-                                                    MUTASI (dari site lain)
+                                                <option value="non_standart">
+                                                    non_standart
                                                 </option>
                                             </select>
                                         </div>
@@ -311,6 +308,28 @@ const options = props.pengguna;
                                             />
                                         </div>
                                     </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="number-asset-ho"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Asset Ho Number</label
+                                            >
+                                            <input
+                                                required
+                                                type="text"
+                                                v-model="form.number_asset_ho"
+                                                name="number_asset_ho"
+                                                v-bind:class="{'mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500': form.assets_category == 'non_standart',  'focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none': form.assets_category != 'non_standart'}"
+                                                :disabled="isDisabled_asetnoho"
+                                                placeholder="10700xxx"
+                                            />
+                                        </div>
+                                    </div>
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -463,7 +482,7 @@ const options = props.pengguna;
                                             />
                                         </div>
                                     </div>
-                                    <div
+                                    <!-- <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -481,7 +500,7 @@ const options = props.pengguna;
                                                 placeholder="Standart Progxx"
                                             />
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -629,7 +648,7 @@ const options = props.pengguna;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -648,7 +667,7 @@ const options = props.pengguna;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -662,7 +681,7 @@ const options = props.pengguna;
                                                 :options="options"
                                                 :multiple="false"
                                                 :close-on-select="true"
-                                                placeholder="Pilih Pengguna"
+                                                placeholder="pick name of user"
                                                 track-by="name"
                                                 label="name"
                                             />

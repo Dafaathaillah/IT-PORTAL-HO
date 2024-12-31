@@ -112,7 +112,7 @@ const user = computed(() => page.props.auth.user);
                             class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand"
                         >
                             <i class="fa fa-user sm:mr-1 max-mobile-sm-logout-form:hidden"></i>
-                            <span class="sm:inline">LogOut</span>
+                            <span class="sm:inline">Log Out</span>
                         </ResponsiveNavLink>
                     </li>
                 </ul>

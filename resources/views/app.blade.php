@@ -12,7 +12,7 @@
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
     <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="{{ asset('../assets/css/font.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="{{ asset('../assets/js/fontAwesome27c970a153.js') }}" crossorigin="anonymous"></script>
     <!-- Nucleo Icons -->
@@ -31,6 +31,15 @@
     @routes
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
+
+    <style>
+        .dark {
+
+            body{
+                background: #051139 !important;
+            }
+        }
+    </style>
 </head>
 
 @auth
