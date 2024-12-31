@@ -12,13 +12,18 @@ use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApController;
+use App\Http\Controllers\InvCctvBaController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
+use App\Http\Controllers\InvPrinterBaController;
 use App\Http\Controllers\InvPrinterController;
+use App\Http\Controllers\InvScannerBaController;
 use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvSwitchController;
+use App\Http\Controllers\InvSwitchBaController;
+use App\Http\Controllers\InvWirellessBaController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
@@ -373,7 +378,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTV', [InvCctvController::class, 'uploadCsv'])->name('cctv.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA'], function () {
             Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
             Route::get('/accessPointSiteBa/create', [InvApBaController::class, 'create'])->name('accessPointBa.create');
             Route::post('/accessPointSiteBa/create', [InvApBaController::class, 'store'])->name('accessPointBa.store');
@@ -381,6 +386,53 @@ Route::middleware('auth')->group(function () {
             Route::put('/accessPointSiteBa/{apId}/update', [InvApBaController::class, 'update'])->name('accessPointBa.update');
             Route::delete('/accessPointSiteBa/{apId}/delete', [InvApBaController::class, 'destroy'])->name('accessPointBa.delete');
             Route::get('/accessPointSiteBa/{id}/detail', [InvApBaController::class, 'detail'])->name('accessPointBa.detail');
+            Route::post('/uploadCsvApBa', [InvApBaController::class, 'uploadCsv'])->name('accessPointBa.import');
+
+            Route::get('/switchBa', [InvSwitchBaController::class, 'index'])->name('switchBa.page');
+            Route::get('/switchBa/create', [InvSwitchBaController::class, 'create'])->name('switchBa.create');
+            Route::post('/switchBa/create', [InvSwitchBaController::class, 'store'])->name('switchBa.store');
+            Route::get('/switchBa/{swId}/edit', [InvSwitchBaController::class, 'edit'])->name('switchBa.edit');
+            Route::put('/switchBa/{swId}/update', [InvSwitchBaController::class, 'update'])->name('switchBa.update');
+            Route::delete('/switchBa/{swId}/delete', [InvSwitchBaController::class, 'destroy'])->name('switchBa.delete');
+            Route::get('/switchBa/{id}/detail', [InvSwitchBaController::class, 'detail'])->name('switchBa.detail');
+            Route::post('/uploadCsvSwBa', [InvSwitchBaController::class, 'uploadCsv'])->name('switchBa.import');
+
+            Route::get('/wirellessBa', [InvWirellessBaController::class, 'index'])->name('wirellessBa.page');
+            Route::get('/wirellessBa/create', [InvWirellessBaController::class, 'create'])->name('wirellessBa.create');
+            Route::post('/wirellessBa/create', [InvWirellessBaController::class, 'store'])->name('wirellessBa.store');
+            Route::get('/wirellessBa/{id}/edit', [InvWirellessBaController::class, 'edit'])->name('wirellessBa.edit');
+            Route::put('/wirellessBa/{id}/update', [InvWirellessBaController::class, 'update'])->name('wirellessBa.update');
+            Route::delete('/wirellessBa/{id}/delete', [InvWirellessBaController::class, 'destroy'])->name('wirellessBa.delete');
+            Route::get('/wirellessBa/{id}/detail', [InvWirellessBaController::class, 'detail'])->name('wirellessBa.detail');
+            Route::post('/uploadCsvBbBa', [InvWirellessBaController::class, 'uploadCsv'])->name('wirellessBa.import');
+
+            Route::get('/printerBa', [InvPrinterBaController::class, 'index'])->name(name: 'printerBa.page');
+            Route::get('/printerBa/create', [InvPrinterBaController::class, 'create'])->name('printerBa.create');
+            Route::post('/printerBa/create', [InvPrinterBaController::class, 'store'])->name('printerBa.store');
+            Route::get('/printerBa/{id}/edit', [InvPrinterBaController::class, 'edit'])->name('printerBa.edit');
+            Route::delete('/printerBa/{id}/delete', [InvPrinterBaController::class, 'destroy'])->name('printerBa.delete');
+            Route::post('/printerBa/update', [InvPrinterBaController::class, 'update'])->name('printerBa.update');
+            Route::get('/printerBa/{id}/detail', [InvPrinterBaController::class, 'detail'])->name('printerBa.detail');
+            Route::post('/uploadCsvPrtBa', [InvPrinterBaController::class, 'uploadCsv'])->name('printerBa.import');
+
+            Route::get('/scannerBa', [InvScannerBaController::class, 'index'])->name('scannerBa.page');
+            Route::get('/scannerBa/create', [InvScannerBaController::class, 'create'])->name('scannerBa.create');
+            Route::post('/scannerBa/create', [InvScannerBaController::class, 'store'])->name('scannerBa.store');
+            Route::get('/scannerBa/{id}/edit', [InvScannerBaController::class, 'edit'])->name('scannerBa.edit');
+            Route::delete('/scannerBa/{id}/delete', [InvScannerBaController::class, 'destroy'])->name('scannerBa.delete');
+            Route::post('/scannerBa/update', [InvScannerBaController::class, 'update'])->name('scannerBa.update');
+            Route::get('/scannerBa/{id}/detail', [InvScannerBaController::class, 'detail'])->name('scannerBa.detail');
+            Route::post('/uploadCsvScnBa', [InvScannerBaController::class, 'uploadCsv'])->name('scannerBa.import');
+
+            Route::get('/cctvBa', [InvCctvBaController::class, 'index'])->name('cctvBa.page');
+            Route::get('/cctvBa/create', [InvCctvBaController::class, 'create'])->name('cctvBa.create');
+            Route::post('/cctvBa/create', [InvCctvBaController::class, 'store'])->name('cctvBa.store');
+            Route::get('/cctvBa/{id}/edit', [InvCctvBaController::class, 'edit'])->name('cctvBa.edit');
+            Route::delete('/cctvBa/{id}/delete', [InvCctvBaController::class, 'destroy'])->name('cctvBa.delete');
+            Route::post('/cctvBa/update', [InvCctvBaController::class, 'update'])->name('cctvBa.update');
+            Route::get('/cctvBa/{id}/detail', [InvCctvBaController::class, 'detail'])->name('cctvBa.detail');
+            Route::post('/uploadCsvCCTVBa', [InvCctvBaController::class, 'uploadCsv'])->name('cctvBa.import');
+
         });
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
             Route::prefix('itportal')->group(function () {

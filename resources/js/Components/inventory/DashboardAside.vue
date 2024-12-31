@@ -215,6 +215,7 @@ const toggleLevel3PrinterHo = () => {
         level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
     level3PrinterOpenHo.value = !level3PrinterOpenHo.value;
@@ -225,6 +226,7 @@ const toggleLevel3ScannerHo = () => {
         level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
         level3CctvOpenHo.value = false;
     }
     level3ScannerOpenHo.value = !level3ScannerOpenHo.value;
@@ -418,6 +420,7 @@ const toggleLevel3PrinterBa = () => {
         level2OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
+        level3ScannerOpenBa.value = false;
         level3CctvOpenBa.value = false;
     }
     level3PrinterOpenBa.value = !level3PrinterOpenBa.value;
@@ -428,6 +431,7 @@ const toggleLevel3ScannerBa = () => {
         level2OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
+        level3PrinterOpenBa.value = false;
         level3CctvOpenBa.value = false;
     }
     level3ScannerOpenBa.value = !level3ScannerOpenBa.value;
@@ -630,6 +634,7 @@ const toggleLevel3PrinterBib = () => {
         level2OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
+        level3ScannerOpenBib.value = false;
         level3CctvOpenBib.value = false;
     }
     level3PrinterOpenBib.value = !level3PrinterOpenBib.value;
@@ -640,6 +645,7 @@ const toggleLevel3ScannerBib = () => {
         level2OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
+        level3PrinterOpenBib.value = false;
         level3CctvOpenBib.value = false;
     }
     level3ScannerOpenBib.value = !level3ScannerOpenBib.value;
@@ -1623,9 +1629,9 @@ const toggleLevel3ScannerBib = () => {
                                     </div>
                                     <li v-if="level3PrinterOpenBa">
                                         <NavLink
-                                            :href="route('printer.page')"
+                                            :href="route('printerBa.page')"
                                             :active="
-                                                route().current('printer.page')
+                                                route().current('printerBa.page')
                                             "
                                         >
                                             <div
@@ -1669,9 +1675,9 @@ const toggleLevel3ScannerBib = () => {
                                     </div>
                                     <li v-if="level3ScannerOpenBa">
                                         <NavLink
-                                            :href="route('scanner.page')"
+                                            :href="route('scannerBa.page')"
                                             :active="
-                                                route().current('scanner.page')
+                                                route().current('scannerBa.page')
                                             "
                                         >
                                             <div
@@ -1715,9 +1721,9 @@ const toggleLevel3ScannerBib = () => {
                                     </div>
                                     <li v-if="level3CctvOpenBa">
                                         <NavLink
-                                            :href="route('cctv.page')"
+                                            :href="route('cctvBa.page')"
                                             :active="
-                                                route().current('cctv.page')
+                                                route().current('cctvBa.page')
                                             "
                                         >
                                             <div
