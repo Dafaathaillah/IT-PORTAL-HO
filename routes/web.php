@@ -10,14 +10,20 @@ use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InspeksiLaptopController;
+use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApController;
+use App\Http\Controllers\InvCctvBaController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
+use App\Http\Controllers\InvPrinterBaController;
 use App\Http\Controllers\InvPrinterController;
+use App\Http\Controllers\InvScannerBaController;
 use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvSwitchController;
+use App\Http\Controllers\InvSwitchBaController;
+use App\Http\Controllers\InvWirellessBaController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
@@ -38,7 +44,7 @@ use Illuminate\Foundation\Application;
 
 Route::middleware('auth')->group(function () {
 
-    Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod,ict_section_head'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
         Route::get('/dashboard', function () {
 
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
@@ -209,14 +215,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/asetDashboard/pengajuanAkses', [GuestAllController::class, 'pengajuanAkses'])->name('pengajuanAkses');
     });
 
-    Route::group(['middleware' => 'checkRole:guest,ict_developer,ict_ho,ict_bod,ict_section_head,ict_group_leader'], function () {
+    Route::group(['middleware' => 'checkRole:guest:null'], function () {
         Route::get('/complaint/dashboard', [GuestReportController::class, 'index'])->name('guestAduan.page');
         Route::get('/complaint', [GuestReportController::class, 'create'])->name('guestAduan.create');
         Route::post('/complaint-store', [GuestReportController::class, 'store'])->name('guestAduan.store');
         Route::delete('/complaint/{id}/delete', [GuestReportController::class, 'destroy'])->name('guestAduan.delete');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_technician'], function () {
+    Route::group(['middleware' => 'checkRole:ict_technician:BIB'], function () {
         Route::get('/technicianDashboard', function () {
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
             $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
@@ -295,9 +301,10 @@ Route::middleware('auth')->group(function () {
             );
         })->name('technicianDashboard');
     });
-    Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod,ict_section_head,ict_group_leader,ict_technician,ict_group_leader'], function () {
 
-        Route::prefix('inventory')->group(function () {
+    Route::prefix('inventory')->group(function () {
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
             Route::get('/accessPoint', [InvApController::class, 'index'])->name('accessPoint.page');
             Route::get('/accessPoint/create', [InvApController::class, 'create'])->name('accessPoint.create');
             Route::post('/accessPoint/create', [InvApController::class, 'store'])->name('accessPoint.store');
@@ -371,46 +378,104 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTV', [InvCctvController::class, 'uploadCsv'])->name('cctv.import');
         });
 
-        Route::prefix('itportal')->group(function () {
-            Route::get('/pengguna', [UserAllController::class, 'index'])->name('pengguna.page');
-            Route::get('/pengguna/create', [UserAllController::class, 'create'])->name('pengguna.create');
-            Route::post('/pengguna/create', [UserAllController::class, 'store'])->name('pengguna.store');
-            Route::get('/pengguna/{id}/edit', [UserAllController::class, 'edit'])->name('pengguna.edit');
-            Route::put('/pengguna/{id}/update', [UserAllController::class, 'update'])->name('pengguna.update');
-            Route::delete('/pengguna/{id}/delete', [UserAllController::class, 'destroy'])->name('pengguna.delete');
-            Route::post('/uploadCsvPengguna', [UserAllController::class, 'uploadCsv'])->name('pengguna.import');
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA'], function () {
+            Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
+            Route::get('/accessPointSiteBa/create', [InvApBaController::class, 'create'])->name('accessPointBa.create');
+            Route::post('/accessPointSiteBa/create', [InvApBaController::class, 'store'])->name('accessPointBa.store');
+            Route::get('/accessPointSiteBa/{apId}/edit', [InvApBaController::class, 'edit'])->name('accessPointBa.edit');
+            Route::put('/accessPointSiteBa/{apId}/update', [InvApBaController::class, 'update'])->name('accessPointBa.update');
+            Route::delete('/accessPointSiteBa/{apId}/delete', [InvApBaController::class, 'destroy'])->name('accessPointBa.delete');
+            Route::get('/accessPointSiteBa/{id}/detail', [InvApBaController::class, 'detail'])->name('accessPointBa.detail');
+            Route::post('/uploadCsvApBa', [InvApBaController::class, 'uploadCsv'])->name('accessPointBa.import');
 
-            Route::get('department', [DepartmentController::class, 'index'])->name('department.page');
-            Route::get('department/create', [DepartmentController::class, 'create'])->name('department.create');
-            Route::post('department/create', [DepartmentController::class, 'store'])->name('department.store');
-            Route::get('department/{id}/edit', [DepartmentController::class, 'edit'])->name('department.edit');
-            Route::put('department/{id}/update', [DepartmentController::class, 'update'])->name('department.update');
-            Route::delete('department/{id}/delete', [DepartmentController::class, 'destroy'])->name('department.delete');
+            Route::get('/switchBa', [InvSwitchBaController::class, 'index'])->name('switchBa.page');
+            Route::get('/switchBa/create', [InvSwitchBaController::class, 'create'])->name('switchBa.create');
+            Route::post('/switchBa/create', [InvSwitchBaController::class, 'store'])->name('switchBa.store');
+            Route::get('/switchBa/{swId}/edit', [InvSwitchBaController::class, 'edit'])->name('switchBa.edit');
+            Route::put('/switchBa/{swId}/update', [InvSwitchBaController::class, 'update'])->name('switchBa.update');
+            Route::delete('/switchBa/{swId}/delete', [InvSwitchBaController::class, 'destroy'])->name('switchBa.delete');
+            Route::get('/switchBa/{id}/detail', [InvSwitchBaController::class, 'detail'])->name('switchBa.detail');
+            Route::post('/uploadCsvSwBa', [InvSwitchBaController::class, 'uploadCsv'])->name('switchBa.import');
 
-            Route::get('akses', [AdminPengajuanRoleController::class, 'index'])->name('akses.page');
-            Route::get('akses/{id}/edit', [AdminPengajuanRoleController::class, 'edit'])->name('akses.edit');
-            Route::post('akses/update', [AdminPengajuanRoleController::class, 'update'])->name('akses.update');
-            Route::delete('akses/{id}/delete', [AdminPengajuanRoleController::class, 'destroy'])->name('akses.delete');
+            Route::get('/wirellessBa', [InvWirellessBaController::class, 'index'])->name('wirellessBa.page');
+            Route::get('/wirellessBa/create', [InvWirellessBaController::class, 'create'])->name('wirellessBa.create');
+            Route::post('/wirellessBa/create', [InvWirellessBaController::class, 'store'])->name('wirellessBa.store');
+            Route::get('/wirellessBa/{id}/edit', [InvWirellessBaController::class, 'edit'])->name('wirellessBa.edit');
+            Route::put('/wirellessBa/{id}/update', [InvWirellessBaController::class, 'update'])->name('wirellessBa.update');
+            Route::delete('/wirellessBa/{id}/delete', [InvWirellessBaController::class, 'destroy'])->name('wirellessBa.delete');
+            Route::get('/wirellessBa/{id}/detail', [InvWirellessBaController::class, 'detail'])->name('wirellessBa.detail');
+            Route::post('/uploadCsvBbBa', [InvWirellessBaController::class, 'uploadCsv'])->name('wirellessBa.import');
 
-            Route::get('inspeksi-komputer', [InspeksiComputerController::class, 'index'])->name('inspeksiKomputer.page');
-            Route::get('inspeksi-komputer/{id}/inspection', [InspeksiComputerController::class, 'doInspection'])->name('inspeksiKomputer.inspection');
-            Route::post('inspeksi-komputer/inspection', [InspeksiComputerController::class, 'store'])->name('inspeksiKomputer.store');
-            Route::get('inspeksi-komputer/{id}/edit', [InspeksiComputerController::class, 'edit'])->name('inspeksiKomputer.edit');
-            Route::put('inspeksi-komputer/{id}/update', [InspeksiComputerController::class, 'update'])->name('inspeksiKomputer.update');
-            Route::get('/inspeksi-komputer/{id}/detail', [InspeksiComputerController::class, 'detail'])->name('inspeksiKomputer.detail');
-            Route::delete('inspeksi-komputer/{id}/delete', [InspeksiComputerController::class, 'destroy'])->name('inspeksiKomputer.delete');
+            Route::get('/printerBa', [InvPrinterBaController::class, 'index'])->name(name: 'printerBa.page');
+            Route::get('/printerBa/create', [InvPrinterBaController::class, 'create'])->name('printerBa.create');
+            Route::post('/printerBa/create', [InvPrinterBaController::class, 'store'])->name('printerBa.store');
+            Route::get('/printerBa/{id}/edit', [InvPrinterBaController::class, 'edit'])->name('printerBa.edit');
+            Route::delete('/printerBa/{id}/delete', [InvPrinterBaController::class, 'destroy'])->name('printerBa.delete');
+            Route::post('/printerBa/update', [InvPrinterBaController::class, 'update'])->name('printerBa.update');
+            Route::get('/printerBa/{id}/detail', [InvPrinterBaController::class, 'detail'])->name('printerBa.detail');
+            Route::post('/uploadCsvPrtBa', [InvPrinterBaController::class, 'uploadCsv'])->name('printerBa.import');
 
-            Route::get('inspeksi-laptop', [InspeksiLaptopController::class, 'index'])->name('inspeksiLaptop.page');
-            Route::get('inspeksi-laptop/{id}/process', [InspeksiLaptopController::class, 'process'])->name('inspeksiLaptop.process');
-            Route::post('inspeksi-laptop/process', [InspeksiLaptopController::class, 'store'])->name('inspeksiLaptop.store');
-            Route::get('inspeksi-laptop/{id}/edit', [InspeksiLaptopController::class, 'edit'])->name('inspeksiLaptop.edit');
-            Route::post('inspeksi-laptop/update', [InspeksiLaptopController::class, 'update'])->name('inspeksiLaptop.update');
-            Route::get('/inspeksi-laptop/{id}/detail', [InspeksiLaptopController::class, 'detail'])->name('inspeksiLaptop.detail');
-            Route::delete('inspeksi-laptop/{id}/delete', [InspeksiLaptopController::class, 'destroy'])->name('inspeksiLaptop.delete');
+            Route::get('/scannerBa', [InvScannerBaController::class, 'index'])->name('scannerBa.page');
+            Route::get('/scannerBa/create', [InvScannerBaController::class, 'create'])->name('scannerBa.create');
+            Route::post('/scannerBa/create', [InvScannerBaController::class, 'store'])->name('scannerBa.store');
+            Route::get('/scannerBa/{id}/edit', [InvScannerBaController::class, 'edit'])->name('scannerBa.edit');
+            Route::delete('/scannerBa/{id}/delete', [InvScannerBaController::class, 'destroy'])->name('scannerBa.delete');
+            Route::post('/scannerBa/update', [InvScannerBaController::class, 'update'])->name('scannerBa.update');
+            Route::get('/scannerBa/{id}/detail', [InvScannerBaController::class, 'detail'])->name('scannerBa.detail');
+            Route::post('/uploadCsvScnBa', [InvScannerBaController::class, 'uploadCsv'])->name('scannerBa.import');
+
+            Route::get('/cctvBa', [InvCctvBaController::class, 'index'])->name('cctvBa.page');
+            Route::get('/cctvBa/create', [InvCctvBaController::class, 'create'])->name('cctvBa.create');
+            Route::post('/cctvBa/create', [InvCctvBaController::class, 'store'])->name('cctvBa.store');
+            Route::get('/cctvBa/{id}/edit', [InvCctvBaController::class, 'edit'])->name('cctvBa.edit');
+            Route::delete('/cctvBa/{id}/delete', [InvCctvBaController::class, 'destroy'])->name('cctvBa.delete');
+            Route::post('/cctvBa/update', [InvCctvBaController::class, 'update'])->name('cctvBa.update');
+            Route::get('/cctvBa/{id}/detail', [InvCctvBaController::class, 'detail'])->name('cctvBa.detail');
+            Route::post('/uploadCsvCCTVBa', [InvCctvBaController::class, 'uploadCsv'])->name('cctvBa.import');
+
+        });
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
+            Route::prefix('itportal')->group(function () {
+                Route::get('/pengguna', [UserAllController::class, 'index'])->name('pengguna.page');
+                Route::get('/pengguna/create', [UserAllController::class, 'create'])->name('pengguna.create');
+                Route::post('/pengguna/create', [UserAllController::class, 'store'])->name('pengguna.store');
+                Route::get('/pengguna/{id}/edit', [UserAllController::class, 'edit'])->name('pengguna.edit');
+                Route::put('/pengguna/{id}/update', [UserAllController::class, 'update'])->name('pengguna.update');
+                Route::delete('/pengguna/{id}/delete', [UserAllController::class, 'destroy'])->name('pengguna.delete');
+                Route::post('/uploadCsvPengguna', [UserAllController::class, 'uploadCsv'])->name('pengguna.import');
+
+                Route::get('department', [DepartmentController::class, 'index'])->name('department.page');
+                Route::get('department/create', [DepartmentController::class, 'create'])->name('department.create');
+                Route::post('department/create', [DepartmentController::class, 'store'])->name('department.store');
+                Route::get('department/{id}/edit', [DepartmentController::class, 'edit'])->name('department.edit');
+                Route::put('department/{id}/update', [DepartmentController::class, 'update'])->name('department.update');
+                Route::delete('department/{id}/delete', [DepartmentController::class, 'destroy'])->name('department.delete');
+
+                Route::get('akses', [AdminPengajuanRoleController::class, 'index'])->name('akses.page');
+                Route::get('akses/{id}/edit', [AdminPengajuanRoleController::class, 'edit'])->name('akses.edit');
+                Route::post('akses/update', [AdminPengajuanRoleController::class, 'update'])->name('akses.update');
+                Route::delete('akses/{id}/delete', [AdminPengajuanRoleController::class, 'destroy'])->name('akses.delete');
+
+                Route::get('inspeksi-komputer', [InspeksiComputerController::class, 'index'])->name('inspeksiKomputer.page');
+                Route::get('inspeksi-komputer/{id}/inspection', [InspeksiComputerController::class, 'doInspection'])->name('inspeksiKomputer.inspection');
+                Route::post('inspeksi-komputer/inspection', [InspeksiComputerController::class, 'store'])->name('inspeksiKomputer.store');
+                Route::get('inspeksi-komputer/{id}/edit', [InspeksiComputerController::class, 'edit'])->name('inspeksiKomputer.edit');
+                Route::put('inspeksi-komputer/{id}/update', [InspeksiComputerController::class, 'update'])->name('inspeksiKomputer.update');
+                Route::get('/inspeksi-komputer/{id}/detail', [InspeksiComputerController::class, 'detail'])->name('inspeksiKomputer.detail');
+                Route::delete('inspeksi-komputer/{id}/delete', [InspeksiComputerController::class, 'destroy'])->name('inspeksiKomputer.delete');
+
+                Route::get('inspeksi-laptop', [InspeksiLaptopController::class, 'index'])->name('inspeksiLaptop.page');
+                Route::get('inspeksi-laptop/{id}/process', [InspeksiLaptopController::class, 'process'])->name('inspeksiLaptop.process');
+                Route::post('inspeksi-laptop/process', [InspeksiLaptopController::class, 'store'])->name('inspeksiLaptop.store');
+                Route::get('inspeksi-laptop/{id}/edit', [InspeksiLaptopController::class, 'edit'])->name('inspeksiLaptop.edit');
+                Route::post('inspeksi-laptop/update', [InspeksiLaptopController::class, 'update'])->name('inspeksiLaptop.update');
+                Route::get('/inspeksi-laptop/{id}/detail', [InspeksiLaptopController::class, 'detail'])->name('inspeksiLaptop.detail');
+                Route::delete('inspeksi-laptop/{id}/delete', [InspeksiLaptopController::class, 'destroy'])->name('inspeksiLaptop.delete');
+            });
         });
     });
-    
-    Route::group(['middleware' => 'checkRole:ict_developer,ict_ho,ict_bod,ict_section_head,ict_group_leader,ict_technician,ict_group_leader,soc_ho'], function () {
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
         Route::prefix('itportal')->group(function () {
             Route::get('/aduan', [AduanController::class, 'index'])->name('aduan.page');
             Route::get('/aduan/create', [AduanController::class, 'create'])->name('aduan.create');

@@ -17,13 +17,17 @@ class CheckRole
     {
         $roles = array_slice(func_get_args(), 2);
 
-        foreach ($roles as $role) { 
-            $user = \Auth::user()->role;
-            if( $user == $role){
-                return $next($request);
+        $userRole = \Auth::user()->role;
+        $userSite = \Auth::user()->site;
+
+        foreach ($roles as $role) {
+            [$role, $site] = explode(':', $role);
+
+            if ($userRole === $role && $userSite === $site) {
+                return $next($request); // Jika cocok, izinkan akses
             }
         }
-    
-        return redirect('/login');
+
+        return abort(403, 'Anda tidak memiliki aksess pada halaman ini!');
     }
 }
