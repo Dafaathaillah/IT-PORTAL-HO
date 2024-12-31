@@ -1363,7 +1363,8 @@ const toggleLevel3ScannerBib = () => {
                     <hr
                         v-if="
                             $page.props.auth.user.role == 'ict_developer' ||
-                            $page.props.auth.user.site == 'BA'
+                            $page.props.auth.user.site == 'BA' ||
+                            $page.props.auth.user.site == 'HO'
                         "
                         class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                     />
