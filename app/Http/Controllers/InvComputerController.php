@@ -24,7 +24,7 @@ class InvComputerController extends Controller
             $dataInventory = InvComputer::with('pengguna')->get();
             $site = '';
 
-            $department = Department::orderBy('department_name')->pluck('department_name')->map(function ($name) {
+            $department = Department::orderBy('department_name')->where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
 
@@ -42,7 +42,7 @@ class InvComputerController extends Controller
 
             $site = auth()->user()->site;
 
-            $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            $department = Department::orderBy('department_name')->where('code', '!=' , null)->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
         }
@@ -83,7 +83,7 @@ class InvComputerController extends Controller
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'BIB-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'BIB-PC-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
                 $maxId = InvComputer::where('site', 'HO')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
 
@@ -94,7 +94,7 @@ class InvComputerController extends Controller
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'HO-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'HO-PC-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             } else {
                 $maxId = InvComputer::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
                 // dd($maxId);
@@ -106,7 +106,7 @@ class InvComputerController extends Controller
                     $maxId = $noUrut;
                 }
 
-                $uniqueString = 'BA-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $uniqueString = 'BA-PC-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
             }
 
             $request['inventory_number'] = $uniqueString;
