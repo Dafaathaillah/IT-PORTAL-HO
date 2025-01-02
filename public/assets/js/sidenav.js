@@ -17,9 +17,9 @@ collapse_triggers.forEach((trigger) => {
 function open_collapse(trigger, collapse, height) {
   if (current_page != "landing.html") {
     trigger.classList.remove("after:text-slate-800/50");
-    trigger.classList.add("after:rotate-90", "after:text-slate-800");
+    trigger.classList.add("after:rotate-180", "after:text-slate-800");
   }
-  trigger.classList.add("after:rotate-90");
+  trigger.classList.add("after:rotate-180");
 
   if (!trigger.hasAttribute("active_primary")) {
     trigger.classList.add("dark:after:text-white");
@@ -40,10 +40,10 @@ function open_collapse(trigger, collapse, height) {
 
 function close_collapse(trigger, collapse, height) {
   if (current_page != "landing.html") {
-    trigger.classList.remove("after:rotate-90", "after:text-slate-800");
+    trigger.classList.remove("after:rotate-180", "after:text-slate-800");
     trigger.classList.add("after:text-slate-800/50");
   }
-  trigger.classList.remove("after:rotate-90");
+  trigger.classList.remove("after:rotate-180");
 
   if (!trigger.hasAttribute("active_primary")) {
     trigger.classList.add("dark:after:text-white/50");
