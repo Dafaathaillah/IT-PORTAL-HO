@@ -1899,8 +1899,8 @@ const toggleLevel3ScannerBib = () => {
                                             $page.props.auth.user.role ===
                                             'ict_developer'
                                         "
-                                        :href="route('akses.page')"
-                                        :active="route().current('akses.page')"
+                                        :href="route('aksesBa.page')"
+                                        :active="route().current('aksesBa.page')"
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"

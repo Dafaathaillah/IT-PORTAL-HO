@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPengajuanRoleBaController;
 use App\Http\Controllers\AdminPengajuanRoleController;
 use App\Http\Controllers\AduanBaController;
 use App\Http\Controllers\AduanController;
@@ -529,6 +530,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('department-ba/{id}/edit', [DepartmentController::class, 'edit'])->name('departmentBa.edit');
                 Route::put('department-ba/{id}/update', [DepartmentController::class, 'update'])->name('departmentBa.update');
                 Route::delete('department-ba/{id}/delete', [DepartmentController::class, 'destroy'])->name('departmentBa.delete');
+
+                Route::get('akses-ba', [AdminPengajuanRoleBaController::class, 'index'])->name('aksesBa.page');
+                Route::get('akses-ba/{id}/edit', [AdminPengajuanRoleBaController::class, 'edit'])->name('aksesBa.edit');
+                Route::post('akses-ba/update', [AdminPengajuanRoleBaController::class, 'update'])->name('aksesBa.update');
+                Route::delete('akses-ba/{id}/delete', [AdminPengajuanRoleBaController::class, 'destroy'])->name('aksesBa.delete');
             });
         });
     });
