@@ -16,40 +16,21 @@ use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Node\Expr\Empty_;
 
-class InvComputerController extends Controller
+class InvComputerBaController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $dataInventory = InvComputer::with('pengguna')->get();
-            $site = '';
+        $dataInventory = InvComputer::with('pengguna')->where('site', 'BA')->get();
 
-            $department = Department::orderBy('department_name')->pluck('department_name')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
+        $site = 'BA';
 
-        } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $dataInventory = InvComputer::with('pengguna')->where('site', null)->orWhere('site', 'HO')->get();
-
-            $site = '';
-
-            $department = Department::orderBy('department_name')->where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
-
-        } else {
-            $dataInventory = InvComputer::with('pengguna')->where('site', auth()->user()->site)->get();
-
-            $site = auth()->user()->site;
-
-            $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
-        }
+        $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
+        return Inertia::render('Inventory/SiteBa/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
     }
 
     public function create()
@@ -73,50 +54,26 @@ class InvComputerController extends Controller
 
             $code_dept = Department::where('department_name', $dept)->first();
 
-            if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-                $maxId = InvComputer::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+            $maxId = InvComputer::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+            // dd($maxId);
 
-                if (is_null($maxId)) {
-                    $maxId = 0;
-                } else {                    
-                    $noUrut = (int) substr($maxId->computer_code, 11, 3);
-                    $maxId = $noUrut;
-                }
-
-                $uniqueString = 'BIB-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-            } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-                $maxId = InvComputer::where('site', 'HO')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-
-                if (is_null($maxId)) {
-                    $maxId = 0;
-                } else {                    
-                    $noUrut = (int) substr($maxId->computer_code, 10, 3);
-                    $maxId = $noUrut;
-                }
-
-                $uniqueString = 'HO-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            if (is_null($maxId)) {
+                $maxId = 0;
             } else {
-                $maxId = InvComputer::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-                // dd($maxId);
-
-                if (is_null($maxId)) {
-                    $maxId = 0;
-                } else {
-                    $noUrut = (int) substr($maxId->computer_code, 10, 3);
-                    $maxId = $noUrut;
-                }
-
-                $uniqueString = 'BA-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $noUrut = (int) substr($maxId->computer_code, 10, 3);
+                $maxId = $noUrut;
             }
+
+            $uniqueString = 'BA-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
             $request['inventory_number'] = $uniqueString;
             // end generate code
 
-            $pengguna = UserAll::where('site',auth()->user()->site)->pluck('username')->map(function ($name) {
+            $pengguna = UserAll::where('site', 'BA')->pluck('username')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
 
-            return Inertia::render('Inventory/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+            return Inertia::render('Inventory/SiteBa/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
         } else {
             // dd($request->all());
             $maxId = InvComputer::max('max_id');
@@ -125,7 +82,7 @@ class InvComputerController extends Controller
             } else {
                 $maxId = $maxId + 1;
             }
-            
+
             $documentation_image = $request->file('image');
             $destinationPath = 'images/';
             $path_documentation_image = $documentation_image->store('images', 'public');
@@ -155,12 +112,12 @@ class InvComputerController extends Controller
                 'note' => $params['note'],
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => auth()->user()->site,
+                'site' => 'BA',
                 'dept' => $dept
             ];
 
             InvComputer::create($data);
-            return redirect()->route('komputer.page');
+            return redirect()->route('komputerBa.page');
         }
     }
 
@@ -169,7 +126,7 @@ class InvComputerController extends Controller
         try {
 
             Excel::import(new ImportComputer, $request->file('file'));
-            return redirect()->route('komputer.page');
+            return redirect()->route('komputerBa.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -192,7 +149,7 @@ class InvComputerController extends Controller
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site',auth()->user()->site)->pluck('username')->map(function ($name) {
+        $pengguna_all = UserAll::where('site', 'BA')->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -206,7 +163,7 @@ class InvComputerController extends Controller
         $warna_komputer = trim($spesifikasi[6]);
         $os_komputer = trim($spesifikasi[7]);
         // return response()->json(['ap' => $komputer]);
-        return Inertia::render('Inventory/Komputer/KomputerEdit', [
+        return Inertia::render('Inventory/SiteBa/Komputer/KomputerEdit', [
             'komputer' => $komputer,
             'model' => $model,
             'processor' => $processor,
@@ -230,7 +187,7 @@ class InvComputerController extends Controller
         }
 
         $aduan = Aduan::where('inventory_number', $komputer->computer_code)->get();
-        return Inertia::render('Inventory/Komputer/KomputerDetail', [
+        return Inertia::render('Inventory/SiteBa/Komputer/KomputerDetail', [
             'komputer' => $komputer,
             'aduan' => $aduan,
         ]);
@@ -266,7 +223,7 @@ class InvComputerController extends Controller
                 'note' => $request->note,
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => auth()->user()->site
+                'site' => 'BA'
             ];
         } else {
 
@@ -290,12 +247,12 @@ class InvComputerController extends Controller
                 'condition' => $request->condition,
                 'note' => $request->note,
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => auth()->user()->site
+                'site' => 'BA'
             ];
         }
 
         InvComputer::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('komputer.page');
+        return redirect()->route('komputerBa.page');
     }
     public function destroy($id)
     {
