@@ -359,6 +359,7 @@ const toggleLevel2SettingBa = () => {
     if (!level2OpenSettingBa.value) {
         level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiBa.value = false;
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
         level3PrinterOpenBa.value = false;
@@ -374,6 +375,7 @@ const toggleLevel2InspeksiBa = () => {
         level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenBa.value = false;
+        level2OpenSettingBa.value = false;
         level3KomputerOpenBa.value = false;
         level3PrinterOpenBa.value = false;
         level3ScannerOpenBa.value = false;
@@ -573,6 +575,7 @@ const toggleLevel2SettingBib = () => {
     if (!level2OpenSettingBib.value) {
         level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiBib.value = false;
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
         level3PrinterOpenBib.value = false;
@@ -587,6 +590,7 @@ const toggleLevel2InspeksiBib = () => {
     if (!level2OpenInspeksiBib.value) {
         level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingBib.value = false;
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
         level3PrinterOpenBib.value = false;
@@ -1412,8 +1416,8 @@ const toggleLevel3ScannerBib = () => {
                             <li>
                                 <NavLink
                                     @click="toggleLevel2AduanBa"
-                                    :href="route('aduan.page')"
-                                    :active="route().current('aduan.page')"
+                                    :href="route('aduanBa.page')"
+                                    :active="route().current('aduanBa.page')"
                                 >
                                     <div
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -1538,9 +1542,9 @@ const toggleLevel3ScannerBib = () => {
                                     </div>
                                     <li v-if="level3OpenBa">
                                         <NavLink
-                                            :href="route('laptop.page')"
+                                            :href="route('laptopBa.page')"
                                             :active="
-                                                route().current('laptop.page')
+                                                route().current('laptopBa.page')
                                             "
                                         >
                                             <div
@@ -1584,9 +1588,9 @@ const toggleLevel3ScannerBib = () => {
                                     </div>
                                     <li v-if="level3KomputerOpenBa">
                                         <NavLink
-                                            :href="route('komputer.page')"
+                                            :href="route('komputerBa.page')"
                                             :active="
-                                                route().current('komputer.page')
+                                                route().current('komputerBa.page')
                                             "
                                         >
                                             <div
@@ -1772,10 +1776,10 @@ const toggleLevel3ScannerBib = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiBa">
                                     <NavLink
-                                        :href="route('inspeksiLaptop.page')"
+                                        :href="route('inspeksiLaptopBa.page')"
                                         :active="
                                             route().current(
-                                                'inspeksiLaptop.page'
+                                                'inspeksiLaptopBa.page'
                                             )
                                         "
                                     >
@@ -1793,10 +1797,10 @@ const toggleLevel3ScannerBib = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('inspeksiKomputer.page')"
+                                        :href="route('inspeksiKomputerBa.page')"
                                         :active="
                                             route().current(
-                                                'inspeksiKomputer.page'
+                                                'inspeksiKomputerBa.page'
                                             )
                                         "
                                     >
@@ -1849,9 +1853,9 @@ const toggleLevel3ScannerBib = () => {
                                             $page.props.auth.user.role ===
                                             'ict_developer'
                                         "
-                                        :href="route('pengguna.page')"
+                                        :href="route('penggunaBa.page')"
                                         :active="
-                                            route().current('pengguna.page')
+                                            route().current('penggunaBa.page')
                                         "
                                     >
                                         <div
@@ -1872,9 +1876,9 @@ const toggleLevel3ScannerBib = () => {
                                             $page.props.auth.user.role ===
                                             'ict_developer'
                                         "
-                                        :href="route('department.page')"
+                                        :href="route('departmentBa.page')"
                                         :active="
-                                            route().current('department.page')
+                                            route().current('departmentBa.page')
                                         "
                                     >
                                         <div
