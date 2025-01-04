@@ -358,7 +358,7 @@ class InspeksiComputerBaController extends Controller
             ];
             $data['udpateInspeksi'] = InvComputer::firstWhere('id', $getDataInventory->id)->update($dataInventory);
         }
-        return redirect()->route('inspeksiKomputer.page');
+        return redirect()->route('inspeksiKomputerBa.page');
     }
 
     public function edit($id)

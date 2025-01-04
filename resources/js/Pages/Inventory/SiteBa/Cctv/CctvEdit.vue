@@ -108,7 +108,7 @@ const update = () => {
     formData.append("uplink", form.uplink);
     formData.append("vlan", form.vlan);
 
-    Inertia.post(route("cctv.update", props.cctv.id), formData, {
+    Inertia.post(route("cctvBa.update", props.cctv.id), formData, {
         // Use route name here
         onProgress: (progress) => {
             console.log(formData.append); // Track the upload progress
@@ -131,7 +131,7 @@ const update = () => {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('cctv.page')"
+                        :href="route('cctvBa.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
@@ -518,7 +518,7 @@ const update = () => {
                                 <div class="flex flex-nowrap mt-6 justify-between">
                                     
                                     <Link
-                                        :href="route('cctv.page')"
+                                        :href="route('cctvBa.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

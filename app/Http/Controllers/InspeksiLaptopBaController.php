@@ -131,7 +131,7 @@ class InspeksiLaptopBaController extends Controller
 
 
         InspeksiLaptop::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('inspeksiLaptop.page');
+        return redirect()->route('inspeksiLaptopBa.page');
     }
 
     public function edit($id)
@@ -248,7 +248,7 @@ class InspeksiLaptopBaController extends Controller
 
 
         InspeksiLaptop::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('inspeksiLaptop.page');
+        return redirect()->route('inspeksiLaptopBa.page');
     }
 
     public function approval(Request $request)

@@ -104,6 +104,11 @@ const toggleLevel1Ho = () => {
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenHo.value) {
         level2OpenHo.value = false;
@@ -313,6 +318,11 @@ const toggleLevel1Ba = () => {
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBa.value) {
         level2OpenBa.value = false;
@@ -439,6 +449,227 @@ const toggleLevel3ScannerBa = () => {
     level3ScannerOpenBa.value = !level3ScannerOpenBa.value;
 };
 
+// toggle MIFA
+const level1OpenMifa = ref(false);
+const level2OpenMifa = ref(false);
+const level2OpenAduanMifa = ref(false);
+const level2OpenSettingMifa = ref(false);
+const level2OpenInspeksiMifa = ref(false);
+const level3OpenMifa = ref(false);
+const level3KomputerOpenMifa = ref(false);
+const level3PrinterOpenMifa = ref(false);
+const level3ScannerOpenMifa = ref(false);
+const level3CctvOpenMifa = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenMifa.value = localStorage.getItem("level1OpenMifa") === "true";
+    level2OpenMifa.value = localStorage.getItem("level2OpenMifa") === "true";
+    level2OpenAduanMifa.value =
+        localStorage.getItem("level2OpenAduanMifa") === "true";
+    level2OpenSettingMifa.value =
+        localStorage.getItem("level2OpenSettingMifa") === "true";
+    level2OpenInspeksiMifa.value =
+        localStorage.getItem("level2OpenInspeksiMifa") === "true";
+    level3OpenMifa.value = localStorage.getItem("level3OpenMifa") === "true";
+    level3PrinterOpenMifa.value =
+        localStorage.getItem("level3PrinterOpenMifa") === "true";
+    level3ScannerOpenMifa.value =
+        localStorage.getItem("level3ScannerOpenMifa") === "true";
+    level3KomputerOpenMifa.value =
+        localStorage.getItem("level3KomputerOpenMifa") === "true";
+    level3CctvOpenMifa.value =
+        localStorage.getItem("level3CctvOpenMifa") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenMifa,
+        level2OpenMifa,
+        level2OpenSettingMifa,
+        level2OpenInspeksiMifa,
+        level2OpenAduanMifa,
+        level3OpenMifa,
+        level3PrinterOpenMifa,
+        level3ScannerOpenMifa,
+        level3KomputerOpenMifa,
+        level3CctvOpenMifa,
+    ],
+    () => {
+        localStorage.setItem("level1OpenMifa", level1OpenMifa.value);
+        localStorage.setItem("level2OpenMifa", level2OpenMifa.value);
+        localStorage.setItem("level2OpenAduanMifa", level2OpenAduanMifa.value);
+        localStorage.setItem(
+            "level2OpenSettingMifa",
+            level2OpenSettingMifa.value
+        );
+        localStorage.setItem(
+            "level2OpenInspeksiMifa",
+            level2OpenInspeksiMifa.value
+        );
+        localStorage.setItem("level3OpenMifa", level3OpenMifa.value);
+        localStorage.setItem(
+            "level3KomputerOpenMifa",
+            level3KomputerOpenMifa.value
+        );
+        localStorage.setItem(
+            "level3PrinterOpenMifa",
+            level3PrinterOpenMifa.value
+        );
+        localStorage.setItem(
+            "level3ScannerOpenMifa",
+            level3ScannerOpenMifa.value
+        );
+        localStorage.setItem("level3CctvOpenMifa", level3CctvOpenMifa.value);
+    }
+);
+
+// Toggle functions for each level
+const toggleLevel1Mifa = () => {
+    level1OpenMifa.value = !level1OpenMifa.value;
+
+    level1OpenHo.value = false;
+    level2OpenHo.value = false;
+    level2OpenSettingHo.value = false;
+    level2OpenInspeksiHo.value = false;
+
+    level1OpenBa.value = false;
+    level2OpenBa.value = false;
+    level2OpenSettingBa.value = false;
+    level2OpenInspeksiBa.value = false;
+
+    level1OpenBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenMifa.value) {
+        level2OpenMifa.value = false;
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+};
+
+const toggleLevel2Mifa = () => {
+    console.log(level1OpenMifa.value);
+    if (!level2OpenMifa.value) {
+        level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingMifa.value = false;
+        level2OpenInspeksiMifa.value = false;
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level2OpenMifa.value = !level2OpenMifa.value;
+};
+
+const toggleLevel2AduanMifa = () => {
+    console.log(level1OpenMifa.value);
+    if (!level2OpenAduanMifa.value) {
+        level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level2OpenAduanMifa.value = !level2OpenAduanMifa.value;
+};
+
+const toggleLevel2SettingMifa = () => {
+    console.log(level1OpenMifa.value);
+    if (!level2OpenSettingMifa.value) {
+        level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiMifa.value = false;
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level2OpenSettingMifa.value = !level2OpenSettingMifa.value;
+};
+
+const toggleLevel2InspeksiMifa = () => {
+    console.log(level1OpenMifa.value);
+    if (!level2OpenInspeksiMifa.value) {
+        level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingMifa.value = false;
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level2OpenInspeksiMifa.value = !level2OpenInspeksiMifa.value;
+};
+
+const toggleLevel3LaptopMifa = () => {
+    if (!level3OpenMifa.value) {
+        level2OpenMifa.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level3OpenMifa.value = !level3OpenMifa.value;
+};
+
+const toggleLevel3KomputerMifa = () => {
+    if (!level3KomputerOpenMifa.value) {
+        level2OpenMifa.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level3KomputerOpenMifa.value = !level3KomputerOpenMifa.value;
+};
+
+const toggleLevel3CctvMifa = () => {
+    if (!level3CctvOpenMifa.value) {
+        level2OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+    }
+    level3CctvOpenMifa.value = !level3CctvOpenMifa.value;
+};
+
+const toggleLevel3PrinterMifa = () => {
+    if (!level3PrinterOpenMifa.value) {
+        level2OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level3PrinterOpenMifa.value = !level3PrinterOpenMifa.value;
+};
+
+const toggleLevel3ScannerMifa = () => {
+    if (!level3ScannerOpenMifa.value) {
+        level2OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level3ScannerOpenMifa.value = !level3ScannerOpenMifa.value;
+};
+
 // toggle BIB
 const level1OpenBib = ref(false);
 const level2OpenBib = ref(false);
@@ -528,6 +759,11 @@ const toggleLevel1Bib = () => {
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
+
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBib.value) {
@@ -818,16 +1054,12 @@ const toggleLevel3ScannerBib = () => {
                                 ></i>
                             </div>
                             <span
-                                v-if="
-                                    $page.props.auth.user.site == 'HO'
-                                "
+                                v-if="$page.props.auth.user.site == 'HO'"
                                 class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                 >Head Office PPA</span
                             >
                             <span
-                                v-if="
-                                    $page.props.auth.user.site != 'HO'
-                                "
+                                v-if="$page.props.auth.user.site != 'HO'"
                                 class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                 >ICT - PPA HO</span
                             >
@@ -1483,7 +1715,9 @@ const toggleLevel3ScannerBib = () => {
                                     </NavLink>
                                     <NavLink
                                         :href="route('switchBa.page')"
-                                        :active="route().current('switchBa.page')"
+                                        :active="
+                                            route().current('switchBa.page')
+                                        "
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -1590,7 +1824,9 @@ const toggleLevel3ScannerBib = () => {
                                         <NavLink
                                             :href="route('komputerBa.page')"
                                             :active="
-                                                route().current('komputerBa.page')
+                                                route().current(
+                                                    'komputerBa.page'
+                                                )
                                             "
                                         >
                                             <div
@@ -1636,7 +1872,9 @@ const toggleLevel3ScannerBib = () => {
                                         <NavLink
                                             :href="route('printerBa.page')"
                                             :active="
-                                                route().current('printerBa.page')
+                                                route().current(
+                                                    'printerBa.page'
+                                                )
                                             "
                                         >
                                             <div
@@ -1682,7 +1920,9 @@ const toggleLevel3ScannerBib = () => {
                                         <NavLink
                                             :href="route('scannerBa.page')"
                                             :active="
-                                                route().current('scannerBa.page')
+                                                route().current(
+                                                    'scannerBa.page'
+                                                )
                                             "
                                         >
                                             <div
@@ -1900,7 +2140,9 @@ const toggleLevel3ScannerBib = () => {
                                             'ict_developer'
                                         "
                                         :href="route('aksesBa.page')"
-                                        :active="route().current('aksesBa.page')"
+                                        :active="
+                                            route().current('aksesBa.page')
+                                        "
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -1943,12 +2185,610 @@ const toggleLevel3ScannerBib = () => {
                     <!-- end BA -->
                     <hr
                         v-if="
+                            $page.props.auth.user.site == 'MIFA' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                        class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                    />
+
+                    <!-- start MIFA -->
+                    <li
+                        v-if="
+                            $page.props.auth.user.site == 'MIFA' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
+                        <div
+                            @click="toggleLevel1Mifa"
+                            style="cursor: pointer"
+                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        >
+                            <div
+                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                ></i>
+                            </div>
+                            <span
+                                v-if="$page.props.auth.user.site == 'HO'"
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >Mifa Bersaudara</span
+                            >
+                            <span
+                                v-if="
+                                    $page.props.auth.user.site == 'MIFA' ||
+                                    $page.props.auth.user.role ==
+                                        'ict_developer'
+                                "
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >ICT - PPA MIFA</span
+                            >
+                            <i
+                                v-if="!level1OpenMifa"
+                                class="ms-3 fas fa-angle-right"
+                            ></i>
+                            <i v-else class="ms-3 fas fa-angle-down"></i>
+                        </div>
+                        <ul v-if="level1OpenMifa">
+                            <li>
+                                <NavLink
+                                    @click="toggleLevel2AduanMifa"
+                                    :href="route('aduanMifa.page')"
+                                    :active="route().current('aduanMifa.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Aduan</span
+                                    >
+                                </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2Mifa"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inventory</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenMifa"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenMifa">
+                                    <NavLink
+                                        :href="route('accessPointMifa.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Access Point</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('switchMifa.page')"
+                                        :active="
+                                            route().current('switchMifa.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Switch</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('wirellessMifa.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Wirelless</span
+                                        >
+                                    </NavLink>
+                                    <div
+                                        @click="toggleLevel3LaptopMifa"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Laptop</span
+                                        >
+                                        <i
+                                            v-if="!level3OpenMifa"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3OpenMifa">
+                                        <NavLink
+                                            :href="route('laptopMifa.page')"
+                                            :active="
+                                                route().current(
+                                                    'laptopMifa.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Laptop Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3KomputerMifa"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Komputer</span
+                                        >
+                                        <i
+                                            v-if="!level3KomputerOpenMifa"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3KomputerOpenMifa">
+                                        <NavLink
+                                            :href="route('komputerMifa.page')"
+                                            :active="
+                                                route().current(
+                                                    'komputerMifa.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Komputer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3PrinterMifa"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Printer</span
+                                        >
+                                        <i
+                                            v-if="!level3PrinterOpenMifa"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3PrinterOpenMifa">
+                                        <NavLink
+                                            :href="route('printerMifa.page')"
+                                            :active="
+                                                route().current(
+                                                    'printerMifa.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Printer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3ScannerMifa"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Scanner</span
+                                        >
+                                        <i
+                                            v-if="!level3ScannerOpenMifa"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3ScannerOpenMifa">
+                                        <NavLink
+                                            :href="route('scannerMifa.page')"
+                                            :active="
+                                                route().current(
+                                                    'scannerMifa.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Scanner</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3CctvMifa"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Cctv</span
+                                        >
+                                        <i
+                                            v-if="!level3CctvOpenMifa"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3CctvOpenMifa">
+                                        <NavLink
+                                            :href="route('cctvMifa.page')"
+                                            :active="
+                                                route().current('cctvMifa.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Cctv</span
+                                            >
+                                        </NavLink>
+                                    </li>
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2InspeksiMifa"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenInspeksiMifa"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenInspeksiMifa">
+                                    <NavLink
+                                        :href="route('inspeksiLaptopMifa.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiLaptopMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiKomputerMifa.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiKomputerMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_developer'
+                                    "
+                                    @click="toggleLevel2SettingMifa"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenSettingMifa"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenSettingMifa">
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('penggunaMifa.page')"
+                                        :active="
+                                            route().current('penggunaMifa.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Pengguna</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('departmentMifa.page')"
+                                        :active="
+                                            route().current(
+                                                'departmentMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Department</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('aksesMifa.page')"
+                                        :active="
+                                            route().current('aksesMifa.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pengajuan Akses Role</span
+                                        >
+                                    </NavLink>
+                                </ul>
+
+                                <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_group_leader'
+                                    "
+                                    :href="route('aduan-ho.page')"
+                                    :active="route().current('aduan-ho.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >
+                                        Pengaduan HO</span
+                                    >
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end MIFA -->
+
+                    <hr
+                        v-if="
                             $page.props.auth.user.site == 'BIB' ||
                             $page.props.auth.user.role == 'ict_developer' ||
                             $page.props.auth.user.site == 'HO'
                         "
                         class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                     />
+
                     <!-- start BIB -->
                     <li
                         v-if="

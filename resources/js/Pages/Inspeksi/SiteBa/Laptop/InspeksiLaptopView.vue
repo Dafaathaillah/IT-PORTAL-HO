@@ -73,8 +73,8 @@ const getBadgeClassStatusInventory = (status) => {
 const getBadgeTextStatusInventory = (status) => {
     if (status === "READY_USED") {
         return "READY_USED";
-    } else if (status === "READY_STANDBY") {
-        return "READY_STANDBY";
+    } else if (status === "READY_STANBY") {
+        return "READY_STANBY";
     } else if (status === "SCRAP") {
         return "SCRAP";
     } else if (status === "BREAKDOWN") {
