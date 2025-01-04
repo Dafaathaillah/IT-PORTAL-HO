@@ -154,7 +154,7 @@ class InvApBaController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => auth()->user()->site
+            'site' => 'BA'
         ];
         // DB::table('inv_aps')->insert($data);
         InvAp::firstWhere('id', $request->id)->update($data);
