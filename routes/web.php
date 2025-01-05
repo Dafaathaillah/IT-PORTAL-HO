@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminPengajuanRoleMifaController;
 use App\Http\Controllers\AduanBaController;
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\AduanHoController;
+use App\Http\Controllers\AduanMhuController;
 use App\Http\Controllers\AduanMifaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
@@ -22,28 +23,36 @@ use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InspeksiLaptopMifaController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApController;
+use App\Http\Controllers\InvApMhuController;
 use App\Http\Controllers\InvApMifaController;
 use App\Http\Controllers\InvCctvBaController;
 use App\Http\Controllers\InvCctvController;
+use App\Http\Controllers\InvCctvMhuController;
 use App\Http\Controllers\InvCctvMifaController;
 use App\Http\Controllers\InvComputerBaController;
 use App\Http\Controllers\InvComputerController;
+use App\Http\Controllers\InvComputerMhuController;
 use App\Http\Controllers\InvComputerMifaController;
 use App\Http\Controllers\InvLaptopBaController;
 use App\Http\Controllers\InvLaptopController;
+use App\Http\Controllers\InvLaptopMhuController;
 use App\Http\Controllers\InvLaptopMifaController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
 use App\Http\Controllers\InvPrinterBaController;
 use App\Http\Controllers\InvPrinterController;
+use App\Http\Controllers\InvPrinterMhuController;
 use App\Http\Controllers\InvPrinterMifaController;
 use App\Http\Controllers\InvScannerBaController;
 use App\Http\Controllers\InvScannerController;
+use App\Http\Controllers\InvScannerMhuController;
 use App\Http\Controllers\InvScannerMifaController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvSwitchBaController;
+use App\Http\Controllers\InvSwitchMhuController;
 use App\Http\Controllers\InvSwitchMifaController;
 use App\Http\Controllers\InvWirellessBaController;
 use App\Http\Controllers\InvWirellessController;
+use App\Http\Controllers\InvWirellessMhuController;
 use App\Http\Controllers\InvWirellessMifaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
@@ -435,7 +444,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/laptopBa/{id}/delete', [InvLaptopBaController::class, 'destroy'])->name('laptopBa.delete');
             Route::post('/laptopBa/update', [InvLaptopBaController::class, 'update'])->name('laptopBa.update');
             Route::get('/laptopBa/{id}/detail', [InvLaptopBaController::class, 'detail'])->name('laptopBa.detail');
-            Route::post('/uploadCsvNb', [InvLaptopBaController::class, 'uploadCsv'])->name('laptopBa.import');
+            Route::post('/uploadCsvNbBa', [InvLaptopBaController::class, 'uploadCsv'])->name('laptopBa.import');
 
             Route::get('/komputerBa', [InvComputerBaController::class, 'index'])->name('komputerBa.page');
             Route::get('/komputerBa/create', [InvComputerBaController::class, 'create'])->name('komputerBa.create');
@@ -444,7 +453,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/komputerBa/{id}/delete', [InvComputerBaController::class, 'destroy'])->name('komputerBa.delete');
             Route::post('/komputerBa/update', [InvComputerBaController::class, 'update'])->name('komputerBa.update');
             Route::get('/komputerBa/{id}/detail', [InvComputerBaController::class, 'detail'])->name('komputerBa.detail');
-            Route::post('/uploadCsvCu', [InvComputerBaController::class, 'uploadCsv'])->name('komputerBa.import');
+            Route::post('/uploadCsvCuBa', [InvComputerBaController::class, 'uploadCsv'])->name('komputerBa.import');
 
             Route::get('/printerBa', [InvPrinterBaController::class, 'index'])->name(name: 'printerBa.page');
             Route::get('/printerBa/create', [InvPrinterBaController::class, 'create'])->name('printerBa.create');
@@ -473,7 +482,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvBa/{id}/detail', [InvCctvBaController::class, 'detail'])->name('cctvBa.detail');
             Route::post('/uploadCsvCCTVBa', [InvCctvBaController::class, 'uploadCsv'])->name('cctvBa.import');
         });
-        
+
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_ho:HO'], function () {
             Route::get('/accessPointSiteMifa', [InvApMifaController::class, 'index'])->name('accessPointMifa.page');
             Route::get('/accessPointSiteMifa/create', [InvApMifaController::class, 'create'])->name('accessPointMifa.create');
@@ -509,7 +518,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/laptopMifa/{id}/delete', [InvLaptopMifaController::class, 'destroy'])->name('laptopMifa.delete');
             Route::post('/laptopMifa/update', [InvLaptopMifaController::class, 'update'])->name('laptopMifa.update');
             Route::get('/laptopMifa/{id}/detail', [InvLaptopMifaController::class, 'detail'])->name('laptopMifa.detail');
-            Route::post('/uploadCsvNb', [InvLaptopMifaController::class, 'uploadCsv'])->name('laptopMifa.import');
+            Route::post('/uploadCsvNbMifa', [InvLaptopMifaController::class, 'uploadCsv'])->name('laptopMifa.import');
 
             Route::get('/komputerMifa', [InvComputerMifaController::class, 'index'])->name('komputerMifa.page');
             Route::get('/komputerMifa/create', [InvComputerMifaController::class, 'create'])->name('komputerMifa.create');
@@ -518,7 +527,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/komputerMifa/{id}/delete', [InvComputerMifaController::class, 'destroy'])->name('komputerMifa.delete');
             Route::post('/komputerMifa/update', [InvComputerMifaController::class, 'update'])->name('komputerMifa.update');
             Route::get('/komputerMifa/{id}/detail', [InvComputerMifaController::class, 'detail'])->name('komputerMifa.detail');
-            Route::post('/uploadCsvCu', [InvComputerMifaController::class, 'uploadCsv'])->name('komputerMifa.import');
+            Route::post('/uploadCsvCuMifa', [InvComputerMifaController::class, 'uploadCsv'])->name('komputerMifa.import');
 
             Route::get('/printerMifa', [InvPrinterMifaController::class, 'index'])->name(name: 'printerMifa.page');
             Route::get('/printerMifa/create', [InvPrinterMifaController::class, 'create'])->name('printerMifa.create');
@@ -546,6 +555,80 @@ Route::middleware('auth')->group(function () {
             Route::post('/cctvMifa/update', [InvCctvMifaController::class, 'update'])->name('cctvMifa.update');
             Route::get('/cctvMifa/{id}/detail', [InvCctvMifaController::class, 'detail'])->name('cctvMifa.detail');
             Route::post('/uploadCsvCCTVMifa', [InvCctvMifaController::class, 'uploadCsv'])->name('cctvMifa.import');
+        });
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_ho:HO'], function () {
+            Route::get('/accessPointSiteMHU', [InvApMhuController::class, 'index'])->name('accessPointMhu.page');
+            Route::get('/accessPointSiteMHU/create', [InvApMhuController::class, 'create'])->name('accessPointMhu.create');
+            Route::post('/accessPointSiteMHU/create', [InvApMhuController::class, 'store'])->name('accessPointMhu.store');
+            Route::get('/accessPointSiteMHU/{apId}/edit', [InvApMhuController::class, 'edit'])->name('accessPointMhu.edit');
+            Route::put('/accessPointSiteMHU/{apId}/update', [InvApMhuController::class, 'update'])->name('accessPointMhu.update');
+            Route::delete('/accessPointSiteMHU/{apId}/delete', [InvApMhuController::class, 'destroy'])->name('accessPointMhu.delete');
+            Route::get('/accessPointSiteMHU/{id}/detail', [InvApMhuController::class, 'detail'])->name('accessPointMhu.detail');
+            Route::post('/uploadCsvApMHU', [InvApMhuController::class, 'uploadCsv'])->name('accessPointMhu.import');
+
+            Route::get('/switchMhu', [InvSwitchMhuController::class, 'index'])->name('switchMhu.page');
+            Route::get('/switchMhu/create', [InvSwitchMhuController::class, 'create'])->name('switchMhu.create');
+            Route::post('/switchMhu/create', [InvSwitchMhuController::class, 'store'])->name('switchMhu.store');
+            Route::get('/switchMhu/{swId}/edit', [InvSwitchMhuController::class, 'edit'])->name('switchMhu.edit');
+            Route::put('/switchMhu/{swId}/update', [InvSwitchMhuController::class, 'update'])->name('switchMhu.update');
+            Route::delete('/switchMhu/{swId}/delete', [InvSwitchMhuController::class, 'destroy'])->name('switchMhu.delete');
+            Route::get('/switchMhu/{id}/detail', [InvSwitchMhuController::class, 'detail'])->name('switchMhu.detail');
+            Route::post('/uploadCsvSwMhu', [InvSwitchMhuController::class, 'uploadCsv'])->name('switchMhu.import');
+
+            Route::get('/wirellessMhu', [InvWirellessMhuController::class, 'index'])->name('wirellessMhu.page');
+            Route::get('/wirellessMhu/create', [InvWirellessMhuController::class, 'create'])->name('wirellessMhu.create');
+            Route::post('/wirellessMhu/create', [InvWirellessMhuController::class, 'store'])->name('wirellessMhu.store');
+            Route::get('/wirellessMhu/{id}/edit', [InvWirellessMhuController::class, 'edit'])->name('wirellessMhu.edit');
+            Route::put('/wirellessMhu/{id}/update', [InvWirellessMhuController::class, 'update'])->name('wirellessMhu.update');
+            Route::delete('/wirellessMhu/{id}/delete', [InvWirellessMhuController::class, 'destroy'])->name('wirellessMhu.delete');
+            Route::get('/wirellessMhu/{id}/detail', [InvWirellessMhuController::class, 'detail'])->name('wirellessMhu.detail');
+            Route::post('/uploadCsvBbMhu', [InvWirellessMhuController::class, 'uploadCsv'])->name('wirellessMhu.import');
+
+            Route::get('/laptopMhu', [InvLaptopMhuController::class, 'index'])->name('laptopMhu.page');
+            Route::get('/laptopMhu/create', [InvLaptopMhuController::class, 'create'])->name('laptopMhu.create');
+            Route::post('/laptopMhu/create', [InvLaptopMhuController::class, 'store'])->name('laptopMhu.store');
+            Route::get('/laptopMhu/{id}/edit', [InvLaptopMhuController::class, 'edit'])->name('laptopMhu.edit');
+            Route::delete('/laptopMhu/{id}/delete', [InvLaptopMhuController::class, 'destroy'])->name('laptopMhu.delete');
+            Route::post('/laptopMhu/update', [InvLaptopMhuController::class, 'update'])->name('laptopMhu.update');
+            Route::get('/laptopMhu/{id}/detail', [InvLaptopMhuController::class, 'detail'])->name('laptopMhu.detail');
+            Route::post('/uploadCsvNbMhu', [InvLaptopMhuController::class, 'uploadCsv'])->name('laptopMhu.import');
+
+            Route::get('/komputerMhu', [InvComputerMhuController::class, 'index'])->name('komputerMhu.page');
+            Route::get('/komputerMhu/create', [InvComputerMhuController::class, 'create'])->name('komputerMhu.create');
+            Route::post('/komputerMhu/create', [InvComputerMhuController::class, 'store'])->name('komputerMhu.store');
+            Route::get('/komputerMhu/{id}/edit', [InvComputerMhuController::class, 'edit'])->name('komputerMhu.edit');
+            Route::delete('/komputerMhu/{id}/delete', [InvComputerMhuController::class, 'destroy'])->name('komputerMhu.delete');
+            Route::post('/komputerMhu/update', [InvComputerMhuController::class, 'update'])->name('komputerMhu.update');
+            Route::get('/komputerMhu/{id}/detail', [InvComputerMhuController::class, 'detail'])->name('komputerMhu.detail');
+            Route::post('/uploadCsvCuMhu', [InvComputerMhuController::class, 'uploadCsv'])->name('komputerMhu.import');
+
+            Route::get('/printerMhu', [InvPrinterMhuController::class, 'index'])->name(name: 'printerMhu.page');
+            Route::get('/printerMhu/create', [InvPrinterMhuController::class, 'create'])->name('printerMhu.create');
+            Route::post('/printerMhu/create', [InvPrinterMhuController::class, 'store'])->name('printerMhu.store');
+            Route::get('/printerMhu/{id}/edit', [InvPrinterMhuController::class, 'edit'])->name('printerMhu.edit');
+            Route::delete('/printerMhu/{id}/delete', [InvPrinterMhuController::class, 'destroy'])->name('printerMhu.delete');
+            Route::post('/printerMhu/update', [InvPrinterMhuController::class, 'update'])->name('printerMhu.update');
+            Route::get('/printerMhu/{id}/detail', [InvPrinterMhuController::class, 'detail'])->name('printerMhu.detail');
+            Route::post('/uploadCsvPrtMhu', [InvPrinterMhuController::class, 'uploadCsv'])->name('printerMhu.import');
+
+            Route::get('/scannerMhu', [InvScannerMhuController::class, 'index'])->name('scannerMhu.page');
+            Route::get('/scannerMhu/create', [InvScannerMhuController::class, 'create'])->name('scannerMhu.create');
+            Route::post('/scannerMhu/create', [InvScannerMhuController::class, 'store'])->name('scannerMhu.store');
+            Route::get('/scannerMhu/{id}/edit', [InvScannerMhuController::class, 'edit'])->name('scannerMhu.edit');
+            Route::delete('/scannerMhu/{id}/delete', [InvScannerMhuController::class, 'destroy'])->name('scannerMhu.delete');
+            Route::post('/scannerMhu/update', [InvScannerMhuController::class, 'update'])->name('scannerMhu.update');
+            Route::get('/scannerMhu/{id}/detail', [InvScannerMhuController::class, 'detail'])->name('scannerMhu.detail');
+            Route::post('/uploadCsvScnMhu', [InvScannerMhuController::class, 'uploadCsv'])->name('scannerMhu.import');
+
+            Route::get('/cctvMhu', [InvCctvMhuController::class, 'index'])->name('cctvMhu.page');
+            Route::get('/cctvMhu/create', [InvCctvMhuController::class, 'create'])->name('cctvMhu.create');
+            Route::post('/cctvMhu/create', [InvCctvMhuController::class, 'store'])->name('cctvMhu.store');
+            Route::get('/cctvMhu/{id}/edit', [InvCctvMhuController::class, 'edit'])->name('cctvMhu.edit');
+            Route::delete('/cctvMhu/{id}/delete', [InvCctvMhuController::class, 'destroy'])->name('cctvMhu.delete');
+            Route::post('/cctvMhu/update', [InvCctvMhuController::class, 'update'])->name('cctvMhu.update');
+            Route::get('/cctvMhu/{id}/detail', [InvCctvMhuController::class, 'detail'])->name('cctvMhu.detail');
+            Route::post('/uploadCsvCCTVMhu', [InvCctvMhuController::class, 'uploadCsv'])->name('cctvMhu.import');
         });
 
         Route::prefix('itportal')->group(function () {
@@ -577,7 +660,7 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer/{id}/update', [InspeksiComputerController::class, 'update'])->name('inspeksiKomputer.update');
                 Route::get('/inspeksi-komputer/{id}/detail', [InspeksiComputerController::class, 'detail'])->name('inspeksiKomputer.detail');
                 Route::delete('inspeksi-komputer/{id}/delete', [InspeksiComputerController::class, 'destroy'])->name('inspeksiKomputer.delete');
-                
+
                 Route::get('inspeksi-laptop', [InspeksiLaptopController::class, 'index'])->name('inspeksiLaptop.page');
                 Route::get('inspeksi-laptop/{id}/process', [InspeksiLaptopController::class, 'process'])->name('inspeksiLaptop.process');
                 Route::post('inspeksi-laptop/process', [InspeksiLaptopController::class, 'store'])->name('inspeksiLaptop.store');
@@ -595,7 +678,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('inspeksi-laptop-ba/update', [InspeksiLaptopBaController::class, 'update'])->name('inspeksiLaptopBa.update');
                 Route::get('/inspeksi-laptop-ba/{id}/detail', [InspeksiLaptopBaController::class, 'detail'])->name('inspeksiLaptopBa.detail');
                 Route::delete('inspeksi-laptop-ba/{id}/delete', [InspeksiLaptopBaController::class, 'destroy'])->name('inspeksiLaptopBa.delete');
-            
+
                 Route::get('inspeksi-komputer-ba', [InspeksiComputerBaController::class, 'index'])->name('inspeksiKomputerBa.page');
                 Route::get('inspeksi-komputer-ba/{id}/inspection', [InspeksiComputerBaController::class, 'doInspection'])->name('inspeksiKomputerBa.inspection');
                 Route::post('inspeksi-komputer-ba/inspection', [InspeksiComputerBaController::class, 'store'])->name('inspeksiKomputerBa.store');
@@ -633,7 +716,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('inspeksi-laptop-mifa/update', [InspeksiLaptopMifaController::class, 'update'])->name('inspeksiLaptopMifa.update');
                 Route::get('/inspeksi-laptop-mifa/{id}/detail', [InspeksiLaptopMifaController::class, 'detail'])->name('inspeksiLaptopMifa.detail');
                 Route::delete('inspeksi-laptop-mifa/{id}/delete', [InspeksiLaptopMifaController::class, 'destroy'])->name('inspeksiLaptopMifa.delete');
-            
+
                 Route::get('inspeksi-komputer-mifa', [InspeksiComputerMifaController::class, 'index'])->name('inspeksiKomputerMifa.page');
                 Route::get('inspeksi-komputer-mifa/{id}/inspection', [InspeksiComputerMifaController::class, 'doInspection'])->name('inspeksiKomputerMifa.inspection');
                 Route::post('inspeksi-komputer-mifa/inspection', [InspeksiComputerMifaController::class, 'store'])->name('inspeksiKomputerMifa.store');
@@ -683,6 +766,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanBa/create', [AduanBaController::class, 'create'])->name('aduanBa.create');
             Route::post('/aduanBa/create', [AduanBaController::class, 'store'])->name('aduanBa.store');
             Route::get('/aduanBa/{id}/edit', [AduanBaController::class, 'edit'])->name('aduanBa.edit');
+            Route::post('/aduanBa/updateProgress', [AduanBaController::class, 'update_aduan_progress'])->name('aduanBa.updateProgress');
+            Route::get('/aduanBa/{id}/progress', [AduanBaController::class, 'progress'])->name('aduanBa.progress');
             Route::delete('/aduanBa/{id}/delete', [AduanBaController::class, 'destroy'])->name('aduanBa.delete');
             Route::post('/aduanBa/update', [AduanBaController::class, 'update_aduan'])->name('aduanBa.update');
             Route::get('/aduanBa/{id}/detail', [AduanBaController::class, 'detail'])->name('aduanBa.detail');
@@ -693,9 +778,23 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMifa/create', [AduanMifaController::class, 'create'])->name('aduanMifa.create');
             Route::post('/aduanMifa/create', [AduanMifaController::class, 'store'])->name('aduanMifa.store');
             Route::get('/aduanMifa/{id}/edit', [AduanMifaController::class, 'edit'])->name('aduanMifa.edit');
+            Route::post('/aduanMifa/updateProgress', [AduanMifaController::class, 'update_aduan_progress'])->name('aduanMifa.updateProgress');
+            Route::get('/aduanMifa/{id}/progress', [AduanMifaController::class, 'progress'])->name('aduanMifa.progress');
             Route::delete('/aduanMifa/{id}/delete', [AduanMifaController::class, 'destroy'])->name('aduanMifa.delete');
             Route::post('/aduanMifa/update', [AduanMifaController::class, 'update_aduan'])->name('aduanMifa.update');
             Route::get('/aduanMifa/{id}/detail', [AduanMifaController::class, 'detail'])->name('aduanMifa.detail');
+        });
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_ho:HO'], function () {
+            Route::get('/aduanMhu', [AduanMhuController::class, 'index'])->name('aduanMhu.page');
+            Route::get('/aduanMhu/create', [AduanMhuController::class, 'create'])->name('aduanMhu.create');
+            Route::post('/aduanMhu/create', [AduanMhuController::class, 'store'])->name('aduanMhu.store');
+            Route::get('/aduanMhu/{id}/edit', [AduanMhuController::class, 'edit'])->name('aduanMhu.edit');
+            Route::post('/aduanMhu/updateProgress', [AduanMhuController::class, 'update_aduan_progress'])->name('aduanMhu.updateProgress');
+            Route::get('/aduanMhu/{id}/progress', [AduanMhuController::class, 'progress'])->name('aduanMhu.progress');
+            Route::delete('/aduanMhu/{id}/delete', [AduanMhuController::class, 'destroy'])->name('aduanMhu.delete');
+            Route::post('/aduanMhu/update', [AduanMhuController::class, 'update_aduan'])->name('aduanMhu.update');
+            Route::get('/aduanMhu/{id}/detail', [AduanMhuController::class, 'detail'])->name('aduanMhu.detail');
         });
 
         Route::group(['middleware' => 'checkRole:ict_technician:BA'], function () {

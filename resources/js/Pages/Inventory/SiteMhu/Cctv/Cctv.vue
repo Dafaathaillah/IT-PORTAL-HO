@@ -1,17 +1,17 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import DashboardBreadcrumb from "@/Components/inventory/DashboardBreadcrumb.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { ref, computed } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
-const subMenu = ref("Access Point Pages");
-const mainMenu = ref("Access Point");
+const subMenu = ref("Cctv Pages");
+const mainMenu = ref("Cctv Data");
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -21,11 +21,10 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable();
-    // var table = new DataTable('#tableData');
 });
 
 const props = defineProps({
-    accessPoint: {
+    cctv: {
         type: Array,
     },
     site: {
@@ -51,7 +50,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("accessPointMifa.delete", { id: id }), {
+            form.delete(route("cctvMhu.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -77,13 +76,13 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("accessPointMifa.edit", { id: id }));
+            form.get(route("cctvMhu.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("accessPointMifa.detail", { id: id }));
+    form.get(route("cctvMhu.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -111,11 +110,12 @@ const submitCsv = () => {
         window.location.reload();
     }
 
-    formx.post(route("accessPointMifa.import"), {
+    formx.post(route("cctvMhu.import"), {
         onSuccess: () => {
+            // Show SweetAlert2 success notification
             Swal.fire({
                 title: "Success!",
-                text: "Data has been successfully import!",
+                text: "Data has been successfully created!",
                 icon: "success",
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
@@ -136,10 +136,22 @@ const submitCsv = () => {
         },
     });
 };
+
+function formatData(text) {
+    const maxLength = 20; // Set your limit here
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+}
+
+// const formattedText = computed(() => formatText(dynamicText.value))
+
+// function formatText(text, limit) {
+//   const regex = new RegExp(`(.{1,${limit}})(\\s|$)`, 'g');
+//   return (text.match(regex)?.map(line => line.trim()).join('\n') || '');
+// }
 </script>
 
 <template>
-    <Head title="Inv Access Point" />
+    <Head title="Inv Cctv" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -149,49 +161,46 @@ const submitCsv = () => {
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
-                        <form
-                            @submit.prevent="submitCsv"
-                            enctype="multipart/form-data"
-                        >
-                            <div class="flex flex-wrap">
-                                <div
-                                    class="max-w-full px-3"
-                                >
-                                    <div class="mb-4">
-                                        <input
-                                            type="file"
-                                            ref="fileInput"
-                                            enctype="multipart/form-data"
-                                            class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                            @change="handleFileUpload"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="max-w-full pl-3">
-                                    <button
-                                        type="submit"
-                                        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                    >
-                                        <i class="fas fa-file-import"></i>
-                                        Import
-                                    </button>
-                                </div>
-                                <div
-                                    class="max-w-full px-3"
-                                >
-                                    <a
-                                        href="/sampleAP-Mifa.xlsx"
-                                        download="Format-Import-Data-AP.xlsx"
-                                        target="_blank"
-                                        type="button"
-                                        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                    >
-                                        <i class="fas fa-download"></i>
-                                        Format Excel Data
-                                    </a>
+                    <form
+                        @submit.prevent="submitCsv"
+                        enctype="multipart/form-data"
+                    >
+                        <div class="flex flex-wrap">
+                            <div class="max-w-full px-3">
+                                <div class="mb-4">
+                                    <input
+                                        type="file"
+                                        ref="fileInput"
+                                        enctype="multipart/form-data"
+                                        class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                        @change="handleFileUpload"
+                                    />
                                 </div>
                             </div>
-                        </form>
+                            <div class="max-w-full pl-3">
+                                <button
+                                    type="submit"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-file-import"></i>
+                                    Import
+                                </button>
+                            </div>
+                            <div class="max-w-full px-3">
+                                <a
+                                    href="/sampleCctv-Mhu.xlsx"
+                                    download="Format-Import-Data-cctv.xlsx"
+                                    target="_blank"
+                                    type="button"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Format Excel Data
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
@@ -200,7 +209,7 @@ const submitCsv = () => {
                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <Link
-                                    :href="route('accessPointMifa.create')"
+                                    :href="route('cctvMhu.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                 >
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
@@ -235,27 +244,17 @@ const submitCsv = () => {
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Ip Address
+                                                            Cctv Name
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Serial Number
+                                                            Cctv Brand
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Device Model
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Device Type
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Frequency
+                                                            Type Cctv
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -265,24 +264,38 @@ const submitCsv = () => {
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
+                                                            Ip Address
+                                                        </th>
+                                                        <!-- <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Nvr
+                                                        </th> -->
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Switch
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Date Of Inventory
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Location
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Status
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Note
                                                         </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Inspection remark
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Device Status
-                                                        </th>
-
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -297,10 +310,9 @@ const submitCsv = () => {
                                                 </thead>
                                                 <tbody>
                                                     <tr
-                                                        
                                                         v-for="(
-                                                            accessPoints, index
-                                                        ) in accessPoint"
+                                                            cctvs, index
+                                                        ) in cctv"
                                                         :key="index"
                                                     >
                                                         <td
@@ -319,7 +331,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.inventory_number
+                                                                    cctvs.cctv_code
                                                                 }}
                                                             </p>
                                                         </td>
@@ -330,7 +342,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.asset_ho_number
+                                                                    cctvs.asset_ho_number
                                                                 }}
                                                             </p>
                                                         </td>
@@ -341,7 +353,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.ip_address
+                                                                    cctvs.cctv_name
                                                                 }}
                                                             </p>
                                                         </td>
@@ -352,7 +364,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.serial_number
+                                                                    cctvs.cctv_brand
                                                                 }}
                                                             </p>
                                                         </td>
@@ -363,7 +375,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.device_model
+                                                                    cctvs.type_cctv
                                                                 }}
                                                             </span>
                                                         </td>
@@ -374,7 +386,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.device_type
+                                                                    cctvs.mac_address
                                                                 }}
                                                             </span>
                                                         </td>
@@ -385,8 +397,54 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.frequency
+                                                                    cctvs.ip_address
                                                                 }}
+                                                            </span>
+                                                        </td>
+                                                        <!-- <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.nvr_id
+                                                                }}
+                                                            </span>
+                                                        </td> -->
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    cctvs.switch
+                                                                        .inventory_number
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                v-if="
+                                                                    cctvs.date_of_inventory
+                                                                "
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    formattedDate(
+                                                                        cctvs.date_of_inventory
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                            <span
+                                                                v-else
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Edit untuk setting
+                                                                tanggal !
                                                             </span>
                                                         </td>
                                                         <td
@@ -395,42 +453,7 @@ const submitCsv = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    accessPoints.mac_address
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    accessPoints.location
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    accessPoints.note
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    accessPoints.inspection_remark
-                                                                }}
+                                                                {{ cctvs.location }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -439,21 +462,35 @@ const submitCsv = () => {
                                                             <span
                                                                 :class="{
                                                                     'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                        accessPoints.status ===
+                                                                        cctvs.status ===
                                                                         'READY_USED',
                                                                     'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                        accessPoints.status ===
+                                                                        cctvs.status ===
                                                                         'READY_STANDBY',
                                                                     'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                        accessPoints.status ===
+                                                                        cctvs.status ===
                                                                         'SCRAP',
                                                                     'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                        accessPoints.status ===
+                                                                        cctvs.status ===
                                                                         'BREAKDOWN',
                                                                 }"
                                                             >
-                                                                {{
-                                                                    accessPoints.status
+                                                                {{ cctvs.status }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="break-normal mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                            {{
+                                                                    cctvs.note ==
+                                                                    null
+                                                                        ? ""
+                                                                        : formatData(
+                                                                            cctvs.note
+                                                                        )
                                                                 }}
                                                             </span>
                                                         </td>
@@ -465,7 +502,7 @@ const submitCsv = () => {
                                                             >
                                                                 {{
                                                                     formattedDate(
-                                                                        accessPoints.updated_at
+                                                                        cctvs.updated_at
                                                                     )
                                                                 }}
                                                             </span>
@@ -476,7 +513,7 @@ const submitCsv = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     detailData(
-                                                                        accessPoints.id
+                                                                        cctvs.cctv_code
                                                                     )
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -487,7 +524,7 @@ const submitCsv = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     editData(
-                                                                        accessPoints.id
+                                                                        cctvs.id
                                                                     )
                                                                 "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -498,7 +535,7 @@ const submitCsv = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     deleteData(
-                                                                        accessPoints.id
+                                                                        cctvs.id
                                                                     )
                                                                 "
                                                                 v-if="props.role !== 'ict_technician'"
