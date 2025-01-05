@@ -41,7 +41,7 @@ class InvWirellessMifaController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPABABB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAMIFABB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code

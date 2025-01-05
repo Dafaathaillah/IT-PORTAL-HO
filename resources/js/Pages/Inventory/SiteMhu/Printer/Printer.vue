@@ -1,17 +1,17 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import DashboardBreadcrumb from "@/Components/inventory/DashboardBreadcrumb.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
-const subMenu = ref("Access Point Pages");
-const mainMenu = ref("Access Point");
+const subMenu = ref("Printer Pages");
+const mainMenu = ref("Printer Data");
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -20,12 +20,13 @@ function formattedDate(date) {
 
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
-    $("#tableData").DataTable();
-    // var table = new DataTable('#tableData');
+    $("#tableData").DataTable({
+        buttons: ["copy", "csv", "excel", "pdf", "print"],
+    });
 });
 
 const props = defineProps({
-    accessPoint: {
+    printer: {
         type: Array,
     },
     site: {
@@ -42,7 +43,7 @@ const deleteData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        text: "Menghapus data ini akan berdampak pada table yang berelasi dengan data ini!, data pada table yang berelasi akan ikut terhapus!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -51,7 +52,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("accessPointMifa.delete", { id: id }), {
+            form.delete(route("printerMhu.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -77,13 +78,13 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("accessPointMifa.edit", { id: id }));
+            form.get(route("printerMhu.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("accessPointMifa.detail", { id: id }));
+    form.get(route("printerMhu.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -111,8 +112,9 @@ const submitCsv = () => {
         window.location.reload();
     }
 
-    formx.post(route("accessPointMifa.import"), {
+    formx.post(route("printerMhu.import"), {
         onSuccess: () => {
+            // Show SweetAlert2 success notification
             Swal.fire({
                 title: "Success!",
                 text: "Data has been successfully import!",
@@ -139,7 +141,7 @@ const submitCsv = () => {
 </script>
 
 <template>
-    <Head title="Inv Access Point" />
+    <Head title="Inv Printer" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -149,49 +151,58 @@ const submitCsv = () => {
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
-                        <form
-                            @submit.prevent="submitCsv"
-                            enctype="multipart/form-data"
-                        >
-                            <div class="flex flex-wrap">
-                                <div
-                                    class="max-w-full px-3"
-                                >
-                                    <div class="mb-4">
-                                        <input
-                                            type="file"
-                                            ref="fileInput"
-                                            enctype="multipart/form-data"
-                                            class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                            @change="handleFileUpload"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="max-w-full pl-3">
-                                    <button
-                                        type="submit"
-                                        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                    >
-                                        <i class="fas fa-file-import"></i>
-                                        Import
-                                    </button>
-                                </div>
-                                <div
-                                    class="max-w-full px-3"
-                                >
-                                    <a
-                                        href="/sampleAP-Mifa.xlsx"
-                                        download="Format-Import-Data-AP.xlsx"
-                                        target="_blank"
-                                        type="button"
-                                        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                    >
-                                        <i class="fas fa-download"></i>
-                                        Format Excel Data
-                                    </a>
+                    <form
+                        @submit.prevent="submitCsv"
+                        enctype="multipart/form-data"
+                    >
+                        <div class="flex flex-wrap">
+                            <div class="max-w-full px-3">
+                                <div class="mb-4">
+                                    <input
+                                        type="file"
+                                        ref="fileInput"
+                                        enctype="multipart/form-data"
+                                        class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                        @change="handleFileUpload"
+                                    />
                                 </div>
                             </div>
-                        </form>
+                            <div class="max-w-full pl-3">
+                                <button
+                                    type="submit"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-file-import"></i>
+                                    Import
+                                </button>
+                            </div>
+                            <div class="max-w-full px-3">
+                                <a
+                                    href="/samplePrinter.xlsx"
+                                    v-if="props.site === ''"
+                                    download="Format-Import-Data-printer.xlsx"
+                                    target="_blank"
+                                    type="button"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Format Excel Data
+                                </a>
+                                <a
+                                    href="/samplePrinter-Mhu.xlsx"
+                                    v-if="props.site === 'BA'"
+                                    download="Format-Import-Data-printer.xlsx"
+                                    target="_blank"
+                                    type="button"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Format Excel Data
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
@@ -200,17 +211,24 @@ const submitCsv = () => {
                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <Link
-                                    :href="route('accessPointMifa.create')"
+                                    :href="route('printerMhu.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                 >
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
                                     New Data
                                 </Link>
                             </div>
+
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <PerfectScrollbar style="position: relative;">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
+                                            <div
+                                                v-if="$page.props.flash.message"
+                                                class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300"
+                                            >
+                                                {{ $page.props.flash.message }}
+                                            </div>
                                             <table
                                                 id="tableData"
                                                 class="table table-striped"
@@ -233,34 +251,14 @@ const submitCsv = () => {
                                                             Asset Ho Number
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Ip Address
+                                                            Printer Brand
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Serial Number
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Device Model
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Device Type
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Frequency
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Mac Address
+                                                            Printer Type
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -297,10 +295,9 @@ const submitCsv = () => {
                                                 </thead>
                                                 <tbody>
                                                     <tr
-                                                        
                                                         v-for="(
-                                                            accessPoints, index
-                                                        ) in accessPoint"
+                                                            printers, index
+                                                        ) in printer"
                                                         :key="index"
                                                     >
                                                         <td
@@ -319,7 +316,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.inventory_number
+                                                                    printers.printer_code
                                                                 }}
                                                             </p>
                                                         </td>
@@ -330,29 +327,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.asset_ho_number
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    accessPoints.ip_address
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    accessPoints.serial_number
+                                                                    printers.asset_ho_number
                                                                 }}
                                                             </p>
                                                         </td>
@@ -363,7 +338,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.device_model
+                                                                    printers.printer_brand
                                                                 }}
                                                             </span>
                                                         </td>
@@ -374,7 +349,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.device_type
+                                                                    printers.printer_type
                                                                 }}
                                                             </span>
                                                         </td>
@@ -385,7 +360,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.frequency
+                                                                    printers.location
                                                                 }}
                                                             </span>
                                                         </td>
@@ -395,9 +370,7 @@ const submitCsv = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    accessPoints.mac_address
-                                                                }}
+                                                                {{ printers.note }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -407,29 +380,7 @@ const submitCsv = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    accessPoints.location
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    accessPoints.note
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    accessPoints.inspection_remark
+                                                                    printers.inspection_remark
                                                                 }}
                                                             </span>
                                                         </td>
@@ -439,21 +390,21 @@ const submitCsv = () => {
                                                             <span
                                                                 :class="{
                                                                     'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                        accessPoints.status ===
+                                                                        printers.status ===
                                                                         'READY_USED',
                                                                     'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                        accessPoints.status ===
+                                                                        printers.status ===
                                                                         'READY_STANDBY',
                                                                     'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                        accessPoints.status ===
+                                                                        printers.status ===
                                                                         'SCRAP',
                                                                     'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                        accessPoints.status ===
+                                                                        printers.status ===
                                                                         'BREAKDOWN',
                                                                 }"
                                                             >
                                                                 {{
-                                                                    accessPoints.status
+                                                                    printers.status
                                                                 }}
                                                             </span>
                                                         </td>
@@ -465,7 +416,7 @@ const submitCsv = () => {
                                                             >
                                                                 {{
                                                                     formattedDate(
-                                                                        accessPoints.updated_at
+                                                                        printers.updated_at
                                                                     )
                                                                 }}
                                                             </span>
@@ -476,7 +427,7 @@ const submitCsv = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     detailData(
-                                                                        accessPoints.id
+                                                                        printers.id
                                                                     )
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -487,7 +438,7 @@ const submitCsv = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     editData(
-                                                                        accessPoints.id
+                                                                        printers.id
                                                                     )
                                                                 "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -498,7 +449,7 @@ const submitCsv = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     deleteData(
-                                                                        accessPoints.id
+                                                                        printers.id
                                                                     )
                                                                 "
                                                                 v-if="props.role !== 'ict_technician'"

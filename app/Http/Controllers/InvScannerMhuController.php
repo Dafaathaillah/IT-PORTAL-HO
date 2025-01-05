@@ -14,14 +14,14 @@ use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 
-class InvScannerMifaController extends Controller
+class InvScannerMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'MIFA')->get();
+        $dataInventory = InvScanner::where('site', 'MHU')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
-        return Inertia::render('Inventory/SiteMifa/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SiteMhu/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -32,7 +32,7 @@ class InvScannerMifaController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvScanner::where('site', 'MIFA')->orderBy('max_id', 'desc')->first();
+        $maxId = InvScanner::where('site', 'MHU')->orderBy('max_id', 'desc')->first();
         // dd($maxId->scanner_code);
 
         if (is_null($maxId)) {
@@ -42,7 +42,7 @@ class InvScannerMifaController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPAMIFASCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAMHUSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['scanner_code'] = $uniqueString;
 
@@ -52,7 +52,7 @@ class InvScannerMifaController extends Controller
 
         // end generate code
 
-        return Inertia::render('Inventory/SiteMifa/Scanner/ScannerCreate', ['scanner_code' => $uniqueString, 'department' => $department]);
+        return Inertia::render('Inventory/SiteMhu/Scanner/ScannerCreate', ['scanner_code' => $uniqueString, 'department' => $department]);
     }
 
     public function store(Request $request)
@@ -85,11 +85,11 @@ class InvScannerMifaController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::create($data);
-        return redirect()->route('scannerMifa.page');
+        return redirect()->route('scannerMhu.page');
     }
 
     public function uploadCsv(Request $request)
@@ -97,7 +97,7 @@ class InvScannerMifaController extends Controller
         try {
 
             Excel::import(new ScannerImport, $request->file('file'));
-            return redirect()->route('scannerMifa.page');
+            return redirect()->route('scannerMhu.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -112,7 +112,7 @@ class InvScannerMifaController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiteMifa/Scanner/ScannerDetail', [
+        return Inertia::render('Inventory/SiteMhu/Scanner/ScannerDetail', [
             'scanners' => $scanner,
         ]);
     }
@@ -134,7 +134,7 @@ class InvScannerMifaController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        return Inertia::render('Inventory/SiteMifa/Scanner/ScannerEdit', ['scanner' => $scanner, 'department' => $department, 'department_select' => $department_select]);
+        return Inertia::render('Inventory/SiteMhu/Scanner/ScannerEdit', ['scanner' => $scanner, 'department' => $department, 'department_select' => $department_select]);
     }
 
     public function update(Request $request)
@@ -155,11 +155,11 @@ class InvScannerMifaController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('scannerMifa.page');
+        return redirect()->route('scannerMhu.page');
     }
 
 

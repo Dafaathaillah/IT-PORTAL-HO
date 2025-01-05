@@ -40,7 +40,7 @@ class InvPrinterMifaController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPABAPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAMIFAPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['printer_code'] = $uniqueString;
 

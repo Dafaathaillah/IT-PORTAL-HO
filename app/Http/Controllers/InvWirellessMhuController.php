@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ImportAp;
-use App\Models\InvAp;
+use App\Models\InvWirelless;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Container\Attributes\DB;
@@ -13,51 +12,46 @@ use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 
-class InvApMifaController extends Controller
+class InvWirellessMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'MIFA')->get();
-        $site = 'MIFA';
+        $dataInventory = InvWirelless::where('site', 'MHU')->get();
+        $site = auth()->user()->site;
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SiteMhu/Wirelless/Wirelless', ['wirelless' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
     {
         // start generate code
-        $currentDate = Carbon::tomorrow();
+        $currentDate = Carbon::now();
         $year = $currentDate->format('y');
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'MIFA') {
-            $maxId = InvAp::where('site', 'MIFA')->orderBy('max_id', 'desc')->first();
-            // dd($maxId->inventory_number);
+        $maxId = InvWirelless::where('site', 'MHU')->orderBy('max_id', 'desc')->first();
+        // dd($maxId->inventory_number);
 
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPAMIFAAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        if (is_null($maxId)) {
+            $maxId = 0;
         } else {
-            $maxId = '';
-            $uniqueString = 'User Tidak Dikenali';
+            $noUrut = (int) substr($maxId->inventory_number, 7, 3);
+            $maxId = $noUrut;
         }
+
+        $uniqueString = 'PPAMHUBB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointCreate', ['inventoryNumber' => $uniqueString]);
+        return Inertia::render('Inventory/SiteMhu/Wirelless/WirellessCreate', ['inventoryNumber' => $uniqueString]);
     }
 
     public function store(Request $request)
     {
-        $maxId = InvAp::max('max_id');
+        $maxId = InvWirelless::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
         } else {
@@ -79,54 +73,45 @@ class InvApMifaController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
         // DB::table('inv_aps')->insert($data);
-        InvAp::create($data);
-        return redirect()->route('accessPointMifa.page');
+        InvWirelless::create($data);
+        return redirect()->route('wirellessMhu.page');
     }
 
     public function uploadCsv(Request $request)
     {
         try {
 
-            Excel::import(new ImportAp, $request->file('file'));
-            return redirect()->route('accessPointMifa.page');
+            Excel::import(new WirellessImport, $request->file('file'));
+            return redirect()->route('wirellessMhu.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
         }
     }
 
-    public function edit($apId)
-    {
-        $accessPoint = InvAp::find($apId);
-        if (empty($accessPoint)) {
-            abort(404, 'Data not found');
-        }
-
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
-    }
-
     public function detail($id)
     {
-        $accessPoint = InvAp::where('id', $id)->first();
-        if (empty($accessPoint)) {
+        $wirelless = InvWirelless::where('id', $id)->first();
+
+        if (empty($wirelless)) {
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointDetail', [
-            'accessPoints' => $accessPoint,
+        return Inertia::render('Inventory/SiteMhu/Wirelless/WirellessDetail', [
+            'wirelless' => $wirelless,
         ]);
     }
 
-    public function show($id)
+    public function edit($id)
     {
-        $invap = InvAp::find($id);
-        if (is_null($invap)) {
-            return response()->json(['message' => 'AP Device not found'], 404);
+        $wirelless = InvWirelless::find($id);
+        if (empty($wirelless)) {
+            abort(404, 'Data not found');
         }
-        return response()->json($invap);
+        return Inertia::render('Inventory/SiteMhu/Wirelless/WirellessEdit', ['wirelless' => $wirelless]);
     }
 
     public function update(Request $request)
@@ -146,22 +131,20 @@ class InvApMifaController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
-        // DB::table('inv_aps')->insert($data);
-        InvAp::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('accessPointMifa.page');
+        InvWirelless::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('wirellessMhu.page');
     }
 
-    public function destroy($apId)
+    public function destroy($id)
     {
-        $accessPoint = InvAp::find($apId);
-        if (empty($accessPoint)) {
+        $wirelless = InvWirelless::find($id);
+        if (empty($wirelless)) {
             abort(404, 'Data not found');
         }
-
-        // return response()->json(['ap' => $accessPoint]);
-        $accessPoint->delete();
+        // return response()->json(['ap' => $wirelless]);
+        $wirelless->delete();
         return redirect()->back();
     }
 }

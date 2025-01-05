@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ImportAp;
-use App\Models\InvAp;
+use App\Imports\SwitchImport;
+use App\Models\InvSwitch;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Container\Attributes\DB;
@@ -13,51 +13,48 @@ use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 
-class InvApMifaController extends Controller
+class InvSwitchMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'MIFA')->get();
-        $site = 'MIFA';
+
+        $dataInventory = InvSwitch::where('site', 'MHU')->get();
+        $site = auth()->user()->site;
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SiteMhu/Switch/Switch', ['switch' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
     {
         // start generate code
-        $currentDate = Carbon::tomorrow();
+        $currentDate = Carbon::now();
         $year = $currentDate->format('y');
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'MIFA') {
-            $maxId = InvAp::where('site', 'MIFA')->orderBy('max_id', 'desc')->first();
-            // dd($maxId->inventory_number);
 
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
-            }
+        $maxId = InvSwitch::where('site', 'MHU')->orderBy('max_id', 'desc')->first();
+        // dd($maxId->inventory_number);
 
-            $uniqueString = 'PPAMIFAAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        if (is_null($maxId)) {
+            $maxId = 0;
         } else {
-            $maxId = '';
-            $uniqueString = 'User Tidak Dikenali';
+            $noUrut = (int) substr($maxId->inventory_number, 7, 3);
+            $maxId = $noUrut;
         }
+
+        $uniqueString = 'PPAMHUSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointCreate', ['inventoryNumber' => $uniqueString]);
+        return Inertia::render('Inventory/SiteMhu/Switch/SwitchCreate', ['inventoryNumber' => $uniqueString]);
     }
 
     public function store(Request $request)
     {
-        $maxId = InvAp::max('max_id');
+        $maxId = InvSwitch::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
         } else {
@@ -70,7 +67,6 @@ class InvApMifaController extends Controller
             'inventory_number' => $params['inventory_number'],
             'asset_ho_number' => $params['asset_ho_number'],
             'serial_number' => $params['serial_number'],
-            'frequency' => $params['frequency'],
             'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
             'device_brand' => $params['device_brand'],
@@ -79,54 +75,45 @@ class InvApMifaController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
         // DB::table('inv_aps')->insert($data);
-        InvAp::create($data);
-        return redirect()->route('accessPointMifa.page');
+        InvSwitch::create($data);
+        return redirect()->route('switchMhu.page');
     }
 
     public function uploadCsv(Request $request)
     {
         try {
 
-            Excel::import(new ImportAp, $request->file('file'));
-            return redirect()->route('accessPointMifa.page');
+            Excel::import(new SwitchImport, $request->file('file'));
+            // return redirect()->route('switch.page')->with('message', 'Data berhasil ditambahkan');
+            return redirect()->route('switchMhu.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
         }
     }
 
-    public function edit($apId)
+    public function edit($swId)
     {
-        $accessPoint = InvAp::find($apId);
-        if (empty($accessPoint)) {
+        $switch = InvSwitch::find($swId);
+        if (empty($switch)) {
             abort(404, 'Data not found');
         }
-
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
+        return Inertia::render('Inventory/SiteMhu/Switch/SwitchEdit', ['switch' => $switch]);
     }
 
     public function detail($id)
     {
-        $accessPoint = InvAp::where('id', $id)->first();
-        if (empty($accessPoint)) {
+        $switch = InvSwitch::where('id', $id)->first();
+        if (empty($switch)) {
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointDetail', [
-            'accessPoints' => $accessPoint,
+        return Inertia::render('Inventory/SiteMhu/Switch/SwitchDetail', [
+            'switchs' => $switch,
         ]);
-    }
-
-    public function show($id)
-    {
-        $invap = InvAp::find($id);
-        if (is_null($invap)) {
-            return response()->json(['message' => 'AP Device not found'], 404);
-        }
-        return response()->json($invap);
     }
 
     public function update(Request $request)
@@ -137,7 +124,6 @@ class InvApMifaController extends Controller
             'inventory_number' => $params['inventory_number'],
             'asset_ho_number' => $params['asset_ho_number'],
             'serial_number' => $params['serial_number'],
-            'frequency' => $params['frequency'],
             'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
             'device_brand' => $params['device_brand'],
@@ -146,22 +132,20 @@ class InvApMifaController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
-        // DB::table('inv_aps')->insert($data);
-        InvAp::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('accessPointMifa.page');
+        InvSwitch::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('switchMhu.page');
     }
 
-    public function destroy($apId)
+    public function destroy($swId)
     {
-        $accessPoint = InvAp::find($apId);
-        if (empty($accessPoint)) {
+        $switch = InvSwitch::find($swId);
+        if (empty($switch)) {
             abort(404, 'Data not found');
         }
-
-        // return response()->json(['ap' => $accessPoint]);
-        $accessPoint->delete();
+        // return response()->json(['ap' => $switch]);
+        $switch->delete();
         return redirect()->back();
     }
 }

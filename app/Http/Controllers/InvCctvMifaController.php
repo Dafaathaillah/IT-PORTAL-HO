@@ -45,12 +45,12 @@ class InvCctvMifaController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPABACCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAMIFACCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        $switch = InvSwitch::select('id', 'inventory_number')->get();
+        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'MIFA')->get();
 
 
         return Inertia::render('Inventory/SiteMifa/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);

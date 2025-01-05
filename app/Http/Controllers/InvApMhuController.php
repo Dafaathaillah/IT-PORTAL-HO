@@ -13,15 +13,15 @@ use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 
-class InvApMifaController extends Controller
+class InvApMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'MIFA')->get();
-        $site = 'MIFA';
+        $dataInventory = InvAp::where('site', 'MHU')->get();
+        $site = 'MHU';
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SiteMhu/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -32,8 +32,8 @@ class InvApMifaController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'MIFA') {
-            $maxId = InvAp::where('site', 'MIFA')->orderBy('max_id', 'desc')->first();
+        if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'MHU') {
+            $maxId = InvAp::where('site', 'MHU')->orderBy('max_id', 'desc')->first();
             // dd($maxId->inventory_number);
 
             if (is_null($maxId)) {
@@ -43,7 +43,7 @@ class InvApMifaController extends Controller
                 $maxId = $noUrut;
             }
 
-            $uniqueString = 'PPAMIFAAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            $uniqueString = 'PPAMHUAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
         } else {
             $maxId = '';
             $uniqueString = 'User Tidak Dikenali';
@@ -52,7 +52,7 @@ class InvApMifaController extends Controller
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointCreate', ['inventoryNumber' => $uniqueString]);
+        return Inertia::render('Inventory/SiteMhu/AccessPoint/AccessPointCreate', ['inventoryNumber' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -79,11 +79,11 @@ class InvApMifaController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
         // DB::table('inv_aps')->insert($data);
         InvAp::create($data);
-        return redirect()->route('accessPointMifa.page');
+        return redirect()->route('accessPointMhu.page');
     }
 
     public function uploadCsv(Request $request)
@@ -91,7 +91,7 @@ class InvApMifaController extends Controller
         try {
 
             Excel::import(new ImportAp, $request->file('file'));
-            return redirect()->route('accessPointMifa.page');
+            return redirect()->route('accessPointMhu.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -105,7 +105,7 @@ class InvApMifaController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
+        return Inertia::render('Inventory/SiteMhu/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
     }
 
     public function detail($id)
@@ -115,7 +115,7 @@ class InvApMifaController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiteMifa/AccessPoint/AccessPointDetail', [
+        return Inertia::render('Inventory/SiteMhu/AccessPoint/AccessPointDetail', [
             'accessPoints' => $accessPoint,
         ]);
     }
@@ -146,11 +146,11 @@ class InvApMifaController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
         // DB::table('inv_aps')->insert($data);
         InvAp::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('accessPointMifa.page');
+        return redirect()->route('accessPointMhu.page');
     }
 
     public function destroy($apId)

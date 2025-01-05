@@ -2,26 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ScannerImport;
+use App\Imports\PrinterImport;
 use App\Models\Department;
-use App\Models\InvScanner;
+use App\Models\InvPrinter;
 use Carbon\Carbon;
-use Dedoc\Scramble\Scramble;
-use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 
-class InvScannerMifaController extends Controller
+class InvPrinterMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'MIFA')->get();
+        $dataInventory = InvPrinter::where('site', 'MHU')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
-        return Inertia::render('Inventory/SiteMifa/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);
+
+        return Inertia::render('Inventory/SiteMhu/Printer/Printer', ['printer' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -32,19 +30,19 @@ class InvScannerMifaController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvScanner::where('site', 'MIFA')->orderBy('max_id', 'desc')->first();
-        // dd($maxId->scanner_code);
+        $maxId = InvPrinter::where('site', 'MHU')->orderBy('max_id', 'desc')->first();
+        // dd($maxId->printer_code);
 
         if (is_null($maxId)) {
             $maxId = 0;
         } else {
-            $noUrut = (int) substr($maxId->scanner_code, 8, 3);
+            $noUrut = (int) substr($maxId->printer_code, 8, 3);
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPAMIFASCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAMHUPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
-        $request['scanner_code'] = $uniqueString;
+        $request['printer_code'] = $uniqueString;
 
         $department = Department::pluck('department_name')->map(function ($name) {
             return ['name' => $name];
@@ -52,7 +50,7 @@ class InvScannerMifaController extends Controller
 
         // end generate code
 
-        return Inertia::render('Inventory/SiteMifa/Scanner/ScannerCreate', ['scanner_code' => $uniqueString, 'department' => $department]);
+        return Inertia::render('Inventory/SiteMhu/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
     }
 
     public function store(Request $request)
@@ -62,7 +60,7 @@ class InvScannerMifaController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvScanner::max('max_id');
+        $maxId = InvPrinter::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
         } else {
@@ -72,32 +70,32 @@ class InvScannerMifaController extends Controller
         $data = [
             'max_id' => $maxId,
             'item_name' => $params['item_name'],
-            'scanner_code' => $params['scanner_code'],
+            'printer_code' => $params['printer_code'],
             'asset_ho_number' => $params['asset_ho_number'],
             'serial_number' => $params['serial_number'],
             'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
-            'scanner_brand' => $params['device_brand'],
-            'scanner_type' => $params['device_type'],
+            'printer_brand' => $params['device_brand'],
+            'printer_type' => $params['device_type'],
             'division' => $params['divisi'],
             'department' => $params['dept'],
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
         // DB::table('inv_aps')->insert($data);
-        InvScanner::create($data);
-        return redirect()->route('scannerMifa.page');
+        InvPrinter::create($data);
+        return redirect()->route('printerMhu.page');
     }
 
     public function uploadCsv(Request $request)
     {
         try {
 
-            Excel::import(new ScannerImport, $request->file('file'));
-            return redirect()->route('scannerMifa.page');
+            Excel::import(new PrinterImport, $request->file('file'));
+            return redirect()->route('printerMhu.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -106,26 +104,26 @@ class InvScannerMifaController extends Controller
 
     public function detail($id)
     {
-        $scanner = InvScanner::where('id', $id)->first();
-
-        if (empty($scanner)) {
+        $printer = InvPrinter::where('id', $id)->first();
+        if (empty($printer)) {
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiteMifa/Scanner/ScannerDetail', [
-            'scanners' => $scanner,
+        return Inertia::render('Inventory/SiteMhu/Printer/PrinterDetail', [
+            'printers' => $printer,
         ]);
     }
 
-    public function edit($id)
+    public function edit($printerId)
     {
-        $scanner = InvScanner::find($id);
-        if (empty($scanner)) {
+        $printer = InvPrinter::find($printerId);
+
+        if (empty($printer)) {
             abort(404, 'Data not found');
         }
 
-        if (!empty($scanner->department)) {
-            $department_select = array($scanner->department);
+        if (!empty($printer->department)) {
+            $department_select = array($printer->department);
         } else {
             $department_select = array('data tidak ada !');
         }
@@ -134,43 +132,60 @@ class InvScannerMifaController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        return Inertia::render('Inventory/SiteMifa/Scanner/ScannerEdit', ['scanner' => $scanner, 'department' => $department, 'department_select' => $department_select]);
+        // return response()->json(['ap' => $accessPoint]);
+        return Inertia::render('Inventory/SiteMhu/Printer/PrinterEdit', ['printer' => $printer, 'department' => $department, 'department_select' => $department_select]);
+    }
+
+    public function show($id)
+    {
+        $invPrinter = InvPrinter::find($id);
+
+        if (empty($invPrinter)) {
+            abort(404, 'Data not found');
+        }
+
+        if (is_null($invPrinter)) {
+            return response()->json(['message' => 'Printers Data not found'], 404);
+        }
+        return response()->json($invPrinter);
     }
 
     public function update(Request $request)
     {
         $params = $request->all();
-        // dd($params);
         $data = [
             'item_name' => $params['item_name'],
-            'scanner_code' => $params['scanner_code'],
+            'printer_code' => $params['printer_code'],
             'asset_ho_number' => $params['asset_ho_number'],
             'serial_number' => $params['serial_number'],
             'mac_address' => $params['mac_address'],
             'ip_address' => $params['ip_address'],
-            'scanner_brand' => $params['scanner_brand'],
-            'scanner_type' => $params['scanner_type'],
+            'printer_brand' => $params['printer_brand'],
+            'printer_type' => $params['printer_type'],
             'division' => $params['divisi'],
             'department' => $params['dept'],
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'MHU'
         ];
         // DB::table('inv_aps')->insert($data);
-        InvScanner::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('scannerMifa.page');
+        InvPrinter::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('printerMhu.page');
     }
-
 
     public function destroy($id)
     {
-        $scanner = InvScanner::find($id);
-        if (empty($scanner)) {
+        $invPrinter = InvPrinter::find($id);
+
+        if (empty($invPrinter)) {
             abort(404, 'Data not found');
         }
-        // return response()->json(['ap' => $scanner]);
-        $scanner->delete();
+
+        if (is_null($invPrinter)) {
+            return response()->json(['message' => 'Printers Data not found'], 404);
+        }
+        $invPrinter->delete();
         return redirect()->back();
     }
 }

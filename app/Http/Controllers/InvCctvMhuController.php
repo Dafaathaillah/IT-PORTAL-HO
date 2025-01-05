@@ -14,17 +14,17 @@ use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 
-class InvCctvBaController extends Controller
+class InvCctvMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::with('switch')->where('site', 'BA')->get();
+        $dataInventory = InvCctv::with('switch')->where('site', 'MHU')->get();
 
         $site = auth()->user()->site;
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiteBa/Cctv/Cctv', ['cctv' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SiteMhu/Cctv/Cctv', ['cctv' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -35,7 +35,7 @@ class InvCctvBaController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvCctv::where('site', 'BA')->orderBy('max_id', 'desc')->first();
+        $maxId = InvCctv::where('site', 'MHU')->orderBy('max_id', 'desc')->first();
         // dd($maxId->cctv_code);
 
         if (is_null($maxId)) {
@@ -45,15 +45,15 @@ class InvCctvBaController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPABACCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAMHUCCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'BA')->get();
+        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'MHU')->get();
 
 
-        return Inertia::render('Inventory/SiteBa/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
+        return Inertia::render('Inventory/SiteMhu/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
     }
 
     public function store(Request $request)
@@ -84,18 +84,18 @@ class InvCctvBaController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'BA'
+            'site' => 'MHU'
         ];
         // dd($data);
         InvCctv::create($data);
-        return redirect()->route('cctvBa.page');
+        return redirect()->route('cctvMhu.page');
     }
 
     public function uploadCsv(Request $request)
     {
         try {
             Excel::import(new ImportCctv, $request->file('file'));
-            return redirect()->route('cctvBa.page');
+            return redirect()->route('cctvMhu.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -113,7 +113,7 @@ class InvCctvBaController extends Controller
         $selectSwitch = $cctv->switch_id;
         $switch = InvSwitch::select('id', 'inventory_number')->get();
 
-        return Inertia::render('Inventory/SiteBa/Cctv/CctvEdit', [
+        return Inertia::render('Inventory/SiteMhu/Cctv/CctvEdit', [
             'cctv' => $cctv,
             'switch' => $switch,
             'selectSwitch' => $selectSwitch
@@ -126,7 +126,7 @@ class InvCctvBaController extends Controller
         $aduan = Aduan::where('inventory_number', $id)->get();
         // dd($aduan);
 
-        return Inertia::render('Inventory/SiteBa/Cctv/CctvDetail', [
+        return Inertia::render('Inventory/SiteMhu/Cctv/CctvDetail', [
             'cctv' => $cctv,
             'aduan' => $aduan,
         ]);
@@ -152,11 +152,11 @@ class InvCctvBaController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'BA'
+            'site' => 'MHU'
         ];
 
         InvCctv::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('cctvBa.page');
+        return redirect()->route('cctvMhu.page');
     }
     public function destroy($id)
     {
