@@ -93,7 +93,7 @@ const getBadgeTextStatusFindings = (temuan) => {
 const getBadgeClassStatusInventory = (status) => {
     if (status === "READY_USED") {
         return "bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    } else if (status === "READY_STANBY") {
+    } else if (status === "READY_STANDBY") {
         return "bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
     } else if (status === "SCRAP") {
         return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";

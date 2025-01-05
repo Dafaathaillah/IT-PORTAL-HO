@@ -34,7 +34,7 @@ const props = defineProps({
 const form = useForm({});
 
 const editData = (id) => {
-    form.get(route("inspeksiKomputerMifa.inspection", { id: id }));
+    form.get(route("inspeksiKomputerMhu.inspection", { id: id }));
 };
 
 const editDataInspeksi = (id) => {
@@ -49,13 +49,13 @@ const editDataInspeksi = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("inspeksiKomputerMifa.edit", { id: id }));
+            form.get(route("inspeksiKomputerMhu.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("inspeksiKomputerMifa.detail", { id: id }));
+    form.get(route("inspeksiKomputerMhu.detail", { id: id }));
 };
 
 const file = ref(null);

@@ -3446,10 +3446,10 @@ const toggleLevel3ScannerBib = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiMhu">
                                     <NavLink
-                                        :href="route('inspeksiLaptopMifa.page')"
+                                        :href="route('inspeksiLaptopMhu.page')"
                                         :active="
                                             route().current(
-                                                'inspeksiLaptopMifa.page'
+                                                'inspeksiLaptopMhu.page'
                                             )
                                         "
                                     >
@@ -3468,11 +3468,11 @@ const toggleLevel3ScannerBib = () => {
 
                                     <NavLink
                                         :href="
-                                            route('inspeksiKomputerMifa.page')
+                                            route('inspeksiKomputerMhu.page')
                                         "
                                         :active="
                                             route().current(
-                                                'inspeksiKomputerMifa.page'
+                                                'inspeksiKomputerMhu.page'
                                             )
                                         "
                                     >
@@ -3525,9 +3525,9 @@ const toggleLevel3ScannerBib = () => {
                                             $page.props.auth.user.role ===
                                             'ict_developer'
                                         "
-                                        :href="route('penggunaMifa.page')"
+                                        :href="route('penggunaMhu.page')"
                                         :active="
-                                            route().current('penggunaMifa.page')
+                                            route().current('penggunaMhu.page')
                                         "
                                     >
                                         <div
