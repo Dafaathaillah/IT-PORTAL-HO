@@ -114,6 +114,11 @@ const toggleLevel1Ho = () => {
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenHo.value) {
         level2OpenHo.value = false;
@@ -331,6 +336,11 @@ const toggleLevel1Ba = () => {
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
+
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBa.value) {
@@ -558,6 +568,11 @@ const toggleLevel1Mifa = () => {
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMifa.value) {
         level2OpenMifa.value = false;
@@ -784,6 +799,11 @@ const toggleLevel1Mhu = () => {
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMhu.value) {
         level2OpenMhu.value = false;
@@ -910,6 +930,237 @@ const toggleLevel3ScannerMhu = () => {
     level3ScannerOpenMhu.value = !level3ScannerOpenMhu.value;
 };
 
+// toggle WARA
+const level1OpenWARA = ref(false);
+const level2OpenWARA = ref(false);
+const level2OpenAduanWARA = ref(false);
+const level2OpenSettingWARA = ref(false);
+const level2OpenInspeksiWARA = ref(false);
+const level3OpenWARA = ref(false);
+const level3KomputerOpenWARA = ref(false);
+const level3PrinterOpenWARA = ref(false);
+const level3ScannerOpenWARA = ref(false);
+const level3CctvOpenWARA = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenWARA.value = localStorage.getItem("level1OpenWARA") === "true";
+    level2OpenWARA.value = localStorage.getItem("level2OpenWARA") === "true";
+    level2OpenAduanWARA.value =
+        localStorage.getItem("level2OpenAduanWARA") === "true";
+    level2OpenSettingWARA.value =
+        localStorage.getItem("level2OpenSettingWARA") === "true";
+    level2OpenInspeksiWARA.value =
+        localStorage.getItem("level2OpenInspeksiWARA") === "true";
+    level3OpenWARA.value = localStorage.getItem("level3OpenWARA") === "true";
+    level3PrinterOpenWARA.value =
+        localStorage.getItem("level3PrinterOpenWARA") === "true";
+    level3ScannerOpenWARA.value =
+        localStorage.getItem("level3ScannerOpenWARA") === "true";
+    level3KomputerOpenWARA.value =
+        localStorage.getItem("level3KomputerOpenWARA") === "true";
+    level3CctvOpenWARA.value =
+        localStorage.getItem("level3CctvOpenWARA") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenWARA,
+        level2OpenWARA,
+        level2OpenSettingWARA,
+        level2OpenInspeksiWARA,
+        level2OpenAduanWARA,
+        level3OpenWARA,
+        level3PrinterOpenWARA,
+        level3ScannerOpenWARA,
+        level3KomputerOpenWARA,
+        level3CctvOpenWARA,
+    ],
+    () => {
+        localStorage.setItem("level1OpenWARA", level1OpenWARA.value);
+        localStorage.setItem("level2OpenWARA", level2OpenWARA.value);
+        localStorage.setItem("level2OpenAduanWARA", level2OpenAduanWARA.value);
+        localStorage.setItem(
+            "level2OpenSettingWARA",
+            level2OpenSettingWARA.value
+        );
+        localStorage.setItem(
+            "level2OpenInspeksiWARA",
+            level2OpenInspeksiWARA.value
+        );
+        localStorage.setItem("level3OpenWARA", level3OpenWARA.value);
+        localStorage.setItem(
+            "level3KomputerOpenWARA",
+            level3KomputerOpenWARA.value
+        );
+        localStorage.setItem(
+            "level3PrinterOpenWARA",
+            level3PrinterOpenWARA.value
+        );
+        localStorage.setItem(
+            "level3ScannerOpenWARA",
+            level3ScannerOpenWARA.value
+        );
+        localStorage.setItem("level3CctvOpenWARA", level3CctvOpenWARA.value);
+    }
+);
+
+// Toggle functions for each level
+const toggleLevel1WARA = () => {
+    level1OpenWARA.value = !level1OpenWARA.value;
+
+    level1OpenHo.value = false;
+    level2OpenHo.value = false;
+    level2OpenSettingHo.value = false;
+    level2OpenInspeksiHo.value = false;
+
+    level1OpenBa.value = false;
+    level2OpenBa.value = false;
+    level2OpenSettingBa.value = false;
+    level2OpenInspeksiBa.value = false;
+
+    level1OpenBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+    
+    level1OpenMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenWARA.value) {
+        level2OpenWARA.value = false;
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+};
+
+const toggleLevel2WARA = () => {
+    console.log(level1OpenWARA.value);
+    if (!level2OpenWARA.value) {
+        level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingWARA.value = false;
+        level2OpenInspeksiWARA.value = false;
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level2OpenWARA.value = !level2OpenWARA.value;
+};
+
+const toggleLevel2AduanWARA = () => {
+    console.log(level1OpenWARA.value);
+    if (!level2OpenAduanWARA.value) {
+        level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level2OpenAduanWARA.value = !level2OpenAduanWARA.value;
+};
+
+const toggleLevel2SettingWARA = () => {
+    console.log(level1OpenWARA.value);
+    if (!level2OpenSettingWARA.value) {
+        level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiWARA.value = false;
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level2OpenSettingWARA.value = !level2OpenSettingWARA.value;
+};
+
+const toggleLevel2InspeksiWARA = () => {
+    console.log(level1OpenWARA.value);
+    if (!level2OpenInspeksiWARA.value) {
+        level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingWARA.value = false;
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level2OpenInspeksiWARA.value = !level2OpenInspeksiWARA.value;
+};
+
+const toggleLevel3LaptopWARA = () => {
+    if (!level3OpenWARA.value) {
+        level2OpenWARA.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level3OpenWARA.value = !level3OpenWARA.value;
+};
+
+const toggleLevel3KomputerWARA = () => {
+    if (!level3KomputerOpenWARA.value) {
+        level2OpenWARA.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level3KomputerOpenWARA.value = !level3KomputerOpenWARA.value;
+};
+
+const toggleLevel3CctvWARA = () => {
+    if (!level3CctvOpenWARA.value) {
+        level2OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+    }
+    level3CctvOpenWARA.value = !level3CctvOpenWARA.value;
+};
+
+const toggleLevel3PrinterWARA = () => {
+    if (!level3PrinterOpenWARA.value) {
+        level2OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level3PrinterOpenWARA.value = !level3PrinterOpenWARA.value;
+};
+
+const toggleLevel3ScannerWARA = () => {
+    if (!level3ScannerOpenWARA.value) {
+        level2OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level3ScannerOpenWARA.value = !level3ScannerOpenWARA.value;
+};
+
 // toggle BIB
 const level1OpenBib = ref(false);
 const level2OpenBib = ref(false);
@@ -1004,6 +1255,16 @@ const toggleLevel1Bib = () => {
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
+
+    level1OpenMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+    
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBib.value) {
@@ -3709,6 +3970,501 @@ const toggleLevel3ScannerBib = () => {
                         </ul>
                     </li>
                     <!-- end MHU -->
+
+                    <hr
+                        v-if="
+                            $page.props.auth.user.site == 'MHU' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                        class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                    />
+
+                    <!-- start WARA -->
+                    <li
+                        v-if="
+                            $page.props.auth.user.site == 'WARA' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
+                        <div
+                            @click="toggleLevel1WARA"
+                            style="cursor: pointer"
+                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        >
+                            <div
+                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                ></i>
+                            </div>
+                            <span
+                                v-if="$page.props.auth.user.site == 'HO'"
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >ADARO WARA</span
+                            >
+                            <span
+                                v-if="
+                                    $page.props.auth.user.site == 'WARA' ||
+                                    $page.props.auth.user.role ==
+                                        'ict_developer'
+                                "
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >ICT - PPA WARA</span
+                            >
+                            <i
+                                v-if="!level1OpenWARA"
+                                class="ms-3 fas fa-angle-right"
+                            ></i>
+                            <i v-else class="ms-3 fas fa-angle-down"></i>
+                        </div>
+                        <ul v-if="level1OpenWARA">
+                            <li>
+                                <NavLink
+                                    @click="toggleLevel2AduanWARA"
+                                    :href="route('aduanWARA.page')"
+                                    :active="route().current('aduanWARA.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Aduan</span
+                                    >
+                                </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2WARA"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inventory</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenWARA"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenWARA">
+                                    <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Access Point</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('switchWARA.page')"
+                                        :active="
+                                            route().current('switchWARA.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Switch</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Wirelless</span
+                                        >
+                                    </NavLink>
+                                    <div
+                                        @click="toggleLevel3LaptopWARA"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Laptop</span
+                                        >
+                                        <i
+                                            v-if="!level3OpenWARA"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3OpenWARA">
+                                        <NavLink
+                                            :href="route('laptopWARA.page')"
+                                            :active="
+                                                route().current(
+                                                    'laptopWARA.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Laptop Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3KomputerWARA"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Komputer</span
+                                        >
+                                        <i
+                                            v-if="!level3KomputerOpenWARA"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3KomputerOpenWARA">
+                                        <NavLink
+                                            :href="route('komputerWARA.page')"
+                                            :active="
+                                                route().current(
+                                                    'komputerWARA.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Komputer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3PrinterWARA"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Printer</span
+                                        >
+                                        <i
+                                            v-if="!level3PrinterOpenWARA"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3PrinterOpenWARA">
+                                        <NavLink
+                                            :href="route('printerWARA.page')"
+                                            :active="
+                                                route().current(
+                                                    'printerWARA.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Printer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3ScannerWARA"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Scanner</span
+                                        >
+                                        <i
+                                            v-if="!level3ScannerOpenWARA"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3ScannerOpenWARA">
+                                        <NavLink
+                                            :href="route('scannerWARA.page')"
+                                            :active="
+                                                route().current(
+                                                    'scannerWARA.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Scanner</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3CctvWARA"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Cctv</span
+                                        >
+                                        <i
+                                            v-if="!level3CctvOpenWARA"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3CctvOpenWARA">
+                                        <NavLink
+                                            :href="route('cctvWARA.page')"
+                                            :active="
+                                                route().current('cctvWARA.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Cctv</span
+                                            >
+                                        </NavLink>
+                                    </li>
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2InspeksiWARA"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenInspeksiWARA"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenInspeksiWARA">
+                                    <NavLink
+                                        :href="route('inspeksiLaptopWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiLaptopWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiKomputerWARA.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiKomputerWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+                                </ul>
+
+                                <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_group_leader'
+                                    "
+                                    :href="route('aduan-ho.page')"
+                                    :active="route().current('aduan-ho.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >
+                                        Pengaduan HO</span
+                                    >
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end WARA -->
 
                     <hr
                         v-if="
