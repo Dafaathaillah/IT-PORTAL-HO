@@ -17,9 +17,11 @@ use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspeksiComputerBaController;
 use App\Http\Controllers\InspeksiComputerController;
+use App\Http\Controllers\InspeksiComputerMhuController;
 use App\Http\Controllers\InspeksiComputerMifaController;
 use App\Http\Controllers\InspeksiLaptopBaController;
 use App\Http\Controllers\InspeksiLaptopController;
+use App\Http\Controllers\InspeksiLaptopMhuController;
 use App\Http\Controllers\InspeksiLaptopMifaController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApController;
@@ -58,6 +60,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
 use App\Http\Controllers\UserAllBaController;
 use App\Http\Controllers\UserAllController;
+use App\Http\Controllers\UserAllMhuController;
 use App\Http\Controllers\UserAllMifaController;
 use App\Models\Aduan;
 use App\Models\InvAp;
@@ -483,7 +486,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVBa', [InvCctvBaController::class, 'uploadCsv'])->name('cctvBa.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_ho:HO'], function () {
             Route::get('/accessPointSiteMifa', [InvApMifaController::class, 'index'])->name('accessPointMifa.page');
             Route::get('/accessPointSiteMifa/create', [InvApMifaController::class, 'create'])->name('accessPointMifa.create');
             Route::post('/accessPointSiteMifa/create', [InvApMifaController::class, 'store'])->name('accessPointMifa.store');
@@ -708,7 +711,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('akses-ba/{id}/delete', [AdminPengajuanRoleBaController::class, 'destroy'])->name('aksesBa.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA'], function () {
                 Route::get('inspeksi-laptop-mifa', [InspeksiLaptopMifaController::class, 'index'])->name('inspeksiLaptopMifa.page');
                 Route::get('inspeksi-laptop-mifa/{id}/process', [InspeksiLaptopMifaController::class, 'process'])->name('inspeksiLaptopMifa.process');
                 Route::post('inspeksi-laptop-mifa/process', [InspeksiLaptopMifaController::class, 'store'])->name('inspeksiLaptopMifa.store');
@@ -733,17 +736,55 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/pengguna-mifa/{id}/delete', [UserAllMifaController::class, 'destroy'])->name('penggunaMifa.delete');
                 Route::post('/uploadCsvPenggunaBa', [UserAllMifaController::class, 'uploadCsv'])->name('penggunaMifa.import');
 
-                Route::get('department-mifa', [DepartmentMifaController::class, 'index'])->name('departmentMifa.page');
-                Route::get('department-mifa/create', [DepartmentMifaController::class, 'create'])->name('departmentMifa.create');
-                Route::post('department-mifa/create', [DepartmentMifaController::class, 'store'])->name('departmentMifa.store');
-                Route::get('department-mifa/{id}/edit', [DepartmentMifaController::class, 'edit'])->name('departmentMifa.edit');
-                Route::put('department-mifa/{id}/update', [DepartmentMifaController::class, 'update'])->name('departmentMifa.update');
-                Route::delete('department-mifa/{id}/delete', [DepartmentMifaController::class, 'destroy'])->name('departmentMifa.delete');
+                Route::get('department-mifa', [DepartmentController::class, 'index'])->name('departmentMifa.page');
+                Route::get('department-mifa/create', [DepartmentController::class, 'create'])->name('departmentMifa.create');
+                Route::post('department-mifa/create', [DepartmentController::class, 'store'])->name('departmentMifa.store');
+                Route::get('department-mifa/{id}/edit', [DepartmentController::class, 'edit'])->name('departmentMifa.edit');
+                Route::put('department-mifa/{id}/update', [DepartmentController::class, 'update'])->name('departmentMifa.update');
+                Route::delete('department-mifa/{id}/delete', [DepartmentController::class, 'destroy'])->name('departmentMifa.delete');
 
                 Route::get('akses-mifa', [AdminPengajuanRoleMifaController::class, 'index'])->name('aksesMifa.page');
                 Route::get('akses-mifa/{id}/edit', [AdminPengajuanRoleMifaController::class, 'edit'])->name('aksesMifa.edit');
                 Route::post('akses-mifa/update', [AdminPengajuanRoleMifaController::class, 'update'])->name('aksesMifa.update');
                 Route::delete('akses-mifa/{id}/delete', [AdminPengajuanRoleMifaController::class, 'destroy'])->name('aksesMifa.delete');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU'], function () {
+                Route::get('inspeksi-laptop-mhu', [InspeksiLaptopMhuController::class, 'index'])->name('inspeksiLaptopMhu.page');
+                Route::get('inspeksi-laptop-mhu/{id}/process', [InspeksiLaptopMhuController::class, 'process'])->name('inspeksiLaptopMhu.process');
+                Route::post('inspeksi-laptop-mhu/process', [InspeksiLaptopMhuController::class, 'store'])->name('inspeksiLaptopMhu.store');
+                Route::get('inspeksi-laptop-mhu/{id}/edit', [InspeksiLaptopMhuController::class, 'edit'])->name('inspeksiLaptopMhu.edit');
+                Route::post('inspeksi-laptop-mhu/update', [InspeksiLaptopMhuController::class, 'update'])->name('inspeksiLaptopMhu.update');
+                Route::get('/inspeksi-laptop-mhu/{id}/detail', [InspeksiLaptopMhuController::class, 'detail'])->name('inspeksiLaptopMhu.detail');
+                Route::delete('inspeksi-laptop-mhu/{id}/delete', [InspeksiLaptopMhuController::class, 'destroy'])->name('inspeksiLaptopMhu.delete');
+
+                Route::get('inspeksi-komputer-mhu', [InspeksiComputerMhuController::class, 'index'])->name('inspeksiKomputerMhu.page');
+                Route::get('inspeksi-komputer-mhu/{id}/inspection', [InspeksiComputerMhuController::class, 'doInspection'])->name('inspeksiKomputerMhu.inspection');
+                Route::post('inspeksi-komputer-mhu/inspection', [InspeksiComputerMhuController::class, 'store'])->name('inspeksiKomputerMhu.store');
+                Route::get('inspeksi-komputer-mhu/{id}/edit', [InspeksiComputerMhuController::class, 'edit'])->name('inspeksiKomputerMhu.edit');
+                Route::put('inspeksi-komputer-mhu/{id}/update', [InspeksiComputerMhuController::class, 'update'])->name('inspeksiKomputerMhu.update');
+                Route::get('/inspeksi-komputer-mhu/{id}/detail', [InspeksiComputerMhuController::class, 'detail'])->name('inspeksiKomputerMhu.detail');
+                Route::delete('inspeksi-komputer-mhu/{id}/delete', [InspeksiComputerMhuController::class, 'destroy'])->name('inspeksiKomputerMhu.delete');
+
+                Route::get('/pengguna-mhu', [UserAllMhuController::class, 'index'])->name('penggunaMhu.page');
+                Route::get('/pengguna-mhu/create', [UserAllMhuController::class, 'create'])->name('penggunaMhu.create');
+                Route::post('/pengguna-mhu/create', [UserAllMhuController::class, 'store'])->name('penggunaMhu.store');
+                Route::get('/pengguna-mhu/{id}/edit', [UserAllMhuController::class, 'edit'])->name('penggunaMhu.edit');
+                Route::put('/pengguna-mhu/{id}/update', [UserAllMhuController::class, 'update'])->name('penggunaMhu.update');
+                Route::delete('/pengguna-mhu/{id}/delete', [UserAllMhuController::class, 'destroy'])->name('penggunaMhu.delete');
+                Route::post('/uploadCsvPenggunaBa', [UserAllMhuController::class, 'uploadCsv'])->name('penggunaMhu.import');
+
+                // Route::get('department-mhu', [DepartmentMifaController::class, 'index'])->name('departmentMifa.page');
+                // Route::get('department-mhu/create', [DepartmentMifaController::class, 'create'])->name('departmentMifa.create');
+                // Route::post('department-mhu/create', [DepartmentMifaController::class, 'store'])->name('departmentMifa.store');
+                // Route::get('department-mhu/{id}/edit', [DepartmentMifaController::class, 'edit'])->name('departmentMifa.edit');
+                // Route::put('department-mhu/{id}/update', [DepartmentMifaController::class, 'update'])->name('departmentMifa.update');
+                // Route::delete('department-mhu/{id}/delete', [DepartmentMifaController::class, 'destroy'])->name('departmentMifa.delete');
+
+                // Route::get('akses-mhu', [AdminPengajuanRoleMifaController::class, 'index'])->name('aksesMifa.page');
+                // Route::get('akses-mhu/{id}/edit', [AdminPengajuanRoleMifaController::class, 'edit'])->name('aksesMifa.edit');
+                // Route::post('akses-mhu/update', [AdminPengajuanRoleMifaController::class, 'update'])->name('aksesMifa.update');
+                // Route::delete('akses-mhu/{id}/delete', [AdminPengajuanRoleMifaController::class, 'destroy'])->name('aksesMifa.delete');
             });
         });
     });
@@ -773,7 +814,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanBa/{id}/detail', [AduanBaController::class, 'detail'])->name('aduanBa.detail');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_ho:HO'], function () {
             Route::get('/aduanMifa', [AduanMifaController::class, 'index'])->name('aduanMifa.page');
             Route::get('/aduanMifa/create', [AduanMifaController::class, 'create'])->name('aduanMifa.create');
             Route::post('/aduanMifa/create', [AduanMifaController::class, 'store'])->name('aduanMifa.store');

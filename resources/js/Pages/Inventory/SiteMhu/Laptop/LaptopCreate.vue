@@ -621,7 +621,7 @@ console.log(data);
                                                 >
                                                     Ready Used
                                                 </option>
-                                                <option value="READY_STANBY">
+                                                <option value="READY_STANdBY">
                                                     Ready Standby
                                                 </option>
                                                 <option value="SCRAP">

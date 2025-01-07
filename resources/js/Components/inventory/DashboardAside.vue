@@ -160,7 +160,6 @@ const toggleLevel2AduanHo = () => {
 const toggleLevel2SettingHo = () => {
     console.log(level1OpenHo.value);
     if (!level2OpenSettingHo.value) {
-        level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenHo.value = false;
         level2OpenInspeksiHo.value = false;
         level3OpenHo.value = false;
@@ -1268,6 +1267,101 @@ const toggleLevel3ScannerBib = () => {
                             >
                         </NavLink>
                     </li>
+
+                    <li
+                        class="mt-0.5 w-full"
+                    >
+                        <div
+                            v-if="
+                                $page.props.auth.user.role === 'ict_developer'
+                            "
+                            @click="toggleLevel2SettingHo"
+                            style="cursor: pointer"
+                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        >
+                            <div
+                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                ></i>
+                            </div>
+                            <span
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >Setting</span
+                            >
+                            <i
+                                v-if="!level2OpenSettingHo"
+                                class="ms-3 fas fa-angle-right"
+                            ></i>
+                            <i v-else class="ms-3 fas fa-angle-down"></i>
+                        </div>
+                        <ul v-if="level2OpenSettingHo">
+                            <NavLink
+                                v-if="
+                                    $page.props.auth.user.role ===
+                                    'ict_developer'
+                                "
+                                :href="route('pengguna.page')"
+                                :active="route().current('pengguna.page')"
+                            >
+                                <div
+                                    class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Setting Pengguna</span
+                                >
+                            </NavLink>
+
+                            <NavLink
+                                v-if="
+                                    $page.props.auth.user.role ===
+                                    'ict_developer'
+                                "
+                                :href="route('department.page')"
+                                :active="route().current('department.page')"
+                            >
+                                <div
+                                    class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Setting Department</span
+                                >
+                            </NavLink>
+
+                            <NavLink
+                                v-if="
+                                    $page.props.auth.user.role ===
+                                    'ict_developer'
+                                "
+                                :href="route('akses.page')"
+                                :active="route().current('akses.page')"
+                            >
+                                <div
+                                    class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Pengajuan Akses Role</span
+                                >
+                            </NavLink>
+                        </ul>
+                    </li>
+
                     <hr
                         v-if="
                             $page.props.auth.user.role == 'ict_developer' ||
@@ -2299,7 +2393,7 @@ const toggleLevel3ScannerBib = () => {
                                     </NavLink>
                                 </ul>
 
-                                <div
+                                <!-- <div
                                     v-if="
                                         $page.props.auth.user.role ===
                                         'ict_developer'
@@ -2397,7 +2491,7 @@ const toggleLevel3ScannerBib = () => {
                                             >Pengajuan Akses Role</span
                                         >
                                     </NavLink>
-                                </ul>
+                                </ul> -->
 
                                 <NavLink
                                     v-if="
@@ -2893,7 +2987,7 @@ const toggleLevel3ScannerBib = () => {
                                     </NavLink>
                                 </ul>
 
-                                <div
+                                <!-- <div
                                     v-if="
                                         $page.props.auth.user.role ===
                                         'ict_developer'
@@ -2921,8 +3015,8 @@ const toggleLevel3ScannerBib = () => {
                                         v-else
                                         class="ms-3 fas fa-angle-down"
                                     ></i>
-                                </div>
-                                <ul v-if="level2OpenSettingMifa">
+                                </div> -->
+                                <!-- <ul v-if="level2OpenSettingMifa">
                                     <NavLink
                                         v-if="
                                             $page.props.auth.user.role ===
@@ -2993,7 +3087,7 @@ const toggleLevel3ScannerBib = () => {
                                             >Pengajuan Akses Role</span
                                         >
                                     </NavLink>
-                                </ul>
+                                </ul> -->
 
                                 <NavLink
                                     v-if="
@@ -3160,9 +3254,7 @@ const toggleLevel3ScannerBib = () => {
                                     <NavLink
                                         :href="route('wirellessMhu.page')"
                                         :active="
-                                            route().current(
-                                                'wirellessMhu.page'
-                                            )
+                                            route().current('wirellessMhu.page')
                                         "
                                     >
                                         <div
@@ -3446,10 +3538,10 @@ const toggleLevel3ScannerBib = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiMhu">
                                     <NavLink
-                                        :href="route('inspeksiLaptopMifa.page')"
+                                        :href="route('inspeksiLaptopMhu.page')"
                                         :active="
                                             route().current(
-                                                'inspeksiLaptopMifa.page'
+                                                'inspeksiLaptopMhu.page'
                                             )
                                         "
                                     >
@@ -3468,11 +3560,11 @@ const toggleLevel3ScannerBib = () => {
 
                                     <NavLink
                                         :href="
-                                            route('inspeksiKomputerMifa.page')
+                                            route('inspeksiKomputerMhu.page')
                                         "
                                         :active="
                                             route().current(
-                                                'inspeksiKomputerMifa.page'
+                                                'inspeksiKomputerMhu.page'
                                             )
                                         "
                                     >
@@ -3490,7 +3582,7 @@ const toggleLevel3ScannerBib = () => {
                                     </NavLink>
                                 </ul>
 
-                                <div
+                                <!-- <div
                                     v-if="
                                         $page.props.auth.user.role ===
                                         'ict_developer'
@@ -3525,9 +3617,9 @@ const toggleLevel3ScannerBib = () => {
                                             $page.props.auth.user.role ===
                                             'ict_developer'
                                         "
-                                        :href="route('penggunaMifa.page')"
+                                        :href="route('penggunaMhu.page')"
                                         :active="
-                                            route().current('penggunaMifa.page')
+                                            route().current('penggunaMhu.page')
                                         "
                                     >
                                         <div
@@ -3590,7 +3682,7 @@ const toggleLevel3ScannerBib = () => {
                                             >Pengajuan Akses Role</span
                                         >
                                     </NavLink>
-                                </ul>
+                                </ul> -->
 
                                 <NavLink
                                     v-if="
@@ -4071,7 +4163,7 @@ const toggleLevel3ScannerBib = () => {
                                     </NavLink>
                                 </ul>
 
-                                <div
+                                <!-- <div
                                     v-if="
                                         $page.props.auth.user.role ===
                                         'ict_developer'
@@ -4167,7 +4259,7 @@ const toggleLevel3ScannerBib = () => {
                                             >Pengajuan Akses Role</span
                                         >
                                     </NavLink>
-                                </ul>
+                                </ul> -->
 
                                 <NavLink
                                     v-if="
