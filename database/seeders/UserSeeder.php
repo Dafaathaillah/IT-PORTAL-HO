@@ -245,65 +245,138 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert(
             [
-                'name' => 'DWI HENDRA IRAWAN',
-                'nrp' => '12070267',
-                'password' => Hash::make('12070267'),
-                'position' => 'CENTER OF EXCELLENCE DEPT HEAD',
-                'role' => 'ict_bod',
+                'name' => 'HARIS FADHILLAH BATU BARA',
+                'nrp' => '18054043',
+                'password' => Hash::make('18054043'),
+                'position' => 'GROUP LEADER',
+                'role' => 'ict_group_leader',
+                'site' => 'MIFA',
             ],
         );
         DB::table('users')->insert(
             [
-                'name' => 'MOCHAMMAD SUWITO',
-                'nrp' => '12100320',
-                'password' => Hash::make('12100320'),
-                'position' => 'CENTER OF EXCELLENCE DIV HEAD',
-                'role' => 'ict_bod',
+                'name' => 'EDI SAPUTRA',
+                'nrp' => '17092763',
+                'password' => Hash::make('17092763'),
+                'position' => 'GROUP LEADER',
+                'role' => 'ict_group_leader',
+                'role' => 'MIFA',
             ],
         );
         DB::table('users')->insert(
             [
-                'name' => 'DARMA DANA AZIS',
-                'nrp' => '13080543',
-                'password' => Hash::make('13080543'),
-                'position' => 'CENTER OF EXCELLENCE DEPUTY DIV HEAD',
-                'role' => 'ict_bod',
+                'name' => 'IMAM SUPRIADI',
+                'nrp' => '22002922',
+                'password' => Hash::make('22002922'),
+                'position' => 'ict_group_leader',
+                'role' => 'ict_group_leader',
+                'role' => 'MIFA',
             ],
         );
         DB::table('users')->insert(
             [
-                'name' => 'ANGGI PUTRA PERDANA',
-                'nrp' => '15041084',
-                'password' => Hash::make('15041084'),
-                'position' => 'MANAGEMENT DEVELOPMENT STAFF',
-                'role' => 'ict_ho',
+                'name' => 'AGUS WIDIYANTO',
+                'nrp' => '22002488',
+                'password' => Hash::make('22002488'),
+                'position' => 'ICT TECHNICIAN',
+                'role' => 'ict_technician',
+                'role' => 'MIFA',
             ],
         );
         DB::table('users')->insert(
             [
-                'name' => 'EDI NUGROHO',
-                'nrp' => '18105204',
-                'password' => Hash::make('18105204'),
-                'position' => 'NETWORK & INFRASTRUCTURE STAFF',
-                'role' => 'ict_ho',
+                'name' => 'FEBRI MIFTAQUL RIZA',
+                'nrp' => '22003280',
+                'password' => Hash::make('22003280'),
+                'position' => 'ICT TECHNICIAN',
+                'role' => 'ict_technician',
+                'role' => 'MIFA',
             ],
         );
         DB::table('users')->insert(
             [
-                'name' => 'DANNY KHARNIZAL',
-                'nrp' => '19019750',
-                'password' => Hash::make('19019750'),
-                'position' => 'NETWORK & INFRASTUCTURE DEPT HEAD',
-                'role' => 'ict_bod',
+                'name' => 'YUKO',
+                'nrp' => '23000928',
+                'password' => Hash::make('23000928'),
+                'position' => 'ICT TECHNICIAN',
+                'role' => 'ict_technician',
+                'role' => 'MIFA',
             ],
         );
         DB::table('users')->insert(
             [
-                'name' => 'EKO SUGIANTO',
-                'nrp' => '19020759',
-                'password' => Hash::make('19020759'),
-                'position' => 'ICT STAFF',
-                'role' => 'ict_ho',
+                'name' => 'TEUKU ALFIN ALSA',
+                'nrp' => '24000134',
+                'password' => Hash::make('24000134'),
+                'position' => 'ICT TECHNICIAN',
+                'role' => 'ict_technician',
+                'role' => 'MIFA',
+            ],
+        );
+
+        DB::table('users')->insert(
+            [
+                'name' => 'RIZKY BATUBARA',
+                'nrp' => '24001109',
+                'password' => Hash::make('24001109'),
+                'position' => 'ICT TECHNICIAN',
+                'role' => 'ict_technician',
+                'role' => 'MIFA',
+            ],
+        );
+
+        DB::table('users')->insert(
+            [
+                'name' => 'T ROVID NINA',
+                'nrp' => '2401229',
+                'password' => Hash::make('2401229'),
+                'position' => 'ADMIN COE',
+                'role' => 'admin',
+                'role' => 'MIFA',
+            ],
+        );
+        
+        DB::table('users')->insert(
+            [
+                'name' => 'KARMILATUL HAYYAT',
+                'nrp' => '2401289',
+                'password' => Hash::make('2401289'),
+                'position' => 'ADMIN COE',
+                'role' => 'admin',
+                'role' => 'MIFA',
+            ],
+        );
+
+        DB::table('users')->insert(
+            [
+                'name' => 'SYAFLIZAR',
+                'nrp' => '2401358',
+                'password' => Hash::make('2401358'),
+                'position' => 'ICT TECHNICIAN',
+                'role' => 'ict_technician',
+                'role' => 'MIFA',
+            ],
+        );
+
+        DB::table('users')->insert(
+            [
+                'name' => 'PUPUT SYAHPUTRA',
+                'nrp' => '2401359',
+                'password' => Hash::make('2401359'),
+                'position' => 'ICT TECHNICIAN',
+                'role' => 'ict_technician',
+                'role' => 'MIFA',
+            ],
+        );
+
+        DB::table('users')->insert(
+            [
+                'name' => 'DICKY ALVIAN MAHENDRA',
+                'nrp' => '24001948',
+                'password' => Hash::make('24001948'),
+                'position' => 'ICT TECHNICIAN',
+                'role' => 'ict_technician',
+                'role' => 'MIFA',
             ],
         );
     }
