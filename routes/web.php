@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminPengajuanRoleBaController;
 use App\Http\Controllers\AdminPengajuanRoleController;
 use App\Http\Controllers\AdminPengajuanRoleMifaController;
+use App\Http\Controllers\AduanAmiController;
 use App\Http\Controllers\AduanBaController;
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\AduanHoController;
@@ -16,52 +17,62 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentMifaController;
 use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
+use App\Http\Controllers\InspeksiComputerAmiController;
 use App\Http\Controllers\InspeksiComputerBaController;
 use App\Http\Controllers\InspeksiComputerWARAController;
 use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InspeksiComputerMhuController;
 use App\Http\Controllers\InspeksiComputerMifaController;
+use App\Http\Controllers\InspeksiLaptopAmiController;
 use App\Http\Controllers\InspeksiLaptopBaController;
 use App\Http\Controllers\InspeksiLaptopWARAController;
 use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InspeksiLaptopMhuController;
 use App\Http\Controllers\InspeksiLaptopMifaController;
+use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApWARAController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvApMhuController;
 use App\Http\Controllers\InvApMifaController;
+use App\Http\Controllers\InvCctvAmiController;
 use App\Http\Controllers\InvCctvBaController;
 use App\Http\Controllers\InvCctvWARAController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvCctvMhuController;
 use App\Http\Controllers\InvCctvMifaController;
+use App\Http\Controllers\InvComputerAmiController;
 use App\Http\Controllers\InvComputerBaController;
 use App\Http\Controllers\InvComputerWARAController;
 use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvComputerMhuController;
 use App\Http\Controllers\InvComputerMifaController;
+use App\Http\Controllers\InvLaptopAmiController;
 use App\Http\Controllers\InvLaptopBaController;
 use App\Http\Controllers\InvLaptopWARAController;
 use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopMhuController;
 use App\Http\Controllers\InvLaptopMifaController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
+use App\Http\Controllers\InvPrinterAmiController;
 use App\Http\Controllers\InvPrinterBaController;
 use App\Http\Controllers\InvPrinterWARAController;
 use App\Http\Controllers\InvPrinterController;
 use App\Http\Controllers\InvPrinterMhuController;
 use App\Http\Controllers\InvPrinterMifaController;
+use App\Http\Controllers\InvScannerAmiController;
 use App\Http\Controllers\InvScannerBaController;
 use App\Http\Controllers\InvScannerWARAController;
 use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvScannerMhuController;
 use App\Http\Controllers\InvScannerMifaController;
+use App\Http\Controllers\InvSwitchAmiController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvSwitchBaController;
 use App\Http\Controllers\InvSwitchWARAController;
 use App\Http\Controllers\InvSwitchMhuController;
 use App\Http\Controllers\InvSwitchMifaController;
+use App\Http\Controllers\InvWirellessAmiController;
 use App\Http\Controllers\InvWirellessBaController;
 use App\Http\Controllers\InvWirellessWARAController;
 use App\Http\Controllers\InvWirellessController;
@@ -645,6 +656,80 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVMhu', [InvCctvMhuController::class, 'uploadCsv'])->name('cctvMhu.import');
         });
 
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_ho:HO'], function () {
+            Route::get('/accessPointSiteAmi', [InvApAmiController::class, 'index'])->name('accessPointAmi.page');
+            Route::get('/accessPointSiteAmi/create', [InvApAmiController::class, 'create'])->name('accessPointAmi.create');
+            Route::post('/accessPointSiteAmi/create', [InvApAmiController::class, 'store'])->name('accessPointAmi.store');
+            Route::get('/accessPointSiteAmi/{apId}/edit', [InvApAmiController::class, 'edit'])->name('accessPointAmi.edit');
+            Route::put('/accessPointSiteAmi/{apId}/update', [InvApAmiController::class, 'update'])->name('accessPointAmi.update');
+            Route::delete('/accessPointSiteAmi/{apId}/delete', [InvApAmiController::class, 'destroy'])->name('accessPointAmi.delete');
+            Route::get('/accessPointSiteAmi/{id}/detail', [InvApAmiController::class, 'detail'])->name('accessPointAmi.detail');
+            Route::post('/uploadCsvApAmi', [InvApAmiController::class, 'uploadCsv'])->name('accessPointAmi.import');
+
+            Route::get('/switchAmi', [InvSwitchAmiController::class, 'index'])->name('switchAmi.page');
+            Route::get('/switchAmi/create', [InvSwitchAmiController::class, 'create'])->name('switchAmi.create');
+            Route::post('/switchAmi/create', [InvSwitchAmiController::class, 'store'])->name('switchAmi.store');
+            Route::get('/switchAmi/{swId}/edit', [InvSwitchAmiController::class, 'edit'])->name('switchAmi.edit');
+            Route::put('/switchAmi/{swId}/update', [InvSwitchAmiController::class, 'update'])->name('switchAmi.update');
+            Route::delete('/switchAmi/{swId}/delete', [InvSwitchAmiController::class, 'destroy'])->name('switchAmi.delete');
+            Route::get('/switchAmi/{id}/detail', [InvSwitchAmiController::class, 'detail'])->name('switchAmi.detail');
+            Route::post('/uploadCsvSwAmi', [InvSwitchAmiController::class, 'uploadCsv'])->name('switchAmi.import');
+
+            Route::get('/wirellessAmi', [InvWirellessAmiController::class, 'index'])->name('wirellessAmi.page');
+            Route::get('/wirellessAmi/create', [InvWirellessAmiController::class, 'create'])->name('wirellessAmi.create');
+            Route::post('/wirellessAmi/create', [InvWirellessAmiController::class, 'store'])->name('wirellessAmi.store');
+            Route::get('/wirellessAmi/{id}/edit', [InvWirellessAmiController::class, 'edit'])->name('wirellessAmi.edit');
+            Route::put('/wirellessAmi/{id}/update', [InvWirellessAmiController::class, 'update'])->name('wirellessAmi.update');
+            Route::delete('/wirellessAmi/{id}/delete', [InvWirellessAmiController::class, 'destroy'])->name('wirellessAmi.delete');
+            Route::get('/wirellessAmi/{id}/detail', [InvWirellessAmiController::class, 'detail'])->name('wirellessAmi.detail');
+            Route::post('/uploadCsvBbAmi', [InvWirellessAmiController::class, 'uploadCsv'])->name('wirellessAmi.import');
+
+            Route::get('/laptopAmi', [InvLaptopAmiController::class, 'index'])->name('laptopAmi.page');
+            Route::get('/laptopAmi/create', [InvLaptopAmiController::class, 'create'])->name('laptopAmi.create');
+            Route::post('/laptopAmi/create', [InvLaptopAmiController::class, 'store'])->name('laptopAmi.store');
+            Route::get('/laptopAmi/{id}/edit', [InvLaptopAmiController::class, 'edit'])->name('laptopAmi.edit');
+            Route::delete('/laptopAmi/{id}/delete', [InvLaptopAmiController::class, 'destroy'])->name('laptopAmi.delete');
+            Route::post('/laptopAmi/update', [InvLaptopAmiController::class, 'update'])->name('laptopAmi.update');
+            Route::get('/laptopAmi/{id}/detail', [InvLaptopAmiController::class, 'detail'])->name('laptopAmi.detail');
+            Route::post('/uploadCsvNbAmi', [InvLaptopAmiController::class, 'uploadCsv'])->name('laptopAmi.import');
+
+            Route::get('/komputerAmi', [InvComputerAmiController::class, 'index'])->name('komputerAmi.page');
+            Route::get('/komputerAmi/create', [InvComputerAmiController::class, 'create'])->name('komputerAmi.create');
+            Route::post('/komputerAmi/create', [InvComputerAmiController::class, 'store'])->name('komputerAmi.store');
+            Route::get('/komputerAmi/{id}/edit', [InvComputerAmiController::class, 'edit'])->name('komputerAmi.edit');
+            Route::delete('/komputerAmi/{id}/delete', [InvComputerAmiController::class, 'destroy'])->name('komputerAmi.delete');
+            Route::post('/komputerAmi/update', [InvComputerAmiController::class, 'update'])->name('komputerAmi.update');
+            Route::get('/komputerAmi/{id}/detail', [InvComputerAmiController::class, 'detail'])->name('komputerAmi.detail');
+            Route::post('/uploadCsvCuAmi', [InvComputerAmiController::class, 'uploadCsv'])->name('komputerAmi.import');
+
+            Route::get('/printerAmi', [InvPrinterAmiController::class, 'index'])->name(name: 'printerAmi.page');
+            Route::get('/printerAmi/create', [InvPrinterAmiController::class, 'create'])->name('printerAmi.create');
+            Route::post('/printerAmi/create', [InvPrinterAmiController::class, 'store'])->name('printerAmi.store');
+            Route::get('/printerAmi/{id}/edit', [InvPrinterAmiController::class, 'edit'])->name('printerAmi.edit');
+            Route::delete('/printerAmi/{id}/delete', [InvPrinterAmiController::class, 'destroy'])->name('printerAmi.delete');
+            Route::post('/printerAmi/update', [InvPrinterAmiController::class, 'update'])->name('printerAmi.update');
+            Route::get('/printerAmi/{id}/detail', [InvPrinterAmiController::class, 'detail'])->name('printerAmi.detail');
+            Route::post('/uploadCsvPrtAmi', [InvPrinterAmiController::class, 'uploadCsv'])->name('printerAmi.import');
+
+            Route::get('/scannerAmi', [InvScannerAmiController::class, 'index'])->name('scannerAmi.page');
+            Route::get('/scannerAmi/create', [InvScannerAmiController::class, 'create'])->name('scannerAmi.create');
+            Route::post('/scannerAmi/create', [InvScannerAmiController::class, 'store'])->name('scannerAmi.store');
+            Route::get('/scannerAmi/{id}/edit', [InvScannerAmiController::class, 'edit'])->name('scannerAmi.edit');
+            Route::delete('/scannerAmi/{id}/delete', [InvScannerAmiController::class, 'destroy'])->name('scannerAmi.delete');
+            Route::post('/scannerAmi/update', [InvScannerAmiController::class, 'update'])->name('scannerAmi.update');
+            Route::get('/scannerAmi/{id}/detail', [InvScannerAmiController::class, 'detail'])->name('scannerAmi.detail');
+            Route::post('/uploadCsvScnAmi', [InvScannerAmiController::class, 'uploadCsv'])->name('scannerAmi.import');
+
+            Route::get('/cctvAmi', [InvCctvAmiController::class, 'index'])->name('cctvAmi.page');
+            Route::get('/cctvAmi/create', [InvCctvAmiController::class, 'create'])->name('cctvAmi.create');
+            Route::post('/cctvAmi/create', [InvCctvAmiController::class, 'store'])->name('cctvAmi.store');
+            Route::get('/cctvAmi/{id}/edit', [InvCctvAmiController::class, 'edit'])->name('cctvAmi.edit');
+            Route::delete('/cctvAmi/{id}/delete', [InvCctvAmiController::class, 'destroy'])->name('cctvAmi.delete');
+            Route::post('/cctvAmi/update', [InvCctvAmiController::class, 'update'])->name('cctvAmi.update');
+            Route::get('/cctvAmi/{id}/detail', [InvCctvAmiController::class, 'detail'])->name('cctvAmi.detail');
+            Route::post('/uploadCsvCCTVAmi', [InvCctvAmiController::class, 'uploadCsv'])->name('cctvAmi.import');
+        });
+
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_ho:HO,ict_group_leader:WARA'], function () {
             Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
             Route::get('/accessPointSiteWara/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');
@@ -889,6 +974,25 @@ Route::middleware('auth')->group(function () {
                 Route::get('/inspeksi-komputer-Wara/{id}/detail', [InspeksiComputerWARAController::class, 'detail'])->name('inspeksiKomputerWARA.detail');
                 Route::delete('inspeksi-komputer-Wara/{id}/delete', [InspeksiComputerWARAController::class, 'destroy'])->name('inspeksiKomputerWARA.delete');
             });
+            
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI'], function () {
+                Route::get('inspeksi-laptop-ami', [InspeksiLaptopAmiController::class, 'index'])->name('inspeksiLaptopAmi.page');
+                Route::get('inspeksi-laptop-ami/{id}/process', [InspeksiLaptopAmiController::class, 'process'])->name('inspeksiLaptopAmi.process');
+                Route::post('inspeksi-laptop-ami/process', [InspeksiLaptopAmiController::class, 'store'])->name('inspeksiLaptopAmi.store');
+                Route::get('inspeksi-laptop-ami/{id}/edit', [InspeksiLaptopAmiController::class, 'edit'])->name('inspeksiLaptopAmi.edit');
+                Route::post('inspeksi-laptop-ami/update', [InspeksiLaptopAmiController::class, 'update'])->name('inspeksiLaptopAmi.update');
+                Route::get('/inspeksi-laptop-ami/{id}/detail', [InspeksiLaptopAmiController::class, 'detail'])->name('inspeksiLaptopAmi.detail');
+                Route::delete('inspeksi-laptop-ami/{id}/delete', [InspeksiLaptopAmiController::class, 'destroy'])->name('inspeksiLaptopAmi.delete');
+
+                Route::get('inspeksi-komputer-ami', [InspeksiComputerAmiController::class, 'index'])->name('inspeksiKomputerAmi.page');
+                Route::get('inspeksi-komputer-ami/{id}/inspection', [InspeksiComputerAmiController::class, 'doInspection'])->name('inspeksiKomputerAmi.inspection');
+                Route::post('inspeksi-komputer-ami/inspection', [InspeksiComputerAmiController::class, 'store'])->name('inspeksiKomputerAmi.store');
+                Route::get('inspeksi-komputer-ami/{id}/edit', [InspeksiComputerAmiController::class, 'edit'])->name('inspeksiKomputerAmi.edit');
+                Route::put('inspeksi-komputer-ami/{id}/update', [InspeksiComputerAmiController::class, 'update'])->name('inspeksiKomputerAmi.update');
+                Route::get('/inspeksi-komputer-ami/{id}/detail', [InspeksiComputerAmiController::class, 'detail'])->name('inspeksiKomputerAmi.detail');
+                Route::delete('inspeksi-komputer-ami/{id}/delete', [InspeksiComputerAmiController::class, 'destroy'])->name('inspeksiKomputerAmi.delete');
+            });
+
         });
     });
 
@@ -951,6 +1055,18 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanWara/{id}/delete', [AduanWARAController::class, 'destroy'])->name('aduanWARA.delete');
             Route::post('/aduanWara/update', [AduanWARAController::class, 'update_aduan'])->name('aduanWARA.update');
             Route::get('/aduanWara/{id}/detail', [AduanWARAController::class, 'detail'])->name('aduanWARA.detail');
+        });
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_ho:HO'], function () {
+            Route::get('/aduanAmi', [AduanAmiController::class, 'index'])->name('aduanAmi.page');
+            Route::get('/aduanAmi/create', [AduanAmiController::class, 'create'])->name('aduanAmi.create');
+            Route::post('/aduanAmi/create', [AduanAmiController::class, 'store'])->name('aduanAmi.store');
+            Route::get('/aduanAmi/{id}/edit', [AduanAmiController::class, 'edit'])->name('aduanAmi.edit');
+            Route::post('/aduanAmi/updateProgress', [AduanAmiController::class, 'update_aduan_progress'])->name('aduanAmi.updateProgress');
+            Route::get('/aduanAmi/{id}/progress', [AduanAmiController::class, 'progress'])->name('aduanAmi.progress');
+            Route::delete('/aduanAmi/{id}/delete', [AduanAmiController::class, 'destroy'])->name('aduanAmi.delete');
+            Route::post('/aduanAmi/update', [AduanAmiController::class, 'update_aduan'])->name('aduanAmi.update');
+            Route::get('/aduanAmi/{id}/detail', [AduanAmiController::class, 'detail'])->name('aduanAmi.detail');
         });
 
         Route::group(['middleware' => 'checkRole:ict_technician:BA'], function (): void {

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ImportComputer;
+use App\Imports\ImportLaptop;
 use App\Models\Aduan;
 use App\Models\Department;
-use App\Models\InvComputer;
+use App\Models\InspeksiLaptop;
+use App\Models\InvLaptop;
+use App\Models\UnscheduleJob;
 use App\Models\UserAll;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
@@ -14,15 +16,14 @@ use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpParser\Node\Expr\Empty_;
 
-class InvComputerMifaController extends Controller
+class InvLaptopAmiController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->where('site', 'MIFA')->get();
+        $dataInventory = InvLaptop::with('pengguna')->where('site', 'AMI')->get();
 
-        $site = 'MIFA';
+        $site = 'AMI';
 
         $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
             return ['name' => $name];
@@ -30,19 +31,18 @@ class InvComputerMifaController extends Controller
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiteMifa/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
+        return Inertia::render('Inventory/SiteAmi/Laptop/Laptop', ['laptop' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
     }
 
     public function create()
     {
-        abort(404, 'page not found');
+        abort(404, 'Page not found');
     }
 
     public function store(Request $request)
     {
 
         $params = $request->all();
-
         if ($params['roterx'] == 'index') {
             // start generate code
             $currentDate = Carbon::tomorrow();
@@ -52,32 +52,33 @@ class InvComputerMifaController extends Controller
 
             $dept = $params['dept'];
 
+            // dd($dept);
+
             $code_dept = Department::where('department_name', $dept)->first();
 
-            $maxId = InvComputer::where('site', 'MIFA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+            $maxId = InvLaptop::where('site', 'AMI')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
             // dd($maxId);
 
             if (is_null($maxId)) {
                 $maxId = 0;
             } else {
-                $noUrut = (int) substr($maxId->computer_code, 10, 3);
+                $noUrut = (int) substr($maxId->laptop_code, 10, 3);
                 $maxId = $noUrut;
             }
 
-            $uniqueString = 'MIFA-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            $uniqueString = 'AMI-NB-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
             $request['inventory_number'] = $uniqueString;
             // end generate code
 
-            $pengguna = UserAll::where('site', 'MIFA')->pluck('username')->map(function ($name) {
+            $pengguna = UserAll::where('site', 'AMI')->pluck('username')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
 
-            return Inertia::render('Inventory/SiteMifa/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+            return Inertia::render('Inventory/SiteAmi/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
         } else {
-            // dd($request->all());
-            $maxId = InvComputer::max('max_id');
-            if (is_null($maxId) || empty($maxId)) {
+            $maxId = InvLaptop::max('max_id');
+            if (is_null($maxId)) {
                 $maxId = 1;
             } else {
                 $maxId = $maxId + 1;
@@ -95,11 +96,11 @@ class InvComputerMifaController extends Controller
 
             $data = [
                 'max_id' => $maxId,
-                'computer_name' => $params['computer_name'],
-                'computer_code' => $params['computer_code'],
+                'laptop_name' => $params['laptop_name'],
+                'laptop_code' => $params['laptop_code'],
                 'number_asset_ho' => $params['number_asset_ho'],
                 'assets_category' => $params['assets_category'],
-                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_komputer'] . ', ' . $params['os_komputer'],
+                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
                 'serial_number' => $params['serial_number'],
                 'aplikasi' => $params['aplikasi'],
                 'license' => $params['license'],
@@ -112,12 +113,12 @@ class InvComputerMifaController extends Controller
                 'note' => $params['note'],
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'MIFA',
+                'site' => 'AMI',
                 'dept' => $dept
             ];
 
-            InvComputer::create($data);
-            return redirect()->route('komputerMifa.page');
+            InvLaptop::create($data);
+            return redirect()->route('laptopAmi.page');
         }
     }
 
@@ -125,8 +126,8 @@ class InvComputerMifaController extends Controller
     {
         try {
 
-            Excel::import(new ImportComputer, $request->file('file'));
-            return redirect()->route('komputerMifa.page');
+            Excel::import(new ImportLaptop, $request->file('file'));
+            return redirect()->route('laptopAmi.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -135,61 +136,71 @@ class InvComputerMifaController extends Controller
 
     public function edit($id)
     {
-        $komputer = InvComputer::find($id);
-
-        if (empty($komputer)) {
+        $laptop = InvLaptop::find($id);
+        if (empty($laptop)) {
             abort(404, 'Data not found');
         }
 
-        if (!empty($komputer->user_alls_id)) {
-            $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->username;
+        if (!empty($laptop->user_alls_id)) {
+            $aduan_get_data_user = UserAll::where('id', $laptop->user_alls_id)->first()->username;
 
             $pengguna_selected = array($aduan_get_data_user);
         } else {
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site', 'MIFA')->pluck('username')->map(function ($name) {
+        $pengguna_all = UserAll::where('site', 'AMI')->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
-        $spesifikasi = explode(',', $komputer->spesifikasi);
+        // dd($aduan_get_data_user);
+
+        $spesifikasi = explode(',', $laptop->spesifikasi);
         $model = trim($spesifikasi[0]);
         $processor = trim($spesifikasi[1]);
         $hdd = trim($spesifikasi[2]);
         $ssd = trim($spesifikasi[3]);
         $ram = trim($spesifikasi[4]);
         $vga = trim($spesifikasi[5]);
-        $warna_komputer = trim($spesifikasi[6]);
-        $os_komputer = trim($spesifikasi[7]);
-        // return response()->json(['ap' => $komputer]);
-        return Inertia::render('Inventory/SiteMifa/Komputer/KomputerEdit', [
-            'komputer' => $komputer,
+        $warna_laptop = trim($spesifikasi[6]);
+        $os_laptop = trim($spesifikasi[7]);
+        // return response()->json(['ap' => $laptop]);
+        return Inertia::render('Inventory/SiteAmi/Laptop/LaptopEdit', [
+            'laptop' => $laptop,
             'model' => $model,
             'processor' => $processor,
             'hdd' => $hdd,
             'ssd' => $ssd,
             'ram' => $ram,
             'vga' => $vga,
-            'warna_komputer' => $warna_komputer,
-            'os_komputer' => $os_komputer,
+            'warna_laptop' => $warna_laptop,
+            'os_laptop' => $os_laptop,
             'pengguna_selected' => $pengguna_selected,
-            'pengguna_all' => $pengguna_all
+            'pengguna_all' => $pengguna_all,
         ]);
     }
 
     public function detail($id)
     {
-        $komputer = InvComputer::where('id', $id)->first();
-
-        if (empty($komputer)) {
+        $laptop = InvLaptop::where('id', $id)->first();
+        if (empty($laptop)) {
             abort(404, 'Data not found');
         }
-
-        $aduan = Aduan::where('inventory_number', $komputer->computer_code)->get();
-        return Inertia::render('Inventory/SiteMifa/Komputer/KomputerDetail', [
-            'komputer' => $komputer,
+        $aduan = Aduan::where('inventory_number', $laptop->laptop_code)->get();
+        $unschedule = UnscheduleJob::where('inventory_number', $laptop->laptop_code)->get();
+        $inspeksi = InspeksiLaptop::with('inventory')
+            ->where('inv_laptop_id', $id) // Only get posts from user_id 1
+            ->get();
+        // return response()->json($inspeksi);
+        $merge = [
             'aduan' => $aduan,
+            'inspeksi' => $inspeksi
+        ];
+        return Inertia::render('Inventory/SiteAmi/Laptop/LaptopDetail', [
+            'laptop' => $laptop,
+            'aduan' => $aduan,
+            'inspeksi' => $inspeksi,
+            'unschedule' => $unschedule,
         ]);
     }
 
@@ -206,11 +217,11 @@ class InvComputerMifaController extends Controller
 
             $data = [
                 'max_id' => $request->max_id,
-                'computer_name' => $request->computer_name,
-                'computer_code' => $request->computer_code,
+                'laptop_name' => $request->laptop_name,
+                'laptop_code' => $request->laptop_code,
                 'number_asset_ho' => $request->number_asset_ho,
                 'assets_category' => $request->assets_category,
-                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_komputer . ', ' . $request->os_komputer,
+                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_laptop . ', ' . $request->os_laptop,
                 'serial_number' => $request->serial_number,
                 'aplikasi' => $request->aplikasi,
                 'license' => $request->license,
@@ -223,7 +234,7 @@ class InvComputerMifaController extends Controller
                 'note' => $request->note,
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'MIFA'
+                'site' => 'AMI'
             ];
         } else {
 
@@ -231,11 +242,11 @@ class InvComputerMifaController extends Controller
 
             $data = [
                 'max_id' => $request->max_id,
-                'computer_name' => $request->computer_name,
-                'computer_code' => $request->computer_code,
+                'laptop_name' => $request->laptop_name,
+                'laptop_code' => $request->laptop_code,
                 'number_asset_ho' => $request->number_asset_ho,
                 'assets_category' => $request->assets_category,
-                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_komputer . ', ' . $request->os_komputer,
+                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_laptop . ', ' . $request->os_laptop,
                 'serial_number' => $request->serial_number,
                 'aplikasi' => $request->aplikasi,
                 'license' => $request->license,
@@ -247,21 +258,21 @@ class InvComputerMifaController extends Controller
                 'condition' => $request->condition,
                 'note' => $request->note,
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'MIFA'
+                'site' => 'AMI'
             ];
         }
 
-        InvComputer::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('komputerMifa.page');
+        InvLaptop::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('laptopAmi.page');
     }
     public function destroy($id)
     {
-        $komputer = InvComputer::find($id);
-        if (empty($komputer)) {
+        $laptop = InvLaptop::find($id);
+        if (empty($laptop)) {
             abort(404, 'Data not found');
         }
-        // return response()->json(['ap' => $komputer]);
-        $komputer->delete();
+        // return response()->json(['ap' => $laptop]);
+        $laptop->delete();
         return redirect()->back();
     }
 }

@@ -16,13 +16,13 @@ use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Node\Expr\Empty_;
 
-class InvComputerMifaController extends Controller
+class InvComputerAmiController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->where('site', 'MIFA')->get();
+        $dataInventory = InvComputer::with('pengguna')->where('site', 'AMI')->get();
 
-        $site = 'MIFA';
+        $site = 'AMI';
 
         $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
             return ['name' => $name];
@@ -30,7 +30,7 @@ class InvComputerMifaController extends Controller
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiteMifa/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
+        return Inertia::render('Inventory/SiteAmi/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
     }
 
     public function create()
@@ -54,7 +54,7 @@ class InvComputerMifaController extends Controller
 
             $code_dept = Department::where('department_name', $dept)->first();
 
-            $maxId = InvComputer::where('site', 'MIFA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+            $maxId = InvComputer::where('site', 'AMI')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
             // dd($maxId);
 
             if (is_null($maxId)) {
@@ -64,16 +64,16 @@ class InvComputerMifaController extends Controller
                 $maxId = $noUrut;
             }
 
-            $uniqueString = 'MIFA-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            $uniqueString = 'AMI-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
             $request['inventory_number'] = $uniqueString;
             // end generate code
 
-            $pengguna = UserAll::where('site', 'MIFA')->pluck('username')->map(function ($name) {
+            $pengguna = UserAll::where('site', 'AMI')->pluck('username')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
 
-            return Inertia::render('Inventory/SiteMifa/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+            return Inertia::render('Inventory/SiteAmi/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
         } else {
             // dd($request->all());
             $maxId = InvComputer::max('max_id');
@@ -112,12 +112,12 @@ class InvComputerMifaController extends Controller
                 'note' => $params['note'],
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'MIFA',
+                'site' => 'AMI',
                 'dept' => $dept
             ];
 
             InvComputer::create($data);
-            return redirect()->route('komputerMifa.page');
+            return redirect()->route('komputerAmi.page');
         }
     }
 
@@ -126,7 +126,7 @@ class InvComputerMifaController extends Controller
         try {
 
             Excel::import(new ImportComputer, $request->file('file'));
-            return redirect()->route('komputerMifa.page');
+            return redirect()->route('komputerAmi.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -149,7 +149,7 @@ class InvComputerMifaController extends Controller
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site', 'MIFA')->pluck('username')->map(function ($name) {
+        $pengguna_all = UserAll::where('site', 'AMI')->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -163,7 +163,7 @@ class InvComputerMifaController extends Controller
         $warna_komputer = trim($spesifikasi[6]);
         $os_komputer = trim($spesifikasi[7]);
         // return response()->json(['ap' => $komputer]);
-        return Inertia::render('Inventory/SiteMifa/Komputer/KomputerEdit', [
+        return Inertia::render('Inventory/SiteAmi/Komputer/KomputerEdit', [
             'komputer' => $komputer,
             'model' => $model,
             'processor' => $processor,
@@ -187,7 +187,7 @@ class InvComputerMifaController extends Controller
         }
 
         $aduan = Aduan::where('inventory_number', $komputer->computer_code)->get();
-        return Inertia::render('Inventory/SiteMifa/Komputer/KomputerDetail', [
+        return Inertia::render('Inventory/SiteAmi/Komputer/KomputerDetail', [
             'komputer' => $komputer,
             'aduan' => $aduan,
         ]);
@@ -223,7 +223,7 @@ class InvComputerMifaController extends Controller
                 'note' => $request->note,
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'MIFA'
+                'site' => 'AMI'
             ];
         } else {
 
@@ -247,12 +247,12 @@ class InvComputerMifaController extends Controller
                 'condition' => $request->condition,
                 'note' => $request->note,
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'MIFA'
+                'site' => 'AMI'
             ];
         }
 
         InvComputer::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('komputerMifa.page');
+        return redirect()->route('komputerAmi.page');
     }
     public function destroy($id)
     {
