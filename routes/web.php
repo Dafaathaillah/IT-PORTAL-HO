@@ -646,77 +646,77 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_ho:HO,ict_group_leader:WARA'], function () {
-            Route::get('/accessPointSiteWARA', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
-            Route::get('/accessPointSiteWARA/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');
-            Route::post('/accessPointSiteWARA/create', [InvApWARAController::class, 'store'])->name('accessPointWARA.store');
-            Route::get('/accessPointSiteWARA/{apId}/edit', [InvApWARAController::class, 'edit'])->name('accessPointWARA.edit');
-            Route::put('/accessPointSiteWARA/{apId}/update', [InvApWARAController::class, 'update'])->name('accessPointWARA.update');
-            Route::delete('/accessPointSiteWARA/{apId}/delete', [InvApWARAController::class, 'destroy'])->name('accessPointWARA.delete');
-            Route::get('/accessPointSiteWARA/{id}/detail', [InvApWARAController::class, 'detail'])->name('accessPointWARA.detail');
-            Route::post('/uploadCsvApWARA', [InvApWARAController::class, 'uploadCsv'])->name('accessPointWARA.import');
+            Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
+            Route::get('/accessPointSiteWara/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');
+            Route::post('/accessPointSiteWara/create', [InvApWARAController::class, 'store'])->name('accessPointWARA.store');
+            Route::get('/accessPointSiteWara/{apId}/edit', [InvApWARAController::class, 'edit'])->name('accessPointWARA.edit');
+            Route::put('/accessPointSiteWara/{apId}/update', [InvApWARAController::class, 'update'])->name('accessPointWARA.update');
+            Route::delete('/accessPointSiteWara/{apId}/delete', [InvApWARAController::class, 'destroy'])->name('accessPointWARA.delete');
+            Route::get('/accessPointSiteWara/{id}/detail', [InvApWARAController::class, 'detail'])->name('accessPointWARA.detail');
+            Route::post('/uploadCsvApWara', [InvApWARAController::class, 'uploadCsv'])->name('accessPointWARA.import');
 
-            Route::get('/switchWARA', [InvSwitchWARAController::class, 'index'])->name('switchWARA.page');
-            Route::get('/switchWARA/create', [InvSwitchWARAController::class, 'create'])->name('switchWARA.create');
-            Route::post('/switchWARA/create', [InvSwitchWARAController::class, 'store'])->name('switchWARA.store');
-            Route::get('/switchWARA/{swId}/edit', [InvSwitchWARAController::class, 'edit'])->name('switchWARA.edit');
-            Route::put('/switchWARA/{swId}/update', [InvSwitchWARAController::class, 'update'])->name('switchWARA.update');
-            Route::delete('/switchWARA/{swId}/delete', [InvSwitchWARAController::class, 'destroy'])->name('switchWARA.delete');
-            Route::get('/switchWARA/{id}/detail', [InvSwitchWARAController::class, 'detail'])->name('switchWARA.detail');
-            Route::post('/uploadCsvSwWARA', [InvSwitchWARAController::class, 'uploadCsv'])->name('switchWARA.import');
+            Route::get('/switchWara', [InvSwitchWARAController::class, 'index'])->name('switchWARA.page');
+            Route::get('/switchWara/create', [InvSwitchWARAController::class, 'create'])->name('switchWARA.create');
+            Route::post('/switchWara/create', [InvSwitchWARAController::class, 'store'])->name('switchWARA.store');
+            Route::get('/switchWara/{swId}/edit', [InvSwitchWARAController::class, 'edit'])->name('switchWARA.edit');
+            Route::put('/switchWara/{swId}/update', [InvSwitchWARAController::class, 'update'])->name('switchWARA.update');
+            Route::delete('/switchWara/{swId}/delete', [InvSwitchWARAController::class, 'destroy'])->name('switchWARA.delete');
+            Route::get('/switchWara/{id}/detail', [InvSwitchWARAController::class, 'detail'])->name('switchWARA.detail');
+            Route::post('/uploadCsvSwWara', [InvSwitchWARAController::class, 'uploadCsv'])->name('switchWARA.import');
 
-            Route::get('/wirellessWARA', [InvWirellessWARAController::class, 'index'])->name('wirellessWARA.page');
-            Route::get('/wirellessWARA/create', [InvWirellessWARAController::class, 'create'])->name('wirellessWARA.create');
-            Route::post('/wirellessWARA/create', [InvWirellessWARAController::class, 'store'])->name('wirellessWARA.store');
-            Route::get('/wirellessWARA/{id}/edit', [InvWirellessWARAController::class, 'edit'])->name('wirellessWARA.edit');
-            Route::put('/wirellessWARA/{id}/update', [InvWirellessWARAController::class, 'update'])->name('wirellessWARA.update');
-            Route::delete('/wirellessWARA/{id}/delete', [InvWirellessWARAController::class, 'destroy'])->name('wirellessWARA.delete');
-            Route::get('/wirellessWARA/{id}/detail', [InvWirellessWARAController::class, 'detail'])->name('wirellessWARA.detail');
-            Route::post('/uploadCsvBbWARA', [InvWirellessWARAController::class, 'uploadCsv'])->name('wirellessWARA.import');
+            Route::get('/wirellessWara', [InvWirellessWARAController::class, 'index'])->name('wirellessWARA.page');
+            Route::get('/wirellessWara/create', [InvWirellessWARAController::class, 'create'])->name('wirellessWARA.create');
+            Route::post('/wirellessWara/create', [InvWirellessWARAController::class, 'store'])->name('wirellessWARA.store');
+            Route::get('/wirellessWara/{id}/edit', [InvWirellessWARAController::class, 'edit'])->name('wirellessWARA.edit');
+            Route::put('/wirellessWara/{id}/update', [InvWirellessWARAController::class, 'update'])->name('wirellessWARA.update');
+            Route::delete('/wirellessWara/{id}/delete', [InvWirellessWARAController::class, 'destroy'])->name('wirellessWARA.delete');
+            Route::get('/wirellessWara/{id}/detail', [InvWirellessWARAController::class, 'detail'])->name('wirellessWARA.detail');
+            Route::post('/uploadCsvBbWara', [InvWirellessWARAController::class, 'uploadCsv'])->name('wirellessWARA.import');
 
-            Route::get('/laptopWARA', [InvLaptopWARAController::class, 'index'])->name('laptopWARA.page');
-            Route::get('/laptopWARA/create', [InvLaptopWARAController::class, 'create'])->name('laptopWARA.create');
-            Route::post('/laptopWARA/create', [InvLaptopWARAController::class, 'store'])->name('laptopWARA.store');
-            Route::get('/laptopWARA/{id}/edit', [InvLaptopWARAController::class, 'edit'])->name('laptopWARA.edit');
-            Route::delete('/laptopWARA/{id}/delete', [InvLaptopWARAController::class, 'destroy'])->name('laptopWARA.delete');
-            Route::post('/laptopWARA/update', [InvLaptopWARAController::class, 'update'])->name('laptopWARA.update');
-            Route::get('/laptopWARA/{id}/detail', [InvLaptopWARAController::class, 'detail'])->name('laptopWARA.detail');
-            Route::post('/uploadCsvNbWARA', [InvLaptopWARAController::class, 'uploadCsv'])->name('laptopWARA.import');
+            Route::get('/laptopWara', [InvLaptopWARAController::class, 'index'])->name('laptopWARA.page');
+            Route::get('/laptopWara/create', [InvLaptopWARAController::class, 'create'])->name('laptopWARA.create');
+            Route::post('/laptopWara/create', [InvLaptopWARAController::class, 'store'])->name('laptopWARA.store');
+            Route::get('/laptopWara/{id}/edit', [InvLaptopWARAController::class, 'edit'])->name('laptopWARA.edit');
+            Route::delete('/laptopWara/{id}/delete', [InvLaptopWARAController::class, 'destroy'])->name('laptopWARA.delete');
+            Route::post('/laptopWara/update', [InvLaptopWARAController::class, 'update'])->name('laptopWARA.update');
+            Route::get('/laptopWara/{id}/detail', [InvLaptopWARAController::class, 'detail'])->name('laptopWARA.detail');
+            Route::post('/uploadCsvNbWara', [InvLaptopWARAController::class, 'uploadCsv'])->name('laptopWARA.import');
 
-            Route::get('/komputerWARA', [InvComputerWARAController::class, 'index'])->name('komputerWARA.page');
-            Route::get('/komputerWARA/create', [InvComputerWARAController::class, 'create'])->name('komputerWARA.create');
-            Route::post('/komputerWARA/create', [InvComputerWARAController::class, 'store'])->name('komputerWARA.store');
-            Route::get('/komputerWARA/{id}/edit', [InvComputerWARAController::class, 'edit'])->name('komputerWARA.edit');
-            Route::delete('/komputerWARA/{id}/delete', [InvComputerWARAController::class, 'destroy'])->name('komputerWARA.delete');
-            Route::post('/komputerWARA/update', [InvComputerWARAController::class, 'update'])->name('komputerWARA.update');
-            Route::get('/komputerWARA/{id}/detail', [InvComputerWARAController::class, 'detail'])->name('komputerWARA.detail');
-            Route::post('/uploadCsvCuWARA', [InvComputerWARAController::class, 'uploadCsv'])->name('komputerWARA.import');
+            Route::get('/komputerWara', [InvComputerWARAController::class, 'index'])->name('komputerWARA.page');
+            Route::get('/komputerWara/create', [InvComputerWARAController::class, 'create'])->name('komputerWARA.create');
+            Route::post('/komputerWara/create', [InvComputerWARAController::class, 'store'])->name('komputerWARA.store');
+            Route::get('/komputerWara/{id}/edit', [InvComputerWARAController::class, 'edit'])->name('komputerWARA.edit');
+            Route::delete('/komputerWara/{id}/delete', [InvComputerWARAController::class, 'destroy'])->name('komputerWARA.delete');
+            Route::post('/komputerWara/update', [InvComputerWARAController::class, 'update'])->name('komputerWARA.update');
+            Route::get('/komputerWara/{id}/detail', [InvComputerWARAController::class, 'detail'])->name('komputerWARA.detail');
+            Route::post('/uploadCsvCuWara', [InvComputerWARAController::class, 'uploadCsv'])->name('komputerWARA.import');
 
-            Route::get('/printerWARA', [InvPrinterWARAController::class, 'index'])->name(name: 'printerWARA.page');
-            Route::get('/printerWARA/create', [InvPrinterWARAController::class, 'create'])->name('printerWARA.create');
-            Route::post('/printerWARA/create', [InvPrinterWARAController::class, 'store'])->name('printerWARA.store');
-            Route::get('/printerWARA/{id}/edit', [InvPrinterWARAController::class, 'edit'])->name('printerWARA.edit');
-            Route::delete('/printerWARA/{id}/delete', [InvPrinterWARAController::class, 'destroy'])->name('printerWARA.delete');
-            Route::post('/printerWARA/update', [InvPrinterWARAController::class, 'update'])->name('printerWARA.update');
-            Route::get('/printerWARA/{id}/detail', [InvPrinterWARAController::class, 'detail'])->name('printerWARA.detail');
-            Route::post('/uploadCsvPrtWARA', [InvPrinterWARAController::class, 'uploadCsv'])->name('printerWARA.import');
+            Route::get('/printerWara', [InvPrinterWARAController::class, 'index'])->name(name: 'printerWARA.page');
+            Route::get('/printerWara/create', [InvPrinterWARAController::class, 'create'])->name('printerWARA.create');
+            Route::post('/printerWara/create', [InvPrinterWARAController::class, 'store'])->name('printerWARA.store');
+            Route::get('/printerWara/{id}/edit', [InvPrinterWARAController::class, 'edit'])->name('printerWARA.edit');
+            Route::delete('/printerWara/{id}/delete', [InvPrinterWARAController::class, 'destroy'])->name('printerWARA.delete');
+            Route::post('/printerWara/update', [InvPrinterWARAController::class, 'update'])->name('printerWARA.update');
+            Route::get('/printerWara/{id}/detail', [InvPrinterWARAController::class, 'detail'])->name('printerWARA.detail');
+            Route::post('/uploadCsvPrtWara', [InvPrinterWARAController::class, 'uploadCsv'])->name('printerWARA.import');
 
-            Route::get('/scannerWARA', [InvScannerWARAController::class, 'index'])->name('scannerWARA.page');
-            Route::get('/scannerWARA/create', [InvScannerWARAController::class, 'create'])->name('scannerWARA.create');
-            Route::post('/scannerWARA/create', [InvScannerWARAController::class, 'store'])->name('scannerWARA.store');
-            Route::get('/scannerWARA/{id}/edit', [InvScannerWARAController::class, 'edit'])->name('scannerWARA.edit');
-            Route::delete('/scannerWARA/{id}/delete', [InvScannerWARAController::class, 'destroy'])->name('scannerWARA.delete');
-            Route::post('/scannerWARA/update', [InvScannerWARAController::class, 'update'])->name('scannerWARA.update');
-            Route::get('/scannerWARA/{id}/detail', [InvScannerWARAController::class, 'detail'])->name('scannerWARA.detail');
-            Route::post('/uploadCsvScnWARA', [InvScannerWARAController::class, 'uploadCsv'])->name('scannerWARA.import');
+            Route::get('/scannerWara', [InvScannerWARAController::class, 'index'])->name('scannerWARA.page');
+            Route::get('/scannerWara/create', [InvScannerWARAController::class, 'create'])->name('scannerWARA.create');
+            Route::post('/scannerWara/create', [InvScannerWARAController::class, 'store'])->name('scannerWARA.store');
+            Route::get('/scannerWara/{id}/edit', [InvScannerWARAController::class, 'edit'])->name('scannerWARA.edit');
+            Route::delete('/scannerWara/{id}/delete', [InvScannerWARAController::class, 'destroy'])->name('scannerWARA.delete');
+            Route::post('/scannerWara/update', [InvScannerWARAController::class, 'update'])->name('scannerWARA.update');
+            Route::get('/scannerWara/{id}/detail', [InvScannerWARAController::class, 'detail'])->name('scannerWARA.detail');
+            Route::post('/uploadCsvScnWara', [InvScannerWARAController::class, 'uploadCsv'])->name('scannerWARA.import');
 
-            Route::get('/cctvWARA', [InvCctvWARAController::class, 'index'])->name('cctvWARA.page');
-            Route::get('/cctvWARA/create', [InvCctvWARAController::class, 'create'])->name('cctvWARA.create');
-            Route::post('/cctvWARA/create', [InvCctvWARAController::class, 'store'])->name('cctvWARA.store');
-            Route::get('/cctvWARA/{id}/edit', [InvCctvWARAController::class, 'edit'])->name('cctvWARA.edit');
-            Route::delete('/cctvWARA/{id}/delete', [InvCctvWARAController::class, 'destroy'])->name('cctvWARA.delete');
-            Route::post('/cctvWARA/update', [InvCctvWARAController::class, 'update'])->name('cctvWARA.update');
-            Route::get('/cctvWARA/{id}/detail', [InvCctvWARAController::class, 'detail'])->name('cctvWARA.detail');
-            Route::post('/uploadCsvCCTVWARA', [InvCctvWARAController::class, 'uploadCsv'])->name('cctvWARA.import');
+            Route::get('/cctvWara', [InvCctvWARAController::class, 'index'])->name('cctvWARA.page');
+            Route::get('/cctvWara/create', [InvCctvWARAController::class, 'create'])->name('cctvWARA.create');
+            Route::post('/cctvWara/create', [InvCctvWARAController::class, 'store'])->name('cctvWARA.store');
+            Route::get('/cctvWara/{id}/edit', [InvCctvWARAController::class, 'edit'])->name('cctvWARA.edit');
+            Route::delete('/cctvWara/{id}/delete', [InvCctvWARAController::class, 'destroy'])->name('cctvWARA.delete');
+            Route::post('/cctvWara/update', [InvCctvWARAController::class, 'update'])->name('cctvWARA.update');
+            Route::get('/cctvWara/{id}/detail', [InvCctvWARAController::class, 'detail'])->name('cctvWARA.detail');
+            Route::post('/uploadCsvCCTVWara', [InvCctvWARAController::class, 'uploadCsv'])->name('cctvWARA.import');
         });
 
         Route::prefix('itportal')->group(function () {
@@ -870,25 +870,25 @@ Route::middleware('auth')->group(function () {
                 // Route::get('akses-mhu/{id}/edit', [AdminPengajuanRoleMifaController::class, 'edit'])->name('aksesMifa.edit');
                 // Route::post('akses-mhu/update', [AdminPengajuanRoleMifaController::class, 'update'])->name('aksesMifa.update');
                 // Route::delete('akses-mhu/{id}/delete', [AdminPengajuanRoleMifaController::class, 'destroy'])->name('aksesMifa.delete');
-        });
+            });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_group_leader:WARA'], function () {
-            Route::get('inspeksi-laptop-WARA', [InspeksiLaptopWARAController::class, 'index'])->name('inspeksiLaptopWARA.page');
-            Route::get('inspeksi-laptop-WARA/{id}/process', [InspeksiLaptopWARAController::class, 'process'])->name('inspeksiLaptopWARA.process');
-            Route::post('inspeksi-laptop-WARA/process', [InspeksiLaptopWARAController::class, 'store'])->name('inspeksiLaptopWARA.store');
-            Route::get('inspeksi-laptop-WARA/{id}/edit', [InspeksiLaptopWARAController::class, 'edit'])->name('inspeksiLaptopWARA.edit');
-            Route::post('inspeksi-laptop-WARA/update', [InspeksiLaptopWARAController::class, 'update'])->name('inspeksiLaptopWARA.update');
-            Route::get('/inspeksi-laptop-WARA/{id}/detail', [InspeksiLaptopWARAController::class, 'detail'])->name('inspeksiLaptopWARA.detail');
-            Route::delete('inspeksi-laptop-WARA/{id}/delete', [InspeksiLaptopWARAController::class, 'destroy'])->name('inspeksiLaptopWARA.delete');
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_group_leader:WARA'], function () {
+                Route::get('inspeksi-laptop-Wara', [InspeksiLaptopWARAController::class, 'index'])->name('inspeksiLaptopWARA.page');
+                Route::get('inspeksi-laptop-Wara/{id}/process', [InspeksiLaptopWARAController::class, 'process'])->name('inspeksiLaptopWARA.process');
+                Route::post('inspeksi-laptop-Wara/process', [InspeksiLaptopWARAController::class, 'store'])->name('inspeksiLaptopWARA.store');
+                Route::get('inspeksi-laptop-Wara/{id}/edit', [InspeksiLaptopWARAController::class, 'edit'])->name('inspeksiLaptopWARA.edit');
+                Route::post('inspeksi-laptop-Wara/update', [InspeksiLaptopWARAController::class, 'update'])->name('inspeksiLaptopWARA.update');
+                Route::get('/inspeksi-laptop-Wara/{id}/detail', [InspeksiLaptopWARAController::class, 'detail'])->name('inspeksiLaptopWARA.detail');
+                Route::delete('inspeksi-laptop-Wara/{id}/delete', [InspeksiLaptopWARAController::class, 'destroy'])->name('inspeksiLaptopWARA.delete');
 
-            Route::get('inspeksi-komputer-WARA', [InspeksiComputerWARAController::class, 'index'])->name('inspeksiKomputerWARA.page');
-            Route::get('inspeksi-komputer-WARA/{id}/inspection', [InspeksiComputerWARAController::class, 'doInspection'])->name('inspeksiKomputerWARA.inspection');
-            Route::post('inspeksi-komputer-WARA/inspection', [InspeksiComputerWARAController::class, 'store'])->name('inspeksiKomputerWARA.store');
-            Route::get('inspeksi-komputer-WARA/{id}/edit', [InspeksiComputerWARAController::class, 'edit'])->name('inspeksiKomputerWARA.edit');
-            Route::put('inspeksi-komputer-WARA/{id}/update', [InspeksiComputerWARAController::class, 'update'])->name('inspeksiKomputerWARA.update');
-            Route::get('/inspeksi-komputer-WARA/{id}/detail', [InspeksiComputerWARAController::class, 'detail'])->name('inspeksiKomputerWARA.detail');
-            Route::delete('inspeksi-komputer-WARA/{id}/delete', [InspeksiComputerWARAController::class, 'destroy'])->name('inspeksiKomputerWARA.delete');
-
+                Route::get('inspeksi-komputer-Wara', [InspeksiComputerWARAController::class, 'index'])->name('inspeksiKomputerWARA.page');
+                Route::get('inspeksi-komputer-Wara/{id}/inspection', [InspeksiComputerWARAController::class, 'doInspection'])->name('inspeksiKomputerWARA.inspection');
+                Route::post('inspeksi-komputer-Wara/inspection', [InspeksiComputerWARAController::class, 'store'])->name('inspeksiKomputerWARA.store');
+                Route::get('inspeksi-komputer-Wara/{id}/edit', [InspeksiComputerWARAController::class, 'edit'])->name('inspeksiKomputerWARA.edit');
+                Route::put('inspeksi-komputer-Wara/{id}/update', [InspeksiComputerWARAController::class, 'update'])->name('inspeksiKomputerWARA.update');
+                Route::get('/inspeksi-komputer-Wara/{id}/detail', [InspeksiComputerWARAController::class, 'detail'])->name('inspeksiKomputerWARA.detail');
+                Route::delete('inspeksi-komputer-Wara/{id}/delete', [InspeksiComputerWARAController::class, 'destroy'])->name('inspeksiKomputerWARA.delete');
+            });
         });
     });
 
@@ -942,15 +942,15 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_group_leader:WARA,ict_ho:HO'], function () {
-            Route::get('/aduanWARA', [AduanWARAController::class, 'index'])->name('aduanWARA.page');
-            Route::get('/aduanWARA/create', [AduanWARAController::class, 'create'])->name('aduanWARA.create');
-            Route::post('/aduanWARA/create', [AduanWARAController::class, 'store'])->name('aduanWARA.store');
-            Route::get('/aduanWARA/{id}/edit', [AduanWARAController::class, 'edit'])->name('aduanWARA.edit');
-            Route::post('/aduanWARA/updateProgress', [AduanWARAController::class, 'update_aduan_progress'])->name('aduanWARA.updateProgress');
-            Route::get('/aduanWARA/{id}/progress', [AduanWARAController::class, 'progress'])->name('aduanWARA.progress');
-            Route::delete('/aduanWARA/{id}/delete', [AduanWARAController::class, 'destroy'])->name('aduanWARA.delete');
-            Route::post('/aduanWARA/update', [AduanWARAController::class, 'update_aduan'])->name('aduanWARA.update');
-            Route::get('/aduanWARA/{id}/detail', [AduanWARAController::class, 'detail'])->name('aduanWARA.detail');
+            Route::get('/aduanWara', [AduanWARAController::class, 'index'])->name('aduanWARA.page');
+            Route::get('/aduanWara/create', [AduanWARAController::class, 'create'])->name('aduanWARA.create');
+            Route::post('/aduanWara/create', [AduanWARAController::class, 'store'])->name('aduanWARA.store');
+            Route::get('/aduanWara/{id}/edit', [AduanWARAController::class, 'edit'])->name('aduanWARA.edit');
+            Route::post('/aduanWara/updateProgress', [AduanWARAController::class, 'update_aduan_progress'])->name('aduanWARA.updateProgress');
+            Route::get('/aduanWara/{id}/progress', [AduanWARAController::class, 'progress'])->name('aduanWARA.progress');
+            Route::delete('/aduanWara/{id}/delete', [AduanWARAController::class, 'destroy'])->name('aduanWARA.delete');
+            Route::post('/aduanWara/update', [AduanWARAController::class, 'update_aduan'])->name('aduanWARA.update');
+            Route::get('/aduanWara/{id}/detail', [AduanWARAController::class, 'detail'])->name('aduanWARA.detail');
         });
 
         Route::group(['middleware' => 'checkRole:ict_technician:BA'], function (): void {
