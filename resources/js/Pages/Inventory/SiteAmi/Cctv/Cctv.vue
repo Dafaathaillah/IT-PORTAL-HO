@@ -188,7 +188,7 @@ function formatData(text) {
                             </div>
                             <div class="max-w-full px-3">
                                 <a
-                                    href="/sampleCctv-Ami.xlsx"
+                                    href="/sampleCctv.xlsx"
                                     download="Format-Import-Data-cctv.xlsx"
                                     target="_blank"
                                     type="button"

@@ -189,7 +189,7 @@ const submitCsv = () => {
                                     Format Excel Data
                                 </a>
                                 <a
-                                    href="/samplePrinter-Ami.xlsx"
+                                    href="/samplePrinter.xlsx"
                                     v-if="props.site === 'BA'"
                                     download="Format-Import-Data-printer.xlsx"
                                     target="_blank"

@@ -180,7 +180,7 @@ const submitCsv = () => {
                                     class="max-w-full px-3"
                                 >
                                     <a
-                                        href="/sampleAP-WARA.xlsx"
+                                        href="/sampleAP.xlsx"
                                         download="Format-Import-Data-AP.xlsx"
                                         target="_blank"
                                         type="button"

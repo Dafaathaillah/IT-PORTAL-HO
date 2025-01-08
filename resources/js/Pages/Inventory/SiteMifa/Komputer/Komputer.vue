@@ -204,7 +204,7 @@ const showAddAlert = () => {
                             </div>
                             <div class="max-w-full px-3">
                                 <a
-                                    href="/sampleKomputer-Mifa.xlsx"
+                                    href="/sampleKomputer.xlsx"
                                     download="Format-Import-Data-komputer.xlsx"
                                     target="_blank"
                                     type="button"

@@ -182,7 +182,7 @@ const submitCsv = () => {
                                 class="max-w-full px-3"
                             >
                                 <a
-                                    href="/sampleScanner-Mifa.xlsx"
+                                    href="/sampleScanner.xlsx"
                                     download="Format-Import-Data-scanner.xlsx"
                                     target="_blank"
                                     type="button"

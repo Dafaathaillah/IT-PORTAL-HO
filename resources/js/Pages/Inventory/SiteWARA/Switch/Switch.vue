@@ -178,7 +178,7 @@ const submitCsv = () => {
                             </div>
                             <div class="max-w-full px-3">
                                 <a
-                                    href="/sampleSW-WARA.xlsx"
+                                    href="/sampleSW.xlsx"
                                     download="Format-Import-Data-Switch.xlsx"
                                     target="_blank"
                                     type="button"
