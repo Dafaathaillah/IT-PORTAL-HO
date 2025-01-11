@@ -12,6 +12,11 @@ use App\Http\Controllers\AduanMifaController;
 use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\DashboardAmiController;
+use App\Http\Controllers\DashboardBaController;
+use App\Http\Controllers\DashboardMhuController;
+use App\Http\Controllers\DashboardMifaController;
+use App\Http\Controllers\DashboardWaraController;
 use App\Http\Controllers\DepartmentBaController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentMifaController;
@@ -435,6 +440,8 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteBa', [DashboardBaController::class, 'index'])->name('dashboardBa.page');
+           
             Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
             Route::get('/accessPointSiteBa/create', [InvApBaController::class, 'create'])->name('accessPointBa.create');
             Route::post('/accessPointSiteBa/create', [InvApBaController::class, 'store'])->name('accessPointBa.store');
@@ -509,6 +516,8 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteMifa', [DashboardMifaController::class, 'index'])->name('dashboardMifa.page');
+
             Route::get('/accessPointSiteMifa', [InvApMifaController::class, 'index'])->name('accessPointMifa.page');
             Route::get('/accessPointSiteMifa/create', [InvApMifaController::class, 'create'])->name('accessPointMifa.create');
             Route::post('/accessPointSiteMifa/create', [InvApMifaController::class, 'store'])->name('accessPointMifa.store');
@@ -583,6 +592,8 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteMhu', [DashboardMhuController::class, 'index'])->name('dashboardMhu.page');
+
             Route::get('/accessPointSiteMHU', [InvApMhuController::class, 'index'])->name('accessPointMhu.page');
             Route::get('/accessPointSiteMHU/create', [InvApMhuController::class, 'create'])->name('accessPointMhu.create');
             Route::post('/accessPointSiteMHU/create', [InvApMhuController::class, 'store'])->name('accessPointMhu.store');
@@ -656,7 +667,9 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVMhu', [InvCctvMhuController::class, 'uploadCsv'])->name('cctvMhu.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteAmi', [DashboardAmiController::class, 'index'])->name('dashboardAmi.page');
+
             Route::get('/accessPointSiteAmi', [InvApAmiController::class, 'index'])->name('accessPointAmi.page');
             Route::get('/accessPointSiteAmi/create', [InvApAmiController::class, 'create'])->name('accessPointAmi.create');
             Route::post('/accessPointSiteAmi/create', [InvApAmiController::class, 'store'])->name('accessPointAmi.store');
@@ -731,6 +744,8 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_ho:HO,ict_group_leader:WARA'], function () {
+            Route::get('/dashboardSiteWara', [DashboardWaraController::class, 'index'])->name('dashboardWara.page');
+
             Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
             Route::get('/accessPointSiteWara/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');
             Route::post('/accessPointSiteWara/create', [InvApWARAController::class, 'store'])->name('accessPointWARA.store');

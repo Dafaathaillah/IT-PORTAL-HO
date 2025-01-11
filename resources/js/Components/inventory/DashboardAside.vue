@@ -127,7 +127,6 @@ const toggleLevel1Ho = () => {
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenHo.value) {
         level2OpenHo.value = false;
-        level2OpenSettingHo.value = false;
         level2OpenInspeksiHo.value = false;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
@@ -170,13 +169,13 @@ const toggleLevel2AduanHo = () => {
 const toggleLevel2SettingHo = () => {
     console.log(level1OpenHo.value);
     if (!level2OpenSettingHo.value) {
-        level2OpenHo.value = false;
-        level2OpenInspeksiHo.value = false;
-        level3OpenHo.value = false;
-        level3KomputerOpenHo.value = false;
-        level3PrinterOpenHo.value = false;
-        level3ScannerOpenHo.value = false;
-        level3CctvOpenHo.value = false;
+        level1OpenHo.value = false;
+        level1OpenBa.value = false;
+        level1OpenMifa.value = false;
+        level1OpenMhu.value = false;
+        level1OpenWARA.value = false;
+        level1OpenAmi.value = false;
+        level1OpenBib.value = false;
     }
     level2OpenSettingHo.value = !level2OpenSettingHo.value;
 };
@@ -2333,7 +2332,7 @@ const toggleLevel3ScannerAmi = () => {
                                     </NavLink>
                                 </ul>
 
-                                <div
+                                <!-- <div
                                     v-if="
                                         $page.props.auth.user.role ===
                                         'ict_developer'
@@ -2361,8 +2360,8 @@ const toggleLevel3ScannerAmi = () => {
                                         v-else
                                         class="ms-3 fas fa-angle-down"
                                     ></i>
-                                </div>
-                                <ul v-if="level2OpenSettingHo">
+                                </div> -->
+                                <!-- <ul v-if="level2OpenSettingHo">
                                     <NavLink
                                         v-if="
                                             $page.props.auth.user.role ===
@@ -2429,7 +2428,7 @@ const toggleLevel3ScannerAmi = () => {
                                             >Pengajuan Akses Role</span
                                         >
                                     </NavLink>
-                                </ul>
+                                </ul> -->
 
                                 <NavLink
                                     v-if="
@@ -2506,6 +2505,25 @@ const toggleLevel3ScannerAmi = () => {
                         </div>
                         <ul v-if="level1OpenBa">
                             <li>
+                                <NavLink
+                                    :href="route('dashboardBa.page')"
+                                    :active="
+                                        route().current('dashboardBa.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
                                 <NavLink
                                     @click="toggleLevel2AduanBa"
                                     :href="route('aduanBa.page')"
@@ -3094,6 +3112,25 @@ const toggleLevel3ScannerAmi = () => {
                         </div>
                         <ul v-if="level1OpenMifa">
                             <li>
+                                <NavLink
+                                    :href="route('dashboardMifa.page')"
+                                    :active="
+                                        route().current('dashboardMifa.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
                                 <NavLink
                                     @click="toggleLevel2AduanMifa"
                                     :href="route('aduanMifa.page')"
@@ -3692,6 +3729,25 @@ const toggleLevel3ScannerAmi = () => {
                         <ul v-if="level1OpenMhu">
                             <li>
                                 <NavLink
+                                    :href="route('dashboardMhu.page')"
+                                    :active="
+                                        route().current('dashboardMhu.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
                                     @click="toggleLevel2AduanMhu"
                                     :href="route('aduanMhu.page')"
                                     :active="route().current('aduanMhu.page')"
@@ -4287,6 +4343,25 @@ const toggleLevel3ScannerAmi = () => {
                         <ul v-if="level1OpenWARA">
                             <li>
                                 <NavLink
+                                    :href="route('dashboardWara.page')"
+                                    :active="
+                                        route().current('dashboardWara.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
                                     @click="toggleLevel2AduanWARA"
                                     :href="route('aduanWARA.page')"
                                     :active="route().current('aduanWARA.page')"
@@ -4781,6 +4856,25 @@ const toggleLevel3ScannerAmi = () => {
                         </div>
                         <ul v-if="level1OpenAmi">
                             <li>
+                             <NavLink
+                                    :href="route('dashboardAmi.page')"
+                                    :active="
+                                        route().current('dashboardAmi.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
                                 <NavLink
                                     @click="toggleLevel2AduanAmi"
                                     :href="route('aduanAmi.page')"
