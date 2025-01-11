@@ -15,7 +15,7 @@ class ImportCctv implements ToModel, WithStartRow
      */
     public function startRow(): int
     {
-        return 20;
+        return 17;
     }
 
 

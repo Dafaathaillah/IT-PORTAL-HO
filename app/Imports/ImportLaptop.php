@@ -16,7 +16,7 @@ class ImportLaptop implements ToModel, WithStartRow
      */
     public function startRow(): int
     {
-        return 25;
+        return 17;
     }
 
     public function model(array $row)
