@@ -144,7 +144,7 @@ onMounted(() => {
                 </div>
                 <div class="text-center mb-5">
                     <PrimaryButton
-                        class="inline-block w-full px-5 py-2.5 mt-6 mb-2 text-sm font-bold text-center text-white align-middle transition-all ease-in border-0 rounded-lg shadow-md cursor-pointer active:-translate-y-px active:hover:text-white active:text-black hover:-translate-y-px hover:shadow-xs leading-normal tracking-tight-rem bg-150 bg-x-25 bg-blue-500 hover:border-blue-500 hover:bg-blue-500 hover:text-white"
+                        class="inline-block w-full px-5 py-2.5 mt-6 mb-2 text-sm font-bold text-center text-white align-middle transition-all ease-in border-0 rounded-lg shadow-md cursor-pointer active:-translate-y-px active:hover:text-white active:text-black hover:-translate-y-px hover:shadow-xs leading-normal tracking-tight-rem bg-150 bg-x-25 bg-slate-700 hover:border-blue-500 hover:bg-slate-700 hover:text-white"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                     >
