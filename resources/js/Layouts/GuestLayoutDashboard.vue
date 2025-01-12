@@ -33,7 +33,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="absolute w-full bg-red-700 dark:hidden min-h-75"></div>
+    <div class="absolute w-full dark:hidden min-h-75" style="background: linear-gradient(180deg, #ff2c2c 0%, rgba(255,80,80,1) 100%);"></div>
+    <div class="hidden absolute w-full bg-slate-900 dark:block min-h-75"></div>
 
     <DashboardAside v-model:isMobileSidebar="isActive" />
 
