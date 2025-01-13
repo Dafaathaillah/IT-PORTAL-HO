@@ -17,18 +17,10 @@ class InvWirellessController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $dataInventory = InvWirelless::all();
-            $site = '';
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $dataInventory = InvWirelless::where('site',null)->orWhere('site','HO')->get();
+        
+        $dataInventory = InvWirelless::where('site',null)->orWhere('site','HO')->get();
 
-            $site = '';
-        }else{
-            $dataInventory = InvWirelless::where('site',auth()->user()->site)->get();
-
-            $site = auth()->user()->site;
-        }
+        $site = '';
 
         $role = auth()->user()->role;
 

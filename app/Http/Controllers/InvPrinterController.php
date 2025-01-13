@@ -15,18 +15,10 @@ class InvPrinterController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $dataInventory = InvPrinter::all();
-            $site = '';
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $dataInventory = InvPrinter::where('site',null)->orWhere('site','HO')->get();
+        
+        $dataInventory = InvPrinter::where('site',null)->orWhere('site','HO')->get();
 
-            $site = '';
-        }else{
-            $dataInventory = InvPrinter::where('site',auth()->user()->site)->get();
-
-            $site = auth()->user()->site;
-        }
+        $site = '';
 
         $role = auth()->user()->role;
         return Inertia::render('Inventory/Printer/Printer', ['printer' => $dataInventory,'site' => $site,'role' => $role]);

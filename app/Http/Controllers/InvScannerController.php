@@ -18,18 +18,10 @@ class InvScannerController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $dataInventory = InvScanner::all();
-            $site = '';
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $dataInventory = InvScanner::where('site',null)->orWhere('site','HO')->get();
+        
+        $dataInventory = InvScanner::where('site',null)->orWhere('site','HO')->get();
 
-            $site = '';
-        }else{
-            $dataInventory = InvScanner::where('site',auth()->user()->site)->get();
-
-            $site = auth()->user()->site;
-        }
+        $site = '';
 
         $role = auth()->user()->role;
         return Inertia::render('Inventory/Scanner/Scanner', ['scanner' => $dataInventory,'site' => $site,'role' => $role]);

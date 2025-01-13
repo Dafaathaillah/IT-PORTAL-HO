@@ -18,18 +18,10 @@ class InvCctvController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $dataInventory = InvCctv::with('switch')->get();
-            $site = '';
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $dataInventory = InvCctv::with('switch')->where('site',null)->orWhere('site','HO')->get();
+        
+        $dataInventory = InvCctv::with('switch')->where('site',null)->orWhere('site','HO')->get();
 
-            $site = '';
-        }else{
-            $dataInventory = InvCctv::with('switch')->where('site',auth()->user()->site)->get();
-
-            $site = auth()->user()->site;
-        }
+        $site = '';
 
         $role = auth()->user()->role;
 

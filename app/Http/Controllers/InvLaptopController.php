@@ -21,31 +21,14 @@ class InvLaptopController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $dataInventory = InvLaptop::with('pengguna')->get();
-            $site = '';
+        
+        $dataInventory = InvLaptop::with('pengguna')->where('site', null)->orWhere('site', 'HO')->get();
 
-            $department = Department::orderBy('department_name')->pluck('department_name')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
+        $site = '';
 
-        } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $dataInventory = InvLaptop::with('pengguna')->where('site', null)->orWhere('site', 'HO')->get();
-
-            $site = '';
-
-            $department = Department::orderBy('department_name')->where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
-        } else {
-            $dataInventory = InvLaptop::with('pengguna')->where('site', auth()->user()->site)->get();
-
-            $site = auth()->user()->site;
-
-            $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
-        }
+        $department = Department::orderBy('department_name')->where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $role = auth()->user()->role;
         // dd($dataInventory);

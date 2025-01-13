@@ -30,18 +30,10 @@ class InspeksiLaptopController extends Controller
     public function index()
     {
 
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->get();
-            $site = '';
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site',null)->orWhere('site','HO')->get();
+        
+        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site',null)->orWhere('site','HO')->get();
 
-            $site = '';
-        }else{
-            $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site',auth()->user()->site)->get();
-
-            $site = auth()->user()->site;
-        }
+        $site = '';
 
         $role = auth()->user()->role;
 
