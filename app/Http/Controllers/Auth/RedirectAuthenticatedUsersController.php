@@ -23,17 +23,9 @@ class RedirectAuthenticatedUsersController extends Controller
             return redirect()->route('dashboardWara.page');
         } elseif (auth()->user()->role == 'soc_ho') {
             return redirect()->route('aduan.page');
-        }  elseif (auth()->user()->role == 'ict_section') {
-            return redirect('sectionDashboard');
-        } elseif (auth()->user()->role == 'ict_group_leader') {
-            return redirect('groupLeaderDashboard');
-        } elseif (auth()->user()->role == 'ict_technician') {
-            return redirect('technicianDashboard');
-        } elseif (auth()->user()->role == 'ict_admin') {
-            return redirect('adminDashboard');
         } elseif (auth()->user()->role == 'guest') {
             return redirect('asetDashboard');
-        }else{
+        } else{
             return redirect('/login');
         }
     }
