@@ -1,3 +1,22 @@
+<style>
+@import 'datatables.net-dt';
+
+.dt-search {
+    margin-bottom: 1em;
+    float: right !important;
+    text-align: center !important;
+
+}
+.dt-paging {
+    margin-top: 1em;
+    float: right !important;
+    text-align: right !important;
+}
+.dt-buttons {
+    margin-top: 1em;
+}
+</style>
+
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
@@ -21,7 +40,23 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-        buttons: ["copy", "csv", "excel", "pdf", "print"],
+        dom: 'fBrtilp',
+        buttons: [
+                {
+                    extend: 'spacer',
+                    style: 'bar',
+                    text: 'Export files:'
+                },
+                'csvHtml5',
+                'excelHtml5',
+                'spacer'
+            ],
+        initComplete: function () {
+            var btns = $('.dt-button');
+            btns.addClass('text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2');
+            btns.removeClass('dt-button');
+
+        }
     });
 });
 
@@ -105,8 +140,8 @@ const getBadgeClassStatusInventory = (status) => {
 const getBadgeTextStatusInventory = (status) => {
     if (status === "READY_USED") {
         return "READY_USED";
-    } else if (status === "READY_STANBY") {
-        return "READY_STANBY";
+    } else if (status === "READY_STANDBY") {
+        return "READY_STANDBY";
     } else if (status === "SCRAP") {
         return "SCRAP";
     } else if (status === "BREAKDOWN") {
