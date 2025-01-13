@@ -2,10 +2,15 @@ import './bootstrap';
 import '../css/app.css';
 import 'select2/dist/css/select2.min.css';
 import 'select2';
-import DataTablesLib from 'datatables.net'; 
+
 import DataTable from 'datatables.net-vue3';
+import DataTablesLib from 'datatables.net';
+import 'datatables.net-buttons';
+import 'datatables.net-buttons/js/buttons.html5';
+import jszip from 'jszip';
  
 DataTable.use(DataTablesLib);
+DataTablesLib.Buttons.jszip(jszip);
 
 import $ from 'jquery';
 window.$ = window.jQuery = $;

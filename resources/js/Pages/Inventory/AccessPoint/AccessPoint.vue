@@ -1,3 +1,21 @@
+<style>
+@import 'datatables.net-dt';
+
+.dt-search {
+    margin-bottom: 1em;
+    float: right !important;
+    text-align: center !important;
+
+}
+.dt-paging {
+    margin-top: 1em;
+    float: right !important;
+    text-align: right !important;
+}
+.dt-buttons {
+    margin-top: 1em;
+}
+</style>
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DashboardBreadcrumb from "@/Components/inventory/DashboardBreadcrumb.vue";
@@ -20,7 +38,25 @@ function formattedDate(date) {
 
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
-    $("#tableData").DataTable();
+    $("#tableData").DataTable({
+        dom: 'fBrtilp',
+        buttons: [
+                {
+                    extend: 'spacer',
+                    style: 'bar',
+                    text: 'Export files:'
+                },
+                'csvHtml5',
+                'excelHtml5',
+                'spacer'
+            ],
+        initComplete: function () {
+            var btns = $('.dt-button');
+            btns.addClass('text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2');
+            btns.removeClass('dt-button');
+
+        }
+    });
     // var table = new DataTable('#tableData');
 });
 
