@@ -9,6 +9,7 @@ use App\Http\Controllers\AduanController;
 use App\Http\Controllers\AduanHoController;
 use App\Http\Controllers\AduanMhuController;
 use App\Http\Controllers\AduanMifaController;
+use App\Http\Controllers\AduanPikController;
 use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\DashboardAmiController;
 use App\Http\Controllers\DashboardBaController;
 use App\Http\Controllers\DashboardMhuController;
 use App\Http\Controllers\DashboardMifaController;
+use App\Http\Controllers\DashboardPikController;
 use App\Http\Controllers\DashboardWaraController;
 use App\Http\Controllers\DepartmentBaController;
 use App\Http\Controllers\DepartmentController;
@@ -40,24 +42,28 @@ use App\Http\Controllers\InvApWARAController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvApMhuController;
 use App\Http\Controllers\InvApMifaController;
+use App\Http\Controllers\InvApPikController;
 use App\Http\Controllers\InvCctvAmiController;
 use App\Http\Controllers\InvCctvBaController;
 use App\Http\Controllers\InvCctvWARAController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvCctvMhuController;
 use App\Http\Controllers\InvCctvMifaController;
+use App\Http\Controllers\InvCctvPikController;
 use App\Http\Controllers\InvComputerAmiController;
 use App\Http\Controllers\InvComputerBaController;
 use App\Http\Controllers\InvComputerWARAController;
 use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvComputerMhuController;
 use App\Http\Controllers\InvComputerMifaController;
+use App\Http\Controllers\InvComputerPikController;
 use App\Http\Controllers\InvLaptopAmiController;
 use App\Http\Controllers\InvLaptopBaController;
 use App\Http\Controllers\InvLaptopWARAController;
 use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopMhuController;
 use App\Http\Controllers\InvLaptopMifaController;
+use App\Http\Controllers\InvLaptopPikController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
 use App\Http\Controllers\InvPrinterAmiController;
 use App\Http\Controllers\InvPrinterBaController;
@@ -65,24 +71,28 @@ use App\Http\Controllers\InvPrinterWARAController;
 use App\Http\Controllers\InvPrinterController;
 use App\Http\Controllers\InvPrinterMhuController;
 use App\Http\Controllers\InvPrinterMifaController;
+use App\Http\Controllers\InvPrinterPikController;
 use App\Http\Controllers\InvScannerAmiController;
 use App\Http\Controllers\InvScannerBaController;
 use App\Http\Controllers\InvScannerWARAController;
 use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvScannerMhuController;
 use App\Http\Controllers\InvScannerMifaController;
+use App\Http\Controllers\InvScannerPikController;
 use App\Http\Controllers\InvSwitchAmiController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvSwitchBaController;
 use App\Http\Controllers\InvSwitchWARAController;
 use App\Http\Controllers\InvSwitchMhuController;
 use App\Http\Controllers\InvSwitchMifaController;
+use App\Http\Controllers\InvSwitchPikController;
 use App\Http\Controllers\InvWirellessAmiController;
 use App\Http\Controllers\InvWirellessBaController;
 use App\Http\Controllers\InvWirellessWARAController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\InvWirellessMhuController;
 use App\Http\Controllers\InvWirellessMifaController;
+use App\Http\Controllers\InvWirellessPikController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
 use App\Http\Controllers\UserAllBaController;
@@ -743,6 +753,82 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVAmi', [InvCctvAmiController::class, 'uploadCsv'])->name('cctvAmi.import');
         });
 
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_ho:HO'], function () {
+            Route::get('/dashboardSitePik', [DashboardPikController::class, 'index'])->name('dashboardPik.page');
+
+            Route::get('/accessPointSitePik', [InvApPikController::class, 'index'])->name('accessPointPik.page');
+            Route::get('/accessPointSitePik/create', [InvApPikController::class, 'create'])->name('accessPointPik.create');
+            Route::post('/accessPointSitePik/create', [InvApPikController::class, 'store'])->name('accessPointPik.store');
+            Route::get('/accessPointSitePik/{apId}/edit', [InvApPikController::class, 'edit'])->name('accessPointPik.edit');
+            Route::put('/accessPointSitePik/{apId}/update', [InvApPikController::class, 'update'])->name('accessPointPik.update');
+            Route::delete('/accessPointSitePik/{apId}/delete', [InvApPikController::class, 'destroy'])->name('accessPointPik.delete');
+            Route::get('/accessPointSitePik/{id}/detail', [InvApPikController::class, 'detail'])->name('accessPointPik.detail');
+            Route::post('/uploadCsvApPik', [InvApPikController::class, 'uploadCsv'])->name('accessPointPik.import');
+
+            Route::get('/switchPik', [InvSwitchPikController::class, 'index'])->name('switchPik.page');
+            Route::get('/switchPik/create', [InvSwitchPikController::class, 'create'])->name('switchPik.create');
+            Route::post('/switchPik/create', [InvSwitchPikController::class, 'store'])->name('switchPik.store');
+            Route::get('/switchPik/{swId}/edit', [InvSwitchPikController::class, 'edit'])->name('switchPik.edit');
+            Route::put('/switchPik/{swId}/update', [InvSwitchPikController::class, 'update'])->name('switchPik.update');
+            Route::delete('/switchPik/{swId}/delete', [InvSwitchPikController::class, 'destroy'])->name('switchPik.delete');
+            Route::get('/switchPik/{id}/detail', [InvSwitchPikController::class, 'detail'])->name('switchPik.detail');
+            Route::post('/uploadCsvSwPik', [InvSwitchPikController::class, 'uploadCsv'])->name('switchPik.import');
+
+            Route::get('/wirellessPik', [InvWirellessPikController::class, 'index'])->name('wirellessPik.page');
+            Route::get('/wirellessPik/create', [InvWirellessPikController::class, 'create'])->name('wirellessPik.create');
+            Route::post('/wirellessPik/create', [InvWirellessPikController::class, 'store'])->name('wirellessPik.store');
+            Route::get('/wirellessPik/{id}/edit', [InvWirellessPikController::class, 'edit'])->name('wirellessPik.edit');
+            Route::put('/wirellessPik/{id}/update', [InvWirellessPikController::class, 'update'])->name('wirellessPik.update');
+            Route::delete('/wirellessPik/{id}/delete', [InvWirellessPikController::class, 'destroy'])->name('wirellessPik.delete');
+            Route::get('/wirellessPik/{id}/detail', [InvWirellessPikController::class, 'detail'])->name('wirellessPik.detail');
+            Route::post('/uploadCsvBbPik', [InvWirellessPikController::class, 'uploadCsv'])->name('wirellessPik.import');
+
+            Route::get('/laptopPik', [InvLaptopPikController::class, 'index'])->name('laptopPik.page');
+            Route::get('/laptopPik/create', [InvLaptopPikController::class, 'create'])->name('laptopPik.create');
+            Route::post('/laptopPik/create', [InvLaptopPikController::class, 'store'])->name('laptopPik.store');
+            Route::get('/laptopPik/{id}/edit', [InvLaptopPikController::class, 'edit'])->name('laptopPik.edit');
+            Route::delete('/laptopPik/{id}/delete', [InvLaptopPikController::class, 'destroy'])->name('laptopPik.delete');
+            Route::post('/laptopPik/update', [InvLaptopPikController::class, 'update'])->name('laptopPik.update');
+            Route::get('/laptopPik/{id}/detail', [InvLaptopPikController::class, 'detail'])->name('laptopPik.detail');
+            Route::post('/uploadCsvNbPik', [InvLaptopPikController::class, 'uploadCsv'])->name('laptopPik.import');
+
+            Route::get('/komputerPik', [InvComputerPikController::class, 'index'])->name('komputerPik.page');
+            Route::get('/komputerPik/create', [InvComputerPikController::class, 'create'])->name('komputerPik.create');
+            Route::post('/komputerPik/create', [InvComputerPikController::class, 'store'])->name('komputerPik.store');
+            Route::get('/komputerPik/{id}/edit', [InvComputerPikController::class, 'edit'])->name('komputerPik.edit');
+            Route::delete('/komputerPik/{id}/delete', [InvComputerPikController::class, 'destroy'])->name('komputerPik.delete');
+            Route::post('/komputerPik/update', [InvComputerPikController::class, 'update'])->name('komputerPik.update');
+            Route::get('/komputerPik/{id}/detail', [InvComputerPikController::class, 'detail'])->name('komputerPik.detail');
+            Route::post('/uploadCsvCuPik', [InvComputerPikController::class, 'uploadCsv'])->name('komputerPik.import');
+
+            Route::get('/printerPik', [InvPrinterPikController::class, 'index'])->name(name: 'printerPik.page');
+            Route::get('/printerPik/create', [InvPrinterPikController::class, 'create'])->name('printerPik.create');
+            Route::post('/printerPik/create', [InvPrinterPikController::class, 'store'])->name('printerPik.store');
+            Route::get('/printerPik/{id}/edit', [InvPrinterPikController::class, 'edit'])->name('printerPik.edit');
+            Route::delete('/printerPik/{id}/delete', [InvPrinterPikController::class, 'destroy'])->name('printerPik.delete');
+            Route::post('/printerPik/update', [InvPrinterPikController::class, 'update'])->name('printerPik.update');
+            Route::get('/printerPik/{id}/detail', [InvPrinterPikController::class, 'detail'])->name('printerPik.detail');
+            Route::post('/uploadCsvPrtPik', [InvPrinterPikController::class, 'uploadCsv'])->name('printerPik.import');
+
+            Route::get('/scannerPik', [InvScannerPikController::class, 'index'])->name('scannerPik.page');
+            Route::get('/scannerPik/create', [InvScannerPikController::class, 'create'])->name('scannerPik.create');
+            Route::post('/scannerPik/create', [InvScannerPikController::class, 'store'])->name('scannerPik.store');
+            Route::get('/scannerPik/{id}/edit', [InvScannerPikController::class, 'edit'])->name('scannerPik.edit');
+            Route::delete('/scannerPik/{id}/delete', [InvScannerPikController::class, 'destroy'])->name('scannerPik.delete');
+            Route::post('/scannerPik/update', [InvScannerPikController::class, 'update'])->name('scannerPik.update');
+            Route::get('/scannerPik/{id}/detail', [InvScannerPikController::class, 'detail'])->name('scannerPik.detail');
+            Route::post('/uploadCsvScnPik', [InvScannerPikController::class, 'uploadCsv'])->name('scannerPik.import');
+
+            Route::get('/cctvPik', [InvCctvPikController::class, 'index'])->name('cctvPik.page');
+            Route::get('/cctvPik/create', [InvCctvPikController::class, 'create'])->name('cctvPik.create');
+            Route::post('/cctvPik/create', [InvCctvPikController::class, 'store'])->name('cctvPik.store');
+            Route::get('/cctvPik/{id}/edit', [InvCctvPikController::class, 'edit'])->name('cctvPik.edit');
+            Route::delete('/cctvPik/{id}/delete', [InvCctvPikController::class, 'destroy'])->name('cctvPik.delete');
+            Route::post('/cctvPik/update', [InvCctvPikController::class, 'update'])->name('cctvPik.update');
+            Route::get('/cctvPik/{id}/detail', [InvCctvPikController::class, 'detail'])->name('cctvPik.detail');
+            Route::post('/uploadCsvCCTVPik', [InvCctvPikController::class, 'uploadCsv'])->name('cctvPik.import');
+        });
+
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_ho:HO,ict_group_leader:WARA'], function () {
             Route::get('/dashboardSiteWara', [DashboardWaraController::class, 'index'])->name('dashboardWara.page');
 
@@ -1082,6 +1168,18 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanAmi/{id}/delete', [AduanAmiController::class, 'destroy'])->name('aduanAmi.delete');
             Route::post('/aduanAmi/update', [AduanAmiController::class, 'update_aduan'])->name('aduanAmi.update');
             Route::get('/aduanAmi/{id}/detail', [AduanAmiController::class, 'detail'])->name('aduanAmi.detail');
+        });
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_ho:HO'], function () {
+            Route::get('/aduanPik', [AduanPikController::class, 'index'])->name('aduanPik.page');
+            Route::get('/aduanPik/create', [AduanPikController::class, 'create'])->name('aduanPik.create');
+            Route::post('/aduanPik/create', [AduanPikController::class, 'store'])->name('aduanPik.store');
+            Route::get('/aduanPik/{id}/edit', [AduanPikController::class, 'edit'])->name('aduanPik.edit');
+            Route::post('/aduanPik/updateProgress', [AduanPikController::class, 'update_aduan_progress'])->name('aduanPik.updateProgress');
+            Route::get('/aduanPik/{id}/progress', [AduanPikController::class, 'progress'])->name('aduanPik.progress');
+            Route::delete('/aduanPik/{id}/delete', [AduanPikController::class, 'destroy'])->name('aduanPik.delete');
+            Route::post('/aduanPik/update', [AduanPikController::class, 'update_aduan'])->name('aduanPik.update');
+            Route::get('/aduanPik/{id}/detail', [AduanPikController::class, 'detail'])->name('aduanPik.detail');
         });
 
         Route::group(['middleware' => 'checkRole:ict_technician:BA'], function (): void {

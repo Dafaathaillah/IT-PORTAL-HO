@@ -114,6 +114,11 @@ const toggleLevel1Ho = () => {
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
@@ -340,6 +345,11 @@ const toggleLevel1Ba = () => {
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
 
     level1OpenMhu.value = false;
     level2OpenMhu.value = false;
@@ -582,6 +592,11 @@ const toggleLevel1Mifa = () => {
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
@@ -818,6 +833,11 @@ const toggleLevel1Mhu = () => {
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
@@ -1053,6 +1073,11 @@ const toggleLevel1WARA = () => {
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
 
     level1OpenMhu.value = false;
     level2OpenMhu.value = false;
@@ -1526,6 +1551,11 @@ const toggleLevel1Ami = () => {
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
@@ -1655,6 +1685,246 @@ const toggleLevel3ScannerAmi = () => {
         level3CctvOpenAmi.value = false;
     }
     level3ScannerOpenAmi.value = !level3ScannerOpenAmi.value;
+};
+// toggle Pik
+const level1OpenPik = ref(false);
+const level2OpenPik = ref(false);
+const level2OpenAduanPik = ref(false);
+const level2OpenSettingPik = ref(false);
+const level2OpenInspeksiPik = ref(false);
+const level3OpenPik = ref(false);
+const level3KomputerOpenPik = ref(false);
+const level3PrinterOpenPik = ref(false);
+const level3ScannerOpenPik = ref(false);
+const level3CctvOpenPik = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenPik.value = localStorage.getItem("level1OpenPik") === "true";
+    level2OpenPik.value = localStorage.getItem("level2OpenPik") === "true";
+    level2OpenAduanPik.value =
+        localStorage.getItem("level2OpenAduanPik") === "true";
+    level2OpenSettingPik.value =
+        localStorage.getItem("level2OpenSettingPik") === "true";
+    level2OpenInspeksiPik.value =
+        localStorage.getItem("level2OpenInspeksiPik") === "true";
+    level3OpenPik.value = localStorage.getItem("level3OpenPik") === "true";
+    level3PrinterOpenPik.value =
+        localStorage.getItem("level3PrinterOpenPik") === "true";
+    level3ScannerOpenPik.value =
+        localStorage.getItem("level3ScannerOpenPik") === "true";
+    level3KomputerOpenPik.value =
+        localStorage.getItem("level3KomputerOpenPik") === "true";
+    level3CctvOpenPik.value =
+        localStorage.getItem("level3CctvOpenPik") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenPik,
+        level2OpenPik,
+        level2OpenSettingPik,
+        level2OpenInspeksiPik,
+        level2OpenAduanPik,
+        level3OpenPik,
+        level3PrinterOpenPik,
+        level3ScannerOpenPik,
+        level3KomputerOpenPik,
+        level3CctvOpenPik,
+    ],
+    () => {
+        localStorage.setItem("level1OpenPik", level1OpenPik.value);
+        localStorage.setItem("level2OpenPik", level2OpenPik.value);
+        localStorage.setItem("level2OpenAduanPik", level2OpenAduanPik.value);
+        localStorage.setItem(
+            "level2OpenSettingPik",
+            level2OpenSettingPik.value
+        );
+        localStorage.setItem(
+            "level2OpenInspeksiPik",
+            level2OpenInspeksiPik.value
+        );
+        localStorage.setItem("level3OpenPik", level3OpenPik.value);
+        localStorage.setItem(
+            "level3KomputerOpenPik",
+            level3KomputerOpenPik.value
+        );
+        localStorage.setItem(
+            "level3PrinterOpenPik",
+            level3PrinterOpenPik.value
+        );
+        localStorage.setItem(
+            "level3ScannerOpenPik",
+            level3ScannerOpenPik.value
+        );
+        localStorage.setItem("level3CctvOpenPik", level3CctvOpenPik.value);
+    }
+);
+
+// Toggle functions for each level
+const toggleLevel1Pik = () => {
+    level1OpenPik.value = !level1OpenPik.value;
+
+    level1OpenHo.value = false;
+    level2OpenHo.value = false;
+    level2OpenSettingHo.value = false;
+    level2OpenInspeksiHo.value = false;
+
+    level1OpenBa.value = false;
+    level2OpenBa.value = false;
+    level2OpenSettingBa.value = false;
+    level2OpenInspeksiBa.value = false;
+
+    level1OpenBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+
+    level1OpenMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
+    level1OpenAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenPik.value) {
+        level2OpenPik.value = false;
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+};
+
+const toggleLevel2Pik = () => {
+    console.log(level1OpenPik.value);
+    if (!level2OpenPik.value) {
+        level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingPik.value = false;
+        level2OpenInspeksiPik.value = false;
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level2OpenPik.value = !level2OpenPik.value;
+};
+
+const toggleLevel2AduanPik = () => {
+    console.log(level1OpenPik.value);
+    if (!level2OpenAduanPik.value) {
+        level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level2OpenAduanPik.value = !level2OpenAduanPik.value;
+};
+
+const toggleLevel2SettingPik = () => {
+    console.log(level1OpenPik.value);
+    if (!level2OpenSettingPik.value) {
+        level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiPik.value = false;
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level2OpenSettingPik.value = !level2OpenSettingPik.value;
+};
+
+const toggleLevel2InspeksiPik = () => {
+    console.log(level1OpenPik.value);
+    if (!level2OpenInspeksiPik.value) {
+        level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingPik.value = false;
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level2OpenInspeksiPik.value = !level2OpenInspeksiPik.value;
+};
+
+const toggleLevel3LaptopPik = () => {
+    if (!level3OpenPik.value) {
+        level2OpenPik.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level3OpenPik.value = !level3OpenPik.value;
+};
+
+const toggleLevel3KomputerPik = () => {
+    if (!level3KomputerOpenPik.value) {
+        level2OpenPik.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level3KomputerOpenPik.value = !level3KomputerOpenPik.value;
+};
+
+const toggleLevel3CctvPik = () => {
+    if (!level3CctvOpenPik.value) {
+        level2OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+    }
+    level3CctvOpenPik.value = !level3CctvOpenPik.value;
+};
+
+const toggleLevel3PrinterPik = () => {
+    if (!level3PrinterOpenPik.value) {
+        level2OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level3PrinterOpenPik.value = !level3PrinterOpenPik.value;
+};
+
+const toggleLevel3ScannerPik = () => {
+    if (!level3ScannerOpenPik.value) {
+        level2OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level3ScannerOpenPik.value = !level3ScannerOpenPik.value;
 };
 </script>
 
@@ -4841,7 +5111,7 @@ const toggleLevel3ScannerAmi = () => {
                             >
                             <span
                                 v-if="
-                                    $page.props.auth.user.site == 'Ami' ||
+                                    $page.props.auth.user.site == 'AMI' ||
                                     $page.props.auth.user.role ==
                                         'ict_developer'
                                 "
@@ -4856,7 +5126,7 @@ const toggleLevel3ScannerAmi = () => {
                         </div>
                         <ul v-if="level1OpenAmi">
                             <li>
-                             <NavLink
+                                <NavLink
                                     :href="route('dashboardAmi.page')"
                                     :active="
                                         route().current('dashboardAmi.page')
@@ -5418,6 +5688,620 @@ const toggleLevel3ScannerAmi = () => {
                         </ul>
                     </li>
                     <!-- end AMI -->
+
+                    <hr
+                        v-if="
+                            $page.props.auth.user.site == 'PIK' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                        class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                    />
+
+                    <!-- start PIK -->
+                    <li
+                        v-if="
+                            $page.props.auth.user.site == 'PIK' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
+                        <div
+                            @click="toggleLevel1Pik"
+                            style="cursor: pointer"
+                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        >
+                            <div
+                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                ></i>
+                            </div>
+                            <span
+                                v-if="$page.props.auth.user.site == 'HO'"
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >PIK Tabang</span
+                            >
+                            <span
+                                v-if="
+                                    $page.props.auth.user.site == 'PIK' ||
+                                    $page.props.auth.user.role ==
+                                        'ict_developer'
+                                "
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >ICT - PPA PIK</span
+                            >
+                            <i
+                                v-if="!level1OpenAmi"
+                                class="ms-3 fas fa-angle-right"
+                            ></i>
+                            <i v-else class="ms-3 fas fa-angle-down"></i>
+                        </div>
+                        <ul v-if="level1OpenPik">
+                            <li>
+                                <NavLink
+                                    :href="route('dashboardPik.page')"
+                                    :active="
+                                        route().current('dashboardPik.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
+                                    @click="toggleLevel2AduanPik"
+                                    :href="route('aduanPik.page')"
+                                    :active="route().current('aduanPik.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Aduan</span
+                                    >
+                                </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2Pik"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inventory</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenPik"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenPik">
+                                    <NavLink
+                                        :href="route('accessPointPik.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointPik.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Access Point</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('switchPik.page')"
+                                        :active="
+                                            route().current('switchPik.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Switch</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('wirellessPik.page')"
+                                        :active="
+                                            route().current('wirellessPik.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Wirelless</span
+                                        >
+                                    </NavLink>
+                                    <div
+                                        @click="toggleLevel3LaptopPik"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Laptop</span
+                                        >
+                                        <i
+                                            v-if="!level3OpenPik"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3OpenPik">
+                                        <NavLink
+                                            :href="route('laptopPik.page')"
+                                            :active="
+                                                route().current(
+                                                    'laptopPik.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Laptop Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3KomputerPik"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Komputer</span
+                                        >
+                                        <i
+                                            v-if="!level3KomputerOpenPik"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3KomputerOpenPik">
+                                        <NavLink
+                                            :href="route('komputerPik.page')"
+                                            :active="
+                                                route().current(
+                                                    'komputerPik.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Komputer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3PrinterPik"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Printer</span
+                                        >
+                                        <i
+                                            v-if="!level3PrinterOpenPik"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3PrinterOpenPik">
+                                        <NavLink
+                                            :href="route('printerPik.page')"
+                                            :active="
+                                                route().current(
+                                                    'printerPik.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Printer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3ScannerPik"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Scanner</span
+                                        >
+                                        <i
+                                            v-if="!level3ScannerOpenPik"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3ScannerOpenPik">
+                                        <NavLink
+                                            :href="route('scannerPik.page')"
+                                            :active="
+                                                route().current(
+                                                    'scannerPik.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Scanner</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3CctvPik"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Cctv</span
+                                        >
+                                        <i
+                                            v-if="!level3CctvOpenPik"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3CctvOpenPik">
+                                        <NavLink
+                                            :href="route('cctvPik.page')"
+                                            :active="
+                                                route().current('cctvPik.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Cctv</span
+                                            >
+                                        </NavLink>
+                                    </li>
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2InspeksiPik"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenInspeksiPik"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenInspeksiPik">
+                                    <NavLink
+                                        :href="route('inspeksiLaptopPik.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiLaptopPik.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiKomputerPik.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiKomputerPik.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+                                </ul>
+
+                                <!-- <div
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_developer'
+                                    "
+                                    @click="toggleLevel2SettingMhu"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenSettingMhu"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenSettingMhu">
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('penggunaMhu.page')"
+                                        :active="
+                                            route().current('penggunaMhu.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Pengguna</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('departmentMifa.page')"
+                                        :active="
+                                            route().current(
+                                                'departmentMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Department</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('aksesMifa.page')"
+                                        :active="
+                                            route().current('aksesMifa.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pengajuan Akses Role</span
+                                        >
+                                    </NavLink>
+                                </ul> -->
+
+                                <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_group_leader'
+                                    "
+                                    :href="route('aduan-ho.page')"
+                                    :active="route().current('aduan-ho.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >
+                                        Pengaduan HO</span
+                                    >
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end PIK -->
 
                     <hr
                         v-if="
