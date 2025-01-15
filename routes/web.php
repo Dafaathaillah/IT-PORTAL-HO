@@ -30,12 +30,14 @@ use App\Http\Controllers\InspeksiComputerWARAController;
 use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InspeksiComputerMhuController;
 use App\Http\Controllers\InspeksiComputerMifaController;
+use App\Http\Controllers\InspeksiComputerPikController;
 use App\Http\Controllers\InspeksiLaptopAmiController;
 use App\Http\Controllers\InspeksiLaptopBaController;
 use App\Http\Controllers\InspeksiLaptopWARAController;
 use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InspeksiLaptopMhuController;
 use App\Http\Controllers\InspeksiLaptopMifaController;
+use App\Http\Controllers\InspeksiLaptopPikController;
 use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApWARAController;
@@ -1092,6 +1094,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-ami/{id}/update', [InspeksiComputerAmiController::class, 'update'])->name('inspeksiKomputerAmi.update');
                 Route::get('/inspeksi-komputer-ami/{id}/detail', [InspeksiComputerAmiController::class, 'detail'])->name('inspeksiKomputerAmi.detail');
                 Route::delete('inspeksi-komputer-ami/{id}/delete', [InspeksiComputerAmiController::class, 'destroy'])->name('inspeksiKomputerAmi.delete');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK'], function () {
+                Route::get('inspeksi-laptop-pik', [InspeksiLaptopPikController::class, 'index'])->name('inspeksiLaptopPik.page');
+                Route::get('inspeksi-laptop-pik/{id}/process', [InspeksiLaptopPikController::class, 'process'])->name('inspeksiLaptopPik.process');
+                Route::post('inspeksi-laptop-pik/process', [InspeksiLaptopPikController::class, 'store'])->name('inspeksiLaptopPik.store');
+                Route::get('inspeksi-laptop-pik/{id}/edit', [InspeksiLaptopPikController::class, 'edit'])->name('inspeksiLaptopPik.edit');
+                Route::post('inspeksi-laptop-pik/update', [InspeksiLaptopPikController::class, 'update'])->name('inspeksiLaptopPik.update');
+                Route::get('/inspeksi-laptop-pik/{id}/detail', [InspeksiLaptopPikController::class, 'detail'])->name('inspeksiLaptopPik.detail');
+                Route::delete('inspeksi-laptop-pik/{id}/delete', [InspeksiLaptopPikController::class, 'destroy'])->name('inspeksiLaptopPik.delete');
+
+                Route::get('inspeksi-komputer-pik', [InspeksiComputerPikController::class, 'index'])->name('inspeksiKomputerPik.page');
+                Route::get('inspeksi-komputer-pik/{id}/inspection', [InspeksiComputerPikController::class, 'doInspection'])->name('inspeksiKomputerPik.inspection');
+                Route::post('inspeksi-komputer-pik/inspection', [InspeksiComputerPikController::class, 'store'])->name('inspeksiKomputerPik.store');
+                Route::get('inspeksi-komputer-pik/{id}/edit', [InspeksiComputerPikController::class, 'edit'])->name('inspeksiKomputerPik.edit');
+                Route::put('inspeksi-komputer-pik/{id}/update', [InspeksiComputerPikController::class, 'update'])->name('inspeksiKomputerPik.update');
+                Route::get('/inspeksi-komputer-pik/{id}/detail', [InspeksiComputerPikController::class, 'detail'])->name('inspeksiKomputerPik.detail');
+                Route::delete('inspeksi-komputer-pik/{id}/delete', [InspeksiComputerPikController::class, 'destroy'])->name('inspeksiKomputerPik.delete');
             });
 
         });
