@@ -7,56 +7,58 @@ import VueMultiselect from "vue-multiselect";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Swal from "sweetalert2";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
-const props = defineProps(["inspeksi", "crew"]);
+const props = defineProps(["inspeksi", "crew", "crew_select"]);
 
 const form = useForm({
     id: props.inspeksi.id,
-    cpu: "",
-    monitor: "",
-    license: "",
-    standaritation: "",
-    cache: "",
-    restore: "",
-    defrag: "",
-    hard_maintenance: "",
-    change_user_pass: "",
-    autolock: "",
-    enter_password: "",
-    findings: "",
-    findings_image: "",
-    action: "",
-    action_image: "",
-    inspection_image: "",
-    remark: "",
-    due_date: "",
-    kondisi: "",
-    inventory_status: "",
-    status: "",
-    ip_address: "",
-    location: "",
-    crew: "",
+    cpu: props.inspeksi.physique_condition_cpu,
+    monitor: props.inspeksi.physique_condition_monitor,
+    license: props.inspeksi.software_license,
+    standaritation: props.inspeksi.software_standaritation,
+    cache: props.inspeksi.software_clear_cache,
+    restore: props.inspeksi.software_system_restore,
+    defrag: props.inspeksi.defrag,
+    hard_maintenance: props.inspeksi.hard_maintenance,
+    change_user_pass: props.inspeksi.change_user_pass,
+    autolock: props.inspeksi.autolock,
+    enter_password: props.inspeksi.enter_password,
+    findings: props.inspeksi.findings,
+    findings_image: props.inspeksi.findings_image,
+    action: props.inspeksi.findings_action,
+    action_image: props.inspeksi.action_image,
+    inspection_image: props.inspeksi.inspection_image,
+    remark: props.inspeksi.remarks,
+    due_date: props.inspeksi.due_date,
+    kondisi: props.inspeksi.conditions,
+    inventory_status: props.inspeksi.inventory_status,
+    status: props.inspeksi.findings_status,
+    crew: props.crew_select,
     ip_address: props.inspeksi.computer.ip_address,
     location: props.inspeksi.computer.location,
 });
 
 const isDisabled = ref(true);
-const selectedValues = ref(null); // Awalnya array kosong
-const selectedOptionCondition = ref("");
+const selectedValues = ref(
+    props.crew.filter((option) => props.crew_select.includes(option.name))
+);
+const selectedOptionCondition = ref(form.kondisi);
 const selectedOptionInventoryStatus = ref(props.inspeksi.computer.status);
-const selectedOptionStatus = ref("");
+const selectedOptionStatus = ref(form.status);
 const fileFindings = ref(null);
 const fileAction = ref(null);
-const fileInspection = ref(null);
-const selectedDate = ref(null);
+const fileInspection = ref(form.inspection_image);
+const selectedDate = ref(form.due_date);
 
-const findings = ref("");
+const findings = ref(form.findings);
 const findingImageIsRequired = ref(false);
 const findingStatusIsRequired = ref(false);
 const findingDuedateIsRequired = ref(false);
-const action = ref("");
+const action = ref(form.action);
 const actionImageIsRequired = ref(false);
+const inspectionImageData = ref(form.inspection_image);
+const inspectionImageIsRequired = ref(false);
 
 const checkRequiredImageFinding = () => {
     findingImageIsRequired.value = findings.value.trim() !== "";
@@ -66,6 +68,10 @@ const checkRequiredImageFinding = () => {
 
 const checkRequiredImageAction = () => {
     actionImageIsRequired.value = action.value.trim() !== "";
+};
+
+const checkRequiredImageInspection = () => {
+    inspectionImageIsRequired.value = action.value.trim() !== "";
 };
 
 const handleFileUploadFindings = (event) => {
@@ -98,22 +104,15 @@ const customFormat = (date) => {
     return `${year}-${month}-${day}`;
 };
 
-// const handleDueDate = () => {
-//     if (!selectedDate.value) {
-//         form.due_date = null; // Set nilai ke null jika kosong
-//     } else {
-//         form.due_date = customFormat(selectedDate.value);
-//     }
-// };
 const formSubmittedCrew = ref(false);
 
 const save = () => {
-    if (selectedValues.value == null) {
+    if (selectedValues.value == '') {
         formSubmittedCrew.value = true;
         // console.log('ga oke')
         return; // Stop execution if validation fails
     }
-    
+
     if (selectedDate.value != null) {
         form.due_date = customFormat(selectedDate.value);
     }
@@ -131,7 +130,7 @@ const save = () => {
     form.findings = findings.value;
     form.action = action.value;
     form.inspection_image = fileInspection.value;
-    form.post(route("inspeksiKomputerBib.store"), {
+    form.post(route("inspeksiKomputerIpt.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -168,7 +167,7 @@ const save = () => {
                     <li class="text-sm leading-normal">
                         <a class="text-white opacity-50">Pages</a>
                     </li>
-                       <li
+                    <li
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
@@ -176,7 +175,7 @@ const save = () => {
                     </li>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Computer Inspection
+                    Computer Inspection Edit
                 </h6>
             </nav>
         </template>
@@ -885,7 +884,7 @@ const save = () => {
 
                                 <div class="flex flex-wrap -mx-3">
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -912,6 +911,22 @@ const save = () => {
                                             <label
                                                 for="link_documentation_asset_image"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Preview Findings Image</label
+                                            >
+                                            <img
+                                                :src="form.findings_image"
+                                                alt="documentation image"
+                                                class="min-w-72 max-w-72 h-30 shadow-2xl rounded-xl"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Findings Image</label
                                             >
                                             <input
@@ -929,7 +944,7 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -956,6 +971,22 @@ const save = () => {
                                             <label
                                                 for="link_documentation_asset_image"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Preview Action Image</label
+                                            >
+                                            <img
+                                                :src="form.action_image"
+                                                alt="documentation image"
+                                                class="min-w-72 max-w-72 h-30 shadow-2xl rounded-xl"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Action Image</label
                                             >
                                             <input
@@ -971,7 +1002,7 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1006,6 +1037,22 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Preview Inspection Image</label
+                                            >
+                                            <img
+                                                :src="form.inspection_image"
+                                                alt="documentation image"
+                                                class="min-w-72 max-w-72 h-30 shadow-2xl rounded-xl"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -1015,7 +1062,9 @@ const save = () => {
                                                 >Inspection Image</label
                                             >
                                             <input
-                                                required
+                                                :required="
+                                                    inspectionImageIsRequired
+                                                "
                                                 type="file"
                                                 ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
@@ -1087,7 +1136,7 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1123,7 +1172,7 @@ const save = () => {
                                     </div>
 
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1158,7 +1207,7 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1177,7 +1226,7 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1203,7 +1252,7 @@ const save = () => {
                                     class="flex flex-nowrap mt-6 justify-between"
                                 >
                                     <Link
-                                        :href="route('inspeksiKomputerBib.page')"
+                                        :href="route('inspeksiKomputerIpt.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

@@ -417,7 +417,7 @@ const initChartLight = () => {
                     <div class="p-4 pb-0 mb-0 rounded-t-4">
                         <div class="flex justify-between">
                             <h6 class="mb-2 dark:text-white">
-                                Table Monitoring Device PPA Site PIK
+                                Table Monitoring Device PPA Site IPT
                             </h6>
                         </div>
                     </div>

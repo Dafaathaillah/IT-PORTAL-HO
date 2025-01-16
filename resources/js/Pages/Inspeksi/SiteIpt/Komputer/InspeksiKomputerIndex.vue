@@ -69,7 +69,7 @@ const props = defineProps({
 const form = useForm({});
 
 const editData = (id) => {
-    form.get(route("inspeksiKomputerBib.inspection", { id: id }));
+    form.get(route("inspeksiKomputerIpt.inspection", { id: id }));
 };
 
 const editDataInspeksi = (id) => {
@@ -84,13 +84,13 @@ const editDataInspeksi = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("inspeksiKomputerBib.edit", { id: id }));
+            form.get(route("inspeksiKomputerIpt.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("inspeksiKomputerBib.detail", { id: id }));
+    form.get(route("inspeksiKomputerIpt.detail", { id: id }));
 };
 
 const file = ref(null);
