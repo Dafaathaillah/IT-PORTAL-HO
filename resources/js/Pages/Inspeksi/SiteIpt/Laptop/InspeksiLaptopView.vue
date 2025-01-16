@@ -29,8 +29,8 @@ import { onMounted } from "vue";
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
-const subMenu = ref("Inspeksi Komputer Pages");
-const mainMenu = ref("Inspeksi Komputer Data");
+const subMenu = ref("Inspeksi Laptop Pages");
+const mainMenu = ref("Inspeksi Laptop");
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -61,7 +61,7 @@ const mount = onMounted(() => {
 });
 
 const props = defineProps({
-    computer: {
+    inspeksiLaptopx: {
         type: Array,
     },
 });
@@ -69,10 +69,6 @@ const props = defineProps({
 const form = useForm({});
 
 const editData = (id) => {
-    form.get(route("inspeksiKomputerBib.inspection", { id: id }));
-};
-
-const editDataInspeksi = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
@@ -84,19 +80,9 @@ const editDataInspeksi = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("inspeksiKomputerBib.edit", { id: id }));
+            form.get(route("inspeksiLaptopIpt.edit", { id: id }));
         }
     });
-};
-
-const detailData = (id) => {
-    form.get(route("inspeksiKomputerBib.detail", { id: id }));
-};
-
-const file = ref(null);
-
-const handleFileUpload = (event) => {
-    file.value = event.target.files[0];
 };
 
 const getBadgeClassStatusInspeksi = (status) => {
@@ -107,22 +93,6 @@ const getBadgeClassStatusInspeksi = (status) => {
 
 const getBadgeTextStatusInspeksi = (status) => {
     return status === "Y" ? "INSPECTED" : "NOT INSPECTED YET";
-};
-
-const getBadgeClassStatusFindings = (temuan) => {
-    if (temuan === "" || temuan === null) {
-        return "bg-gradient-to-tl from-cyan-500 to-sky-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    }else {
-        return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"; // Default untuk status yang tidak dikenal
-    }
-};
-
-const getBadgeTextStatusFindings = (temuan) => {
-    if (temuan === "" || temuan === null) {
-        return "Tidak ada temuan";
-    }else {
-        return temuan; // Default teks untuk status yang tidak dikenal
-    }
 };
 
 const getBadgeClassStatusInventory = (status) => {
@@ -148,13 +118,43 @@ const getBadgeTextStatusInventory = (status) => {
         return "BREAKDOWN";
     }
 };
+
+const getBadgeClassStatusFindings = (temuan) => {
+    if (temuan === "" || temuan === null) {
+        return "bg-gradient-to-tl from-cyan-500 to-sky-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
+    }else {
+        return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"; // Default untuk status yang tidak dikenal
+    }
+};
+
+const getBadgeTextStatusFindings = (temuan) => {
+    if (temuan === "" || temuan === null) {
+        return "Tidak ada temuan";
+    }else {
+        return temuan; // Default teks untuk status yang tidak dikenal
+    }
+};
+
+const detailData = (id) => {
+    form.get(route("inspeksiLaptopIpt.detail", { id: id }));
+};
+
+const processData = (id) => {
+    form.get(route("inspeksiLaptopIpt.process", { id: id }));
+};
+
+
+function formatData(text) {
+    const maxLength = 20; // Set your limit here
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+}
 </script>
 
 <template>
-    <Head title="Inspeksi Komputer" />
+    <Head title="Inspeksi Laptop" />
 
     <AuthenticatedLayout
-            v-model:pages="pages"
+      v-model:pages="pages"
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
         >
@@ -162,20 +162,16 @@ const getBadgeTextStatusInventory = (status) => {
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
+
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
+                            
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <PerfectScrollbar style="position: relative;">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
-                                            <div
-                                                v-if="$page.props.flash.message"
-                                                class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300"
-                                            >
-                                                {{ $page.props.flash.message }}
-                                            </div>
                                             <table
                                                 id="tableData"
                                                 class="table table-striped"
@@ -222,12 +218,12 @@ const getBadgeTextStatusInventory = (status) => {
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Komp Status
+                                                            Laptop Status
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Komp Condition
+                                                            Laptop Condition
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -250,11 +246,11 @@ const getBadgeTextStatusInventory = (status) => {
                                                 <tbody>
                                                     <tr
                                                         v-for="(
-                                                            computers, index
-                                                        ) in computer"
+                                                            inspeksiLaptops, index
+                                                        ) in inspeksiLaptopx"
                                                         :key="index"
                                                     >
-                                                    <td
+                                                        <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
@@ -270,7 +266,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.computer.computer_code
+                                                                    inspeksiLaptops.inventory.laptop_code
                                                                 }}
                                                             </p>
                                                         </td>
@@ -282,7 +278,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.computer.pengguna.username
+                                                                    inspeksiLaptops.inventory.pengguna.username
                                                                 }}
                                                             </p>
                                                         </td>
@@ -294,7 +290,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             >
 
                                                                 {{
-                                                                    computers.computer.pengguna.department
+                                                                    inspeksiLaptops.inventory.pengguna.department
                                                                 }}
                                                                 
                                                             </p>
@@ -307,13 +303,13 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <span
                                                                 :class="
                                                                     getBadgeClassStatusFindings(
-                                                                        computers.findings
+                                                                        inspeksiLaptops.findings
                                                                     )
                                                                 "
                                                             >
                                                                 {{
                                                                     getBadgeTextStatusFindings(
-                                                                        computers.findings
+                                                                        inspeksiLaptops.findings
                                                                     )
                                                                 }}
                                                             </span>
@@ -325,8 +321,8 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{ 
-                                                                    computers.updated_at == null ? '-' : formattedDate(
-                                                                        computers.updated_at
+                                                                    inspeksiLaptops.inspection_at == null ? '-' : formattedDate(
+                                                                        inspeksiLaptops.inspection_at
                                                                     )
                                                                 }}
                                                             </span>
@@ -337,13 +333,13 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <span
                                                                 :class="
                                                                     getBadgeClassStatusInspeksi(
-                                                                        computers.inspection_status
+                                                                        inspeksiLaptops.inspection_status
                                                                     )
                                                                 "
                                                             >
                                                                 {{
                                                                     getBadgeTextStatusInspeksi(
-                                                                        computers.inspection_status
+                                                                        inspeksiLaptops.inspection_status
                                                                     )
                                                                 }}
                                                             </span>
@@ -354,13 +350,13 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <span
                                                                 :class="
                                                                     getBadgeClassStatusInventory(
-                                                                        computers.inventory_status
+                                                                        inspeksiLaptops.inventory_status
                                                                     )
                                                                 "
                                                             >
                                                                 {{
                                                                     getBadgeTextStatusInventory(
-                                                                        computers.inventory_status
+                                                                        inspeksiLaptops.inventory_status
                                                                     )
                                                                 }}
                                                             </span>
@@ -372,7 +368,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.conditions
+                                                                    inspeksiLaptops.condition
                                                                 }}
                                                             </span>
                                                         </td>
@@ -383,7 +379,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.remarks
+                                                                    inspeksiLaptops.remarks
                                                                 }}
                                                             </span>
                                                         </td>
@@ -394,49 +390,49 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ computers.status_approval }}
+                                                                {{ inspeksiLaptops.status_approval }}
                                                             </span>
                                                         </td>
+                                                        
                                                         <td
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
-                                                            <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'N'"
-                                                                @click="
-                                                                    editData(
-                                                                        computers.id
-                                                                    )
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Do Inspection
-                                                            </NavLinkCustom>
 
                                                             <NavLinkCustom
                                                                 @click="
-                                                                    editDataInspeksi(
-                                                                        computers.id
+                                                                    processData(
+                                                                        inspeksiLaptops.id
                                                                     )
                                                                 "
-                                                                v-if="computers.inspection_status === 'Y'"
+                                                                v-if="inspeksiLaptops.inspection_status === 'N'"
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                Edit
+                                                            Do Inspection
                                                             </NavLinkCustom>
-                                                            
 
                                                             <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'Y'"
                                                                 @click="
                                                                     detailData(
-                                                                        computers.id
+                                                                        inspeksiLaptops.id
                                                                     )
                                                                 "
+                                                                v-if="inspeksiLaptops.inspection_status === 'Y'"
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Detail
                                                             </NavLinkCustom>
 
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    editData(
+                                                                        inspeksiLaptops.id
+                                                                    )
+                                                                "
+                                                                v-if="inspeksiLaptops.inspection_status === 'Y'"
+                                                                class="ml-3 mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Edit
+                                                            </NavLinkCustom>
                                                         </td>
                                                     </tr>
                                                 </tbody>
