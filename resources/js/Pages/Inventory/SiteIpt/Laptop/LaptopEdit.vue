@@ -1,4 +1,4 @@
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";

@@ -17,7 +17,7 @@
 }
 </style>
 
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
