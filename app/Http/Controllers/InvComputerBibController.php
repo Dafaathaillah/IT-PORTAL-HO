@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ImportLaptop;
+use App\Imports\ImportComputer;
 use App\Models\Aduan;
 use App\Models\Department;
-use App\Models\InspeksiLaptop;
-use App\Models\InvLaptop;
-use App\Models\UnscheduleJob;
+use App\Models\InvComputer;
 use App\Models\UserAll;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
@@ -16,12 +14,13 @@ use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpParser\Node\Expr\Empty_;
 
-class InvLaptopPikController extends Controller
+class InvComputerBibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->where('site', 'BIB')->get();
+        $dataInventory = InvComputer::with('pengguna')->where('site', 'BIB')->get();
 
         $site = 'BIB';
 
@@ -31,18 +30,19 @@ class InvLaptopPikController extends Controller
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SitePik/Laptop/Laptop', ['laptop' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
+        return Inertia::render('Inventory/SiteBib/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
     }
 
     public function create()
     {
-        abort(404, 'Page not found');
+        abort(404, 'page not found');
     }
 
     public function store(Request $request)
     {
 
         $params = $request->all();
+
         if ($params['roterx'] == 'index') {
             // start generate code
             $currentDate = Carbon::tomorrow();
@@ -52,21 +52,19 @@ class InvLaptopPikController extends Controller
 
             $dept = $params['dept'];
 
-            // dd($dept);
-
             $code_dept = Department::where('department_name', $dept)->first();
 
-            $maxId = InvLaptop::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+            $maxId = InvComputer::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
             // dd($maxId);
 
             if (is_null($maxId)) {
                 $maxId = 0;
             } else {
-                $noUrut = (int) substr($maxId->laptop_code, 10, 3);
+                $noUrut = (int) substr($maxId->computer_code, 10, 3);
                 $maxId = $noUrut;
             }
 
-            $uniqueString = 'PIK-NB-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            $uniqueString = 'BIB-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
             $request['inventory_number'] = $uniqueString;
             // end generate code
@@ -75,10 +73,11 @@ class InvLaptopPikController extends Controller
                 return ['name' => $name];
             })->toArray();
 
-            return Inertia::render('Inventory/SitePik/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+            return Inertia::render('Inventory/SiteBib/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
         } else {
-            $maxId = InvLaptop::max('max_id');
-            if (is_null($maxId)) {
+            // dd($request->all());
+            $maxId = InvComputer::max('max_id');
+            if (is_null($maxId) || empty($maxId)) {
                 $maxId = 1;
             } else {
                 $maxId = $maxId + 1;
@@ -96,11 +95,11 @@ class InvLaptopPikController extends Controller
 
             $data = [
                 'max_id' => $maxId,
-                'laptop_name' => $params['laptop_name'],
-                'laptop_code' => $params['laptop_code'],
+                'computer_name' => $params['computer_name'],
+                'computer_code' => $params['computer_code'],
                 'number_asset_ho' => $params['number_asset_ho'],
                 'assets_category' => $params['assets_category'],
-                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
+                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_komputer'] . ', ' . $params['os_komputer'],
                 'serial_number' => $params['serial_number'],
                 'aplikasi' => $params['aplikasi'],
                 'license' => $params['license'],
@@ -117,8 +116,8 @@ class InvLaptopPikController extends Controller
                 'dept' => $dept
             ];
 
-            InvLaptop::create($data);
-            return redirect()->route('laptopPik.page');
+            InvComputer::create($data);
+            return redirect()->route('komputerBib.page');
         }
     }
 
@@ -126,8 +125,8 @@ class InvLaptopPikController extends Controller
     {
         try {
 
-            Excel::import(new ImportLaptop, $request->file('file'));
-            return redirect()->route('laptopPik.page');
+            Excel::import(new ImportComputer, $request->file('file'));
+            return redirect()->route('komputerBib.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -136,13 +135,14 @@ class InvLaptopPikController extends Controller
 
     public function edit($id)
     {
-        $laptop = InvLaptop::find($id);
-        if (empty($laptop)) {
+        $komputer = InvComputer::find($id);
+
+        if (empty($komputer)) {
             abort(404, 'Data not found');
         }
 
-        if (!empty($laptop->user_alls_id)) {
-            $aduan_get_data_user = UserAll::where('id', $laptop->user_alls_id)->first()->username;
+        if (!empty($komputer->user_alls_id)) {
+            $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->username;
 
             $pengguna_selected = array($aduan_get_data_user);
         } else {
@@ -153,54 +153,43 @@ class InvLaptopPikController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        // dd($aduan_get_data_user);
-
-        $spesifikasi = explode(',', $laptop->spesifikasi);
+        $spesifikasi = explode(',', $komputer->spesifikasi);
         $model = trim($spesifikasi[0]);
         $processor = trim($spesifikasi[1]);
         $hdd = trim($spesifikasi[2]);
         $ssd = trim($spesifikasi[3]);
         $ram = trim($spesifikasi[4]);
         $vga = trim($spesifikasi[5]);
-        $warna_laptop = trim($spesifikasi[6]);
-        $os_laptop = trim($spesifikasi[7]);
-        // return response()->json(['ap' => $laptop]);
-        return Inertia::render('Inventory/SitePik/Laptop/LaptopEdit', [
-            'laptop' => $laptop,
+        $warna_komputer = trim($spesifikasi[6]);
+        $os_komputer = trim($spesifikasi[7]);
+        // return response()->json(['ap' => $komputer]);
+        return Inertia::render('Inventory/SiteBib/Komputer/KomputerEdit', [
+            'komputer' => $komputer,
             'model' => $model,
             'processor' => $processor,
             'hdd' => $hdd,
             'ssd' => $ssd,
             'ram' => $ram,
             'vga' => $vga,
-            'warna_laptop' => $warna_laptop,
-            'os_laptop' => $os_laptop,
+            'warna_komputer' => $warna_komputer,
+            'os_komputer' => $os_komputer,
             'pengguna_selected' => $pengguna_selected,
-            'pengguna_all' => $pengguna_all,
+            'pengguna_all' => $pengguna_all
         ]);
     }
 
     public function detail($id)
     {
-        $laptop = InvLaptop::where('id', $id)->first();
-        if (empty($laptop)) {
+        $komputer = InvComputer::where('id', $id)->first();
+
+        if (empty($komputer)) {
             abort(404, 'Data not found');
         }
-        $aduan = Aduan::where('inventory_number', $laptop->laptop_code)->get();
-        $unschedule = UnscheduleJob::where('inventory_number', $laptop->laptop_code)->get();
-        $inspeksi = InspeksiLaptop::with('inventory')
-            ->where('inv_laptop_id', $id) // Only get posts from user_id 1
-            ->get();
-        // return response()->json($inspeksi);
-        $merge = [
+
+        $aduan = Aduan::where('inventory_number', $komputer->computer_code)->get();
+        return Inertia::render('Inventory/SiteBib/Komputer/KomputerDetail', [
+            'komputer' => $komputer,
             'aduan' => $aduan,
-            'inspeksi' => $inspeksi
-        ];
-        return Inertia::render('Inventory/SitePik/Laptop/LaptopDetail', [
-            'laptop' => $laptop,
-            'aduan' => $aduan,
-            'inspeksi' => $inspeksi,
-            'unschedule' => $unschedule,
         ]);
     }
 
@@ -217,11 +206,11 @@ class InvLaptopPikController extends Controller
 
             $data = [
                 'max_id' => $request->max_id,
-                'laptop_name' => $request->laptop_name,
-                'laptop_code' => $request->laptop_code,
+                'computer_name' => $request->computer_name,
+                'computer_code' => $request->computer_code,
                 'number_asset_ho' => $request->number_asset_ho,
                 'assets_category' => $request->assets_category,
-                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_laptop . ', ' . $request->os_laptop,
+                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_komputer . ', ' . $request->os_komputer,
                 'serial_number' => $request->serial_number,
                 'aplikasi' => $request->aplikasi,
                 'license' => $request->license,
@@ -242,11 +231,11 @@ class InvLaptopPikController extends Controller
 
             $data = [
                 'max_id' => $request->max_id,
-                'laptop_name' => $request->laptop_name,
-                'laptop_code' => $request->laptop_code,
+                'computer_name' => $request->computer_name,
+                'computer_code' => $request->computer_code,
                 'number_asset_ho' => $request->number_asset_ho,
                 'assets_category' => $request->assets_category,
-                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_laptop . ', ' . $request->os_laptop,
+                'spesifikasi' => $request->model . ', ' . $request->processor . ', ' . $request->hdd . ', ' . $request->ssd . ', ' . $request->ram . ', ' . $request->vga . ', ' . $request->warna_komputer . ', ' . $request->os_komputer,
                 'serial_number' => $request->serial_number,
                 'aplikasi' => $request->aplikasi,
                 'license' => $request->license,
@@ -262,17 +251,17 @@ class InvLaptopPikController extends Controller
             ];
         }
 
-        InvLaptop::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('laptopPik.page');
+        InvComputer::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('komputerBib.page');
     }
     public function destroy($id)
     {
-        $laptop = InvLaptop::find($id);
-        if (empty($laptop)) {
+        $komputer = InvComputer::find($id);
+        if (empty($komputer)) {
             abort(404, 'Data not found');
         }
-        // return response()->json(['ap' => $laptop]);
-        $laptop->delete();
+        // return response()->json(['ap' => $komputer]);
+        $komputer->delete();
         return redirect()->back();
     }
 }

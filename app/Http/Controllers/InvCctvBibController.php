@@ -14,17 +14,17 @@ use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 
-class InvCctvPikController extends Controller
+class InvCctvBibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::with('switch')->where('site', 'PIK')->get();
+        $dataInventory = InvCctv::with('switch')->where('site', 'BIB')->get();
 
         $site = auth()->user()->site;
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SitePik/Cctv/Cctv', ['cctv' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SiteBib/Cctv/Cctv', ['cctv' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -35,7 +35,7 @@ class InvCctvPikController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvCctv::where('site', 'PIK')->orderBy('max_id', 'desc')->first();
+        $maxId = InvCctv::where('site', 'BIB')->orderBy('max_id', 'desc')->first();
         // dd($maxId->cctv_code);
 
         if (is_null($maxId)) {
@@ -50,10 +50,10 @@ class InvCctvPikController extends Controller
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'PIK')->get();
+        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'BIB')->get();
 
 
-        return Inertia::render('Inventory/SitePik/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
+        return Inertia::render('Inventory/SiteBib/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
     }
 
     public function store(Request $request)
@@ -84,18 +84,18 @@ class InvCctvPikController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'PIK'
+            'site' => 'BIB'
         ];
         // dd($data);
         InvCctv::create($data);
-        return redirect()->route('cctvPik.page');
+        return redirect()->route('cctvBib.page');
     }
 
     public function uploadCsv(Request $request)
     {
         try {
             Excel::import(new ImportCctv, $request->file('file'));
-            return redirect()->route('cctvPik.page');
+            return redirect()->route('cctvBib.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -113,7 +113,7 @@ class InvCctvPikController extends Controller
         $selectSwitch = $cctv->switch_id;
         $switch = InvSwitch::select('id', 'inventory_number')->get();
 
-        return Inertia::render('Inventory/SitePik/Cctv/CctvEdit', [
+        return Inertia::render('Inventory/SiteBib/Cctv/CctvEdit', [
             'cctv' => $cctv,
             'switch' => $switch,
             'selectSwitch' => $selectSwitch
@@ -126,7 +126,7 @@ class InvCctvPikController extends Controller
         $aduan = Aduan::where('inventory_number', $id)->get();
         // dd($aduan);
 
-        return Inertia::render('Inventory/SitePik/Cctv/CctvDetail', [
+        return Inertia::render('Inventory/SiteBib/Cctv/CctvDetail', [
             'cctv' => $cctv,
             'aduan' => $aduan,
         ]);
@@ -152,11 +152,11 @@ class InvCctvPikController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'PIK'
+            'site' => 'BIB'
         ];
 
         InvCctv::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('cctvPik.page');
+        return redirect()->route('cctvBib.page');
     }
     public function destroy($id)
     {

@@ -17,7 +17,7 @@ use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 
-class InvLaptopPikController extends Controller
+class InvLaptopBibController extends Controller
 {
     public function index()
     {
@@ -31,7 +31,7 @@ class InvLaptopPikController extends Controller
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SitePik/Laptop/Laptop', ['laptop' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
+        return Inertia::render('Inventory/SiteBib/Laptop/Laptop', ['laptop' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
     }
 
     public function create()
@@ -66,7 +66,7 @@ class InvLaptopPikController extends Controller
                 $maxId = $noUrut;
             }
 
-            $uniqueString = 'PIK-NB-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            $uniqueString = 'BIB-NB-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
             $request['inventory_number'] = $uniqueString;
             // end generate code
@@ -75,7 +75,7 @@ class InvLaptopPikController extends Controller
                 return ['name' => $name];
             })->toArray();
 
-            return Inertia::render('Inventory/SitePik/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+            return Inertia::render('Inventory/SiteBib/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
         } else {
             $maxId = InvLaptop::max('max_id');
             if (is_null($maxId)) {
@@ -118,7 +118,7 @@ class InvLaptopPikController extends Controller
             ];
 
             InvLaptop::create($data);
-            return redirect()->route('laptopPik.page');
+            return redirect()->route('laptopBib.page');
         }
     }
 
@@ -127,7 +127,7 @@ class InvLaptopPikController extends Controller
         try {
 
             Excel::import(new ImportLaptop, $request->file('file'));
-            return redirect()->route('laptopPik.page');
+            return redirect()->route('laptopBib.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -165,7 +165,7 @@ class InvLaptopPikController extends Controller
         $warna_laptop = trim($spesifikasi[6]);
         $os_laptop = trim($spesifikasi[7]);
         // return response()->json(['ap' => $laptop]);
-        return Inertia::render('Inventory/SitePik/Laptop/LaptopEdit', [
+        return Inertia::render('Inventory/SiteBib/Laptop/LaptopEdit', [
             'laptop' => $laptop,
             'model' => $model,
             'processor' => $processor,
@@ -196,7 +196,7 @@ class InvLaptopPikController extends Controller
             'aduan' => $aduan,
             'inspeksi' => $inspeksi
         ];
-        return Inertia::render('Inventory/SitePik/Laptop/LaptopDetail', [
+        return Inertia::render('Inventory/SiteBib/Laptop/LaptopDetail', [
             'laptop' => $laptop,
             'aduan' => $aduan,
             'inspeksi' => $inspeksi,
@@ -263,7 +263,7 @@ class InvLaptopPikController extends Controller
         }
 
         InvLaptop::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('laptopPik.page');
+        return redirect()->route('laptopBib.page');
     }
     public function destroy($id)
     {

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminPengajuanRoleController;
 use App\Http\Controllers\AdminPengajuanRoleMifaController;
 use App\Http\Controllers\AduanAmiController;
 use App\Http\Controllers\AduanBaController;
+use App\Http\Controllers\AduanBibController;
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\AduanHoController;
 use App\Http\Controllers\AduanMhuController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\DashboardAmiController;
 use App\Http\Controllers\DashboardBaController;
+use App\Http\Controllers\DashboardBibController;
 use App\Http\Controllers\DashboardMhuController;
 use App\Http\Controllers\DashboardMifaController;
 use App\Http\Controllers\DashboardPikController;
@@ -26,6 +28,7 @@ use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspeksiComputerAmiController;
 use App\Http\Controllers\InspeksiComputerBaController;
+use App\Http\Controllers\InspeksiComputerBibController;
 use App\Http\Controllers\InspeksiComputerWARAController;
 use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InspeksiComputerMhuController;
@@ -33,6 +36,7 @@ use App\Http\Controllers\InspeksiComputerMifaController;
 use App\Http\Controllers\InspeksiComputerPikController;
 use App\Http\Controllers\InspeksiLaptopAmiController;
 use App\Http\Controllers\InspeksiLaptopBaController;
+use App\Http\Controllers\InspeksiLaptopBibController;
 use App\Http\Controllers\InspeksiLaptopWARAController;
 use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InspeksiLaptopMhuController;
@@ -40,6 +44,7 @@ use App\Http\Controllers\InspeksiLaptopMifaController;
 use App\Http\Controllers\InspeksiLaptopPikController;
 use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
+use App\Http\Controllers\InvApBibController;
 use App\Http\Controllers\InvApWARAController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvApMhuController;
@@ -47,6 +52,7 @@ use App\Http\Controllers\InvApMifaController;
 use App\Http\Controllers\InvApPikController;
 use App\Http\Controllers\InvCctvAmiController;
 use App\Http\Controllers\InvCctvBaController;
+use App\Http\Controllers\InvCctvBibController;
 use App\Http\Controllers\InvCctvWARAController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvCctvMhuController;
@@ -54,6 +60,7 @@ use App\Http\Controllers\InvCctvMifaController;
 use App\Http\Controllers\InvCctvPikController;
 use App\Http\Controllers\InvComputerAmiController;
 use App\Http\Controllers\InvComputerBaController;
+use App\Http\Controllers\InvComputerBibController;
 use App\Http\Controllers\InvComputerWARAController;
 use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvComputerMhuController;
@@ -61,6 +68,7 @@ use App\Http\Controllers\InvComputerMifaController;
 use App\Http\Controllers\InvComputerPikController;
 use App\Http\Controllers\InvLaptopAmiController;
 use App\Http\Controllers\InvLaptopBaController;
+use App\Http\Controllers\InvLaptopBibController;
 use App\Http\Controllers\InvLaptopWARAController;
 use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopMhuController;
@@ -69,6 +77,7 @@ use App\Http\Controllers\InvLaptopPikController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
 use App\Http\Controllers\InvPrinterAmiController;
 use App\Http\Controllers\InvPrinterBaController;
+use App\Http\Controllers\InvPrinterBibController;
 use App\Http\Controllers\InvPrinterWARAController;
 use App\Http\Controllers\InvPrinterController;
 use App\Http\Controllers\InvPrinterMhuController;
@@ -76,6 +85,7 @@ use App\Http\Controllers\InvPrinterMifaController;
 use App\Http\Controllers\InvPrinterPikController;
 use App\Http\Controllers\InvScannerAmiController;
 use App\Http\Controllers\InvScannerBaController;
+use App\Http\Controllers\InvScannerBibController;
 use App\Http\Controllers\InvScannerWARAController;
 use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvScannerMhuController;
@@ -84,12 +94,14 @@ use App\Http\Controllers\InvScannerPikController;
 use App\Http\Controllers\InvSwitchAmiController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvSwitchBaController;
+use App\Http\Controllers\InvSwitchBibController;
 use App\Http\Controllers\InvSwitchWARAController;
 use App\Http\Controllers\InvSwitchMhuController;
 use App\Http\Controllers\InvSwitchMifaController;
 use App\Http\Controllers\InvSwitchPikController;
 use App\Http\Controllers\InvWirellessAmiController;
 use App\Http\Controllers\InvWirellessBaController;
+use App\Http\Controllers\InvWirellessBibController;
 use App\Http\Controllers\InvWirellessWARAController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\InvWirellessMhuController;
@@ -831,6 +843,82 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVPik', [InvCctvPikController::class, 'uploadCsv'])->name('cctvPik.import');
         });
 
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteBib', [DashboardBibController::class, 'index'])->name('dashboardBib.page');
+
+            Route::get('/accessPointSiteBib', [InvApBibController::class, 'index'])->name('accessPointBib.page');
+            Route::get('/accessPointSiteBib/create', [InvApBibController::class, 'create'])->name('accessPointBib.create');
+            Route::post('/accessPointSiteBib/create', [InvApBibController::class, 'store'])->name('accessPointBib.store');
+            Route::get('/accessPointSiteBib/{apId}/edit', [InvApBibController::class, 'edit'])->name('accessPointBib.edit');
+            Route::put('/accessPointSiteBib/{apId}/update', [InvApBibController::class, 'update'])->name('accessPointBib.update');
+            Route::delete('/accessPointSiteBib/{apId}/delete', [InvApBibController::class, 'destroy'])->name('accessPointBib.delete');
+            Route::get('/accessPointSiteBib/{id}/detail', [InvApBibController::class, 'detail'])->name('accessPointBib.detail');
+            Route::post('/uploadCsvApBib', [InvApBibController::class, 'uploadCsv'])->name('accessPointBib.import');
+
+            Route::get('/switchBib', [InvSwitchBibController::class, 'index'])->name('switchBib.page');
+            Route::get('/switchBib/create', [InvSwitchBibController::class, 'create'])->name('switchBib.create');
+            Route::post('/switchBib/create', [InvSwitchBibController::class, 'store'])->name('switchBib.store');
+            Route::get('/switchBib/{swId}/edit', [InvSwitchBibController::class, 'edit'])->name('switchBib.edit');
+            Route::put('/switchBib/{swId}/update', [InvSwitchBibController::class, 'update'])->name('switchBib.update');
+            Route::delete('/switchBib/{swId}/delete', [InvSwitchBibController::class, 'destroy'])->name('switchBib.delete');
+            Route::get('/switchBib/{id}/detail', [InvSwitchBibController::class, 'detail'])->name('switchBib.detail');
+            Route::post('/uploadCsvSwBib', [InvSwitchBibController::class, 'uploadCsv'])->name('switchBib.import');
+
+            Route::get('/wirellessBib', [InvWirellessBibController::class, 'index'])->name('wirellessBib.page');
+            Route::get('/wirellessBib/create', [InvWirellessBibController::class, 'create'])->name('wirellessBib.create');
+            Route::post('/wirellessBib/create', [InvWirellessBibController::class, 'store'])->name('wirellessBib.store');
+            Route::get('/wirellessBib/{id}/edit', [InvWirellessBibController::class, 'edit'])->name('wirellessBib.edit');
+            Route::put('/wirellessBib/{id}/update', [InvWirellessBibController::class, 'update'])->name('wirellessBib.update');
+            Route::delete('/wirellessBib/{id}/delete', [InvWirellessBibController::class, 'destroy'])->name('wirellessBib.delete');
+            Route::get('/wirellessBib/{id}/detail', [InvWirellessBibController::class, 'detail'])->name('wirellessBib.detail');
+            Route::post('/uploadCsvBbBib', [InvWirellessBibController::class, 'uploadCsv'])->name('wirellessBib.import');
+
+            Route::get('/laptopBib', [InvLaptopBibController::class, 'index'])->name('laptopBib.page');
+            Route::get('/laptopBib/create', [InvLaptopBibController::class, 'create'])->name('laptopBib.create');
+            Route::post('/laptopBib/create', [InvLaptopBibController::class, 'store'])->name('laptopBib.store');
+            Route::get('/laptopBib/{id}/edit', [InvLaptopBibController::class, 'edit'])->name('laptopBib.edit');
+            Route::delete('/laptopBib/{id}/delete', [InvLaptopBibController::class, 'destroy'])->name('laptopBib.delete');
+            Route::post('/laptopBib/update', [InvLaptopBibController::class, 'update'])->name('laptopBib.update');
+            Route::get('/laptopBib/{id}/detail', [InvLaptopBibController::class, 'detail'])->name('laptopBib.detail');
+            Route::post('/uploadCsvNbBib', [InvLaptopBibController::class, 'uploadCsv'])->name('laptopBib.import');
+
+            Route::get('/komputerBib', [InvComputerBibController::class, 'index'])->name('komputerBib.page');
+            Route::get('/komputerBib/create', [InvComputerBibController::class, 'create'])->name('komputerBib.create');
+            Route::post('/komputerBib/create', [InvComputerBibController::class, 'store'])->name('komputerBib.store');
+            Route::get('/komputerBib/{id}/edit', [InvComputerBibController::class, 'edit'])->name('komputerBib.edit');
+            Route::delete('/komputerBib/{id}/delete', [InvComputerBibController::class, 'destroy'])->name('komputerBib.delete');
+            Route::post('/komputerBib/update', [InvComputerBibController::class, 'update'])->name('komputerBib.update');
+            Route::get('/komputerBib/{id}/detail', [InvComputerBibController::class, 'detail'])->name('komputerBib.detail');
+            Route::post('/uploadCsvCuBib', [InvComputerBibController::class, 'uploadCsv'])->name('komputerBib.import');
+
+            Route::get('/printerBib', [InvPrinterBibController::class, 'index'])->name(name: 'printerBib.page');
+            Route::get('/printerBib/create', [InvPrinterBibController::class, 'create'])->name('printerBib.create');
+            Route::post('/printerBib/create', [InvPrinterBibController::class, 'store'])->name('printerBib.store');
+            Route::get('/printerBib/{id}/edit', [InvPrinterBibController::class, 'edit'])->name('printerBib.edit');
+            Route::delete('/printerBib/{id}/delete', [InvPrinterBibController::class, 'destroy'])->name('printerBib.delete');
+            Route::post('/printerBib/update', [InvPrinterBibController::class, 'update'])->name('printerBib.update');
+            Route::get('/printerBib/{id}/detail', [InvPrinterBibController::class, 'detail'])->name('printerBib.detail');
+            Route::post('/uploadCsvPrtPik', [InvPrinterBibController::class, 'uploadCsv'])->name('printerBib.import');
+
+            Route::get('/scannerBib', [InvScannerBibController::class, 'index'])->name('scannerBib.page');
+            Route::get('/scannerBib/create', [InvScannerBibController::class, 'create'])->name('scannerBib.create');
+            Route::post('/scannerBib/create', [InvScannerBibController::class, 'store'])->name('scannerBib.store');
+            Route::get('/scannerBib/{id}/edit', [InvScannerBibController::class, 'edit'])->name('scannerBib.edit');
+            Route::delete('/scannerBib/{id}/delete', [InvScannerBibController::class, 'destroy'])->name('scannerBib.delete');
+            Route::post('/scannerBib/update', [InvScannerBibController::class, 'update'])->name('scannerBib.update');
+            Route::get('/scannerBib/{id}/detail', [InvScannerBibController::class, 'detail'])->name('scannerBib.detail');
+            Route::post('/uploadCsvScnBib', [InvScannerBibController::class, 'uploadCsv'])->name('scannerBib.import');
+
+            Route::get('/cctvBib', [InvCctvBibController::class, 'index'])->name('cctvBib.page');
+            Route::get('/cctvBib/create', [InvCctvBibController::class, 'create'])->name('cctvBib.create');
+            Route::post('/cctvBib/create', [InvCctvBibController::class, 'store'])->name('cctvBib.store');
+            Route::get('/cctvBib/{id}/edit', [InvCctvBibController::class, 'edit'])->name('cctvBib.edit');
+            Route::delete('/cctvBib/{id}/delete', [InvCctvBibController::class, 'destroy'])->name('cctvBib.delete');
+            Route::post('/cctvBib/update', [InvCctvBibController::class, 'update'])->name('cctvBib.update');
+            Route::get('/cctvBib/{id}/detail', [InvCctvBibController::class, 'detail'])->name('cctvBib.detail');
+            Route::post('/uploadCsvCCTVBib', [InvCctvBibController::class, 'uploadCsv'])->name('cctvBib.import');
+        });
+
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_ho:HO,ict_group_leader:WARA'], function () {
             Route::get('/dashboardSiteWara', [DashboardWaraController::class, 'index'])->name('dashboardWara.page');
 
@@ -1114,6 +1202,24 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-pik/{id}/delete', [InspeksiComputerPikController::class, 'destroy'])->name('inspeksiKomputerPik.delete');
             });
 
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK'], function () {
+                Route::get('inspeksi-laptop-bib', [InspeksiLaptopBibController::class, 'index'])->name('inspeksiLaptopBib.page');
+                Route::get('inspeksi-laptop-bib/{id}/process', [InspeksiLaptopBibController::class, 'process'])->name('inspeksiLaptopBib.process');
+                Route::post('inspeksi-laptop-bib/process', [InspeksiLaptopBibController::class, 'store'])->name('inspeksiLaptopBib.store');
+                Route::get('inspeksi-laptop-bib/{id}/edit', [InspeksiLaptopBibController::class, 'edit'])->name('inspeksiLaptopBib.edit');
+                Route::post('inspeksi-laptop-bib/update', [InspeksiLaptopBibController::class, 'update'])->name('inspeksiLaptopBib.update');
+                Route::get('/inspeksi-laptop-bib/{id}/detail', [InspeksiLaptopBibController::class, 'detail'])->name('inspeksiLaptopBib.detail');
+                Route::delete('inspeksi-laptop-bib/{id}/delete', [InspeksiLaptopBibController::class, 'destroy'])->name('inspeksiLaptopBib.delete');
+
+                Route::get('inspeksi-komputer-bib', [InspeksiComputerBibController::class, 'index'])->name('inspeksiKomputerBib.page');
+                Route::get('inspeksi-komputer-bib/{id}/inspection', [InspeksiComputerBibController::class, 'doInspection'])->name('inspeksiKomputerBib.inspection');
+                Route::post('inspeksi-komputer-bib/inspection', [InspeksiComputerBibController::class, 'store'])->name('inspeksiKomputerBib.store');
+                Route::get('inspeksi-komputer-bib/{id}/edit', [InspeksiComputerBibController::class, 'edit'])->name('inspeksiKomputerBib.edit');
+                Route::put('inspeksi-komputer-bib/{id}/update', [InspeksiComputerBibController::class, 'update'])->name('inspeksiKomputerBib.update');
+                Route::get('/inspeksi-komputer-bib/{id}/detail', [InspeksiComputerBibController::class, 'detail'])->name('inspeksiKomputerBib.detail');
+                Route::delete('inspeksi-komputer-bib/{id}/delete', [InspeksiComputerBibController::class, 'destroy'])->name('inspeksiKomputerBib.delete');
+            });
+
         });
     });
 
@@ -1188,6 +1294,18 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanAmi/{id}/delete', [AduanAmiController::class, 'destroy'])->name('aduanAmi.delete');
             Route::post('/aduanAmi/update', [AduanAmiController::class, 'update_aduan'])->name('aduanAmi.update');
             Route::get('/aduanAmi/{id}/detail', [AduanAmiController::class, 'detail'])->name('aduanAmi.detail');
+        });
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_ho:HO'], function () {
+            Route::get('/aduanBib', [AduanBibController::class, 'index'])->name('aduanBib.page');
+            Route::get('/aduanBib/create', [AduanBibController::class, 'create'])->name('aduanBib.create');
+            Route::post('/aduanBib/create', [AduanBibController::class, 'store'])->name('aduanBib.store');
+            Route::get('/aduanBib/{id}/edit', [AduanBibController::class, 'edit'])->name('aduanBib.edit');
+            Route::post('/aduanBib/updateProgress', [AduanBibController::class, 'update_aduan_progress'])->name('aduanBib.updateProgress');
+            Route::get('/aduanBib/{id}/progress', [AduanBibController::class, 'progress'])->name('aduanBib.progress');
+            Route::delete('/aduanBib/{id}/delete', [AduanBibController::class, 'destroy'])->name('aduanBib.delete');
+            Route::post('/aduanBib/update', [AduanBibController::class, 'update_aduan'])->name('aduanBib.update');
+            Route::get('/aduanBib/{id}/detail', [AduanBibController::class, 'detail'])->name('aduanBib.detail');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_ho:HO'], function () {

@@ -11,18 +11,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class InspeksiComputerPikController extends Controller
+class InspeksiComputerBibController extends Controller
 {
     public function index()
     {
-        $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'PIK')->get();
-        $site = 'PIK';
+        $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'BIB')->get();
+
+        $site = 'BIB';
 
         $role = auth()->user()->role;
 
         // return dd($inspeksi_computer);
         return Inertia::render(
-            'Inspeksi/SitePik/Komputer/InspeksiKomputerIndex',
+            'Inspeksi/SiteBib/Komputer/InspeksiKomputerIndex',
             ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role]
         );
     }
@@ -33,11 +34,11 @@ class InspeksiComputerPikController extends Controller
         if (empty($dataInspeksi)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site', 'PIK')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'BIB')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return dd($dataInspeksi);
-        return Inertia::render('Inspeksi/SitePik/Komputer/InspeksiKomputerForm', ['inspeksi' => $dataInspeksi, 'crew' => $crew]);
+        return Inertia::render('Inspeksi/SiteBib/Komputer/InspeksiKomputerForm', ['inspeksi' => $dataInspeksi, 'crew' => $crew]);
     }
 
     public function store(Request $request)
@@ -48,7 +49,7 @@ class InspeksiComputerPikController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InspeksiComputer::where('site', 'PIK')->where('year', $year)->max('pica_number');
+        $maxId = InspeksiComputer::where('site', 'BIB')->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -357,7 +358,7 @@ class InspeksiComputerPikController extends Controller
             ];
             $data['udpateInspeksi'] = InvComputer::firstWhere('id', $getDataInventory->id)->update($dataInventory);
         }
-        return redirect()->route('inspeksiKomputerPik.page');
+        return redirect()->route('inspeksiKomputerBib.page');
     }
 
     public function edit($id)
@@ -368,10 +369,10 @@ class InspeksiComputerPikController extends Controller
         }
         $crew_select = explode(', ', $dataInspeksi->crew);
 
-        $crew = User::where('site', 'PIK')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'BIB')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
-        return Inertia::render('Inspeksi/SitePik/Komputer/InspeksiKomputerFormEdit', ['inspeksi' => $dataInspeksi, 'crew' => $crew, 'crew_select' => $crew_select]);
+        return Inertia::render('Inspeksi/SiteBib/Komputer/InspeksiKomputerFormEdit', ['inspeksi' => $dataInspeksi, 'crew' => $crew, 'crew_select' => $crew_select]);
     }
 
 
@@ -437,7 +438,7 @@ class InspeksiComputerPikController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inspeksi/SitePik/Komputer/InspeksiKomputerDetail', [
+        return Inertia::render('Inspeksi/SiteBib/Komputer/InspeksiKomputerDetail', [
             'inspeksi' => $inspeksi_komputer
         ]);
     }

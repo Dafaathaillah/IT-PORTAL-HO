@@ -14,14 +14,14 @@ use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 
-class InvScannerPikController extends Controller
+class InvScannerBibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'PIK')->get();
+        $dataInventory = InvScanner::where('site', 'BIB')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
-        return Inertia::render('Inventory/SitePik/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SiteBib/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -32,7 +32,7 @@ class InvScannerPikController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvScanner::where('site', 'PIK')->orderBy('max_id', 'desc')->first();
+        $maxId = InvScanner::where('site', 'BIB')->orderBy('max_id', 'desc')->first();
         // dd($maxId->scanner_code);
 
         if (is_null($maxId)) {
@@ -42,7 +42,7 @@ class InvScannerPikController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPAPIKSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPABIBSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['scanner_code'] = $uniqueString;
 
@@ -52,7 +52,7 @@ class InvScannerPikController extends Controller
 
         // end generate code
 
-        return Inertia::render('Inventory/SitePik/Scanner/ScannerCreate', ['scanner_code' => $uniqueString, 'department' => $department]);
+        return Inertia::render('Inventory/SiteBib/Scanner/ScannerCreate', ['scanner_code' => $uniqueString, 'department' => $department]);
     }
 
     public function store(Request $request)
@@ -85,11 +85,11 @@ class InvScannerPikController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
-            'site' => 'PIK'
+            'site' => 'BIB'
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::create($data);
-        return redirect()->route('scannerPik.page');
+        return redirect()->route('scannerBib.page');
     }
 
     public function uploadCsv(Request $request)
@@ -97,7 +97,7 @@ class InvScannerPikController extends Controller
         try {
 
             Excel::import(new ScannerImport, $request->file('file'));
-            return redirect()->route('scannerPik.page');
+            return redirect()->route('scannerBib.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -112,7 +112,7 @@ class InvScannerPikController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SitePik/Scanner/ScannerDetail', [
+        return Inertia::render('Inventory/SiteBib/Scanner/ScannerDetail', [
             'scanners' => $scanner,
         ]);
     }
@@ -134,7 +134,7 @@ class InvScannerPikController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        return Inertia::render('Inventory/SitePik/Scanner/ScannerEdit', ['scanner' => $scanner, 'department' => $department, 'department_select' => $department_select]);
+        return Inertia::render('Inventory/SiteBib/Scanner/ScannerEdit', ['scanner' => $scanner, 'department' => $department, 'department_select' => $department_select]);
     }
 
     public function update(Request $request)
@@ -155,11 +155,11 @@ class InvScannerPikController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'PIK'
+            'site' => 'BIB'
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('scannerPik.page');
+        return redirect()->route('scannerBib.page');
     }
 
 

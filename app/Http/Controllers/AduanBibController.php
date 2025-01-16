@@ -14,27 +14,19 @@ use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AduanController extends Controller
+class AduanBibController extends Controller
 {
     public function index()
     {
-        $auth = auth()->user()->role;
-        if ($auth == 'soc_ho') {
-            # code...
-            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('category_name', 'SOC')->get();
-            $countOpen = Aduan::where('status', 'OPEN')->where('category_name', 'SOC')->count();  
-            $countClosed = Aduan::where('status', 'CLOSED')->where('category_name', 'SOC')->count();
-            $countProgress = Aduan::where('status', 'PROGRESS')->where('category_name', 'SOC')->count();
-            $countCancel = Aduan::where('status', 'CANCEL')->where('category_name', 'SOC')->count();
-        }else{
-            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site',auth()->user()->site)->get();
-            $countOpen = Aduan::where('status', 'OPEN')->where('site',auth()->user()->site)->count();
-            $countClosed = Aduan::where('status', 'CLOSED')->where('site',auth()->user()->site)->count();
-            $countProgress = Aduan::where('status', 'PROGRESS')->where('site',auth()->user()->site)->count();
-            $countCancel = Aduan::where('status', 'CANCEL')->where('site',auth()->user()->site)->count();
-        }
+
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'BIB')->get();
+        $countOpen = Aduan::where('status', 'OPEN')->where('site', 'BIB')->count();
+        $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'BIB')->count();
+        $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'BIB')->count();
+        $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'BIB')->count();
+
         return Inertia::render(
-            'Aduan/Aduan',
+            'Inventory/SiteBib/Aduan/Aduan',
             [
                 'aduan' => $aduan,
                 'open' => $countOpen,
@@ -47,18 +39,10 @@ class AduanController extends Controller
 
     public function create()
     {
-        $site = Auth::user()->site;
-        if ($site != 'HO') {
-            $categories = DB::table('root_cause_categories')
-                ->select('id', 'category_root_cause')
-                ->where('site_type', 'SITE')
-                ->get();
-        } else {
-            $categories = DB::table('root_cause_categories')
-                ->select('id', 'category_root_cause')
-                ->where('site_type', 'HO')
-                ->get();
-        }
+        $categories = DB::table('root_cause_categories')
+            ->select('id', 'category_root_cause')
+            ->where('site_type', 'SITE')
+            ->get();
 
         // start generate code
         $currentDate = Carbon::now();
@@ -66,11 +50,11 @@ class AduanController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site',auth()->user()->site)->orderBy('max_id', 'desc')->first();
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site', 'BIB')->orderBy('max_id', 'desc')->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
-        }else{
+        } else {
             $split = explode('-', $maxId->complaint_code);
             $noUrut = (int) $split[2];
             $maxId = $noUrut;
@@ -79,17 +63,15 @@ class AduanController extends Controller
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
 
-        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'BIB')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
-        // return response()->json($crew);
-        // end generate code
-        return Inertia::render('Aduan/AduanCreate', ['ticket' => $uniqueString, 'crew' => $crew, 'categories' => $categories]);
+
+        return Inertia::render('Inventory/SiteBib/Aduan/AduanCreate', ['ticket' => $uniqueString, 'crew' => $crew, 'categories' => $categories]);
     }
 
     public function store(Request $request)
     {
-        // dd($request);
         $maxId = Aduan::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
@@ -108,8 +90,8 @@ class AduanController extends Controller
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'crew' => $request['crew'],
-            'site' => auth()->user()->site,
-            'site_pelapor' => auth()->user()->site
+            'site' => 'BIB',
+            'site_pelapor' => 'BIB'
         ];
 
         if ($request->file('image') != null) {
@@ -129,25 +111,24 @@ class AduanController extends Controller
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            }else{
+            } else {
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['inventory_number'] = $request->inventory_number;
             $data['status'] = 'OPEN';
-            // return response()->json($data);
             $aduan = Aduan::create($data);
         } else {
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            }else{
+            } else {
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['status'] = 'OPEN';
 
             $aduan = Aduan::create($data);
         }
-        return redirect()->route('aduan.page');
+        return redirect()->route('aduanBib.page');
     }
 
     public function progress($id)
@@ -156,13 +137,11 @@ class AduanController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'BIB')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
-        // return response()->json($crew);
-        // dd($crew);
-        return Inertia::render('Aduan/AduanProgress', [
+        return Inertia::render('Inventory/SiteBib/Aduan/AduanProgress', [
             'aduan' => $aduan,
             'crew' => $crew,
         ]);
@@ -170,8 +149,6 @@ class AduanController extends Controller
 
     public function update_aduan_progress(Request $request)
     {
-        // return dd($request);
-        // start get response time
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
@@ -210,10 +187,9 @@ class AduanController extends Controller
 
 
         $data['response_time'] = $response_time;
-        // return dd($data);
 
         $closing_aduan = Aduan::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('aduan.page');
+        return redirect()->route('aduanBib.page');
     }
 
     public function edit($id)
@@ -222,13 +198,12 @@ class AduanController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        
+
         $selectCrew = explode(', ', $aduan->crew);
-        // return dd($aduan);
-        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'BIB')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
-        return Inertia::render('Aduan/AduanEdit', [
+        return Inertia::render('Inventory/SiteBib/Aduan/AduanEdit', [
             'aduan' => $aduan,
             'crew' => $crew,
             'selectCrew' => $selectCrew,
@@ -237,7 +212,6 @@ class AduanController extends Controller
 
     public function update_aduan(Request $request)
     {
-        // return dd($request);
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
@@ -292,7 +266,7 @@ class AduanController extends Controller
         // return dd($data);
 
         $closing_aduan = Aduan::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('aduan.page');
+        return redirect()->route('aduanBib.page');
     }
 
     public function show($id)
@@ -313,7 +287,7 @@ class AduanController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        return Inertia::render('Aduan/AduanDetail', [
+        return Inertia::render('Inventory/SiteBib/Aduan/AduanDetail', [
             'aduan' => $aduan,
         ]);
     }
@@ -324,7 +298,6 @@ class AduanController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        // return response()->json(['ap' => $aduan]);
         $aduan->delete();
         return redirect()->back();
     }

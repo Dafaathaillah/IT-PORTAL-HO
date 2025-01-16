@@ -5733,7 +5733,7 @@ const toggleLevel3ScannerPik = () => {
                                 >ICT - PPA PIK</span
                             >
                             <i
-                                v-if="!level1OpenAmi"
+                                v-if="!level1OpenPik"
                                 class="ms-3 fas fa-angle-right"
                             ></i>
                             <i v-else class="ms-3 fas fa-angle-down"></i>
@@ -6355,9 +6355,28 @@ const toggleLevel3ScannerPik = () => {
                         <ul v-if="level1OpenBib">
                             <li>
                                 <NavLink
+                                    :href="route('dashboardBib.page')"
+                                    :active="
+                                        route().current('dashboardBib.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
                                     @click="toggleLevel2AduanBib"
-                                    :href="route('aduan.page')"
-                                    :active="route().current('aduan.page')"
+                                    :href="route('aduanBib.page')"
+                                    :active="route().current('aduanBib.page')"
                                 >
                                     <div
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -6402,9 +6421,11 @@ const toggleLevel3ScannerPik = () => {
                                 </div>
                                 <ul v-if="level2OpenBib">
                                     <NavLink
-                                        :href="route('accessPoint.page')"
+                                        :href="route('accessPointBib.page')"
                                         :active="
-                                            route().current('accessPoint.page')
+                                            route().current(
+                                                'accessPointBib.page'
+                                            )
                                         "
                                     >
                                         <div
@@ -6420,8 +6441,8 @@ const toggleLevel3ScannerPik = () => {
                                         >
                                     </NavLink>
                                     <NavLink
-                                        :href="route('switch.page')"
-                                        :active="route().current('switch.page')"
+                                        :href="route('switchBib.page')"
+                                        :active="route().current('switchBib.page')"
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -6436,9 +6457,9 @@ const toggleLevel3ScannerPik = () => {
                                         >
                                     </NavLink>
                                     <NavLink
-                                        :href="route('wirelless.page')"
+                                        :href="route('wirellessBib.page')"
                                         :active="
-                                            route().current('wirelless.page')
+                                            route().current('wirellessBib.page')
                                         "
                                     >
                                         <div
@@ -6480,9 +6501,9 @@ const toggleLevel3ScannerPik = () => {
                                     </div>
                                     <li v-if="level3OpenBib">
                                         <NavLink
-                                            :href="route('laptop.page')"
+                                            :href="route('laptopBib.page')"
                                             :active="
-                                                route().current('laptop.page')
+                                                route().current('laptopBib.page')
                                             "
                                         >
                                             <div
@@ -6526,9 +6547,9 @@ const toggleLevel3ScannerPik = () => {
                                     </div>
                                     <li v-if="level3KomputerOpenBib">
                                         <NavLink
-                                            :href="route('komputer.page')"
+                                            :href="route('komputerBib.page')"
                                             :active="
-                                                route().current('komputer.page')
+                                                route().current('komputerBib.page')
                                             "
                                         >
                                             <div
@@ -6572,9 +6593,9 @@ const toggleLevel3ScannerPik = () => {
                                     </div>
                                     <li v-if="level3PrinterOpenBib">
                                         <NavLink
-                                            :href="route('printer.page')"
+                                            :href="route('printerBib.page')"
                                             :active="
-                                                route().current('printer.page')
+                                                route().current('printerBib.page')
                                             "
                                         >
                                             <div
@@ -6618,9 +6639,9 @@ const toggleLevel3ScannerPik = () => {
                                     </div>
                                     <li v-if="level3ScannerOpenBib">
                                         <NavLink
-                                            :href="route('scanner.page')"
+                                            :href="route('scannerBib.page')"
                                             :active="
-                                                route().current('scanner.page')
+                                                route().current('scannerBib.page')
                                             "
                                         >
                                             <div
@@ -6664,9 +6685,9 @@ const toggleLevel3ScannerPik = () => {
                                     </div>
                                     <li v-if="level3CctvOpenBib">
                                         <NavLink
-                                            :href="route('cctv.page')"
+                                            :href="route('cctvBib.page')"
                                             :active="
-                                                route().current('cctv.page')
+                                                route().current('cctvBib.page')
                                             "
                                         >
                                             <div
@@ -6714,10 +6735,10 @@ const toggleLevel3ScannerPik = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiBib">
                                     <NavLink
-                                        :href="route('inspeksiLaptop.page')"
+                                        :href="route('inspeksiLaptopBib.page')"
                                         :active="
                                             route().current(
-                                                'inspeksiLaptop.page'
+                                                'inspeksiLaptopBib.page'
                                             )
                                         "
                                     >
@@ -6735,10 +6756,10 @@ const toggleLevel3ScannerPik = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('inspeksiKomputer.page')"
+                                        :href="route('inspeksiKomputerBib.page')"
                                         :active="
                                             route().current(
-                                                'inspeksiKomputer.page'
+                                                'inspeksiKomputerBib.page'
                                             )
                                         "
                                     >
