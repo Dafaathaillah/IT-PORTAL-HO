@@ -11,6 +11,7 @@ use App\Http\Controllers\AduanHoController;
 use App\Http\Controllers\AduanIptController;
 use App\Http\Controllers\AduanMhuController;
 use App\Http\Controllers\AduanMifaController;
+use App\Http\Controllers\AduanMlpController;
 use App\Http\Controllers\AduanPikController;
 use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\DashboardBibController;
 use App\Http\Controllers\DashboardIptController;
 use App\Http\Controllers\DashboardMhuController;
 use App\Http\Controllers\DashboardMifaController;
+use App\Http\Controllers\DashboardMlpController;
 use App\Http\Controllers\DashboardPikController;
 use App\Http\Controllers\DashboardWaraController;
 use App\Http\Controllers\DepartmentBaController;
@@ -33,8 +35,10 @@ use App\Http\Controllers\InspeksiComputerBaController;
 use App\Http\Controllers\InspeksiComputerBibController;
 use App\Http\Controllers\InspeksiComputerWARAController;
 use App\Http\Controllers\InspeksiComputerController;
+use App\Http\Controllers\InspeksiComputerIptController;
 use App\Http\Controllers\InspeksiComputerMhuController;
 use App\Http\Controllers\InspeksiComputerMifaController;
+use App\Http\Controllers\InspeksiComputerMlpController;
 use App\Http\Controllers\InspeksiComputerPikController;
 use App\Http\Controllers\InspeksiLaptopAmiController;
 use App\Http\Controllers\InspeksiLaptopBaController;
@@ -44,6 +48,7 @@ use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InspeksiLaptopIptController;
 use App\Http\Controllers\InspeksiLaptopMhuController;
 use App\Http\Controllers\InspeksiLaptopMifaController;
+use App\Http\Controllers\InspeksiLaptopMlpController;
 use App\Http\Controllers\InspeksiLaptopPikController;
 use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
@@ -53,6 +58,7 @@ use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvApIptController;
 use App\Http\Controllers\InvApMhuController;
 use App\Http\Controllers\InvApMifaController;
+use App\Http\Controllers\InvApMlpController;
 use App\Http\Controllers\InvApPikController;
 use App\Http\Controllers\InvCctvAmiController;
 use App\Http\Controllers\InvCctvBaController;
@@ -62,6 +68,7 @@ use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvCctvIptController;
 use App\Http\Controllers\InvCctvMhuController;
 use App\Http\Controllers\InvCctvMifaController;
+use App\Http\Controllers\InvCctvMlpController;
 use App\Http\Controllers\InvCctvPikController;
 use App\Http\Controllers\InvComputerAmiController;
 use App\Http\Controllers\InvComputerBaController;
@@ -71,6 +78,7 @@ use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvComputerIptController;
 use App\Http\Controllers\InvComputerMhuController;
 use App\Http\Controllers\InvComputerMifaController;
+use App\Http\Controllers\InvComputerMlpController;
 use App\Http\Controllers\InvComputerPikController;
 use App\Http\Controllers\InvLaptopAmiController;
 use App\Http\Controllers\InvLaptopBaController;
@@ -80,6 +88,7 @@ use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopIptController;
 use App\Http\Controllers\InvLaptopMhuController;
 use App\Http\Controllers\InvLaptopMifaController;
+use App\Http\Controllers\InvLaptopMlpController;
 use App\Http\Controllers\InvLaptopPikController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
 use App\Http\Controllers\InvPrinterAmiController;
@@ -90,6 +99,7 @@ use App\Http\Controllers\InvPrinterController;
 use App\Http\Controllers\InvPrinterIptController;
 use App\Http\Controllers\InvPrinterMhuController;
 use App\Http\Controllers\InvPrinterMifaController;
+use App\Http\Controllers\InvPrinterMlpController;
 use App\Http\Controllers\InvPrinterPikController;
 use App\Http\Controllers\InvScannerAmiController;
 use App\Http\Controllers\InvScannerBaController;
@@ -99,6 +109,7 @@ use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvScannerIptController;
 use App\Http\Controllers\InvScannerMhuController;
 use App\Http\Controllers\InvScannerMifaController;
+use App\Http\Controllers\InvScannerMlpController;
 use App\Http\Controllers\InvScannerPikController;
 use App\Http\Controllers\InvSwitchAmiController;
 use App\Http\Controllers\InvSwitchController;
@@ -108,6 +119,7 @@ use App\Http\Controllers\InvSwitchIptController;
 use App\Http\Controllers\InvSwitchWARAController;
 use App\Http\Controllers\InvSwitchMhuController;
 use App\Http\Controllers\InvSwitchMifaController;
+use App\Http\Controllers\InvSwitchMlpController;
 use App\Http\Controllers\InvSwitchPikController;
 use App\Http\Controllers\InvWirellessAmiController;
 use App\Http\Controllers\InvWirellessBaController;
@@ -117,6 +129,7 @@ use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\InvWirellessIptController;
 use App\Http\Controllers\InvWirellessMhuController;
 use App\Http\Controllers\InvWirellessMifaController;
+use App\Http\Controllers\InvWirellessMlpController;
 use App\Http\Controllers\InvWirellessPikController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
@@ -1006,6 +1019,82 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVIpt', [InvCctvIptController::class, 'uploadCsv'])->name('cctvIpt.import');
         });
 
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteMlp', [DashboardMlpController::class, 'index'])->name('dashboardMlp.page');
+
+            Route::get('/accessPointSiteMlp', [InvApMlpController::class, 'index'])->name('accessPointMlp.page');
+            Route::get('/accessPointSiteMlp/create', [InvApMlpController::class, 'create'])->name('accessPointMlp.create');
+            Route::post('/accessPointSiteMlp/create', [InvApMlpController::class, 'store'])->name('accessPointMlp.store');
+            Route::get('/accessPointSiteMlp/{apId}/edit', [InvApMlpController::class, 'edit'])->name('accessPointMlp.edit');
+            Route::put('/accessPointSiteMlp/{apId}/update', [InvApMlpController::class, 'update'])->name('accessPointMlp.update');
+            Route::delete('/accessPointSiteMlp/{apId}/delete', [InvApMlpController::class, 'destroy'])->name('accessPointMlp.delete');
+            Route::get('/accessPointSiteMlp/{id}/detail', [InvApMlpController::class, 'detail'])->name('accessPointMlp.detail');
+            Route::post('/uploadCsvApMlp', [InvApMlpController::class, 'uploadCsv'])->name('accessPointMlp.import');
+
+            Route::get('/switchMlp', [InvSwitchMlpController::class, 'index'])->name('switchMlp.page');
+            Route::get('/switchMlp/create', [InvSwitchMlpController::class, 'create'])->name('switchMlp.create');
+            Route::post('/switchMlp/create', [InvSwitchMlpController::class, 'store'])->name('switchMlp.store');
+            Route::get('/switchMlp/{swId}/edit', [InvSwitchMlpController::class, 'edit'])->name('switchMlp.edit');
+            Route::put('/switchMlp/{swId}/update', [InvSwitchMlpController::class, 'update'])->name('switchMlp.update');
+            Route::delete('/switchMlp/{swId}/delete', [InvSwitchMlpController::class, 'destroy'])->name('switchMlp.delete');
+            Route::get('/switchMlp/{id}/detail', [InvSwitchMlpController::class, 'detail'])->name('switchMlp.detail');
+            Route::post('/uploadCsvSwMlp', [InvSwitchMlpController::class, 'uploadCsv'])->name('switchMlp.import');
+
+            Route::get('/wirellessMlp', [InvWirellessMlpController::class, 'index'])->name('wirellessMlp.page');
+            Route::get('/wirellessMlp/create', [InvWirellessMlpController::class, 'create'])->name('wirellessMlp.create');
+            Route::post('/wirellessMlp/create', [InvWirellessMlpController::class, 'store'])->name('wirellessMlp.store');
+            Route::get('/wirellessMlp/{id}/edit', [InvWirellessMlpController::class, 'edit'])->name('wirellessMlp.edit');
+            Route::put('/wirellessMlp/{id}/update', [InvWirellessMlpController::class, 'update'])->name('wirellessMlp.update');
+            Route::delete('/wirellessMlp/{id}/delete', [InvWirellessMlpController::class, 'destroy'])->name('wirellessMlp.delete');
+            Route::get('/wirellessMlp/{id}/detail', [InvWirellessMlpController::class, 'detail'])->name('wirellessMlp.detail');
+            Route::post('/uploadCsvBbMlp', [InvWirellessMlpController::class, 'uploadCsv'])->name('wirellessMlp.import');
+
+            Route::get('/laptopMlp', [InvLaptopMlpController::class, 'index'])->name('laptopMlp.page');
+            Route::get('/laptopMlp/create', [InvLaptopMlpController::class, 'create'])->name('laptopMlp.create');
+            Route::post('/laptopMlp/create', [InvLaptopMlpController::class, 'store'])->name('laptopMlp.store');
+            Route::get('/laptopMlp/{id}/edit', [InvLaptopMlpController::class, 'edit'])->name('laptopMlp.edit');
+            Route::delete('/laptopMlp/{id}/delete', [InvLaptopMlpController::class, 'destroy'])->name('laptopMlp.delete');
+            Route::post('/laptopMlp/update', [InvLaptopMlpController::class, 'update'])->name('laptopMlp.update');
+            Route::get('/laptopMlp/{id}/detail', [InvLaptopMlpController::class, 'detail'])->name('laptopMlp.detail');
+            Route::post('/uploadCsvNbMlp', [InvLaptopMlpController::class, 'uploadCsv'])->name('laptopMlp.import');
+
+            Route::get('/komputerMlp', [InvComputerMlpController::class, 'index'])->name('komputerMlp.page');
+            Route::get('/komputerMlp/create', [InvComputerMlpController::class, 'create'])->name('komputerMlp.create');
+            Route::post('/komputerMlp/create', [InvComputerMlpController::class, 'store'])->name('komputerMlp.store');
+            Route::get('/komputerMlp/{id}/edit', [InvComputerMlpController::class, 'edit'])->name('komputerMlp.edit');
+            Route::delete('/komputerMlp/{id}/delete', [InvComputerMlpController::class, 'destroy'])->name('komputerMlp.delete');
+            Route::post('/komputerMlp/update', [InvComputerMlpController::class, 'update'])->name('komputerMlp.update');
+            Route::get('/komputerMlp/{id}/detail', [InvComputerMlpController::class, 'detail'])->name('komputerMlp.detail');
+            Route::post('/uploadCsvCuIpt', [InvComputerMlpController::class, 'uploadCsv'])->name('komputerMlp.import');
+
+            Route::get('/printerMlp', [InvPrinterMlpController::class, 'index'])->name(name: 'printerMlp.page');
+            Route::get('/printerMlp/create', [InvPrinterMlpController::class, 'create'])->name('printerMlp.create');
+            Route::post('/printerMlp/create', [InvPrinterMlpController::class, 'store'])->name('printerMlp.store');
+            Route::get('/printerMlp/{id}/edit', [InvPrinterMlpController::class, 'edit'])->name('printerMlp.edit');
+            Route::delete('/printerMlp/{id}/delete', [InvPrinterMlpController::class, 'destroy'])->name('printerMlp.delete');
+            Route::post('/printerMlp/update', [InvPrinterMlpController::class, 'update'])->name('printerMlp.update');
+            Route::get('/printerMlp/{id}/detail', [InvPrinterMlpController::class, 'detail'])->name('printerMlp.detail');
+            Route::post('/uploadCsvPrtMlp', [InvPrinterMlpController::class, 'uploadCsv'])->name('printerMlp.import');
+
+            Route::get('/scannerMlp', [InvScannerMlpController::class, 'index'])->name('scannerMlp.page');
+            Route::get('/scannerMlp/create', [InvScannerMlpController::class, 'create'])->name('scannerMlp.create');
+            Route::post('/scannerMlp/create', [InvScannerMlpController::class, 'store'])->name('scannerMlp.store');
+            Route::get('/scannerMlp/{id}/edit', [InvScannerMlpController::class, 'edit'])->name('scannerMlp.edit');
+            Route::delete('/scannerMlp/{id}/delete', [InvScannerMlpController::class, 'destroy'])->name('scannerMlp.delete');
+            Route::post('/scannerMlp/update', [InvScannerMlpController::class, 'update'])->name('scannerMlp.update');
+            Route::get('/scannerMlp/{id}/detail', [InvScannerMlpController::class, 'detail'])->name('scannerMlp.detail');
+            Route::post('/uploadCsvScnMlp', [InvScannerMlpController::class, 'uploadCsv'])->name('scannerMlp.import');
+
+            Route::get('/cctvMlp', [InvCctvMlpController::class, 'index'])->name('cctvMlp.page');
+            Route::get('/cctvMlp/create', [InvCctvMlpController::class, 'create'])->name('cctvMlp.create');
+            Route::post('/cctvMlp/create', [InvCctvMlpController::class, 'store'])->name('cctvMlp.store');
+            Route::get('/cctvMlp/{id}/edit', [InvCctvMlpController::class, 'edit'])->name('cctvMlp.edit');
+            Route::delete('/cctvMlp/{id}/delete', [InvCctvMlpController::class, 'destroy'])->name('cctvMlp.delete');
+            Route::post('/cctvMlp/update', [InvCctvMlpController::class, 'update'])->name('cctvMlp.update');
+            Route::get('/cctvMlp/{id}/detail', [InvCctvMlpController::class, 'detail'])->name('cctvMlp.detail');
+            Route::post('/uploadCsvCCTVMlp', [InvCctvMlpController::class, 'uploadCsv'])->name('cctvMlp.import');
+        });
+
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_ho:HO,ict_group_leader:WARA'], function () {
             Route::get('/dashboardSiteWara', [DashboardWaraController::class, 'index'])->name('dashboardWara.page');
 
@@ -1316,13 +1405,31 @@ Route::middleware('auth')->group(function () {
                 Route::get('/inspeksi-laptop-ipt/{id}/detail', [InspeksiLaptopIptController::class, 'detail'])->name('inspeksiLaptopIpt.detail');
                 Route::delete('inspeksi-laptop-ipt/{id}/delete', [InspeksiLaptopIptController::class, 'destroy'])->name('inspeksiLaptopIpt.delete');
 
-                Route::get('inspeksi-komputer-ipt', [InspeksiComputerBibController::class, 'index'])->name('inspeksiKomputerIpt.page');
-                Route::get('inspeksi-komputer-ipt/{id}/inspection', [InspeksiComputerBibController::class, 'doInspection'])->name('inspeksiKomputerIpt.inspection');
-                Route::post('inspeksi-komputer-ipt/inspection', [InspeksiComputerBibController::class, 'store'])->name('inspeksiKomputerIpt.store');
-                Route::get('inspeksi-komputer-ipt/{id}/edit', [InspeksiComputerBibController::class, 'edit'])->name('inspeksiKomputerIpt.edit');
-                Route::put('inspeksi-komputer-ipt/{id}/update', [InspeksiComputerBibController::class, 'update'])->name('inspeksiKomputerIpt.update');
-                Route::get('/inspeksi-komputer-ipt/{id}/detail', [InspeksiComputerBibController::class, 'detail'])->name('inspeksiKomputerIpt.detail');
-                Route::delete('inspeksi-komputer-ipt/{id}/delete', [InspeksiComputerBibController::class, 'destroy'])->name('inspeksiKomputerIpt.delete');
+                Route::get('inspeksi-komputer-ipt', [InspeksiComputerIptController::class, 'index'])->name('inspeksiKomputerIpt.page');
+                Route::get('inspeksi-komputer-ipt/{id}/inspection', [InspeksiComputerIptController::class, 'doInspection'])->name('inspeksiKomputerIpt.inspection');
+                Route::post('inspeksi-komputer-ipt/inspection', [InspeksiComputerIptController::class, 'store'])->name('inspeksiKomputerIpt.store');
+                Route::get('inspeksi-komputer-ipt/{id}/edit', [InspeksiComputerIptController::class, 'edit'])->name('inspeksiKomputerIpt.edit');
+                Route::put('inspeksi-komputer-ipt/{id}/update', [InspeksiComputerIptController::class, 'update'])->name('inspeksiKomputerIpt.update');
+                Route::get('/inspeksi-komputer-ipt/{id}/detail', [InspeksiComputerIptController::class, 'detail'])->name('inspeksiKomputerIpt.detail');
+                Route::delete('inspeksi-komputer-ipt/{id}/delete', [InspeksiComputerIptController::class, 'destroy'])->name('inspeksiKomputerIpt.delete');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP'], function () {
+                Route::get('inspeksi-laptop-mlp', [InspeksiLaptopMlpController::class, 'index'])->name('inspeksiLaptopMlp.page');
+                Route::get('inspeksi-laptop-mlp/{id}/process', [InspeksiLaptopMlpController::class, 'process'])->name('inspeksiLaptopMlp.process');
+                Route::post('inspeksi-laptop-mlp/process', [InspeksiLaptopMlpController::class, 'store'])->name('inspeksiLaptopMlp.store');
+                Route::get('inspeksi-laptop-mlp/{id}/edit', [InspeksiLaptopMlpController::class, 'edit'])->name('inspeksiLaptopMlp.edit');
+                Route::post('inspeksi-laptop-mlp/update', [InspeksiLaptopMlpController::class, 'update'])->name('inspeksiLaptopMlp.update');
+                Route::get('/inspeksi-laptop-mlp/{id}/detail', [InspeksiLaptopMlpController::class, 'detail'])->name('inspeksiLaptopMlp.detail');
+                Route::delete('inspeksi-laptop-mlp/{id}/delete', [InspeksiLaptopMlpController::class, 'destroy'])->name('inspeksiLaptopMlp.delete');
+
+                Route::get('inspeksi-komputer-mlp', [InspeksiComputerMlpController::class, 'index'])->name('inspeksiKomputerMlp.page');
+                Route::get('inspeksi-komputer-mlp/{id}/inspection', [InspeksiComputerMlpController::class, 'doInspection'])->name('inspeksiKomputerMlp.inspection');
+                Route::post('inspeksi-komputer-mlp/inspection', [InspeksiComputerMlpController::class, 'store'])->name('inspeksiKomputerMlp.store');
+                Route::get('inspeksi-komputer-mlp/{id}/edit', [InspeksiComputerMlpController::class, 'edit'])->name('inspeksiKomputerMlp.edit');
+                Route::put('inspeksi-komputer-mlp/{id}/update', [InspeksiComputerMlpController::class, 'update'])->name('inspeksiKomputerMlp.update');
+                Route::get('/inspeksi-komputer-mlp/{id}/detail', [InspeksiComputerMlpController::class, 'detail'])->name('inspeksiKomputerMlp.detail');
+                Route::delete('inspeksi-komputer-mlp/{id}/delete', [InspeksiComputerMlpController::class, 'destroy'])->name('inspeksiKomputerMlp.delete');
             });
 
         });
@@ -1423,6 +1530,18 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanIpt/{id}/delete', [AduanIptController::class, 'destroy'])->name('aduanIpt.delete');
             Route::post('/aduanIpt/update', [AduanIptController::class, 'update_aduan'])->name('aduanIpt.update');
             Route::get('/aduanIpt/{id}/detail', [AduanIptController::class, 'detail'])->name('aduanIpt.detail');
+        });
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_ho:HO'], function () {
+            Route::get('/aduanMlp', [AduanMlpController::class, 'index'])->name('aduanMlp.page');
+            Route::get('/aduanMlp/create', [AduanMlpController::class, 'create'])->name('aduanMlp.create');
+            Route::post('/aduanMlp/create', [AduanMlpController::class, 'store'])->name('aduanMlp.store');
+            Route::get('/aduanMlp/{id}/edit', [AduanMlpController::class, 'edit'])->name('aduanMlp.edit');
+            Route::post('/aduanMlp/updateProgress', [AduanMlpController::class, 'update_aduan_progress'])->name('aduanMlp.updateProgress');
+            Route::get('/aduanMlp/{id}/progress', [AduanMlpController::class, 'progress'])->name('aduanMlp.progress');
+            Route::delete('/aduanMlp/{id}/delete', [AduanMlpController::class, 'destroy'])->name('aduanMlp.delete');
+            Route::post('/aduanMlp/update', [AduanMlpController::class, 'update_aduan'])->name('aduanMlp.update');
+            Route::get('/aduanMlp/{id}/detail', [AduanMlpController::class, 'detail'])->name('aduanMlp.detail');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_ho:HO'], function () {

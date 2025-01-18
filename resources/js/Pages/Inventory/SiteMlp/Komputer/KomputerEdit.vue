@@ -11,7 +11,7 @@ import { Inertia } from "@inertiajs/inertia";
 import { ref, computed } from "vue";
 
 const props = defineProps([
-    "laptop",
+    "komputer",
     "model",
     "processor",
     "hdd",
@@ -19,46 +19,46 @@ const props = defineProps([
     "ram",
     "ram",
     "vga",
-    "warna_laptop",
-    "os_laptop",
+    "warna_komputer",
+    "os_komputer",
     "pengguna_all",
     "pengguna_selected"
 ]);
 
 const form = useForm({
-    id: props.laptop.id,
-    max_id: props.laptop.max_id,
-    laptop_name: props.laptop.laptop_name,
-    laptop_code: props.laptop.laptop_code,
-    number_asset_ho: props.laptop.number_asset_ho,
-    assets_category: props.laptop.assets_category,
+    id: props.komputer.id,
+    max_id: props.komputer.max_id,
+    computer_name: props.komputer.computer_name,
+    computer_code: props.komputer.computer_code,
+    number_asset_ho: props.komputer.number_asset_ho,
+    assets_category: props.komputer.assets_category,
     model: props.model,
     processor: props.processor,
     hdd: props.hdd,
     ssd: props.ssd,
     ram: props.ram,
     vga: props.vga,
-    warna_laptop: props.warna_laptop,
-    os_laptop: props.os_laptop,
-    serial_number: props.laptop.serial_number,
-    aplikasi: props.laptop.aplikasi,
-    license: props.laptop.license,
-    ip_address: props.laptop.ip_address,
-    date_of_inventory: props.laptop.date_of_inventory,
-    date_of_deploy: props.laptop.date_of_deploy,
-    location: props.laptop.location,
-    status: props.laptop.status,
-    condition: props.laptop.condition,
-    note: props.laptop.note,
-    link_documentation_asset_image: props.laptop.link_documentation_asset_image,
+    warna_komputer: props.warna_komputer,
+    os_komputer: props.os_komputer,
+    serial_number: props.komputer.serial_number,
+    aplikasi: props.komputer.aplikasi,
+    license: props.komputer.license,
+    ip_address: props.komputer.ip_address,
+    date_of_inventory: props.komputer.date_of_inventory,
+    date_of_deploy: props.komputer.date_of_deploy,
+    location: props.komputer.location,
+    status: props.komputer.status,
+    condition: props.komputer.condition,
+    note: props.komputer.note,
+    link_documentation_asset_image: props.komputer.link_documentation_asset_image,
     user_alls_id: props.pengguna_all,
 });
 
 const isDisabled = ref(true);
 const file = ref(null);
 
-const selectedDateInv = ref(props.laptop.date_of_inventory);
-const selectedDateDeploy = ref(props.laptop.date_of_deploy);
+const selectedDateInv = ref(props.komputer.date_of_inventory);
+const selectedDateDeploy = ref(props.komputer.date_of_deploy);
 
 const customFormat = (date) => {
     if (!date) {
@@ -95,7 +95,7 @@ const penggunaString = computed(() => {
 const update = () => {
     const formData = new FormData();
 
-    if (selectedValues.value ==  null) {
+    if (selectedValues.value == null) {
         formSubmitted.value = true;
         return; 
     }else{
@@ -112,14 +112,13 @@ const update = () => {
         }
     }
 
-
     const fixTanggalInv = customFormat(selectedDateInv.value);
     const fixTanggalDeploy = customFormat(selectedDateDeploy.value);
 
     formData.append("id", form.id);
     formData.append("max_id", form.max_id);
-    formData.append("laptop_name", form.laptop_name);
-    formData.append("laptop_code", form.laptop_code);
+    formData.append("computer_name", form.computer_name);
+    formData.append("computer_code", form.computer_code);
     formData.append("number_asset_ho", form.number_asset_ho);
     formData.append("assets_category", form.assets_category);
     formData.append("model", form.model);
@@ -128,8 +127,8 @@ const update = () => {
     formData.append("ssd", form.ssd);
     formData.append("ram", form.ram);
     formData.append("vga", form.vga);
-    formData.append("warna_laptop", form.warna_laptop);
-    formData.append("os_laptop", form.os_laptop);
+    formData.append("warna_komputer", form.warna_komputer);
+    formData.append("os_komputer", form.os_komputer);
     formData.append("serial_number", form.serial_number);
     formData.append("aplikasi", form.aplikasi);
     formData.append("license", form.license);
@@ -145,40 +144,17 @@ const update = () => {
         formData.append("image", file.value); // Append the file
     }
 
-    Inertia.post(route("laptop.update", props.laptop.id), formData, {
+    Inertia.post(route("komputerMlp.update", props.komputer.id), formData, {
         // Use route name here
         onProgress: (progress) => {
             console.log(formData.append); // Track the upload progress
         },
     });
-
-    // Inertia.post(route("laptop.store"), formData, {
-    //     forceFormData: true,
-    //     onSuccess: () => {
-    //         // Show SweetAlert2 success notification
-    //         Swal.fire({
-    //             title: "Success!",
-    //             text: "Data has been successfully updated!",
-    //             icon: "success",
-    //             confirmButtonText: "OK",
-    //             confirmButtonColor: "#3085d6",
-    //         });
-    //     },
-    //     onError: () => {
-    //         Swal.fire({
-    //             title: "error!",
-    //             text: "Data not updated!",
-    //             icon: "waring",
-    //             confirmButtonText: "OK",
-    //             confirmButtonColor: "#3085d6",
-    //         });
-    //     },
-    // });
 };
 </script>
 
 <template>
-    <Head title="Edit data Laptop" />
+    <Head title="Edit data Komputer" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -191,15 +167,15 @@ const update = () => {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('laptop.page')"
+                        :href="route('komputerMlp.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Laptop
+                        Komputer
                     </Link>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Laptop Edit Pages
+                    Komputer Edit Pages
                 </h6>
             </nav>
         </template>
@@ -217,7 +193,7 @@ const update = () => {
                         >
                             <div class="flex items-center">
                                 <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Edit Laptop
+                                    Form Edit Komputer
                                 </p>
                             </div>
                         </div>
@@ -232,36 +208,38 @@ const update = () => {
                                     >
                                     <div class="mb-4">
                                             <label
-                                                for="laptop-code"
+                                                for="komputer-code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Laptop Code</label
+                                                >Komputer Code</label
                                             >
                                             <input
                                                 :disabled="isDisabled"
                                                 required
                                                 type="text"
-                                                name="laptop_code"
-                                                v-model="form.laptop_code"
+                                                name="computer_code"
+                                                v-model="form.computer_code"
                                                 value="1"
                                                 class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Auto Generate Laptop Code"
+                                                placeholder="Auto Generate Komputer Code"
                                             />
                                         </div>
+                                        
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
+                                        
                                     <div class="mb-4">
                                             <label
                                                 for="device-name"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Brand Laptop</label
+                                                >Brand Komputer</label
                                             >
                                             <input
                                                 required
                                                 type="text"
-                                                name="laptop_name"
-                                                v-model="form.laptop_name"
+                                                name="computer_name"
+                                                v-model="form.computer_name"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="Lenovo"
                                             />
@@ -364,7 +342,7 @@ const update = () => {
                                                 >Hdd</label
                                             >
                                             <input
-                                                required
+                                                
                                                 type="text"
                                                 v-model="form.hdd"
                                                 name="hdd"
@@ -435,15 +413,15 @@ const update = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="warna_laptop"
+                                                for="warna_komputer"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Warna Laptop</label
+                                                >Warna Komputer</label
                                             >
                                             <input
                                                 required
                                                 type="text"
-                                                v-model="form.warna_laptop"
-                                                name="warna_laptop"
+                                                v-model="form.warna_komputer"
+                                                name="warna_komputer"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="Hitxx"
                                             />
@@ -454,15 +432,15 @@ const update = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="os_laptop"
+                                                for="os_komputer"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Os Laptop</label
+                                                >Os Komputer</label
                                             >
                                             <input
                                                 required
                                                 type="text"
-                                                v-model="form.os_laptop"
-                                                name="os_laptop"
+                                                v-model="form.os_komputer"
+                                                name="os_komputer"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="WINDOWS 1x PRO"
                                             />
@@ -487,7 +465,7 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
-                                    <!-- <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -505,7 +483,7 @@ const update = () => {
                                                 placeholder="Standart Progxx"
                                             />
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -621,7 +599,7 @@ const update = () => {
                                                 >
                                                     Ready Used
                                                 </option>
-                                                <option value="READY_STANBY">
+                                                <option value="READY_STANDBY">
                                                     Ready Standby
                                                 </option>
                                                 <option value="SCRAP">
@@ -684,7 +662,6 @@ const update = () => {
                                                 Select User</label
                                             >
                                             <VueMultiselect
-                                                
                                                 v-model="selectedValues"
                                                 :options="options"
                                                 :multiple="false"
@@ -718,7 +695,7 @@ const update = () => {
                                                     form.link_documentation_asset_image
                                                 "
                                                 alt="documentation image"
-                                                class="w-100 shadow-2xl rounded-xl"
+                                                class="max-w-48 max-h-64 shadow-2xl rounded-xl"
                                             />
                                         </div>
                                     </div>
@@ -748,7 +725,7 @@ const update = () => {
                                 <div class="flex flex-nowrap mt-6 justify-between">
                                     
                                     <Link
-                                        :href="route('laptop.page')"
+                                        :href="route('komputerMlp.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span
@@ -768,7 +745,6 @@ const update = () => {
                                             Save
                                         </span>
                                     </button>
-
 
                                 </div>
                             </form>

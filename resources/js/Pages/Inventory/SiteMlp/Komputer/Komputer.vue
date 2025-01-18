@@ -1,4 +1,3 @@
-<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <style>
 @import 'datatables.net-dt';
 
@@ -17,6 +16,8 @@
     margin-top: 1em;
 }
 </style>
+
+<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
@@ -27,11 +28,11 @@ import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import VueMultiselect from "vue-multiselect";
 import { onMounted } from "vue";
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const pages = ref("Pages");
-const subMenu = ref("Laptop Pages");
-const mainMenu = ref("Laptop Data");
+const subMenu = ref("Komputer Pages");
+const mainMenu = ref("Komputer Data");
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -62,7 +63,7 @@ const mount = onMounted(() => {
 });
 
 const props = defineProps({
-    laptop: {
+    komputer: {
         type: Array,
     },
     department: {
@@ -75,6 +76,10 @@ const props = defineProps({
         type: Object,
     },
 });
+
+const options = props.department;
+
+const selectedOption = ref(null);
 
 const form = useForm({});
 
@@ -91,7 +96,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("laptop.delete", { id: id }), {
+            form.delete(route("komputerMlp.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -117,13 +122,13 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("laptop.edit", { id: id }));
+            form.get(route("komputerMlp.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("laptop.detail", { id: id }));
+    form.get(route("komputerMlp.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -131,8 +136,6 @@ const file = ref(null);
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
-
-const options = props.department;
 
 const submitCsv = () => {
     let timerInterval;
@@ -153,7 +156,7 @@ const submitCsv = () => {
         window.location.reload();
     }
 
-    formx.post(route("laptop.import"), {
+    formx.post(route("komputerMlp.import"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -185,27 +188,23 @@ function formatData(text) {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
 
-const selectedOption = ref(null);
-
 // State pencarian
 const onInput = (data, some) => {
-
     console.log(data.name);
 };
 
 const showAddAlert = () => {
-  Swal.fire({
-    title: 'Mohon Select Department!',
-    text: 'Wajib memilih Department untuk menambahkan data',
-    icon: 'warning',
-    confirmButtonText: 'OK'
-  })
-}
-
+    Swal.fire({
+        title: "Mohon Select Department!",
+        text: "Wajib memilih Department untuk menambahkan data",
+        icon: "warning",
+        confirmButtonText: "OK",
+    });
+};
 </script>
 
 <template>
-    <Head title="Inv Laptop" />
+    <Head title="Inv Komputer" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -242,20 +241,8 @@ const showAddAlert = () => {
                             </div>
                             <div class="max-w-full px-3">
                                 <a
-                                    href="/sampleLaptop.xlsx"
-                                    v-if="props.site === ''"
-                                    download="Format-Import-Data-Laptop.xlsx"
-                                    target="_blank"
-                                    type="button"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                >
-                                    <i class="fas fa-download"></i>
-                                    Format Excel Data
-                                </a>
-                                <a
-                                    href="/sampleLaptop-ba.xlsx"
-                                    v-if="props.site === 'BA'"
-                                    download="Format-Import-Data-Laptop.xlsx"
+                                    href="/sampleKomputer.xlsx"
+                                    download="Format-Import-Data-komputer.xlsx"
                                     target="_blank"
                                     type="button"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -268,53 +255,54 @@ const showAddAlert = () => {
                     </form>
 
                     <div class="flex-none w-full max-w-full px-3">
-
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
-                            
                             <div
-                                class="flex items-center p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <div
-                                    class="h-11 relative flex flex-wrap items-stretch transition-all rounded-lg ease mr-4"
+                                    class="flex items-center p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                                 >
-                                
-                                    <VueMultiselect
-                                        v-model="selectedOption"
-                                        :options="options"
-                                        :multiple="false"
-                                        :close-on-select="true"
-                                        placeholder="Select Department"
-                                        track-by="name"
-                                        label="name"
-                                        @update:model-value="onInput"
-                                    />
+                                    <div
+                                        class="h-11 relative flex flex-wrap items-stretch transition-all rounded-lg ease mr-4"
+                                    >
+                                        <VueMultiselect
+                                            v-model="selectedOption"
+                                            :options="options"
+                                            :multiple="false"
+                                            :close-on-select="true"
+                                            placeholder="Select Department"
+                                            track-by="name"
+                                            label="name"
+                                            @update:model-value="onInput"
+                                        />
+                                    </div>
+                                    <Link
+                                        :href="route('komputerMlp.store')"
+                                        v-if="selectedOption?.name"
+                                        method="post"
+                                        :data="{
+                                            dept: selectedOption.name,
+                                            roterx: 'index',
+                                        }"
+                                        class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
+                                    >
+                                        <i class="fas fa-plus"> </i
+                                        >&nbsp;&nbsp;Add New Data
+                                    </Link>
+                                    <button
+                                        @click="showAddAlert()"
+                                        v-if="selectedOption == null"
+                                        class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
+                                    >
+                                        <i class="fas fa-plus"> </i
+                                        >&nbsp;&nbsp;Add New Data
+                                    </button>
                                 </div>
-                                <Link
-                                    href="/inventory/laptop/create"
-                                    v-if="
-                                        selectedOption?.name 
-                                    "
-                                    method="post" :data="{ dept: selectedOption.name, roterx: 'index' }"
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </Link>
-                                <button
-                                    @click="showAddAlert()"
-                                    v-if="
-                                        selectedOption == null
-                                    "
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </button>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <PerfectScrollbar style="position: relative;">
+                                <PerfectScrollbar style="position: relative">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <table
@@ -428,8 +416,8 @@ const showAddAlert = () => {
                                                 <tbody>
                                                     <tr
                                                         v-for="(
-                                                            laptops, index
-                                                        ) in laptop"
+                                                            komputers, index
+                                                        ) in komputer"
                                                         :key="index"
                                                     >
                                                         <td
@@ -448,7 +436,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.laptop_code
+                                                                    komputers.computer_code
                                                                 }}
                                                             </p>
                                                         </td>
@@ -459,7 +447,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.number_asset_ho
+                                                                    komputers.number_asset_ho
                                                                 }}
                                                             </p>
                                                         </td>
@@ -470,7 +458,8 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.pengguna
+                                                                    komputers
+                                                                        .pengguna
                                                                         .username
                                                                 }}
                                                             </p>
@@ -482,7 +471,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.laptop_name
+                                                                    komputers.computer_name
                                                                 }}
                                                             </p>
                                                         </td>
@@ -493,7 +482,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.assets_category
+                                                                    komputers.assets_category
                                                                 }}
                                                             </p>
                                                         </td>
@@ -505,7 +494,7 @@ const showAddAlert = () => {
                                                             >
                                                                 {{
                                                                     formatData(
-                                                                        laptops.spesifikasi
+                                                                        komputers.spesifikasi
                                                                     )
                                                                 }}
                                                             </span>
@@ -517,7 +506,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.serial_number
+                                                                    komputers.serial_number
                                                                 }}
                                                             </span>
                                                         </td>
@@ -528,7 +517,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.aplikasi
+                                                                    komputers.aplikasi
                                                                 }}
                                                             </span>
                                                         </td>
@@ -539,7 +528,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.license
+                                                                    komputers.license
                                                                 }}
                                                             </span>
                                                         </td>
@@ -550,7 +539,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.ip_address
+                                                                    komputers.ip_address
                                                                 }}
                                                             </span>
                                                         </td>
@@ -559,13 +548,13 @@ const showAddAlert = () => {
                                                         >
                                                             <span
                                                                 v-if="
-                                                                    laptops.date_of_inventory
+                                                                    komputers.date_of_inventory
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
                                                                     formattedDate(
-                                                                        laptops.date_of_inventory
+                                                                        komputers.date_of_inventory
                                                                     )
                                                                 }}
                                                             </span>
@@ -573,8 +562,9 @@ const showAddAlert = () => {
                                                                 v-else
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                Edit untuk setting
-                                                                tanggal !
+                                                                Edit untuk
+                                                                setting tanggal
+                                                                !
                                                             </span>
                                                         </td>
                                                         <td
@@ -582,13 +572,13 @@ const showAddAlert = () => {
                                                         >
                                                             <span
                                                                 v-if="
-                                                                    laptops.date_of_deploy
+                                                                    komputers.date_of_deploy
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
                                                                     formattedDate(
-                                                                        laptops.date_of_deploy
+                                                                        komputers.date_of_deploy
                                                                     )
                                                                 }}
                                                             </span>
@@ -596,8 +586,9 @@ const showAddAlert = () => {
                                                                 v-else
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                Edit untuk setting
-                                                                tanggal !
+                                                                Edit untuk
+                                                                setting tanggal
+                                                                !
                                                             </span>
                                                         </td>
                                                         <td
@@ -607,7 +598,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.location
+                                                                    komputers.location
                                                                 }}
                                                             </span>
                                                         </td>
@@ -617,7 +608,9 @@ const showAddAlert = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ laptops.status }}
+                                                                {{
+                                                                    komputers.status
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -627,7 +620,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.condition
+                                                                    komputers.condition
                                                                 }}
                                                             </span>
                                                         </td>
@@ -638,12 +631,12 @@ const showAddAlert = () => {
                                                                 class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.note ==
+                                                                    komputers.note ==
                                                                     null
                                                                         ? ""
                                                                         : formatData(
-                                                                            laptops.note
-                                                                        )
+                                                                              komputers.note
+                                                                          )
                                                                 }}
                                                             </span>
                                                         </td>
@@ -655,7 +648,7 @@ const showAddAlert = () => {
                                                             >
                                                                 <img
                                                                     :src="
-                                                                        laptops.link_documentation_asset_image
+                                                                        komputers.link_documentation_asset_image
                                                                     "
                                                                     alt="documentation image"
                                                                     class="w-30 h-20 shadow-2xl rounded-xl"
@@ -670,7 +663,7 @@ const showAddAlert = () => {
                                                             >
                                                                 {{
                                                                     formattedDate(
-                                                                        laptops.updated_at
+                                                                        komputers.updated_at
                                                                     )
                                                                 }}
                                                             </span>
@@ -681,7 +674,7 @@ const showAddAlert = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     detailData(
-                                                                        laptops.id
+                                                                        komputers.id
                                                                     )
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -692,7 +685,7 @@ const showAddAlert = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     editData(
-                                                                        laptops.id
+                                                                        komputers.id
                                                                     )
                                                                 "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -703,10 +696,13 @@ const showAddAlert = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     deleteData(
-                                                                        laptops.id
+                                                                        komputers.id
                                                                     )
                                                                 "
-                                                                v-if="props.role !== 'ict_technician'"
+                                                                v-if="
+                                                                    props.role !==
+                                                                    'ict_technician'
+                                                                "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Delete
@@ -727,6 +723,5 @@ const showAddAlert = () => {
     </AuthenticatedLayout>
 </template>
 <style>
-@import '/public/assets/css/perfect-scrollbar.css';
-
+@import "/public/assets/css/perfect-scrollbar.css";
 </style>

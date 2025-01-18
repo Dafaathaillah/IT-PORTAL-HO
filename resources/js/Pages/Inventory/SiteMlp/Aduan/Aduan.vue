@@ -1,4 +1,3 @@
-<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <style>
 @import 'datatables.net-dt';
 
@@ -17,6 +16,7 @@
     margin-top: 1em;
 }
 </style>
+
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
@@ -25,13 +25,13 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import VueMultiselect from "vue-multiselect";
 import { onMounted } from "vue";
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
-const subMenu = ref("Komputer Pages");
-const mainMenu = ref("Komputer Data");
+const subMenu = ref("Aduan Pages");
+const mainMenu = ref("Aduan Data");
+
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -62,23 +62,22 @@ const mount = onMounted(() => {
 });
 
 const props = defineProps({
-    komputer: {
+    aduan: {
         type: Array,
     },
-    department: {
-        type: Array,
-    },
-    site: {
+    open: {
         type: Object,
     },
-    role: {
+    closed: {
+        type: Object,
+    },
+    progress: {
+        type: Object,
+    },
+    cancel: {
         type: Object,
     },
 });
-
-const options = props.department;
-
-const selectedOption = ref(null);
 
 const form = useForm({});
 
@@ -95,7 +94,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("komputer.delete", { id: id }), {
+            form.delete(route("aduanMlp.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -121,13 +120,17 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("komputer.edit", { id: id }));
+            form.get(route("aduanMlp.edit", { id: id }));
         }
     });
 };
 
+const progressAduan = (id) => {
+    form.get(route("aduanMlp.progress", { id: id }));
+};
+
 const detailData = (id) => {
-    form.get(route("komputer.detail", { id: id }));
+    form.get(route("aduanMlp.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -137,25 +140,10 @@ const handleFileUpload = (event) => {
 };
 
 const submitCsv = () => {
-    let timerInterval;
-    Swal.fire({
-        title: "Mengimport Data...",
-        text: "Mohon tunggu sebentar...",
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        },
-    });
-
-    const formx = useForm({
-        file: file.value,
-    });
-
-    function reloadPage() {
-        window.location.reload();
-    }
-
-    formx.post(route("komputer.import"), {
+    const formData = new FormData();
+    formData.append("file", file.value);
+    Inertia.post(route("aduanMlp.import"), formData, {
+        forceFormData: true,
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -165,10 +153,6 @@ const submitCsv = () => {
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
             });
-
-            setTimeout(function () {
-                reloadPage();
-            }, 2000);
         },
         onError: () => {
             Swal.fire({
@@ -186,93 +170,177 @@ function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
-
-// State pencarian
-const onInput = (data, some) => {
-
-    console.log(data.name);
-};
-
-const showAddAlert = () => {
-    Swal.fire({
-        title: 'Mohon Select Department!',
-        text: 'Wajib memilih Department untuk menambahkan data',
-        icon: 'warning',
-        confirmButtonText: 'OK'
-    })
-}
-
 </script>
 
 <template>
 
-    <Head title="Inv Komputer" />
+    <Head title="Complaint" />
 
     <AuthenticatedLayout v-model:pages="pages" v-model:subMenu="subMenu" v-model:mainMenu="mainMenu">
+
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex flex-wrap -mx-3">
-                    <form @submit.prevent="submitCsv" enctype="multipart/form-data">
-                        <div class="flex flex-wrap">
-                            <div class="max-w-full px-3">
-                                <div class="mb-4">
-                                    <input type="file" ref="fileInput" enctype="multipart/form-data"
-                                        class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                        @change="handleFileUpload" />
+                <div class="flex flex-wrap -mx-3 mb-8">
+                    <!-- card1 -->
+                    <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                        <div
+                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                            <div class="flex-auto p-4">
+                                <div class="flex flex-row -mx-3">
+                                    <div class="flex-none w-2/3 max-w-full px-3">
+                                        <div>
+                                            <p
+                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                                ADUAN OPEN
+                                            </p>
+                                            <h5 class="mb-2 font-bold dark:text-white">
+                                                {{ props.open }}
+                                            </h5>
+                                            <!-- <p
+                                                class="mb-0 dark:text-white dark:opacity-60"
+                                            >
+                                                <span
+                                                    class="text-sm font-bold leading-normal text-emerald-500"
+                                                    >+55%</span
+                                                >
+                                                since yesterday
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                    <div class="px-3 text-right basis-1/3">
+                                        <div
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500">
+                                            <i class="fas fa-envelope-open text-lg relative top-2.5 text-white"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="max-w-full pl-3">
-                                <button type="submit"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                                    <i class="fas fa-file-import"></i>
-                                    Import
-                                </button>
-                            </div>
-                            <div class="max-w-full px-3">
-                                <a href="/sampleKomputer.xlsx" v-if="props.site === ''"
-                                    download="Format-Import-Data-komputer.xlsx" target="_blank" type="button"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                                    <i class="fas fa-download"></i>
-                                    Format Excel Data
-                                </a>
-                                <a href="/sampleKomputer-ba.xlsx" v-if="props.site === 'BA'"
-                                    download="Format-Import-Data-komputer.xlsx" target="_blank" type="button"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                                    <i class="fas fa-download"></i>
-                                    Format Excel Data
-                                </a>
+                        </div>
+                    </div>
+
+                    <!-- card2 -->
+                    <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                        <div
+                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                            <div class="flex-auto p-4">
+                                <div class="flex flex-row -mx-3">
+                                    <div class="flex-none w-2/3 max-w-full px-3">
+                                        <div>
+                                            <p
+                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                                ADUAN PROGRESS
+                                            </p>
+                                            <h5 class="mb-2 font-bold dark:text-white">
+                                                {{ props.progress }}
+                                            </h5>
+                                            <!-- <p
+                                                class="mb-0 dark:text-white dark:opacity-60"
+                                            >
+                                                <span
+                                                    class="text-sm font-bold leading-normal text-red-600"
+                                                    >-2%</span
+                                                >
+                                                since last quarter
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                    <div class="px-3 text-right basis-1/3">
+                                        <div
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-400">
+                                            <i class="fas fa-clock text-lg relative top-2.5 text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
 
+
+                    <!-- card3 -->
+
+                    <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                        <div
+                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                            <div class="flex-auto p-4">
+                                <div class="flex flex-row -mx-3">
+                                    <div class="flex-none w-2/3 max-w-full px-3">
+                                        <div>
+                                            <p
+                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                                ADUAN CLOSED
+                                            </p>
+                                            <h5 class="mb-2 font-bold dark:text-white">
+                                                {{ props.closed }}
+                                            </h5>
+                                            <!-- <p
+                                                class="mb-0 dark:text-white dark:opacity-60"
+                                            >
+                                                <span
+                                                    class="text-sm font-bold leading-normal text-emerald-500"
+                                                    >+3%</span
+                                                >
+                                                since last week
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                    <div class="px-3 text-right basis-1/3">
+                                        <div
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-green-600 to-green-600">
+                                            <i class="fas fa-check-square text-lg relative top-2.5 text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- card4 -->
+                    <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
+                        <div
+                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                            <div class="flex-auto p-4">
+                                <div class="flex flex-row -mx-3">
+                                    <div class="flex-none w-2/3 max-w-full px-3">
+                                        <div>
+                                            <p
+                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                                ADUN CANCEL
+                                            </p>
+                                            <h5 class="mb-2 font-bold dark:text-white">
+                                                {{ props.cancel }}
+                                            </h5>
+                                            <!-- <p
+                                                class="mb-0 dark:text-white dark:opacity-60"
+                                            >
+                                                <span
+                                                    class="text-sm font-bold leading-normal text-emerald-500"
+                                                    >+5%</span
+                                                >
+                                                than last month
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                    <div class="px-3 text-right basis-1/3">
+                                        <div
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-500 to-red-500">
+                                            <i class="fas fa-ban text-lg relative top-2.5 text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3">
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                             <div class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
-                                <div
-                                    class="flex items-center p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
-                                    <div
-                                        class="h-11 relative flex flex-wrap items-stretch transition-all rounded-lg ease mr-4">
-
-                                        <VueMultiselect v-model="selectedOption" :options="options" :multiple="false"
-                                            :close-on-select="true" placeholder="Select Department" track-by="name"
-                                            label="name" @update:model-value="onInput" />
-                                    </div>
-                                    <Link href="/inventory/komputer/create" v-if="
-                                        selectedOption?.name
-                                    " method="post" :data="{ dept: selectedOption.name, roterx: 'index' }"
-                                        class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25">
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                    </Link>
-                                    <button @click="showAddAlert()" v-if="
-                                        selectedOption == null
-                                    "
-                                        class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25">
-                                        <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                        New Data
-                                    </button>
-                                </div>
+                                <Link :href="route('aduanMlp.create')"
+                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25">
+                                <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
+                                New Data
+                                </Link>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <PerfectScrollbar style="position: relative;">
@@ -287,75 +355,55 @@ const showAddAlert = () => {
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Inventory Number
+                                                            Ticket Code
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Asset Ho Number
+                                                            Report Date
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Pengguna
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Brand
+                                                            Start Response
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Category Assets
+                                                            Response Time
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Spesifikasi
+                                                            Start Progres
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Serial Number
+                                                            Finish Progress
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Aplikasi
+                                                            Nrp
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            License
+                                                            Name
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Ip Address
+                                                            Category
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Date Of Inventory
+                                                            Action Repair
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Date Of Deploy
+                                                            Issue
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Location
+                                                            crew
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
                                                             Status
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Condition
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Note
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Documentation Asset
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Last Edit At
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
@@ -365,8 +413,8 @@ const showAddAlert = () => {
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="(
-                                                            komputers, index
-                                                        ) in komputer" :key="index">
+                                                        aduans, index
+                                                    ) in aduan" :key="index">
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                             <span
@@ -379,7 +427,7 @@ const showAddAlert = () => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 {{
-                                                                    komputers.computer_code
+                                                                    aduans.complaint_code
                                                                 }}
                                                             </p>
                                                         </td>
@@ -388,7 +436,7 @@ const showAddAlert = () => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 {{
-                                                                    komputers.number_asset_ho
+                                                                    aduans.date_of_complaint
                                                                 }}
                                                             </p>
                                                         </td>
@@ -397,28 +445,42 @@ const showAddAlert = () => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 {{
-                                                                    komputers
-                                                                        .pengguna
-                                                                        .username
+                                                                    aduans.start_response
                                                                 }}
                                                             </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                {{
+                                                                    aduans.response_time
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                {{
+                                                                    aduans.start_progress
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                {{
+                                                                    aduans.end_progress
+                                                                }}
+                                                            </span>
                                                         </td>
                                                         <td
                                                             class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    komputers.computer_name
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    komputers.assets_category
-                                                                }}
+                                                                {{ aduans.nrp }}
                                                             </p>
                                                         </td>
                                                         <td
@@ -426,9 +488,7 @@ const showAddAlert = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 {{
-                                                                    formatData(
-                                                                        komputers.spesifikasi
-                                                                    )
+                                                                    aduans.complaint_name
                                                                 }}
                                                             </span>
                                                         </td>
@@ -437,7 +497,7 @@ const showAddAlert = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 {{
-                                                                    komputers.serial_number
+                                                                    aduans.category_name
                                                                 }}
                                                             </span>
                                                         </td>
@@ -446,7 +506,7 @@ const showAddAlert = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 {{
-                                                                    komputers.aplikasi
+                                                                    aduans.action_repair
                                                                 }}
                                                             </span>
                                                         </td>
@@ -455,7 +515,7 @@ const showAddAlert = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 {{
-                                                                    komputers.license
+                                                                    aduans.complaint_note
                                                                 }}
                                                             </span>
                                                         </td>
@@ -463,122 +523,52 @@ const showAddAlert = () => {
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    komputers.ip_address
-                                                                }}
+                                                                {{ aduans.crew }}
                                                             </span>
                                                         </td>
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span v-if="
-                                                                komputers.date_of_inventory
-                                                            "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    formattedDate(
-                                                                        komputers.date_of_inventory
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                            <span v-else
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                Edit untuk setting
-                                                                tanggal !
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span v-if="
-                                                                komputers.date_of_deploy
-                                                            "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    formattedDate(
-                                                                        komputers.date_of_deploy
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                            <span v-else
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                Edit untuk setting
-                                                                tanggal !
+                                                            <span :class="{
+                                                                'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    aduans.status ===
+                                                                    'CLOSED',
+                                                                'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    aduans.status ===
+                                                                    'PROGRESS',
+                                                                'bg-gradient-to-tl from-blue-500 to-purple-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    aduans.status ===
+                                                                    'OPEN',
+                                                                'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    aduans.status ===
+                                                                    'CANCEL',
+                                                            }">
+                                                                {{ aduans.status }}
                                                             </span>
                                                         </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    komputers.location
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    komputers.status
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    komputers.condition
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    komputers.note ==
-                                                                        null
-                                                                        ? ""
-                                                                        : formatData(
-                                                                            komputers.note
-                                                                        )
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                <img :src="komputers.link_documentation_asset_image
-                                                                    " alt="documentation image"
-                                                                    class="w-30 h-20 shadow-2xl rounded-xl" />
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    formattedDate(
-                                                                        komputers.updated_at
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                        </td>
+
                                                         <td
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                             <NavLinkCustom @click="
-                                                                detailData(
-                                                                    komputers.id
+                                                                progressAduan(
+                                                                    aduans.id
                                                                 )
                                                                 "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                Progress Aduan
+                                                            </NavLinkCustom>
+
+                                                            <NavLinkCustom @click="
+                                                                detailData(
+                                                                    aduans.id
+                                                                )
+                                                                "
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 Detail
                                                             </NavLinkCustom>
 
                                                             <NavLinkCustom @click="
                                                                 editData(
-                                                                    komputers.id
+                                                                    aduans.id
                                                                 )
                                                                 "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
@@ -587,9 +577,9 @@ const showAddAlert = () => {
 
                                                             <NavLinkCustom @click="
                                                                 deleteData(
-                                                                    komputers.id
+                                                                    aduans.id
                                                                 )
-                                                                " v-if="props.role !== 'ict_technician'"
+                                                                "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
                                                                 Delete
                                                             </NavLinkCustom>
