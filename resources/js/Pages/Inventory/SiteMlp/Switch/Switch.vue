@@ -1,4 +1,3 @@
-<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <style>
 @import 'datatables.net-dt';
 
@@ -17,6 +16,7 @@
     margin-top: 1em;
 }
 </style>
+
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
@@ -25,13 +25,12 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import VueMultiselect from "vue-multiselect";
 import { onMounted } from "vue";
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
-const subMenu = ref("Laptop Pages");
-const mainMenu = ref("Laptop Data");
+const subMenu = ref("Switch Pages");
+const mainMenu = ref("Switch Data");
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -62,10 +61,7 @@ const mount = onMounted(() => {
 });
 
 const props = defineProps({
-    laptop: {
-        type: Array,
-    },
-    department: {
+    switch: {
         type: Array,
     },
     site: {
@@ -82,7 +78,7 @@ const deleteData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        text: "Menghapus data ini akan berdampak pada table yang berelasi dengan data ini!, data pada table yang berelasi akan ikut terhapus!. salah satu table yang berelasi dengan data ini adalah data cctv.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -91,7 +87,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("laptop.delete", { id: id }), {
+            form.delete(route("switchMlp.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -117,13 +113,13 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("laptop.edit", { id: id }));
+            form.get(route("switchMlp.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("laptop.detail", { id: id }));
+    form.get(route("switchMlp.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -131,8 +127,6 @@ const file = ref(null);
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
-
-const options = props.department;
 
 const submitCsv = () => {
     let timerInterval;
@@ -153,12 +147,12 @@ const submitCsv = () => {
         window.location.reload();
     }
 
-    formx.post(route("laptop.import"), {
+    formx.post(route("switchMlp.import"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
                 title: "Success!",
-                text: "Data has been successfully created!",
+                text: "Data has been successfully import!",
                 icon: "success",
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
@@ -179,33 +173,10 @@ const submitCsv = () => {
         },
     });
 };
-
-function formatData(text) {
-    const maxLength = 20; // Set your limit here
-    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-}
-
-const selectedOption = ref(null);
-
-// State pencarian
-const onInput = (data, some) => {
-
-    console.log(data.name);
-};
-
-const showAddAlert = () => {
-  Swal.fire({
-    title: 'Mohon Select Department!',
-    text: 'Wajib memilih Department untuk menambahkan data',
-    icon: 'warning',
-    confirmButtonText: 'OK'
-  })
-}
-
 </script>
 
 <template>
-    <Head title="Inv Laptop" />
+    <Head title="Inv Switch" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -242,20 +213,8 @@ const showAddAlert = () => {
                             </div>
                             <div class="max-w-full px-3">
                                 <a
-                                    href="/sampleLaptop.xlsx"
-                                    v-if="props.site === ''"
-                                    download="Format-Import-Data-Laptop.xlsx"
-                                    target="_blank"
-                                    type="button"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                >
-                                    <i class="fas fa-download"></i>
-                                    Format Excel Data
-                                </a>
-                                <a
-                                    href="/sampleLaptop-ba.xlsx"
-                                    v-if="props.site === 'BA'"
-                                    download="Format-Import-Data-Laptop.xlsx"
+                                    href="/sampleSW.xlsx"
+                                    download="Format-Import-Data-Switch.xlsx"
                                     target="_blank"
                                     type="button"
                                     class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -268,55 +227,31 @@ const showAddAlert = () => {
                     </form>
 
                     <div class="flex-none w-full max-w-full px-3">
-
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
-                            
                             <div
-                                class="flex items-center p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
-                                <div
-                                    class="h-11 relative flex flex-wrap items-stretch transition-all rounded-lg ease mr-4"
-                                >
-                                
-                                    <VueMultiselect
-                                        v-model="selectedOption"
-                                        :options="options"
-                                        :multiple="false"
-                                        :close-on-select="true"
-                                        placeholder="Select Department"
-                                        track-by="name"
-                                        label="name"
-                                        @update:model-value="onInput"
-                                    />
-                                </div>
                                 <Link
-                                    href="/inventory/laptop/create"
-                                    v-if="
-                                        selectedOption?.name 
-                                    "
-                                    method="post" :data="{ dept: selectedOption.name, roterx: 'index' }"
+                                    :href="route('switchMlp.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                 >
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
                                     New Data
                                 </Link>
-                                <button
-                                    @click="showAddAlert()"
-                                    v-if="
-                                        selectedOption == null
-                                    "
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </button>
                             </div>
+
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <PerfectScrollbar style="position: relative;">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
+                                            <div
+                                                v-if="$page.props.flash.message"
+                                                class="relative w-full p-4 mb-4 text-white border border-solid rounded-lg bg-gradient-to-tl from-emerald-500 to-teal-400 border-emerald-300"
+                                            >
+                                                {{ $page.props.flash.message }}
+                                            </div>
                                             <table
                                                 id="tableData"
                                                 class="table table-striped"
@@ -341,22 +276,7 @@ const showAddAlert = () => {
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Pengguna
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Brand
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Category Assets
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Spesifikasi
+                                                            Ip Address
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -366,27 +286,17 @@ const showAddAlert = () => {
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Aplikasi
+                                                            Device Model
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            License
+                                                            Device Type
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Ip Address
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Date Of Inventory
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Date Of Deploy
+                                                            Mac Address
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -396,23 +306,19 @@ const showAddAlert = () => {
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Status
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Condition
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
                                                             Note
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Documentation Asset
+                                                            Inspection remark
                                                         </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Device Status
+                                                        </th>
+
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -428,8 +334,8 @@ const showAddAlert = () => {
                                                 <tbody>
                                                     <tr
                                                         v-for="(
-                                                            laptops, index
-                                                        ) in laptop"
+                                                            switchs, index
+                                                        ) in switch"
                                                         :key="index"
                                                     >
                                                         <td
@@ -448,7 +354,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.laptop_code
+                                                                    switchs.inventory_number
                                                                 }}
                                                             </p>
                                                         </td>
@@ -459,7 +365,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.number_asset_ho
+                                                                    switchs.asset_ho_number
                                                                 }}
                                                             </p>
                                                         </td>
@@ -470,8 +376,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.pengguna
-                                                                        .username
+                                                                    switchs.ip_address
                                                                 }}
                                                             </p>
                                                         </td>
@@ -482,18 +387,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.laptop_name
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.assets_category
+                                                                    switchs.serial_number
                                                                 }}
                                                             </p>
                                                         </td>
@@ -504,9 +398,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    formatData(
-                                                                        laptops.spesifikasi
-                                                                    )
+                                                                    switchs.device_model
                                                                 }}
                                                             </span>
                                                         </td>
@@ -517,7 +409,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.serial_number
+                                                                    switchs.device_type
                                                                 }}
                                                             </span>
                                                         </td>
@@ -528,7 +420,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.aplikasi
+                                                                    switchs.mac_address
                                                                 }}
                                                             </span>
                                                         </td>
@@ -539,8 +431,17 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.license
+                                                                    switchs.location
                                                                 }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{ switchs.note }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -550,7 +451,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.ip_address
+                                                                    switchs.inspection_remark
                                                                 }}
                                                             </span>
                                                         </td>
@@ -558,108 +459,22 @@ const showAddAlert = () => {
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
-                                                                v-if="
-                                                                    laptops.date_of_inventory
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                                :class="{
+                                                                    'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        switchs.status ===
+                                                                        'READY_USED',
+                                                                    'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        switchs.status ===
+                                                                        'READY_STANDBY',
+                                                                    'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        switchs.status ===
+                                                                        'SCRAP',
+                                                                    'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        switchs.status ===
+                                                                        'BREAKDOWN',
+                                                                }"
                                                             >
-                                                                {{
-                                                                    formattedDate(
-                                                                        laptops.date_of_inventory
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                            <span
-                                                                v-else
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Edit untuk setting
-                                                                tanggal !
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                v-if="
-                                                                    laptops.date_of_deploy
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    formattedDate(
-                                                                        laptops.date_of_deploy
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                            <span
-                                                                v-else
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Edit untuk setting
-                                                                tanggal !
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.location
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{ laptops.status }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.condition
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.note ==
-                                                                    null
-                                                                        ? ""
-                                                                        : formatData(
-                                                                            laptops.note
-                                                                        )
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                <img
-                                                                    :src="
-                                                                        laptops.link_documentation_asset_image
-                                                                    "
-                                                                    alt="documentation image"
-                                                                    class="w-30 h-20 shadow-2xl rounded-xl"
-                                                                />
+                                                                {{ switchs.status }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -670,7 +485,7 @@ const showAddAlert = () => {
                                                             >
                                                                 {{
                                                                     formattedDate(
-                                                                        laptops.updated_at
+                                                                        switchs.updated_at
                                                                     )
                                                                 }}
                                                             </span>
@@ -681,7 +496,7 @@ const showAddAlert = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     detailData(
-                                                                        laptops.id
+                                                                        switchs.id
                                                                     )
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -692,7 +507,7 @@ const showAddAlert = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     editData(
-                                                                        laptops.id
+                                                                        switchs.id
                                                                     )
                                                                 "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -703,7 +518,7 @@ const showAddAlert = () => {
                                                             <NavLinkCustom
                                                                 @click="
                                                                     deleteData(
-                                                                        laptops.id
+                                                                        switchs.id
                                                                     )
                                                                 "
                                                                 v-if="props.role !== 'ict_technician'"

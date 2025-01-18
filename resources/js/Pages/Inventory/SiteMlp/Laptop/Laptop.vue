@@ -1,4 +1,3 @@
-<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <style>
 @import 'datatables.net-dt';
 
@@ -17,6 +16,8 @@
     margin-top: 1em;
 }
 </style>
+
+<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
@@ -91,7 +92,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("laptop.delete", { id: id }), {
+            form.delete(route("laptopMlp.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -117,13 +118,13 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("laptop.edit", { id: id }));
+            form.get(route("laptopMlp.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("laptop.detail", { id: id }));
+    form.get(route("laptopMlp.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -153,7 +154,7 @@ const submitCsv = () => {
         window.location.reload();
     }
 
-    formx.post(route("laptop.import"), {
+    formx.post(route("laptopMlp.import"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -243,18 +244,6 @@ const showAddAlert = () => {
                             <div class="max-w-full px-3">
                                 <a
                                     href="/sampleLaptop.xlsx"
-                                    v-if="props.site === ''"
-                                    download="Format-Import-Data-Laptop.xlsx"
-                                    target="_blank"
-                                    type="button"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                >
-                                    <i class="fas fa-download"></i>
-                                    Format Excel Data
-                                </a>
-                                <a
-                                    href="/sampleLaptop-ba.xlsx"
-                                    v-if="props.site === 'BA'"
                                     download="Format-Import-Data-Laptop.xlsx"
                                     target="_blank"
                                     type="button"
@@ -292,7 +281,7 @@ const showAddAlert = () => {
                                     />
                                 </div>
                                 <Link
-                                    href="/inventory/laptop/create"
+                                    :href="route('laptopMlp.create')"
                                     v-if="
                                         selectedOption?.name 
                                     "
