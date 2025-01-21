@@ -50,7 +50,7 @@ const mount = onMounted(() => {
                                 </h6>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('inspeksiKomputerMip.page')"
+                                    :href="route('inspeksiKomputerVale.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>
