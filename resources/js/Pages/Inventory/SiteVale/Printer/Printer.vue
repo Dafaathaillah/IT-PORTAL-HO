@@ -29,12 +29,12 @@ import { onMounted } from "vue";
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
-const subMenu = ref("Inspeksi Komputer Pages");
-const mainMenu = ref("Inspeksi Komputer Data");
+const subMenu = ref("Printer Pages");
+const mainMenu = ref("Printer Data");
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
-    return moment(date).format("MMMM Do, YYYY HH:mm"); // Sesuaikan format sesuai kebutuhan
+    return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
 }
 
 const mount = onMounted(() => {
@@ -61,18 +61,47 @@ const mount = onMounted(() => {
 });
 
 const props = defineProps({
-    computer: {
+    printer: {
         type: Array,
+    },
+    site: {
+        type: Object,
+    },
+    role: {
+        type: Object,
     },
 });
 
 const form = useForm({});
 
-const editData = (id) => {
-    form.get(route("inspeksiKomputerMip.inspection", { id: id }));
+const deleteData = (id) => {
+    // Call SweetAlert for confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Menghapus data ini akan berdampak pada table yang berelasi dengan data ini!, data pada table yang berelasi akan ikut terhapus!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Perform the delete operation, e.g., by making a request to the server
+            form.delete(route("printerVale.delete", { id: id }), {
+                onSuccess: () => {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                    });
+                },
+            });
+        }
+    });
 };
 
-const editDataInspeksi = (id) => {
+const editData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
@@ -84,13 +113,13 @@ const editDataInspeksi = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("inspeksiKomputerMip.edit", { id: id }));
+            form.get(route("printerVale.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("inspeksiKomputerMip.detail", { id: id }));
+    form.get(route("printerVale.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -99,73 +128,132 @@ const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
-const getBadgeClassStatusInspeksi = (status) => {
-    return status === "Y"
-        ? "bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"
-        : "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-};
+const submitCsv = () => {
+    let timerInterval;
+    Swal.fire({
+        title: "Mengimport Data...",
+        text: "Mohon tunggu sebentar...",
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
 
-const getBadgeTextStatusInspeksi = (status) => {
-    return status === "Y" ? "INSPECTED" : "NOT INSPECTED YET";
-};
+    const formx = useForm({
+        file: file.value,
+    });
 
-const getBadgeClassStatusFindings = (temuan) => {
-    if (temuan === "" || temuan === null) {
-        return "bg-gradient-to-tl from-cyan-500 to-sky-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    }else {
-        return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"; // Default untuk status yang tidak dikenal
+    function reloadPage() {
+        window.location.reload();
     }
-};
 
-const getBadgeTextStatusFindings = (temuan) => {
-    if (temuan === "" || temuan === null) {
-        return "Tidak ada temuan";
-    }else {
-        return temuan; // Default teks untuk status yang tidak dikenal
-    }
-};
+    formx.post(route("printerVale.import"), {
+        onSuccess: () => {
+            // Show SweetAlert2 success notification
+            Swal.fire({
+                title: "Success!",
+                text: "Data has been successfully import!",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
 
-const getBadgeClassStatusInventory = (status) => {
-    if (status === "READY_USED") {
-        return "bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    } else if (status === "READY_STANDBY") {
-        return "bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    } else if (status === "SCRAP") {
-        return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    } else if (status === "BREAKDOWN") {
-        return "bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    }
-};
-
-const getBadgeTextStatusInventory = (status) => {
-    if (status === "READY_USED") {
-        return "READY_USED";
-    } else if (status === "READY_STANDBY") {
-        return "READY_STANDBY";
-    } else if (status === "SCRAP") {
-        return "SCRAP";
-    } else if (status === "BREAKDOWN") {
-        return "BREAKDOWN";
-    }
+            setTimeout(function () {
+                reloadPage();
+            }, 2000);
+        },
+        onError: () => {
+            Swal.fire({
+                title: "error!",
+                text: "Data not created!",
+                icon: "waring",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+        },
+    });
 };
 </script>
 
 <template>
-    <Head title="Inspeksi Komputer" />
+    <Head title="Inv Printer" />
 
     <AuthenticatedLayout
-            v-model:pages="pages"
+        v-model:pages="pages"
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
-        >
-
+    >
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
+                    <form
+                        @submit.prevent="submitCsv"
+                        enctype="multipart/form-data"
+                    >
+                        <div class="flex flex-wrap">
+                            <div class="max-w-full px-3">
+                                <div class="mb-4">
+                                    <input
+                                        type="file"
+                                        ref="fileInput"
+                                        enctype="multipart/form-data"
+                                        class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                        @change="handleFileUpload"
+                                    />
+                                </div>
+                            </div>
+                            <div class="max-w-full pl-3">
+                                <button
+                                    type="submit"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-file-import"></i>
+                                    Import
+                                </button>
+                            </div>
+                            <div class="max-w-full px-3">
+                                <a
+                                    href="/samplePrinter.xlsx"
+                                    v-if="props.site === ''"
+                                    download="Format-Import-Data-printer.xlsx"
+                                    target="_blank"
+                                    type="button"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Format Excel Data
+                                </a>
+                                <a
+                                    href="/samplePrinter.xlsx"
+                                    v-if="props.site === 'BA'"
+                                    download="Format-Import-Data-printer.xlsx"
+                                    target="_blank"
+                                    type="button"
+                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Format Excel Data
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
+                            <div
+                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+                            >
+                                <Link
+                                    :href="route('printerVale.create')"
+                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
+                                >
+                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
+                                    New Data
+                                </Link>
+                            </div>
+
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <PerfectScrollbar style="position: relative;">
                                     <div class="p-0">
@@ -192,69 +280,62 @@ const getBadgeTextStatusInventory = (status) => {
                                                         >
                                                             Inventory Number
                                                         </th>
-                                                        
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            User
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Department
-                                                        </th>
-                                                        
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Temuan
+                                                            Asset Ho Number
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Inspection date
+                                                            Printer Brand
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Inspection Status
+                                                            Printer Type
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Komp Status
+                                                            Location
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Komp Condition
+                                                            Note
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Remark
+                                                            Inspection remark
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Approval Status
+                                                            Device Status
+                                                        </th>
+
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Last Edit At
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Action
                                                         </th>
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr
                                                         v-for="(
-                                                            computers, index
-                                                        ) in computer"
+                                                            printers, index
+                                                        ) in printer"
                                                         :key="index"
                                                     >
-                                                    <td
+                                                        <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
@@ -270,19 +351,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.computer.computer_code
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    computers.computer.pengguna.username
+                                                                    printers.printer_code
                                                                 }}
                                                             </p>
                                                         </td>
@@ -292,76 +361,19 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-
                                                                 {{
-                                                                    computers.computer.pengguna.department
+                                                                    printers.asset_ho_number
                                                                 }}
-                                                                
                                                             </p>
                                                         </td>
-                                                        
-                                                        
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                :class="
-                                                                    getBadgeClassStatusFindings(
-                                                                        computers.findings
-                                                                    )
-                                                                "
-                                                            >
-                                                                {{
-                                                                    getBadgeTextStatusFindings(
-                                                                        computers.findings
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                        </td>
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ 
-                                                                    computers.updated_at == null ? '-' : formattedDate(
-                                                                        computers.updated_at
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                :class="
-                                                                    getBadgeClassStatusInspeksi(
-                                                                        computers.inspection_status
-                                                                    )
-                                                                "
-                                                            >
                                                                 {{
-                                                                    getBadgeTextStatusInspeksi(
-                                                                        computers.inspection_status
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                :class="
-                                                                    getBadgeClassStatusInventory(
-                                                                        computers.inventory_status
-                                                                    )
-                                                                "
-                                                            >
-                                                                {{
-                                                                    getBadgeTextStatusInventory(
-                                                                        computers.inventory_status
-                                                                    )
+                                                                    printers.printer_brand
                                                                 }}
                                                             </span>
                                                         </td>
@@ -372,7 +384,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.conditions
+                                                                    printers.printer_type
                                                                 }}
                                                             </span>
                                                         </td>
@@ -383,60 +395,103 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.remarks
+                                                                    printers.location
                                                                 }}
                                                             </span>
                                                         </td>
-                                                        
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ computers.status_approval }}
+                                                                {{ printers.note }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    printers.inspection_remark
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                :class="{
+                                                                    'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        printers.status ===
+                                                                        'READY_USED',
+                                                                    'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        printers.status ===
+                                                                        'READY_STANDBY',
+                                                                    'bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        printers.status ===
+                                                                        'SCRAP',
+                                                                    'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        printers.status ===
+                                                                        'BREAKDOWN',
+                                                                }"
+                                                            >
+                                                                {{
+                                                                    printers.status
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    formattedDate(
+                                                                        printers.updated_at
+                                                                    )
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'N'"
-                                                                @click="
-                                                                    editData(
-                                                                        computers.id
-                                                                    )
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Do Inspection
-                                                            </NavLinkCustom>
-
-                                                            <NavLinkCustom
-                                                                @click="
-                                                                    editDataInspeksi(
-                                                                        computers.id
-                                                                    )
-                                                                "
-                                                                v-if="computers.inspection_status === 'Y'"
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Edit
-                                                            </NavLinkCustom>
-                                                            
-
-                                                            <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'Y'"
                                                                 @click="
                                                                     detailData(
-                                                                        computers.id
+                                                                        printers.id
                                                                     )
                                                                 "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Detail
                                                             </NavLinkCustom>
 
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    editData(
+                                                                        printers.id
+                                                                    )
+                                                                "
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Edit
+                                                            </NavLinkCustom>
+
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    deleteData(
+                                                                        printers.id
+                                                                    )
+                                                                "
+                                                                v-if="props.role !== 'ict_technician'"
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Delete
+                                                            </NavLinkCustom>
                                                         </td>
                                                     </tr>
                                                 </tbody>
