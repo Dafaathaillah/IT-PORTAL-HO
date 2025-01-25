@@ -145,7 +145,7 @@ const toggleLevel1Ho = () => {
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
-        level1OpenVale.value = false;
+    level1OpenVale.value = false;
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
@@ -397,7 +397,7 @@ const toggleLevel1Ba = () => {
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
-        level1OpenVale.value = false;
+    level1OpenVale.value = false;
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
@@ -658,7 +658,7 @@ const toggleLevel1Mifa = () => {
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
-        level1OpenVale.value = false;
+    level1OpenVale.value = false;
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
@@ -1180,7 +1180,7 @@ const toggleLevel1WARA = () => {
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
-        level1OpenVale.value = false;
+    level1OpenVale.value = false;
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
@@ -1441,7 +1441,7 @@ const toggleLevel1Bib = () => {
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
-        level1OpenVale.value = false;
+    level1OpenVale.value = false;
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
@@ -1702,7 +1702,7 @@ const toggleLevel1Ami = () => {
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
-        level1OpenVale.value = false;
+    level1OpenVale.value = false;
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
@@ -1962,7 +1962,7 @@ const toggleLevel1Pik = () => {
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
-        level1OpenVale.value = false;
+    level1OpenVale.value = false;
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
@@ -2223,7 +2223,7 @@ const toggleLevel1Ipt = () => {
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
-        level1OpenVale.value = false;
+    level1OpenVale.value = false;
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
@@ -3009,7 +3009,7 @@ const toggleLevel1Vale = () => {
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
-        level1OpenMip.value = false;
+    level1OpenMip.value = false;
     level2OpenMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
@@ -3138,6 +3138,540 @@ const toggleLevel3ScannerVale = () => {
         level3CctvOpenVale.value = false;
     }
     level3ScannerOpenVale.value = !level3ScannerOpenVale.value;
+};
+
+// toggle SBS
+const level1OpenSbs = ref(false);
+const level2OpenSbs = ref(false);
+const level2OpenAduanSbs = ref(false);
+const level2OpenSettingSbs = ref(false);
+const level2OpenInspeksiSbs = ref(false);
+const level3OpenSbs = ref(false);
+const level3KomputerOpenSbs = ref(false);
+const level3PrinterOpenSbs = ref(false);
+const level3ScannerOpenSbs = ref(false);
+const level3CctvOpenSbs = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenSbs.value = localStorage.getItem("level1OpenSbs") === "true";
+    level2OpenSbs.value = localStorage.getItem("level2OpenSbs") === "true";
+    level2OpenAduanSbs.value =
+        localStorage.getItem("level2OpenAduanSbs") === "true";
+    level2OpenSettingSbs.value =
+        localStorage.getItem("level2OpenSettingSbs") === "true";
+    level2OpenInspeksiSbs.value =
+        localStorage.getItem("level2OpenInspeksiSbs") === "true";
+    level3OpenSbs.value = localStorage.getItem("level3OpenSbs") === "true";
+    level3PrinterOpenSbs.value =
+        localStorage.getItem("level3PrinterOpenSbs") === "true";
+    level3ScannerOpenSbs.value =
+        localStorage.getItem("level3ScannerOpenSbs") === "true";
+    level3KomputerOpenSbs.value =
+        localStorage.getItem("level3KomputerOpenSbs") === "true";
+    level3CctvOpenSbs.value =
+        localStorage.getItem("level3CctvOpenSbs") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenSbs,
+        level2OpenSbs,
+        level2OpenSettingSbs,
+        level2OpenInspeksiSbs,
+        level2OpenAduanSbs,
+        level3OpenSbs,
+        level3PrinterOpenSbs,
+        level3ScannerOpenSbs,
+        level3KomputerOpenSbs,
+        level3CctvOpenSbs,
+    ],
+    () => {
+        localStorage.setItem("level1OpenSbs", level1OpenSbs.value);
+        localStorage.setItem("level2OpenSbs", level2OpenSbs.value);
+        localStorage.setItem("level2OpenAduanSbs", level2OpenAduanSbs.value);
+        localStorage.setItem(
+            "level2OpenSettingSbs",
+            level2OpenSettingSbs.value
+        );
+        localStorage.setItem(
+            "level2OpenInspeksiSbs",
+            level2OpenInspeksiSbs.value
+        );
+        localStorage.setItem("level3OpenSbs", level3OpenSbs.value);
+        localStorage.setItem(
+            "level3KomputerOpenSbs",
+            level3KomputerOpenSbs.value
+        );
+        localStorage.setItem(
+            "level3PrinterOpenSbs",
+            level3PrinterOpenSbs.value
+        );
+        localStorage.setItem(
+            "level3ScannerOpenSbs",
+            level3ScannerOpenSbs.value
+        );
+        localStorage.setItem("level3CctvOpenSbs", level3CctvOpenSbs.value);
+    }
+);
+
+// Toggle functions for each level
+const toggleLevel1Sbs = () => {
+    // console.log('TAI');
+    level1OpenSbs.value = !level1OpenSbs.value;
+
+    level1OpenHo.value = false;
+    level2OpenHo.value = false;
+    level2OpenSettingHo.value = false;
+    level2OpenInspeksiHo.value = false;
+
+    level1OpenBa.value = false;
+    level2OpenBa.value = false;
+    level2OpenSettingBa.value = false;
+    level2OpenInspeksiBa.value = false;
+
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+
+    level1OpenMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
+    level1OpenAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
+    level1OpenIpt.value = false;
+    level2OpenIpt.value = false;
+    level2OpenSettingIpt.value = false;
+    level2OpenInspeksiIpt.value = false;
+
+    level1OpenMlp.value = false;
+    level2OpenMlp.value = false;
+    level2OpenSettingMlp.value = false;
+    level2OpenInspeksiMlp.value = false;
+
+    level1OpenMip.value = false;
+    level2OpenMip.value = false;
+    level2OpenSettingMip.value = false;
+    level2OpenInspeksiMip.value = false;
+
+    level1OpenVale.value = false;
+    level2OpenVale.value = false;
+    level2OpenSettingVale.value = false;
+    level2OpenInspeksiVale.value = false;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenSbs.value) {
+        level2OpenSbs.value = false;
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+};
+
+const toggleLevel2Sbs = () => {
+    console.log(level1OpenSbs.value);
+    if (!level2OpenSbs.value) {
+        level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingSbs.value = false;
+        level2OpenInspeksiSbs.value = false;
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level2OpenSbs.value = !level2OpenSbs.value;
+};
+
+const toggleLevel2AduanSbs = () => {
+    console.log(level1OpenSbs.value);
+    if (!level2OpenAduanSbs.value) {
+        level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level2OpenAduanSbs.value = !level2OpenAduanSbs.value;
+};
+
+const toggleLevel2SettingSbs = () => {
+    console.log(level1OpenSbs.value);
+    if (!level2OpenSettingSbs.value) {
+        level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiSbs.value = false;
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level2OpenSettingSbs.value = !level2OpenSettingSbs.value;
+};
+
+const toggleLevel2InspeksiSbs = () => {
+    console.log(level1OpenSbs.value);
+    if (!level2OpenInspeksiSbs.value) {
+        level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingSbs.value = false;
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level2OpenInspeksiSbs.value = !level2OpenInspeksiSbs.value;
+};
+
+const toggleLevel3LaptopSbs = () => {
+    if (!level3OpenSbs.value) {
+        level2OpenSbs.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level3OpenSbs.value = !level3OpenSbs.value;
+};
+
+const toggleLevel3KomputerSbs = () => {
+    if (!level3KomputerOpenSbs.value) {
+        level2OpenSbs.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level3KomputerOpenSbs.value = !level3KomputerOpenSbs.value;
+};
+
+const toggleLevel3CctvSbs = () => {
+    if (!level3CctvOpenSbs.value) {
+        level2OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+    }
+    level3CctvOpenSbs.value = !level3CctvOpenSbs.value;
+};
+
+const toggleLevel3PrinterSbs = () => {
+    if (!level3PrinterOpenSbs.value) {
+        level2OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level3PrinterOpenSbs.value = !level3PrinterOpenSbs.value;
+};
+
+const toggleLevel3ScannerSbs = () => {
+    if (!level3ScannerOpenSbs.value) {
+        level2OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level3ScannerOpenSbs.value = !level3ScannerOpenSbs.value;
+};
+
+// toggle SKS
+const level1OpenSks = ref(false);
+const level2OpenSks = ref(false);
+const level2OpenAduanSks = ref(false);
+const level2OpenSettingSks = ref(false);
+const level2OpenInspeksiSks = ref(false);
+const level3OpenSks = ref(false);
+const level3KomputerOpenSks = ref(false);
+const level3PrinterOpenSks = ref(false);
+const level3ScannerOpenSks = ref(false);
+const level3CctvOpenSks = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenSks.value = localStorage.getItem("level1OpenSks") === "true";
+    level2OpenSks.value = localStorage.getItem("level2OpenSks") === "true";
+    level2OpenAduanSks.value =
+        localStorage.getItem("level2OpenAduanSks") === "true";
+    level2OpenSettingSks.value =
+        localStorage.getItem("level2OpenSettingSks") === "true";
+    level2OpenInspeksiSks.value =
+        localStorage.getItem("level2OpenInspeksiSks") === "true";
+    level3OpenSks.value = localStorage.getItem("level3OpenSks") === "true";
+    level3PrinterOpenSks.value =
+        localStorage.getItem("level3PrinterOpenSks") === "true";
+    level3ScannerOpenSks.value =
+        localStorage.getItem("level3ScannerOpenSks") === "true";
+    level3KomputerOpenSks.value =
+        localStorage.getItem("level3KomputerOpenSks") === "true";
+    level3CctvOpenSks.value =
+        localStorage.getItem("level3CctvOpenSks") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenSks,
+        level2OpenSks,
+        level2OpenSettingSks,
+        level2OpenInspeksiSks,
+        level2OpenAduanSks,
+        level3OpenSks,
+        level3PrinterOpenSks,
+        level3ScannerOpenSks,
+        level3KomputerOpenSks,
+        level3CctvOpenSks,
+    ],
+    () => {
+        localStorage.setItem("level1OpenSks", level1OpenSks.value);
+        localStorage.setItem("level2OpenSks", level2OpenSks.value);
+        localStorage.setItem("level2OpenAduanSks", level2OpenAduanSks.value);
+        localStorage.setItem(
+            "level2OpenSettingSks",
+            level2OpenSettingSks.value
+        );
+        localStorage.setItem(
+            "level2OpenInspeksiSks",
+            level2OpenInspeksiSks.value
+        );
+        localStorage.setItem("level3OpenSks", level3OpenSks.value);
+        localStorage.setItem(
+            "level3KomputerOpenSks",
+            level3KomputerOpenSks.value
+        );
+        localStorage.setItem(
+            "level3PrinterOpenSks",
+            level3PrinterOpenSks.value
+        );
+        localStorage.setItem(
+            "level3ScannerOpenSks",
+            level3ScannerOpenSks.value
+        );
+        localStorage.setItem("level3CctvOpenSks", level3CctvOpenSks.value);
+    }
+);
+
+// Toggle functions for each level
+const toggleLevel1Sks = () => {
+    // console.log('TAI');
+    level1OpenSks.value = !level1OpenSks.value;
+
+    level1OpenHo.value = false;
+    level2OpenHo.value = false;
+    level2OpenSettingHo.value = false;
+    level2OpenInspeksiHo.value = false;
+
+    level1OpenBa.value = false;
+    level2OpenBa.value = false;
+    level2OpenSettingBa.value = false;
+    level2OpenInspeksiBa.value = false;
+
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+
+    level1OpenMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
+    level1OpenAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
+    level1OpenIpt.value = false;
+    level2OpenIpt.value = false;
+    level2OpenSettingIpt.value = false;
+    level2OpenInspeksiIpt.value = false;
+
+    level1OpenMlp.value = false;
+    level2OpenMlp.value = false;
+    level2OpenSettingMlp.value = false;
+    level2OpenInspeksiMlp.value = false;
+
+    level1OpenMip.value = false;
+    level2OpenMip.value = false;
+    level2OpenSettingMip.value = false;
+    level2OpenInspeksiMip.value = false;
+
+    level1OpenVale.value = false;
+    level2OpenVale.value = false;
+    level2OpenSettingVale.value = false;
+    level2OpenInspeksiVale.value = false;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenSks.value) {
+        level2OpenSks.value = false;
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+};
+
+const toggleLevel2Sks = () => {
+    console.log(level1OpenSks.value);
+    if (!level2OpenSks.value) {
+        level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingSks.value = false;
+        level2OpenInspeksiSks.value = false;
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level2OpenSks.value = !level2OpenSks.value;
+};
+
+const toggleLevel2AduanSks = () => {
+    console.log(level1OpenSks.value);
+    if (!level2OpenAduanSks.value) {
+        level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level2OpenAduanSks.value = !level2OpenAduanSks.value;
+};
+
+const toggleLevel2SettingSks = () => {
+    console.log(level1OpenSks.value);
+    if (!level2OpenSettingSks.value) {
+        level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiSks.value = false;
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level2OpenSettingSks.value = !level2OpenSettingSks.value;
+};
+
+const toggleLevel2InspeksiSks = () => {
+    console.log(level1OpenSks.value);
+    if (!level2OpenInspeksiSks.value) {
+        level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingSks.value = false;
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level2OpenInspeksiSks.value = !level2OpenInspeksiSks.value;
+};
+
+const toggleLevel3LaptopSks = () => {
+    if (!level3OpenSks.value) {
+        level2OpenSks.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level3OpenSks.value = !level3OpenSks.value;
+};
+
+const toggleLevel3KomputerSks = () => {
+    if (!level3KomputerOpenSks.value) {
+        level2OpenSks.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level3KomputerOpenSks.value = !level3KomputerOpenSks.value;
+};
+
+const toggleLevel3CctvSks = () => {
+    if (!level3CctvOpenSks.value) {
+        level2OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+    }
+    level3CctvOpenSks.value = !level3CctvOpenSks.value;
+};
+
+const toggleLevel3PrinterSks = () => {
+    if (!level3PrinterOpenSks.value) {
+        level2OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level3PrinterOpenSks.value = !level3PrinterOpenSks.value;
+};
+
+const toggleLevel3ScannerSks = () => {
+    if (!level3ScannerOpenSks.value) {
+        level2OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level3ScannerOpenSks.value = !level3ScannerOpenSks.value;
 };
 </script>
 
@@ -9956,7 +10490,7 @@ const toggleLevel3ScannerVale = () => {
                     </li>
                     <!-- end MIP -->
 
-<hr
+                    <hr
                         v-if="
                             $page.props.auth.user.site == 'VALE' ||
                             $page.props.auth.user.role == 'ict_developer' ||
@@ -9965,7 +10499,7 @@ const toggleLevel3ScannerVale = () => {
                         class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                     />
 
-                                        <!-- start VALE -->
+                    <!-- start VALE -->
                     <li
                         v-if="
                             $page.props.auth.user.site == 'VALE' ||
@@ -10114,7 +10648,9 @@ const toggleLevel3ScannerVale = () => {
                                     <NavLink
                                         :href="route('wirellessVale.page')"
                                         :active="
-                                            route().current('wirellessVale.page')
+                                            route().current(
+                                                'wirellessVale.page'
+                                            )
                                         "
                                     >
                                         <div
@@ -10565,6 +11101,1228 @@ const toggleLevel3ScannerVale = () => {
                         </ul>
                     </li>
                     <!-- end VALE -->
+
+                    <hr
+                        v-if="
+                            $page.props.auth.user.site == 'SBS' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                        class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                    />
+
+                    <!-- start SBS -->
+                    <li
+                        v-if="
+                            $page.props.auth.user.site == 'SBS' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
+                        <div
+                            @click="toggleLevel1Sbs"
+                            style="cursor: pointer"
+                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        >
+                            <div
+                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                ></i>
+                            </div>
+                            <span
+                                v-if="$page.props.auth.user.site == 'HO'"
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >Site SBS</span
+                            >
+                            <span
+                                v-if="
+                                    $page.props.auth.user.site == 'SBS' ||
+                                    $page.props.auth.user.role ==
+                                        'ict_developer'
+                                "
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >ICT - PPA SBS</span
+                            >
+                            <i
+                                v-if="!level1OpenSbs"
+                                class="ms-3 fas fa-angle-right"
+                            ></i>
+                            <i v-else class="ms-3 fas fa-angle-down"></i>
+                        </div>
+                        <ul v-if="level1OpenSbs">
+                            <li>
+                                <NavLink
+                                    :href="route('dashboardSbs.page')"
+                                    :active="
+                                        route().current('dashboardSbs.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
+                                    @click="toggleLevel2AduanSbs"
+                                    :href="route('aduanSbs.page')"
+                                    :active="route().current('aduanSbs.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Aduan</span
+                                    >
+                                </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2Sbs"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inventory</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenSbs"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenSbs">
+                                    <NavLink
+                                        :href="route('accessPointSbs.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointSbs.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Access Point</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('switchSbs.page')"
+                                        :active="
+                                            route().current('switchSbs.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Switch</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('wirellessSbs.page')"
+                                        :active="
+                                            route().current('wirellessSbs.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Wirelless</span
+                                        >
+                                    </NavLink>
+                                    <div
+                                        @click="toggleLevel3LaptopSbs"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Laptop</span
+                                        >
+                                        <i
+                                            v-if="!level3OpenSbs"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3OpenSbs">
+                                        <NavLink
+                                            :href="route('laptopSbs.page')"
+                                            :active="
+                                                route().current(
+                                                    'laptopSbs.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Laptop Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3KomputerSbs"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Komputer</span
+                                        >
+                                        <i
+                                            v-if="!level3KomputerOpenSbs"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3KomputerOpenSbs">
+                                        <NavLink
+                                            :href="route('komputerSbs.page')"
+                                            :active="
+                                                route().current(
+                                                    'komputerSbs.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Komputer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3PrinterSbs"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Printer</span
+                                        >
+                                        <i
+                                            v-if="!level3PrinterOpenSbs"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3PrinterOpenSbs">
+                                        <NavLink
+                                            :href="route('printerSbs.page')"
+                                            :active="
+                                                route().current(
+                                                    'printerSbs.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Printer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3ScannerSbs"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Scanner</span
+                                        >
+                                        <i
+                                            v-if="!level3ScannerOpenSbs"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3ScannerOpenSbs">
+                                        <NavLink
+                                            :href="route('scannerSbs.page')"
+                                            :active="
+                                                route().current(
+                                                    'scannerSbs.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Scanner</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3CctvSbs"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Cctv</span
+                                        >
+                                        <i
+                                            v-if="!level3CctvOpenSbs"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3CctvOpenSbs">
+                                        <NavLink
+                                            :href="route('cctvSbs.page')"
+                                            :active="
+                                                route().current('cctvSbs.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Cctv</span
+                                            >
+                                        </NavLink>
+                                    </li>
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2InspeksiSbs"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenInspeksiSbs"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenInspeksiSbs">
+                                    <NavLink
+                                        :href="route('inspeksiLaptopSbs.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiLaptopSbs.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiKomputerSbs.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiKomputerSbs.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+                                </ul>
+
+                                <!-- <div
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_developer'
+                                    "
+                                    @click="toggleLevel2SettingBib"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenSettingBib"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenSettingBib">
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('pengguna.page')"
+                                        :active="
+                                            route().current('pengguna.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Pengguna</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('department.page')"
+                                        :active="
+                                            route().current('department.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Department</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('akses.page')"
+                                        :active="route().current('akses.page')"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pengajuan Akses Role</span
+                                        >
+                                    </NavLink>
+                                </ul> -->
+
+                                <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_group_leader'
+                                    "
+                                    :href="route('aduan-ho.page')"
+                                    :active="route().current('aduan-ho.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >
+                                        Pengaduan HO</span
+                                    >
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end SBS -->
+
+                             <hr
+                        v-if="
+                            $page.props.auth.user.site == 'SKS' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                        class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                    />
+                    
+                       <!-- start SKS -->
+                    <li
+                        v-if="
+                            $page.props.auth.user.site == 'SKS' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
+                        <div
+                            @click="toggleLevel1Sks"
+                            style="cursor: pointer"
+                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        >
+                            <div
+                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                ></i>
+                            </div>
+                            <span
+                                v-if="$page.props.auth.user.site == 'HO'"
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >Site SKS</span
+                            >
+                            <span
+                                v-if="
+                                    $page.props.auth.user.site == 'SKS' ||
+                                    $page.props.auth.user.role ==
+                                        'ict_developer'
+                                "
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >ICT - PPA SKS</span
+                            >
+                            <i
+                                v-if="!level1OpenSks"
+                                class="ms-3 fas fa-angle-right"
+                            ></i>
+                            <i v-else class="ms-3 fas fa-angle-down"></i>
+                        </div>
+                        <ul v-if="level1OpenSks">
+                            <li>
+                                <NavLink
+                                    :href="route('dashboardSks.page')"
+                                    :active="
+                                        route().current('dashboardSks.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
+                                    @click="toggleLevel2AduanSks"
+                                    :href="route('aduanSks.page')"
+                                    :active="route().current('aduanSks.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Aduan</span
+                                    >
+                                </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2Sks"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inventory</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenSks"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenSks">
+                                    <NavLink
+                                        :href="route('accessPointSks.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointSks.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Access Point</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('switchSks.page')"
+                                        :active="
+                                            route().current('switchSks.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Switch</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('wirellessSks.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessSks.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Wirelless</span
+                                        >
+                                    </NavLink>
+                                    <div
+                                        @click="toggleLevel3LaptopSks"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Laptop</span
+                                        >
+                                        <i
+                                            v-if="!level3OpenSks"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3OpenSks">
+                                        <NavLink
+                                            :href="route('laptopSks.page')"
+                                            :active="
+                                                route().current(
+                                                    'laptopSks.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Laptop Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3KomputerSks"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Komputer</span
+                                        >
+                                        <i
+                                            v-if="!level3KomputerOpenSks"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3KomputerOpenSks">
+                                        <NavLink
+                                            :href="route('komputerSks.page')"
+                                            :active="
+                                                route().current(
+                                                    'komputerSks.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Komputer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3PrinterSks"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Printer</span
+                                        >
+                                        <i
+                                            v-if="!level3PrinterOpenSks"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3PrinterOpenSks">
+                                        <NavLink
+                                            :href="route('printerSks.page')"
+                                            :active="
+                                                route().current(
+                                                    'printerSks.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Printer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3ScannerSks"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Scanner</span
+                                        >
+                                        <i
+                                            v-if="!level3ScannerOpenSks"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3ScannerOpenSks">
+                                        <NavLink
+                                            :href="route('scannerSks.page')"
+                                            :active="
+                                                route().current(
+                                                    'scannerSks.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Scanner</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3CctvSks"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Cctv</span
+                                        >
+                                        <i
+                                            v-if="!level3CctvOpenSks"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3CctvOpenSks">
+                                        <NavLink
+                                            :href="route('cctvSks.page')"
+                                            :active="
+                                                route().current('cctvSks.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Cctv</span
+                                            >
+                                        </NavLink>
+                                    </li>
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2InspeksiSks"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenInspeksiSks"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenInspeksiSks">
+                                    <NavLink
+                                        :href="route('inspeksiLaptopSks.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiLaptopSks.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiKomputerSks.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiKomputerSks.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+                                </ul>
+
+                                <!-- <div
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_developer'
+                                    "
+                                    @click="toggleLevel2SettingBib"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenSettingBib"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenSettingBib">
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('pengguna.page')"
+                                        :active="
+                                            route().current('pengguna.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Pengguna</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('department.page')"
+                                        :active="
+                                            route().current('department.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Department</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('akses.page')"
+                                        :active="route().current('akses.page')"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pengajuan Akses Role</span
+                                        >
+                                    </NavLink>
+                                </ul> -->
+
+                                <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_group_leader'
+                                    "
+                                    :href="route('aduan-ho.page')"
+                                    :active="route().current('aduan-ho.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >
+                                        Pengaduan HO</span
+                                    >
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end SKS -->
                 </ul>
             </div>
         </PerfectScrollbar>
