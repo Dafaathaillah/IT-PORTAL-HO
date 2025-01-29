@@ -15,6 +15,7 @@ use App\Http\Controllers\AduanMipController;
 use App\Http\Controllers\AduanMlpController;
 use App\Http\Controllers\AduanPikController;
 use App\Http\Controllers\AduanSbsController;
+use App\Http\Controllers\AduanSksController;
 use App\Http\Controllers\AduanValeController;
 use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\DashboardMipController;
 use App\Http\Controllers\DashboardMlpController;
 use App\Http\Controllers\DashboardPikController;
 use App\Http\Controllers\DashboardSbsController;
+use App\Http\Controllers\DashboardSksController;
 use App\Http\Controllers\DashboardValeController;
 use App\Http\Controllers\DashboardWaraController;
 use App\Http\Controllers\DepartmentBaController;
@@ -48,6 +50,7 @@ use App\Http\Controllers\InspeksiComputerMipController;
 use App\Http\Controllers\InspeksiComputerMlpController;
 use App\Http\Controllers\InspeksiComputerPikController;
 use App\Http\Controllers\InspeksiComputerSbsController;
+use App\Http\Controllers\InspeksiComputerSksController;
 use App\Http\Controllers\InspeksiComputerValeController;
 use App\Http\Controllers\InspeksiLaptopAmiController;
 use App\Http\Controllers\InspeksiLaptopBaController;
@@ -61,6 +64,7 @@ use App\Http\Controllers\InspeksiLaptopMipController;
 use App\Http\Controllers\InspeksiLaptopMlpController;
 use App\Http\Controllers\InspeksiLaptopPikController;
 use App\Http\Controllers\InspeksiLaptopSbsController;
+use App\Http\Controllers\InspeksiLaptopSksController;
 use App\Http\Controllers\InspeksiLaptopValeController;
 use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
@@ -74,6 +78,7 @@ use App\Http\Controllers\InvApMipController;
 use App\Http\Controllers\InvApMlpController;
 use App\Http\Controllers\InvApPikController;
 use App\Http\Controllers\InvApSbsController;
+use App\Http\Controllers\InvApSksController;
 use App\Http\Controllers\InvApValeController;
 use App\Http\Controllers\InvCctvAmiController;
 use App\Http\Controllers\InvCctvBaController;
@@ -87,6 +92,7 @@ use App\Http\Controllers\InvCctvMipController;
 use App\Http\Controllers\InvCctvMlpController;
 use App\Http\Controllers\InvCctvPikController;
 use App\Http\Controllers\InvCctvSbsController;
+use App\Http\Controllers\InvCctvSksController;
 use App\Http\Controllers\InvCctvValeController;
 use App\Http\Controllers\InvComputerAmiController;
 use App\Http\Controllers\InvComputerBaController;
@@ -100,6 +106,7 @@ use App\Http\Controllers\InvComputerMipController;
 use App\Http\Controllers\InvComputerMlpController;
 use App\Http\Controllers\InvComputerPikController;
 use App\Http\Controllers\InvComputerSbsController;
+use App\Http\Controllers\InvComputerSksController;
 use App\Http\Controllers\InvComputerValeController;
 use App\Http\Controllers\InvLaptopAmiController;
 use App\Http\Controllers\InvLaptopBaController;
@@ -114,6 +121,7 @@ use App\Http\Controllers\InvLaptopMlpController;
 use App\Http\Controllers\InvLaptopPikController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
 use App\Http\Controllers\InvLaptopSbsController;
+use App\Http\Controllers\InvLaptopSksController;
 use App\Http\Controllers\InvLaptopValeController;
 use App\Http\Controllers\InvPrinterAmiController;
 use App\Http\Controllers\InvPrinterBaController;
@@ -127,6 +135,7 @@ use App\Http\Controllers\InvPrinterMipController;
 use App\Http\Controllers\InvPrinterMlpController;
 use App\Http\Controllers\InvPrinterPikController;
 use App\Http\Controllers\InvPrinterSbsController;
+use App\Http\Controllers\InvPrinterSksController;
 use App\Http\Controllers\InvPrinterValeController;
 use App\Http\Controllers\InvScannerAmiController;
 use App\Http\Controllers\InvScannerBaController;
@@ -140,6 +149,7 @@ use App\Http\Controllers\InvScannerMipController;
 use App\Http\Controllers\InvScannerMlpController;
 use App\Http\Controllers\InvScannerPikController;
 use App\Http\Controllers\InvScannerSbsController;
+use App\Http\Controllers\InvScannerSksController;
 use App\Http\Controllers\InvScannerValeController;
 use App\Http\Controllers\InvSwitchAmiController;
 use App\Http\Controllers\InvSwitchController;
@@ -153,6 +163,7 @@ use App\Http\Controllers\InvSwitchMipController;
 use App\Http\Controllers\InvSwitchMlpController;
 use App\Http\Controllers\InvSwitchPikController;
 use App\Http\Controllers\InvSwitchSbsController;
+use App\Http\Controllers\InvSwitchSksController;
 use App\Http\Controllers\InvSwitchValeController;
 use App\Http\Controllers\InvWirellessAmiController;
 use App\Http\Controllers\InvWirellessBaController;
@@ -166,6 +177,7 @@ use App\Http\Controllers\InvWirellessMipController;
 use App\Http\Controllers\InvWirellessMlpController;
 use App\Http\Controllers\InvWirellessPikController;
 use App\Http\Controllers\InvWirellessSbsController;
+use App\Http\Controllers\InvWirellessSksController;
 use App\Http\Controllers\InvWirellessValeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
@@ -1363,6 +1375,82 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVSbs', [InvCctvSbsController::class, 'uploadCsv'])->name('cctvSbs.import');
         });
 
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteSks', [DashboardSksController::class, 'index'])->name('dashboardSks.page');
+
+            Route::get('/accessPointSiteSks', [InvApSksController::class, 'index'])->name('accessPointSks.page');
+            Route::get('/accessPointSiteSks/create', [InvApSksController::class, 'create'])->name('accessPointSks.create');
+            Route::post('/accessPointSiteSks/create', [InvApSksController::class, 'store'])->name('accessPointSks.store');
+            Route::get('/accessPointSiteSks/{apId}/edit', [InvApSksController::class, 'edit'])->name('accessPointSks.edit');
+            Route::put('/accessPointSiteSks/{apId}/update', [InvApSksController::class, 'update'])->name('accessPointSks.update');
+            Route::delete('/accessPointSiteSks/{apId}/delete', [InvApSksController::class, 'destroy'])->name('accessPointSks.delete');
+            Route::get('/accessPointSiteSks/{id}/detail', [InvApSksController::class, 'detail'])->name('accessPointSks.detail');
+            Route::post('/uploadCsvApSks', [InvApSksController::class, 'uploadCsv'])->name('accessPointSks.import');
+
+            Route::get('/switchSks', [InvSwitchSksController::class, 'index'])->name('switchSks.page');
+            Route::get('/switchSks/create', [InvSwitchSksController::class, 'create'])->name('switchSks.create');
+            Route::post('/switchSks/create', [InvSwitchSksController::class, 'store'])->name('switchSks.store');
+            Route::get('/switchSks/{swId}/edit', [InvSwitchSksController::class, 'edit'])->name('switchSks.edit');
+            Route::put('/switchSks/{swId}/update', [InvSwitchSksController::class, 'update'])->name('switchSks.update');
+            Route::delete('/switchSks/{swId}/delete', [InvSwitchSksController::class, 'destroy'])->name('switchSks.delete');
+            Route::get('/switchSks/{id}/detail', [InvSwitchSksController::class, 'detail'])->name('switchSks.detail');
+            Route::post('/uploadCsvSwSks', [InvSwitchSksController::class, 'uploadCsv'])->name('switchSks.import');
+
+            Route::get('/wirellessSks', [InvWirellessSksController::class, 'index'])->name('wirellessSks.page');
+            Route::get('/wirellessSks/create', [InvWirellessSksController::class, 'create'])->name('wirellessSks.create');
+            Route::post('/wirellessSks/create', [InvWirellessSksController::class, 'store'])->name('wirellessSks.store');
+            Route::get('/wirellessSks/{id}/edit', [InvWirellessSksController::class, 'edit'])->name('wirellessSks.edit');
+            Route::put('/wirellessSks/{id}/update', [InvWirellessSksController::class, 'update'])->name('wirellessSks.update');
+            Route::delete('/wirellessSks/{id}/delete', [InvWirellessSksController::class, 'destroy'])->name('wirellessSks.delete');
+            Route::get('/wirellessSks/{id}/detail', [InvWirellessSksController::class, 'detail'])->name('wirellessSks.detail');
+            Route::post('/uploadCsvBbSks', [InvWirellessSksController::class, 'uploadCsv'])->name('wirellessSks.import');
+
+            Route::get('/laptopSks', [InvLaptopSksController::class, 'index'])->name('laptopSks.page');
+            Route::get('/laptopSks/create', [InvLaptopSksController::class, 'create'])->name('laptopSks.create');
+            Route::post('/laptopSks/create', [InvLaptopSksController::class, 'store'])->name('laptopSks.store');
+            Route::get('/laptopSks/{id}/edit', [InvLaptopSksController::class, 'edit'])->name('laptopSks.edit');
+            Route::delete('/laptopSks/{id}/delete', [InvLaptopSksController::class, 'destroy'])->name('laptopSks.delete');
+            Route::post('/laptopSks/update', [InvLaptopSksController::class, 'update'])->name('laptopSks.update');
+            Route::get('/laptopSks/{id}/detail', [InvLaptopSksController::class, 'detail'])->name('laptopSks.detail');
+            Route::post('/uploadCsvNbSks', [InvLaptopSksController::class, 'uploadCsv'])->name('laptopSks.import');
+
+            Route::get('/komputerSks', [InvComputerSksController::class, 'index'])->name('komputerSks.page');
+            Route::get('/komputerSks/create', [InvComputerSksController::class, 'create'])->name('komputerSks.create');
+            Route::post('/komputerSks/create', [InvComputerSksController::class, 'store'])->name('komputerSks.store');
+            Route::get('/komputerSks/{id}/edit', [InvComputerSksController::class, 'edit'])->name('komputerSks.edit');
+            Route::delete('/komputerSks/{id}/delete', [InvComputerSksController::class, 'destroy'])->name('komputerSks.delete');
+            Route::post('/komputerSks/update', [InvComputerSksController::class, 'update'])->name('komputerSks.update');
+            Route::get('/komputerSks/{id}/detail', [InvComputerSksController::class, 'detail'])->name('komputerSks.detail');
+            Route::post('/uploadCsvCuSks', [InvComputerSksController::class, 'uploadCsv'])->name('komputerSks.import');
+
+            Route::get('/printerSks', [InvPrinterSksController::class, 'index'])->name(name: 'printerSks.page');
+            Route::get('/printerSks/create', [InvPrinterSksController::class, 'create'])->name('printerSks.create');
+            Route::post('/printerSks/create', [InvPrinterSksController::class, 'store'])->name('printerSks.store');
+            Route::get('/printerSks/{id}/edit', [InvPrinterSksController::class, 'edit'])->name('printerSks.edit');
+            Route::delete('/printerSks/{id}/delete', [InvPrinterSksController::class, 'destroy'])->name('printerSks.delete');
+            Route::post('/printerSks/update', [InvPrinterSksController::class, 'update'])->name('printerSks.update');
+            Route::get('/printerSks/{id}/detail', [InvPrinterSksController::class, 'detail'])->name('printerSks.detail');
+            Route::post('/uploadCsvPrtSbs', [InvPrinterSksController::class, 'uploadCsv'])->name('printerSks.import');
+
+            Route::get('/scannerSks', [InvScannerSksController::class, 'index'])->name('scannerSks.page');
+            Route::get('/scannerSks/create', [InvScannerSksController::class, 'create'])->name('scannerSks.create');
+            Route::post('/scannerSks/create', [InvScannerSksController::class, 'store'])->name('scannerSks.store');
+            Route::get('/scannerSks/{id}/edit', [InvScannerSksController::class, 'edit'])->name('scannerSks.edit');
+            Route::delete('/scannerSks/{id}/delete', [InvScannerSksController::class, 'destroy'])->name('scannerSks.delete');
+            Route::post('/scannerSks/update', [InvScannerSksController::class, 'update'])->name('scannerSks.update');
+            Route::get('/scannerSks/{id}/detail', [InvScannerSksController::class, 'detail'])->name('scannerSks.detail');
+            Route::post('/uploadCsvScnSbs', [InvScannerSksController::class, 'uploadCsv'])->name('scannerSks.import');
+
+            Route::get('/cctvSks', [InvCctvSksController::class, 'index'])->name('cctvSks.page');
+            Route::get('/cctvSks/create', [InvCctvSksController::class, 'create'])->name('cctvSks.create');
+            Route::post('/cctvSks/create', [InvCctvSksController::class, 'store'])->name('cctvSks.store');
+            Route::get('/cctvSks/{id}/edit', [InvCctvSksController::class, 'edit'])->name('cctvSks.edit');
+            Route::delete('/cctvSks/{id}/delete', [InvCctvSksController::class, 'destroy'])->name('cctvSks.delete');
+            Route::post('/cctvSks/update', [InvCctvSksController::class, 'update'])->name('cctvSks.update');
+            Route::get('/cctvSks/{id}/detail', [InvCctvSksController::class, 'detail'])->name('cctvSks.detail');
+            Route::post('/uploadCsvCCTVSbs', [InvCctvSksController::class, 'uploadCsv'])->name('cctvSks.import');
+        });
+
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_ho:HO,ict_group_leader:WARA,ict_admin:WARA'], function () {
             Route::get('/dashboardSiteWara', [DashboardWaraController::class, 'index'])->name('dashboardWara.page');
 
@@ -1753,6 +1841,24 @@ Route::middleware('auth')->group(function () {
                 Route::get('/inspeksi-komputer-sbs/{id}/detail', [InspeksiComputerSbsController::class, 'detail'])->name('inspeksiKomputerSbs.detail');
                 Route::delete('inspeksi-komputer-sbs/{id}/delete', [InspeksiComputerSbsController::class, 'destroy'])->name('inspeksiKomputerSbs.delete');
             });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS'], function () {
+                Route::get('inspeksi-laptop-sks', [InspeksiLaptopSksController::class, 'index'])->name('inspeksiLaptopSks.page');
+                Route::get('inspeksi-laptop-sks/{id}/process', [InspeksiLaptopSksController::class, 'process'])->name('inspeksiLaptopSks.process');
+                Route::post('inspeksi-laptop-sks/process', [InspeksiLaptopSksController::class, 'store'])->name('inspeksiLaptopSks.store');
+                Route::get('inspeksi-laptop-sks/{id}/edit', [InspeksiLaptopSksController::class, 'edit'])->name('inspeksiLaptopSks.edit');
+                Route::post('inspeksi-laptop-sks/update', [InspeksiLaptopSksController::class, 'update'])->name('inspeksiLaptopSks.update');
+                Route::get('/inspeksi-laptop-sks/{id}/detail', [InspeksiLaptopSksController::class, 'detail'])->name('inspeksiLaptopSks.detail');
+                Route::delete('inspeksi-laptop-sks/{id}/delete', [InspeksiLaptopSksController::class, 'destroy'])->name('inspeksiLaptopSks.delete');
+
+                Route::get('inspeksi-komputer-sks', [InspeksiComputerSksController::class, 'index'])->name('inspeksiKomputerSks.page');
+                Route::get('inspeksi-komputer-sks/{id}/inspection', [InspeksiComputerSksController::class, 'doInspection'])->name('inspeksiKomputerSks.inspection');
+                Route::post('inspeksi-komputer-sks/inspection', [InspeksiComputerSksController::class, 'store'])->name('inspeksiKomputerSks.store');
+                Route::get('inspeksi-komputer-sks/{id}/edit', [InspeksiComputerSksController::class, 'edit'])->name('inspeksiKomputerSks.edit');
+                Route::put('inspeksi-komputer-sks/{id}/update', [InspeksiComputerSksController::class, 'update'])->name('inspeksiKomputerSks.update');
+                Route::get('/inspeksi-komputer-sks/{id}/detail', [InspeksiComputerSksController::class, 'detail'])->name('inspeksiKomputerSks.detail');
+                Route::delete('inspeksi-komputer-sks/{id}/delete', [InspeksiComputerSksController::class, 'destroy'])->name('inspeksiKomputerSks.delete');
+            });
         });
     });
 
@@ -1899,6 +2005,18 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanSbs/{id}/delete', [AduanSbsController::class, 'destroy'])->name('aduanSbs.delete');
             Route::post('/aduanSbs/update', [AduanSbsController::class, 'update_aduan'])->name('aduanSbs.update');
             Route::get('/aduanSbs/{id}/detail', [AduanSbsController::class, 'detail'])->name('aduanSbs.detail');
+        });
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_ho:HO,ict_group_leader:SKS,ict_admin:SKS'], function () {
+            Route::get('/aduanSks', [AduanSksController::class, 'index'])->name('aduanSks.page');
+            Route::get('/aduanSks/create', [AduanSksController::class, 'create'])->name('aduanSks.create');
+            Route::post('/aduanSks/create', [AduanSksController::class, 'store'])->name('aduanSks.store');
+            Route::get('/aduanSks/{id}/edit', [AduanSksController::class, 'edit'])->name('aduanSks.edit');
+            Route::post('/aduanSks/updateProgress', [AduanSksController::class, 'update_aduan_progress'])->name('aduanSks.updateProgress');
+            Route::get('/aduanSks/{id}/progress', [AduanSksController::class, 'progress'])->name('aduanSks.progress');
+            Route::delete('/aduanSks/{id}/delete', [AduanSksController::class, 'destroy'])->name('aduanSks.delete');
+            Route::post('/aduanSks/update', [AduanSksController::class, 'update_aduan'])->name('aduanSks.update');
+            Route::get('/aduanSks/{id}/detail', [AduanSksController::class, 'detail'])->name('aduanSks.detail');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_ho:HO,ict_group_leader:PIK,ict_admin:PIK'], function () {

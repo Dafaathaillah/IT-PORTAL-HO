@@ -11,15 +11,15 @@ use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 
-class InvPrinterSbsController extends Controller
+class InvPrinterSksController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvPrinter::where('site', 'SBS')->get();
+        $dataInventory = InvPrinter::where('site', 'SKS')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiteSbs/Printer/Printer', ['printer' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SiteSks/Printer/Printer', ['printer' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -30,7 +30,7 @@ class InvPrinterSbsController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvPrinter::where('site', 'SBS')->orderBy('max_id', 'desc')->first();
+        $maxId = InvPrinter::where('site', 'SKS')->orderBy('max_id', 'desc')->first();
         // dd($maxId->printer_code);
 
         if (is_null($maxId)) {
@@ -40,7 +40,7 @@ class InvPrinterSbsController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPASBSPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPASKSPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['printer_code'] = $uniqueString;
 
@@ -50,7 +50,7 @@ class InvPrinterSbsController extends Controller
 
         // end generate code
 
-        return Inertia::render('Inventory/SiteSbs/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
+        return Inertia::render('Inventory/SiteSks/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
     }
 
     public function store(Request $request)
@@ -83,11 +83,11 @@ class InvPrinterSbsController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
-            'site' => 'SBS'
+            'site' => 'SKS'
         ];
         // DB::table('inv_aps')->insert($data);
         InvPrinter::create($data);
-        return redirect()->route('printerSbs.page');
+        return redirect()->route('printerSks.page');
     }
 
     public function uploadCsv(Request $request)
@@ -95,7 +95,7 @@ class InvPrinterSbsController extends Controller
         try {
 
             Excel::import(new PrinterImport, $request->file('file'));
-            return redirect()->route('printerSbs.page');
+            return redirect()->route('printerSks.page');
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
@@ -109,7 +109,7 @@ class InvPrinterSbsController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiteSbs/Printer/PrinterDetail', [
+        return Inertia::render('Inventory/SiteSks/Printer/PrinterDetail', [
             'printers' => $printer,
         ]);
     }
@@ -133,7 +133,7 @@ class InvPrinterSbsController extends Controller
         })->toArray();
 
         // return response()->json(['ap' => $accessPoint]);
-        return Inertia::render('Inventory/SiteSbs/Printer/PrinterEdit', ['printer' => $printer, 'department' => $department, 'department_select' => $department_select]);
+        return Inertia::render('Inventory/SiteSks/Printer/PrinterEdit', ['printer' => $printer, 'department' => $department, 'department_select' => $department_select]);
     }
 
     public function show($id)
@@ -167,11 +167,11 @@ class InvPrinterSbsController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'SBS'
+            'site' => 'SKS'
         ];
         // DB::table('inv_aps')->insert($data);
         InvPrinter::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('printerSbs.page');
+        return redirect()->route('printerSks.page');
     }
 
     public function destroy($id)
