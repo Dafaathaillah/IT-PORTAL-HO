@@ -150,6 +150,16 @@ const toggleLevel1Ho = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
+    level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+    
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenHo.value) {
         level2OpenHo.value = false;
@@ -201,7 +211,12 @@ const toggleLevel2SettingHo = () => {
         level1OpenMhu.value = false;
         level1OpenWARA.value = false;
         level1OpenAmi.value = false;
-        level1OpenBib.value = false;
+        level1OpenIpt.value = false;
+        level1OpenMlp.value = false;
+        level1OpenMip.value = false;
+        level1OpenVale.value = false;
+        level1OpenSbs.value = false;
+        level1OpenSks.value = false;
     }
     level2OpenSettingHo.value = !level2OpenSettingHo.value;
 };
@@ -401,6 +416,16 @@ const toggleLevel1Ba = () => {
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
+
+        level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBa.value) {
@@ -663,6 +688,16 @@ const toggleLevel1Mifa = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
+    level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMifa.value) {
         level2OpenMifa.value = false;
@@ -923,6 +958,16 @@ const toggleLevel1Mhu = () => {
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
+
+    level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMhu.value) {
@@ -1185,6 +1230,16 @@ const toggleLevel1WARA = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
+    level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenWARA.value) {
         level2OpenWARA.value = false;
@@ -1445,6 +1500,16 @@ const toggleLevel1Bib = () => {
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
+
+        level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBib.value) {
@@ -1707,6 +1772,16 @@ const toggleLevel1Ami = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
+        level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenAmi.value) {
         level2OpenAmi.value = false;
@@ -1966,6 +2041,16 @@ const toggleLevel1Pik = () => {
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
+
+    level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenPik.value) {
@@ -2227,6 +2312,16 @@ const toggleLevel1Ipt = () => {
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
+
+        level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenIpt.value) {
@@ -2490,6 +2585,16 @@ const toggleLevel1Mlp = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
+        level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMlp.value) {
         level2OpenMlp.value = false;
@@ -2752,6 +2857,16 @@ const toggleLevel1Mip = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
+        level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMip.value) {
         level2OpenMip.value = false;
@@ -3013,6 +3128,16 @@ const toggleLevel1Vale = () => {
     level2OpenMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
+
+    level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenVale.value) {
@@ -3281,6 +3406,11 @@ const toggleLevel1Sbs = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenSbs.value) {
         level2OpenSbs.value = false;
@@ -3547,6 +3677,11 @@ const toggleLevel1Sks = () => {
     level2OpenVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
+
+       level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenSks.value) {
