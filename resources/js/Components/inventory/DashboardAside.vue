@@ -23,6 +23,276 @@ const classes = computed(() =>
         : "shadow-xl xl:ml-6"
 );
 
+// Toggle Site RcBin
+// State for controlling the visibility of submenus
+const level1OpenRcBin = ref(false);
+const level2OpenRcBin = ref(false);
+const level2OpenAduanRcBin = ref(false);
+const level2OpenSettingRcBin = ref(false);
+const level2OpenInspeksiRcBin = ref(false);
+const level3OpenRcBin = ref(false);
+const level3KomputerOpenRcBin = ref(false);
+const level3PrinterOpenRcBin = ref(false);
+const level3ScannerOpenRcBin = ref(false);
+const level3CctvOpenRcBin = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenRcBin.value = localStorage.getItem("level1OpenRcBin") === "true";
+    level2OpenRcBin.value = localStorage.getItem("level2OpenRcBin") === "true";
+    level2OpenAduanRcBin.value =
+        localStorage.getItem("level2OpenAduanRcBin") === "true";
+    level2OpenSettingRcBin.value =
+        localStorage.getItem("level2OpenSettingRcBin") === "true";
+    level2OpenInspeksiRcBin.value =
+        localStorage.getItem("level2OpenInspeksiRcBin") === "true";
+    level3OpenRcBin.value = localStorage.getItem("level3OpenRcBin") === "true";
+    level3PrinterOpenRcBin.value =
+        localStorage.getItem("level3PrinterOpenRcBin") === "true";
+    level3ScannerOpenRcBin.value =
+        localStorage.getItem("level3ScannerOpenRcBin") === "true";
+    level3KomputerOpenRcBin.value =
+        localStorage.getItem("level3KomputerOpenRcBin") === "true";
+    level3CctvOpenRcBin.value =
+        localStorage.getItem("level3CctvOpenRcBin") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenRcBin,
+        level2OpenRcBin,
+        level2OpenSettingRcBin,
+        level2OpenInspeksiRcBin,
+        level2OpenAduanRcBin,
+        level3OpenRcBin,
+        level3PrinterOpenRcBin,
+        level3ScannerOpenRcBin,
+        level3KomputerOpenRcBin,
+        level3CctvOpenRcBin,
+    ],
+    () => {
+        localStorage.setItem("level1OpenRcBin", level1OpenRcBin.value);
+        localStorage.setItem("level2OpenRcBin", level2OpenRcBin.value);
+        localStorage.setItem(
+            "level2OpenAduanRcBin",
+            level2OpenAduanRcBin.value
+        );
+        localStorage.setItem(
+            "level2OpenSettingRcBin",
+            level2OpenSettingRcBin.value
+        );
+        localStorage.setItem(
+            "level2OpenInspeksiRcBin",
+            level2OpenInspeksiRcBin.value
+        );
+        localStorage.setItem("level3OpenRcBin", level3OpenRcBin.value);
+        localStorage.setItem(
+            "level3KomputerOpenRcBin",
+            level3KomputerOpenRcBin.value
+        );
+        localStorage.setItem(
+            "level3PrinterOpenRcBin",
+            level3PrinterOpenRcBin.value
+        );
+        localStorage.setItem(
+            "level3ScannerOpenRcBin",
+            level3ScannerOpenRcBin.value
+        );
+        localStorage.setItem("level3CctvOpenRcBin", level3CctvOpenRcBin.value);
+    }
+);
+
+// Toggle functions for each level
+const toggleLevel1RcBin = () => {
+    level1OpenRcBin.value = !level1OpenRcBin.value;
+
+    level1OpenHo.value = false;
+    level2OpenHo.value = false;
+    level2OpenSettingHo.value = false;
+    level2OpenInspeksiHo.value = false;
+
+    level1OpenBa.value = false;
+    level2OpenBa.value = false;
+    level2OpenSettingBa.value = false;
+    level2OpenInspeksiBa.value = false;
+
+    level1OpenBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+
+    level1OpenAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
+    level1OpenMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
+    level1OpenIpt.value = false;
+    level2OpenIpt.value = false;
+    level2OpenSettingIpt.value = false;
+    level2OpenInspeksiIpt.value = false;
+
+    level1OpenMlp.value = false;
+    level2OpenMlp.value = false;
+    level2OpenSettingMlp.value = false;
+    level2OpenInspeksiMlp.value = false;
+
+    level1OpenMip.value = false;
+    level2OpenMip.value = false;
+    level2OpenSettingMip.value = false;
+    level2OpenInspeksiMip.value = false;
+
+    level1OpenVale.value = false;
+    level2OpenVale.value = false;
+    level2OpenSettingVale.value = false;
+    level2OpenInspeksiVale.value = false;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenRcBin.value) {
+        level2OpenRcBin.value = false;
+        level2OpenInspeksiRcBin.value = false;
+        level3OpenRcBin.value = false;
+        level3KomputerOpenRcBin.value = false;
+        level3PrinterOpenRcBin.value = false;
+        level3ScannerOpenRcBin.value = false;
+        level3CctvOpenRcBin.value = false;
+    }
+};
+
+const toggleLevel2RcBin = () => {
+    console.log(level1OpenRcBin.value);
+    if (!level2OpenRcBin.value) {
+        level1OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingRcBin.value = false;
+        level2OpenInspeksiRcBin.value = false;
+        level3OpenRcBin.value = false;
+        level3KomputerOpenRcBin.value = false;
+        level3PrinterOpenRcBin.value = false;
+        level3ScannerOpenRcBin.value = false;
+        level3CctvOpenRcBin.value = false;
+    }
+    level2OpenRcBin.value = !level2OpenRcBin.value;
+};
+
+const toggleLevel2AduanRcBin = () => {
+    console.log(level1OpenRcBin.value);
+    if (!level2OpenAduanRcBin.value) {
+        level2OpenRcBin.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingRcBin.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiRcBin.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenRcBin.value = false;
+        level3KomputerOpenRcBin.value = false;
+        level3PrinterOpenRcBin.value = false;
+        level3ScannerOpenRcBin.value = false;
+        level3CctvOpenRcBin.value = false;
+    }
+    level2OpenAduanRcBin.value = !level2OpenAduanRcBin.value;
+};
+
+const toggleLevel2SettingRcBin = () => {
+    console.log(level1OpenRcBin.value);
+    if (!level2OpenSettingRcBin.value) {
+        level1OpenRcBin.value = false;
+        level1OpenBa.value = false;
+        level1OpenMifa.value = false;
+        level1OpenMhu.value = false;
+        level1OpenWARA.value = false;
+        level1OpenAmi.value = false;
+        level1OpenBib.value = false;
+    }
+    level2OpenSettingRcBin.value = !level2OpenSettingRcBin.value;
+};
+
+const toggleLevel2InspeksiRcBin = () => {
+    console.log(level1OpenRcBin.value);
+    if (!level2OpenInspeksiRcBin.value) {
+        level1OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenRcBin.value = false;
+        level2OpenSettingRcBin.value = false;
+        level3OpenRcBin.value = false;
+        level3KomputerOpenRcBin.value = false;
+        level3PrinterOpenRcBin.value = false;
+        level3ScannerOpenRcBin.value = false;
+        level3CctvOpenRcBin.value = false;
+    }
+    level2OpenInspeksiRcBin.value = !level2OpenInspeksiRcBin.value;
+};
+
+const toggleLevel3LaptopRcBin = () => {
+    if (!level3OpenRcBin.value) {
+        level2OpenRcBin.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenRcBin.value = false;
+        level3PrinterOpenRcBin.value = false;
+        level3ScannerOpenRcBin.value = false;
+        level3CctvOpenRcBin.value = false;
+    }
+    level3OpenRcBin.value = !level3OpenRcBin.value;
+};
+
+const toggleLevel3KomputerRcBin = () => {
+    if (!level3KomputerOpenRcBin.value) {
+        level2OpenRcBin.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenRcBin.value = false;
+        level3PrinterOpenRcBin.value = false;
+        level3ScannerOpenRcBin.value = false;
+        level3CctvOpenRcBin.value = false;
+    }
+    level3KomputerOpenRcBin.value = !level3KomputerOpenRcBin.value;
+};
+
+const toggleLevel3CctvRcBin = () => {
+    if (!level3CctvOpenRcBin.value) {
+        level2OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenRcBin.value = false;
+        level3KomputerOpenRcBin.value = false;
+        level3PrinterOpenRcBin.value = false;
+        level3ScannerOpenRcBin.value = false;
+    }
+    level3CctvOpenRcBin.value = !level3CctvOpenRcBin.value;
+};
+
+const toggleLevel3PrinterRcBin = () => {
+    if (!level3PrinterOpenRcBin.value) {
+        level2OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenRcBin.value = false;
+        level3KomputerOpenRcBin.value = false;
+        level3ScannerOpenRcBin.value = false;
+        level3CctvOpenRcBin.value = false;
+    }
+    level3PrinterOpenRcBin.value = !level3PrinterOpenRcBin.value;
+};
+
+const toggleLevel3ScannerRcBin = () => {
+    if (!level3ScannerOpenRcBin.value) {
+        level2OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenRcBin.value = false;
+        level3KomputerOpenRcBin.value = false;
+        level3PrinterOpenRcBin.value = false;
+        level3CctvOpenRcBin.value = false;
+    }
+    level3ScannerOpenRcBin.value = !level3ScannerOpenRcBin.value;
+};
+
 // Toggle Site Ho
 // State for controlling the visibility of submenus
 const level1OpenHo = ref(false);
@@ -202,6 +472,13 @@ const toggleLevel2SettingHo = () => {
         level1OpenWARA.value = false;
         level1OpenAmi.value = false;
         level1OpenBib.value = false;
+        level1OpenIpt.value = false;
+        level1OpenMip.value = false;
+        level1OpenMlp.value = false;
+        level1OpenVale.value = false;
+        level1OpenSbs.value = false;
+        level1OpenSks.value = false;
+        level1OpenRcBin.value = false;
     }
     level2OpenSettingHo.value = !level2OpenSettingHo.value;
 };
@@ -3902,6 +4179,465 @@ const toggleLevel3ScannerSks = () => {
                             </NavLink>
                         </ul>
                     </li>
+
+                    <!-- start Recycle Bin -->
+                    <li v-if="$page.props.auth.user.role == 'ict_developer'">
+                        <div
+                            @click="toggleLevel1RcBin"
+                            style="cursor: pointer"
+                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        >
+                            <div
+                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-trash"
+                                ></i>
+                            </div>
+                            <span
+                                v-if="
+                                    $page.props.auth.user.role ==
+                                    'ict_developer'
+                                "
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >RecycleBin</span
+                            >
+                            <i
+                                v-if="!level1OpenRcBin"
+                                class="ms-3 fas fa-angle-right"
+                            ></i>
+                            <i v-else class="ms-3 fas fa-angle-down"></i>
+                        </div>
+                        <ul v-if="level1OpenRcBin">
+                            <li>
+                                <NavLink
+                                    @click="toggleLevel2AduanRcBin"
+                                    :href="route('aduan.page')"
+                                    :active="route().current('aduan.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Aduan</span
+                                    >
+                                </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role ==
+                                        'ict_developer'
+                                    "
+                                    @click="toggleLevel2RcBin"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inventory</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenRcBin"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenRcBin">
+                                    <NavLink
+                                        :href="route('accessPoint.page')"
+                                        :active="
+                                            route().current('accessPoint.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Access Point</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('switch.page')"
+                                        :active="route().current('switch.page')"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Switch</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('wirelless.page')"
+                                        :active="
+                                            route().current('wirelless.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Wirelless</span
+                                        >
+                                    </NavLink>
+                                    <div
+                                        @click="toggleLevel3LaptopRcBin"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Laptop</span
+                                        >
+                                        <i
+                                            v-if="!level3OpenRcBin"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3OpenRcBin">
+                                        <NavLink
+                                            :href="route('laptop.page')"
+                                            :active="
+                                                route().current('laptop.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Laptop Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3KomputerRcBin"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Komputer</span
+                                        >
+                                        <i
+                                            v-if="!level3KomputerOpenRcBin"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3KomputerOpenRcBin">
+                                        <NavLink
+                                            :href="route('komputer.page')"
+                                            :active="
+                                                route().current('komputer.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Komputer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3PrinterRcBin"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Printer</span
+                                        >
+                                        <i
+                                            v-if="!level3PrinterOpenRcBin"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3PrinterOpenRcBin">
+                                        <NavLink
+                                            :href="route('printer.page')"
+                                            :active="
+                                                route().current('printer.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Printer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3ScannerRcBin"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Scanner</span
+                                        >
+                                        <i
+                                            v-if="!level3ScannerOpenRcBin"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3ScannerOpenRcBin">
+                                        <NavLink
+                                            :href="route('scanner.page')"
+                                            :active="
+                                                route().current('scanner.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Scanner</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3CctvRcBin"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Cctv</span
+                                        >
+                                        <i
+                                            v-if="!level3CctvOpenRcBin"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3CctvOpenRcBin">
+                                        <NavLink
+                                            :href="route('cctv.page')"
+                                            :active="
+                                                route().current('cctv.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Cctv</span
+                                            >
+                                        </NavLink>
+                                    </li>
+                                </ul>
+
+                                <!-- <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2InspeksiRcBin"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenInspeksiRcBin"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenInspeksiRcBin">
+                                    <NavLink
+                                        :href="route('inspeksiLaptop.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiLaptop.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiKomputer.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiKomputer.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+                                </ul> -->
+
+                                <!-- <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_group_leader'
+                                    "
+                                    :href="route('aduan-ho.page')"
+                                    :active="route().current('aduan-ho.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >
+                                        Pengaduan HO</span
+                                    >
+                                </NavLink> -->
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end Recycle Bin -->
 
                     <hr
                         v-if="
@@ -11712,7 +12448,7 @@ const toggleLevel3ScannerSks = () => {
                     </li>
                     <!-- end SBS -->
 
-                             <hr
+                    <hr
                         v-if="
                             $page.props.auth.user.site == 'SKS' ||
                             $page.props.auth.user.role == 'ict_developer' ||
@@ -11720,8 +12456,8 @@ const toggleLevel3ScannerSks = () => {
                         "
                         class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                     />
-                    
-                       <!-- start SKS -->
+
+                    <!-- start SKS -->
                     <li
                         v-if="
                             $page.props.auth.user.site == 'SKS' ||
@@ -11870,9 +12606,7 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="route('wirellessSks.page')"
                                         :active="
-                                            route().current(
-                                                'wirellessSks.page'
-                                            )
+                                            route().current('wirellessSks.page')
                                         "
                                     >
                                         <div
