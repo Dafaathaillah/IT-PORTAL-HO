@@ -167,11 +167,10 @@ class InvWirellessController extends Controller
 
     public function destroy($id)
     {
-        $wirelless = InvWirelless::find($id);
+        $wirelless = InvWirelless::findOrFail($id);
         if (empty($wirelless)) {
             abort(404, 'Data not found');
         }
-        // return response()->json(['ap' => $wirelless]);
         $wirelless->delete();
         return redirect()->back();
     }

@@ -229,19 +229,16 @@ class InvApController extends Controller
             'note' => $params['note'],
             'site' => auth()->user()->site
         ];
-        // DB::table('inv_aps')->insert($data);
         InvAp::firstWhere('id', $request->id)->update($data);
         return redirect()->route('accessPoint.page');
     }
 
     public function destroy($apId)
     {
-        $accessPoint = InvAp::find($apId);
+        $accessPoint = InvAp::findOrFail($apId);
         if (empty($accessPoint)) {
             abort(404, 'Data not found');
         }
-        
-        // return response()->json(['ap' => $accessPoint]);
         $accessPoint->delete();
         return redirect()->back();
     }

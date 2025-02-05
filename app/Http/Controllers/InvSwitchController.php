@@ -165,11 +165,10 @@ class InvSwitchController extends Controller
 
     public function destroy($swId)
     {
-        $switch = InvSwitch::find($swId);
+        $switch = InvSwitch::findOrFail($swId);
         if (empty($switch)) {
             abort(404, 'Data not found');
         }
-        // return response()->json(['ap' => $switch]);
         $switch->delete();
         return redirect()->back();
     }

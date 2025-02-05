@@ -156,4 +156,11 @@ class AduanHoController extends Controller
             'aduan' => $aduan,
         ]);
     }
+
+    public function destroy($id)
+    {
+        $aduans = Aduan::findOrFail($id);
+        $aduans->delete();
+        return redirect()->back();
+    }
 }
