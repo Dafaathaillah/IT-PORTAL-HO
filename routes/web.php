@@ -14,6 +14,7 @@ use App\Http\Controllers\AduanMifaController;
 use App\Http\Controllers\AduanMipController;
 use App\Http\Controllers\AduanMlpController;
 use App\Http\Controllers\AduanPikController;
+use App\Http\Controllers\AduanRcbinController;
 use App\Http\Controllers\AduanSbsController;
 use App\Http\Controllers\AduanSksController;
 use App\Http\Controllers\AduanValeController;
@@ -77,6 +78,7 @@ use App\Http\Controllers\InvApMifaController;
 use App\Http\Controllers\InvApMipController;
 use App\Http\Controllers\InvApMlpController;
 use App\Http\Controllers\InvApPikController;
+use App\Http\Controllers\InvApRcbinController;
 use App\Http\Controllers\InvApSbsController;
 use App\Http\Controllers\InvApSksController;
 use App\Http\Controllers\InvApValeController;
@@ -162,6 +164,7 @@ use App\Http\Controllers\InvSwitchMifaController;
 use App\Http\Controllers\InvSwitchMipController;
 use App\Http\Controllers\InvSwitchMlpController;
 use App\Http\Controllers\InvSwitchPikController;
+use App\Http\Controllers\InvSwitchRcbinController;
 use App\Http\Controllers\InvSwitchSbsController;
 use App\Http\Controllers\InvSwitchSksController;
 use App\Http\Controllers\InvSwitchValeController;
@@ -176,6 +179,7 @@ use App\Http\Controllers\InvWirellessMifaController;
 use App\Http\Controllers\InvWirellessMipController;
 use App\Http\Controllers\InvWirellessMlpController;
 use App\Http\Controllers\InvWirellessPikController;
+use App\Http\Controllers\InvWirellessRcbinController;
 use App\Http\Controllers\InvWirellessSbsController;
 use App\Http\Controllers\InvWirellessSksController;
 use App\Http\Controllers\InvWirellessValeController;
@@ -541,7 +545,7 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {
             Route::get('/dashboardSiteBa', [DashboardBaController::class, 'index'])->name('dashboardBa.page');
-           
+
             Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
             Route::get('/accessPointSiteBa/create', [InvApBaController::class, 'create'])->name('accessPointBa.create');
             Route::post('/accessPointSiteBa/create', [InvApBaController::class, 'store'])->name('accessPointBa.store');
@@ -1069,7 +1073,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/cctvIpt/update', [InvCctvIptController::class, 'update'])->name('cctvIpt.update');
             Route::get('/cctvIpt/{id}/detail', [InvCctvIptController::class, 'detail'])->name('cctvIpt.detail');
             Route::post('/uploadCsvCCTVIpt', [InvCctvIptController::class, 'uploadCsv'])->name('cctvIpt.import');
-        }); 
+        });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMlp', [DashboardMlpController::class, 'index'])->name('dashboardMlp.page');
@@ -1697,7 +1701,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/inspeksi-komputer-Wara/{id}/detail', [InspeksiComputerWARAController::class, 'detail'])->name('inspeksiKomputerWARA.detail');
                 Route::delete('inspeksi-komputer-Wara/{id}/delete', [InspeksiComputerWARAController::class, 'destroy'])->name('inspeksiKomputerWARA.delete');
             });
-            
+
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI'], function () {
                 Route::get('inspeksi-laptop-ami', [InspeksiLaptopAmiController::class, 'index'])->name('inspeksiLaptopAmi.page');
                 Route::get('inspeksi-laptop-ami/{id}/process', [InspeksiLaptopAmiController::class, 'process'])->name('inspeksiLaptopAmi.process');
@@ -2029,6 +2033,40 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanPik/{id}/delete', [AduanPikController::class, 'destroy'])->name('aduanPik.delete');
             Route::post('/aduanPik/update', [AduanPikController::class, 'update_aduan'])->name('aduanPik.update');
             Route::get('/aduanPik/{id}/detail', [AduanPikController::class, 'detail'])->name('aduanPik.detail');
+        });
+
+        Route::prefix('/recycleBin')->group(function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/aduanRcBin', [AduanRcbinController::class, 'index'])->name('aduanRcBin.page');
+                Route::patch('/aduanRcBin/{id}/restore', [AduanRcbinController::class, 'restore'])->name('aduanRcBin.restore');
+                Route::delete('/aduanRcBin/{id}/delete', [AduanRcbinController::class, 'destroy'])->name('aduanRcBin.delete');
+                Route::delete('/aduanRcbBin/{id}/force-delete', [AduanRcbinController::class, 'forceDelete'])->name('aduanRcBin.forceDelete');
+                Route::get('/aduanRcBin/{id}/detail', [AduanRcbinController::class, 'detail'])->name('aduanRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/invApRcBin', [InvApRcbinController::class, 'index'])->name('accessPointRcBin.page');
+                Route::patch('/invApRcBin/{id}/restore', [InvApRcbinController::class, 'restore'])->name('accessPointRcBin.restore');
+                Route::delete('/invApRcBin/{id}/delete', [InvApRcbinController::class, 'destroy'])->name('accessPointRcBin.delete');
+                Route::delete('/invApRcbBin/{id}/force-delete', [InvApRcbinController::class, 'forceDelete'])->name('accessPointRcBin.forceDelete');
+                Route::get('/invApRcBin/{id}/detail', [InvApRcbinController::class, 'detail'])->name('accessPointRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/invSwitchRcBin', [InvSwitchRcbinController::class, 'index'])->name('switchRcBin.page');
+                Route::patch('/invSwitchRcBin/{id}/restore', [InvSwitchRcbinController::class, 'restore'])->name('switchRcBin.restore');
+                Route::delete('/invSwitchRcBin/{id}/delete', [InvSwitchRcbinController::class, 'destroy'])->name('switchRcBin.delete');
+                Route::delete('/invSwitchRcbBin/{id}/force-delete', [InvSwitchRcbinController::class, 'forceDelete'])->name('switchRcBin.forceDelete');
+                Route::get('/invSwitchRcBin/{id}/detail', [InvSwitchRcbinController::class, 'detail'])->name('switchRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/invWirellessRcBin', [InvWirellessRcbinController::class, 'index'])->name('wirellessRcBin.page');
+                Route::patch('/invWirellessRcBin/{id}/restore', [InvWirellessRcbinController::class, 'restore'])->name('wirellessRcBin.restore');
+                Route::delete('/invWirellessRcBin/{id}/delete', [InvWirellessRcbinController::class, 'destroy'])->name('wirellessRcBin.delete');
+                Route::delete('/invWirellessRcbBin/{id}/force-delete', [InvWirellessRcbinController::class, 'forceDelete'])->name('wirellessRcBin.forceDelete');
+                Route::get('/invWirellessRcBin/{id}/detail', [InvWirellessRcbinController::class, 'detail'])->name('wirellessRcBin.detail');
+            });
         });
     });
 });

@@ -4342,8 +4342,8 @@ const toggleLevel3ScannerSks = () => {
                             <li>
                                 <NavLink
                                     @click="toggleLevel2AduanRcBin"
-                                    :href="route('aduan.page')"
-                                    :active="route().current('aduan.page')"
+                                    :href="route('aduanRcBin.page')"
+                                    :active="route().current('aduanRcBin.page')"
                                 >
                                     <div
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -4389,9 +4389,9 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenRcBin">
                                     <NavLink
-                                        :href="route('accessPoint.page')"
+                                        :href="route('accessPointRcBin.page')"
                                         :active="
-                                            route().current('accessPoint.page')
+                                            route().current('accessPointRcBin.page')
                                         "
                                     >
                                         <div
@@ -4407,8 +4407,8 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
-                                        :href="route('switch.page')"
-                                        :active="route().current('switch.page')"
+                                        :href="route('switchRcBin.page')"
+                                        :active="route().current('switchRcBin.page')"
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -4423,9 +4423,9 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
-                                        :href="route('wirelless.page')"
+                                        :href="route('wirellessRcBin.page')"
                                         :active="
-                                            route().current('wirelless.page')
+                                            route().current('wirellessRcBin.page')
                                         "
                                     >
                                         <div
