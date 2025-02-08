@@ -4467,9 +4467,9 @@ const toggleLevel3ScannerSks = () => {
                                     </div>
                                     <li v-if="level3OpenRcBin">
                                         <NavLink
-                                            :href="route('laptop.page')"
+                                            :href="route('laptopRcBin.page')"
                                             :active="
-                                                route().current('laptop.page')
+                                                route().current('laptopRcBin.page')
                                             "
                                         >
                                             <div
@@ -4513,9 +4513,9 @@ const toggleLevel3ScannerSks = () => {
                                     </div>
                                     <li v-if="level3KomputerOpenRcBin">
                                         <NavLink
-                                            :href="route('komputer.page')"
+                                            :href="route('komputerRcBin.page')"
                                             :active="
-                                                route().current('komputer.page')
+                                                route().current('komputerRcBin.page')
                                             "
                                         >
                                             <div
@@ -4559,9 +4559,9 @@ const toggleLevel3ScannerSks = () => {
                                     </div>
                                     <li v-if="level3PrinterOpenRcBin">
                                         <NavLink
-                                            :href="route('printer.page')"
+                                            :href="route('printerRcBin.page')"
                                             :active="
-                                                route().current('printer.page')
+                                                route().current('printerRcBin.page')
                                             "
                                         >
                                             <div
@@ -4605,9 +4605,9 @@ const toggleLevel3ScannerSks = () => {
                                     </div>
                                     <li v-if="level3ScannerOpenRcBin">
                                         <NavLink
-                                            :href="route('scanner.page')"
+                                            :href="route('scannerRcBin.page')"
                                             :active="
-                                                route().current('scanner.page')
+                                                route().current('scannerRcBin.page')
                                             "
                                         >
                                             <div
@@ -4651,9 +4651,9 @@ const toggleLevel3ScannerSks = () => {
                                     </div>
                                     <li v-if="level3CctvOpenRcBin">
                                         <NavLink
-                                            :href="route('cctv.page')"
+                                            :href="route('cctvRcBin.page')"
                                             :active="
-                                                route().current('cctv.page')
+                                                route().current('cctvRcBin.page')
                                             "
                                         >
                                             <div

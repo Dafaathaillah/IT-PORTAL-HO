@@ -22,7 +22,7 @@ const mount = onMounted(() => {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="RecycleBin Inv Cctv" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -47,7 +47,7 @@ const mount = onMounted(() => {
                                 </h6>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('cctvWARA.page')"
+                                    :href="route('cctvRcBin.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>

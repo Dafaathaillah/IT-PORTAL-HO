@@ -296,7 +296,7 @@ class InvLaptopController extends Controller
     }
     public function destroy($id)
     {
-        $laptop = InvLaptop::find($id);
+        $laptop = InvLaptop::findOrFail($id);
         if (empty($laptop)) {
             abort(404, 'Data not found');
         }

@@ -281,11 +281,10 @@ class InvComputerController extends Controller
     }
     public function destroy($id)
     {
-        $komputer = InvComputer::find($id);
+        $komputer = InvComputer::findOrFail($id);
         if (empty($komputer)) {
             abort(404, 'Data not found');
         }
-        // return response()->json(['ap' => $komputer]);
         $komputer->delete();
         return redirect()->back();
     }

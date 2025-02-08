@@ -202,7 +202,7 @@ class InvPrinterController extends Controller
 
     public function destroy($id)
     {
-        $invPrinter = InvPrinter::find($id);
+        $invPrinter = InvPrinter::findOrFail($id);
 
         if (empty($invPrinter)) {
             abort(404, 'Data not found');

@@ -24,7 +24,7 @@ function formattedDate(date) {
 
 <template>
 
-    <Head title="Inv Printer" />
+    <Head title="RecycleBin Inv Printer" />
 
     <AuthenticatedLayout
             v-model:pages="pages"
@@ -44,7 +44,7 @@ function formattedDate(date) {
                                     <h6 class="mb-4 mr-3 dark:text-white">
                                         Detail Printer
                                     </h6>
-                                    <NavLinkCustom class="text-red-700" :href="route('printerWARA.page')">
+                                    <NavLinkCustom class="text-red-700" :href="route('printerRcBin.page')">
                                         Move to home page
                                     </NavLinkCustom>
 

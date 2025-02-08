@@ -22,7 +22,7 @@ function formattedDate(date) {
 </script>
 
 <template>
-    <Head title="Inv Scanner" />
+    <Head title="RecycleBin Inv Scanner" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -48,7 +48,7 @@ function formattedDate(date) {
                                     </h6>
                                     <NavLinkCustom
                                         class="text-red-700"
-                                        :href="route('scannerWARA.page')"
+                                        :href="route('scannerRcBin.page')"
                                     >
                                         Move to home page
                                     </NavLinkCustom>

@@ -74,11 +74,38 @@ const props = defineProps({
 
 const form = useForm({});
 
-const deleteData = (id) => {
+const restore = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
         title: "Are you sure?",
-        text: "Menghapus data ini akan berdampak pada table yang berelasi dengan data ini!, data pada table yang berelasi akan ikut terhapus!",
+        text: "You won't be able to restore this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, resore it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Perform the delete operation, e.g., by making a request to the server
+            form.patch(route("printerRcBin.restore", { id: id }), {
+                onSuccess: () => {
+                    Swal.fire({
+                        title: "Restored!",
+                        text: "Your file has been restore.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                    });
+                },
+            });
+        }
+    });
+};
+
+const forceDeleted = (id) => {
+    // Call SweetAlert for confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -87,7 +114,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("printerWARA.delete", { id: id }), {
+            form.delete(route("printerRcBin.forceDelete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -101,82 +128,13 @@ const deleteData = (id) => {
     });
 };
 
-const editData = (id) => {
-    // Call SweetAlert for confirmation
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You want edit this data?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form.get(route("printerWARA.edit", { id: id }));
-        }
-    });
-};
-
 const detailData = (id) => {
-    form.get(route("printerWARA.detail", { id: id }));
-};
-
-const file = ref(null);
-
-const handleFileUpload = (event) => {
-    file.value = event.target.files[0];
-};
-
-const submitCsv = () => {
-    let timerInterval;
-    Swal.fire({
-        title: "Mengimport Data...",
-        text: "Mohon tunggu sebentar...",
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        },
-    });
-
-    const formx = useForm({
-        file: file.value,
-    });
-
-    function reloadPage() {
-        window.location.reload();
-    }
-
-    formx.post(route("printerWARA.import"), {
-        onSuccess: () => {
-            // Show SweetAlert2 success notification
-            Swal.fire({
-                title: "Success!",
-                text: "Data has been successfully import!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-
-            setTimeout(function () {
-                reloadPage();
-            }, 2000);
-        },
-        onError: () => {
-            Swal.fire({
-                title: "error!",
-                text: "Data not created!",
-                icon: "waring",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-        },
-    });
+    form.get(route("printerRcBin.detail", { id: id }));
 };
 </script>
 
 <template>
-    <Head title="Inv Printer" />
+    <Head title="RecycleBin Inv Printer" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -186,61 +144,11 @@ const submitCsv = () => {
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
-                    <form
-                        @submit.prevent="submitCsv"
-                        enctype="multipart/form-data"
-                    >
-                        <div class="flex flex-wrap">
-                            <div class="max-w-full px-3">
-                                <div class="mb-4">
-                                    <input
-                                        type="file"
-                                        ref="fileInput"
-                                        enctype="multipart/form-data"
-                                        class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                        @change="handleFileUpload"
-                                    />
-                                </div>
-                            </div>
-                            <div class="max-w-full pl-3">
-                                <button
-                                    type="submit"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                >
-                                    <i class="fas fa-file-import"></i>
-                                    Import
-                                </button>
-                            </div>
-                            <div class="max-w-full px-3">
-                                <a
-                                    href="/samplePrinter.xlsx"
-                                    download="Format-Import-Data-printer.xlsx"
-                                    target="_blank"
-                                    type="button"
-                                    class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                >
-                                    <i class="fas fa-download"></i>
-                                    Format Excel Data
-                                </a>
-                            </div>
-                        </div>
-                    </form>
 
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
-                            <div
-                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
-                            >
-                                <Link
-                                    :href="route('printerWARA.create')"
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </Link>
-                            </div>
 
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <PerfectScrollbar style="position: relative;">
@@ -262,6 +170,11 @@ const submitCsv = () => {
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             #
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Site
                                                         </th>
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -331,6 +244,17 @@ const submitCsv = () => {
                                                             >
                                                                 {{ index + 1 }}
                                                             </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    printers.site
+                                                                }}
+                                                            </p>
                                                         </td>
                                                         <td
                                                             class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
@@ -460,18 +384,18 @@ const submitCsv = () => {
 
                                                             <NavLinkCustom
                                                                 @click="
-                                                                    editData(
+                                                                    restore(
                                                                         printers.id
                                                                     )
                                                                 "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                Edit
+                                                                Restore
                                                             </NavLinkCustom>
 
                                                             <NavLinkCustom
                                                                 @click="
-                                                                    deleteData(
+                                                                    forceDelete(
                                                                         printers.id
                                                                     )
                                                                 "

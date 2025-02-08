@@ -93,6 +93,7 @@ use App\Http\Controllers\InvCctvMifaController;
 use App\Http\Controllers\InvCctvMipController;
 use App\Http\Controllers\InvCctvMlpController;
 use App\Http\Controllers\InvCctvPikController;
+use App\Http\Controllers\InvCctvRcBinController;
 use App\Http\Controllers\InvCctvSbsController;
 use App\Http\Controllers\InvCctvSksController;
 use App\Http\Controllers\InvCctvValeController;
@@ -107,6 +108,7 @@ use App\Http\Controllers\InvComputerMifaController;
 use App\Http\Controllers\InvComputerMipController;
 use App\Http\Controllers\InvComputerMlpController;
 use App\Http\Controllers\InvComputerPikController;
+use App\Http\Controllers\InvComputerRcBinController;
 use App\Http\Controllers\InvComputerSbsController;
 use App\Http\Controllers\InvComputerSksController;
 use App\Http\Controllers\InvComputerValeController;
@@ -121,6 +123,7 @@ use App\Http\Controllers\InvLaptopMifaController;
 use App\Http\Controllers\InvLaptopMipController;
 use App\Http\Controllers\InvLaptopMlpController;
 use App\Http\Controllers\InvLaptopPikController;
+use App\Http\Controllers\InvLaptopRcBinController;
 use App\Http\Controllers\InvLaptopReUtilizeController;
 use App\Http\Controllers\InvLaptopSbsController;
 use App\Http\Controllers\InvLaptopSksController;
@@ -136,6 +139,7 @@ use App\Http\Controllers\InvPrinterMifaController;
 use App\Http\Controllers\InvPrinterMipController;
 use App\Http\Controllers\InvPrinterMlpController;
 use App\Http\Controllers\InvPrinterPikController;
+use App\Http\Controllers\InvPrinterRcBinController;
 use App\Http\Controllers\InvPrinterSbsController;
 use App\Http\Controllers\InvPrinterSksController;
 use App\Http\Controllers\InvPrinterValeController;
@@ -150,6 +154,7 @@ use App\Http\Controllers\InvScannerMifaController;
 use App\Http\Controllers\InvScannerMipController;
 use App\Http\Controllers\InvScannerMlpController;
 use App\Http\Controllers\InvScannerPikController;
+use App\Http\Controllers\InvScannerRcBinController;
 use App\Http\Controllers\InvScannerSbsController;
 use App\Http\Controllers\InvScannerSksController;
 use App\Http\Controllers\InvScannerValeController;
@@ -2066,6 +2071,46 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/invWirellessRcBin/{id}/delete', [InvWirellessRcbinController::class, 'destroy'])->name('wirellessRcBin.delete');
                 Route::delete('/invWirellessRcbBin/{id}/force-delete', [InvWirellessRcbinController::class, 'forceDelete'])->name('wirellessRcBin.forceDelete');
                 Route::get('/invWirellessRcBin/{id}/detail', [InvWirellessRcbinController::class, 'detail'])->name('wirellessRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/invLaptopRcBin', [InvLaptopRcBinController::class, 'index'])->name('laptopRcBin.page');
+                Route::patch('/invLaptopRcBin/{id}/restore', [InvLaptopRcBinController::class, 'restore'])->name('laptopRcBin.restore');
+                Route::delete('/invLaptopRcBin/{id}/delete', [InvLaptopRcBinController::class, 'destroy'])->name('laptopRcBin.delete');
+                Route::delete('/invLaptopRcbBin/{id}/force-delete', [InvLaptopRcBinController::class, 'forceDelete'])->name('laptopRcBin.forceDelete');
+                Route::get('/invLaptopRcBin/{id}/detail', [InvLaptopRcBinController::class, 'detail'])->name('laptopRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/invComputerRcBin', [InvComputerRcBinController::class, 'index'])->name('komputerRcBin.page');
+                Route::patch('/invComputerRcBin/{id}/restore', [InvComputerRcBinController::class, 'restore'])->name('komputerRcBin.restore');
+                Route::delete('/invComputerRcBin/{id}/delete', [InvComputerRcBinController::class, 'destroy'])->name('komputerRcBin.delete');
+                Route::delete('/invComputerRcbBin/{id}/force-delete', [InvComputerRcBinController::class, 'forceDelete'])->name('komputerRcBin.forceDelete');
+                Route::get('/invComputerRcBin/{id}/detail', [InvComputerRcBinController::class, 'detail'])->name('komputerRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/invPrinterRcBin', [InvPrinterRcBinController::class, 'index'])->name('printerRcBin.page');
+                Route::patch('/invPrinterRcBin/{id}/restore', [InvPrinterRcBinController::class, 'restore'])->name('printerRcBin.restore');
+                Route::delete('/invPrinterRcBin/{id}/delete', [InvPrinterRcBinController::class, 'destroy'])->name('printerRcBin.delete');
+                Route::delete('/invPrinterRcbBin/{id}/force-delete', [InvPrinterRcBinController::class, 'forceDelete'])->name('printerRcBin.forceDelete');
+                Route::get('/invPrinterRcBin/{id}/detail', [InvPrinterRcBinController::class, 'detail'])->name('printerRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/invScannerRcBin', [InvScannerRcBinController::class, 'index'])->name('scannerRcBin.page');
+                Route::patch('/invScannerRcBin/{id}/restore', [InvScannerRcBinController::class, 'restore'])->name('scannerRcBin.restore');
+                Route::delete('/invScannerRcBin/{id}/delete', [InvScannerRcBinController::class, 'destroy'])->name('scannerRcBin.delete');
+                Route::delete('/invScannerRcbBin/{id}/force-delete', [InvScannerRcBinController::class, 'forceDelete'])->name('scannerRcBin.forceDelete');
+                Route::get('/invScannerRcBin/{id}/detail', [InvScannerRcBinController::class, 'detail'])->name('scannerRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/invCctvRcBin', [InvCctvRcBinController::class, 'index'])->name('cctvRcBin.page');
+                Route::patch('/invCctvRcBin/{id}/restore', [InvCctvRcBinController::class, 'restore'])->name('cctvRcBin.restore');
+                Route::delete('/invCctvRcBin/{id}/delete', [InvCctvRcBinController::class, 'destroy'])->name('cctvRcBin.delete');
+                Route::delete('/invCctvRcbBin/{id}/force-delete', [InvCctvRcBinController::class, 'forceDelete'])->name('cctvRcBin.forceDelete');
+                Route::get('/invCctvRcBin/{id}/detail', [InvCctvRcBinController::class, 'detail'])->name('cctvRcBin.detail');
             });
         });
     });

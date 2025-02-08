@@ -183,7 +183,7 @@ function formatData(text) {
 
 <template>
 
-    <Head title="Complaint" />
+    <Head title="RecycleBin Complaint" />
 
     <AuthenticatedLayout v-model:pages="pages" v-model:subMenu="subMenu" v-model:mainMenu="mainMenu">
 

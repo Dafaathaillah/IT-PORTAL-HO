@@ -187,7 +187,7 @@ class InvCctvController extends Controller
     }
     public function destroy($id)
     {
-        $cctv = InvCctv::find($id);
+        $cctv = InvCctv::findOrFail($id);
         if (empty($cctv)) {
             abort(404, 'Data not found');
         }

@@ -22,7 +22,7 @@ function formattedDate(date) {
 </script>
 
 <template>
-    <Head title="Inv Access Point" />
+    <Head title="RecycleBin Inv Access Point" />
 
     <AuthenticatedLayout
         v-model:pages="pages"

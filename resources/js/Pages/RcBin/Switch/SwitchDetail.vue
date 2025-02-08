@@ -24,7 +24,7 @@ function formattedDate(date) {
 
 <template>
 
-    <Head title="Inv Switch" />
+    <Head title="RecycleBin Inv Switch" />
 
     <AuthenticatedLayout
             v-model:pages="pages"

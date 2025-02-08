@@ -192,7 +192,7 @@ class InvScannerController extends Controller
 
     public function destroy($id)
     {
-        $scanner = InvScanner::find($id);
+        $scanner = InvScanner::findOrFail($id);
         if (empty($scanner)) {
             abort(404, 'Data not found');
         }
