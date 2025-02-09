@@ -429,7 +429,7 @@ const toggleLevel1Ho = () => {
     level2OpenSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
-    
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenHo.value) {
         level2OpenHo.value = false;
@@ -689,7 +689,7 @@ const toggleLevel1Ba = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
-        level1OpenSbs.value = false;
+    level1OpenSbs.value = false;
     level2OpenSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
@@ -1773,7 +1773,7 @@ const toggleLevel1Bib = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
-        level1OpenSbs.value = false;
+    level1OpenSbs.value = false;
     level2OpenSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
@@ -2044,7 +2044,7 @@ const toggleLevel1Ami = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
-        level1OpenSbs.value = false;
+    level1OpenSbs.value = false;
     level2OpenSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
@@ -2585,7 +2585,7 @@ const toggleLevel1Ipt = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
-        level1OpenSbs.value = false;
+    level1OpenSbs.value = false;
     level2OpenSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
@@ -2857,7 +2857,7 @@ const toggleLevel1Mlp = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
-        level1OpenSbs.value = false;
+    level1OpenSbs.value = false;
     level2OpenSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
@@ -3129,7 +3129,7 @@ const toggleLevel1Mip = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
-        level1OpenSbs.value = false;
+    level1OpenSbs.value = false;
     level2OpenSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
@@ -3950,7 +3950,7 @@ const toggleLevel1Sks = () => {
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
-       level1OpenSbs.value = false;
+    level1OpenSbs.value = false;
     level2OpenSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
@@ -4341,6 +4341,27 @@ const toggleLevel3ScannerSks = () => {
                         <ul v-if="level1OpenRcBin">
                             <li>
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_developer'
+                                    "
+                                    :href="route('penggunaRcBin.page')"
+                                    :active="route().current('penggunaRcBin.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting Pengguna</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
                                     @click="toggleLevel2AduanRcBin"
                                     :href="route('aduanRcBin.page')"
                                     :active="route().current('aduanRcBin.page')"
@@ -4391,7 +4412,9 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="route('accessPointRcBin.page')"
                                         :active="
-                                            route().current('accessPointRcBin.page')
+                                            route().current(
+                                                'accessPointRcBin.page'
+                                            )
                                         "
                                     >
                                         <div
@@ -4408,7 +4431,9 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
                                     <NavLink
                                         :href="route('switchRcBin.page')"
-                                        :active="route().current('switchRcBin.page')"
+                                        :active="
+                                            route().current('switchRcBin.page')
+                                        "
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -4425,7 +4450,9 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="route('wirellessRcBin.page')"
                                         :active="
-                                            route().current('wirellessRcBin.page')
+                                            route().current(
+                                                'wirellessRcBin.page'
+                                            )
                                         "
                                     >
                                         <div
@@ -4469,7 +4496,9 @@ const toggleLevel3ScannerSks = () => {
                                         <NavLink
                                             :href="route('laptopRcBin.page')"
                                             :active="
-                                                route().current('laptopRcBin.page')
+                                                route().current(
+                                                    'laptopRcBin.page'
+                                                )
                                             "
                                         >
                                             <div
@@ -4515,7 +4544,9 @@ const toggleLevel3ScannerSks = () => {
                                         <NavLink
                                             :href="route('komputerRcBin.page')"
                                             :active="
-                                                route().current('komputerRcBin.page')
+                                                route().current(
+                                                    'komputerRcBin.page'
+                                                )
                                             "
                                         >
                                             <div
@@ -4561,7 +4592,9 @@ const toggleLevel3ScannerSks = () => {
                                         <NavLink
                                             :href="route('printerRcBin.page')"
                                             :active="
-                                                route().current('printerRcBin.page')
+                                                route().current(
+                                                    'printerRcBin.page'
+                                                )
                                             "
                                         >
                                             <div
@@ -4607,7 +4640,9 @@ const toggleLevel3ScannerSks = () => {
                                         <NavLink
                                             :href="route('scannerRcBin.page')"
                                             :active="
-                                                route().current('scannerRcBin.page')
+                                                route().current(
+                                                    'scannerRcBin.page'
+                                                )
                                             "
                                         >
                                             <div
@@ -4653,7 +4688,9 @@ const toggleLevel3ScannerSks = () => {
                                         <NavLink
                                             :href="route('cctvRcBin.page')"
                                             :active="
-                                                route().current('cctvRcBin.page')
+                                                route().current(
+                                                    'cctvRcBin.page'
+                                                )
                                             "
                                         >
                                             <div

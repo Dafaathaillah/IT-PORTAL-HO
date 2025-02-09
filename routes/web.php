@@ -194,6 +194,7 @@ use App\Http\Controllers\UserAllBaController;
 use App\Http\Controllers\UserAllController;
 use App\Http\Controllers\UserAllMhuController;
 use App\Http\Controllers\UserAllMifaController;
+use App\Http\Controllers\UserAllRcBinController;
 use App\Models\Aduan;
 use App\Models\InvAp;
 use App\Models\InvCctv;
@@ -2111,6 +2112,14 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/invCctvRcBin/{id}/delete', [InvCctvRcBinController::class, 'destroy'])->name('cctvRcBin.delete');
                 Route::delete('/invCctvRcbBin/{id}/force-delete', [InvCctvRcBinController::class, 'forceDelete'])->name('cctvRcBin.forceDelete');
                 Route::get('/invCctvRcBin/{id}/detail', [InvCctvRcBinController::class, 'detail'])->name('cctvRcBin.detail');
+            });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/penggunaRcBin', [UserAllRcBinController::class, 'index'])->name('penggunaRcBin.page');
+                Route::patch('/penggunaRcBin/{id}/restore', [UserAllRcBinController::class, 'restore'])->name('penggunaRcBin.restore');
+                Route::delete('/penggunaRcBin/{id}/delete', [UserAllRcBinController::class, 'destroy'])->name('penggunaRcBin.delete');
+                Route::delete('/penggunaRcbBin/{id}/force-delete', [UserAllRcBinController::class, 'forceDelete'])->name('penggunaRcBin.forceDelete');
+                Route::get('/penggunaRcBin/{id}/detail', [UserAllRcBinController::class, 'detail'])->name('penggunaRcBin.detail');
             });
         });
     });
