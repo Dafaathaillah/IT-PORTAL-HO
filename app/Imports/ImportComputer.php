@@ -53,7 +53,7 @@ class ImportComputer implements ToModel, WithStartRow
                 // 'date_of_deploy' => $row[23],
                 'user_alls_id' => $aduan_get_data_user['id'],
                 'site' => auth()->user()->site,
-                'dept' => $dept[2]
+                'dept' => $dept[22]
             ]);
         }
     }

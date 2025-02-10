@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\WirellessImport;
 use App\Models\InvWirelless;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
@@ -83,7 +84,6 @@ class InvWirellessMlpController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
             Excel::import(new WirellessImport, $request->file('file'));
             return redirect()->route('wirellessMlp.page');
         } catch (\Exception $ex) {

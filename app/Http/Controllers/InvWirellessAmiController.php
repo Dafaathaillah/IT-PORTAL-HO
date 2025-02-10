@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\WirellessImport;
 use App\Models\InvWirelless;
 use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
