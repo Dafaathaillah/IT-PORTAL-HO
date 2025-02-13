@@ -195,6 +195,7 @@ use App\Http\Controllers\UserAllController;
 use App\Http\Controllers\UserAllMhuController;
 use App\Http\Controllers\UserAllMifaController;
 use App\Http\Controllers\UserAllRcBinController;
+use App\Http\Controllers\UserController;
 use App\Models\Aduan;
 use App\Models\InvAp;
 use App\Models\InvCctv;
@@ -1538,6 +1539,13 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('itportal')->group(function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+                Route::get('/Management-User-Ict', [UserController::class, 'index'])->name('managementUserIct.page');
+                Route::get('/Management-User-Ict/{id}/edit', [UserController::class, 'edit'])->name('managementUserIct.edit');
+                Route::post('/Management-User-Ict/update', [UserController::class, 'update'])->name('managementUserIct.update');
+                Route::delete('/Management-User-Ict/{id}/delete', [UserController::class, 'destroy'])->name('managementUserIct.delete');
+            });
+
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
                 Route::get('/pengguna', [UserAllController::class, 'index'])->name('pengguna.page');
                 Route::get('/pengguna/create', [UserAllController::class, 'create'])->name('pengguna.create');

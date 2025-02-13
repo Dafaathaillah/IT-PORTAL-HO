@@ -18,7 +18,6 @@ class GuestAllController extends Controller
             $idUser = UserAll::where('nrp', $user)->first();
             $dataInventoryLaptop = InvLaptop::where('user_alls_id', $idUser->id)->get();
             $dataInventoryKomp = InvComputer::where('user_alls_id', $idUser->id)->get();
-            // dd($dataInventoryKomp);
 
             $invs = [];
 

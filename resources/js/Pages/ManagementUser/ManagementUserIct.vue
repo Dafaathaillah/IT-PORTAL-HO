@@ -9,8 +9,8 @@ import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
 
 const pages = ref("Pages");
-const subMenu = ref("Akses User Pages");
-const mainMenu = ref("Pengajuan Akses Role");
+const subMenu = ref("Management Pengguna Pages");
+const mainMenu = ref("Management Pengguna Data");
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -24,12 +24,39 @@ const mount = onMounted(() => {
 });
 
 const props = defineProps({
-    dataUsers: {
+    users: {
         type: Array,
     },
 });
 
 const form = useForm({});
+
+const deleteData = (id) => {
+    // Call SweetAlert for confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Perform the delete operation, e.g., by making a request to the server
+            form.delete(route("managementUserIct.delete", { id: id }), {
+                onSuccess: () => {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                    });
+                },
+            });
+        }
+    });
+};
 
 const editData = (id) => {
     // Call SweetAlert for confirmation
@@ -43,11 +70,61 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("akses.edit", { id: id }));
+            form.get(route("managementUserIct.edit", { id: id }));
         }
     });
 };
 
+const file = ref(null);
+
+const handleFileUpload = (event) => {
+    file.value = event.target.files[0];
+};
+
+const submitCsv = () => {
+    let timerInterval;
+    Swal.fire({
+        title: "Mengimport Data...",
+        text: "Mohon tunggu sebentar...",
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    const formx = useForm({
+        file: file.value,
+    });
+
+    function reloadPage() {
+      window.location.reload();
+    }
+
+    formx.post(route("managementUserIct.import"), {
+        onSuccess: () => {
+            Swal.fire({
+                title: "Success!",
+                text: "Data has been successfully import!",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+
+            setTimeout(function() {
+                reloadPage();
+            }, 2000);
+        },
+        onError: () => {
+            Swal.fire({
+                title: "error!",
+                text: "Data not created!",
+                icon: "waring",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#3085d6",
+            });
+        },
+    });
+};
 </script>
 
 <template>
@@ -62,16 +139,10 @@ const editData = (id) => {
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
-                    
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
-                            <div
-                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
-                            >
-
-                            </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0 overflow-x-auto">
                                     <div class="p-6 text-gray-900">
@@ -107,38 +178,27 @@ const editData = (id) => {
                                                         Position
                                                     </th>
                                                     <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Site
+                                                        Role
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Status
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Date Of Request
-                                                    </th>
-                                                    <th
-                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                    >
-                                                        Date Of Accept
+                                                        Last Edit At
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Action
                                                     </th>
-                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr
                                                     v-for="(
-                                                        dataUser, index
-                                                    ) in dataUsers"
+                                                        penggunas, index
+                                                    ) in users"
                                                     :key="index"
                                                 >
                                                     <td
@@ -156,7 +216,7 @@ const editData = (id) => {
                                                         <p
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{ dataUser.nrp_user }}
+                                                            {{ penggunas.nrp }}
                                                         </p>
                                                     </td>
                                                     <td
@@ -166,7 +226,7 @@ const editData = (id) => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                dataUser.nama_user
+                                                                penggunas.name
                                                             }}
                                                         </p>
                                                     </td>
@@ -177,7 +237,7 @@ const editData = (id) => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                dataUser.dept
+                                                                penggunas.department
                                                             }}
                                                         </p>
                                                     </td>
@@ -188,62 +248,33 @@ const editData = (id) => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                dataUser.divisi
+                                                                penggunas.position
                                                             }}
                                                         </p>
                                                     </td>
-                                                    <td
+                                                     <td
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <p
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                dataUser.site
+                                                                penggunas.role
                                                             }}
                                                         </p>
                                                     </td>
                                                     <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
-                                                    <span
-                                                            :class="{
-                                                                'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    dataUser.status ===
-                                                                    'DONE',
-                                                                'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    dataUser.status ===
-                                                                    'BELUM',
-                                                            }"
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            {{ dataUser.status }}
+                                                            {{
+                                                                formattedDate(
+                                                                    penggunas.updated_at
+                                                                )
+                                                            }}
                                                         </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                    formattedDate(
-                                                                        dataUser.created_at
-                                                                    )
-                                                                }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                    >
-                                                        <p
-                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            {{
-                                                                    formattedDate(
-                                                                        dataUser.updated_at
-                                                                    )
-                                                                }}
-                                                        </p>
                                                     </td>
                                                     <td
                                                         class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
@@ -251,15 +282,24 @@ const editData = (id) => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 editData(
-                                                                    dataUser.id
+                                                                    penggunas.id
                                                                 )
                                                             "
-                                                            v-if="dataUser.status == 'BELUM'"
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Edit
                                                         </NavLinkCustom>
 
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                deleteData(
+                                                                    penggunas.id
+                                                                )
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Delete
+                                                        </NavLinkCustom>
                                                     </td>
                                                 </tr>
                                             </tbody>

@@ -79,7 +79,7 @@ class DashboardBibController extends Controller
         $loginSession =  'tes';
 
         return Inertia::render(
-            'Inventory/SitePik/Dashboard',
+            'Inventory/SiteBib/Dashboard',
             [
                 'aduan' => $aduan,
                 'open' => $countOpen,

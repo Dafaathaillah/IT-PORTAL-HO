@@ -4111,6 +4111,12 @@ const toggleLevel3ScannerSks = () => {
             </div>
 
             <hr
+                v-if="
+                    $page.props.auth.user.role === 'ict_developer' ||
+                    $page.props.auth.user.role === 'ict_bod' ||
+                    $page.props.auth.user.role === 'ict_ho' ||
+                    $page.props.auth.user.role === 'ict_section_head'
+                "
                 class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
             />
 
@@ -4142,7 +4148,7 @@ const toggleLevel3ScannerSks = () => {
                             >
                         </NavLink>
                     </li>
-                    <li
+                    <!-- <li
                         v-if="$page.props.auth.user.role === 'ict_group_leader'"
                         class="mt-0.5 w-full"
                     >
@@ -4216,7 +4222,7 @@ const toggleLevel3ScannerSks = () => {
                                 >Dashboard</span
                             >
                         </NavLink>
-                    </li>
+                    </li> -->
 
                     <li class="mt-0.5 w-full">
                         <div
@@ -4307,6 +4313,29 @@ const toggleLevel3ScannerSks = () => {
                                     >Pengajuan Akses Role</span
                                 >
                             </NavLink>
+
+                            <NavLink
+                                v-if="
+                                    $page.props.auth.user.role ===
+                                    'ict_developer'
+                                "
+                                :href="route('managementUserIct.page')"
+                                :active="
+                                    route().current('managementUserIct.page')
+                                "
+                            >
+                                <div
+                                    class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-gear"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Management ICT User</span
+                                >
+                            </NavLink>
                         </ul>
                     </li>
 
@@ -4346,7 +4375,9 @@ const toggleLevel3ScannerSks = () => {
                                         'ict_developer'
                                     "
                                     :href="route('penggunaRcBin.page')"
-                                    :active="route().current('penggunaRcBin.page')"
+                                    :active="
+                                        route().current('penggunaRcBin.page')
+                                    "
                                 >
                                     <div
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
