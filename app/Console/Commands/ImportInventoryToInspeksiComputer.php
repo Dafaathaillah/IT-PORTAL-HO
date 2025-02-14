@@ -38,22 +38,27 @@ class ImportInventoryToInspeksiComputer extends Command
         // Retrieve data from inventory
         $inventories_computer = InvComputer::get();
 
-        // Insert data into inspeksi
         foreach ($inventories_computer as $inventory_computer) {
 
             $triwulan = Carbon::now()->quarter;
 
-            InspeksiComputer::create([
-                'inv_computer_id' => $inventory_computer->id,
-                'created_date' => Carbon::now()->format('Y-m-d H:i:s'),
-                'triwulan' => $triwulan,
-                'month' => Carbon::now()->format('m'),
-                'year' => Carbon::now()->format('Y'),
-                'inspection_status' => 'N',
-                'inventory_status' => $inventory_computer->status,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'site' => $inventory_computer->site
-            ]);
+            $cek = InspeksiComputer::where('inv_computer_id',  $inventory_computer->id)
+            ->where('triwulan', $triwulan)
+            ->get();
+
+            if ($cek->isEmpty()) {
+                InspeksiComputer::create([
+                    'inv_computer_id' => $inventory_computer->id,
+                    'created_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'triwulan' => $triwulan,
+                    'month' => Carbon::now()->format('m'),
+                    'year' => Carbon::now()->format('Y'),
+                    'inspection_status' => 'N',
+                    'inventory_status' => $inventory_computer->status,
+                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'site' => $inventory_computer->site
+                ]);
+            }
         }
 
         $this->info('Data successfully imported from inventory to inspeksi.');
