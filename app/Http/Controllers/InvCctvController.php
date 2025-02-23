@@ -76,7 +76,7 @@ class InvCctvController extends Controller
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        $switch = InvSwitch::select('id', 'inventory_number')->get();
+         $switch = InvSwitch::select('id', 'inventory_number')->where('site', auth()->user()->site)->get();
 
 
         return Inertia::render('Inventory/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
@@ -138,7 +138,7 @@ class InvCctvController extends Controller
         }
 
         $selectSwitch = $cctv->switch_id;
-        $switch = InvSwitch::select('id', 'inventory_number')->get();
+         $switch = InvSwitch::select('id', 'inventory_number')->where('site', auth()->user()->site)->get();
 
         return Inertia::render('Inventory/Cctv/CctvEdit', [
             'cctv' => $cctv,

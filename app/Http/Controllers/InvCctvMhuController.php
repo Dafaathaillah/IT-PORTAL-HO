@@ -111,7 +111,7 @@ class InvCctvMhuController extends Controller
         }
 
         $selectSwitch = $cctv->switch_id;
-        $switch = InvSwitch::select('id', 'inventory_number')->get();
+         $switch = InvSwitch::select('id', 'inventory_number')->where('site', auth()->user()->site)->get();
 
         return Inertia::render('Inventory/SiteMhu/Cctv/CctvEdit', [
             'cctv' => $cctv,

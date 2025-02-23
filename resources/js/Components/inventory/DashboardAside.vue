@@ -4289,7 +4289,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <span
                                     class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                    >Setting Department</span
+                                    >Setting Departement</span
                                 >
                             </NavLink>
 

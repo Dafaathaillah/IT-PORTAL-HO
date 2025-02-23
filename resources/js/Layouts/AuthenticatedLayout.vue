@@ -175,6 +175,4 @@ const mainMenu = defineModel('mainMenu', {
     }
   
 }
-
-
 </style>

@@ -111,7 +111,7 @@ class InvCctvMifaController extends Controller
         }
 
         $selectSwitch = $cctv->switch_id;
-        $switch = InvSwitch::select('id', 'inventory_number')->get();
+         $switch = InvSwitch::select('id', 'inventory_number')->where('site', auth()->user()->site)->get();
 
         return Inertia::render('Inventory/SiteMifa/Cctv/CctvEdit', [
             'cctv' => $cctv,
