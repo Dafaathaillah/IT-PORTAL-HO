@@ -440,6 +440,7 @@ const options = props.crew;
                                                 >Issue/Complaint Note</label
                                             >
                                             <textarea
+                                            readonly
                                                 required
                                                 id="message"
                                                 name="complaint_note"
@@ -460,6 +461,7 @@ const options = props.crew;
                                                 >Detail Location</label
                                             >
                                             <textarea
+                                            readonly
                                                 id="message"
                                                 name="location_detail"
                                                 v-model="form.location_detail"

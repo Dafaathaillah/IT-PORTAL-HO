@@ -40,7 +40,7 @@ class RedirectAuthenticatedUsersController extends Controller
         } elseif (auth()->user()->role == 'soc_ho') {
             return redirect()->route('aduan.page');
         } elseif (auth()->user()->role == 'guest') {
-            return redirect('asetDashboard');
+            return redirect('complaint/dashboard');
         } else{
             return redirect('/login');
         }

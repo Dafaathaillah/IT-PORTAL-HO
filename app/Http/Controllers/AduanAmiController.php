@@ -63,7 +63,7 @@ class AduanAmiController extends Controller
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
 
-        $crew = User::where('site', 'AMI')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'AMI')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -194,19 +194,24 @@ class AduanAmiController extends Controller
 
     public function edit($id)
     {
+        $categories = DB::table('root_cause_categories')
+        ->select('id', 'category_root_cause')
+        ->where('site_type', 'SITE')
+        ->get();
         $aduan = Aduan::find($id);
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
 
         $selectCrew = explode(', ', $aduan->crew);
-        $crew = User::where('site', 'AMI')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'AMI')->where('ict_group', 'Y')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         return Inertia::render('Inventory/SiteAmi/Aduan/AduanEdit', [
             'aduan' => $aduan,
             'crew' => $crew,
             'selectCrew' => $selectCrew,
+            'categories' => $categories,
         ]);
     }
 

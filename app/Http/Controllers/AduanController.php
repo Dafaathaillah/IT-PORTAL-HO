@@ -218,6 +218,19 @@ class AduanController extends Controller
 
     public function edit($id)
     {
+        $site = Auth::user()->site;
+        if ($site != 'HO') {
+            $categories = DB::table('root_cause_categories')
+                ->select('id', 'category_root_cause')
+                ->where('site_type', 'SITE')
+                ->get();
+        } else {
+            $categories = DB::table('root_cause_categories')
+                ->select('id', 'category_root_cause')
+                ->where('site_type', 'HO')
+                ->get();
+        }
+
         $aduan = Aduan::find($id);
         if (empty($aduan)) {
             abort(404, 'Data not found');
@@ -232,6 +245,7 @@ class AduanController extends Controller
             'aduan' => $aduan,
             'crew' => $crew,
             'selectCrew' => $selectCrew,
+            'categories' => $categories,
         ]);
     }
 

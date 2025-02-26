@@ -56,7 +56,7 @@ const yearxyz = new Date().getFullYear();
                     <p class="mb-0 text-slate-400 text-sm md:text-base lg:text-base">
                         Copyright ©
                         {{ yearxyz }}
-                        by ICT PPA BIB.
+                        by ICT PPA AMM
                     </p>
                 </div>
             </div>

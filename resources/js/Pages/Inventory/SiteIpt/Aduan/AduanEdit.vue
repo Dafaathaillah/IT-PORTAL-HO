@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
 import { ref, computed } from "vue";
 
-const props = defineProps(["aduan", "crew", "selectCrew"]);
+const props = defineProps(["aduan", "crew", "selectCrew", "categories"]);
 
 const form = useForm({
     id: props.aduan.id,
@@ -263,20 +263,18 @@ function handleCategoryChange(event) {
                                                 name="category_name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option
+                                                  <option
                                                     selected
-                                                    value="PRINTER"
+                                                    value=""
                                                 >
-                                                    PRINTER
+                                                    SELECT CATEGORY
                                                 </option>
-                                                <option value="NETWORK">
-                                                    NETWORK
-                                                </option>
-                                                <option value="CCTV">
-                                                    CCTV
-                                                </option>
-                                                <option value="PC/LAPTOP">
-                                                    PC/LAPTOP
+                                                <option
+                                                    v-for="category in categories"
+                                                    :key="category.id"
+                                                    :value="category.category_root_cause"
+                                                >
+                                                    {{ category.category_root_cause }}
                                                 </option>
                                             </select>
                                         </div>

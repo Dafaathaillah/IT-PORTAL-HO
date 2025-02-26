@@ -63,7 +63,7 @@ class AduanSksController extends Controller
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
 
-        $crew = User::where('site', 'SKS')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'SKS')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -137,7 +137,7 @@ class AduanSksController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site', 'SKS')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'SKS')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -194,19 +194,25 @@ class AduanSksController extends Controller
 
     public function edit($id)
     {
+        $categories = DB::table('root_cause_categories')
+            ->select('id', 'category_root_cause')
+            ->where('site_type', 'SITE')
+            ->get();
+
         $aduan = Aduan::find($id);
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
 
         $selectCrew = explode(', ', $aduan->crew);
-        $crew = User::where('site', 'SKS')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'SKS')->where('ict_group', 'Y')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         return Inertia::render('Inventory/SiteSks/Aduan/AduanEdit', [
             'aduan' => $aduan,
             'crew' => $crew,
             'selectCrew' => $selectCrew,
+            'categories' => $categories,
         ]);
     }
 

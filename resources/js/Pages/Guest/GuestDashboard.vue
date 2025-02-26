@@ -14,18 +14,18 @@ function formattedDate(date) {
 }
 
 const mount = onMounted(() => {
-    console.log(props.data_pengajuan);
-    if (!localStorage.getItem('hasLoaded')) {
-        Swal.fire({
-            title: "Hello!",
-            text: "Akun ini adalah akun tamu silahkan mengajukan akses melalui tombol pengajuan akses !",
-            icon: "warning",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#3085d6",
-        });
-    }
-    // Set a flag in localStorage so the popup won't appear again
-    localStorage.setItem('hasLoaded', 'true');
+    // console.log(props.data_pengajuan);
+    // if (!localStorage.getItem('hasLoaded')) {
+    //     Swal.fire({
+    //         title: "Hello!",
+    //         text: "Akun ini adalah akun tamu silahkan mengajukan akses melalui tombol pengajuan akses !",
+    //         icon: "warning",
+    //         confirmButtonText: "OK",
+    //         confirmButtonColor: "#3085d6",
+    //     });
+    // }
+    // // Set a flag in localStorage so the popup won't appear again
+    // localStorage.setItem('hasLoaded', 'true');
 
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable();

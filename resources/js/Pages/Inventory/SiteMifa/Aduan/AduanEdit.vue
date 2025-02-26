@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
 import { ref, computed } from "vue";
 
-const props = defineProps(["aduan", "crew", "selectCrew"]);
+const props = defineProps(["aduan", "crew", "selectCrew", "categories"]);
 
 const form = useForm({
     id: props.aduan.id,
@@ -265,18 +265,16 @@ function handleCategoryChange(event) {
                                             >
                                                 <option
                                                     selected
-                                                    value="PRINTER"
+                                                    value=""
                                                 >
-                                                    PRINTER
+                                                    SELECT CATEGORY
                                                 </option>
-                                                <option value="NETWORK">
-                                                    NETWORK
-                                                </option>
-                                                <option value="CCTV">
-                                                    CCTV
-                                                </option>
-                                                <option value="PC/LAPTOP">
-                                                    PC/LAPTOP
+                                                <option
+                                                    v-for="category in categories"
+                                                    :key="category.id"
+                                                    :value="category.category_root_cause"
+                                                >
+                                                    {{ category.category_root_cause }}
                                                 </option>
                                             </select>
                                         </div>
