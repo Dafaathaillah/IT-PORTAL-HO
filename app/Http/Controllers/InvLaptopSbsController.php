@@ -182,7 +182,7 @@ class InvLaptopSbsController extends Controller
 
     public function detail($id)
     {
-        $laptop = InvLaptop::where('id', $id)->first();
+        $laptop = InvLaptop::with('pengguna')->where('id', $id)->first();
         if (empty($laptop)) {
             abort(404, 'Data not found');
         }

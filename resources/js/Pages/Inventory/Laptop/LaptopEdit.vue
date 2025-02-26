@@ -284,11 +284,11 @@ const update = () => {
                                                 name="assets_category"
                                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="standart">
-                                                    standart
+                                                <option selected value="STANDART">
+                                                    STANDART
                                                 </option>
-                                                <option value="non_standart">
-                                                    non_standart
+                                                <option value="NON_STANDART">
+                                                    NON_STANDART
                                                 </option>
                                             </select>
                                         </div>
@@ -502,7 +502,7 @@ const update = () => {
                                                 v-model="form.aplikasi"
                                                 name="aplikasi"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Standart Progxx"
+                                                placeholder="STANDART Progxx"
                                             />
                                         </div>
                                     </div> -->

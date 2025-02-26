@@ -71,6 +71,30 @@ const mount = onMounted(() => {
                                         <p>: {{ laptop.number_asset_ho }}</p>
                                     </div>
                                 </div>
+                                  <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">Nama Pengguna</p>
+                                    </div>
+                                    <div>
+                                        <p>: {{ laptop.pengguna.username }}</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">Departemen</p>
+                                    </div>
+                                    <div>
+                                        <p>: {{ laptop.pengguna.department }}</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">Jabatan</p>
+                                    </div>
+                                    <div>
+                                        <p>: {{ laptop.pengguna.position }}</p>
+                                    </div>
+                                </div>
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Laptop Name</p>

@@ -510,6 +510,7 @@ function formatData(text) {
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <NavLinkCustom
+                                                                v-if="aduans.status != 'CLOSED'"
                                                                 @click="
                                                                     progressAduan(
                                                                         aduans.id

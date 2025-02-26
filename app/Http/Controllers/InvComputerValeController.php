@@ -180,7 +180,7 @@ class InvComputerValeController extends Controller
 
     public function detail($id)
     {
-        $komputer = InvComputer::where('id', $id)->first();
+        $komputer = InvComputer::with('pengguna')->where('id', $id)->first();
 
         if (empty($komputer)) {
             abort(404, 'Data not found');

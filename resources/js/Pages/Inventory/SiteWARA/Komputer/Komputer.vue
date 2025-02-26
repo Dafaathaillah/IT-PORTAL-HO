@@ -331,6 +331,14 @@ const showAddAlert = () => {
                                                         >
                                                             Pengguna
                                                         </th>
+                                                           <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            Departemen
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            Jabatan
+                                                        </th>
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -461,6 +469,28 @@ const showAddAlert = () => {
                                                                     komputers
                                                                         .pengguna
                                                                         .username
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                {{
+                                                                    komputers
+                                                                        .pengguna
+                                                                        .department
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                {{
+                                                                    komputers
+                                                                        .pengguna
+                                                                        .position
                                                                 }}
                                                             </p>
                                                         </td>

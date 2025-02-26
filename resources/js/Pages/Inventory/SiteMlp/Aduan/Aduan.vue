@@ -170,7 +170,6 @@ const formatComplaint = (text) => {
     return text.replace(/(.{25})/g, "$1\n"); // Menyisipkan baris baru setiap 25 karakter
 };
 
-
 function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
@@ -397,220 +396,290 @@ function formatData(text) {
                                     New Data
                                 </Link>
                             </div>
-                                                        <div class="flex-auto px-0 pt-0 pb-2">
-                                <PerfectScrollbar style="position: relative;">
+                            <div class="flex-auto px-0 pt-0 pb-2">
+                                <PerfectScrollbar style="position: relative">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
-                                            <table id="tableData" class="table table-striped">
+                                            <table
+                                                id="tableData"
+                                                class="table table-striped"
+                                            >
                                                 <thead class="align-bottom">
                                                     <tr>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             #
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Progress
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Ticket Code
                                                         </th>
-                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Nrp
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Name
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Category
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Action Repair
                                                         </th>
                                                         <th
-                                                        style="min-width: 250px; max-width: 400px; word-break: break-word; white-space: normal; padding: 10px;"
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            style="
+                                                                min-width: 250px;
+                                                                max-width: 400px;
+                                                                word-break: break-word;
+                                                                white-space: normal;
+                                                                padding: 10px;
+                                                            "
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Issue
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             crew
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Status
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Report Date
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Start Response
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Response Time
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Start Progres
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Finish Progress
                                                         </th>
                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
                                                             Action
                                                         </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="(
-                                                        aduans, index
-                                                    ) in aduan" :key="index">
+                                                    <tr
+                                                        v-for="(
+                                                            aduans, index
+                                                        ) in aduan"
+                                                        :key="index"
+                                                    >
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{ index + 1 }}
                                                             </span>
                                                         </td>
-                                                         <td
-                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <NavLinkCustom @click="
-                                                                progressAduan(
-                                                                    aduans.id
-                                                                )
+                                                        <td
+                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <NavLinkCustom
+                                                                v-if="
+                                                                    aduans.status !=
+                                                                    'CLOSED'
                                                                 "
-                                                                class="mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                @click="
+                                                                    progressAduan(
+                                                                        aduans.id
+                                                                    )
+                                                                "
+                                                                class="mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 Progress Aduan
                                                             </NavLinkCustom>
                                                         </td>
                                                         <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.complaint_code
                                                                 }}
                                                             </p>
                                                         </td>
                                                         <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{ aduans.nrp }}
                                                             </p>
                                                         </td>
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.complaint_name
                                                                 }}
                                                             </span>
                                                         </td>
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.category_name
                                                                 }}
                                                             </span>
                                                         </td>
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.action_repair
                                                                 }}
                                                             </span>
                                                         </td>
-                                                                                                              <td
+                                                        <td
                                                             class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
                                                                 class="mb-0 text-sm break-words whitespace-pre-wrap font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                 {{ formatComplaint(aduans.complaint_note) }}
+                                                                {{
+                                                                    formatComplaint(
+                                                                        aduans.complaint_note
+                                                                    )
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{ aduans.crew }}
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    aduans.crew
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span :class="{
-                                                                'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    aduans.status ===
-                                                                    'CLOSED',
-                                                                'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    aduans.status ===
-                                                                    'PROGRESS',
-                                                                'bg-gradient-to-tl from-blue-500 to-purple-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    aduans.status ===
-                                                                    'OPEN',
-                                                                'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
-                                                                    aduans.status ===
-                                                                    'CANCEL',
-                                                            }">
-                                                                {{ aduans.status }}
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                :class="{
+                                                                    'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        aduans.status ===
+                                                                        'CLOSED',
+                                                                    'bg-gradient-to-tl from-yellow-500 to-yellow-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        aduans.status ===
+                                                                        'PROGRESS',
+                                                                    'bg-gradient-to-tl from-blue-500 to-purple-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        aduans.status ===
+                                                                        'OPEN',
+                                                                    'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                        aduans.status ===
+                                                                        'CANCEL',
+                                                                }"
+                                                            >
+                                                                {{
+                                                                    aduans.status
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.date_of_complaint
                                                                 }}
                                                             </p>
                                                         </td>
                                                         <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.start_response
                                                                 }}
                                                             </p>
                                                         </td>
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.response_time
                                                                 }}
                                                             </span>
                                                         </td>
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.start_progress
                                                                 }}
                                                             </span>
                                                         </td>
                                                         <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
                                                             <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
                                                                     aduans.end_progress
                                                                 }}
@@ -618,32 +687,38 @@ function formatData(text) {
                                                         </td>
 
                                                         <td
-                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-
-                                                            <NavLinkCustom @click="
-                                                                detailData(
-                                                                    aduans.id
-                                                                )
+                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    detailData(
+                                                                        aduans.id
+                                                                    )
                                                                 "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 Detail
                                                             </NavLinkCustom>
 
-                                                            <NavLinkCustom @click="
-                                                                editData(
-                                                                    aduans.id
-                                                                )
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    editData(
+                                                                        aduans.id
+                                                                    )
                                                                 "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 Edit
                                                             </NavLinkCustom>
 
-                                                            <NavLinkCustom @click="
-                                                                deleteData(
-                                                                    aduans.id
-                                                                )
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    deleteData(
+                                                                        aduans.id
+                                                                    )
                                                                 "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 Delete
                                                             </NavLinkCustom>
                                                         </td>

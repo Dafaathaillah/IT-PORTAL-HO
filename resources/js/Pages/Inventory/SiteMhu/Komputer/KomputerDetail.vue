@@ -71,6 +71,30 @@ const mount = onMounted(() => {
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div>
+                                        <p class="text-base">Nama Pengguna</p>
+                                    </div>
+                                    <div>
+                                        <p>: {{ komputer.pengguna.username }}</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">Departemen</p>
+                                    </div>
+                                    <div>
+                                        <p>: {{ komputer.pengguna.department }}</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">Jabatan</p>
+                                    </div>
+                                    <div>
+                                        <p>: {{ komputer.pengguna.position }}</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div>
                                         <p class="text-base">Komputer Name</p>
                                     </div>
                                     <div>

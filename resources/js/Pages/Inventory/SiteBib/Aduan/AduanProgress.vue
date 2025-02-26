@@ -24,8 +24,8 @@ const form = useForm({
     location_detail: props.aduan.detail_location,
     status: props.aduan.status,
     complaint_note: props.aduan.complaint_note,
-    action_repair: "",
-    repair_note: "",
+    actionRepair: props.aduan.actionRepair,
+    repair_note: props.aduan.repair_note,
 });
 
 const isDisabled = ref(true);
@@ -73,7 +73,7 @@ const updateProgress = () => {
     formData.append("id", form.id);
     formData.append("crew", crewString.value);
     formData.append("image", file.value);
-    formData.append("actionRepair", form.action_repair);
+    formData.append("actionRepair", form.actionRepair);
     formData.append("dateOfComplaint", formattedDateDateOfComplaint);
     formData.append("startResponse", formattedDateStartResponse);
     formData.append("startProgress", formattedDateStartProgress);

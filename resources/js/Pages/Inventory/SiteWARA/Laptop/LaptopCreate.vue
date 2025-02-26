@@ -162,7 +162,7 @@ const onInput = (data, some) => {
 
     form.assets_category = data;
 
-    if(data == 'non_standart') {
+    if(data == 'NON_STANDART') {
         isDisabled_asetnoho.value = true;
         form.number_asset_ho = 'unidentified';
     }else{
@@ -285,11 +285,11 @@ console.log(data);
                                                 @update:model-value="onInput"
                                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="standart">
-                                                    standart
+                                                <option selected value="STANDART">
+                                                    STANDART
                                                 </option>
-                                                <option value="non_standart">
-                                                    non_standart
+                                                <option value="NON_STANDART">
+                                                    NON_STANDART
                                                 </option>
                                             </select>
                                         </div>
@@ -329,7 +329,7 @@ console.log(data);
                                                 type="text"
                                                 v-model="form.number_asset_ho"
                                                 name="number_asset_ho"
-                                                v-bind:class="{'mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500': form.assets_category == 'non_standart',  'focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none': form.assets_category != 'non_standart'}"
+                                                v-bind:class="{'mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500': form.assets_category == 'NON_STANDART',  'focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none': form.assets_category != 'NON_STANDART'}"
                                                 :disabled="isDisabled_asetnoho"
                                                 placeholder="10700xxx"
                                             />
@@ -503,7 +503,7 @@ console.log(data);
                                                 v-model="form.aplikasi"
                                                 name="aplikasi"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Standart Progxx"
+                                                placeholder="STANDART Progxx"
                                             />
                                         </div>
                                     </div> -->
