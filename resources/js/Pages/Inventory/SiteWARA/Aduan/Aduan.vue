@@ -446,6 +446,7 @@ function formatData(text) {
                                                             Action Repair
                                                         </th>
                                                         <th
+                                                        style="min-width: 250px; max-width: 400px; word-break: break-word; white-space: normal; padding: 10px;"
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Issue

@@ -170,7 +170,6 @@ const formatComplaint = (text) => {
     return text.replace(/(.{25})/g, "$1\n"); // Menyisipkan baris baru setiap 25 karakter
 };
 
-
 function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
@@ -443,6 +442,13 @@ function formatData(text) {
                                                             Action Repair
                                                         </th>
                                                         <th
+                                                            style="
+                                                                min-width: 250px;
+                                                                max-width: 400px;
+                                                                word-break: break-word;
+                                                                white-space: normal;
+                                                                padding: 10px;
+                                                            "
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Issue
@@ -572,13 +578,17 @@ function formatData(text) {
                                                                 }}
                                                             </span>
                                                         </td>
-                                                                                                              <td
+                                                        <td
                                                             class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
                                                                 class="mb-0 text-sm break-words whitespace-pre-wrap font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                 {{ formatComplaint(aduans.complaint_note) }}
+                                                                {{
+                                                                    formatComplaint(
+                                                                        aduans.complaint_note
+                                                                    )
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -675,7 +685,6 @@ function formatData(text) {
                                                         <td
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
-
                                                             <NavLinkCustom
                                                                 @click="
                                                                     detailData(
