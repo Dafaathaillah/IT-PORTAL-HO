@@ -21,9 +21,9 @@ class InvLaptopPikController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->where('site', 'BIB')->get();
+        $dataInventory = InvLaptop::with('pengguna')->where('site', 'PIK')->get();
 
-        $site = 'BIB';
+        $site = 'PIK';
 
         $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
             return ['name' => $name];
@@ -56,7 +56,7 @@ class InvLaptopPikController extends Controller
 
             $code_dept = Department::where('department_name', $dept)->first();
 
-            $maxId = InvLaptop::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+            $maxId = InvLaptop::where('site', 'PIK')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
             // dd($maxId);
 
             if (is_null($maxId)) {
@@ -71,7 +71,7 @@ class InvLaptopPikController extends Controller
             $request['inventory_number'] = $uniqueString;
             // end generate code
 
-            $pengguna = UserAll::where('site', 'BIB')->pluck('username')->map(function ($name) {
+            $pengguna = UserAll::where('site', 'PIK')->pluck('username')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
 
@@ -113,7 +113,7 @@ class InvLaptopPikController extends Controller
                 'note' => $params['note'],
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'BIB',
+                'site' => 'PIK',
                 'dept' => $dept
             ];
 
@@ -149,7 +149,7 @@ class InvLaptopPikController extends Controller
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site', 'BIB')->pluck('username')->map(function ($name) {
+        $pengguna_all = UserAll::where('site', 'PIK')->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -234,7 +234,7 @@ class InvLaptopPikController extends Controller
                 'note' => $request->note,
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'BIB'
+                'site' => 'PIK'
             ];
         } else {
 
@@ -258,7 +258,7 @@ class InvLaptopPikController extends Controller
                 'condition' => $request->condition,
                 'note' => $request->note,
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'BIB'
+                'site' => 'PIK'
             ];
         }
 
