@@ -31,9 +31,13 @@ class ImportLaptop implements ToModel, WithStartRow
         $dept = explode('-', $row[2]);
 
         $aduan_get_data_user = UserAll::where('nrp', $row[20])->first();
+        $existingDataSn = InvLaptop::where('serial_number', $row[13])->exists();
 
         // dd(aduan_get_data_user);
         if ($aduan_get_data_user) {
+            if ($existingDataSn) {
+                return null;
+            }
             return new InvLaptop([
                 'max_id' => $maxId,
                 'laptop_name' => $row[3],

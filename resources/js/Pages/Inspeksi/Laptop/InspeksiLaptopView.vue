@@ -333,6 +333,11 @@ function formatData(text) {
                                                         >
                                                             #
                                                         </th>
+                                                         <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inspection
+                                                        </th>
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -409,6 +414,26 @@ function formatData(text) {
                                                                 {{ index + 1 }}
                                                             </span>
                                                         </td>
+
+                                                         <td
+                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    processData(
+                                                                        inspeksiLaptops.id
+                                                                    )
+                                                                "
+                                                                v-if="
+                                                                    inspeksiLaptops.inspection_status ===
+                                                                    'N'
+                                                                "
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Do Inspection
+                                                            </NavLinkCustom>
+                                                        </td>
+
                                                         <td
                                                             class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
@@ -557,20 +582,6 @@ function formatData(text) {
                                                         <td
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
-                                                            <NavLinkCustom
-                                                                @click="
-                                                                    processData(
-                                                                        inspeksiLaptops.id
-                                                                    )
-                                                                "
-                                                                v-if="
-                                                                    inspeksiLaptops.inspection_status ===
-                                                                    'N'
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Do Inspection
-                                                            </NavLinkCustom>
 
                                                             <NavLinkCustom
                                                                 @click="

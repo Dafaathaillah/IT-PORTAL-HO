@@ -31,9 +31,13 @@ class ImportComputer implements ToModel, WithStartRow
         $dept = explode('-', $row[2]);
 
         $aduan_get_data_user = UserAll::where('nrp', $row[20])->first();
+        $existingDataSn = InvComputer::where('serial_number', $row[13])->exists();
 
-        // dd($aduan_get_data_user);
+        // dd(aduan_get_data_user);
         if ($aduan_get_data_user) {
+            if ($existingDataSn) {
+                return null;
+            }
             return new InvComputer([
                 'max_id' => $maxId,
                 'computer_name' => $row[3],

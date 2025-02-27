@@ -1,11 +1,10 @@
 <style>
-@import 'datatables.net-dt';
+@import "datatables.net-dt";
 
 .dt-search {
     margin-bottom: 1em;
     float: right !important;
     text-align: center !important;
-
 }
 .dt-paging {
     margin-top: 1em;
@@ -25,7 +24,7 @@ import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Komputer Pages");
@@ -39,23 +38,24 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-        dom: 'fBrtilp',
+        dom: "fBrtilp",
         buttons: [
-                {
-                    extend: 'spacer',
-                    style: 'bar',
-                    text: 'Export files:'
-                },
-                'csvHtml5',
-                'excelHtml5',
-                'spacer'
-            ],
+            {
+                extend: "spacer",
+                style: "bar",
+                text: "Export files:",
+            },
+            "csvHtml5",
+            "excelHtml5",
+            "spacer",
+        ],
         initComplete: function () {
-            var btns = $('.dt-button');
-            btns.addClass('text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2');
-            btns.removeClass('dt-button');
-
-        }
+            var btns = $(".dt-button");
+            btns.addClass(
+                "text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            );
+            btns.removeClass("dt-button");
+        },
     });
 });
 
@@ -111,7 +111,7 @@ const getBadgeTextStatusInspeksi = (status) => {
 const getBadgeClassStatusFindings = (temuan) => {
     if (temuan === "" || temuan === null) {
         return "bg-gradient-to-tl from-cyan-500 to-sky-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    }else {
+    } else {
         return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"; // Default untuk status yang tidak dikenal
     }
 };
@@ -119,7 +119,7 @@ const getBadgeClassStatusFindings = (temuan) => {
 const getBadgeTextStatusFindings = (temuan) => {
     if (temuan === "" || temuan === null) {
         return "Tidak ada temuan";
-    }else {
+    } else {
         return temuan; // Default teks untuk status yang tidak dikenal
     }
 };
@@ -153,11 +153,10 @@ const getBadgeTextStatusInventory = (status) => {
     <Head title="Inspeksi Komputer" />
 
     <AuthenticatedLayout
-            v-model:pages="pages"
+        v-model:pages="pages"
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
-        >
-
+    >
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
@@ -166,7 +165,7 @@ const getBadgeTextStatusInventory = (status) => {
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <PerfectScrollbar style="position: relative;">
+                                <PerfectScrollbar style="position: relative">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <div
@@ -187,11 +186,16 @@ const getBadgeTextStatusInventory = (status) => {
                                                             #
                                                         </th>
                                                         <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inspection
+                                                        </th>
+                                                        <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Inventory Number
                                                         </th>
-                                                        
+
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -202,7 +206,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                         >
                                                             Department
                                                         </th>
-                                                        
+
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -243,7 +247,6 @@ const getBadgeTextStatusInventory = (status) => {
                                                         >
                                                             Action
                                                         </th>
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -253,7 +256,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                         ) in computer"
                                                         :key="index"
                                                     >
-                                                    <td
+                                                        <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
@@ -262,44 +265,69 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 {{ index + 1 }}
                                                             </span>
                                                         </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    computers.computer.computer_code
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    computers.computer.pengguna.username
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
 
+                                                                      <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <NavLinkCustom
+                                                                v-if="
+                                                                    computers.inspection_status ===
+                                                                    'N'
+                                                                "
+                                                                @click="
+                                                                    editData(
+                                                                        computers.id
+                                                                    )
+                                                                "
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Do Inspection
+                                                            </NavLinkCustom>
+                                                        </td>
+
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
                                                                 {{
-                                                                    computers.computer.pengguna.department
+                                                                    computers
+                                                                        .computer
+                                                                        .computer_code
                                                                 }}
-                                                                
                                                             </p>
                                                         </td>
-                                                        
-                                                        
+
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    computers
+                                                                        .computer
+                                                                        .pengguna
+                                                                        .username
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    computers
+                                                                        .computer
+                                                                        .pengguna
+                                                                        .department
+                                                                }}
+                                                            </p>
+                                                        </td>
+
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
@@ -323,10 +351,13 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ 
-                                                                    computers.updated_at == null ? '-' : formattedDate(
-                                                                        computers.updated_at
-                                                                    )
+                                                                {{
+                                                                    computers.updated_at ==
+                                                                    null
+                                                                        ? "-"
+                                                                        : formattedDate(
+                                                                              computers.updated_at
+                                                                          )
                                                                 }}
                                                             </span>
                                                         </td>
@@ -386,46 +417,41 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 }}
                                                             </span>
                                                         </td>
-                                                        
+
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ computers.status_approval }}
+                                                                {{
+                                                                    computers.status_approval
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'N'"
-                                                                @click="
-                                                                    editData(
-                                                                        computers.id
-                                                                    )
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Do Inspection
-                                                            </NavLinkCustom>
-
-                                                            <NavLinkCustom
                                                                 @click="
                                                                     editDataInspeksi(
                                                                         computers.id
                                                                     )
                                                                 "
-                                                                v-if="computers.inspection_status === 'Y'"
+                                                                v-if="
+                                                                    computers.inspection_status ===
+                                                                    'Y'
+                                                                "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Edit
                                                             </NavLinkCustom>
-                                                            
 
                                                             <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'Y'"
+                                                                v-if="
+                                                                    computers.inspection_status ===
+                                                                    'Y'
+                                                                "
                                                                 @click="
                                                                     detailData(
                                                                         computers.id
@@ -435,7 +461,6 @@ const getBadgeTextStatusInventory = (status) => {
                                                             >
                                                                 Detail
                                                             </NavLinkCustom>
-
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -452,6 +477,5 @@ const getBadgeTextStatusInventory = (status) => {
     </AuthenticatedLayout>
 </template>
 <style>
-@import '/public/assets/css/perfect-scrollbar.css';
-
+@import "/public/assets/css/perfect-scrollbar.css";
 </style>
