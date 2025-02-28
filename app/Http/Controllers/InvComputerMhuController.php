@@ -125,8 +125,15 @@ class InvComputerMhuController extends Controller
     {
         try {
 
-            Excel::import(new ImportComputer, $request->file('file'));
-            return redirect()->route('komputerMhu.page');
+            $import = new ImportComputer();
+            Excel::import($import, $request->file('file'));
+    
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('komputerMhu.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);

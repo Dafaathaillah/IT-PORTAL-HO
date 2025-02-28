@@ -10,17 +10,20 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class ImportComputer implements ToModel, WithStartRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function startRow(): int
     {
         return 17;
     }
 
+    public $duplicateRecords = [];
+
     public function model(array $row)
     {
+
         $maxId = InvComputer::max('max_id');
         if (is_null($maxId) || empty($maxId)) {
             $maxId = 1;
@@ -31,11 +34,17 @@ class ImportComputer implements ToModel, WithStartRow
         $dept = explode('-', $row[2]);
 
         $aduan_get_data_user = UserAll::where('nrp', $row[20])->first();
-        $existingDataSn = InvComputer::where('serial_number', $row[13])->exists();
+        $existingDataSn = InvComputer::where('serial_number', $row[13])->first();
 
-        // dd(aduan_get_data_user);
+        // dd($existingDataSn);
         if ($aduan_get_data_user) {
             if ($existingDataSn) {
+                $this->duplicateRecords[] = [
+                    'number_asset_ho' => $existingDataSn->number_asset_ho,
+                    'computer_code' => $existingDataSn->computer_code,
+                    'serial_number' => $existingDataSn->serial_number,
+                    'site' => $existingDataSn->site,
+                ];
                 return null;
             }
             return new InvComputer([
@@ -60,5 +69,10 @@ class ImportComputer implements ToModel, WithStartRow
                 'dept' => $dept[22]
             ]);
         }
+    }
+
+    public function getDuplicateRecords()
+    {
+        return $this->duplicateRecords;
     }
 }

@@ -19,7 +19,7 @@ class InvPrinterPikController extends Controller
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiePik/Printer/Printer', ['printer' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/SitePik/Printer/Printer', ['printer' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -50,7 +50,7 @@ class InvPrinterPikController extends Controller
 
         // end generate code
 
-        return Inertia::render('Inventory/SiePik/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
+        return Inertia::render('Inventory/SitePik/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
     }
 
     public function store(Request $request)
@@ -109,7 +109,7 @@ class InvPrinterPikController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiePik/Printer/PrinterDetail', [
+        return Inertia::render('Inventory/SitePik/Printer/PrinterDetail', [
             'printers' => $printer,
         ]);
     }
@@ -133,7 +133,7 @@ class InvPrinterPikController extends Controller
         })->toArray();
 
         // return response()->json(['ap' => $accessPoint]);
-        return Inertia::render('Inventory/SiePik/Printer/PrinterEdit', ['printer' => $printer, 'department' => $department, 'department_select' => $department_select]);
+        return Inertia::render('Inventory/SitePik/Printer/PrinterEdit', ['printer' => $printer, 'department' => $department, 'department_select' => $department_select]);
     }
 
     public function show($id)
