@@ -22,7 +22,7 @@ class InvLaptopMifaController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->where('site', 'MIFA')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'MIFA')->get();
 
         $site = 'MIFA';
 

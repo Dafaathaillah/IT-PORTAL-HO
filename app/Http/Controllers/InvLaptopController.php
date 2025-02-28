@@ -23,7 +23,7 @@ class InvLaptopController extends Controller
     public function index()
     {
         
-        $dataInventory = InvLaptop::with('pengguna')->where('site', null)->orWhere('site', 'HO')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', null)->orWhere('site', 'HO')->get();
 
         $site = '';
 

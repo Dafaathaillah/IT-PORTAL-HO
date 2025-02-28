@@ -22,7 +22,7 @@ class InvLaptopAmiController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->where('site', 'AMI')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'AMI')->get();
 
         $site = 'AMI';
 

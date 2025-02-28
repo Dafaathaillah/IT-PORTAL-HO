@@ -22,7 +22,7 @@ class InvLaptopSbsController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->where('site', 'SBS')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'SBS')->get();
 
         $site = 'SBS';
 

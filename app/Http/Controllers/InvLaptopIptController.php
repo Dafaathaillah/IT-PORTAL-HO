@@ -22,7 +22,7 @@ class InvLaptopIptController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->where('site', 'IPT')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'IPT')->get();
 
         $site = 'IPT';
 

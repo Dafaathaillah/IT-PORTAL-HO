@@ -66,21 +66,19 @@ class ImportLaptop implements ToModel, WithStartRow
 
     private function extractDept($inventoryNumber)
     {
-        preg_match('/^BIB-NB-([A-Z]+)-\d+$/', $inventoryNumber, $matches);
+        preg_match('/^[A-Z]+-[A-Z]+-([A-Z]+)-\d+$/', $inventoryNumber, $matches);
         
         return $matches[1] ?? null; // Mengembalikan dept jika ada, jika tidak null
     }
 
     private function extractSite($inventoryNumber)
     {
-        // Ambil "BIB" dari awal string jika ada
-        preg_match('/^BIB/', $inventoryNumber, $matches);
+        preg_match('/^[A-Z]+/', $inventoryNumber, $matches);
         return $matches[0] ?? null;
     }
 
     private function extractNumber($inventoryNumber)
     {
-        // Ambil 3 digit angka terakhir dari inventory_number
         preg_match('/(\d{3})$/', $inventoryNumber, $matches);
 
         // Ubah menjadi integer agar menghilangkan leading zero
