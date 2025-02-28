@@ -61,8 +61,9 @@ class InvComputerValeController extends Controller
             if (is_null($maxId)) {
                 $maxId = 0;
             } else {
-                $noUrut = (int) substr($maxId->computer_code, 10, 3);
-                $maxId = $noUrut;
+                $parts = explode('-', $maxId->computer_code);
+                $lastPart = end($parts);
+                $maxId = (int) $lastPart;
             }
 
             $uniqueString = 'VALE-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);

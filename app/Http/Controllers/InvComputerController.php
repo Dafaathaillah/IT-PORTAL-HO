@@ -21,12 +21,12 @@ class InvComputerController extends Controller
 {
     public function index()
     {
-        
+
         $dataInventory = InvComputer::with('pengguna')->where('site', null)->orWhere('site', 'HO')->get();
 
         $site = '';
 
-        $department = Department::orderBy('department_name')->where('code', '!=' , null)->pluck('department_name')->map(function ($name) {
+        $department = Department::orderBy('department_name')->where('code', '!=', null)->pluck('department_name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -56,46 +56,22 @@ class InvComputerController extends Controller
 
             $code_dept = Department::where('department_name', $dept)->first();
 
-            if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-                $maxId = InvComputer::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
+            $maxId = InvComputer::where('site', 'HO')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
 
-                if (is_null($maxId)) {
-                    $maxId = 0;
-                } else {                    
-                    $noUrut = (int) substr($maxId->computer_code, 11, 3);
-                    $maxId = $noUrut;
-                }
-
-                $uniqueString = 'BIB-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-            } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-                $maxId = InvComputer::where('site', 'HO')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-
-                if (is_null($maxId)) {
-                    $maxId = 0;
-                } else {                    
-                    $noUrut = (int) substr($maxId->computer_code, 10, 3);
-                    $maxId = $noUrut;
-                }
-
-                $uniqueString = 'HO-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            if (is_null($maxId)) {
+                $maxId = 0;
             } else {
-                $maxId = InvComputer::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-                // dd($maxId);
-
-                if (is_null($maxId)) {
-                    $maxId = 0;
-                } else {
-                    $noUrut = (int) substr($maxId->computer_code, 10, 3);
-                    $maxId = $noUrut;
-                }
-
-                $uniqueString = 'BA-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+                $parts = explode('-', $maxId->computer_code);
+                $lastPart = end($parts);
+                $maxId = (int) $lastPart;
             }
+
+            $uniqueString = 'HO-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
             $request['inventory_number'] = $uniqueString;
             // end generate code
 
-            $pengguna = UserAll::where('site',auth()->user()->site)->pluck('username')->map(function ($name) {
+            $pengguna = UserAll::where('site', auth()->user()->site)->pluck('username')->map(function ($name) {
                 return ['name' => $name];
             })->toArray();
 
@@ -108,7 +84,7 @@ class InvComputerController extends Controller
             } else {
                 $maxId = $maxId + 1;
             }
-            
+
             $documentation_image = $request->file('image');
             $destinationPath = 'images/';
             $path_documentation_image = $documentation_image->store('images', 'public');
@@ -153,7 +129,7 @@ class InvComputerController extends Controller
 
             $import = new ImportComputer();
             Excel::import($import, $request->file('file'));
-    
+
             $duplicates = $import->getDuplicateRecords();
             // dd($duplicates);
             return Redirect::route('komputer.page')->with([
@@ -182,7 +158,7 @@ class InvComputerController extends Controller
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site',auth()->user()->site)->pluck('username')->map(function ($name) {
+        $pengguna_all = UserAll::where('site', auth()->user()->site)->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 

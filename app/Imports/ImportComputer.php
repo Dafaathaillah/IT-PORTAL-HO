@@ -24,14 +24,11 @@ class ImportComputer implements ToModel, WithStartRow
     public function model(array $row)
     {
 
-        $maxId = InvComputer::max('max_id');
-        if (is_null($maxId) || empty($maxId)) {
-            $maxId = 1;
-        } else {
-            $maxId = $maxId + 1;
-        }
+        $inventoryNumber = $row[2] ?? '';
+        $codeDept = $this->extractDept($inventoryNumber);
+        $codeSite = $this->extractSite($inventoryNumber);
+        $codeMaxId = $this->extractNumber($inventoryNumber);
 
-        $dept = explode('-', $row[2]);
 
         $aduan_get_data_user = UserAll::where('nrp', $row[20])->first();
         $existingDataSn = InvComputer::where('serial_number', $row[13])->first();
@@ -48,7 +45,7 @@ class ImportComputer implements ToModel, WithStartRow
                 return null;
             }
             return new InvComputer([
-                'max_id' => $maxId,
+                'max_id' => $codeMaxId,
                 'computer_name' => $row[3],
                 'computer_code' => $row[2],
                 'number_asset_ho' => $row[1],
@@ -65,10 +62,31 @@ class ImportComputer implements ToModel, WithStartRow
                 // 'date_of_inventory' => $row[22],
                 // 'date_of_deploy' => $row[23],
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => auth()->user()->site,
-                'dept' => $dept[22]
+                'site' => $codeSite,
+                'dept' => $codeDept
             ]);
         }
+    }
+
+    private function extractDept($inventoryNumber)
+    {
+        preg_match('/^[A-Z]+-[A-Z]+-([A-Z]+)-\d+$/', $inventoryNumber, $matches);
+        
+        return $matches[1] ?? null; // Mengembalikan dept jika ada, jika tidak null
+    }
+
+    private function extractSite($inventoryNumber)
+    {
+        preg_match('/^[A-Z]+/', $inventoryNumber, $matches);
+        return $matches[0] ?? null;
+    }
+
+    private function extractNumber($inventoryNumber)
+    {
+        preg_match('/(\d{3})$/', $inventoryNumber, $matches);
+
+        // Ubah menjadi integer agar menghilangkan leading zero
+        return isset($matches[1]) ? (int) $matches[1] : null;
     }
 
     public function getDuplicateRecords()
