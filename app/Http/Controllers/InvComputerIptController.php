@@ -21,7 +21,7 @@ class InvComputerIptController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->where('site', 'IPT')->get();
+        $dataInventory = InvComputer::with('pengguna')->orderBy('computer_code', 'asc')->where('site', 'IPT')->get();
 
         $site = 'IPT';
 

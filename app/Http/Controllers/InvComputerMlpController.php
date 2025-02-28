@@ -21,7 +21,7 @@ class InvComputerMlpController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->where('site', 'MLP')->get();
+        $dataInventory = InvComputer::with('pengguna')->orderBy('computer_code', 'asc')->where('site', 'MLP')->get();
 
         $site = 'MLP';
 

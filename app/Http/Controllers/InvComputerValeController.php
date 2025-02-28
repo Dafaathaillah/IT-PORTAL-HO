@@ -21,7 +21,7 @@ class InvComputerValeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->where('site', 'VALE')->get();
+        $dataInventory = InvComputer::with('pengguna')->orderBy('computer_code', 'asc')->where('site', 'VALE')->get();
 
         $site = 'VALE';
 

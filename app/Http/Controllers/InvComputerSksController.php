@@ -21,7 +21,7 @@ class InvComputerSksController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->where('site', 'SKS')->get();
+        $dataInventory = InvComputer::with('pengguna')->orderBy('computer_code', 'asc')->where('site', 'SKS')->get();
 
         $site = 'SKS';
 
