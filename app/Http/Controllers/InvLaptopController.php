@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
@@ -61,41 +62,17 @@ class InvLaptopController extends Controller
 
             // if($dept) = 
 
-            if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-                $maxId = InvLaptop::where('site', 'BIB')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-
-                if (is_null($maxId)) {
-                    $maxId = 0;
-                } else {                    
-                    $noUrut = (int) substr($maxId->laptop_code, 11, 3);
-                    $maxId = $noUrut;
-                }
-
-                $uniqueString = 'BIB-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-            } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
                 $maxId = InvLaptop::where('site', 'HO')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
 
                 if (is_null($maxId)) {
                     $maxId = 0;
-                } else {                    
-                    $noUrut = (int) substr($maxId->laptop_code, 10, 3);
-                    $maxId = $noUrut;
+                } else {
+                    $parts = explode('-', $maxId->laptop_code);
+                    $lastPart = end($parts);
+                    $maxId = (int) $lastPart;
                 }
 
                 $uniqueString = 'HO-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-            } else {
-                $maxId = InvLaptop::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-                // dd($maxId);
-
-                if (is_null($maxId)) {
-                    $maxId = 0;
-                } else {
-                    $noUrut = (int) substr($maxId->laptop_code, 10, 3);
-                    $maxId = $noUrut;
-                }
-
-                $uniqueString = 'BA-NB-'. $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-            }
 
             $request['inventory_number'] = $uniqueString;
             // end generate code
@@ -155,8 +132,15 @@ class InvLaptopController extends Controller
     {
         try {
 
-            Excel::import(new ImportLaptop, $request->file('file'));
-            return redirect()->route('laptop.page');
+            $import = new ImportLaptop();
+            Excel::import($import, $request->file('file'));
+    
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('laptop.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);

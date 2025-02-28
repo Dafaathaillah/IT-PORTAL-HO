@@ -19,27 +19,31 @@ class ImportLaptop implements ToModel, WithStartRow
         return 17;
     }
 
+    public $duplicateRecords = [];
+
     public function model(array $row)
     {
-        $maxId = InvLaptop::max('max_id');
-        if (is_null($maxId)) {
-            $maxId = 1;
-        } else {
-            $maxId = $maxId + 1;
-        }
+        $inventoryNumber = $row[2] ?? '';
+        $codeDept = $this->extractDept($inventoryNumber);
+        $codeSite = $this->extractSite($inventoryNumber);
+        $codeMaxId = $this->extractNumber($inventoryNumber);
 
-        $dept = explode('-', $row[2]);
-
+        // dd($codeDept);
         $aduan_get_data_user = UserAll::where('nrp', $row[20])->first();
-        $existingDataSn = InvLaptop::where('serial_number', $row[13])->exists();
+        $existingDataSn = InvLaptop::where('serial_number', $row[13])->first();
 
-        // dd(aduan_get_data_user);
         if ($aduan_get_data_user) {
             if ($existingDataSn) {
+                $this->duplicateRecords[] = [
+                    'number_asset_ho' => $existingDataSn->number_asset_ho,
+                    'laptop_code' => $existingDataSn->laptop_code,
+                    'serial_number' => $existingDataSn->serial_number,
+                    'site' => $existingDataSn->site,
+                ];
                 return null;
             }
             return new InvLaptop([
-                'max_id' => $maxId,
+                'max_id' => $codeMaxId,
                 'laptop_name' => $row[3],
                 'laptop_code' => $row[2],
                 'number_asset_ho' => $row[1],
@@ -54,9 +58,37 @@ class ImportLaptop implements ToModel, WithStartRow
                 'condition' => $row[19],
                 'note' => $row[21],
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => auth()->user()->site,
-                'dept' => $dept[2]
+                'site' => $codeSite,
+                'dept' => $codeDept
             ]);
         }
+    }
+
+    private function extractDept($inventoryNumber)
+    {
+        preg_match('/^BIB-NB-([A-Z]+)-\d+$/', $inventoryNumber, $matches);
+        
+        return $matches[1] ?? null; // Mengembalikan dept jika ada, jika tidak null
+    }
+
+    private function extractSite($inventoryNumber)
+    {
+        // Ambil "BIB" dari awal string jika ada
+        preg_match('/^BIB/', $inventoryNumber, $matches);
+        return $matches[0] ?? null;
+    }
+
+    private function extractNumber($inventoryNumber)
+    {
+        // Ambil 3 digit angka terakhir dari inventory_number
+        preg_match('/(\d{3})$/', $inventoryNumber, $matches);
+
+        // Ubah menjadi integer agar menghilangkan leading zero
+        return isset($matches[1]) ? (int) $matches[1] : null;
+    }
+
+    public function getDuplicateRecords()
+    {
+        return $this->duplicateRecords;
     }
 }

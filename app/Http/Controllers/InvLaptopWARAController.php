@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
@@ -62,8 +63,9 @@ class InvLaptopWARAController extends Controller
             if (is_null($maxId)) {
                 $maxId = 0;
             } else {
-                $noUrut = (int) substr($maxId->laptop_code, 10, 3);
-                $maxId = $noUrut;
+                $parts = explode('-', $maxId->laptop_code);
+                $lastPart = end($parts);
+                $maxId = (int) $lastPart;
             }
 
             $uniqueString = 'WARA-NB-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
@@ -126,8 +128,15 @@ class InvLaptopWARAController extends Controller
     {
         try {
 
-            Excel::import(new ImportLaptop, $request->file('file'));
-            return redirect()->route('laptopWARA.page');
+            $import = new ImportLaptop();
+            Excel::import($import, $request->file('file'));
+    
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('laptopWARA.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
