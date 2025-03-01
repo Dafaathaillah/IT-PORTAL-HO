@@ -983,6 +983,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbBib', [InvLaptopBibController::class, 'uploadCsv'])->name('laptopBib.import');
 
             Route::get('/komputerBib', [InvComputerBibController::class, 'index'])->name('komputerBib.page');
+            Route::post('/komputerBib/generate', [InvComputerBibController::class, 'generateCode'])->name('komputerBib.generate');
             Route::get('/komputerBib/create', [InvComputerBibController::class, 'create'])->name('komputerBib.create');
             Route::post('/komputerBib/create', [InvComputerBibController::class, 'store'])->name('komputerBib.store');
             Route::get('/komputerBib/{id}/edit', [InvComputerBibController::class, 'edit'])->name('komputerBib.edit');

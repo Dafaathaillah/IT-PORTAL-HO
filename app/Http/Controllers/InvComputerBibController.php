@@ -25,18 +25,46 @@ class InvComputerBibController extends Controller
 
         $site = 'BIB';
 
-        $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
-
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/SiteBib/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role, 'department' => $department]);
+        return Inertia::render('Inventory/SiteBib/Komputer/Komputer', ['komputer' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
     {
-        abort(404, 'page not found');
+        $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        $pengguna = UserAll::where('site', 'BIB')->pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        // return Inertia::render('Inventory/SiteBib/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+        return Inertia::render('Inventory/SiteBib/Komputer/KomputerCreate', ['pengguna' => $pengguna, 'department' => $department, 'computer_code' => session('computer_code') ?? null,]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataDept = $request->input('department');
+        $dept = $dataDept['name'];
+        $codeDept = Department::where('department_name', $dept)->first();
+        // dd($codeDept);
+        $maxId = InvComputer::where('site', 'BIB')->where('dept', $codeDept->code)->orderBy('max_id', 'desc')->first();
+        // dd($maxId);
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            $parts = explode('-', $maxId->computer_code);
+            $lastPart = end($parts);
+            $maxId = (int) $lastPart;
+        }
+
+        $uniqueString = 'BIB-PC-' . $codeDept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+
+        // return back()->with(['computerCode' => $uniqueString]);
+        return redirect()->route('komputerBib.create')->with('computer_code', $uniqueString);
     }
 
     public function store(Request $request)
@@ -45,12 +73,6 @@ class InvComputerBibController extends Controller
         $params = $request->all();
 
         if ($params['roterx'] == 'index') {
-            // start generate code
-            $currentDate = Carbon::tomorrow();
-            $year = $currentDate->format('y');
-            $month = $currentDate->month;
-            $day = $currentDate->day;
-
             $dept = $params['dept'];
 
             $code_dept = Department::where('department_name', $dept)->first();
@@ -128,7 +150,7 @@ class InvComputerBibController extends Controller
         try {
             $import = new ImportComputer();
             Excel::import($import, $request->file('file'));
-    
+
             $duplicates = $import->getDuplicateRecords();
             // dd($duplicates);
             return Redirect::route('komputerBib.page')->with([
@@ -139,7 +161,6 @@ class InvComputerBibController extends Controller
             Log::error($ex);
             return response()->json(['message' => 'Some error has occurred.'], 500);
         }
-
     }
 
     public function edit($id)

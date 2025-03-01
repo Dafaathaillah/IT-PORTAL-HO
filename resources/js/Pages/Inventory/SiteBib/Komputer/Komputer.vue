@@ -279,7 +279,7 @@ const showAddAlert = () => {
                                 <div
                                     class="flex items-center p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                                 >
-                                    <div
+                                    <!-- <div
                                         class="h-11 relative flex flex-wrap items-stretch transition-all rounded-lg ease mr-4"
                                     >
                                         <VueMultiselect
@@ -305,15 +305,14 @@ const showAddAlert = () => {
                                     >
                                         <i class="fas fa-plus"> </i
                                         >&nbsp;&nbsp;Add New Data
-                                    </Link>
-                                    <button
-                                        @click="showAddAlert()"
-                                        v-if="selectedOption == null"
+                                    </Link> -->
+                                    <Link
+                                        :href="route('komputerBib.store')"
                                         class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                     >
                                         <i class="fas fa-plus"> </i
                                         >&nbsp;&nbsp;Add New Data
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
