@@ -20,7 +20,7 @@
 <!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -161,13 +161,13 @@ const submitCsv = () => {
                 icon: "success",
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
-            });
+            }); 
 
             if (duplicates.length > 0) {
                 let duplicateMsg = duplicates
                     .map(
                         (d) =>
-                            `SN: ${d.serial_number}, No Inventory: ${d.computer_code}, No Asset HO: ${d.number_asset_ho}, Site: ${d.site}`
+                            `SN: ${d.serial_number}, No Inventory: ${d.computer_code}, No Asset HO: ${d.number_asset_ho}, site: ${d.site}`
                     )
                     .join("<br>");
 
