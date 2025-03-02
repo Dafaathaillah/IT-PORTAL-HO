@@ -92,7 +92,6 @@ class InvLaptopAmiController extends Controller
             ]);
         }
 
-
         $maxId = InvLaptop::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
@@ -146,7 +145,7 @@ class InvLaptopAmiController extends Controller
 
             $duplicates = $import->getDuplicateRecords();
             // dd($duplicates);
-            return Redirect::route('laptop.page')->with([
+            return Redirect::route('laptopAmi.page')->with([
                 'message' => 'Import selesai!',
                 'duplicates' => $duplicates, // Kirim daftar duplikat
             ]);

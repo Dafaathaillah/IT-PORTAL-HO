@@ -76,6 +76,21 @@ class InvComputerValeController extends Controller
 
         $params = $request->all();
 
+        $existingDataSn = InvComputer::where('serial_number', $params['serial_number'])->first();
+        if ($existingDataSn) {
+            $duplicatesInsertSn[] = [
+                'number_asset_ho' => $existingDataSn->number_asset_ho,
+                'laptop_code' => $existingDataSn->laptop_code,
+                'serial_number' => $existingDataSn->serial_number,
+                'site' => $existingDataSn->site,
+            ];
+            // dd($duplicatesInsertSn);
+            return Redirect::route('komputerVale.page')->with([
+                'message' => 'Import selesai!',
+                'duplicatesInsertSn' => $duplicatesInsertSn, // Kirim daftar duplikat
+            ]);
+        }
+
         $maxId = InvComputer::max('max_id');
         if (is_null($maxId) || empty($maxId)) {
             $maxId = 1;

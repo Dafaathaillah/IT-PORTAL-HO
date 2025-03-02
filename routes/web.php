@@ -1220,8 +1220,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbMip', [InvWirellessMipController::class, 'uploadCsv'])->name('wirellessMip.import');
 
             Route::get('/laptopMip', [InvLaptopMipController::class, 'index'])->name('laptopMip.page');
-            Route::post('/laptopMifa/generate', [InvLaptopMipController::class, 'generateCode'])->name('laptopMip.generate');
-            Route::get('/laptopMifa/create', [InvLaptopMipController::class, 'create'])->name('laptopMip.create');
+            Route::post('/laptopMip/generate', [InvLaptopMipController::class, 'generateCode'])->name('laptopMip.generate');
+            Route::get('/laptopMip/create', [InvLaptopMipController::class, 'create'])->name('laptopMip.create');
             Route::post('/laptopMip/create', [InvLaptopMipController::class, 'store'])->name('laptopMip.store');
             Route::get('/laptopMip/{id}/edit', [InvLaptopMipController::class, 'edit'])->name('laptopMip.edit');
             Route::delete('/laptopMip/{id}/delete', [InvLaptopMipController::class, 'destroy'])->name('laptopMip.delete');
