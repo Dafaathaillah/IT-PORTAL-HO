@@ -76,6 +76,22 @@ class InvLaptopSksController extends Controller
     {
 
         $params = $request->all();
+
+        $existingDataSn = InvLaptop::where('serial_number', $params['serial_number'])->first();
+        if ($existingDataSn) {
+            $duplicatesInsertSn[] = [
+                'number_asset_ho' => $existingDataSn->number_asset_ho,
+                'laptop_code' => $existingDataSn->laptop_code,
+                'serial_number' => $existingDataSn->serial_number,
+                'site' => $existingDataSn->site,
+            ];
+            // dd($duplicatesInsertSn);
+            return Redirect::route('laptopSks.page')->with([
+                'message' => 'Import selesai!',
+                'duplicatesInsertSn' => $duplicatesInsertSn, // Kirim daftar duplikat
+            ]);
+        }
+
         if ($params['roterx'] == 'index') {
             // start generate code
             $currentDate = Carbon::tomorrow();

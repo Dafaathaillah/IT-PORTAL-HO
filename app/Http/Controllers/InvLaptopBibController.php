@@ -76,6 +76,22 @@ class InvLaptopBibController extends Controller
     {
 
         $params = $request->all();
+
+        $existingDataSn = InvLaptop::where('serial_number', $params['serial_number'])->first();
+        if ($existingDataSn) {
+            $duplicatesInsertSn[] = [
+                'number_asset_ho' => $existingDataSn->number_asset_ho,
+                'laptop_code' => $existingDataSn->laptop_code,
+                'serial_number' => $existingDataSn->serial_number,
+                'site' => $existingDataSn->site,
+            ];
+            // dd($duplicatesInsertSn);
+            return Redirect::route('laptopBib.page')->with([
+                'message' => 'Import selesai!',
+                'duplicatesInsertSn' => $duplicatesInsertSn, // Kirim daftar duplikat
+            ]);
+        }
+
         $maxId = InvLaptop::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
@@ -128,7 +144,6 @@ class InvLaptopBibController extends Controller
             Excel::import($import, $request->file('file'));
 
             $duplicates = $import->getDuplicateRecords();
-            // dd($duplicates);
             return Redirect::route('laptopBib.page')->with([
                 'message' => 'Import selesai!',
                 'duplicates' => $duplicates, // Kirim daftar duplikat

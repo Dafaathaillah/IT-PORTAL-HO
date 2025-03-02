@@ -151,7 +151,6 @@ const save = () => {
     Inertia.post(route("laptopBib.store"), formData, {
         forceFormData: true,
         onSuccess: () => {
-            // Show SweetAlert2 success notification
             Swal.fire({
                 title: "Success!",
                 text: "Data has been successfully created!",

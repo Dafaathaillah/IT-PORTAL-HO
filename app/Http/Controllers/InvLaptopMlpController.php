@@ -76,48 +76,64 @@ class InvLaptopMlpController extends Controller
     {
 
         $params = $request->all();
-            $maxId = InvLaptop::max('max_id');
-            if (is_null($maxId)) {
-                $maxId = 1;
-            } else {
-                $maxId = $maxId + 1;
-            }
 
-            $documentation_image = $request->file('image');
-            $destinationPath = 'images/';
-            $path_documentation_image = $documentation_image->store('images', 'public');
-            $new_path_documentation_image = $path_documentation_image;
-            $documentation_image->move($destinationPath, $new_path_documentation_image);
-
-            $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
-
-            $dept = $params['dept'];
-
-            $data = [
-                'max_id' => $maxId,
-                'laptop_name' => $params['laptop_name'],
-                'laptop_code' => $params['laptop_code'],
-                'number_asset_ho' => $params['number_asset_ho'],
-                'assets_category' => $params['assets_category'],
-                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
-                'serial_number' => $params['serial_number'],
-                'aplikasi' => $params['aplikasi'],
-                'license' => $params['license'],
-                'ip_address' => $params['ip_address'],
-                'date_of_inventory' => $params['date_of_inventory'],
-                'date_of_deploy' => $params['date_of_deploy'],
-                'location' => $params['location'],
-                'status' => $params['status'],
-                'condition' => $params['condition'],
-                'note' => $params['note'],
-                'link_documentation_asset_image' => url($new_path_documentation_image),
-                'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'MLP',
-                'dept' => $dept
+        $existingDataSn = InvLaptop::where('serial_number', $params['serial_number'])->first();
+        if ($existingDataSn) {
+            $duplicatesInsertSn[] = [
+                'number_asset_ho' => $existingDataSn->number_asset_ho,
+                'laptop_code' => $existingDataSn->laptop_code,
+                'serial_number' => $existingDataSn->serial_number,
+                'site' => $existingDataSn->site,
             ];
+            // dd($duplicatesInsertSn);
+            return Redirect::route('laptopMlp.page')->with([
+                'message' => 'Import selesai!',
+                'duplicatesInsertSn' => $duplicatesInsertSn, // Kirim daftar duplikat
+            ]);
+        }
 
-            InvLaptop::create($data);
-            return redirect()->route('laptopMlp.page');
+        $maxId = InvLaptop::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
+        } else {
+            $maxId = $maxId + 1;
+        }
+
+        $documentation_image = $request->file('image');
+        $destinationPath = 'images/';
+        $path_documentation_image = $documentation_image->store('images', 'public');
+        $new_path_documentation_image = $path_documentation_image;
+        $documentation_image->move($destinationPath, $new_path_documentation_image);
+
+        $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+
+        $dept = $params['dept'];
+
+        $data = [
+            'max_id' => $maxId,
+            'laptop_name' => $params['laptop_name'],
+            'laptop_code' => $params['laptop_code'],
+            'number_asset_ho' => $params['number_asset_ho'],
+            'assets_category' => $params['assets_category'],
+            'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
+            'serial_number' => $params['serial_number'],
+            'aplikasi' => $params['aplikasi'],
+            'license' => $params['license'],
+            'ip_address' => $params['ip_address'],
+            'date_of_inventory' => $params['date_of_inventory'],
+            'date_of_deploy' => $params['date_of_deploy'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'condition' => $params['condition'],
+            'note' => $params['note'],
+            'link_documentation_asset_image' => url($new_path_documentation_image),
+            'user_alls_id' => $aduan_get_data_user['id'],
+            'site' => 'MLP',
+            'dept' => $dept
+        ];
+
+        InvLaptop::create($data);
+        return redirect()->route('laptopMlp.page');
     }
 
     public function uploadCsv(Request $request)
@@ -126,7 +142,7 @@ class InvLaptopMlpController extends Controller
 
             $import = new ImportLaptop();
             Excel::import($import, $request->file('file'));
-    
+
             $duplicates = $import->getDuplicateRecords();
             // dd($duplicates);
             return Redirect::route('laptopMlp.page')->with([

@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn () => $request->session()->get('message'),
                 'duplicates' => session('duplicates'),
+                'duplicatesInsertSn' => session('duplicatesInsertSn'),
                 'computer_code' => session('computer_code'),
                 'laptop_code' => session('laptop_code'),
                 'dept' => session('dept'),

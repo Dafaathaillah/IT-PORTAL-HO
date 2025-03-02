@@ -39,8 +39,32 @@ function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
 }
 
+const page = usePage();
+
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
+    console.log(page.props);
+    const duplicates = page.props.flash?.duplicatesInsertSn || [];
+
+    if (duplicates.length > 0) {
+        let duplicateMsg = duplicates
+            .map(
+                (d) =>
+                    `SN: ${d.serial_number}, No Inventory: ${d.computer_code}, No Asset HO: ${d.number_asset_ho}, Site: ${d.site}`
+            )
+            .join("<br>");
+
+        Swal.fire({
+            icon: "warning",
+            title: "Data Duplicate & Data Tidak Disimpan!",
+            html: duplicateMsg,
+            confirmButtonText: "OK",
+            confirmButtonColor: "#f39c12",
+        }).then(() => {
+            window.location.reload(); // Reload page setelah klik OK
+        });
+    }
+    
     $("#tableData").DataTable({
         dom: 'fBrtilp',
         buttons: [
