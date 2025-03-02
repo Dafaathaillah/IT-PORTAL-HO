@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
                 'message' => fn () => $request->session()->get('message'),
                 'duplicates' => session('duplicates'),
                 'computer_code' => session('computer_code'),
+                'laptop_code' => session('laptop_code'),
                 'dept' => session('dept'),
             ],
         ]);

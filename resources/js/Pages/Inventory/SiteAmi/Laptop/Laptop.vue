@@ -1,11 +1,10 @@
 <style>
-@import 'datatables.net-dt';
+@import "datatables.net-dt";
 
 .dt-search {
     margin-bottom: 1em;
     float: right !important;
     text-align: center !important;
-
 }
 .dt-paging {
     margin-top: 1em;
@@ -28,7 +27,7 @@ import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import VueMultiselect from "vue-multiselect";
 import { onMounted } from "vue";
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const pages = ref("Pages");
 const subMenu = ref("Laptop Pages");
@@ -42,23 +41,24 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-        dom: 'fBrtilp',
+        dom: "fBrtilp",
         buttons: [
-                {
-                    extend: 'spacer',
-                    style: 'bar',
-                    text: 'Export files:'
-                },
-                'csvHtml5',
-                'excelHtml5',
-                'spacer'
-            ],
+            {
+                extend: "spacer",
+                style: "bar",
+                text: "Export files:",
+            },
+            "csvHtml5",
+            "excelHtml5",
+            "spacer",
+        ],
         initComplete: function () {
-            var btns = $('.dt-button');
-            btns.addClass('text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2');
-            btns.removeClass('dt-button');
-
-        }
+            var btns = $(".dt-button");
+            btns.addClass(
+                "text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            );
+            btns.removeClass("dt-button");
+        },
     });
 });
 
@@ -205,19 +205,17 @@ const selectedOption = ref(null);
 
 // State pencarian
 const onInput = (data, some) => {
-
     console.log(data.name);
 };
 
 const showAddAlert = () => {
-  Swal.fire({
-    title: 'Mohon Select Department!',
-    text: 'Wajib memilih Department untuk menambahkan data',
-    icon: 'warning',
-    confirmButtonText: 'OK'
-  })
-}
-
+    Swal.fire({
+        title: "Mohon Select Department!",
+        text: "Wajib memilih Department untuk menambahkan data",
+        icon: "warning",
+        confirmButtonText: "OK",
+    });
+};
 </script>
 
 <template>
@@ -272,53 +270,26 @@ const showAddAlert = () => {
                     </form>
 
                     <div class="flex-none w-full max-w-full px-3">
-
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
-                            
                             <div
-                                class="flex items-center p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <div
-                                    class="h-11 relative flex flex-wrap items-stretch transition-all rounded-lg ease mr-4"
+                                    class="pb-0 mb-5 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                                 >
-                                
-                                    <VueMultiselect
-                                        v-model="selectedOption"
-                                        :options="options"
-                                        :multiple="false"
-                                        :close-on-select="true"
-                                        placeholder="Select Department"
-                                        track-by="name"
-                                        label="name"
-                                        @update:model-value="onInput"
-                                    />
+                                    <Link
+                                        :href="route('laptopAmi.create')"
+                                        class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
+                                    >
+                                        <i class="fas fa-plus"> </i
+                                        >&nbsp;&nbsp;Add New Data
+                                    </Link>
                                 </div>
-                                <Link
-                                    :href="route('laptopAmi.create')"
-                                    v-if="
-                                        selectedOption?.name 
-                                    "
-                                    method="post" :data="{ dept: selectedOption.name, roterx: 'index' }"
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </Link>
-                                <button
-                                    @click="showAddAlert()"
-                                    v-if="
-                                        selectedOption == null
-                                    "
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </button>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <PerfectScrollbar style="position: relative;">
+                                <PerfectScrollbar style="position: relative">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <table
@@ -484,19 +455,21 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.pengguna
+                                                                    laptops
+                                                                        .pengguna
                                                                         .username
                                                                 }}
                                                             </p>
                                                         </td>
-                                                         <td
+                                                        <td
                                                             class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.pengguna
+                                                                    laptops
+                                                                        .pengguna
                                                                         .department
                                                                 }}
                                                             </p>
@@ -508,7 +481,8 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    laptops.pengguna
+                                                                    laptops
+                                                                        .pengguna
                                                                         .position
                                                                 }}
                                                             </p>
@@ -611,8 +585,9 @@ const showAddAlert = () => {
                                                                 v-else
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                Edit untuk setting
-                                                                tanggal !
+                                                                Edit untuk
+                                                                setting tanggal
+                                                                !
                                                             </span>
                                                         </td>
                                                         <td
@@ -634,8 +609,9 @@ const showAddAlert = () => {
                                                                 v-else
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                Edit untuk setting
-                                                                tanggal !
+                                                                Edit untuk
+                                                                setting tanggal
+                                                                !
                                                             </span>
                                                         </td>
                                                         <td
@@ -655,7 +631,9 @@ const showAddAlert = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ laptops.status }}
+                                                                {{
+                                                                    laptops.status
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -680,8 +658,8 @@ const showAddAlert = () => {
                                                                     null
                                                                         ? ""
                                                                         : formatData(
-                                                                            laptops.note
-                                                                        )
+                                                                              laptops.note
+                                                                          )
                                                                 }}
                                                             </span>
                                                         </td>
@@ -744,7 +722,10 @@ const showAddAlert = () => {
                                                                         laptops.id
                                                                     )
                                                                 "
-                                                                v-if="props.role !== 'ict_technician'"
+                                                                v-if="
+                                                                    props.role !==
+                                                                    'ict_technician'
+                                                                "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Delete
@@ -765,6 +746,5 @@ const showAddAlert = () => {
     </AuthenticatedLayout>
 </template>
 <style>
-@import '/public/assets/css/perfect-scrollbar.css';
-
+@import "/public/assets/css/perfect-scrollbar.css";
 </style>

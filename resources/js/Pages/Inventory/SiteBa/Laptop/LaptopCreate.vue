@@ -1,24 +1,23 @@
-<!-- <style src="vue-multiselect/dist/vue-multiselect.css"></style> -->
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
-import { Link } from "@inertiajs/vue3";
-import { Head, useForm } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
+import { Head, useForm, usePage } from "@inertiajs/vue3";
 import VueMultiselect from "vue-multiselect";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
-import { ref, computed } from "vue";
+import { ref, computed, nextTick, watch } from "vue";
 
 const props = defineProps({
     pengguna: {
         type: Array,
     },
-    inventoryNumber: {
-        type: Object,
-    },
     dept: {
         type: Object,
+    },
+    department: {
+        type: Array,
     },
 });
 
@@ -47,8 +46,30 @@ const form = useForm({
     note: "",
     link_documentation_asset_image: "",
     user_alls_id: "",
-    roterx: "create",
-    dept: props.dept,
+    dept: "",
+});
+
+const page = usePage();
+const optionsDept = props.department;
+const selectedOptionDept = ref(null);
+
+watch(selectedOptionDept, async (newVal) => {
+    if (!newVal) return;
+
+    await nextTick(); // Menunggu Vue memperbarui DOM
+
+    router.post(
+        route("laptopBa.generate"),
+        { department: newVal },
+        {
+            preserveState: true,
+            replace: true,
+            onSuccess: (page) => {
+                form.laptop_code = page.props.laptop_code;
+                form.dept = page.props.dept;
+            },
+        }
+    );
 });
 
 const isDisabled = ref(true);
@@ -69,7 +90,7 @@ const customFormat = (date) => {
         // Jika date null atau kosong, kembalikan null
         return "";
     }
-    
+
     const d = new Date(date);
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -82,7 +103,7 @@ const customFormat = (date) => {
 };
 
 const selectedValues = ref(null);
-const selected = '';
+const selected = "";
 
 const save = () => {
     if (selectedValues.value == null) {
@@ -121,7 +142,6 @@ const save = () => {
     formData.append("status", form.status);
     formData.append("condition", form.condition);
     formData.append("note", form.note);
-    formData.append("roterx", form.roterx);
     formData.append("dept", form.dept);
     formData.append(
         "link_documentation_asset_image",
@@ -159,20 +179,18 @@ function handleCategoryChange(event) {
 const options = props.pengguna;
 
 const onInput = (data, some) => {
-
     form.assets_category = data;
 
-    if(data == 'NON_STANDART') {
+    if (data == "NON_STANDART") {
         isDisabled_asetnoho.value = true;
-        form.number_asset_ho = 'unidentified';
-    }else{
+        form.number_asset_ho = "unidentified";
+    } else {
         isDisabled_asetnoho.value = false;
         form.number_asset_ho = null;
     }
 
-console.log(data);
+    console.log(data);
 };
-
 </script>
 
 <template>
@@ -230,12 +248,40 @@ console.log(data);
                                     >
                                         <div class="mb-4">
                                             <label
+                                                for="assets-category"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Department</label
+                                            >
+                                            <VueMultiselect
+                                                v-model="selectedOptionDept"
+                                                :options="optionsDept"
+                                                :multiple="false"
+                                                :close-on-select="true"
+                                                placeholder="Select Department"
+                                                track-by="name"
+                                                label="name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
                                                 for="laptop-code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Laptop Code</label
                                             >
-                                            <input type="hidden" name="roterx" value="create">
-                                            <input type="hidden" name="roterx" v-model="form.dept">
+                                            <input
+                                                type="hidden"
+                                                name="roterx"
+                                                value="create"
+                                            />
+                                            <input
+                                                type="hidden"
+                                                name="roterx"
+                                                v-model="form.dept"
+                                            />
                                             <input
                                                 :disabled="isDisabled"
                                                 required
@@ -267,7 +313,7 @@ console.log(data);
                                             />
                                         </div>
                                     </div>
-                                    
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -285,7 +331,10 @@ console.log(data);
                                                 @update:model-value="onInput"
                                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="STANDART">
+                                                <option
+                                                    selected
+                                                    value="STANDART"
+                                                >
                                                     STANDART
                                                 </option>
                                                 <option value="NON_STANDART">
@@ -329,7 +378,14 @@ console.log(data);
                                                 type="text"
                                                 v-model="form.number_asset_ho"
                                                 name="number_asset_ho"
-                                                v-bind:class="{'mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500': form.assets_category == 'NON_STANDART',  'focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none': form.assets_category != 'NON_STANDART'}"
+                                                v-bind:class="{
+                                                    'mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500':
+                                                        form.assets_category ==
+                                                        'NON_STANDART',
+                                                    'focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none':
+                                                        form.assets_category !=
+                                                        'NON_STANDART',
+                                                }"
                                                 :disabled="isDisabled_asetnoho"
                                                 placeholder="10700xxx"
                                             />
@@ -365,7 +421,6 @@ console.log(data);
                                                 >Hdd</label
                                             >
                                             <input
-                                                
                                                 type="text"
                                                 v-model="form.hdd"
                                                 name="hdd"
@@ -384,7 +439,6 @@ console.log(data);
                                                 >Ssd</label
                                             >
                                             <input
-                                                
                                                 type="text"
                                                 v-model="form.ssd"
                                                 name="ssd"
@@ -616,12 +670,10 @@ console.log(data);
                                                 name="status"
                                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option
-                                                    value="READY_USED"
-                                                >
+                                                <option value="READY_USED">
                                                     Ready Used
                                                 </option>
-                                                <option value="READY_STANBY">
+                                                <option value="READY_STANdBY">
                                                     Ready Standby
                                                 </option>
                                                 <option value="SCRAP">
@@ -682,7 +734,6 @@ console.log(data);
                                                 Select User</label
                                             >
                                             <VueMultiselect
-                                                
                                                 v-model="selectedValues"
                                                 :options="options"
                                                 :multiple="false"
@@ -701,7 +752,7 @@ console.log(data);
                                         >
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -710,7 +761,6 @@ console.log(data);
                                                 >Note</label
                                             >
                                             <textarea
-                                                
                                                 id="message"
                                                 name="note"
                                                 v-model="form.note"

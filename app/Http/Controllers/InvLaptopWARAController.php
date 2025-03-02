@@ -22,9 +22,9 @@ class InvLaptopWARAController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'WARA')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'ADW')->get();
 
-        $site = 'WARA';
+        $site = 'ADW';
 
         $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
             return ['name' => $name];
@@ -37,48 +37,45 @@ class InvLaptopWARAController extends Controller
 
     public function create()
     {
-        abort(404, 'Page not found');
+        $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        $pengguna = UserAll::where('site', 'ADW')->pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('Inventory/SiteWARA/Laptop/LaptopCreate', ['pengguna' => $pengguna, 'department' => $department, 'laptop_code' => session('laptop_code') ?? null, 'dept' => session('dept') ?? null]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataDept = $request->input('department');
+        $dept = $dataDept['name'];
+        $codeDept = Department::where('department_name', $dept)->first();
+        $maxId = InvLaptop::where('site', 'ADW')->where('dept', $codeDept->code)->orderBy('max_id', 'desc')->first();
+        // dd($maxId);
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            $parts = explode('-', $maxId->laptop_code);
+            $lastPart = end($parts);
+            $maxId = (int) $lastPart;
+        }
+
+        $uniqueString = 'ADW-NB-' . $codeDept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($codeDept->code);
+        return redirect()->route('laptopWARA.create')->with([
+            'laptop_code' => $uniqueString,
+            'dept' => $codeDept->code
+        ]);
     }
 
     public function store(Request $request)
     {
 
         $params = $request->all();
-        if ($params['roterx'] == 'index') {
-            // start generate code
-            $currentDate = Carbon::tomorrow();
-            $year = $currentDate->format('y');
-            $month = $currentDate->month;
-            $day = $currentDate->day;
-
-            $dept = $params['dept'];
-
-            // dd($dept);
-
-            $code_dept = Department::where('department_name', $dept)->first();
-
-            $maxId = InvLaptop::where('site', 'WARA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-            // dd($maxId);
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $parts = explode('-', $maxId->laptop_code);
-                $lastPart = end($parts);
-                $maxId = (int) $lastPart;
-            }
-
-            $uniqueString = 'WARA-NB-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-
-            $request['inventory_number'] = $uniqueString;
-            // end generate code
-
-            $pengguna = UserAll::where('site', 'WARA')->pluck('username')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
-
-            return Inertia::render('Inventory/SiteWARA/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
-        } else {
             $maxId = InvLaptop::max('max_id');
             if (is_null($maxId)) {
                 $maxId = 1;
@@ -115,13 +112,12 @@ class InvLaptopWARAController extends Controller
                 'note' => $params['note'],
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'WARA',
+                'site' => 'ADW',
                 'dept' => $dept
             ];
 
             InvLaptop::create($data);
             return redirect()->route('laptopWARA.page');
-        }
     }
 
     public function uploadCsv(Request $request)
@@ -158,7 +154,7 @@ class InvLaptopWARAController extends Controller
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site', 'WARA')->pluck('username')->map(function ($name) {
+        $pengguna_all = UserAll::where('site', 'ADW')->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -243,7 +239,7 @@ class InvLaptopWARAController extends Controller
                 'note' => $request->note,
                 'link_documentation_asset_image' => url($new_path_documentation_image),
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'WARA'
+                'site' => 'ADW'
             ];
         } else {
 
@@ -267,7 +263,7 @@ class InvLaptopWARAController extends Controller
                 'condition' => $request->condition,
                 'note' => $request->note,
                 'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'WARA'
+                'site' => 'ADW'
             ];
         }
 

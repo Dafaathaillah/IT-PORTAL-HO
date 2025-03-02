@@ -518,6 +518,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBb', [InvWirellessController::class, 'uploadCsv'])->name('wirelless.import');
 
             Route::get('/laptop', [InvLaptopController::class, 'index'])->name('laptop.page');
+            Route::post('/laptop/generate', [InvLaptopController::class, 'generateCode'])->name('laptop.generate');
             Route::get('/laptop/create', [InvLaptopController::class, 'create'])->name('laptop.create');
             Route::post('/laptop/create', [InvLaptopController::class, 'store'])->name('laptop.store');
             Route::get('/laptop/{id}/edit', [InvLaptopController::class, 'edit'])->name('laptop.edit');
@@ -595,6 +596,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbBa', [InvWirellessBaController::class, 'uploadCsv'])->name('wirellessBa.import');
 
             Route::get('/laptopBa', [InvLaptopBaController::class, 'index'])->name('laptopBa.page');
+            Route::post('/laptopBa/generate', [InvLaptopBaController::class, 'generateCode'])->name('laptopBa.generate');
             Route::get('/laptopBa/create', [InvLaptopBaController::class, 'create'])->name('laptopBa.create');
             Route::post('/laptopBa/create', [InvLaptopBaController::class, 'store'])->name('laptopBa.store');
             Route::get('/laptopBa/{id}/edit', [InvLaptopBaController::class, 'edit'])->name('laptopBa.edit');
@@ -672,6 +674,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbMifa', [InvWirellessMifaController::class, 'uploadCsv'])->name('wirellessMifa.import');
 
             Route::get('/laptopMifa', [InvLaptopMifaController::class, 'index'])->name('laptopMifa.page');
+            Route::post('/laptopMifa/generate', [InvLaptopMifaController::class, 'generateCode'])->name('laptopMifa.generate');
             Route::get('/laptopMifa/create', [InvLaptopMifaController::class, 'create'])->name('laptopMifa.create');
             Route::post('/laptopMifa/create', [InvLaptopMifaController::class, 'store'])->name('laptopMifa.store');
             Route::get('/laptopMifa/{id}/edit', [InvLaptopMifaController::class, 'edit'])->name('laptopMifa.edit');
@@ -749,6 +752,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbMhu', [InvWirellessMhuController::class, 'uploadCsv'])->name('wirellessMhu.import');
 
             Route::get('/laptopMhu', [InvLaptopMhuController::class, 'index'])->name('laptopMhu.page');
+            Route::post('/laptopMhu/generate', [InvLaptopMhuController::class, 'generateCode'])->name('laptopMhu.generate');
             Route::get('/laptopMhu/create', [InvLaptopMhuController::class, 'create'])->name('laptopMhu.create');
             Route::post('/laptopMhu/create', [InvLaptopMhuController::class, 'store'])->name('laptopMhu.store');
             Route::get('/laptopMhu/{id}/edit', [InvLaptopMhuController::class, 'edit'])->name('laptopMhu.edit');
@@ -826,6 +830,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbAmi', [InvWirellessAmiController::class, 'uploadCsv'])->name('wirellessAmi.import');
 
             Route::get('/laptopAmi', [InvLaptopAmiController::class, 'index'])->name('laptopAmi.page');
+            Route::post('/laptopAmi/generate', [InvLaptopAmiController::class, 'generateCode'])->name('laptopAmi.generate');
             Route::get('/laptopAmi/create', [InvLaptopAmiController::class, 'create'])->name('laptopAmi.create');
             Route::post('/laptopAmi/create', [InvLaptopAmiController::class, 'store'])->name('laptopAmi.store');
             Route::get('/laptopAmi/{id}/edit', [InvLaptopAmiController::class, 'edit'])->name('laptopAmi.edit');
@@ -903,6 +908,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbPik', [InvWirellessPikController::class, 'uploadCsv'])->name('wirellessPik.import');
 
             Route::get('/laptopPik', [InvLaptopPikController::class, 'index'])->name('laptopPik.page');
+            Route::post('/laptopPik/generate', [InvLaptopPikController::class, 'generateCode'])->name('laptopPik.generate');
             Route::get('/laptopPik/create', [InvLaptopPikController::class, 'create'])->name('laptopPik.create');
             Route::post('/laptopPik/create', [InvLaptopPikController::class, 'store'])->name('laptopPik.store');
             Route::get('/laptopPik/{id}/edit', [InvLaptopPikController::class, 'edit'])->name('laptopPik.edit');
@@ -980,6 +986,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbBib', [InvWirellessBibController::class, 'uploadCsv'])->name('wirellessBib.import');
 
             Route::get('/laptopBib', [InvLaptopBibController::class, 'index'])->name('laptopBib.page');
+            Route::post('/laptopBib/generate', [InvLaptopBibController::class, 'generateCode'])->name('laptopBib.generate');
             Route::get('/laptopBib/create', [InvLaptopBibController::class, 'create'])->name('laptopBib.create');
             Route::post('/laptopBib/create', [InvLaptopBibController::class, 'store'])->name('laptopBib.store');
             Route::get('/laptopBib/{id}/edit', [InvLaptopBibController::class, 'edit'])->name('laptopBib.edit');
@@ -1057,6 +1064,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbIpt', [InvWirellessIptController::class, 'uploadCsv'])->name('wirellessIpt.import');
 
             Route::get('/laptopIpt', [InvLaptopIptController::class, 'index'])->name('laptopIpt.page');
+            Route::post('/laptopIpt/generate', [InvLaptopIptController::class, 'generateCode'])->name('laptopIpt.generate');
             Route::get('/laptopIpt/create', [InvLaptopIptController::class, 'create'])->name('laptopIpt.create');
             Route::post('/laptopIpt/create', [InvLaptopIptController::class, 'store'])->name('laptopIpt.store');
             Route::get('/laptopIpt/{id}/edit', [InvLaptopIptController::class, 'edit'])->name('laptopIpt.edit');
@@ -1134,6 +1142,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbMlp', [InvWirellessMlpController::class, 'uploadCsv'])->name('wirellessMlp.import');
 
             Route::get('/laptopMlp', [InvLaptopMlpController::class, 'index'])->name('laptopMlp.page');
+            Route::post('/laptopMlp/generate', [InvLaptopMlpController::class, 'generateCode'])->name('laptopMlp.generate');
             Route::get('/laptopMlp/create', [InvLaptopMlpController::class, 'create'])->name('laptopMlp.create');
             Route::post('/laptopMlp/create', [InvLaptopMlpController::class, 'store'])->name('laptopMlp.store');
             Route::get('/laptopMlp/{id}/edit', [InvLaptopMlpController::class, 'edit'])->name('laptopMlp.edit');
@@ -1150,7 +1159,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/komputerMlp/{id}/delete', [InvComputerMlpController::class, 'destroy'])->name('komputerMlp.delete');
             Route::post('/komputerMlp/update', [InvComputerMlpController::class, 'update'])->name('komputerMlp.update');
             Route::get('/komputerMlp/{id}/detail', [InvComputerMlpController::class, 'detail'])->name('komputerMlp.detail');
-            Route::post('/uploadCsvCuIMip', [InvComputerMlpController::class, 'uploadCsv'])->name('komputerMlp.import');
+            Route::post('/uploadCsvCuIMlp', [InvComputerMlpController::class, 'uploadCsv'])->name('komputerMlp.import');
 
             Route::get('/printerMlp', [InvPrinterMlpController::class, 'index'])->name(name: 'printerMlp.page');
             Route::get('/printerMlp/create', [InvPrinterMlpController::class, 'create'])->name('printerMlp.create');
@@ -1211,7 +1220,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbMip', [InvWirellessMipController::class, 'uploadCsv'])->name('wirellessMip.import');
 
             Route::get('/laptopMip', [InvLaptopMipController::class, 'index'])->name('laptopMip.page');
-            Route::get('/laptopMip/create', [InvLaptopMipController::class, 'create'])->name('laptopMip.create');
+            Route::post('/laptopMifa/generate', [InvLaptopMipController::class, 'generateCode'])->name('laptopMip.generate');
+            Route::get('/laptopMifa/create', [InvLaptopMipController::class, 'create'])->name('laptopMip.create');
             Route::post('/laptopMip/create', [InvLaptopMipController::class, 'store'])->name('laptopMip.store');
             Route::get('/laptopMip/{id}/edit', [InvLaptopMipController::class, 'edit'])->name('laptopMip.edit');
             Route::delete('/laptopMip/{id}/delete', [InvLaptopMipController::class, 'destroy'])->name('laptopMip.delete');
@@ -1257,7 +1267,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVMip', [InvCctvMipController::class, 'uploadCsv'])->name('cctvMip.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VALE,ict_group_leader:VALE,ict_admin:VALE,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
             Route::get('/dashboardSiteVale', [DashboardValeController::class, 'index'])->name('dashboardVale.page');
 
             Route::get('/accessPointSiteVale', [InvApValeController::class, 'index'])->name('accessPointVale.page');
@@ -1288,6 +1298,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbVale', [InvWirellessValeController::class, 'uploadCsv'])->name('wirellessVale.import');
 
             Route::get('/laptopVale', [InvLaptopValeController::class, 'index'])->name('laptopVale.page');
+            Route::post('/laptopVale/generate', [InvLaptopValeController::class, 'generateCode'])->name('laptopVale.generate');
             Route::get('/laptopVale/create', [InvLaptopValeController::class, 'create'])->name('laptopVale.create');
             Route::post('/laptopVale/create', [InvLaptopValeController::class, 'store'])->name('laptopVale.store');
             Route::get('/laptopVale/{id}/edit', [InvLaptopValeController::class, 'edit'])->name('laptopVale.edit');
@@ -1365,6 +1376,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbSbs', [InvWirellessSbsController::class, 'uploadCsv'])->name('wirellessSbs.import');
 
             Route::get('/laptopSbs', [InvLaptopSbsController::class, 'index'])->name('laptopSbs.page');
+            Route::post('/laptopSbs/generate', [InvLaptopSbsController::class, 'generateCode'])->name('laptopSbs.generate');
             Route::get('/laptopSbs/create', [InvLaptopSbsController::class, 'create'])->name('laptopSbs.create');
             Route::post('/laptopSbs/create', [InvLaptopSbsController::class, 'store'])->name('laptopSbs.store');
             Route::get('/laptopSbs/{id}/edit', [InvLaptopSbsController::class, 'edit'])->name('laptopSbs.edit');
@@ -1442,6 +1454,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbSks', [InvWirellessSksController::class, 'uploadCsv'])->name('wirellessSks.import');
 
             Route::get('/laptopSks', [InvLaptopSksController::class, 'index'])->name('laptopSks.page');
+            Route::post('/laptopSks/generate', [InvLaptopSksController::class, 'generateCode'])->name('laptopSks.generate');
             Route::get('/laptopSks/create', [InvLaptopSksController::class, 'create'])->name('laptopSks.create');
             Route::post('/laptopSks/create', [InvLaptopSksController::class, 'store'])->name('laptopSks.store');
             Route::get('/laptopSks/{id}/edit', [InvLaptopSksController::class, 'edit'])->name('laptopSks.edit');
@@ -1519,6 +1532,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvBbWara', [InvWirellessWARAController::class, 'uploadCsv'])->name('wirellessWARA.import');
 
             Route::get('/laptopWara', [InvLaptopWARAController::class, 'index'])->name('laptopWARA.page');
+            Route::post('/laptopWara/generate', [InvLaptopWARAController::class, 'generateCode'])->name('laptopWARA.generate');
             Route::get('/laptopWara/create', [InvLaptopWARAController::class, 'create'])->name('laptopWARA.create');
             Route::post('/laptopWara/create', [InvLaptopWARAController::class, 'store'])->name('laptopWARA.store');
             Route::get('/laptopWara/{id}/edit', [InvLaptopWARAController::class, 'edit'])->name('laptopWARA.edit');
@@ -1851,7 +1865,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-mip/{id}/delete', [InspeksiComputerMipController::class, 'destroy'])->name('inspeksiKomputerMip.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VALE,ict_group_leader:VALE,ict_admin:VALE,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-vale', [InspeksiLaptopValeController::class, 'index'])->name('inspeksiLaptopVale.page');
                 Route::get('inspeksi-laptop-vale/{id}/process', [InspeksiLaptopValeController::class, 'process'])->name('inspeksiLaptopVale.process');
                 Route::post('inspeksi-laptop-vale/process', [InspeksiLaptopValeController::class, 'store'])->name('inspeksiLaptopVale.store');

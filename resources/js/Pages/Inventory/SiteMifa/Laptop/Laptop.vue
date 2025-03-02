@@ -277,45 +277,20 @@ const showAddAlert = () => {
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
                             
-                            <div
-                                class="flex items-center p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+                           <div
+                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <div
-                                    class="h-11 relative flex flex-wrap items-stretch transition-all rounded-lg ease mr-4"
+                                    class="pb-0 mb-5 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                                 >
-                                
-                                    <VueMultiselect
-                                        v-model="selectedOption"
-                                        :options="options"
-                                        :multiple="false"
-                                        :close-on-select="true"
-                                        placeholder="Select Department"
-                                        track-by="name"
-                                        label="name"
-                                        @update:model-value="onInput"
-                                    />
+                                    <Link
+                                        :href="route('laptopMifa.create')"
+                                        class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
+                                    >
+                                        <i class="fas fa-plus"> </i
+                                        >&nbsp;&nbsp;Add New Data
+                                    </Link>
                                 </div>
-                                <Link
-                                    :href="route('laptopMifa.create')"
-                                    v-if="
-                                        selectedOption?.name 
-                                    "
-                                    method="post" :data="{ dept: selectedOption.name, roterx: 'index' }"
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </Link>
-                                <button
-                                    @click="showAddAlert()"
-                                    v-if="
-                                        selectedOption == null
-                                    "
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
-                                >
-                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                    New Data
-                                </button>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <PerfectScrollbar style="position: relative;">

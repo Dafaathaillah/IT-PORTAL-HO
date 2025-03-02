@@ -37,91 +37,87 @@ class InvLaptopAmiController extends Controller
 
     public function create()
     {
-        abort(404, 'Page not found');
+        $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        $pengguna = UserAll::where('site', 'AMI')->pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('Inventory/SiteAmi/Laptop/LaptopCreate', ['pengguna' => $pengguna, 'department' => $department, 'laptop_code' => session('laptop_code') ?? null, 'dept' => session('dept') ?? null]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataDept = $request->input('department');
+        $dept = $dataDept['name'];
+        $codeDept = Department::where('department_name', $dept)->first();
+        $maxId = InvLaptop::where('site', 'AMI')->where('dept', $codeDept->code)->orderBy('max_id', 'desc')->first();
+        // dd($maxId);
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            $parts = explode('-', $maxId->laptop_code);
+            $lastPart = end($parts);
+            $maxId = (int) $lastPart;
+        }
+
+        $uniqueString = 'AMI-NB-' . $codeDept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($codeDept->code);
+        return redirect()->route('laptopAmi.create')->with([
+            'laptop_code' => $uniqueString,
+            'dept' => $codeDept->code
+        ]);
     }
 
     public function store(Request $request)
     {
 
         $params = $request->all();
-        if ($params['roterx'] == 'index') {
-            // start generate code
-            $currentDate = Carbon::tomorrow();
-            $year = $currentDate->format('y');
-            $month = $currentDate->month;
-            $day = $currentDate->day;
-
-            $dept = $params['dept'];
-
-            // dd($dept);
-
-            $code_dept = Department::where('department_name', $dept)->first();
-
-            $maxId = InvLaptop::where('site', 'AMI')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-            // dd($maxId);
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $parts = explode('-', $maxId->laptop_code);
-                $lastPart = end($parts);
-                $maxId = (int) $lastPart;
-            }
-
-            $uniqueString = 'AMI-NB-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-
-            $request['inventory_number'] = $uniqueString;
-            // end generate code
-
-            $pengguna = UserAll::where('site', 'AMI')->pluck('username')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
-
-            return Inertia::render('Inventory/SiteAmi/Laptop/LaptopCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+        $maxId = InvLaptop::max('max_id');
+        if (is_null($maxId)) {
+            $maxId = 1;
         } else {
-            $maxId = InvLaptop::max('max_id');
-            if (is_null($maxId)) {
-                $maxId = 1;
-            } else {
-                $maxId = $maxId + 1;
-            }
-
-            $documentation_image = $request->file('image');
-            $destinationPath = 'images/';
-            $path_documentation_image = $documentation_image->store('images', 'public');
-            $new_path_documentation_image = $path_documentation_image;
-            $documentation_image->move($destinationPath, $new_path_documentation_image);
-
-            $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
-
-            $dept = $params['dept'];
-
-            $data = [
-                'max_id' => $maxId,
-                'laptop_name' => $params['laptop_name'],
-                'laptop_code' => $params['laptop_code'],
-                'number_asset_ho' => $params['number_asset_ho'],
-                'assets_category' => $params['assets_category'],
-                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
-                'serial_number' => $params['serial_number'],
-                'aplikasi' => $params['aplikasi'],
-                'license' => $params['license'],
-                'ip_address' => $params['ip_address'],
-                'date_of_inventory' => $params['date_of_inventory'],
-                'date_of_deploy' => $params['date_of_deploy'],
-                'location' => $params['location'],
-                'status' => $params['status'],
-                'condition' => $params['condition'],
-                'note' => $params['note'],
-                'link_documentation_asset_image' => url($new_path_documentation_image),
-                'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'AMI',
-                'dept' => $dept
-            ];
-
-            InvLaptop::create($data);
-            return redirect()->route('laptopAmi.page');
+            $maxId = $maxId + 1;
         }
+
+        $documentation_image = $request->file('image');
+        $destinationPath = 'images/';
+        $path_documentation_image = $documentation_image->store('images', 'public');
+        $new_path_documentation_image = $path_documentation_image;
+        $documentation_image->move($destinationPath, $new_path_documentation_image);
+
+        $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+
+        $dept = $params['dept'];
+
+        $data = [
+            'max_id' => $maxId,
+            'laptop_name' => $params['laptop_name'],
+            'laptop_code' => $params['laptop_code'],
+            'number_asset_ho' => $params['number_asset_ho'],
+            'assets_category' => $params['assets_category'],
+            'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_laptop'] . ', ' . $params['os_laptop'],
+            'serial_number' => $params['serial_number'],
+            'aplikasi' => $params['aplikasi'],
+            'license' => $params['license'],
+            'ip_address' => $params['ip_address'],
+            'date_of_inventory' => $params['date_of_inventory'],
+            'date_of_deploy' => $params['date_of_deploy'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'condition' => $params['condition'],
+            'note' => $params['note'],
+            'link_documentation_asset_image' => url($new_path_documentation_image),
+            'user_alls_id' => $aduan_get_data_user['id'],
+            'site' => 'AMI',
+            'dept' => $dept
+        ];
+
+        InvLaptop::create($data);
+        return redirect()->route('laptopAmi.page');
     }
 
     public function uploadCsv(Request $request)
@@ -130,7 +126,7 @@ class InvLaptopAmiController extends Controller
 
             $import = new ImportLaptop();
             Excel::import($import, $request->file('file'));
-    
+
             $duplicates = $import->getDuplicateRecords();
             // dd($duplicates);
             return Redirect::route('laptop.page')->with([

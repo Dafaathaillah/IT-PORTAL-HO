@@ -37,7 +37,39 @@ class InvLaptopSksController extends Controller
 
     public function create()
     {
-        abort(404, 'Page not found');
+        $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        $pengguna = UserAll::where('site', 'SKS')->pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('Inventory/SiteSks/Laptop/LaptopCreate', ['pengguna' => $pengguna, 'department' => $department, 'laptop_code' => session('laptop_code') ?? null, 'dept' => session('dept') ?? null]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataDept = $request->input('department');
+        $dept = $dataDept['name'];
+        $codeDept = Department::where('department_name', $dept)->first();
+        $maxId = InvLaptop::where('site', 'SKS')->where('dept', $codeDept->code)->orderBy('max_id', 'desc')->first();
+        // dd($maxId);
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            $parts = explode('-', $maxId->laptop_code);
+            $lastPart = end($parts);
+            $maxId = (int) $lastPart;
+        }
+
+        $uniqueString = 'SKS-NB-' . $codeDept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($codeDept->code);
+        return redirect()->route('laptopSks.create')->with([
+            'laptop_code' => $uniqueString,
+            'dept' => $codeDept->code
+        ]);
     }
 
     public function store(Request $request)
