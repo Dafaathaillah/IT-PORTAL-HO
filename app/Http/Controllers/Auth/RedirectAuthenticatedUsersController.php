@@ -31,7 +31,7 @@ class RedirectAuthenticatedUsersController extends Controller
             return redirect()->route('dashboardMlp.page');
         } elseif (auth()->user()->role == 'ict_technician' && auth()->user()->site == 'MIP' || auth()->user()->role ==  'ict_group_leader' && auth()->user()->site == 'MIP' || auth()->user()->role ==  'ict_admin' && auth()->user()->site == 'MIP') {
             return redirect()->route('dashboardMip.page');
-        } elseif (auth()->user()->role == 'ict_technician' && auth()->user()->site == 'VALE' || auth()->user()->role ==  'ict_group_leader' && auth()->user()->site == 'VALE' || auth()->user()->role ==  'ict_admin' && auth()->user()->site == 'VALE') {
+        } elseif (auth()->user()->role == 'ict_technician' && auth()->user()->site == 'VIB' || auth()->user()->role ==  'ict_group_leader' && auth()->user()->site == 'VIB' || auth()->user()->role ==  'ict_admin' && auth()->user()->site == 'VIB') {
             return redirect()->route('dashboardVale.page');
         } elseif (auth()->user()->role == 'ict_technician' && auth()->user()->site == 'SBS' || auth()->user()->role ==  'ict_group_leader' && auth()->user()->site == 'SBS' || auth()->user()->role ==  'ict_admin' && auth()->user()->site == 'SBS') {
             return redirect()->route('dashboardSbs.page');

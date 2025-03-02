@@ -18,7 +18,7 @@ class InvSwitchWARAController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'WARA')->get();
+        $dataInventory = InvSwitch::where('site', 'ADW')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
@@ -34,7 +34,7 @@ class InvSwitchWARAController extends Controller
         $day = $currentDate->day;
 
 
-        $maxId = InvSwitch::where('site', 'WARA')->orderBy('max_id', 'desc')->first();
+        $maxId = InvSwitch::where('site', 'ADW')->orderBy('max_id', 'desc')->first();
         // dd($maxId->inventory_number);
 
         if (is_null($maxId)) {
@@ -44,7 +44,7 @@ class InvSwitchWARAController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPAWARASW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAADWSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code
@@ -75,7 +75,7 @@ class InvSwitchWARAController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvSwitch::create($data);
@@ -132,7 +132,7 @@ class InvSwitchWARAController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         InvSwitch::firstWhere('id', $request->id)->update($data);
         return redirect()->route('switchWARA.page');

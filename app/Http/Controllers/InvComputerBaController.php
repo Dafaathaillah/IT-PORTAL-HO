@@ -36,7 +36,39 @@ class InvComputerBaController extends Controller
 
     public function create()
     {
-        abort(404, 'page not found');
+        $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        $pengguna = UserAll::where('site', 'BA')->pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('Inventory/SiteBa/Komputer/KomputerCreate', ['pengguna' => $pengguna, 'department' => $department, 'computer_code' => session('computer_code') ?? null, 'dept' => session('dept') ?? null]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataDept = $request->input('department');
+        $dept = $dataDept['name'];
+        $codeDept = Department::where('department_name', $dept)->first();
+        $maxId = InvComputer::where('site', 'BA')->where('dept', $codeDept->code)->orderBy('max_id', 'desc')->first();
+        // dd($maxId);
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            $parts = explode('-', $maxId->computer_code);
+            $lastPart = end($parts);
+            $maxId = (int) $lastPart;
+        }
+
+        $uniqueString = 'BA-PC-' . $codeDept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($codeDept->code);
+        return redirect()->route('komputerBa.create')->with([
+            'computer_code' => $uniqueString,
+            'dept' => $codeDept->code
+        ]);
     }
 
     public function store(Request $request)
@@ -44,83 +76,48 @@ class InvComputerBaController extends Controller
 
         $params = $request->all();
 
-        if ($params['roterx'] == 'index') {
-            // start generate code
-            $currentDate = Carbon::tomorrow();
-            $year = $currentDate->format('y');
-            $month = $currentDate->month;
-            $day = $currentDate->day;
-
-            $dept = $params['dept'];
-
-            $code_dept = Department::where('department_name', $dept)->first();
-
-            $maxId = InvComputer::where('site', 'BA')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-            // dd($maxId);
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $parts = explode('-', $maxId->computer_code);
-                $lastPart = end($parts);
-                $maxId = (int) $lastPart;
-            }
-
-            $uniqueString = 'BA-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-
-            $request['inventory_number'] = $uniqueString;
-            // end generate code
-
-            $pengguna = UserAll::where('site', 'BA')->pluck('username')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
-
-            return Inertia::render('Inventory/SiteBa/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
+        $maxId = InvComputer::max('max_id');
+        if (is_null($maxId) || empty($maxId)) {
+            $maxId = 1;
         } else {
-            // dd($request->all());
-            $maxId = InvComputer::max('max_id');
-            if (is_null($maxId) || empty($maxId)) {
-                $maxId = 1;
-            } else {
-                $maxId = $maxId + 1;
-            }
-
-            $documentation_image = $request->file('image');
-            $destinationPath = 'images/';
-            $path_documentation_image = $documentation_image->store('images', 'public');
-            $new_path_documentation_image = $path_documentation_image;
-            $documentation_image->move($destinationPath, $new_path_documentation_image);
-
-            $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
-
-            $dept = $params['dept'];
-
-            $data = [
-                'max_id' => $maxId,
-                'computer_name' => $params['computer_name'],
-                'computer_code' => $params['computer_code'],
-                'number_asset_ho' => $params['number_asset_ho'],
-                'assets_category' => $params['assets_category'],
-                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_komputer'] . ', ' . $params['os_komputer'],
-                'serial_number' => $params['serial_number'],
-                'aplikasi' => $params['aplikasi'],
-                'license' => $params['license'],
-                'ip_address' => $params['ip_address'],
-                'date_of_inventory' => $params['date_of_inventory'],
-                'date_of_deploy' => $params['date_of_deploy'],
-                'location' => $params['location'],
-                'status' => $params['status'],
-                'condition' => $params['condition'],
-                'note' => $params['note'],
-                'link_documentation_asset_image' => url($new_path_documentation_image),
-                'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'BA',
-                'dept' => $dept
-            ];
-
-            InvComputer::create($data);
-            return redirect()->route('komputerBa.page');
+            $maxId = $maxId + 1;
         }
+
+        $documentation_image = $request->file('image');
+        $destinationPath = 'images/';
+        $path_documentation_image = $documentation_image->store('images', 'public');
+        $new_path_documentation_image = $path_documentation_image;
+        $documentation_image->move($destinationPath, $new_path_documentation_image);
+
+        $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+
+        $dept = $params['dept'];
+
+        $data = [
+            'max_id' => $maxId,
+            'computer_name' => $params['computer_name'],
+            'computer_code' => $params['computer_code'],
+            'number_asset_ho' => $params['number_asset_ho'],
+            'assets_category' => $params['assets_category'],
+            'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_komputer'] . ', ' . $params['os_komputer'],
+            'serial_number' => $params['serial_number'],
+            'aplikasi' => $params['aplikasi'],
+            'license' => $params['license'],
+            'ip_address' => $params['ip_address'],
+            'date_of_inventory' => $params['date_of_inventory'],
+            'date_of_deploy' => $params['date_of_deploy'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'condition' => $params['condition'],
+            'note' => $params['note'],
+            'link_documentation_asset_image' => url($new_path_documentation_image),
+            'user_alls_id' => $aduan_get_data_user['id'],
+            'site' => 'BA',
+            'dept' => $dept
+        ];
+
+        InvComputer::create($data);
+        return redirect()->route('komputerBa.page');
     }
 
     public function uploadCsv(Request $request)
@@ -129,7 +126,7 @@ class InvComputerBaController extends Controller
 
             $import = new ImportComputer();
             Excel::import($import, $request->file('file'));
-    
+
             $duplicates = $import->getDuplicateRecords();
             // dd($duplicates);
             return Redirect::route('komputerBa.page')->with([

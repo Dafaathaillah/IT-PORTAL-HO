@@ -47,12 +47,12 @@ const form = useForm({
     note: "",
     link_documentation_asset_image: "",
     user_alls_id: "",
+    dept: "",
 });
 
 const page = usePage();
 const optionsDept = props.department;
 const selectedOptionDept = ref(null);
-const computerCode = ref(page.props.computer_code || '');
 
 watch(selectedOptionDept, async (newVal) => {
     if (!newVal) return;
@@ -63,11 +63,11 @@ watch(selectedOptionDept, async (newVal) => {
         route('komputerBib.generate'),
         { department: newVal },
         {
-            preserveState: true, // Biarkan state tetap ada agar tidak kehilangan session
+            preserveState: true,
             replace: true,
             onSuccess: (page) => {
-                form.computer_code = page.props.computer_code; // Update state dengan nilai baru
-                console.log("Updated Computer Code:", computerCode.value);
+                form.computer_code = page.props.computer_code;
+                form.dept = page.props.dept;
             },
         }
     );
@@ -138,7 +138,6 @@ const save = () => {
     formData.append("status", form.status);
     formData.append("condition", form.condition);
     formData.append("note", form.note);
-    formData.append("roterx", form.roterx);
     formData.append("dept", form.dept);
     formData.append(
         "link_documentation_asset_image",
@@ -171,16 +170,16 @@ const save = () => {
 
 const options = props.pengguna;
 
-const isDisabled_asetnoho = ref(false);
+// const isDisabled_asetnoho = ref(false);
 
 const onInput = (data, some) => {
     form.assets_category = data;
 
     if (data == "NON_STANDART") {
-        isDisabled_asetnoho.value = true;
+        // isDisabled_asetnoho.value = true;
         form.number_asset_ho = "unidentified";
     } else {
-        isDisabled_asetnoho.value = false;
+        // isDisabled_asetnoho.value = false;
         form.number_asset_ho = null;
     }
 
@@ -239,7 +238,7 @@ const onInput = (data, some) => {
                                 />
                                 <div class="flex flex-wrap -mx-3">
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -260,7 +259,7 @@ const onInput = (data, some) => {
                                     </div>
 
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -281,7 +280,7 @@ const onInput = (data, some) => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -364,14 +363,7 @@ const onInput = (data, some) => {
                                                 type="text"
                                                 v-model="form.number_asset_ho"
                                                 name="number_asset_ho"
-                                                v-bind:class="{
-                                                    'mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500':
-                                                        form.assets_category ==
-                                                        'NON_STANDART',
-                                                    'focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none':
-                                                        form.assets_category !=
-                                                        'NON_STANDART',
-                                                }"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="10700xxx"
                                             />
                                         </div>
@@ -740,7 +732,7 @@ const onInput = (data, some) => {
                                         >
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

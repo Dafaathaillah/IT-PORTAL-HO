@@ -18,7 +18,7 @@ class InvCctvWARAController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::with('switch')->where('site', 'WARA')->get();
+        $dataInventory = InvCctv::with('switch')->where('site', 'ADW')->get();
 
         $site = auth()->user()->site;
 
@@ -35,7 +35,7 @@ class InvCctvWARAController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvCctv::where('site', 'WARA')->orderBy('max_id', 'desc')->first();
+        $maxId = InvCctv::where('site', 'ADW')->orderBy('max_id', 'desc')->first();
         // dd($maxId->cctv_code);
 
         if (is_null($maxId)) {
@@ -45,12 +45,12 @@ class InvCctvWARAController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPAWARACCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAADWCCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'WARA')->get();
+        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'ADW')->get();
 
 
         return Inertia::render('Inventory/SiteWARA/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
@@ -84,7 +84,7 @@ class InvCctvWARAController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         // dd($data);
         InvCctv::create($data);
@@ -152,7 +152,7 @@ class InvCctvWARAController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
 
         InvCctv::firstWhere('id', $request->id)->update($data);

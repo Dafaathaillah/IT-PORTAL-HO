@@ -15,7 +15,7 @@ class InvPrinterWARAController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvPrinter::where('site', 'WARA')->get();
+        $dataInventory = InvPrinter::where('site', 'ADW')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
@@ -30,7 +30,7 @@ class InvPrinterWARAController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvPrinter::where('site', 'WARA')->orderBy('max_id', 'desc')->first();
+        $maxId = InvPrinter::where('site', 'ADW')->orderBy('max_id', 'desc')->first();
         // dd($maxId->printer_code);
 
         if (is_null($maxId)) {
@@ -40,7 +40,7 @@ class InvPrinterWARAController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPAWARAPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAADWPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['printer_code'] = $uniqueString;
 
@@ -83,7 +83,7 @@ class InvPrinterWARAController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvPrinter::create($data);
@@ -167,7 +167,7 @@ class InvPrinterWARAController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvPrinter::firstWhere('id', $request->id)->update($data);

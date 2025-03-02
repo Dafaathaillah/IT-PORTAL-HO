@@ -15,7 +15,7 @@ class InspeksiLaptopWARAController extends Controller
 {
     public function index()
     {
-        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'WARA')->get();
+        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'ADW')->get();
 
         $site = auth()->user()->site;
         $role = auth()->user()->role;
@@ -40,7 +40,7 @@ class InspeksiLaptopWARAController extends Controller
 
         // dd($laptopx);
 
-        $penggunax = UserAll::where('site', 'WARA')->pluck('username')->map(function ($name) {
+        $penggunax = UserAll::where('site', 'ADW')->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -152,7 +152,7 @@ class InspeksiLaptopWARAController extends Controller
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $penggunax = UserAll::where('site', 'WARA')->pluck('username')->map(function ($name) {
+        $penggunax = UserAll::where('site', 'ADW')->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -169,7 +169,7 @@ class InspeksiLaptopWARAController extends Controller
         // dd($request->file('image_temuan'));
 
         // $maxId = InspeksiLaptop::max('id');
-        $maxId = InspeksiLaptop::where('site', 'WARA')->where('year', $year)->max('pica_number');
+        $maxId = InspeksiLaptop::where('site', 'ADW')->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;

@@ -527,6 +527,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNb', [InvLaptopController::class, 'uploadCsv'])->name('laptop.import');
 
             Route::get('/komputer', [InvComputerController::class, 'index'])->name('komputer.page');
+            Route::post('/komputer/generate', [InvComputerController::class, 'generateCode'])->name('komputer.generate');
             Route::get('/komputer/create', [InvComputerController::class, 'create'])->name('komputer.create');
             Route::post('/komputer/create', [InvComputerController::class, 'store'])->name('komputer.store');
             Route::get('/komputer/{id}/edit', [InvComputerController::class, 'edit'])->name('komputer.edit');
@@ -603,6 +604,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbBa', [InvLaptopBaController::class, 'uploadCsv'])->name('laptopBa.import');
 
             Route::get('/komputerBa', [InvComputerBaController::class, 'index'])->name('komputerBa.page');
+            Route::post('/komputerBa/generate', [InvComputerBaController::class, 'generateCode'])->name('komputerBa.generate');
             Route::get('/komputerBa/create', [InvComputerBaController::class, 'create'])->name('komputerBa.create');
             Route::post('/komputerBa/create', [InvComputerBaController::class, 'store'])->name('komputerBa.store');
             Route::get('/komputerBa/{id}/edit', [InvComputerBaController::class, 'edit'])->name('komputerBa.edit');
@@ -679,6 +681,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbMifa', [InvLaptopMifaController::class, 'uploadCsv'])->name('laptopMifa.import');
 
             Route::get('/komputerMifa', [InvComputerMifaController::class, 'index'])->name('komputerMifa.page');
+            Route::post('/komputerMifa/generate', [InvComputerMifaController::class, 'generateCode'])->name('komputerMifa.generate');
             Route::get('/komputerMifa/create', [InvComputerMifaController::class, 'create'])->name('komputerMifa.create');
             Route::post('/komputerMifa/create', [InvComputerMifaController::class, 'store'])->name('komputerMifa.store');
             Route::get('/komputerMifa/{id}/edit', [InvComputerMifaController::class, 'edit'])->name('komputerMifa.edit');
@@ -755,6 +758,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbMhu', [InvLaptopMhuController::class, 'uploadCsv'])->name('laptopMhu.import');
 
             Route::get('/komputerMhu', [InvComputerMhuController::class, 'index'])->name('komputerMhu.page');
+            Route::post('/komputerMhu/generate', [InvComputerMhuController::class, 'generateCode'])->name('komputerMhu.generate');
             Route::get('/komputerMhu/create', [InvComputerMhuController::class, 'create'])->name('komputerMhu.create');
             Route::post('/komputerMhu/create', [InvComputerMhuController::class, 'store'])->name('komputerMhu.store');
             Route::get('/komputerMhu/{id}/edit', [InvComputerMhuController::class, 'edit'])->name('komputerMhu.edit');
@@ -831,6 +835,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbAmi', [InvLaptopAmiController::class, 'uploadCsv'])->name('laptopAmi.import');
 
             Route::get('/komputerAmi', [InvComputerAmiController::class, 'index'])->name('komputerAmi.page');
+            Route::post('/komputerAmi/generate', [InvComputerAmiController::class, 'generateCode'])->name('komputerAmi.generate');
             Route::get('/komputerAmi/create', [InvComputerAmiController::class, 'create'])->name('komputerAmi.create');
             Route::post('/komputerAmi/create', [InvComputerAmiController::class, 'store'])->name('komputerAmi.store');
             Route::get('/komputerAmi/{id}/edit', [InvComputerAmiController::class, 'edit'])->name('komputerAmi.edit');
@@ -907,6 +912,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbPik', [InvLaptopPikController::class, 'uploadCsv'])->name('laptopPik.import');
 
             Route::get('/komputerPik', [InvComputerPikController::class, 'index'])->name('komputerPik.page');
+            Route::post('/komputerPik/generate', [InvComputerPikController::class, 'generateCode'])->name('komputerPik.generate');
             Route::get('/komputerPik/create', [InvComputerPikController::class, 'create'])->name('komputerPik.create');
             Route::post('/komputerPik/create', [InvComputerPikController::class, 'store'])->name('komputerPik.store');
             Route::get('/komputerPik/{id}/edit', [InvComputerPikController::class, 'edit'])->name('komputerPik.edit');
@@ -1060,6 +1066,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbIpt', [InvLaptopIptController::class, 'uploadCsv'])->name('laptopIpt.import');
 
             Route::get('/komputerIpt', [InvComputerIptController::class, 'index'])->name('komputerIpt.page');
+            Route::post('/komputerIpt/generate', [InvComputerIptController::class, 'generateCode'])->name('komputerIpt.generate');
             Route::get('/komputerIpt/create', [InvComputerIptController::class, 'create'])->name('komputerIpt.create');
             Route::post('/komputerIpt/create', [InvComputerIptController::class, 'store'])->name('komputerIpt.store');
             Route::get('/komputerIpt/{id}/edit', [InvComputerIptController::class, 'edit'])->name('komputerIpt.edit');
@@ -1136,6 +1143,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbMlp', [InvLaptopMlpController::class, 'uploadCsv'])->name('laptopMlp.import');
 
             Route::get('/komputerMlp', [InvComputerMlpController::class, 'index'])->name('komputerMlp.page');
+            Route::post('/komputerMlp/generate', [InvComputerMlpController::class, 'generateCode'])->name('komputerMlp.generate');
             Route::get('/komputerMlp/create', [InvComputerMlpController::class, 'create'])->name('komputerMlp.create');
             Route::post('/komputerMlp/create', [InvComputerMlpController::class, 'store'])->name('komputerMlp.store');
             Route::get('/komputerMlp/{id}/edit', [InvComputerMlpController::class, 'edit'])->name('komputerMlp.edit');
@@ -1212,6 +1220,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbMip', [InvLaptopMipController::class, 'uploadCsv'])->name('laptopMip.import');
 
             Route::get('/komputerMip', [InvComputerMipController::class, 'index'])->name('komputerMip.page');
+            Route::post('/komputerMip/generate', [InvComputerMipController::class, 'generateCode'])->name('komputerMip.generate');
             Route::get('/komputerMip/create', [InvComputerMipController::class, 'create'])->name('komputerMip.create');
             Route::post('/komputerMip/create', [InvComputerMipController::class, 'store'])->name('komputerMip.store');
             Route::get('/komputerMip/{id}/edit', [InvComputerMipController::class, 'edit'])->name('komputerMip.edit');
@@ -1288,6 +1297,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbVale', [InvLaptopValeController::class, 'uploadCsv'])->name('laptopVale.import');
 
             Route::get('/komputerVale', [InvComputerValeController::class, 'index'])->name('komputerVale.page');
+            Route::post('/komputerVale/generate', [InvComputerValeController::class, 'generateCode'])->name('komputerVale.generate');
             Route::get('/komputerVale/create', [InvComputerValeController::class, 'create'])->name('komputerVale.create');
             Route::post('/komputerVale/create', [InvComputerValeController::class, 'store'])->name('komputerVale.store');
             Route::get('/komputerVale/{id}/edit', [InvComputerValeController::class, 'edit'])->name('komputerVale.edit');
@@ -1364,6 +1374,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbSbs', [InvLaptopSbsController::class, 'uploadCsv'])->name('laptopSbs.import');
 
             Route::get('/komputerSbs', [InvComputerSbsController::class, 'index'])->name('komputerSbs.page');
+            Route::post('/komputerSbs/generate', [InvComputerSbsController::class, 'generateCode'])->name('komputerSbs.generate');
             Route::get('/komputerSbs/create', [InvComputerSbsController::class, 'create'])->name('komputerSbs.create');
             Route::post('/komputerSbs/create', [InvComputerSbsController::class, 'store'])->name('komputerSbs.store');
             Route::get('/komputerSbs/{id}/edit', [InvComputerSbsController::class, 'edit'])->name('komputerSbs.edit');
@@ -1440,6 +1451,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbSks', [InvLaptopSksController::class, 'uploadCsv'])->name('laptopSks.import');
 
             Route::get('/komputerSks', [InvComputerSksController::class, 'index'])->name('komputerSks.page');
+            Route::post('/komputerSks/generate', [InvComputerSksController::class, 'generateCode'])->name('komputerSks.generate');
             Route::get('/komputerSks/create', [InvComputerSksController::class, 'create'])->name('komputerSks.create');
             Route::post('/komputerSks/create', [InvComputerSksController::class, 'store'])->name('komputerSks.store');
             Route::get('/komputerSks/{id}/edit', [InvComputerSksController::class, 'edit'])->name('komputerSks.edit');
@@ -1516,6 +1528,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvNbWara', [InvLaptopWARAController::class, 'uploadCsv'])->name('laptopWARA.import');
 
             Route::get('/komputerWara', [InvComputerWARAController::class, 'index'])->name('komputerWARA.page');
+            Route::post('/komputerWara/generate', [InvComputerWARAController::class, 'generateCode'])->name('komputerWARA.generate');
             Route::get('/komputerWara/create', [InvComputerWARAController::class, 'create'])->name('komputerWARA.create');
             Route::post('/komputerWara/create', [InvComputerWARAController::class, 'store'])->name('komputerWARA.store');
             Route::get('/komputerWara/{id}/edit', [InvComputerWARAController::class, 'edit'])->name('komputerWARA.edit');

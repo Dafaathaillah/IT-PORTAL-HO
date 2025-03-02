@@ -15,9 +15,9 @@ class InspeksiComputerWARAController extends Controller
 {
     public function index()
     {
-        $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site', 'WARA')->get();
+        $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site', 'ADW')->get();
 
-        $site = 'WARA';
+        $site = 'ADW';
 
         $role = auth()->user()->role;
 
@@ -34,7 +34,7 @@ class InspeksiComputerWARAController extends Controller
         if (empty($dataInspeksi)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site', 'WARA')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'ADW')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return dd($dataInspeksi);
@@ -49,7 +49,7 @@ class InspeksiComputerWARAController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InspeksiComputer::where('site', 'WARA')->where('year', $year)->max('pica_number');
+        $maxId = InspeksiComputer::where('site', 'ADW')->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -369,7 +369,7 @@ class InspeksiComputerWARAController extends Controller
         }
         $crew_select = explode(', ', $dataInspeksi->crew);
 
-        $crew = User::where('site', 'WARA')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'ADW')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         return Inertia::render('Inspeksi/SiteWARA/Komputer/InspeksiKomputerFormEdit', ['inspeksi' => $dataInspeksi, 'crew' => $crew, 'crew_select' => $crew_select]);

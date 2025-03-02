@@ -36,7 +36,39 @@ class InvComputerPikController extends Controller
 
     public function create()
     {
-        abort(404, 'page not found');
+        $department = Department::orderBy('department_name')->where('is_site', 'Y')->pluck('department_name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        $pengguna = UserAll::where('site', 'PIK')->pluck('username')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        return Inertia::render('Inventory/SitePik/Komputer/KomputerCreate', ['pengguna' => $pengguna, 'department' => $department, 'computer_code' => session('computer_code') ?? null, 'dept' => session('dept') ?? null]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataDept = $request->input('department');
+        $dept = $dataDept['name'];
+        $codeDept = Department::where('department_name', $dept)->first();
+        $maxId = InvComputer::where('site', 'PIK')->where('dept', $codeDept->code)->orderBy('max_id', 'desc')->first();
+        // dd($maxId);
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            $parts = explode('-', $maxId->computer_code);
+            $lastPart = end($parts);
+            $maxId = (int) $lastPart;
+        }
+
+        $uniqueString = 'PIK-PC-' . $codeDept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($codeDept->code);
+        return redirect()->route('komputerPik.create')->with([
+            'computer_code' => $uniqueString,
+            'dept' => $codeDept->code
+        ]);
     }
 
     public function store(Request $request)
@@ -44,41 +76,7 @@ class InvComputerPikController extends Controller
 
         $params = $request->all();
 
-        if ($params['roterx'] == 'index') {
-            // start generate code
-            $currentDate = Carbon::tomorrow();
-            $year = $currentDate->format('y');
-            $month = $currentDate->month;
-            $day = $currentDate->day;
-
-            $dept = $params['dept'];
-
-            $code_dept = Department::where('department_name', $dept)->first();
-
-            $maxId = InvComputer::where('site', 'PIK')->where('dept', $code_dept->code)->orderBy('max_id', 'desc')->first();
-            // dd($maxId);
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $parts = explode('-', $maxId->computer_code);
-                $lastPart = end($parts);
-                $maxId = (int) $lastPart;
-            }
-
-            $uniqueString = 'PIK-PC-' . $code_dept->code . '-' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-
-            $request['inventory_number'] = $uniqueString;
-            // end generate code
-
-            $pengguna = UserAll::where('site', 'PIK')->pluck('username')->map(function ($name) {
-                return ['name' => $name];
-            })->toArray();
-
-            return Inertia::render('Inventory/SitePik/Komputer/KomputerCreate', ['inventoryNumber' => $uniqueString, 'pengguna' => $pengguna, 'dept' => $code_dept->code]);
-        } else {
-            // dd($request->all());
-            $maxId = InvComputer::max('max_id');
+        $maxId = InvComputer::max('max_id');
             if (is_null($maxId) || empty($maxId)) {
                 $maxId = 1;
             } else {
@@ -120,7 +118,6 @@ class InvComputerPikController extends Controller
 
             InvComputer::create($data);
             return redirect()->route('komputerPik.page');
-        }
     }
 
     public function uploadCsv(Request $request)
@@ -128,7 +125,7 @@ class InvComputerPikController extends Controller
         try {
             $import = new ImportComputer();
             Excel::import($import, $request->file('file'));
-    
+
             $duplicates = $import->getDuplicateRecords();
             // dd($duplicates);
             return Redirect::route('komputerPik.page')->with([

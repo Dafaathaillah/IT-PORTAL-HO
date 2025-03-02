@@ -18,7 +18,7 @@ class InvScannerWARAController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'WARA')->get();
+        $dataInventory = InvScanner::where('site', 'ADW')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SiteWARA/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);
@@ -32,7 +32,7 @@ class InvScannerWARAController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvScanner::where('site', 'WARA')->orderBy('max_id', 'desc')->first();
+        $maxId = InvScanner::where('site', 'ADW')->orderBy('max_id', 'desc')->first();
         // dd($maxId->scanner_code);
 
         if (is_null($maxId)) {
@@ -42,7 +42,7 @@ class InvScannerWARAController extends Controller
             $maxId = $noUrut;
         }
 
-        $uniqueString = 'PPAWARASCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        $uniqueString = 'PPAADWSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['scanner_code'] = $uniqueString;
 
@@ -85,7 +85,7 @@ class InvScannerWARAController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::create($data);
@@ -155,7 +155,7 @@ class InvScannerWARAController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::firstWhere('id', $request->id)->update($data);
