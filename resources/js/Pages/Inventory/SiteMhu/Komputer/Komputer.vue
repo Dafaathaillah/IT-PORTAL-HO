@@ -173,7 +173,7 @@ const submitCsv = () => {
 
     const formx = useForm({ file: file.value });
 
-    formx.post(route("komputerIpt.import"), {
+    formx.post(route("komputerMhu.import"), {
         onSuccess: () => {
             // Ambil data flash dari Laravel setelah request berhasil
             const page = usePage();
