@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
                 'computer_code' => session('computer_code'),
                 'laptop_code' => session('laptop_code'),
                 'dept' => session('dept'),
+                'newAduan' => session('new_aduan'),
             ],
         ]);
     }

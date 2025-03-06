@@ -290,9 +290,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    computers.computer.computer_code
-                                                                }}
+                                                                    {{ computers?.computer?.computer_code || 'Tidak ada nomer inventory' }}
                                                             </p>
                                                         </td>
                                                         
@@ -302,9 +300,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    computers.computer.pengguna.username
-                                                                }}
+                                                                    {{ computers?.computer?.pengguna?.username || 'Tidak ada username' }}
                                                             </p>
                                                         </td>
                                                         <td
@@ -313,11 +309,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-
-                                                                {{
-                                                                    computers.computer.pengguna.department
-                                                                }}
-                                                                
+                                                                    {{ computers?.computer?.pengguna?.department || 'Tidak ada departemen' }}
                                                             </p>
                                                         </td>
                                                         

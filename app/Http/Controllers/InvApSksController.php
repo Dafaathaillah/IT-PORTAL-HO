@@ -88,6 +88,10 @@ class InvApSksController extends Controller
 
     public function uploadCsv(Request $request)
     {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx,csv|max:10240', // 10MB = 10240 KB
+        ]);
+        
         try {
 
             Excel::import(new ImportAp, $request->file('file'));

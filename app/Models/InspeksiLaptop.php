@@ -54,9 +54,7 @@ class InspeksiLaptop extends Model
 
     public function inventory()
     {
-        return $this->belongsTo(InvLaptop::class, 'inv_laptop_id', 'id')->withDefault([
-            'username' => 'Edit untuk menambahkan user !',
-        ]);
+        return $this->belongsTo(InvLaptop::class, 'inv_laptop_id', 'id');
     }
     
 }

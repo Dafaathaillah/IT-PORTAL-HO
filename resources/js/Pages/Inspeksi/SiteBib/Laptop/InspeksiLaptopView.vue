@@ -394,11 +394,7 @@ function formatData(text) {
                                                                 <p
                                                                     class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                                 >
-                                                                    {{
-                                                                        inspeksiLaptops
-                                                                            .inventory
-                                                                            .laptop_code
-                                                                    }}
+                                                                    {{ inspeksiLaptops?.inventory?.laptop_code|| 'Tidak ada no inventory' }}
                                                                 </p>
                                                             </td>
 
@@ -408,12 +404,7 @@ function formatData(text) {
                                                                 <p
                                                                     class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                                 >
-                                                                    {{
-                                                                        inspeksiLaptops
-                                                                            .inventory
-                                                                            .pengguna
-                                                                            .username
-                                                                    }}
+                                                                    {{ inspeksiLaptops?.inventory?.pengguna.username || 'Tidak ada pengguna' }}
                                                                 </p>
                                                             </td>
                                                             <td
@@ -422,12 +413,7 @@ function formatData(text) {
                                                                 <p
                                                                     class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                                 >
-                                                                    {{
-                                                                        inspeksiLaptops
-                                                                            .inventory
-                                                                            .pengguna
-                                                                            .department
-                                                                    }}
+                                                                    {{ inspeksiLaptops?.inventory?.pengguna?.department || 'Tidak ada Department' }}
                                                                 </p>
                                                             </td>
 

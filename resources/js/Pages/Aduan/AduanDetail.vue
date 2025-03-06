@@ -19,6 +19,11 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     $("#tableData").DataTable();
 });
+
+const isImage = (url) => {
+    if (!url) return false;
+    return url.match(/\.(jpeg|jpg|png|gif)$/i);
+};
 </script>
 
 <template>
@@ -141,26 +146,76 @@ const mount = onMounted(() => {
                                         </div>
                                     </div>
 
-                                    <div class="grid grid-cols-2">
+                                    <div
+                                        v-if="
+                                            isImage(props.aduan.complaint_image)
+                                        "
+                                        class="grid grid-cols-2"
+                                    >
                                         <div>
                                             <p class="text-base">
                                                 Complaint Image
                                             </p>
                                         </div>
                                         <div>
-                                            <p 
-                                            v-if="props.aduan.complaint_image != null"
-                                            >
-                                                : <img
-                                                :src="
-                                                    props.aduan.complaint_image
+                                            <p
+                                                v-if="
+                                                    props.aduan
+                                                        .complaint_image != null
                                                 "
-                                                alt="documentation image"
-                                                class="ml-40 w-50 h-30 shadow-2xl rounded-xl"
-                                            />
-                                                
+                                            >
+                                                :
+                                                <img
+                                                    :src="
+                                                        props.aduan
+                                                            .complaint_image
+                                                    "
+                                                    alt="documentation image"
+                                                    class="ml-40 w-50 h-30 shadow-2xl rounded-xl"
+                                                />
                                             </p>
-                                            <p v-if="props.aduan.complaint_image == null">: - </p>
+                                            <p
+                                                v-if="
+                                                    props.aduan
+                                                        .complaint_image == null
+                                                "
+                                            >
+                                                : -
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div v-else class="grid grid-cols-4">
+                                        <div>
+                                            <p class="text-base">
+                                                Complaint Form
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p
+                                                v-if="
+                                                    props.aduan
+                                                        .complaint_image != null
+                                                "
+                                            >
+                                                <iframe
+                                                    :src="
+                                                        props.aduan
+                                                            .complaint_image
+                                                    "
+                                                    width="300%"
+                                                    height="300px"
+                                                    class="shadow-2xl rounded-xl"
+                                                ></iframe>
+                                            </p>
+                                            <p
+                                                v-if="
+                                                    props.aduan
+                                                        .complaint_image == null
+                                                "
+                                            >
+                                                : -
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

@@ -20,6 +20,9 @@ class InspeksiLaptopBibController extends Controller
         $site = 'BIB';
         $role = auth()->user()->role;
 
+        // // dd($inspeksi_laptop->first()->inventory);
+        // dd($inspeksi_laptop->first()->inventory);
+
         return Inertia::render(
             'Inspeksi/SiteBib/Laptop/InspeksiLaptopView',
             ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role]

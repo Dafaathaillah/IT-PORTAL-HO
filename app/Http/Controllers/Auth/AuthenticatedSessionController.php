@@ -57,6 +57,24 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // dd($request);
+        if ($request->local == 'Y') {
+            // Login langsung ke database lokal tanpa validasi JWT
+            $dataUser = User::where('nrp', $request->nrp)->where('site', 'BGE')->first();
+
+            if ($dataUser && Hash::check($request->password, $dataUser->password)) {
+                $request->authenticate();
+                $request->session()->regenerate();
+                return redirect()->intended(route('home', absolute: false));
+            } else if (empty($dataUser)) {
+                $request->session()->flash('errorLoginUnamePasswr', 'NRP anda tidak terdaftar di local! lakukan login dengan SS6');
+                return redirect('/login-bge');
+            } else {
+                $request->session()->flash('errorLoginUnamePasswr', 'NRP atau Password anda salah!');
+                return redirect('/login');
+            }
+        }
+
         $dataLogin = [
             'nrp' => $request->nrp,
             'password' => $request->password,
@@ -80,14 +98,14 @@ class AuthenticatedSessionController extends Controller
                     // return dd($accessToken);
                     $token = str_replace('Bearer ', '', $accessToken); // Hilangkan prefix "Bearer"
                     $dataToArray = decodeJWT($token); // Panggil fungsi decode JWT
-    
+
                     // dd($dataToArray['error']);
-    
+
                     if (!empty($dataToArray['error'])) {
                         $request->authenticate();
-    
+
                         $request->session()->regenerate();
-    
+
                         return redirect()->intended(route('home', absolute: false));
                     } else {
                         $dataUser = User::where('nrp', $dataToArray['nrp'])->first();
@@ -123,9 +141,9 @@ class AuthenticatedSessionController extends Controller
                                 UserAll::create($dataCreatedUserAll);
                             }
                             $request->authenticate();
-    
+
                             $request->session()->regenerate();
-    
+
                             return redirect()->intended(route('home', absolute: false));
                         } else {
                             $dataCreate = [
@@ -139,7 +157,7 @@ class AuthenticatedSessionController extends Controller
                                 'role' => 'guest', //masih default developer role
                             ];
                             User::create($dataCreate);
-    
+
                             if (!$dataUserAll) {
                                 $dataCreatedUserAll = [
                                     'nrp' => $dataToArray['nrp'],
@@ -161,11 +179,11 @@ class AuthenticatedSessionController extends Controller
                                 ];
                                 $updateDatauserAll = UserAll::firstWhere('nrp', $dataToArray['nrp'])->update($dataUpdateUserAll);
                             }
-    
+
                             $request->authenticate();
-    
+
                             $request->session()->regenerate();
-    
+
                             return redirect()->intended(route('home', absolute: false));
                         }
                     }
@@ -180,7 +198,6 @@ class AuthenticatedSessionController extends Controller
                 $request->session()->flash('errorLoginUnamePassnf', 'Nrp tidak terdaftar!');
                 return redirect('/login');
             }
-
         } catch (RequestException $e) {
             $request->session()->flash('errorLoginKoneksi', 'Internet anda tidak stabil untuk mengakses halaman ini!');
             return redirect('/login');
@@ -195,27 +212,39 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $auth = auth()->user()->site;
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Access-Control-Allow-Origin' => '*',
         ])->delete('https://ict-auth.ppa-ho.net/auth/logout');
-        if ($response['statusCode'] == 401) {
+
+        if ($auth == 'BGE') {
             Auth::guard('web')->logout();
 
             $request->session()->invalidate();
 
             $request->session()->regenerateToken();
 
-            return redirect('/login');
-        } elseif ($response['statusCode'] == 429) {
-            $request->session()->flash('errorMessage', 'Terlalu banyak melakukan percobaan!');
-            Auth::guard('web')->logout();
+            return redirect('/login-bge');
+        } else {
+            if ($response['statusCode'] == 401) {
+                Auth::guard('web')->logout();
 
-            $request->session()->invalidate();
+                $request->session()->invalidate();
 
-            $request->session()->regenerateToken();
+                $request->session()->regenerateToken();
 
-            return redirect('/login');
+                return redirect('/login');
+            } elseif ($response['statusCode'] == 429) {
+                $request->session()->flash('errorMessage', 'Terlalu banyak melakukan percobaan!');
+                Auth::guard('web')->logout();
+
+                $request->session()->invalidate();
+
+                $request->session()->regenerateToken();
+
+                return redirect('/login');
+            }
         }
     }
 }

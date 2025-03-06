@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminPengajuanRoleController;
 use App\Http\Controllers\AdminPengajuanRoleMifaController;
 use App\Http\Controllers\AduanAmiController;
 use App\Http\Controllers\AduanBaController;
+use App\Http\Controllers\AduanBgeController;
 use App\Http\Controllers\AduanBibController;
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\AduanHoController;
@@ -21,8 +22,10 @@ use App\Http\Controllers\AduanValeController;
 use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardAmiController;
 use App\Http\Controllers\DashboardBaController;
+use App\Http\Controllers\DashboardBgeController;
 use App\Http\Controllers\DashboardBibController;
 use App\Http\Controllers\DashboardIptController;
 use App\Http\Controllers\DashboardMhuController;
@@ -42,6 +45,7 @@ use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspeksiComputerAmiController;
 use App\Http\Controllers\InspeksiComputerBaController;
+use App\Http\Controllers\InspeksiComputerBgeController;
 use App\Http\Controllers\InspeksiComputerBibController;
 use App\Http\Controllers\InspeksiComputerWARAController;
 use App\Http\Controllers\InspeksiComputerController;
@@ -56,6 +60,7 @@ use App\Http\Controllers\InspeksiComputerSksController;
 use App\Http\Controllers\InspeksiComputerValeController;
 use App\Http\Controllers\InspeksiLaptopAmiController;
 use App\Http\Controllers\InspeksiLaptopBaController;
+use App\Http\Controllers\InspeksiLaptopBgeController;
 use App\Http\Controllers\InspeksiLaptopBibController;
 use App\Http\Controllers\InspeksiLaptopWARAController;
 use App\Http\Controllers\InspeksiLaptopController;
@@ -70,6 +75,7 @@ use App\Http\Controllers\InspeksiLaptopSksController;
 use App\Http\Controllers\InspeksiLaptopValeController;
 use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
+use App\Http\Controllers\InvApBgeController;
 use App\Http\Controllers\InvApBibController;
 use App\Http\Controllers\InvApWARAController;
 use App\Http\Controllers\InvApController;
@@ -85,6 +91,7 @@ use App\Http\Controllers\InvApSksController;
 use App\Http\Controllers\InvApValeController;
 use App\Http\Controllers\InvCctvAmiController;
 use App\Http\Controllers\InvCctvBaController;
+use App\Http\Controllers\InvCctvBgeController;
 use App\Http\Controllers\InvCctvBibController;
 use App\Http\Controllers\InvCctvWARAController;
 use App\Http\Controllers\InvCctvController;
@@ -100,6 +107,7 @@ use App\Http\Controllers\InvCctvSksController;
 use App\Http\Controllers\InvCctvValeController;
 use App\Http\Controllers\InvComputerAmiController;
 use App\Http\Controllers\InvComputerBaController;
+use App\Http\Controllers\InvComputerBgeController;
 use App\Http\Controllers\InvComputerBibController;
 use App\Http\Controllers\InvComputerWARAController;
 use App\Http\Controllers\InvComputerController;
@@ -115,6 +123,7 @@ use App\Http\Controllers\InvComputerSksController;
 use App\Http\Controllers\InvComputerValeController;
 use App\Http\Controllers\InvLaptopAmiController;
 use App\Http\Controllers\InvLaptopBaController;
+use App\Http\Controllers\InvLaptopBgeController;
 use App\Http\Controllers\InvLaptopBibController;
 use App\Http\Controllers\InvLaptopWARAController;
 use App\Http\Controllers\InvLaptopController;
@@ -131,6 +140,7 @@ use App\Http\Controllers\InvLaptopSksController;
 use App\Http\Controllers\InvLaptopValeController;
 use App\Http\Controllers\InvPrinterAmiController;
 use App\Http\Controllers\InvPrinterBaController;
+use App\Http\Controllers\InvPrinterBgeController;
 use App\Http\Controllers\InvPrinterBibController;
 use App\Http\Controllers\InvPrinterWARAController;
 use App\Http\Controllers\InvPrinterController;
@@ -146,6 +156,7 @@ use App\Http\Controllers\InvPrinterSksController;
 use App\Http\Controllers\InvPrinterValeController;
 use App\Http\Controllers\InvScannerAmiController;
 use App\Http\Controllers\InvScannerBaController;
+use App\Http\Controllers\InvScannerBgeController;
 use App\Http\Controllers\InvScannerBibController;
 use App\Http\Controllers\InvScannerWARAController;
 use App\Http\Controllers\InvScannerController;
@@ -162,6 +173,7 @@ use App\Http\Controllers\InvScannerValeController;
 use App\Http\Controllers\InvSwitchAmiController;
 use App\Http\Controllers\InvSwitchController;
 use App\Http\Controllers\InvSwitchBaController;
+use App\Http\Controllers\InvSwitchBgeController;
 use App\Http\Controllers\InvSwitchBibController;
 use App\Http\Controllers\InvSwitchIptController;
 use App\Http\Controllers\InvSwitchWARAController;
@@ -176,6 +188,7 @@ use App\Http\Controllers\InvSwitchSksController;
 use App\Http\Controllers\InvSwitchValeController;
 use App\Http\Controllers\InvWirellessAmiController;
 use App\Http\Controllers\InvWirellessBaController;
+use App\Http\Controllers\InvWirellessBgeController;
 use App\Http\Controllers\InvWirellessBibController;
 use App\Http\Controllers\InvWirellessWARAController;
 use App\Http\Controllers\InvWirellessController;
@@ -310,7 +323,7 @@ Route::middleware('auth')->group(function () {
         })->name('developerDashboard');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS'], function () {
+    Route::group(['middleware' => 'checkRole:ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE'], function () {
         Route::get('/groupLeaderDashboard', function () {
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
             $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
@@ -953,6 +966,84 @@ Route::middleware('auth')->group(function () {
             Route::post('/cctvPik/update', [InvCctvPikController::class, 'update'])->name('cctvPik.update');
             Route::get('/cctvPik/{id}/detail', [InvCctvPikController::class, 'detail'])->name('cctvPik.detail');
             Route::post('/uploadCsvCCTVPik', [InvCctvPikController::class, 'uploadCsv'])->name('cctvPik.import');
+        });
+
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BGE,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteBge', [DashboardBgeController::class, 'index'])->name('dashboardBge.page');
+
+            Route::get('/accessPointSiteBge', [InvApBgeController::class, 'index'])->name('accessPointBge.page');
+            Route::get('/accessPointSiteBge/create', [InvApBgeController::class, 'create'])->name('accessPointBge.create');
+            Route::post('/accessPointSiteBge/create', [InvApBgeController::class, 'store'])->name('accessPointBge.store');
+            Route::get('/accessPointSiteBge/{apId}/edit', [InvApBgeController::class, 'edit'])->name('accessPointBge.edit');
+            Route::put('/accessPointSiteBge/{apId}/update', [InvApBgeController::class, 'update'])->name('accessPointBge.update');
+            Route::delete('/accessPointSiteBge/{apId}/delete', [InvApBgeController::class, 'destroy'])->name('accessPointBge.delete');
+            Route::get('/accessPointSiteBge/{id}/detail', [InvApBgeController::class, 'detail'])->name('accessPointBge.detail');
+            Route::post('/uploadCsvApBge', [InvApBgeController::class, 'uploadCsv'])->name('accessPointBge.import');
+
+            Route::get('/switchBge', [InvSwitchBgeController::class, 'index'])->name('switchBge.page');
+            Route::get('/switchBge/create', [InvSwitchBgeController::class, 'create'])->name('switchBge.create');
+            Route::post('/switchBge/create', [InvSwitchBgeController::class, 'store'])->name('switchBge.store');
+            Route::get('/switchBge/{swId}/edit', [InvSwitchBgeController::class, 'edit'])->name('switchBge.edit');
+            Route::put('/switchBge/{swId}/update', [InvSwitchBgeController::class, 'update'])->name('switchBge.update');
+            Route::delete('/switchBge/{swId}/delete', [InvSwitchBgeController::class, 'destroy'])->name('switchBge.delete');
+            Route::get('/switchBge/{id}/detail', [InvSwitchBgeController::class, 'detail'])->name('switchBge.detail');
+            Route::post('/uploadCsvSwBge', [InvSwitchBgeController::class, 'uploadCsv'])->name('switchBge.import');
+
+            Route::get('/wirellessBge', [InvWirellessBgeController::class, 'index'])->name('wirellessBge.page');
+            Route::get('/wirellessBge/create', [InvWirellessBgeController::class, 'create'])->name('wirellessBge.create');
+            Route::post('/wirellessBge/create', [InvWirellessBgeController::class, 'store'])->name('wirellessBge.store');
+            Route::get('/wirellessBge/{id}/edit', [InvWirellessBgeController::class, 'edit'])->name('wirellessBge.edit');
+            Route::put('/wirellessBge/{id}/update', [InvWirellessBgeController::class, 'update'])->name('wirellessBge.update');
+            Route::delete('/wirellessBge/{id}/delete', [InvWirellessBgeController::class, 'destroy'])->name('wirellessBge.delete');
+            Route::get('/wirellessBge/{id}/detail', [InvWirellessBgeController::class, 'detail'])->name('wirellessBge.detail');
+            Route::post('/uploadCsvBbBge', [InvWirellessBgeController::class, 'uploadCsv'])->name('wirellessBge.import');
+
+            Route::get('/laptopBge', [InvLaptopBgeController::class, 'index'])->name('laptopBge.page');
+            Route::post('/laptopBge/generate', [InvLaptopBgeController::class, 'generateCode'])->name('laptopBge.generate');
+            Route::get('/laptopBge/create', [InvLaptopBgeController::class, 'create'])->name('laptopBge.create');
+            Route::post('/laptopBge/create', [InvLaptopBgeController::class, 'store'])->name('laptopBge.store');
+            Route::get('/laptopBge/{id}/edit', [InvLaptopBgeController::class, 'edit'])->name('laptopBge.edit');
+            Route::delete('/laptopBge/{id}/delete', [InvLaptopBgeController::class, 'destroy'])->name('laptopBge.delete');
+            Route::post('/laptopBge/update', [InvLaptopBgeController::class, 'update'])->name('laptopBge.update');
+            Route::get('/laptopBge/{id}/detail', [InvLaptopBgeController::class, 'detail'])->name('laptopBge.detail');
+            Route::post('/uploadCsvNbBge', [InvLaptopBgeController::class, 'uploadCsv'])->name('laptopBge.import');
+
+            Route::get('/komputerBge', [InvComputerBgeController::class, 'index'])->name('komputerBge.page');
+            Route::post('/komputerBge/generate', [InvComputerBgeController::class, 'generateCode'])->name('komputerBge.generate');
+            Route::get('/komputerBge/create', [InvComputerBgeController::class, 'create'])->name('komputerBge.create');
+            Route::post('/komputerBge/create', [InvComputerBgeController::class, 'store'])->name('komputerBge.store');
+            Route::get('/komputerBge/{id}/edit', [InvComputerBgeController::class, 'edit'])->name('komputerBge.edit');
+            Route::delete('/komputerBge/{id}/delete', [InvComputerBgeController::class, 'destroy'])->name('komputerBge.delete');
+            Route::post('/komputerBge/update', [InvComputerBgeController::class, 'update'])->name('komputerBge.update');
+            Route::get('/komputerBge/{id}/detail', [InvComputerBgeController::class, 'detail'])->name('komputerBge.detail');
+            Route::post('/uploadCsvCuBge', [InvComputerBgeController::class, 'uploadCsv'])->name('komputerBge.import');
+
+            Route::get('/printerBge', [InvPrinterBgeController::class, 'index'])->name(name: 'printerBge.page');
+            Route::get('/printerBge/create', [InvPrinterBgeController::class, 'create'])->name('printerBge.create');
+            Route::post('/printerBge/create', [InvPrinterBgeController::class, 'store'])->name('printerBge.store');
+            Route::get('/printerBge/{id}/edit', [InvPrinterBgeController::class, 'edit'])->name('printerBge.edit');
+            Route::delete('/printerBge/{id}/delete', [InvPrinterBgeController::class, 'destroy'])->name('printerBge.delete');
+            Route::post('/printerBge/update', [InvPrinterBgeController::class, 'update'])->name('printerBge.update');
+            Route::get('/printerBge/{id}/detail', [InvPrinterBgeController::class, 'detail'])->name('printerBge.detail');
+            Route::post('/uploadCsvPrtBge', [InvPrinterBgeController::class, 'uploadCsv'])->name('printerBge.import');
+
+            Route::get('/scannerBge', [InvScannerBgeController::class, 'index'])->name('scannerBge.page');
+            Route::get('/scannerBge/create', [InvScannerBgeController::class, 'create'])->name('scannerBge.create');
+            Route::post('/scannerBge/create', [InvScannerBgeController::class, 'store'])->name('scannerBge.store');
+            Route::get('/scannerBge/{id}/edit', [InvScannerBgeController::class, 'edit'])->name('scannerBge.edit');
+            Route::delete('/scannerBge/{id}/delete', [InvScannerBgeController::class, 'destroy'])->name('scannerBge.delete');
+            Route::post('/scannerBge/update', [InvScannerBgeController::class, 'update'])->name('scannerBge.update');
+            Route::get('/scannerBge/{id}/detail', [InvScannerBgeController::class, 'detail'])->name('scannerBge.detail');
+            Route::post('/uploadCsvScnBge', [InvScannerBgeController::class, 'uploadCsv'])->name('scannerBge.import');
+
+            Route::get('/cctvBge', [InvCctvBgeController::class, 'index'])->name('cctvBge.page');
+            Route::get('/cctvBge/create', [InvCctvBgeController::class, 'create'])->name('cctvBge.create');
+            Route::post('/cctvBge/create', [InvCctvBgeController::class, 'store'])->name('cctvBge.store');
+            Route::get('/cctvBge/{id}/edit', [InvCctvBgeController::class, 'edit'])->name('cctvBge.edit');
+            Route::delete('/cctvBge/{id}/delete', [InvCctvBgeController::class, 'destroy'])->name('cctvBge.delete');
+            Route::post('/cctvBge/update', [InvCctvBgeController::class, 'update'])->name('cctvBge.update');
+            Route::get('/cctvBge/{id}/detail', [InvCctvBgeController::class, 'detail'])->name('cctvBge.detail');
+            Route::post('/uploadCsvCCTVBge', [InvCctvBgeController::class, 'uploadCsv'])->name('cctvBge.import');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
@@ -1793,6 +1884,24 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-pik/{id}/delete', [InspeksiComputerPikController::class, 'destroy'])->name('inspeksiKomputerPik.delete');
             });
 
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BGE,ict_ho:HO'], function () {
+                Route::get('inspeksi-laptop-Bge', [InspeksiLaptopBgeController::class, 'index'])->name('inspeksiLaptopBge.page');
+                Route::get('inspeksi-laptop-Bge/{id}/process', [InspeksiLaptopBgeController::class, 'process'])->name('inspeksiLaptopBge.process');
+                Route::post('inspeksi-laptop-Bge/process', [InspeksiLaptopBgeController::class, 'store'])->name('inspeksiLaptopBge.store');
+                Route::get('inspeksi-laptop-Bge/{id}/edit', [InspeksiLaptopBgeController::class, 'edit'])->name('inspeksiLaptopBge.edit');
+                Route::post('inspeksi-laptop-Bge/update', [InspeksiLaptopBgeController::class, 'update'])->name('inspeksiLaptopBge.update');
+                Route::get('/inspeksi-laptop-Bge/{id}/detail', [InspeksiLaptopBgeController::class, 'detail'])->name('inspeksiLaptopBge.detail');
+                Route::delete('inspeksi-laptop-Bge/{id}/delete', [InspeksiLaptopBgeController::class, 'destroy'])->name('inspeksiLaptopBge.delete');
+
+                Route::get('inspeksi-komputer-Bge', [InspeksiComputerBgeController::class, 'index'])->name('inspeksiKomputerBge.page');
+                Route::get('inspeksi-komputer-Bge/{id}/inspection', [InspeksiComputerBgeController::class, 'doInspection'])->name('inspeksiKomputerBge.inspection');
+                Route::post('inspeksi-komputer-Bge/inspection', [InspeksiComputerBgeController::class, 'store'])->name('inspeksiKomputerBge.store');
+                Route::get('inspeksi-komputer-Bge/{id}/edit', [InspeksiComputerBgeController::class, 'edit'])->name('inspeksiKomputerBge.edit');
+                Route::put('inspeksi-komputer-Bge/{id}/update', [InspeksiComputerBgeController::class, 'update'])->name('inspeksiKomputerBge.update');
+                Route::get('/inspeksi-komputer-Bge/{id}/detail', [InspeksiComputerBgeController::class, 'detail'])->name('inspeksiKomputerBge.detail');
+                Route::delete('inspeksi-komputer-Bge/{id}/delete', [InspeksiComputerBgeController::class, 'destroy'])->name('inspeksiKomputerBge.delete');
+            });
+
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-bib', [InspeksiLaptopBibController::class, 'index'])->name('inspeksiLaptopBib.page');
                 Route::get('inspeksi-laptop-bib/{id}/process', [InspeksiLaptopBibController::class, 'process'])->name('inspeksiLaptopBib.process');
@@ -2090,6 +2199,18 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanPik/{id}/detail', [AduanPikController::class, 'detail'])->name('aduanPik.detail');
         });
 
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_group_leader:BGE'], function () {
+            Route::get('/aduanBge', [AduanBgeController::class, 'index'])->name('aduanBge.page');
+            Route::get('/aduanBge/create', [AduanBgeController::class, 'create'])->name('aduanBge.create');
+            Route::post('/aduanBge/create', [AduanBgeController::class, 'store'])->name('aduanBge.store');
+            Route::get('/aduanBge/{id}/edit', [AduanBgeController::class, 'edit'])->name('aduanBge.edit');
+            Route::post('/aduanBge/updateProgress', [AduanBgeController::class, 'update_aduan_progress'])->name('aduanBge.updateProgress');
+            Route::get('/aduanBge/{id}/progress', [AduanBgeController::class, 'progress'])->name('aduanBge.progress');
+            Route::delete('/aduanBge/{id}/delete', [AduanBgeController::class, 'destroy'])->name('aduanBge.delete');
+            Route::post('/aduanBge/update', [AduanBgeController::class, 'update_aduan'])->name('aduanBge.update');
+            Route::get('/aduanBge/{id}/detail', [AduanBgeController::class, 'detail'])->name('aduanBge.detail');
+        });
+
         Route::prefix('/recycleBin')->group(function () {
             Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
                 Route::get('/aduanRcBin', [AduanRcbinController::class, 'index'])->name('aduanRcBin.page');
@@ -2174,6 +2295,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('home');
+Route::get('login-bge', [AuthController::class, 'index'])->name('auth.bge');
 Route::post('login-handling', [TestingAuthApiController::class, 'index'])->name('auth.loginHandling');
 
 require __DIR__ . '/auth.php';

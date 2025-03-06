@@ -107,6 +107,11 @@ watch(
 const toggleLevel1RcBin = () => {
     level1OpenRcBin.value = !level1OpenRcBin.value;
 
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
+    
     level1OpenHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
@@ -364,6 +369,11 @@ watch(
 // Toggle functions for each level
 const toggleLevel1Ho = () => {
     level1OpenHo.value = !level1OpenHo.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenBa.value = false;
     level2OpenBa.value = false;
@@ -633,6 +643,11 @@ watch(
 // Toggle functions for each level
 const toggleLevel1Ba = () => {
     level1OpenBa.value = !level1OpenBa.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -905,6 +920,11 @@ watch(
 const toggleLevel1Mifa = () => {
     level1OpenMifa.value = !level1OpenMifa.value;
 
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
+
     level1OpenHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
@@ -1175,6 +1195,11 @@ watch(
 // Toggle functions for each level
 const toggleLevel1Mhu = () => {
     level1OpenMhu.value = !level1OpenMhu.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -1447,6 +1472,11 @@ watch(
 const toggleLevel1WARA = () => {
     level1OpenWARA.value = !level1OpenWARA.value;
 
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
+
     level1OpenHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
@@ -1718,6 +1748,11 @@ watch(
 const toggleLevel1Bib = () => {
     level1OpenBib.value = !level1OpenBib.value;
 
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
+
     level1OpenHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
@@ -1988,6 +2023,11 @@ watch(
 // Toggle functions for each level
 const toggleLevel1Ami = () => {
     level1OpenAmi.value = !level1OpenAmi.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -2450,6 +2490,283 @@ const toggleLevel3ScannerPik = () => {
     level3ScannerOpenPik.value = !level3ScannerOpenPik.value;
 };
 
+// toggle BGE
+const level1OpenBge = ref(false);
+const level2OpenBge = ref(false);
+const level2OpenAduanBge = ref(false);
+const level2OpenSettingBge = ref(false);
+const level2OpenInspeksiBge = ref(false);
+const level3OpenBge = ref(false);
+const level3KomputerOpenBge = ref(false);
+const level3PrinterOpenBge = ref(false);
+const level3ScannerOpenBge = ref(false);
+const level3CctvOpenBge = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenBge.value = localStorage.getItem("level1OpenBge") === "true";
+    level2OpenBge.value = localStorage.getItem("level2OpenBge") === "true";
+    level2OpenAduanBge.value =
+        localStorage.getItem("level2OpenAduanBge") === "true";
+    level2OpenSettingBge.value =
+        localStorage.getItem("level2OpenSettingBge") === "true";
+    level2OpenInspeksiBge.value =
+        localStorage.getItem("level2OpenInspeksiBge") === "true";
+    level3OpenBge.value = localStorage.getItem("level3OpenBge") === "true";
+    level3PrinterOpenBge.value =
+        localStorage.getItem("level3PrinterOpenBge") === "true";
+    level3ScannerOpenBge.value =
+        localStorage.getItem("level3ScannerOpenBge") === "true";
+    level3KomputerOpenBge.value =
+        localStorage.getItem("level3KomputerOpenBge") === "true";
+    level3CctvOpenBge.value =
+        localStorage.getItem("level3CctvOpenBge") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenBge,
+        level2OpenBge,
+        level2OpenSettingBge,
+        level2OpenInspeksiBge,
+        level2OpenAduanBge,
+        level3OpenBge,
+        level3PrinterOpenBge,
+        level3ScannerOpenBge,
+        level3KomputerOpenBge,
+        level3CctvOpenBge,
+    ],
+    () => {
+        localStorage.setItem("level1OpenBge", level1OpenBge.value);
+        localStorage.setItem("level2OpenBge", level2OpenBge.value);
+        localStorage.setItem("level2OpenAduanBge", level2OpenAduanBge.value);
+        localStorage.setItem(
+            "level2OpenSettingBge",
+            level2OpenSettingBge.value
+        );
+        localStorage.setItem(
+            "level2OpenInspeksiBge",
+            level2OpenInspeksiBge.value
+        );
+        localStorage.setItem("level3OpenBge", level3OpenBge.value);
+        localStorage.setItem(
+            "level3KomputerOpenBge",
+            level3KomputerOpenBge.value
+        );
+        localStorage.setItem(
+            "level3PrinterOpenBge",
+            level3PrinterOpenBge.value
+        );
+        localStorage.setItem(
+            "level3ScannerOpenBge",
+            level3ScannerOpenBge.value
+        );
+        localStorage.setItem("level3CctvOpenBge", level3CctvOpenBge.value);
+    }
+);
+
+// Toggle functions for each level
+const toggleLevel1Bge = () => {
+    // console.log('CEK')
+    level1OpenBge.value = !level1OpenBge.value;
+
+    level1OpenHo.value = false;
+    level2OpenHo.value = false;
+    level2OpenSettingHo.value = false;
+    level2OpenInspeksiHo.value = false;
+
+    level1OpenPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
+    level1OpenBa.value = false;
+    level2OpenBa.value = false;
+    level2OpenSettingBa.value = false;
+    level2OpenInspeksiBa.value = false;
+
+    level1OpenBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
+    level1OpenMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+
+    level1OpenMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
+    level1OpenWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
+    level1OpenAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenIpt.value = false;
+    level2OpenIpt.value = false;
+    level2OpenSettingIpt.value = false;
+    level2OpenInspeksiIpt.value = false;
+
+    level1OpenMlp.value = false;
+    level2OpenMlp.value = false;
+    level2OpenSettingMlp.value = false;
+    level2OpenInspeksiMlp.value = false;
+
+    level1OpenMip.value = false;
+    level2OpenMip.value = false;
+    level2OpenSettingMip.value = false;
+    level2OpenInspeksiMip.value = false;
+
+    level1OpenVale.value = false;
+    level2OpenVale.value = false;
+    level2OpenSettingVale.value = false;
+    level2OpenInspeksiVale.value = false;
+
+    level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenBge.value) {
+        level2OpenBge.value = false;
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+};
+
+const toggleLevel2Bge = () => {
+    console.log(level1OpenBge.value);
+    if (!level2OpenBge.value) {
+        level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingBge.value = false;
+        level2OpenInspeksiBge.value = false;
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level2OpenBge.value = !level2OpenBge.value;
+};
+
+const toggleLevel2AduanBge = () => {
+    console.log(level1OpenBge.value);
+    if (!level2OpenAduanBge.value) {
+        level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level2OpenAduanBge.value = !level2OpenAduanBge.value;
+};
+
+const toggleLevel2SettingBge = () => {
+    console.log(level1OpenBge.value);
+    if (!level2OpenSettingBge.value) {
+        level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenInspeksiBge.value = false;
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level2OpenSettingBge.value = !level2OpenSettingBge.value;
+};
+
+const toggleLevel2InspeksiBge = () => {
+    console.log(level1OpenBge.value);
+    if (!level2OpenInspeksiBge.value) {
+        level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSettingBge.value = false;
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level2OpenInspeksiBge.value = !level2OpenInspeksiBge.value;
+};
+
+const toggleLevel3LaptopBge = () => {
+    if (!level3OpenBge.value) {
+        level2OpenBge.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level3OpenBge.value = !level3OpenBge.value;
+};
+
+const toggleLevel3KomputerBge = () => {
+    if (!level3KomputerOpenBge.value) {
+        level2OpenBge.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level3KomputerOpenBge.value = !level3KomputerOpenBge.value;
+};
+
+const toggleLevel3CctvBge = () => {
+    if (!level3CctvOpenBge.value) {
+        level2OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+    }
+    level3CctvOpenBge.value = !level3CctvOpenBge.value;
+};
+
+const toggleLevel3PrinterBge = () => {
+    if (!level3PrinterOpenBge.value) {
+        level2OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level3PrinterOpenBge.value = !level3PrinterOpenBge.value;
+};
+
+const toggleLevel3ScannerBge = () => {
+    if (!level3ScannerOpenBge.value) {
+        level2OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level3ScannerOpenBge.value = !level3ScannerOpenBge.value;
+};
+
 // toggle IPT
 const level1OpenIpt = ref(false);
 const level2OpenIpt = ref(false);
@@ -2529,6 +2846,11 @@ watch(
 // Toggle functions for each level
 const toggleLevel1Ipt = () => {
     level1OpenIpt.value = !level1OpenIpt.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -2799,8 +3121,12 @@ watch(
 
 // Toggle functions for each level
 const toggleLevel1Mlp = () => {
-    console.log("TAI");
     level1OpenMlp.value = !level1OpenMlp.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -3071,8 +3397,12 @@ watch(
 
 // Toggle functions for each level
 const toggleLevel1Mip = () => {
-    // console.log('TAI');
     level1OpenMip.value = !level1OpenMip.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -3343,8 +3673,12 @@ watch(
 
 // Toggle functions for each level
 const toggleLevel1Vale = () => {
-    // console.log('TAI');
     level1OpenVale.value = !level1OpenVale.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -3615,8 +3949,12 @@ watch(
 
 // Toggle functions for each level
 const toggleLevel1Sbs = () => {
-    // console.log('TAI');
     level1OpenSbs.value = !level1OpenSbs.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -3887,8 +4225,12 @@ watch(
 
 // Toggle functions for each level
 const toggleLevel1Sks = () => {
-    // console.log('TAI');
     level1OpenSks.value = !level1OpenSks.value;
+
+    level1OpenBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
     level2OpenHo.value = false;
@@ -8983,6 +9325,620 @@ const toggleLevel3ScannerSks = () => {
                         </ul>
                     </li>
                     <!-- end PIK -->
+
+                    <hr
+                        v-if="
+                            $page.props.auth.user.site == 'BGE' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                        class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                    />
+
+                    <!-- start BGE -->
+                    <li
+                        v-if="
+                            $page.props.auth.user.site == 'BGE' ||
+                            $page.props.auth.user.role == 'ict_developer' ||
+                            $page.props.auth.user.site == 'HO'
+                        "
+                    >
+                        <div
+                            @click="toggleLevel1Bge"
+                            style="cursor: pointer"
+                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        >
+                            <div
+                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                            >
+                                <i
+                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                ></i>
+                            </div>
+                            <span
+                                v-if="$page.props.auth.user.site == 'HO'"
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >BGE Bayan Group</span
+                            >
+                            <span
+                                v-if="
+                                    $page.props.auth.user.site == 'BGE' ||
+                                    $page.props.auth.user.role ==
+                                        'ict_developer'
+                                "
+                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                >ICT - PPA BGE</span
+                            >
+                            <i
+                                v-if="!level1OpenBge"
+                                class="ms-3 fas fa-angle-right"
+                            ></i>
+                            <i v-else class="ms-3 fas fa-angle-down"></i>
+                        </div>
+                        <ul v-if="level1OpenBge">
+                            <li>
+                                <NavLink
+                                    :href="route('dashboardBge.page')"
+                                    :active="
+                                        route().current('dashboardBge.page')
+                                    "
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Dashboard</span
+                                    >
+                                </NavLink>
+
+                                <NavLink
+                                    @click="toggleLevel2AduanBge"
+                                    :href="route('aduanBge.page')"
+                                    :active="route().current('aduanBge.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Aduan</span
+                                    >
+                                </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2Bge"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inventory</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenBge"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenBge">
+                                    <NavLink
+                                        :href="route('accessPointBge.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointBge.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Access Point</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('switchBge.page')"
+                                        :active="
+                                            route().current('switchBge.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Switch</span
+                                        >
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('wirellessBge.page')"
+                                        :active="
+                                            route().current('wirellessBge.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Wirelless</span
+                                        >
+                                    </NavLink>
+                                    <div
+                                        @click="toggleLevel3LaptopBge"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Laptop</span
+                                        >
+                                        <i
+                                            v-if="!level3OpenBge"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3OpenBge">
+                                        <NavLink
+                                            :href="route('laptopBge.page')"
+                                            :active="
+                                                route().current(
+                                                    'laptopBge.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Laptop Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3KomputerBge"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Komputer</span
+                                        >
+                                        <i
+                                            v-if="!level3KomputerOpenBge"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3KomputerOpenBge">
+                                        <NavLink
+                                            :href="route('komputerBge.page')"
+                                            :active="
+                                                route().current(
+                                                    'komputerBge.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Komputer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3PrinterBge"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Printer</span
+                                        >
+                                        <i
+                                            v-if="!level3PrinterOpenBge"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3PrinterOpenBge">
+                                        <NavLink
+                                            :href="route('printerBge.page')"
+                                            :active="
+                                                route().current(
+                                                    'printerBge.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Printer Fixed</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3ScannerBge"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Scanner</span
+                                        >
+                                        <i
+                                            v-if="!level3ScannerOpenBge"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3ScannerOpenBge">
+                                        <NavLink
+                                            :href="route('scannerBge.page')"
+                                            :active="
+                                                route().current(
+                                                    'scannerBge.page'
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Scanner</span
+                                            >
+                                        </NavLink>
+                                    </li>
+
+                                    <div
+                                        @click="toggleLevel3CctvBge"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Cctv</span
+                                        >
+                                        <i
+                                            v-if="!level3CctvOpenBge"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <li v-if="level3CctvOpenBge">
+                                        <NavLink
+                                            :href="route('cctvBge.page')"
+                                            :active="
+                                                route().current('cctvBge.page')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Data Cctv</span
+                                            >
+                                        </NavLink>
+                                    </li>
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2InspeksiBge"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Inspeksi</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenInspeksiBge"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenInspeksiBge">
+                                    <NavLink
+                                        :href="route('inspeksiLaptopBge.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiLaptopBge.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiKomputerBge.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiKomputerBge.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+                                </ul>
+
+                                <!-- <div
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_developer'
+                                    "
+                                    @click="toggleLevel2SettingMhu"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenSettingMhu"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenSettingMhu">
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('penggunaMhu.page')"
+                                        :active="
+                                            route().current('penggunaMhu.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Pengguna</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('departmentMifa.page')"
+                                        :active="
+                                            route().current(
+                                                'departmentMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Department</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('aksesMifa.page')"
+                                        :active="
+                                            route().current('aksesMifa.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pengajuan Akses Role</span
+                                        >
+                                    </NavLink>
+                                </ul> -->
+
+                                <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_group_leader'
+                                    "
+                                    :href="route('aduan-ho.page')"
+                                    :active="route().current('aduan-ho.page')"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >
+                                        Pengaduan HO</span
+                                    >
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end BGE -->
 
                     <hr
                         v-if="

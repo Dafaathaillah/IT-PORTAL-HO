@@ -139,7 +139,10 @@ class InvLaptopBibController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
+            $request->validate([
+                'file' => 'required|mimes:xls,xlsx,csv|max:10240', // 10MB = 10240 KB
+            ]);
+            
             $import = new ImportLaptop();
             Excel::import($import, $request->file('file'));
 

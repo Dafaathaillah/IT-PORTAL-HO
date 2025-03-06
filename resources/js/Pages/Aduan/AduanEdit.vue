@@ -113,6 +113,11 @@ const update = () => {
 function handleCategoryChange(event) {
     form.category_name = event.target.value;
 }
+
+const isImage = (url) => {
+    if (!url) return false;
+    return url.match(/\.(jpeg|jpg|png|gif)$/i);
+};
 </script>
 
 <template>
@@ -263,18 +268,19 @@ function handleCategoryChange(event) {
                                                 name="category_name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option
-                                                    selected
-                                                    value=""
-                                                >
+                                                <option selected value="">
                                                     SELECT CATEGORY
                                                 </option>
                                                 <option
                                                     v-for="category in categories"
                                                     :key="category.id"
-                                                    :value="category.category_root_cause"
+                                                    :value="
+                                                        category.category_root_cause
+                                                    "
                                                 >
-                                                    {{ category.category_root_cause }}
+                                                    {{
+                                                        category.category_root_cause
+                                                    }}
                                                 </option>
                                             </select>
                                         </div>
@@ -358,6 +364,9 @@ function handleCategoryChange(event) {
                                     </div>
 
                                     <div
+                                        v-if="
+                                            isImage(props.aduan.complaint_image)
+                                        "
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -371,6 +380,27 @@ function handleCategoryChange(event) {
                                                 alt="documentation image"
                                                 class="w-60 h-30 shadow-2xl rounded-xl"
                                             />
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        v-else
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Previous Complaint Form</label
+                                            >
+                                            <iframe
+                                                :src="
+                                                    props.aduan.complaint_image
+                                                "
+                                                width="100%"
+                                                height="200px"
+                                                class="shadow-2xl rounded-xl"
+                                            ></iframe>
                                         </div>
                                     </div>
                                     <div
@@ -575,8 +605,9 @@ function handleCategoryChange(event) {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
-                                    
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
                                         :href="route('aduan.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"

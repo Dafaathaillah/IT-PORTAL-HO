@@ -6,12 +6,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class AuthController extends Controller
 {
-    public function index(){
-        // return inertia('index/index');
-        return response()->json(['message' => 'masih masuk api login'], 401);
+    public function index(Request $request){
+        $errorLoginUnamePasswr = $request->session()->get('errorLoginUnamePasswr', null);
+        $errorMessage = $request->session()->get('errorMessage', null);
+        $errorMessagePE = $request->session()->get('errorMessagePE', null);
+        $errorLoginUnamePassnf = $request->session()->get('errorLoginUnamePassnf', null);
+        $errorLoginKoneksi = $request->session()->get('errorLoginKoneksi', null);
+        return Inertia::render('Auth/LoginLocal', [
+            'errorLoginUnamePasswr' => session('errorLoginUnamePasswr'),
+            'errorMessage' => session('errorMessage'),
+            'errorMessagePE' => session('errorMessagePE'),
+            'errorLoginUnamePassnf' => session('errorLoginUnamePassnf'),
+            'errorLoginKoneksi' => session('errorLoginKoneksi'),
+        ]);
     }
     
     public function register(Request $request)
