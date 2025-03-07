@@ -19,7 +19,7 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -38,7 +38,6 @@ function formattedDate(date) {
 }
 
 const mount = onMounted(() => {
-    // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
         dom: 'fBrtilp',
         buttons: [
@@ -149,26 +148,50 @@ const submitCsv = () => {
 
     formx.post(route("cctvMifa.import"), {
         onSuccess: () => {
-            // Show SweetAlert2 success notification
+            // Ambil data flash dari Laravel setelah request berhasil
+            const page = usePage();
+            const duplicates = page.props.flash?.duplicates || [];
+
             Swal.fire({
                 title: "Success!",
-                text: "Data has been successfully created!",
+                text: "Data berhasil diimport!",
                 icon: "success",
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
+            }).then(() => {
+                window.location.reload(); // Reload page setelah klik OK
             });
 
-            setTimeout(function () {
-                reloadPage();
-            }, 2000);
+            if (duplicates.length > 0) {
+                let duplicateMsg = duplicates
+                    .map(
+                        (d) =>
+                            `No Inventory: ${d.inventory_number}, Lokasi: ${d.location}, site: ${d.site}`
+                    )
+                    .join("<br>");
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "Beberapa Data Duplicate!",
+                    html: duplicateMsg,
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#f39c12",
+                }).then(() => {
+                    window.location.reload(); // Reload page setelah klik OK
+                });
+            }
+
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 2000);
         },
         onError: () => {
             Swal.fire({
-                title: "error!",
-                text: "Data not created!",
-                icon: "waring",
+                title: "Error!",
+                text: "Data gagal diimport!",
+                icon: "error",
                 confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "#d33",
             });
         },
     });

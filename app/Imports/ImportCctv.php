@@ -18,9 +18,19 @@ class ImportCctv implements ToModel, WithStartRow
         return 17;
     }
 
+    public $duplicateRecords = [];
 
     public function model(array $row)
     {
+        $inventoryNumber = trim($row[2]); // Hilangkan spasi di awal dan akhir
+
+        // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
+        if ($inventoryNumber === '' || $inventoryNumber === '-' || $inventoryNumber === null) {
+            $existingDataInvNumber = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $existingDataInvNumber = InvCctv::where('cctv_code', $inventoryNumber)->where('site', auth()->user()->site)->first();
+        }
+
         // return dd($row);
         $maxId = InvCctv::max('max_id');
         if (is_null($maxId)) {
@@ -28,6 +38,16 @@ class ImportCctv implements ToModel, WithStartRow
         }else{
             $maxId = $maxId + 1;
         }
+        
+        if ($existingDataInvNumber) {
+            $this->duplicateRecords[] = [
+                'inventory_number' => $existingDataInvNumber->cctv_code,
+                'location' => $existingDataInvNumber->location,
+                'site' => $existingDataInvNumber->site,
+            ];
+            return null;
+        }
+
         // return dd($maxId);
         return new InvCctv([
             'max_id' => $maxId,
@@ -49,4 +69,10 @@ class ImportCctv implements ToModel, WithStartRow
             'site' => auth()->user()->site
         ]);
     }
+
+    public function getDuplicateRecords()
+    {
+        return $this->duplicateRecords;
+    }
+
 }

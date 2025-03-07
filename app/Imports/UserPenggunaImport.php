@@ -21,6 +21,12 @@ class UserPenggunaImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+
+        if (!isset($row[1]) || empty($row[1])) {
+            return null; // Skip jika tidak ada data
+        }
+
+        
         // Ambil nilai NRP dari data row
         $nrp = strtoupper($row[1]);
 

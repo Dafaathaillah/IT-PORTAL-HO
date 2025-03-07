@@ -147,16 +147,23 @@ const mainMenu = defineModel('mainMenu', {
   
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 1024) {
   /* For laptop: */
   .ps {
-        max-height: 95% !important;
+        max-height: 40em !important;
         /* or height: 100px; */
     }
-  
 }
 
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1180) {
+  /* For laptop: */
+  .ps {
+        max-height: 40em !important;
+        /* or height: 100px; */
+    }
+}
+
+@media only screen and (min-width: 1366px) {
   /* For laptop: */
   .ps {
         max-height: 42em !important;
@@ -164,7 +171,6 @@ const mainMenu = defineModel('mainMenu', {
     }
   
 }
-
 
 @media (min-width: 1800px) {
   

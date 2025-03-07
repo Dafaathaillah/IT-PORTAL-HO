@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
@@ -94,8 +95,14 @@ class InvCctvMlpController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-            Excel::import(new ImportCctv, $request->file('file'));
-            return redirect()->route('cctvMlp.page');
+            $import = new ImportCctv();
+            Excel::import($import, $request->file('file'));
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('cctvMlp.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);

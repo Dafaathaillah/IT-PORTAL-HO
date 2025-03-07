@@ -1,3 +1,11 @@
+:root {
+  --max-height-ps: 90vh; /* Default */
+}
+
+.ps {
+  max-height: var(--max-height-ps) !important;
+}
+
 /*
  * Container style
  */

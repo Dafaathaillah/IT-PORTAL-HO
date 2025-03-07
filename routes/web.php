@@ -1592,7 +1592,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVSbs', [InvCctvSksController::class, 'uploadCsv'])->name('cctvSks.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
             Route::get('/dashboardSiteWara', [DashboardWaraController::class, 'index'])->name('dashboardWara.page');
 
             Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
@@ -1830,7 +1830,7 @@ Route::middleware('auth')->group(function () {
                 // Route::delete('akses-mhu/{id}/delete', [AdminPengajuanRoleMifaController::class, 'destroy'])->name('aksesMifa.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:ADW,ict_admin:ADW,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_group_leader:ADW,ict_admin:ADW,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-Wara', [InspeksiLaptopWARAController::class, 'index'])->name('inspeksiLaptopWARA.page');
                 Route::get('inspeksi-laptop-Wara/{id}/process', [InspeksiLaptopWARAController::class, 'process'])->name('inspeksiLaptopWARA.process');
                 Route::post('inspeksi-laptop-Wara/process', [InspeksiLaptopWARAController::class, 'store'])->name('inspeksiLaptopWARA.store');
@@ -2079,7 +2079,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMhu/{id}/detail', [AduanMhuController::class, 'detail'])->name('aduanMhu.detail');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,dd,ict_group_leader:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
             Route::get('/aduanWara', [AduanWARAController::class, 'index'])->name('aduanWARA.page');
             Route::get('/aduanWara/create', [AduanWARAController::class, 'create'])->name('aduanWARA.create');
             Route::post('/aduanWara/create', [AduanWARAController::class, 'store'])->name('aduanWARA.store');

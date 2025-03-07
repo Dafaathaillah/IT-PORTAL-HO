@@ -19,7 +19,7 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -37,8 +37,32 @@ function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
 }
 
+const page = usePage();
+
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
+    console.log('page.props');
+    const duplicates = page.props.flash?.duplicatesInsertSn || [];
+
+    if (duplicates.length > 0) {
+        let duplicateMsg = duplicates
+            .map(
+                (d) =>
+                    `No Inventory: ${d.inventory_number}, Lokasi: ${d.location}, Site: ${d.site}`
+            )
+            .join("<br>");
+
+        Swal.fire({
+            icon: "warning",
+            title: "Data Duplicate & Data Tidak Disimpan!",
+            html: duplicateMsg,
+            confirmButtonText: "OK",
+            confirmButtonColor: "#f39c12",
+        }).then(() => {
+            window.location.reload(); // Reload page setelah klik OK
+        });
+    }
+
     $("#tableData").DataTable({
         dom: 'fBrtilp',
         buttons: [

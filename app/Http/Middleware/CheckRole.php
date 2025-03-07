@@ -19,7 +19,7 @@ class CheckRole
 
         $userRole = \Auth::user()->role;
         $userSite = \Auth::user()->site;
-
+        // dd($roles);
         foreach ($roles as $role) {
             [$role, $site] = explode(':', $role);
 
