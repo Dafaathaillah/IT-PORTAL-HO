@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class InvApMipController extends Controller
 {
@@ -89,9 +90,14 @@ class InvApMipController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
-            Excel::import(new ImportAp, $request->file('file'));
-            return redirect()->route('accessPointMip.page');
+            $import = new ImportAp();
+            Excel::import($import, $request->file('file'));
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('accessPointMip.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);

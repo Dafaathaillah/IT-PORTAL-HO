@@ -23,8 +23,22 @@ class ImportAp implements ToModel, WithStartRow
         return 17; // Mulai dari baris kedua
     }
 
+    public $duplicateRecords = [];
+
+
     public function model(array $row)
     {
+        $row = array_slice($row, 0, 14); 
+
+        $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
+
+        // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
+        if ($inventoryNumber === '' || $inventoryNumber === '-' || $inventoryNumber === null) {
+            $existingDataInvNumber = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $existingDataInvNumber = InvAp::where('inventory_number', $inventoryNumber)->where('site', auth()->user()->site)->first();
+        }
+
         // dd($row[0]);
         $maxId = InvAp::max('max_id');
         if (is_null($maxId)) {
@@ -33,7 +47,14 @@ class ImportAp implements ToModel, WithStartRow
             $maxId = $maxId + 1;
         }
 
-        // dd(auth()->user()->site);
+       if ($existingDataInvNumber) {
+            $this->duplicateRecords[] = [
+                'inventory_number' => $existingDataInvNumber->inventory_number,
+                'location' => $existingDataInvNumber->location,
+                'site' => $existingDataInvNumber->site,
+            ];
+            return null;
+        }
 
         return new InvAp([
             'max_id' => $maxId,
@@ -52,5 +73,10 @@ class ImportAp implements ToModel, WithStartRow
             'note' => $row[13],
             'site' => auth()->user()->site
         ]);
+    }
+
+    public function getDuplicateRecords()
+    {
+        return $this->duplicateRecords;
     }
 }

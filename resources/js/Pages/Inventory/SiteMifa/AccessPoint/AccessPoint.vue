@@ -20,7 +20,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DashboardBreadcrumb from "@/Components/inventory/DashboardBreadcrumb.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";

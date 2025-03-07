@@ -25,6 +25,7 @@ class SwitchImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+        $row = array_slice($row, 0, 13); 
 
         $maxId = InvSwitch::max('max_id');
         if (is_null($maxId)) {

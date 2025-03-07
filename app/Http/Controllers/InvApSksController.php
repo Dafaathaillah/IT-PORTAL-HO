@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class InvApSksController extends Controller
 {
@@ -93,9 +94,14 @@ class InvApSksController extends Controller
         ]);
         
         try {
-
-            Excel::import(new ImportAp, $request->file('file'));
-            return redirect()->route('accessPointSks.page');
+            $import = new ImportAp();
+            Excel::import($import, $request->file('file'));
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('accessPointSks.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);

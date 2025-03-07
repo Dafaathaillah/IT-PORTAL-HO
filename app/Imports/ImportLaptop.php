@@ -23,6 +23,9 @@ class ImportLaptop implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+        $row = array_slice($row, 0, 22); 
+        // dd($row);
+
         $inventoryNumber = $row[2] ?? '';
         $codeDept = $this->extractDept($inventoryNumber);
         $codeSite = $this->extractSite($inventoryNumber);

@@ -27,6 +27,8 @@ class PrinterImport implements ToModel, WithStartRow
     public function model(array $row)
     {
 
+        $row = array_slice($row, 0, 14); 
+
         $currentDate = Carbon::now();
         $year = $currentDate->format('y');
         $month = $currentDate->month;

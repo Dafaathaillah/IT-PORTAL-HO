@@ -22,6 +22,7 @@ class ImportCctv implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+        $row = array_slice($row, 0, 14); 
         $inventoryNumber = trim($row[2]); // Hilangkan spasi di awal dan akhir
 
         // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi

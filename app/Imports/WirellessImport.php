@@ -21,6 +21,7 @@ class WirellessImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+        $row = array_slice($row, 0, 14); 
         $maxId = InvWirelless::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;

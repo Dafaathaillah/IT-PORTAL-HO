@@ -12382,7 +12382,7 @@ const toggleLevel3ScannerSks = () => {
 
                     <hr
                         v-if="
-                            $page.props.auth.user.site == 'VALE' ||
+                            $page.props.auth.user.site == 'VIB' ||
                             $page.props.auth.user.role == 'ict_developer' ||
                             $page.props.auth.user.site == 'HO'
                         "
@@ -12392,7 +12392,7 @@ const toggleLevel3ScannerSks = () => {
                     <!-- start VALE -->
                     <li
                         v-if="
-                            $page.props.auth.user.site == 'VALE' ||
+                            $page.props.auth.user.site == 'VIB' ||
                             $page.props.auth.user.role == 'ict_developer' ||
                             $page.props.auth.user.site == 'HO'
                         "
@@ -12416,7 +12416,7 @@ const toggleLevel3ScannerSks = () => {
                             >
                             <span
                                 v-if="
-                                    $page.props.auth.user.site == 'VALE' ||
+                                    $page.props.auth.user.site == 'VIB' ||
                                     $page.props.auth.user.role ==
                                         'ict_developer'
                                 "

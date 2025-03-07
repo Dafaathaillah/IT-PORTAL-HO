@@ -408,12 +408,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/aduan-ho/{id}/detail', [AduanHoController::class, 'detail'])->name('aduan-ho.detail');
     });
 
-    Route::group(['middleware' => 'checkRole:guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VALE,guest:SBS,guest:SKS,ict_developer:BIB'], function () {
+    Route::group(['middleware' => 'checkRole:guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB'], function () {
         Route::get('/asetDashboard', [GuestAllController::class, 'index'])->name('asetDashboard');
         Route::get('/asetDashboard/pengajuanAkses', [GuestAllController::class, 'pengajuanAkses'])->name('pengajuanAkses');
     });
 
-    Route::group(['middleware' => 'checkRole:guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VALE,guest:SBS,guest:SKS,ict_developer:BIB'], function () {
+    Route::group(['middleware' => 'checkRole:guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB'], function () {
         Route::get('/complaint/dashboard', [GuestReportController::class, 'index'])->name('guestAduan.page');
         Route::get('/complaint', [GuestReportController::class, 'create'])->name('guestAduan.create');
         Route::post('/complaint-store', [GuestReportController::class, 'store'])->name('guestAduan.store');
@@ -2151,7 +2151,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMip/{id}/detail', [AduanMipController::class, 'detail'])->name('aduanMip.detail');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VALE,ict_ho:HO,ict_group_leader:VALE,ict_admin:VALE'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_ho:HO,ict_group_leader:VIB,ict_admin:VIB'], function () {
             Route::get('/aduanVale', [AduanValeController::class, 'index'])->name('aduanVale.page');
             Route::get('/aduanVale/create', [AduanValeController::class, 'create'])->name('aduanVale.create');
             Route::post('/aduanVale/create', [AduanValeController::class, 'store'])->name('aduanVale.store');

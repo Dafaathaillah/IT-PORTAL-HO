@@ -21,6 +21,7 @@ class UserPenggunaImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+        $row = array_slice($row, 0, 7); 
 
         if (!isset($row[1]) || empty($row[1])) {
             return null; // Skip jika tidak ada data
