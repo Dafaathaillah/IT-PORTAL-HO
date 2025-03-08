@@ -29,10 +29,10 @@ class SwitchImport implements ToModel, WithStartRow
     {
         $row = array_slice($row, 0, 13);
 
-        $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
-        // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
+        $inventoryNumber = trim($row[3]);
+
         if ($inventoryNumber === '' || $inventoryNumber === '-' || $inventoryNumber === null) {
-            $existingDataInvNumber = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+            $existingDataInvNumber = null;
         } else {
             $existingDataInvNumber = InvSwitch::where('inventory_number', $inventoryNumber)->where('site', auth()->user()->site)->first();
         }
