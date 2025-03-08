@@ -25,7 +25,6 @@ class ImportAp implements ToModel, WithStartRow
 
     public $duplicateRecords = [];
 
-
     public function model(array $row)
     {
         $row = array_slice($row, 0, 14); 
@@ -39,7 +38,6 @@ class ImportAp implements ToModel, WithStartRow
             $existingDataInvNumber = InvAp::where('inventory_number', $inventoryNumber)->where('site', auth()->user()->site)->first();
         }
 
-        // dd($row[0]);
         $maxId = InvAp::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;

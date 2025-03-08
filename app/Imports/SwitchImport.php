@@ -9,10 +9,10 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class SwitchImport implements ToModel, WithStartRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     // public function startCell(): string
     // {
     //     return 'B3';
@@ -20,18 +20,37 @@ class SwitchImport implements ToModel, WithStartRow
 
     public function startRow(): int
     {
-        return 17;  
+        return 17;
     }
+
+    public $duplicateRecords = [];
 
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 13); 
+        $row = array_slice($row, 0, 13);
+
+        $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
+        // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
+        if ($inventoryNumber === '' || $inventoryNumber === '-' || $inventoryNumber === null) {
+            $existingDataInvNumber = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $existingDataInvNumber = InvSwitch::where('inventory_number', $inventoryNumber)->where('site', auth()->user()->site)->first();
+        }
 
         $maxId = InvSwitch::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
-        }else{
+        } else {
             $maxId = $maxId + 1;
+        }
+
+        if ($existingDataInvNumber) {
+            $this->duplicateRecords[] = [
+                'inventory_number' => $existingDataInvNumber->inventory_number,
+                'location' => $existingDataInvNumber->location,
+                'site' => $existingDataInvNumber->site,
+            ];
+            return null;
         }
 
         return new InvSwitch([
@@ -50,5 +69,10 @@ class SwitchImport implements ToModel, WithStartRow
             'note' => $row[12],
             'site' => auth()->user()->site
         ]);
+    }
+
+    public function getDuplicateRecords()
+    {
+        return $this->duplicateRecords;
     }
 }

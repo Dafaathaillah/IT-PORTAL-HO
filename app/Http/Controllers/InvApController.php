@@ -169,9 +169,14 @@ class InvApController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
-            Excel::import(new ImportAp, $request->file('file'));
-            return redirect()->route('accessPoint.page');
+            $import = new ImportAp();
+            Excel::import($import, $request->file('file'));
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('accessPoint.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);

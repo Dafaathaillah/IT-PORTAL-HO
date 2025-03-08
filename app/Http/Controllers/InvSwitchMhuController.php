@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class InvSwitchMhuController extends Controller
 {
@@ -85,10 +86,14 @@ class InvSwitchMhuController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
-            Excel::import(new SwitchImport, $request->file('file'));
-            // return redirect()->route('switch.page')->with('message', 'Data berhasil ditambahkan');
-            return redirect()->route('switchMhu.page');
+            $import = new SwitchImport();
+            Excel::import($import, $request->file('file'));
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('switchMhu.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);

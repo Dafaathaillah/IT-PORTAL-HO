@@ -85,10 +85,14 @@ class InvSwitchPikController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
-            Excel::import(new SwitchImport, $request->file('file'));
-            // return redirect()->route('switch.page')->with('message', 'Data berhasil ditambahkan');
-            return redirect()->route('switchPik.page');
+            $import = new SwitchImport();
+            Excel::import($import, $request->file('file'));
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('switchPik.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
