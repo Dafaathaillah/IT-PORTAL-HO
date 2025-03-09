@@ -1,11 +1,10 @@
 <style>
-@import 'datatables.net-dt';
+@import "datatables.net-dt";
 
 .dt-search {
     margin-bottom: 1em;
     float: right !important;
     text-align: center !important;
-
 }
 .dt-paging {
     margin-top: 1em;
@@ -19,14 +18,14 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const pages = ref("Pages");
 const subMenu = ref("Printer Pages");
@@ -40,23 +39,24 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-        dom: 'fBrtilp',
+        dom: "fBrtilp",
         buttons: [
-                {
-                    extend: 'spacer',
-                    style: 'bar',
-                    text: 'Export files:'
-                },
-                'csvHtml5',
-                'excelHtml5',
-                'spacer'
-            ],
+            {
+                extend: "spacer",
+                style: "bar",
+                text: "Export files:",
+            },
+            "csvHtml5",
+            "excelHtml5",
+            "spacer",
+        ],
         initComplete: function () {
-            var btns = $('.dt-button');
-            btns.addClass('text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2');
-            btns.removeClass('dt-button');
-
-        }
+            var btns = $(".dt-button");
+            btns.addClass(
+                "text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            );
+            btns.removeClass("dt-button");
+        },
     });
 });
 
@@ -129,7 +129,6 @@ const handleFileUpload = (event) => {
 };
 
 const submitCsv = () => {
-    let timerInterval;
     Swal.fire({
         title: "Mengimport Data...",
         text: "Mohon tunggu sebentar...",
@@ -143,32 +142,50 @@ const submitCsv = () => {
         file: file.value,
     });
 
-    function reloadPage() {
-        window.location.reload();
-    }
-
     formx.post(route("printerMhu.import"), {
         onSuccess: () => {
-            // Show SweetAlert2 success notification
+            // Ambil data flash dari Laravel setelah request berhasil
+            const page = usePage();
+            const duplicates = page.props.flash?.duplicates || [];
+
             Swal.fire({
                 title: "Success!",
-                text: "Data has been successfully import!",
+                text: "Data berhasil diimport!",
                 icon: "success",
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
             });
 
-            setTimeout(function () {
-                reloadPage();
-            }, 2000);
+            if (duplicates.length > 0) {
+                let duplicateMsg = duplicates
+                    .map(
+                        (d) =>
+                            `SN: ${d.serial_number}, No Inventory: ${d.computer_code}, No Asset HO: ${d.number_asset_ho}, Site: ${d.site}`
+                    )
+                    .join("<br>");
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "Beberapa Data Duplicate!",
+                    html: duplicateMsg,
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#f39c12",
+                }).then(() => {
+                    window.location.reload(); // Reload page setelah klik OK
+                });
+            }
+
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 2000);
         },
         onError: () => {
             Swal.fire({
-                title: "error!",
-                text: "Data not created!",
-                icon: "waring",
+                title: "Error!",
+                text: "Data gagal diimport!",
+                icon: "error",
                 confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "#d33",
             });
         },
     });
@@ -243,7 +260,7 @@ const submitCsv = () => {
                             </div>
 
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <PerfectScrollbar style="position: relative;">
+                                <PerfectScrollbar style="position: relative">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <div
@@ -393,7 +410,9 @@ const submitCsv = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ printers.note }}
+                                                                {{
+                                                                    printers.note
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -475,7 +494,10 @@ const submitCsv = () => {
                                                                         printers.id
                                                                     )
                                                                 "
-                                                                v-if="props.role !== 'ict_technician'"
+                                                                v-if="
+                                                                    props.role !==
+                                                                    'ict_technician'
+                                                                "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Delete
@@ -496,6 +518,5 @@ const submitCsv = () => {
     </AuthenticatedLayout>
 </template>
 <style>
-@import '/public/assets/css/perfect-scrollbar.css';
-
+@import "/public/assets/css/perfect-scrollbar.css";
 </style>

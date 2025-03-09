@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class InvPrinterMlpController extends Controller
 {
@@ -93,9 +94,14 @@ class InvPrinterMlpController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
-            Excel::import(new PrinterImport, $request->file('file'));
-            return redirect()->route('printerMlp.page');
+            $import = new PrinterImport();
+            Excel::import($import, $request->file('file'));
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('printerMlp.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);

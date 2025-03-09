@@ -10,10 +10,10 @@ use Carbon\Carbon;
 class PrinterImport implements ToModel, WithStartRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     // public function startCell(): string
     // {
     //     return 'B3';
@@ -21,13 +21,24 @@ class PrinterImport implements ToModel, WithStartRow
 
     public function startRow(): int
     {
-        return 17;  
+        return 17;
     }
+
+    public $duplicateRecords = [];
 
     public function model(array $row)
     {
 
-        $row = array_slice($row, 0, 14); 
+        $row = array_slice($row, 0, 14);
+
+        $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
+
+        // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
+        if ($inventoryNumber === '' || $inventoryNumber === '-' || $inventoryNumber === null) {
+            $existingDataInvNumber = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $existingDataInvNumber = InvPrinter::where('printer_code', $inventoryNumber)->where('site', auth()->user()->site)->first();
+        }
 
         $currentDate = Carbon::now();
         $year = $currentDate->format('y');
@@ -37,8 +48,18 @@ class PrinterImport implements ToModel, WithStartRow
         $maxId = InvPrinter::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
-        }else{
+        } else {
             $maxId = $maxId + 1;
+        }
+
+
+        if ($existingDataInvNumber) {
+            $this->duplicateRecords[] = [
+                'inventory_number' => $existingDataInvNumber->inventory_number,
+                'location' => $existingDataInvNumber->location,
+                'site' => $existingDataInvNumber->site,
+            ];
+            return null;
         }
 
         return new InvPrinter([
@@ -56,8 +77,13 @@ class PrinterImport implements ToModel, WithStartRow
             'location' => $row[11],
             'status' => strtoupper($row[12]),
             'note' => $row[13],
-            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s'),
+            'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
             'site' => auth()->user()->site
         ]);
+    }
+
+    public function getDuplicateRecords()
+    {
+        return $this->duplicateRecords;
     }
 }
