@@ -19,14 +19,34 @@ class WirellessImport implements ToModel, WithStartRow
         return 17; // Mulai dari baris kedua
     }
 
+    public $duplicateRecords = [];
+
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 14); 
+        $row = array_slice($row, 0, 14);
+
+        $inventoryNumber = trim($row[3]);
+
+        if ($inventoryNumber === '' || $inventoryNumber === '-' || $inventoryNumber === null) {
+            $existingDataInvNumber = null;
+        } else {
+            $existingDataInvNumber = InvWirelless::where('inventory_number', $inventoryNumber)->where('site', auth()->user()->site)->first();
+        }
+
         $maxId = InvWirelless::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
         }else{
             $maxId = $maxId + 1;
+        }
+
+        if ($existingDataInvNumber) {
+            $this->duplicateRecords[] = [
+                'inventory_number' => $existingDataInvNumber->inventory_number,
+                'location' => $existingDataInvNumber->location,
+                'site' => $existingDataInvNumber->site,
+            ];
+            return null;
         }
 
         return new InvWirelless([
@@ -46,5 +66,10 @@ class WirellessImport implements ToModel, WithStartRow
             'note' => $row[13],
             'site' => auth()->user()->site
         ]);
+    }
+
+    public function getDuplicateRecords()
+    {
+        return $this->duplicateRecords;
     }
 }

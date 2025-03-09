@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class InvWirellessBaController extends Controller
 {
@@ -84,9 +85,14 @@ class InvWirellessBaController extends Controller
     public function uploadCsv(Request $request)
     {
         try {
-
-            Excel::import(new WirellessImport, $request->file('file'));
-            return redirect()->route('wirellessBa.page');
+            $import = new WirellessImport();
+            Excel::import($import, $request->file('file'));
+            $duplicates = $import->getDuplicateRecords();
+            // dd($duplicates);
+            return Redirect::route('wirellessBa.page')->with([
+                'message' => 'Import selesai!',
+                'duplicates' => $duplicates, // Kirim daftar duplikat
+            ]);
         } catch (\Exception $ex) {
             Log::info($ex);
             return response()->json(['data' => 'Some error has occur.', 400]);
