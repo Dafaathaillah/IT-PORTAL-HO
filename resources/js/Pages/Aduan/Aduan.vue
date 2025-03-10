@@ -25,7 +25,6 @@ import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
 const pages = ref("Pages");
 const subMenu = ref("Aduan Pages");
@@ -41,6 +40,8 @@ const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
         dom: 'fBrtilp',
+        scrollY: '40vh',
+        scrollCollapse: true,
         buttons: [
                 {
                     extend: 'spacer',
@@ -348,7 +349,6 @@ function formatData(text) {
                                 </Link>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <PerfectScrollbar style="position: relative;">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <table id="tableData" class="table table-striped">
@@ -604,7 +604,6 @@ function formatData(text) {
                                             </table>
                                         </div>
                                     </div>
-                                </PerfectScrollbar>
                             </div>
                         </div>
                     </div>
@@ -613,7 +612,3 @@ function formatData(text) {
         </div>
     </AuthenticatedLayout>
 </template>
-<style>
-@import '/public/assets/css/perfect-scrollbar.css';
-
-</style>

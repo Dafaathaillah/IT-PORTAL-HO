@@ -15,6 +15,10 @@ import DashboardConfig from "@/Components/inventory/DashboardConfig.vue";
 import Swal from "sweetalert2";
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 
+const scrollOptions = ref({
+  suppressScrollX: true
+});
+
 const showingNavigationDropdown = ref(false);
 
 //Mobile Sidebar
@@ -102,7 +106,7 @@ const mainMenu = defineModel('mainMenu', {
     <!-- Page Content -->
     <main
         class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl overflow-hidden">
-        <PerfectScrollbar>
+        <PerfectScrollbar :options="scrollOptions">
             <DashboardNavbar @toggleMobileSidebar="handleMobileSidebar" @toggleConfig="handleConfigurator"
                 v-model:isCollapseIconActive="isActive" v-model:pages="pages" v-model:subMenu="subMenu"
                 v-model:mainMenu="mainMenu" />
