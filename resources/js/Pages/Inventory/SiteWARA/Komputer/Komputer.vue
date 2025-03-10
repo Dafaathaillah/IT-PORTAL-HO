@@ -28,7 +28,6 @@ import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import VueMultiselect from "vue-multiselect";
 import { onMounted } from "vue";
-import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const pages = ref("Pages");
 const subMenu = ref("Komputer Pages");
@@ -313,7 +312,6 @@ const showAddAlert = () => {
                                 </div>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <PerfectScrollbar style="position: relative">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <table
@@ -693,6 +691,7 @@ const showAddAlert = () => {
                                                                     "
                                                                     alt="documentation image"
                                                                     class="w-30 h-20 shadow-2xl rounded-xl"
+                                                                    v-if="komputers.link_documentation_asset_image != null"
                                                                 />
                                                             </span>
                                                         </td>
@@ -754,7 +753,6 @@ const showAddAlert = () => {
                                             </table>
                                         </div>
                                     </div>
-                                </PerfectScrollbar>
                             </div>
                         </div>
                     </div>
@@ -763,6 +761,3 @@ const showAddAlert = () => {
         </div>
     </AuthenticatedLayout>
 </template>
-<style>
-@import "/public/assets/css/perfect-scrollbar.css";
-</style>
