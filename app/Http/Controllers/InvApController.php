@@ -23,14 +23,14 @@ class InvApController extends Controller
 
     public function index()
     {
-        
-        $dataInventory = InvAp::where('site',null)->orWhere('site','HO')->get();
+
+        $dataInventory = InvAp::where('site', null)->orWhere('site', 'HO')->get();
 
         $site = '';
 
         $role = auth()->user()->role;
-        
-        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory,'site' => $site,'role' => $role]);
+
+        return Inertia::render('Inventory/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -42,34 +42,34 @@ class InvApController extends Controller
         $day = $currentDate->day;
 
         if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $maxId = InvAp::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+            $maxId = InvAp::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
 
             if (is_null($maxId)) {
                 $maxId = 0;
-            }else{
+            } else {
                 $noUrut = (int) substr($maxId->inventory_number, 7, 3);
                 $maxId = $noUrut;
             }
 
             $uniqueString = 'PPABIBAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $maxId = InvAp::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+        } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $maxId = InvAp::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
 
             if (is_null($maxId)) {
                 $maxId = 0;
-            }else{
+            } else {
                 $noUrut = (int) substr($maxId->inventory_number, 7, 3);
                 $maxId = $noUrut;
             }
 
             $uniqueString = 'PPAHOAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $maxId = InvAp::where('site','BA')->orderBy('max_id', 'desc')->first();
+        } else {
+            $maxId = InvAp::where('site', 'BA')->orderBy('max_id', 'desc')->first();
             // dd($maxId->inventory_number);
 
             if (is_null($maxId)) {
                 $maxId = 0;
-            }else{
+            } else {
                 $noUrut = (int) substr($maxId->inventory_number, 7, 3);
                 $maxId = $noUrut;
             }
@@ -85,10 +85,14 @@ class InvApController extends Controller
 
     public function store(Request $request)
     {
+        $isoDate = $request->date_of_inventory;
+        $formattedDate = Carbon::parse($isoDate)->toDateString();
+        // dd($formattedDate);
+
         $maxId = InvAp::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
-        }else{
+        } else {
             $maxId = $maxId + 1;
         }
         $params = $request->all();
@@ -106,6 +110,7 @@ class InvApController extends Controller
             'device_model' => $params['device_model'],
             'location' => $params['location'],
             'status' => $params['status'],
+            'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
             'site' => auth()->user()->site
         ];
@@ -113,58 +118,6 @@ class InvApController extends Controller
         InvAp::create($data);
         return redirect()->route('accessPoint.page');
     }
-
-    // public function uploadCsv(Request $request)
-    // {
-    //     $request->validate([
-    //         'file' => 'required|mimes:csv,xlsx,xls',
-    //     ]);
-
-    //     $file = $request->file('file');
-    //     $extension = $file->getClientOriginalExtension();
-
-    //     $records = [];
-
-    //     if ($extension === 'csv') {
-    //         $csv = Reader::createFromPath($file->getRealPath(), 'r');
-    //         $csv->setHeaderOffset(0); // Assuming the first row is the header
-    //         $records = $csv->getRecords(); // Array of rows
-    //     } elseif (in_array($extension, ['xls', 'xlsx'])) {
-    //         $array = Excel::toArray(new MoviesImport, $file);
-    //         dd($array);
-
-    //         $excelData = Excel::toArray([], $file); // Converts the Excel file to an array
-    //         $sheetData = $excelData[0]; // Assuming you are working with the first sheet
-
-    //         // Assuming the first row is the header
-    //         $header = array_shift($sheetData); // Extract header row
-    //         foreach ($sheetData as $row) {
-    //             $records[] = array_combine($header, $row); // Combine header with row data
-    //         }
-    //     }
-    //     dd($records);
-    //     // foreach ($records as $record) {
-    //     //     $maxId = InvAp::max('max_id');
-    //     //     if (is_null($maxId)) {
-    //     //         $maxId = 1;
-    //     //     }
-    //     //     InvAp::create([
-    //     //         'max_id' => $maxId,
-    //     //         'device_name' => 'ada',
-    //     //         'inventory_number' => 'ada',
-    //     //         'serial_number' => 'ada',
-    //     //         'ip_address' => 'ada',
-    //     //         'device_brand' => 'ada',
-    //     //         'device_type' => 'ada',
-    //     //         'device_model' => 'ada',
-    //     //         'location' => 'ada',
-    //     //         'status' => 'ada',
-    //     //         'note' => 'ada',
-    //     //     ]);
-    //     // }
-
-    //     return redirect()->back()->with('success', 'File data imported successfully!');
-    // }
 
     public function uploadCsv(Request $request)
     {
@@ -189,7 +142,7 @@ class InvApController extends Controller
         if (empty($accessPoint)) {
             abort(404, 'Data not found');
         }
-        
+
         // return response()->json(['ap' => $accessPoint]);
         return Inertia::render('Inventory/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
     }
@@ -200,7 +153,7 @@ class InvApController extends Controller
         if (empty($accessPoint)) {
             abort(404, 'Data not found');
         }
-        
+
         return Inertia::render('Inventory/AccessPoint/AccessPointDetail', [
             'accessPoints' => $accessPoint,
         ]);
@@ -218,6 +171,9 @@ class InvApController extends Controller
     public function update(Request $request)
     {
         $params = $request->all();
+        $isoDate = $params['date_of_inventory'];
+        $formattedDate = Carbon::parse($isoDate)->toDateString();
+
         $data = [
             'device_name' => $params['device_name'],
             'inventory_number' => $params['inventory_number'],
@@ -231,6 +187,7 @@ class InvApController extends Controller
             'device_model' => $params['device_model'],
             'location' => $params['location'],
             'status' => $params['status'],
+            'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
             'site' => auth()->user()->site
         ];

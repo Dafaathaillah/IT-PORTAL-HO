@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\InvAp;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Carbon\Carbon;
 
 class ImportAp implements ToModel, WithStartRow
 {
@@ -27,7 +28,7 @@ class ImportAp implements ToModel, WithStartRow
 
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 14); 
+        $row = array_slice($row, 0, 15); 
 
         $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
 
@@ -53,7 +54,8 @@ class ImportAp implements ToModel, WithStartRow
             ];
             return null;
         }
-
+        $tanggal = $this->convertToDate($row[14]);
+        // dd($tanggal);
         return new InvAp([
             'max_id' => $maxId,
             'device_name' => $row[1],
@@ -69,6 +71,7 @@ class ImportAp implements ToModel, WithStartRow
             'location' => $row[11],
             'status' => strtoupper($row[12]),
             'note' => $row[13],
+            'date_of_inventory' => $tanggal,
             'site' => auth()->user()->site
         ]);
     }
@@ -76,5 +79,14 @@ class ImportAp implements ToModel, WithStartRow
     public function getDuplicateRecords()
     {
         return $this->duplicateRecords;
+    }
+
+    private function convertToDate($value)
+    {
+        if (is_numeric($value)) {
+            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 }

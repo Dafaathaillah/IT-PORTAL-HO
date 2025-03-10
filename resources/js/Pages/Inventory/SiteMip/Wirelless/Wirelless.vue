@@ -153,8 +153,7 @@ const submitCsv = () => {
             const page = usePage();
             const duplicates = page.props.flash?.duplicates || [];
 
-            Swal.fire({
-                if (duplicates.length > 0) {
+            if (duplicates.length > 0) {
                 let duplicateMsg = duplicates
                     .map(
                         (d) =>

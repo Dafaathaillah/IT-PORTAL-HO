@@ -26,6 +26,7 @@ class InvAp extends Model
         'location',
         'status',
         'note',
-        'site'
+        'site',
+        'date_of_inventory'
     ];
 }
