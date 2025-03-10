@@ -47,7 +47,8 @@ const user = computed(() => page.props.auth.user);
 <template>
     <!-- Navbar -->
     <nav
-        class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start"
+        class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all ease-in shadow-none duration-250 rounded-2xl lg:flex-nowrap lg:justify-start sticky top-0 z-50"
+        style="background-color: #ff2c2c;"
         navbar-main
         navbar-scroll="false"
     >
