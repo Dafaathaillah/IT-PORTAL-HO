@@ -502,7 +502,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('inventory')->group(function () {
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO,soc_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO'], function () {
             Route::get('/accessPoint', [InvApController::class, 'index'])->name('accessPoint.page');
             Route::get('/accessPoint/create', [InvApController::class, 'create'])->name('accessPoint.create');
             Route::post('/accessPoint/create', [InvApController::class, 'store'])->name('accessPoint.store');
@@ -1678,7 +1678,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/Management-User-Ict/{id}/delete', [UserController::class, 'destroy'])->name('managementUserIct.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO'], function () {
                 Route::get('/pengguna', [UserAllController::class, 'index'])->name('pengguna.page');
                 Route::get('/pengguna/create', [UserAllController::class, 'create'])->name('pengguna.create');
                 Route::post('/pengguna/create', [UserAllController::class, 'store'])->name('pengguna.store');

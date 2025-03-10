@@ -336,7 +336,11 @@ const submitCsv = () => {
                                                         >
                                                             Device Status
                                                         </th>
-
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inventory Date
+                                                        </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -507,6 +511,19 @@ const submitCsv = () => {
                                                             >
                                                                 {{
                                                                     accessPoints.status
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    formattedDate(
+                                                                        accessPoints.date_of_inventory
+                                                                    )
                                                                 }}
                                                             </span>
                                                         </td>
