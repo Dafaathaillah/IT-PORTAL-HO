@@ -153,16 +153,6 @@ const submitCsv = () => {
             const page = usePage();
             const duplicates = page.props.flash?.duplicates || [];
 
-            Swal.fire({
-                title: "Success!",
-                text: "Data berhasil diimport!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            }).then(() => {
-                window.location.reload(); // Reload page setelah klik OK
-            });
-
             if (duplicates.length > 0) {
                 let duplicateMsg = duplicates
                     .map(
@@ -180,11 +170,17 @@ const submitCsv = () => {
                 }).then(() => {
                     window.location.reload(); // Reload page setelah klik OK
                 });
+            } else {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Data berhasil diimport!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#3085d6",
+                }).then(() => {
+                    window.location.reload(); // Reload page setelah klik OK
+                });
             }
-
-            // setTimeout(() => {
-            //     window.location.reload();
-            // }, 2000);
         },
         onError: () => {
             Swal.fire({

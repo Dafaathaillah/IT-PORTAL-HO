@@ -152,19 +152,11 @@ const submitCsv = () => {
             const page = usePage();
             const duplicates = page.props.flash?.duplicates || [];
 
-            Swal.fire({
-                title: "Success!",
-                text: "Data berhasil diimport!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-
             if (duplicates.length > 0) {
                 let duplicateMsg = duplicates
                     .map(
                         (d) =>
-                            `SN: ${d.serial_number}, No Inventory: ${d.computer_code}, No Asset HO: ${d.number_asset_ho}, Site: ${d.site}`
+                            `No Inventory: ${d.inventory_number}, Lokasi: ${d.location}, site: ${d.site}`
                     )
                     .join("<br>");
 
@@ -177,11 +169,17 @@ const submitCsv = () => {
                 }).then(() => {
                     window.location.reload(); // Reload page setelah klik OK
                 });
+            } else {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Data berhasil diimport!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#3085d6",
+                }).then(() => {
+                    window.location.reload(); // Reload page setelah klik OK
+                });
             }
-
-            // setTimeout(() => {
-            //     window.location.reload();
-            // }, 2000);
         },
         onError: () => {
             Swal.fire({
