@@ -66,6 +66,8 @@ const mount = onMounted(() => {
     
     $("#tableData").DataTable({
         dom: 'fBrtilp',
+        scrollY: '40vh',
+        scrollCollapse: true,
         buttons: [
                 {
                     extend: 'spacer',
