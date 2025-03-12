@@ -52,7 +52,7 @@ function formattedDate(date) {
                                         Move to home page
                                     </NavLinkCustom>
                                 </div>
-                                <div
+                                 <div
                                     class="p-6 px-4 pb-0 grid grid-cols-1 gap-4 md:grid-cols-2"
                                 >
                                     <div class="grid grid-cols-2">
@@ -115,6 +115,23 @@ function formattedDate(date) {
                                         <div>
                                             <p>
                                                 : {{ accessPoints.frequency }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                     <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                Inventory Date
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                :
+                                                {{
+                                                    formattedDate(
+                                                        accessPoints.date_of_inventory
+                                                    )
+                                                }}
                                             </p>
                                         </div>
                                     </div>
@@ -212,6 +229,7 @@ function formattedDate(date) {
                                             <p>: {{ accessPoints.note }}</p>
                                         </div>
                                     </div>
+                                     
                                 </div>
                             </div>
                         </div>
