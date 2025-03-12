@@ -121,6 +121,23 @@ function formattedDate(date) {
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">
+                                                Inventory Date
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                :
+                                                {{
+                                                    formattedDate(
+                                                        accessPoints.date_of_inventory
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
                                                 Device Location
                                             </p>
                                         </div>
