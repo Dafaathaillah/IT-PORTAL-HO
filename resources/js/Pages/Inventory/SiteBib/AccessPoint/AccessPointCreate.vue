@@ -2,6 +2,8 @@
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 
@@ -21,7 +23,22 @@ const form = useForm({
     location: "",
     status: "",
     note: "",
+    date_of_inventory: "",
 });
+
+const customFormat = (date) => {
+    if (!date) {
+        // Jika date null atau kosong, kembalikan null
+        return "";
+    }
+
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+};
 
 const isDisabled = ref(true);
 
@@ -181,7 +198,7 @@ const save = () => {
                                         </div>
                                     </div>
 
-                                       <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -314,7 +331,26 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="date-of-inventory"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Date Of Inventory</label
+                                            >
+                                            <VueDatePicker
+                                                required
+                                                v-model="form.date_of_inventory"
+                                                :format="customFormat"
+                                                :enable-time-picker="false"
+                                                name="date_of_inventory"
+                                                placeholder="Select a date and time"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -371,9 +407,11 @@ const save = () => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
-                                        :href="route('accessPointBib.page')"
+                                        :href="route('accessPoint.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span
@@ -393,7 +431,6 @@ const save = () => {
                                             Save
                                         </span>
                                     </button>
-                                    
                                 </div>
                             </form>
                         </div>
