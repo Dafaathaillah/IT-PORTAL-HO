@@ -41,6 +41,8 @@ const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
         dom: 'fBrtilp',
+        scrollY: '40vh',
+        scrollCollapse: true,
         buttons: [
                 {
                     extend: 'spacer',
