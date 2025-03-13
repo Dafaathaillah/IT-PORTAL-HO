@@ -25,6 +25,7 @@ class InvSwitch extends Model
         'location',
         'status',
         'note',
-        'site'
+        'site',
+        'date_of_inventory'
     ];
 }

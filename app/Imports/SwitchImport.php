@@ -27,7 +27,7 @@ class SwitchImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 13);
+        $row = array_slice($row, 0, 14);
 
         $inventoryNumber = trim($row[3]);
 
@@ -52,6 +52,8 @@ class SwitchImport implements ToModel, WithStartRow
             ];
             return null;
         }
+        $tanggal = $this->convertToDate($row[13]);
+
 
         return new InvSwitch([
             'max_id' => $maxId,
@@ -67,6 +69,7 @@ class SwitchImport implements ToModel, WithStartRow
             'location' => $row[10],
             'status' => strtoupper($row[11]),
             'note' => $row[12],
+            'date_of_inventory' => $tanggal,
             'site' => auth()->user()->site
         ]);
     }
@@ -74,5 +77,14 @@ class SwitchImport implements ToModel, WithStartRow
     public function getDuplicateRecords()
     {
         return $this->duplicateRecords;
+    }
+
+    private function convertToDate($value)
+    {
+        if (is_numeric($value)) {
+            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 }

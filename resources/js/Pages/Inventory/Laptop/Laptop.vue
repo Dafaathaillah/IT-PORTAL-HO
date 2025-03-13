@@ -61,10 +61,10 @@ const mount = onMounted(() => {
             window.location.reload(); // Reload page setelah klik OK
         });
     }
-    
+
     $("#tableData").DataTable({
         dom: "fBrtilp",
-        scrollY: '40vh',
+        scrollY: "40vh",
         scrollCollapse: true,
         buttons: [
             {
@@ -177,14 +177,6 @@ const submitCsv = () => {
             const page = usePage();
             const duplicates = page.props.flash?.duplicates || [];
 
-            Swal.fire({
-                title: "Success!",
-                text: "Data berhasil diimport!",
-                icon: "success",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#3085d6",
-            });
-
             if (duplicates.length > 0) {
                 let duplicateMsg = duplicates
                     .map(
@@ -202,11 +194,17 @@ const submitCsv = () => {
                 }).then(() => {
                     window.location.reload(); // Reload page setelah klik OK
                 });
+            } else {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Data berhasil diimport!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#3085d6",
+                }).setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             }
-
-            // setTimeout(() => {
-            //     window.location.reload();
-            // }, 2000);
         },
         onError: () => {
             Swal.fire({
@@ -325,453 +323,449 @@ const showAddAlert = () => {
                                 </div>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                    <div class="p-0">
-                                        <div class="p-6 text-gray-900">
-                                            <table
-                                                id="tableData"
-                                                class="table table-striped"
-                                            >
-                                                <thead class="align-bottom">
-                                                    <tr>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            #
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Inventory Number
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Asset Ho Number
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Pengguna
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Departemen
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Jabatan
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Brand
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Category Assets
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Spesifikasi
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Serial Number
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Aplikasi
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            License
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Ip Address
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Date Of Inventory
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Date Of Deploy
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Location
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Status
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Condition
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Note
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Documentation Asset
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Last Edit At
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                        >
-                                                            Action
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr
-                                                        v-for="(
-                                                            laptops, index
-                                                        ) in laptop"
-                                                        :key="index"
+                                <div class="p-0">
+                                    <div class="p-6 text-gray-900">
+                                        <table
+                                            id="tableData"
+                                            class="table table-striped"
+                                        >
+                                            <thead class="align-bottom">
+                                                <tr>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        #
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Inventory Number
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Asset Ho Number
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Pengguna
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Departemen
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Jabatan
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Brand
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Category Assets
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Spesifikasi
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Serial Number
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Aplikasi
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        License
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Ip Address
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Date Of Inventory
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Date Of Deploy
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Location
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Status
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Condition
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Note
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Documentation Asset
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Last Edit At
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    v-for="(
+                                                        laptops, index
+                                                    ) in laptop"
+                                                    :key="index"
+                                                >
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{ index + 1 }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{ index + 1 }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.laptop_code
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.laptop_code
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.number_asset_ho
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.number_asset_ho
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops
-                                                                        .pengguna
-                                                                        .username
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.pengguna
+                                                                    .username
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops
-                                                                        .pengguna
-                                                                        .department
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.pengguna
+                                                                    .department
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops
-                                                                        .pengguna
-                                                                        .position
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.pengguna
+                                                                    .position
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.laptop_name
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.laptop_name
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.assets_category
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.assets_category
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    formatData(
-                                                                        laptops.spesifikasi
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                formatData(
+                                                                    laptops.spesifikasi
+                                                                )
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.serial_number
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.serial_number
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.aplikasi
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.aplikasi
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.license
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.license
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.ip_address
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            {{
+                                                                laptops.ip_address
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            v-if="
+                                                                laptops.date_of_inventory
+                                                            "
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                v-if="
+                                                            {{
+                                                                formattedDate(
                                                                     laptops.date_of_inventory
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    formattedDate(
-                                                                        laptops.date_of_inventory
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                            <span
-                                                                v-else
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Edit untuk
-                                                                setting tanggal
-                                                                !
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                                )
+                                                            }}
+                                                        </span>
+                                                        <span
+                                                            v-else
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                v-if="
+                                                            Edit untuk setting
+                                                            tanggal !
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            v-if="
+                                                                laptops.date_of_deploy
+                                                            "
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formattedDate(
                                                                     laptops.date_of_deploy
+                                                                )
+                                                            }}
+                                                        </span>
+                                                        <span
+                                                            v-else
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit untuk setting
+                                                            tanggal !
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                laptops.location
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{ laptops.status }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                laptops.condition
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                laptops.note ==
+                                                                null
+                                                                    ? ""
+                                                                    : formatData(
+                                                                          laptops.note
+                                                                      )
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            <img
+                                                                :src="
+                                                                    laptops.link_documentation_asset_image
                                                                 "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    formattedDate(
-                                                                        laptops.date_of_deploy
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                            <span
-                                                                v-else
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Edit untuk
-                                                                setting tanggal
-                                                                !
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.location
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.status
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.condition
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="break-all mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    laptops.note ==
-                                                                    null
-                                                                        ? ""
-                                                                        : formatData(
-                                                                              laptops.note
-                                                                          )
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                <img
-                                                                    :src="
-                                                                        laptops.link_documentation_asset_image
-                                                                    "
-                                                                    alt="documentation image"
-                                                                    class="w-30 h-20 shadow-2xl rounded-xl"
-                                                                    v-if="laptops.link_documentation_asset_image != null"
-                                                                />
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    formattedDate(
-                                                                        laptops.updated_at
-                                                                    )
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <NavLinkCustom
-                                                                @click="
-                                                                    detailData(
-                                                                        laptops.id
-                                                                    )
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Detail
-                                                            </NavLinkCustom>
-
-                                                            <NavLinkCustom
-                                                                @click="
-                                                                    editData(
-                                                                        laptops.id
-                                                                    )
-                                                                "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Edit
-                                                            </NavLinkCustom>
-
-                                                            <NavLinkCustom
-                                                                @click="
-                                                                    deleteData(
-                                                                        laptops.id
-                                                                    )
-                                                                "
+                                                                alt="documentation image"
+                                                                class="w-30 h-20 shadow-2xl rounded-xl"
                                                                 v-if="
-                                                                    props.role !==
-                                                                    'ict_technician'
+                                                                    laptops.link_documentation_asset_image !=
+                                                                    null
                                                                 "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Delete
-                                                            </NavLinkCustom>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                            />
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formattedDate(
+                                                                    laptops.updated_at
+                                                                )
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                detailData(
+                                                                    laptops.id
+                                                                )
+                                                            "
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Detail
+                                                        </NavLinkCustom>
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                editData(
+                                                                    laptops.id
+                                                                )
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit
+                                                        </NavLinkCustom>
+
+                                                        <NavLinkCustom
+                                                            @click="
+                                                                deleteData(
+                                                                    laptops.id
+                                                                )
+                                                            "
+                                                            v-if="
+                                                                props.role !==
+                                                                'ict_technician'
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Delete
+                                                        </NavLinkCustom>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -37,6 +37,7 @@ use App\Http\Controllers\DashboardSbsController;
 use App\Http\Controllers\DashboardSksController;
 use App\Http\Controllers\DashboardValeController;
 use App\Http\Controllers\DashboardWaraController;
+use App\Http\Controllers\DataCheckerController;
 use App\Http\Controllers\DepartmentBaController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentMifaController;
@@ -232,7 +233,10 @@ use Illuminate\Http\Request;
 // });
 
 Route::middleware('auth')->group(function () {
-
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+        Route::get('/cekSn', [DataCheckerController::class, 'checkDuplicateSN']);
+        Route::get('/cekNrp', [DataCheckerController::class, 'checkMissingNRP']);
+    });
     // Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO,soc_ho:HO,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA'], function () {
         Route::post('/encrypt-year', function (Request $request) {
             $year = $request->year ?? Carbon::now()->year;
