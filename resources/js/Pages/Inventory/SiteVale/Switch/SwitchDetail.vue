@@ -82,6 +82,23 @@ function formattedDate(date) {
                                             <p>: {{ switchs.device_brand }}</p>
                                         </div>
                                     </div>
+                                      <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                Inventory Date
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                :
+                                                {{
+                                                    formattedDate(
+                                                        switchs.date_of_inventory
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">Device Location</p>

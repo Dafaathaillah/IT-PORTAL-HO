@@ -49,7 +49,7 @@ function formattedDate(date) {
                                     </NavLinkCustom>
 
                                 </div>
-                                <div class="p-6 px-4 pb-0 grid grid-cols-1 gap-4 md:grid-cols-2">
+                               <div class="p-6 px-4 pb-0 grid grid-cols-1 gap-4 md:grid-cols-2">
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">Asset Ho Number</p>
@@ -80,6 +80,23 @@ function formattedDate(date) {
                                         </div>
                                         <div>
                                             <p>: {{ switchs.device_brand }}</p>
+                                        </div>
+                                    </div>
+                                      <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                Inventory Date
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                :
+                                                {{
+                                                    formattedDate(
+                                                        switchs.date_of_inventory
+                                                    )
+                                                }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
