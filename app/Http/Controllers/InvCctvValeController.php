@@ -19,7 +19,7 @@ class InvCctvValeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::with('switch')->where('site', 'VALE')->get();
+        $dataInventory = InvCctv::with('switch')->where('site', 'VIB')->get();
 
         $site = auth()->user()->site;
 
@@ -36,7 +36,7 @@ class InvCctvValeController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvCctv::where('site', 'VALE')->orderBy('max_id', 'desc')->first();
+        $maxId = InvCctv::where('site', 'VIB')->orderBy('max_id', 'desc')->first();
         // dd($maxId->cctv_code);
 
         if (is_null($maxId)) {
@@ -51,7 +51,7 @@ class InvCctvValeController extends Controller
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'VALE')->get();
+        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'VIB')->get();
 
 
         return Inertia::render('Inventory/SiteVale/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
@@ -85,7 +85,7 @@ class InvCctvValeController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         // dd($data);
         InvCctv::create($data);
@@ -159,7 +159,7 @@ class InvCctvValeController extends Controller
             'uplink' => $params['uplink'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
 
         InvCctv::firstWhere('id', $request->id)->update($data);

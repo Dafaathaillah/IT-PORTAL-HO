@@ -18,8 +18,8 @@ class InvApWARAController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'WARA')->get();
-        $site = 'WARA';
+        $dataInventory = InvAp::where('site', 'ADW')->get();
+        $site = 'ADW';
         $role = auth()->user()->role;
 
         return Inertia::render('Inventory/SiteWARA/AccessPoint/AccessPoint', ['accessPoint' => $dataInventory, 'site' => $site, 'role' => $role]);
@@ -33,8 +33,8 @@ class InvApWARAController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'WARA') {
-            $maxId = InvAp::where('site', 'WARA')->orderBy('max_id', 'desc')->first();
+        if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'ADW') {
+            $maxId = InvAp::where('site', 'ADW')->orderBy('max_id', 'desc')->first();
             // dd($maxId->inventory_number);
 
             if (is_null($maxId)) {
@@ -84,7 +84,7 @@ class InvApWARAController extends Controller
             'status' => $params['status'],
             'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvAp::create($data);
@@ -160,7 +160,7 @@ class InvApWARAController extends Controller
             'status' => $params['status'],
             'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
-            'site' => 'WARA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvAp::firstWhere('id', $request->id)->update($data);
