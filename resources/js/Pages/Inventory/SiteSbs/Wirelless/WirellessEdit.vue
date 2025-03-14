@@ -2,7 +2,7 @@
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
-mport VueDatePicker from "@vuepic/vue-datepicker";
+import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Swal from "sweetalert2";
 import { ref } from "vue";
