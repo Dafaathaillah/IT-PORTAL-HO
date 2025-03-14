@@ -18,14 +18,14 @@ class InvWirellessController extends Controller
 {
     public function index()
     {
-        
-        $dataInventory = InvWirelless::where('site',null)->orWhere('site','HO')->get();
+
+        $dataInventory = InvWirelless::where('site', null)->orWhere('site', 'HO')->get();
 
         $site = '';
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/Wirelless/Wirelless', ['wirelless' => $dataInventory,'site' => $site,'role' => $role]);
+        return Inertia::render('Inventory/Wirelless/Wirelless', ['wirelless' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -37,34 +37,34 @@ class InvWirellessController extends Controller
         $day = $currentDate->day;
 
         if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $maxId = InvWirelless::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+            $maxId = InvWirelless::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
 
             if (is_null($maxId)) {
                 $maxId = 0;
-            }else{
+            } else {
                 $noUrut = (int) substr($maxId->inventory_number, 7, 3);
                 $maxId = $noUrut;
             }
 
             $uniqueString = 'PPABIBBB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $maxId = InvWirelless::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+        } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
+            $maxId = InvWirelless::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
 
             if (is_null($maxId)) {
                 $maxId = 0;
-            }else{
+            } else {
                 $noUrut = (int) substr($maxId->inventory_number, 7, 3);
                 $maxId = $noUrut;
             }
 
             $uniqueString = 'PPAHOBB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $maxId = InvWirelless::where('site','BA')->orderBy('max_id', 'desc')->first();
+        } else {
+            $maxId = InvWirelless::where('site', 'BA')->orderBy('max_id', 'desc')->first();
             // dd($maxId->inventory_number);
 
             if (is_null($maxId)) {
                 $maxId = 0;
-            }else{
+            } else {
                 $noUrut = (int) substr($maxId->inventory_number, 7, 3);
                 $maxId = $noUrut;
             }
@@ -86,7 +86,7 @@ class InvWirellessController extends Controller
         $maxId = InvWirelless::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
-        }else{
+        } else {
             $maxId = $maxId + 1;
         }
         $params = $request->all();
@@ -137,7 +137,7 @@ class InvWirellessController extends Controller
         if (empty($wirelless)) {
             abort(404, 'Data not found');
         }
-        
+
         return Inertia::render('Inventory/Wirelless/WirellessDetail', [
             'wirelless' => $wirelless,
         ]);
