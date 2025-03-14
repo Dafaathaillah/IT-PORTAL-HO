@@ -53,6 +53,9 @@ class InvWirellessMlpController extends Controller
 
     public function store(Request $request)
     {
+        $isoDate = $request->date_of_inventory;
+        $formattedDate = Carbon::parse($isoDate)->toDateString();
+
         $maxId = InvWirelless::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
@@ -74,6 +77,7 @@ class InvWirellessMlpController extends Controller
             'device_model' => $params['device_model'],
             'location' => $params['location'],
             'status' => $params['status'],
+            'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
             'site' => 'MLP'
         ];

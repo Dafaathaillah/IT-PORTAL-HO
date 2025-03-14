@@ -53,6 +53,9 @@ class InvWirellessMipController extends Controller
 
     public function store(Request $request)
     {
+        $isoDate = $request->date_of_inventory;
+        $formattedDate = Carbon::parse($isoDate)->toDateString();
+
         $maxId = InvWirelless::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
@@ -74,6 +77,7 @@ class InvWirellessMipController extends Controller
             'device_model' => $params['device_model'],
             'location' => $params['location'],
             'status' => $params['status'],
+            'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
             'site' => 'MIP'
         ];
@@ -124,6 +128,9 @@ class InvWirellessMipController extends Controller
     public function update(Request $request)
     {
         $params = $request->all();
+        $isoDate = $params['date_of_inventory'];
+        $formattedDate = Carbon::parse($isoDate)->toDateString();
+
         $data = [
             'device_name' => $params['device_name'],
             'inventory_number' => $params['inventory_number'],
@@ -137,6 +144,7 @@ class InvWirellessMipController extends Controller
             'device_model' => $params['device_model'],
             'location' => $params['location'],
             'status' => $params['status'],
+            'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
             'site' => 'MIP'
         ];

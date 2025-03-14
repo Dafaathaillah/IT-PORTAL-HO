@@ -101,6 +101,23 @@ function formattedDate(date) {
                                             </p>
                                         </div>
                                     </div>
+                                      <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                Inventory Date
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                :
+                                                {{
+                                                    formattedDate(
+                                                        wirelless.date_of_inventory
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">

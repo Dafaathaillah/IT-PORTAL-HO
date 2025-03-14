@@ -23,8 +23,8 @@ const form = useForm({
     device_model: props.switch.device_model,
     location: props.switch.location,
     status: props.switch.status,
-    date_of_inventory: props.switch.date_of_inventory,
     note: props.switch.note,
+    date_of_inventory: props.switch.date_of_inventory,
 });
 
 const customFormat = (date) => {
