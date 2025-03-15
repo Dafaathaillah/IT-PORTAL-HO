@@ -19,48 +19,59 @@ const props = defineProps({
 function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
 }
-
 </script>
 
 <template>
-
     <Head title="Inv Printer" />
 
     <AuthenticatedLayout
-            v-model:pages="pages"
+        v-model:pages="pages"
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
-        >
-
+    >
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
                     <div class="w-full max-w-full px-3 mt-6">
-                        <div class="w-full max-w-full px-3 mt-6 md:w-12/12 md:flex-none">
+                        <div
+                            class="w-full max-w-full px-3 mt-6 md:w-12/12 md:flex-none"
+                        >
                             <div
-                                class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                                
-                                <div class="flex flex-row p-6 px-4 pb-0 mb-0 border-b-0 rounded-t-2xl">
+                                class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                            >
+                                <div
+                                    class="flex flex-row p-6 px-4 pb-0 mb-0 border-b-0 rounded-t-2xl"
+                                >
                                     <h6 class="mb-4 mr-3 dark:text-white">
                                         Detail Printer
                                     </h6>
-                                    <NavLinkCustom class="text-red-700" :href="route('printerAmi.page')">
+                                    <NavLinkCustom
+                                        class="text-red-700"
+                                        :href="route('printerAmi.page')"
+                                    >
                                         Move to home page
                                     </NavLinkCustom>
-
                                 </div>
-                                <div class="p-6 px-4 pb-0 grid grid-cols-1 gap-4 md:grid-cols-2">
+                                <div
+                                    class="p-6 px-4 pb-0 grid grid-cols-1 gap-4 md:grid-cols-2"
+                                >
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Asset Ho Number</p>
+                                            <p class="text-base">
+                                                Asset Ho Number
+                                            </p>
                                         </div>
                                         <div>
-                                            <p>: {{ printers.asset_ho_number }}</p>
+                                            <p>
+                                                : {{ printers.asset_ho_number }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Iventory Number</p>
+                                            <p class="text-base">
+                                                Iventory Number
+                                            </p>
                                         </div>
                                         <div>
                                             <p>: {{ printers.printer_code }}</p>
@@ -76,15 +87,38 @@ function formattedDate(date) {
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Printer Brand</p>
+                                            <p class="text-base">
+                                                Printer Brand
+                                            </p>
                                         </div>
                                         <div>
-                                            <p>: {{ printers.printer_brand }}</p>
+                                            <p>
+                                                : {{ printers.printer_brand }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Printer Location</p>
+                                            <p class="text-base">
+                                                Inventory Date
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                :
+                                                {{
+                                                    formattedDate(
+                                                        printers.date_of_inventory
+                                                    )
+                                                }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">
+                                                Printer Location
+                                            </p>
                                         </div>
                                         <div>
                                             <p>: {{ printers.location }}</p>
@@ -92,7 +126,9 @@ function formattedDate(date) {
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Printer Type</p>
+                                            <p class="text-base">
+                                                Printer Type
+                                            </p>
                                         </div>
                                         <div>
                                             <p>: {{ printers.printer_type }}</p>
@@ -122,17 +158,20 @@ function formattedDate(date) {
                                             <p>: {{ printers.ip_address }}</p>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Serial Number</p>
+                                            <p class="text-base">
+                                                Serial Number
+                                            </p>
                                         </div>
                                         <div>
-                                            <p>: {{ printers.serial_number }}</p>
+                                            <p>
+                                                : {{ printers.serial_number }}
+                                            </p>
                                         </div>
                                     </div>
-                                    
-                                    
+
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">Status</p>
@@ -153,13 +192,17 @@ function formattedDate(date) {
 
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Date Of Inventory</p>
+                                            <p class="text-base">
+                                                Date Of Inventory
+                                            </p>
                                         </div>
                                         <div>
                                             <p>
                                                 :
                                                 {{
-                                                    formattedDate(printers.date_of_inventory)
+                                                    formattedDate(
+                                                        printers.date_of_inventory
+                                                    )
                                                 }}
                                             </p>
                                         </div>
@@ -167,24 +210,26 @@ function formattedDate(date) {
 
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Last Edit At</p>
+                                            <p class="text-base">
+                                                Last Edit At
+                                            </p>
                                         </div>
                                         <div>
                                             <p>
                                                 :
                                                 {{
-                                                    formattedDate(printers.updated_at)
+                                                    formattedDate(
+                                                        printers.updated_at
+                                                    )
                                                 }}
                                             </p>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </AuthenticatedLayout>

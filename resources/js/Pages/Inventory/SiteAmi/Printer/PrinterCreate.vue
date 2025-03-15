@@ -3,6 +3,8 @@
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
 import { ref } from "vue";
@@ -23,7 +25,22 @@ const form = useForm({
     location: "",
     status: "",
     note: "",
+    date_of_inventory: "",
 });
+
+const customFormat = (date) => {
+    if (!date) {
+        // Jika date null atau kosong, kembalikan null
+        return "";
+    }
+
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+};
 
 const isDisabled = ref(true);
 const selectedValues = ref(null); // Awalnya array kosong
@@ -35,7 +52,7 @@ const formSubmitted = ref(false);
 const save = () => {
     if (selectedValues.value == null) {
         formSubmitted.value = true;
-        return; 
+        return;
     }
 
     form.dept = selectedValues.value.name;
@@ -314,7 +331,7 @@ const save = () => {
                                         >
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -333,7 +350,27 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="date-of-inventory"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Date Of Inventory</label
+                                            >
+                                            <VueDatePicker
+                                                required
+                                                v-model="form.date_of_inventory"
+                                                :format="customFormat"
+                                                :enable-time-picker="false"
+                                                utc="false"
+                                                name="date_of_inventory"
+                                                placeholder="Select a date and time"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

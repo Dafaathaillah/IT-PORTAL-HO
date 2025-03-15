@@ -56,10 +56,8 @@ class InvPrinterMipController extends Controller
 
     public function store(Request $request)
     {
-        $currentDate = Carbon::now();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        $isoDate = $request->date_of_inventory;
+        $formattedDate = Carbon::parse($isoDate)->setTimezone('Asia/Ujung_Pandang')->toDateString();
 
         $maxId = InvPrinter::max('max_id');
         if (is_null($maxId)) {
@@ -83,7 +81,7 @@ class InvPrinterMipController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
+            'date_of_inventory' => $formattedDate,
             'site' => 'MIP'
         ];
         // DB::table('inv_aps')->insert($data);
@@ -159,6 +157,9 @@ class InvPrinterMipController extends Controller
     public function update(Request $request)
     {
         $params = $request->all();
+        $isoDate = $params['date_of_inventory'];
+        $formattedDate = Carbon::parse($isoDate)->setTimezone('Asia/Ujung_Pandang')->toDateString();
+
         $data = [
             'item_name' => $params['item_name'],
             'printer_code' => $params['printer_code'],
@@ -173,6 +174,7 @@ class InvPrinterMipController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
+            'date_of_inventory' => $formattedDate,
             'site' => 'MIP'
         ];
         // DB::table('inv_aps')->insert($data);
