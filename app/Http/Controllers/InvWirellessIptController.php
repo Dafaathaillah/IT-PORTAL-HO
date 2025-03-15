@@ -55,7 +55,8 @@ class InvWirellessIptController extends Controller
     {
         $maxId = InvWirelless::max('max_id');
         $isoDate = $request->date_of_inventory;
-        $formattedDate = Carbon::parse($isoDate)->toDateString();
+        $formattedDate = Carbon::parse($isoDate)->setTimezone('Asia/Ujung_Pandang')->toDateString();
+
 
         if (is_null($maxId)) {
             $maxId = 1;
@@ -128,7 +129,8 @@ class InvWirellessIptController extends Controller
     {
         $params = $request->all();
         $isoDate = $params['date_of_inventory'];
-        $formattedDate = Carbon::parse($isoDate)->toDateString();
+        $formattedDate = Carbon::parse($isoDate)->setTimezone('Asia/Ujung_Pandang')->toDateString();
+
 
         $data = [
             'device_name' => $params['device_name'],

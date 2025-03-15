@@ -58,7 +58,8 @@ class InvApMlpController extends Controller
     public function store(Request $request)
     {
         $isoDate = $request->date_of_inventory;
-        $formattedDate = Carbon::parse($isoDate)->toDateString();
+        $formattedDate = Carbon::parse($isoDate)->setTimezone('Asia/Ujung_Pandang')->toDateString();
+
 
         $maxId = InvAp::max('max_id');
         if (is_null($maxId)) {
@@ -142,7 +143,8 @@ class InvApMlpController extends Controller
     {
         $params = $request->all();
         $isoDate = $params['date_of_inventory'];
-        $formattedDate = Carbon::parse($isoDate)->toDateString();
+        $formattedDate = Carbon::parse($isoDate)->setTimezone('Asia/Ujung_Pandang')->toDateString();
+
 
         $data = [
             'device_name' => $params['device_name'],
