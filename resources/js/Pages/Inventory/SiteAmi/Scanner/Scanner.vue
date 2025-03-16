@@ -1,11 +1,10 @@
 <style>
-@import 'datatables.net-dt';
+@import "datatables.net-dt";
 
 .dt-search {
     margin-bottom: 1em;
     float: right !important;
     text-align: center !important;
-
 }
 .dt-paging {
     margin-top: 1em;
@@ -26,7 +25,7 @@ import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
+import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
 const pages = ref("Pages");
 const subMenu = ref("Scanner Pages");
@@ -40,25 +39,26 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-        dom: 'fBrtilp',
-        scrollY: '40vh',
+        dom: "fBrtilp",
+        scrollY: "40vh",
         scrollCollapse: true,
         buttons: [
-                {
-                    extend: 'spacer',
-                    style: 'bar',
-                    text: 'Export files:'
-                },
-                'csvHtml5',
-                'excelHtml5',
-                'spacer'
-            ],
+            {
+                extend: "spacer",
+                style: "bar",
+                text: "Export files:",
+            },
+            "csvHtml5",
+            "excelHtml5",
+            "spacer",
+        ],
         initComplete: function () {
-            var btns = $('.dt-button');
-            btns.addClass('text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2');
-            btns.removeClass('dt-button');
-
-        }
+            var btns = $(".dt-button");
+            btns.addClass(
+                "text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            );
+            btns.removeClass("dt-button");
+        },
     });
 });
 
@@ -193,9 +193,7 @@ const submitCsv = () => {
                         enctype="multipart/form-data"
                     >
                         <div class="flex flex-wrap">
-                            <div
-                                class="max-w-full px-3"
-                            >
+                            <div class="max-w-full px-3">
                                 <div class="mb-4">
                                     <input
                                         type="file"
@@ -215,9 +213,7 @@ const submitCsv = () => {
                                     Import
                                 </button>
                             </div>
-                            <div
-                                class="max-w-full px-3"
-                            >
+                            <div class="max-w-full px-3">
                                 <a
                                     href="/sampleScanner.xlsx"
                                     download="Format-Import-Data-scanner.xlsx"
@@ -249,7 +245,7 @@ const submitCsv = () => {
                             </div>
 
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                <PerfectScrollbar style="position: relative;">
+                                <PerfectScrollbar style="position: relative">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <div
@@ -309,7 +305,11 @@ const submitCsv = () => {
                                                         >
                                                             Device Status
                                                         </th>
-
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inventory Date
+                                                        </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -399,7 +399,9 @@ const submitCsv = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ scanners.note }}
+                                                                {{
+                                                                    scanners.note
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -437,6 +439,19 @@ const submitCsv = () => {
                                                                 }}
                                                             </span>
                                                         </td>
+                                                        <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formattedDate(
+                                                                    scanners.date_of_inventory
+                                                                )
+                                                            }}
+                                                        </span>
+                                                    </td>
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
@@ -481,7 +496,10 @@ const submitCsv = () => {
                                                                         scanners.id
                                                                     )
                                                                 "
-                                                                v-if="props.role !== 'ict_technician'"
+                                                                v-if="
+                                                                    props.role !==
+                                                                    'ict_technician'
+                                                                "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Delete
@@ -502,6 +520,5 @@ const submitCsv = () => {
     </AuthenticatedLayout>
 </template>
 <style>
-@import '/public/assets/css/perfect-scrollbar.css';
-
+@import "/public/assets/css/perfect-scrollbar.css";
 </style>

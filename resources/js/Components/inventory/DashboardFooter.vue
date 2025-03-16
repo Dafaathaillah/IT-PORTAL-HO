@@ -8,7 +8,7 @@
                     <div
                         class="text-sm leading-normal text-center text-slate-500 lg:text-left mb-8"
                     >
-                        © 2024 Develop By ICT PPA - BIB Developer Team.
+                        © 2024 Develop By ICT PPA - AMM Developer
                     </div>
                 </div>
                 

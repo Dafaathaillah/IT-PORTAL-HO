@@ -3,9 +3,11 @@
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
-import { ref , computed } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps(["scanner", "department", "department_select"]);
 
@@ -24,7 +26,21 @@ const form = useForm({
     location: props.scanner.location,
     status: props.scanner.status,
     note: props.scanner.note,
+    date_of_inventory: props.scanner.date_of_inventory,
 });
+
+const customFormat = (date) => {
+    if (!date) return "";
+
+    const d = new Date(date);
+    
+    // Gunakan getFullYear, getMonth, dan getDate untuk zona waktu lokal
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+};
 
 const isDisabled = ref(true);
 const selectedValues = ref(
@@ -42,20 +58,22 @@ const options = props.department;
 const formSubmitted = ref(false);
 
 const update = () => {
-    if (selectedValues.value == '') {
+    if (selectedValues.value == "") {
         formSubmitted.value = true;
-        return; 
-    }else{
-        if(props.department_select.includes('data tidak ada !')){
+        return;
+    } else {
+        if (props.department_select.includes("data tidak ada !")) {
             form.dept = selectedValues.value.name;
-        }else{
-
-            if(props.department_select.includes(selectedValues.value.name) == false && selectedValues.value.name != undefined) {
+        } else {
+            if (
+                props.department_select.includes(selectedValues.value.name) ==
+                    false &&
+                selectedValues.value.name != undefined
+            ) {
                 form.dept = selectedValues.value.name;
-            }else{
+            } else {
                 form.dept = dept_select.value;
             }
-
         }
     }
     form.post(route("scannerSbs.update", props.scanner.id), {
@@ -359,7 +377,7 @@ const save = () => {
                                         >
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -378,7 +396,27 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="date-of-inventory"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Date Of Inventory</label
+                                            >
+                                            <VueDatePicker
+                                                required
+                                                v-model="form.date_of_inventory"
+                                                :format="customFormat"
+                                                :enable-time-picker="false"
+                                                utc="false"
+                                                name="date_of_inventory"
+                                                placeholder="Select a date and time"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

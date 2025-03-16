@@ -57,10 +57,8 @@ class InvScannerPikController extends Controller
 
     public function store(Request $request)
     {
-        $currentDate = Carbon::now();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        $isoDate = $request->date_of_inventory;
+        $formattedDate = Carbon::parse($isoDate)->setTimezone('Asia/Ujung_Pandang')->toDateString();
 
         $maxId = InvScanner::max('max_id');
         if (is_null($maxId)) {
@@ -84,7 +82,7 @@ class InvScannerPikController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
+            'date_of_inventory' => $formattedDate,
             'site' => 'PIK'
         ];
         // DB::table('inv_aps')->insert($data);
@@ -140,7 +138,9 @@ class InvScannerPikController extends Controller
     public function update(Request $request)
     {
         $params = $request->all();
-        // dd($params);
+        $isoDate = $params['date_of_inventory'];
+        $formattedDate = Carbon::parse($isoDate)->setTimezone('Asia/Ujung_Pandang')->toDateString();
+
         $data = [
             'item_name' => $params['item_name'],
             'scanner_code' => $params['scanner_code'],
@@ -155,6 +155,7 @@ class InvScannerPikController extends Controller
             'location' => $params['location'],
             'status' => $params['status'],
             'note' => $params['note'],
+            'date_of_inventory' => $formattedDate,
             'site' => 'PIK'
         ];
         // DB::table('inv_aps')->insert($data);

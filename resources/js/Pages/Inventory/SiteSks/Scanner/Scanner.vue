@@ -307,7 +307,11 @@ const submitCsv = () => {
                                                         >
                                                             Device Status
                                                         </th>
-
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inventory Date
+                                                        </th>
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -397,7 +401,9 @@ const submitCsv = () => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ scanners.note }}
+                                                                {{
+                                                                    scanners.note
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -435,6 +441,19 @@ const submitCsv = () => {
                                                                 }}
                                                             </span>
                                                         </td>
+                                                        <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formattedDate(
+                                                                    scanners.date_of_inventory
+                                                                )
+                                                            }}
+                                                        </span>
+                                                    </td>
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
@@ -479,7 +498,10 @@ const submitCsv = () => {
                                                                         scanners.id
                                                                     )
                                                                 "
-                                                                v-if="props.role !== 'ict_technician'"
+                                                                v-if="
+                                                                    props.role !==
+                                                                    'ict_technician'
+                                                                "
                                                                 class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Delete
