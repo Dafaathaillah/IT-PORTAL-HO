@@ -48,8 +48,8 @@ class InvApController extends Controller
             if (is_null($maxId)) {
                 $maxId = 0;
             } else {
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
+                preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
             }
 
             $uniqueString = 'PPABIBAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
@@ -59,8 +59,8 @@ class InvApController extends Controller
             if (is_null($maxId)) {
                 $maxId = 0;
             } else {
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
+                preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
             }
 
             $uniqueString = 'PPAHOAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
@@ -71,8 +71,8 @@ class InvApController extends Controller
             if (is_null($maxId)) {
                 $maxId = 0;
             } else {
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
+                preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
             }
 
             $uniqueString = 'PPABAAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);

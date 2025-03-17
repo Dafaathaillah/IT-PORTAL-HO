@@ -16,13 +16,13 @@ class InvPrinterController extends Controller
 {
     public function index()
     {
-        
-        $dataInventory = InvPrinter::where('site',null)->orWhere('site','HO')->get();
+
+        $dataInventory = InvPrinter::where('site', null)->orWhere('site', 'HO')->get();
 
         $site = '';
 
         $role = auth()->user()->role;
-        return Inertia::render('Inventory/Printer/Printer', ['printer' => $dataInventory,'site' => $site,'role' => $role]);
+        return Inertia::render('Inventory/Printer/Printer', ['printer' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -33,48 +33,23 @@ class InvPrinterController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $maxId = InvPrinter::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+        $maxId = InvPrinter::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
 
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->printer_code, 8, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPABIBPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $maxId = InvPrinter::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->printer_code, 8, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPAHOPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $maxId = InvPrinter::where('site','BA')->orderBy('max_id', 'desc')->first();
-            // dd($maxId->printer_code);
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->printer_code, 8, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPABAPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->printer_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
         }
+
+        $uniqueString = 'PPAHOPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['printer_code'] = $uniqueString;
 
         $department = Department::pluck('department_name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
-        
+
         // end generate code
 
         return Inertia::render('Inventory/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
@@ -88,7 +63,7 @@ class InvPrinterController extends Controller
         $maxId = InvPrinter::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
-        }else{
+        } else {
             $maxId = $maxId + 1;
         }
         $params = $request->all();
@@ -138,7 +113,7 @@ class InvPrinterController extends Controller
         if (empty($printer)) {
             abort(404, 'Data not found');
         }
-        
+
         return Inertia::render('Inventory/Printer/PrinterDetail', [
             'printers' => $printer,
         ]);
@@ -154,10 +129,10 @@ class InvPrinterController extends Controller
 
         if (!empty($printer->department)) {
             $department_select = array($printer->department);
-        }else{
+        } else {
             $department_select = array('data tidak ada !');
         }
-        
+
         $department = Department::pluck('department_name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
@@ -173,7 +148,7 @@ class InvPrinterController extends Controller
         if (empty($invPrinter)) {
             abort(404, 'Data not found');
         }
-        
+
         if (is_null($invPrinter)) {
             return response()->json(['message' => 'Printers Data not found'], 404);
         }

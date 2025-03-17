@@ -37,8 +37,8 @@ class InvPrinterBibController extends Controller
         if (is_null($maxId)) {
             $maxId = 0;
         } else {
-            $noUrut = (int) substr($maxId->printer_code, 8, 3);
-            $maxId = $noUrut;
+            preg_match('/(\d+)$/', $maxId->printer_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
         }
 
         $uniqueString = 'PPABIBPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);

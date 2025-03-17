@@ -38,8 +38,8 @@ class InvScannerMhuController extends Controller
         if (is_null($maxId)) {
             $maxId = 0;
         } else {
-            $noUrut = (int) substr($maxId->scanner_code, 8, 3);
-            $maxId = $noUrut;
+            preg_match('/(\d+)$/', $maxId->scanner_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
         }
 
         $uniqueString = 'PPAMHUSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);

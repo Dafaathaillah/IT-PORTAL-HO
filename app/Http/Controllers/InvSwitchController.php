@@ -18,14 +18,14 @@ class InvSwitchController extends Controller
 {
     public function index()
     {
-        
-        $dataInventory = InvSwitch::where('site',null)->orWhere('site','HO')->get();
+
+        $dataInventory = InvSwitch::where('site', null)->orWhere('site', 'HO')->get();
 
         $site = '';
 
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/Switch/Switch', ['switch' => $dataInventory,'site' => $site,'role' => $role]);
+        return Inertia::render('Inventory/Switch/Switch', ['switch' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -36,41 +36,16 @@ class InvSwitchController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $maxId = InvSwitch::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+        $maxId = InvSwitch::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
 
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPABIBSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $maxId = InvSwitch::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPAHOSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $maxId = InvSwitch::where('site','BA')->orderBy('max_id', 'desc')->first();
-            // dd($maxId->inventory_number);
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPABASW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
         }
+
+        $uniqueString = 'PPAHOSW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code
@@ -87,7 +62,7 @@ class InvSwitchController extends Controller
         $maxId = InvSwitch::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
-        }else{
+        } else {
             $maxId = $maxId + 1;
         }
         $params = $request->all();
@@ -145,7 +120,7 @@ class InvSwitchController extends Controller
         if (empty($switch)) {
             abort(404, 'Data not found');
         }
-        
+
         return Inertia::render('Inventory/Switch/SwitchDetail', [
             'switchs' => $switch,
         ]);

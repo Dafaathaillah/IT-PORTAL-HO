@@ -18,13 +18,13 @@ class InvScannerController extends Controller
 {
     public function index()
     {
-        
-        $dataInventory = InvScanner::where('site',null)->orWhere('site','HO')->get();
+
+        $dataInventory = InvScanner::where('site', null)->orWhere('site', 'HO')->get();
 
         $site = '';
 
         $role = auth()->user()->role;
-        return Inertia::render('Inventory/Scanner/Scanner', ['scanner' => $dataInventory,'site' => $site,'role' => $role]);
+        return Inertia::render('Inventory/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
 
     public function create()
@@ -35,48 +35,23 @@ class InvScannerController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $maxId = InvScanner::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
+        $maxId = InvScanner::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
 
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->scanner_code, 9, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPABIBSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $maxId = InvScanner::where('site',null)->orWhere('site','HO')->orderBy('max_id', 'desc')->first();
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->scanner_code, 8, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPAHOSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        }else{
-            $maxId = InvScanner::where('site','BA')->orderBy('max_id', 'desc')->first();
-            // dd($maxId->scanner_code);
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            }else{
-                $noUrut = (int) substr($maxId->scanner_code, 8, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPABASCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->scanner_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
         }
+
+        $uniqueString = 'PPAHOSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['scanner_code'] = $uniqueString;
 
         $department = Department::pluck('department_name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
-        
+
         // end generate code
 
         return Inertia::render('Inventory/Scanner/ScannerCreate', ['scanner_code' => $uniqueString, 'department' => $department]);
@@ -90,7 +65,7 @@ class InvScannerController extends Controller
         $maxId = InvScanner::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
-        }else{
+        } else {
             $maxId = $maxId + 1;
         }
         $params = $request->all();
@@ -136,7 +111,7 @@ class InvScannerController extends Controller
         if (empty($scanner)) {
             abort(404, 'Data not found');
         }
-        
+
         return Inertia::render('Inventory/Scanner/ScannerDetail', [
             'scanners' => $scanner,
         ]);
@@ -151,10 +126,10 @@ class InvScannerController extends Controller
 
         if (!empty($scanner->department)) {
             $department_select = array($scanner->department);
-        }else{
+        } else {
             $department_select = array('data tidak ada !');
         }
-        
+
         $department = Department::pluck('department_name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();

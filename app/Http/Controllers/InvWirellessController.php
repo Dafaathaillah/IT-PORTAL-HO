@@ -36,41 +36,16 @@ class InvWirellessController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        if (auth()->user()->role == 'ict_developer' && auth()->user()->site == 'BIB') {
-            $maxId = InvWirelless::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
+        $maxId = InvWirelless::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
 
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPABIBBB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        } else if (auth()->user()->role == 'ict_ho' && auth()->user()->site == 'HO' || auth()->user()->role == 'ict_bod' && auth()->user()->site == 'HO') {
-            $maxId = InvWirelless::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPAHOBB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        if (is_null($maxId)) {
+            $maxId = 0;
         } else {
-            $maxId = InvWirelless::where('site', 'BA')->orderBy('max_id', 'desc')->first();
-            // dd($maxId->inventory_number);
-
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                $noUrut = (int) substr($maxId->inventory_number, 7, 3);
-                $maxId = $noUrut;
-            }
-
-            $uniqueString = 'PPABABB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
         }
+
+        $uniqueString = 'PPAHOBB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
 
         $request['inventory_number'] = $uniqueString;
         // end generate code
