@@ -521,6 +521,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/switch', [InvSwitchController::class, 'index'])->name('switch.page');
             Route::get('/switch/create', [InvSwitchController::class, 'create'])->name('switch.create');
             Route::post('/switch/create', [InvSwitchController::class, 'store'])->name('switch.store');
+            Route::post('/switch/generate', [InvSwitchController::class, 'generateCode'])->name('switch.generate');
+            Route::post('/switch/generate/edit', [InvSwitchController::class, 'generateCodeEdit'])->name('switch.generateEdit');
             Route::get('/switch/{swId}/edit', [InvSwitchController::class, 'edit'])->name('switch.edit');
             Route::put('/switch/{swId}/update', [InvSwitchController::class, 'update'])->name('switch.update');
             Route::delete('/switch/{swId}/delete', [InvSwitchController::class, 'destroy'])->name('switch.delete');
@@ -601,6 +603,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/switchBa', [InvSwitchBaController::class, 'index'])->name('switchBa.page');
             Route::get('/switchBa/create', [InvSwitchBaController::class, 'create'])->name('switchBa.create');
             Route::post('/switchBa/create', [InvSwitchBaController::class, 'store'])->name('switchBa.store');
+            Route::post('/switchBa/generate', [InvSwitchBaController::class, 'generateCode'])->name('switchBa.generate');
+            Route::post('/switchBa/generate/edit', [InvSwitchBaController::class, 'generateCodeEdit'])->name('switchBa.generateEdit');
             Route::get('/switchBa/{swId}/edit', [InvSwitchBaController::class, 'edit'])->name('switchBa.edit');
             Route::put('/switchBa/{swId}/update', [InvSwitchBaController::class, 'update'])->name('switchBa.update');
             Route::delete('/switchBa/{swId}/delete', [InvSwitchBaController::class, 'destroy'])->name('switchBa.delete');
@@ -681,6 +685,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/switchMifa', [InvSwitchMifaController::class, 'index'])->name('switchMifa.page');
             Route::get('/switchMifa/create', [InvSwitchMifaController::class, 'create'])->name('switchMifa.create');
             Route::post('/switchMifa/create', [InvSwitchMifaController::class, 'store'])->name('switchMifa.store');
+            Route::post('/switchMifa/generate', [InvSwitchMifaController::class, 'generateCode'])->name('switchMifa.generate');
+            Route::post('/switchMifa/generate/edit', [InvSwitchMifaController::class, 'generateCodeEdit'])->name('switchMifa.generateEdit');
             Route::get('/switchMifa/{swId}/edit', [InvSwitchMifaController::class, 'edit'])->name('switchMifa.edit');
             Route::put('/switchMifa/{swId}/update', [InvSwitchMifaController::class, 'update'])->name('switchMifa.update');
             Route::delete('/switchMifa/{swId}/delete', [InvSwitchMifaController::class, 'destroy'])->name('switchMifa.delete');
@@ -761,6 +767,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/switchMhu', [InvSwitchMhuController::class, 'index'])->name('switchMhu.page');
             Route::get('/switchMhu/create', [InvSwitchMhuController::class, 'create'])->name('switchMhu.create');
             Route::post('/switchMhu/create', [InvSwitchMhuController::class, 'store'])->name('switchMhu.store');
+            Route::post('/switchMhu/generate', [InvSwitchMhuController::class, 'generateCode'])->name('switchMhu.generate');
+            Route::post('/switchMhu/generate/edit', [InvSwitchMhuController::class, 'generateCodeEdit'])->name('switchMhu.generateEdit');
             Route::get('/switchMhu/{swId}/edit', [InvSwitchMhuController::class, 'edit'])->name('switchMhu.edit');
             Route::put('/switchMhu/{swId}/update', [InvSwitchMhuController::class, 'update'])->name('switchMhu.update');
             Route::delete('/switchMhu/{swId}/delete', [InvSwitchMhuController::class, 'destroy'])->name('switchMhu.delete');
@@ -841,6 +849,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/switchAmi', [InvSwitchAmiController::class, 'index'])->name('switchAmi.page');
             Route::get('/switchAmi/create', [InvSwitchAmiController::class, 'create'])->name('switchAmi.create');
             Route::post('/switchAmi/create', [InvSwitchAmiController::class, 'store'])->name('switchAmi.store');
+            Route::post('/switchAmi/generate', [InvSwitchAmiController::class, 'generateCode'])->name('switchAmi.generate');
+            Route::post('/switchAmi/generate/edit', [InvSwitchAmiController::class, 'generateCodeEdit'])->name('switchAmi.generateEdit');
             Route::get('/switchAmi/{swId}/edit', [InvSwitchAmiController::class, 'edit'])->name('switchAmi.edit');
             Route::put('/switchAmi/{swId}/update', [InvSwitchAmiController::class, 'update'])->name('switchAmi.update');
             Route::delete('/switchAmi/{swId}/delete', [InvSwitchAmiController::class, 'destroy'])->name('switchAmi.delete');
@@ -1001,6 +1011,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/switchBge', [InvSwitchBgeController::class, 'index'])->name('switchBge.page');
             Route::get('/switchBge/create', [InvSwitchBgeController::class, 'create'])->name('switchBge.create');
             Route::post('/switchBge/create', [InvSwitchBgeController::class, 'store'])->name('switchBge.store');
+            Route::post('/switchBge/generate', [InvSwitchBgeController::class, 'generateCode'])->name('switchBge.generate');
+            Route::post('/switchBge/generate/edit', [InvSwitchBgeController::class, 'generateCodeEdit'])->name('switchBge.generateEdit');
             Route::get('/switchBge/{swId}/edit', [InvSwitchBgeController::class, 'edit'])->name('switchBge.edit');
             Route::put('/switchBge/{swId}/update', [InvSwitchBgeController::class, 'update'])->name('switchBge.update');
             Route::delete('/switchBge/{swId}/delete', [InvSwitchBgeController::class, 'destroy'])->name('switchBge.delete');
@@ -1081,6 +1093,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/switchBib', [InvSwitchBibController::class, 'index'])->name('switchBib.page');
             Route::get('/switchBib/create', [InvSwitchBibController::class, 'create'])->name('switchBib.create');
             Route::post('/switchBib/create', [InvSwitchBibController::class, 'store'])->name('switchBib.store');
+            Route::post('/switchBib/generate', [InvSwitchBibController::class, 'generateCode'])->name('switchBib.generate');
+            Route::post('/switchBib/generate/edit', [InvSwitchBibController::class, 'generateCodeEdit'])->name('switchBib.generateEdit');
             Route::get('/switchBib/{swId}/edit', [InvSwitchBibController::class, 'edit'])->name('switchBib.edit');
             Route::put('/switchBib/{swId}/update', [InvSwitchBibController::class, 'update'])->name('switchBib.update');
             Route::delete('/switchBib/{swId}/delete', [InvSwitchBibController::class, 'destroy'])->name('switchBib.delete');
@@ -1161,6 +1175,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/switchIpt', [InvSwitchIptController::class, 'index'])->name('switchIpt.page');
             Route::get('/switchIpt/create', [InvSwitchIptController::class, 'create'])->name('switchIpt.create');
             Route::post('/switchIpt/create', [InvSwitchIptController::class, 'store'])->name('switchIpt.store');
+            Route::post('/switchIpt/generate', [InvSwitchIptController::class, 'generateCode'])->name('switchIpt.generate');
+            Route::post('/switchIpt/generate/edit', [InvSwitchIptController::class, 'generateCodeEdit'])->name('switchIpt.generateEdit');
             Route::get('/switchIpt/{swId}/edit', [InvSwitchIptController::class, 'edit'])->name('switchIpt.edit');
             Route::put('/switchIpt/{swId}/update', [InvSwitchIptController::class, 'update'])->name('switchIpt.update');
             Route::delete('/switchIpt/{swId}/delete', [InvSwitchIptController::class, 'destroy'])->name('switchIpt.delete');
