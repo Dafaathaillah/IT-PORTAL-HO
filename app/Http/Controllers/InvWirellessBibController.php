@@ -48,7 +48,66 @@ class InvWirellessBibController extends Controller
         $request['inventory_number'] = $uniqueString;
         // end generate code
 
-        return Inertia::render('Inventory/SiteBib/Wirelless/WirellessCreate', ['inventoryNumber' => $uniqueString]);
+        return Inertia::render('Inventory/SiteBib/Wirelless/WirellessCreate', ['inventory_number' => session('inventory_number') ?? null]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPABIBBB' : 'AMMBIBBB';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvWirelless::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'BIB')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('wirellessBib.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
+
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        // dd($id);
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPABIBBB' : 'AMMBIBBB';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvWirelless::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'BIB')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('wirellessBib.edit', ['id' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -123,7 +182,20 @@ class InvWirellessBibController extends Controller
         if (empty($wirelless)) {
             abort(404, 'Data not found');
         }
-        return Inertia::render('Inventory/SiteBib/Wirelless/WirellessEdit', ['wirelless' => $wirelless]);
+
+        // Ambil prefix dari inventory_number untuk mendapatkan company
+        $inventoryNumber = $wirelless->inventory_number;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPABIBBB')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMBIBBB')) {
+            $company = 'AMM';
+        }
+
+        return Inertia::render('Inventory/SiteBib/Wirelless/WirellessEdit', ['wirelless' => $wirelless,
+        'selectedCompany' => $company,
+        'inventory_number' => session('inventory_number') ?? null,]);
     }
 
     public function update(Request $request)

@@ -532,6 +532,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/wirelless', [InvWirellessController::class, 'index'])->name('wirelless.page');
             Route::get('/wirelless/create', [InvWirellessController::class, 'create'])->name('wirelless.create');
             Route::post('/wirelless/create', [InvWirellessController::class, 'store'])->name('wirelless.store');
+            Route::post('/wirelless/generate', [InvWirellessController::class, 'generateCode'])->name('wirelless.generate');
+            Route::post('/wirelless/generate/edit', [InvWirellessController::class, 'generateCodeEdit'])->name('wirelless.generateEdit');
             Route::get('/wirelless/{id}/edit', [InvWirellessController::class, 'edit'])->name('wirelless.edit');
             Route::put('/wirelless/{id}/update', [InvWirellessController::class, 'update'])->name('wirelless.update');
             Route::delete('/wirelless/{id}/delete', [InvWirellessController::class, 'destroy'])->name('wirelless.delete');
@@ -614,6 +616,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/wirellessBa', [InvWirellessBaController::class, 'index'])->name('wirellessBa.page');
             Route::get('/wirellessBa/create', [InvWirellessBaController::class, 'create'])->name('wirellessBa.create');
             Route::post('/wirellessBa/create', [InvWirellessBaController::class, 'store'])->name('wirellessBa.store');
+            Route::post('/wirellessBa/generate', [InvWirellessBaController::class, 'generateCode'])->name('wirellessBa.generate');
+            Route::post('/wirellessBa/generate/edit', [InvWirellessBaController::class, 'generateCodeEdit'])->name('wirellessBa.generateEdit');
             Route::get('/wirellessBa/{id}/edit', [InvWirellessBaController::class, 'edit'])->name('wirellessBa.edit');
             Route::put('/wirellessBa/{id}/update', [InvWirellessBaController::class, 'update'])->name('wirellessBa.update');
             Route::delete('/wirellessBa/{id}/delete', [InvWirellessBaController::class, 'destroy'])->name('wirellessBa.delete');
@@ -860,6 +864,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/wirellessAmi', [InvWirellessAmiController::class, 'index'])->name('wirellessAmi.page');
             Route::get('/wirellessAmi/create', [InvWirellessAmiController::class, 'create'])->name('wirellessAmi.create');
             Route::post('/wirellessAmi/create', [InvWirellessAmiController::class, 'store'])->name('wirellessAmi.store');
+            Route::post('/wirellessAmi/generate', [InvWirellessAmiController::class, 'generateCode'])->name('wirellessAmi.generate');
+            Route::post('/wirellessAmi/generate/edit', [InvWirellessAmiController::class, 'generateCodeEdit'])->name('wirellessAmi.generateEdit');
             Route::get('/wirellessAmi/{id}/edit', [InvWirellessAmiController::class, 'edit'])->name('wirellessAmi.edit');
             Route::put('/wirellessAmi/{id}/update', [InvWirellessAmiController::class, 'update'])->name('wirellessAmi.update');
             Route::delete('/wirellessAmi/{id}/delete', [InvWirellessAmiController::class, 'destroy'])->name('wirellessAmi.delete');
@@ -1024,6 +1030,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/wirellessBge', [InvWirellessBgeController::class, 'index'])->name('wirellessBge.page');
             Route::get('/wirellessBge/create', [InvWirellessBgeController::class, 'create'])->name('wirellessBge.create');
             Route::post('/wirellessBge/create', [InvWirellessBgeController::class, 'store'])->name('wirellessBge.store');
+            Route::post('/wirellessBge/generate', [InvWirellessBgeController::class, 'generateCode'])->name('wirellessBge.generate');
+            Route::post('/wirellessBge/generate/edit', [InvWirellessBgeController::class, 'generateCodeEdit'])->name('wirellessBge.generateEdit');
             Route::get('/wirellessBge/{id}/edit', [InvWirellessBgeController::class, 'edit'])->name('wirellessBge.edit');
             Route::put('/wirellessBge/{id}/update', [InvWirellessBgeController::class, 'update'])->name('wirellessBge.update');
             Route::delete('/wirellessBge/{id}/delete', [InvWirellessBgeController::class, 'destroy'])->name('wirellessBge.delete');
@@ -1106,6 +1114,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/wirellessBib', [InvWirellessBibController::class, 'index'])->name('wirellessBib.page');
             Route::get('/wirellessBib/create', [InvWirellessBibController::class, 'create'])->name('wirellessBib.create');
             Route::post('/wirellessBib/create', [InvWirellessBibController::class, 'store'])->name('wirellessBib.store');
+            Route::post('/wirellessBib/generate', [InvWirellessBibController::class, 'generateCode'])->name('wirellessBib.generate');
+            Route::post('/wirellessBib/generate/edit', [InvWirellessBibController::class, 'generateCodeEdit'])->name('wirellessBib.generateEdit');
             Route::get('/wirellessBib/{id}/edit', [InvWirellessBibController::class, 'edit'])->name('wirellessBib.edit');
             Route::put('/wirellessBib/{id}/update', [InvWirellessBibController::class, 'update'])->name('wirellessBib.update');
             Route::delete('/wirellessBib/{id}/delete', [InvWirellessBibController::class, 'destroy'])->name('wirellessBib.delete');
