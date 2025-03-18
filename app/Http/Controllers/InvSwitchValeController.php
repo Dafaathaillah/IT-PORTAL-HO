@@ -19,7 +19,7 @@ class InvSwitchValeController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'VALE')->get();
+        $dataInventory = InvSwitch::where('site', 'VIB')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
@@ -28,29 +28,66 @@ class InvSwitchValeController extends Controller
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::now();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        return Inertia::render('Inventory/SiteVale/Switch/SwitchCreate', ['inventory_number' => session('inventory_number') ?? null]);
+    }
 
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
 
-        $maxId = InvSwitch::where('site', 'VALE')->orderBy('max_id', 'desc')->first();
-        // dd($maxId->inventory_number);
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAVIBSW' : 'AMMVIBSW';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvSwitch::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'VIB')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
         } else {
             preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
-            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
         }
 
-        $uniqueString = 'PPAVALESW' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('switchVale.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
 
-        $request['inventory_number'] = $uniqueString;
-        // end generate code
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        // dd($id);
+        $dataCompany = $request->input('company')['name'];
 
-        return Inertia::render('Inventory/SiteVale/Switch/SwitchCreate', ['inventoryNumber' => $uniqueString]);
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAVIBSW' : 'AMMVIBSW';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvSwitch::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'VIB')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('switchVale.edit', ['swId' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -81,7 +118,7 @@ class InvSwitchValeController extends Controller
             'status' => $params['status'],
             'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         // DB::table('inv_aps')->insert($data);
         InvSwitch::create($data);
@@ -111,7 +148,22 @@ class InvSwitchValeController extends Controller
         if (empty($switch)) {
             abort(404, 'Data not found');
         }
-        return Inertia::render('Inventory/SiteVale/Switch/SwitchEdit', ['switch' => $switch]);
+
+        // Ambil prefix dari inventory_number untuk mendapatkan company
+        $inventoryNumber = $switch->inventory_number;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPAVIBSW')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMVIBSW')) {
+            $company = 'AMM';
+        }
+
+        return Inertia::render('Inventory/SiteVale/Switch/SwitchEdit', [
+            'switch' => $switch,
+            'selectedCompany' => $company,
+            'inventory_number' => session('inventory_number') ?? null,
+        ]);
     }
 
     public function detail($id)
@@ -147,7 +199,7 @@ class InvSwitchValeController extends Controller
             'status' => $params['status'],
             'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         InvSwitch::firstWhere('id', $request->id)->update($data);
         return redirect()->route('switchVale.page');

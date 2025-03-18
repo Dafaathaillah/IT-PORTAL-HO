@@ -18,7 +18,7 @@ class InvScannerValeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'VALE')->get();
+        $dataInventory = InvScanner::where('site', 'VIB')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SiteVale/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);
@@ -32,7 +32,7 @@ class InvScannerValeController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvScanner::where('site', 'VALE')->orderBy('max_id', 'desc')->first();
+        $maxId = InvScanner::where('site', 'VIB')->orderBy('max_id', 'desc')->first();
         // dd($maxId->scanner_code);
 
         if (is_null($maxId)) {
@@ -83,7 +83,7 @@ class InvScannerValeController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $formattedDate,
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::create($data);
@@ -156,7 +156,7 @@ class InvScannerValeController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $formattedDate,
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         // DB::table('inv_aps')->insert($data);
         InvScanner::firstWhere('id', $request->id)->update($data);

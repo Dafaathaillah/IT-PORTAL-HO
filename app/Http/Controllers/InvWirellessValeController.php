@@ -17,7 +17,7 @@ class InvWirellessValeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'VALE')->get();
+        $dataInventory = InvWirelless::where('site', 'VIB')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
@@ -32,7 +32,7 @@ class InvWirellessValeController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InvWirelless::where('site', 'VALE')->orderBy('max_id', 'desc')->first();
+        $maxId = InvWirelless::where('site', 'VIB')->orderBy('max_id', 'desc')->first();
         // dd($maxId->inventory_number);
 
         if (is_null($maxId)) {
@@ -79,7 +79,7 @@ class InvWirellessValeController extends Controller
             'status' => $params['status'],
             'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         // DB::table('inv_aps')->insert($data);
         InvWirelless::create($data);
@@ -147,7 +147,7 @@ class InvWirellessValeController extends Controller
             'status' => $params['status'],
             'date_of_inventory' => $formattedDate,
             'note' => $params['note'],
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         InvWirelless::firstWhere('id', $request->id)->update($data);
         return redirect()->route('wirellessVale.page');
