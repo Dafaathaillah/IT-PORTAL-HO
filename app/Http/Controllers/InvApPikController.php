@@ -27,33 +27,65 @@ class InvApPikController extends Controller
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::tomorrow();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        return Inertia::render('Inventory/SitePik/AccessPoint/AccessPointCreate', ['inventory_number' => session('inventory_number') ?? null]);
+    }
 
-        if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'PIK') {
-            $maxId = InvAp::where('site', 'PIK')->orderBy('max_id', 'desc')->first();
-            // dd($maxId->inventory_number);
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
 
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
-            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
-            }
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAPIKAP' : 'AMMPIKAP';
 
-            $uniqueString = 'PPAPIKAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvAp::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'PIK')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
         } else {
-            $maxId = '';
-            $uniqueString = 'User Tidak Dikenali';
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
         }
 
-        $request['inventory_number'] = $uniqueString;
-        // end generate code
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('accessPointPik.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
 
-        return Inertia::render('Inventory/SitePik/AccessPoint/AccessPointCreate', ['inventoryNumber' => $uniqueString]);
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAPIKAP' : 'AMMPIKAP';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvAp::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'PIK')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('accessPointPik.edit', ['apId' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -116,7 +148,21 @@ class InvApPikController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SitePik/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
+        // Ambil prefix dari inventory_number untuk mendapatkan company
+        $inventoryNumber = $accessPoint->inventory_number;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPAPIKAP')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMPIKAP')) {
+            $company = 'AMM';
+        }
+
+        return Inertia::render('Inventory/SitePik/AccessPoint/AccessPointEdit', [
+            'accessPoint' => $accessPoint,
+            'selectedCompany' => $company,
+            'inventory_number' => session('inventory_number') ?? null,
+        ]);
     }
 
     public function detail($id)

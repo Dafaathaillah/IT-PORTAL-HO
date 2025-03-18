@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
                 'duplicatesInsertSn' => session('duplicatesInsertSn'),
                 'computer_code' => session('computer_code'),
                 'laptop_code' => session('laptop_code'),
+                'inventory_number' => session('inventory_number'),
                 'dept' => session('dept'),
                 'newAduan' => session('new_aduan'),
             ],

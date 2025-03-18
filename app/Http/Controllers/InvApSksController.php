@@ -27,33 +27,65 @@ class InvApSksController extends Controller
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::tomorrow();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        return Inertia::render('Inventory/SiteSks/AccessPoint/AccessPointCreate', ['inventory_number' => session('inventory_number') ?? null]);
+    }
 
-        if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'SKS') {
-            $maxId = InvAp::where('site', 'SKS')->orderBy('max_id', 'desc')->first();
-            // dd($maxId->inventory_number);
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
 
-            if (is_null($maxId)) {
-                $maxId = 0;
-            } else {
-                preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
-            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
-            }
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPASKSAP' : 'AMMSKSAP';
 
-            $uniqueString = 'PPASKSAP' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvAp::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'SKS')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
         } else {
-            $maxId = '';
-            $uniqueString = 'User Tidak Dikenali';
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
         }
 
-        $request['inventory_number'] = $uniqueString;
-        // end generate code
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('accessPointSks.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
 
-        return Inertia::render('Inventory/SiteSks/AccessPoint/AccessPointCreate', ['inventoryNumber' => $uniqueString]);
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPASKSAP' : 'AMMSKSAP';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvAp::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'SKS')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('accessPointSks.edit', ['apId' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -97,7 +129,7 @@ class InvApSksController extends Controller
         $request->validate([
             'file' => 'required|mimes:xls,xlsx,csv|max:10240', // 10MB = 10240 KB
         ]);
-        
+
         try {
             $import = new ImportAp();
             Excel::import($import, $request->file('file'));
@@ -116,11 +148,26 @@ class InvApSksController extends Controller
     public function edit($apId)
     {
         $accessPoint = InvAp::find($apId);
+        $accessPoint = InvAp::find($apId);
         if (empty($accessPoint)) {
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/SiteSks/AccessPoint/AccessPointEdit', ['accessPoint' => $accessPoint]);
+        // Ambil prefix dari inventory_number untuk mendapatkan company
+        $inventoryNumber = $accessPoint->inventory_number;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPASKSAP')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMSKSAP')) {
+            $company = 'AMM';
+        }
+
+        return Inertia::render('Inventory/SiteSks/AccessPoint/AccessPointEdit', [
+            'accessPoint' => $accessPoint,
+            'selectedCompany' => $company,
+            'inventory_number' => session('inventory_number') ?? null,
+        ]);
     }
 
     public function detail($id)

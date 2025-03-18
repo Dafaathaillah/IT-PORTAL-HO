@@ -508,6 +508,8 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO'], function () {
             Route::get('/accessPoint', [InvApController::class, 'index'])->name('accessPoint.page');
+            Route::post('/accessPoint/generate', [InvApController::class, 'generateCode'])->name('accessPoint.generate');
+            Route::post('/accessPoint/generate/edit', [InvApController::class, 'generateCodeEdit'])->name('accessPoint.generateEdit');
             Route::get('/accessPoint/create', [InvApController::class, 'create'])->name('accessPoint.create');
             Route::post('/accessPoint/create', [InvApController::class, 'store'])->name('accessPoint.store');
             Route::get('/accessPoint/{apId}/edit', [InvApController::class, 'edit'])->name('accessPoint.edit');
@@ -586,6 +588,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/dashboardSiteBa', [DashboardBaController::class, 'index'])->name('dashboardBa.page');
 
             Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
+            Route::post('/accessPointSiteBa/generate', [InvApBaController::class, 'generateCode'])->name('accessPointBa.generate');
+            Route::post('/accessPointSiteBa/generate/edit', [InvApBaController::class, 'generateCodeEdit'])->name('accessPointBa.generateEdit');
             Route::get('/accessPointSiteBa/create', [InvApBaController::class, 'create'])->name('accessPointBa.create');
             Route::post('/accessPointSiteBa/create', [InvApBaController::class, 'store'])->name('accessPointBa.store');
             Route::get('/accessPointSiteBa/{apId}/edit', [InvApBaController::class, 'edit'])->name('accessPointBa.edit');
@@ -666,6 +670,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/accessPointSiteMifa', [InvApMifaController::class, 'index'])->name('accessPointMifa.page');
             Route::get('/accessPointSiteMifa/create', [InvApMifaController::class, 'create'])->name('accessPointMifa.create');
             Route::post('/accessPointSiteMifa/create', [InvApMifaController::class, 'store'])->name('accessPointMifa.store');
+            Route::post('/accessPointSiteMifa/generate', [InvApMifaController::class, 'generateCode'])->name('accessPointMifa.generate');
+            Route::post('/accessPointSiteMifa/generate/edit', [InvApMifaController::class, 'generateCodeEdit'])->name('accessPointMifa.generateEdit');
             Route::get('/accessPointSiteMifa/{apId}/edit', [InvApMifaController::class, 'edit'])->name('accessPointMifa.edit');
             Route::put('/accessPointSiteMifa/{apId}/update', [InvApMifaController::class, 'update'])->name('accessPointMifa.update');
             Route::delete('/accessPointSiteMifa/{apId}/delete', [InvApMifaController::class, 'destroy'])->name('accessPointMifa.delete');
@@ -743,6 +749,8 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/accessPointSiteMHU', [InvApMhuController::class, 'index'])->name('accessPointMhu.page');
             Route::get('/accessPointSiteMHU/create', [InvApMhuController::class, 'create'])->name('accessPointMhu.create');
+            Route::post('/accessPointSiteMhu/generate', [InvApMhuController::class, 'generateCode'])->name('accessPointMhu.generate');
+            Route::post('/accessPointSiteMhu/generate/edit', [InvApMhuController::class, 'generateCodeEdit'])->name('accessPointMhu.generateEdit');
             Route::post('/accessPointSiteMHU/create', [InvApMhuController::class, 'store'])->name('accessPointMhu.store');
             Route::get('/accessPointSiteMHU/{apId}/edit', [InvApMhuController::class, 'edit'])->name('accessPointMhu.edit');
             Route::put('/accessPointSiteMHU/{apId}/update', [InvApMhuController::class, 'update'])->name('accessPointMhu.update');
@@ -820,6 +828,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/dashboardSiteAmi', [DashboardAmiController::class, 'index'])->name('dashboardAmi.page');
 
             Route::get('/accessPointSiteAmi', [InvApAmiController::class, 'index'])->name('accessPointAmi.page');
+            Route::post('/accessPointSiteAmi/generate', [InvApAmiController::class, 'generateCode'])->name('accessPointAmi.generate');
+            Route::post('/accessPointSiteAmi/generate/edit', [InvApAmiController::class, 'generateCodeEdit'])->name('accessPointAmi.generateEdit');
             Route::get('/accessPointSiteAmi/create', [InvApAmiController::class, 'create'])->name('accessPointAmi.create');
             Route::post('/accessPointSiteAmi/create', [InvApAmiController::class, 'store'])->name('accessPointAmi.store');
             Route::get('/accessPointSiteAmi/{apId}/edit', [InvApAmiController::class, 'edit'])->name('accessPointAmi.edit');
@@ -900,6 +910,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/accessPointSitePik', [InvApPikController::class, 'index'])->name('accessPointPik.page');
             Route::get('/accessPointSitePik/create', [InvApPikController::class, 'create'])->name('accessPointPik.create');
             Route::post('/accessPointSitePik/create', [InvApPikController::class, 'store'])->name('accessPointPik.store');
+            Route::post('/accessPointSitePik/generate', [InvApPikController::class, 'generateCode'])->name('accessPointPik.generate');
+            Route::post('/accessPointSitePik/generate/edit', [InvApPikController::class, 'generateCodeEdit'])->name('accessPointPik.generateEdit');
             Route::get('/accessPointSitePik/{apId}/edit', [InvApPikController::class, 'edit'])->name('accessPointPik.edit');
             Route::put('/accessPointSitePik/{apId}/update', [InvApPikController::class, 'update'])->name('accessPointPik.update');
             Route::delete('/accessPointSitePik/{apId}/delete', [InvApPikController::class, 'destroy'])->name('accessPointPik.delete');
@@ -977,6 +989,8 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/accessPointSiteBge', [InvApBgeController::class, 'index'])->name('accessPointBge.page');
             Route::get('/accessPointSiteBge/create', [InvApBgeController::class, 'create'])->name('accessPointBge.create');
+            Route::post('/accessPointSiteBge/generate', [InvApBgeController::class, 'generateCode'])->name('accessPointBge.generate');
+            Route::post('/accessPointSiteBge/generate/edit', [InvApBgeController::class, 'generateCodeEdit'])->name('accessPointBge.generateEdit');
             Route::post('/accessPointSiteBge/create', [InvApBgeController::class, 'store'])->name('accessPointBge.store');
             Route::get('/accessPointSiteBge/{apId}/edit', [InvApBgeController::class, 'edit'])->name('accessPointBge.edit');
             Route::put('/accessPointSiteBge/{apId}/update', [InvApBgeController::class, 'update'])->name('accessPointBge.update');
@@ -1055,6 +1069,8 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/accessPointSiteBib', [InvApBibController::class, 'index'])->name('accessPointBib.page');
             Route::get('/accessPointSiteBib/create', [InvApBibController::class, 'create'])->name('accessPointBib.create');
+            Route::post('/accessPointSiteBib/generate', [InvApBibController::class, 'generateCode'])->name('accessPointBib.generate');
+            Route::post('/accessPointSiteBib/generate/edit', [InvApBibController::class, 'generateCodeEdit'])->name('accessPointBib.generateEdit');
             Route::post('/accessPointSiteBib/create', [InvApBibController::class, 'store'])->name('accessPointBib.store');
             Route::get('/accessPointSiteBib/{apId}/edit', [InvApBibController::class, 'edit'])->name('accessPointBib.edit');
             Route::put('/accessPointSiteBib/{apId}/update', [InvApBibController::class, 'update'])->name('accessPointBib.update');
@@ -1133,6 +1149,8 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/accessPointSiteIpt', [InvApIptController::class, 'index'])->name('accessPointIpt.page');
             Route::get('/accessPointSiteIpt/create', [InvApIptController::class, 'create'])->name('accessPointIpt.create');
+            Route::post('/accessPointSiteIpt/generate', [InvApIptController::class, 'generateCode'])->name('accessPointIpt.generate');
+            Route::post('/accessPointSiteIpt/generate/edit', [InvApIptController::class, 'generateCodeEdit'])->name('accessPointIpt.generateEdit');
             Route::post('/accessPointSiteIpt/create', [InvApIptController::class, 'store'])->name('accessPointIpt.store');
             Route::get('/accessPointSiteIpt/{apId}/edit', [InvApIptController::class, 'edit'])->name('accessPointIpt.edit');
             Route::put('/accessPointSiteIpt/{apId}/update', [InvApIptController::class, 'update'])->name('accessPointIpt.update');
@@ -1212,6 +1230,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/accessPointSiteMlp', [InvApMlpController::class, 'index'])->name('accessPointMlp.page');
             Route::get('/accessPointSiteMlp/create', [InvApMlpController::class, 'create'])->name('accessPointMlp.create');
             Route::post('/accessPointSiteMlp/create', [InvApMlpController::class, 'store'])->name('accessPointMlp.store');
+            Route::post('/accessPointSiteMlp/generate', [InvApMlpController::class, 'generateCode'])->name('accessPointMlp.generate');
+            Route::post('/accessPointSiteMlp/generate/edit', [InvApMlpController::class, 'generateCodeEdit'])->name('accessPointMlp.generateEdit');
             Route::get('/accessPointSiteMlp/{apId}/edit', [InvApMlpController::class, 'edit'])->name('accessPointMlp.edit');
             Route::put('/accessPointSiteMlp/{apId}/update', [InvApMlpController::class, 'update'])->name('accessPointMlp.update');
             Route::delete('/accessPointSiteMlp/{apId}/delete', [InvApMlpController::class, 'destroy'])->name('accessPointMlp.delete');
@@ -1290,6 +1310,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/accessPointSiteMip', [InvApMipController::class, 'index'])->name('accessPointMip.page');
             Route::get('/accessPointSiteMip/create', [InvApMipController::class, 'create'])->name('accessPointMip.create');
             Route::post('/accessPointSiteMip/create', [InvApMipController::class, 'store'])->name('accessPointMip.store');
+            Route::post('/accessPointSiteMip/generate', [InvApMipController::class, 'generateCode'])->name('accessPointMip.generate');
+            Route::post('/accessPointSiteMip/generate/edit', [InvApMipController::class, 'generateCodeEdit'])->name('accessPointMip.generateEdit');
             Route::get('/accessPointSiteMip/{apId}/edit', [InvApMipController::class, 'edit'])->name('accessPointMip.edit');
             Route::put('/accessPointSiteMip/{apId}/update', [InvApMipController::class, 'update'])->name('accessPointMip.update');
             Route::delete('/accessPointSiteMip/{apId}/delete', [InvApMipController::class, 'destroy'])->name('accessPointMip.delete');
@@ -1368,6 +1390,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/accessPointSiteVale', [InvApValeController::class, 'index'])->name('accessPointVale.page');
             Route::get('/accessPointSiteVale/create', [InvApValeController::class, 'create'])->name('accessPointVale.create');
             Route::post('/accessPointSiteVale/create', [InvApValeController::class, 'store'])->name('accessPointVale.store');
+            Route::post('/accessPointSiteVale/generate', [InvApValeController::class, 'generateCode'])->name('accessPointVale.generate');
+            Route::post('/accessPointSiteVale/generate/edit', [InvApValeController::class, 'generateCodeEdit'])->name('accessPointVale.generateEdit');
             Route::get('/accessPointSiteVale/{apId}/edit', [InvApValeController::class, 'edit'])->name('accessPointVale.edit');
             Route::put('/accessPointSiteVale/{apId}/update', [InvApValeController::class, 'update'])->name('accessPointVale.update');
             Route::delete('/accessPointSiteVale/{apId}/delete', [InvApValeController::class, 'destroy'])->name('accessPointVale.delete');
@@ -1446,6 +1470,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/accessPointSiteSbs', [InvApSbsController::class, 'index'])->name('accessPointSbs.page');
             Route::get('/accessPointSiteSbs/create', [InvApSbsController::class, 'create'])->name('accessPointSbs.create');
             Route::post('/accessPointSiteSbs/create', [InvApSbsController::class, 'store'])->name('accessPointSbs.store');
+            Route::post('/accessPointSiteSbs/generate', [InvApSbsController::class, 'generateCode'])->name('accessPointSbs.generate');
+            Route::post('/accessPointSiteSbs/generate/edit', [InvApSbsController::class, 'generateCodeEdit'])->name('accessPointSbs.generateEdit');
             Route::get('/accessPointSiteSbs/{apId}/edit', [InvApSbsController::class, 'edit'])->name('accessPointSbs.edit');
             Route::put('/accessPointSiteSbs/{apId}/update', [InvApSbsController::class, 'update'])->name('accessPointSbs.update');
             Route::delete('/accessPointSiteSbs/{apId}/delete', [InvApSbsController::class, 'destroy'])->name('accessPointSbs.delete');
@@ -1524,6 +1550,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/accessPointSiteSks', [InvApSksController::class, 'index'])->name('accessPointSks.page');
             Route::get('/accessPointSiteSks/create', [InvApSksController::class, 'create'])->name('accessPointSks.create');
             Route::post('/accessPointSiteSks/create', [InvApSksController::class, 'store'])->name('accessPointSks.store');
+            Route::post('/accessPointSiteSks/generate', [InvApSksController::class, 'generateCode'])->name('accessPointSks.generate');
+            Route::post('/accessPointSiteSks/generate/edit', [InvApSksController::class, 'generateCodeEdit'])->name('accessPointSks.generateEdit');
             Route::get('/accessPointSiteSks/{apId}/edit', [InvApSksController::class, 'edit'])->name('accessPointSks.edit');
             Route::put('/accessPointSiteSks/{apId}/update', [InvApSksController::class, 'update'])->name('accessPointSks.update');
             Route::delete('/accessPointSiteSks/{apId}/delete', [InvApSksController::class, 'destroy'])->name('accessPointSks.delete');
@@ -1602,6 +1630,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
             Route::get('/accessPointSiteWara/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');
             Route::post('/accessPointSiteWara/create', [InvApWARAController::class, 'store'])->name('accessPointWARA.store');
+            Route::post('/accessPointSiteWARA/generate', [InvApWARAController::class, 'generateCode'])->name('accessPointWARA.generate');
+            Route::post('/accessPointSiteWARA/generate/edit', [InvApWARAController::class, 'generateCodeEdit'])->name('accessPointWARA.generateEdit');
             Route::get('/accessPointSiteWara/{apId}/edit', [InvApWARAController::class, 'edit'])->name('accessPointWARA.edit');
             Route::put('/accessPointSiteWara/{apId}/update', [InvApWARAController::class, 'update'])->name('accessPointWARA.update');
             Route::delete('/accessPointSiteWara/{apId}/delete', [InvApWARAController::class, 'destroy'])->name('accessPointWARA.delete');
