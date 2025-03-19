@@ -660,6 +660,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerBa', [InvScannerBaController::class, 'index'])->name('scannerBa.page');
             Route::get('/scannerBa/create', [InvScannerBaController::class, 'create'])->name('scannerBa.create');
             Route::post('/scannerBa/create', [InvScannerBaController::class, 'store'])->name('scannerBa.store');
+            Route::post('/scannerBa/generate', [InvScannerBaController::class, 'generateCode'])->name('scannerBa.generate');
+            Route::post('/scannerBa/generate/edit', [InvScannerBaController::class, 'generateCodeEdit'])->name('scannerBa.generateEdit');
             Route::get('/scannerBa/{id}/edit', [InvScannerBaController::class, 'edit'])->name('scannerBa.edit');
             Route::delete('/scannerBa/{id}/delete', [InvScannerBaController::class, 'destroy'])->name('scannerBa.delete');
             Route::post('/scannerBa/update', [InvScannerBaController::class, 'update'])->name('scannerBa.update');
@@ -746,6 +748,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerMifa', [InvScannerMifaController::class, 'index'])->name('scannerMifa.page');
             Route::get('/scannerMifa/create', [InvScannerMifaController::class, 'create'])->name('scannerMifa.create');
             Route::post('/scannerMifa/create', [InvScannerMifaController::class, 'store'])->name('scannerMifa.store');
+            Route::post('/scannerMifa/generate', [InvScannerMifaController::class, 'generateCode'])->name('scannerMifa.generate');
+            Route::post('/scannerMifa/generate/edit', [InvScannerMifaController::class, 'generateCodeEdit'])->name('scannerMifa.generateEdit');
             Route::get('/scannerMifa/{id}/edit', [InvScannerMifaController::class, 'edit'])->name('scannerMifa.edit');
             Route::delete('/scannerMifa/{id}/delete', [InvScannerMifaController::class, 'destroy'])->name('scannerMifa.delete');
             Route::post('/scannerMifa/update', [InvScannerMifaController::class, 'update'])->name('scannerMifa.update');
@@ -832,6 +836,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerMhu', [InvScannerMhuController::class, 'index'])->name('scannerMhu.page');
             Route::get('/scannerMhu/create', [InvScannerMhuController::class, 'create'])->name('scannerMhu.create');
             Route::post('/scannerMhu/create', [InvScannerMhuController::class, 'store'])->name('scannerMhu.store');
+            Route::post('/scannerMhu/generate', [InvScannerMhuController::class, 'generateCode'])->name('scannerMhu.generate');
+            Route::post('/scannerMhu/generate/edit', [InvScannerMhuController::class, 'generateCodeEdit'])->name('scannerMhu.generateEdit');
             Route::get('/scannerMhu/{id}/edit', [InvScannerMhuController::class, 'edit'])->name('scannerMhu.edit');
             Route::delete('/scannerMhu/{id}/delete', [InvScannerMhuController::class, 'destroy'])->name('scannerMhu.delete');
             Route::post('/scannerMhu/update', [InvScannerMhuController::class, 'update'])->name('scannerMhu.update');
@@ -918,6 +924,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerAmi', [InvScannerAmiController::class, 'index'])->name('scannerAmi.page');
             Route::get('/scannerAmi/create', [InvScannerAmiController::class, 'create'])->name('scannerAmi.create');
             Route::post('/scannerAmi/create', [InvScannerAmiController::class, 'store'])->name('scannerAmi.store');
+            Route::post('/scannerAmi/generate', [InvScannerAmiController::class, 'generateCode'])->name('scannerAmi.generate');
+            Route::post('/scannerAmi/generate/edit', [InvScannerAmiController::class, 'generateCodeEdit'])->name('scannerAmi.generateEdit');
             Route::get('/scannerAmi/{id}/edit', [InvScannerAmiController::class, 'edit'])->name('scannerAmi.edit');
             Route::delete('/scannerAmi/{id}/delete', [InvScannerAmiController::class, 'destroy'])->name('scannerAmi.delete');
             Route::post('/scannerAmi/update', [InvScannerAmiController::class, 'update'])->name('scannerAmi.update');
@@ -1004,6 +1012,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerPik', [InvScannerPikController::class, 'index'])->name('scannerPik.page');
             Route::get('/scannerPik/create', [InvScannerPikController::class, 'create'])->name('scannerPik.create');
             Route::post('/scannerPik/create', [InvScannerPikController::class, 'store'])->name('scannerPik.store');
+            Route::post('/scannerPik/generate', [InvScannerPikController::class, 'generateCode'])->name('scannerPik.generate');
+            Route::post('/scannerPik/generate/edit', [InvScannerPikController::class, 'generateCodeEdit'])->name('scannerPik.generateEdit');
             Route::get('/scannerPik/{id}/edit', [InvScannerPikController::class, 'edit'])->name('scannerPik.edit');
             Route::delete('/scannerPik/{id}/delete', [InvScannerPikController::class, 'destroy'])->name('scannerPik.delete');
             Route::post('/scannerPik/update', [InvScannerPikController::class, 'update'])->name('scannerPik.update');
@@ -1090,6 +1100,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerBge', [InvScannerBgeController::class, 'index'])->name('scannerBge.page');
             Route::get('/scannerBge/create', [InvScannerBgeController::class, 'create'])->name('scannerBge.create');
             Route::post('/scannerBge/create', [InvScannerBgeController::class, 'store'])->name('scannerBge.store');
+            Route::post('/scannerBge/generate', [InvScannerBgeController::class, 'generateCode'])->name('scannerBge.generate');
+            Route::post('/scannerBge/generate/edit', [InvScannerBgeController::class, 'generateCodeEdit'])->name('scannerBge.generateEdit');
             Route::get('/scannerBge/{id}/edit', [InvScannerBgeController::class, 'edit'])->name('scannerBge.edit');
             Route::delete('/scannerBge/{id}/delete', [InvScannerBgeController::class, 'destroy'])->name('scannerBge.delete');
             Route::post('/scannerBge/update', [InvScannerBgeController::class, 'update'])->name('scannerBge.update');
@@ -1176,6 +1188,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerBib', [InvScannerBibController::class, 'index'])->name('scannerBib.page');
             Route::get('/scannerBib/create', [InvScannerBibController::class, 'create'])->name('scannerBib.create');
             Route::post('/scannerBib/create', [InvScannerBibController::class, 'store'])->name('scannerBib.store');
+            Route::post('/scannerBib/generate', [InvScannerBibController::class, 'generateCode'])->name('scannerBib.generate');
+            Route::post('/scannerBib/generate/edit', [InvScannerBibController::class, 'generateCodeEdit'])->name('scannerBib.generateEdit');
             Route::get('/scannerBib/{id}/edit', [InvScannerBibController::class, 'edit'])->name('scannerBib.edit');
             Route::delete('/scannerBib/{id}/delete', [InvScannerBibController::class, 'destroy'])->name('scannerBib.delete');
             Route::post('/scannerBib/update', [InvScannerBibController::class, 'update'])->name('scannerBib.update');
@@ -1262,6 +1276,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerIpt', [InvScannerIptController::class, 'index'])->name('scannerIpt.page');
             Route::get('/scannerIpt/create', [InvScannerIptController::class, 'create'])->name('scannerIpt.create');
             Route::post('/scannerIpt/create', [InvScannerIptController::class, 'store'])->name('scannerIpt.store');
+            Route::post('/scannerIpt/generate', [InvScannerIptController::class, 'generateCode'])->name('scannerIpt.generate');
+            Route::post('/scannerIpt/generate/edit', [InvScannerIptController::class, 'generateCodeEdit'])->name('scannerIpt.generateEdit');
             Route::get('/scannerIpt/{id}/edit', [InvScannerIptController::class, 'edit'])->name('scannerIpt.edit');
             Route::delete('/scannerIpt/{id}/delete', [InvScannerIptController::class, 'destroy'])->name('scannerIpt.delete');
             Route::post('/scannerIpt/update', [InvScannerIptController::class, 'update'])->name('scannerIpt.update');
@@ -1348,6 +1364,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerMlp', [InvScannerMlpController::class, 'index'])->name('scannerMlp.page');
             Route::get('/scannerMlp/create', [InvScannerMlpController::class, 'create'])->name('scannerMlp.create');
             Route::post('/scannerMlp/create', [InvScannerMlpController::class, 'store'])->name('scannerMlp.store');
+            Route::post('/scannerMlp/generate', [InvScannerMlpController::class, 'generateCode'])->name('scannerMlp.generate');
+            Route::post('/scannerMlp/generate/edit', [InvScannerMlpController::class, 'generateCodeEdit'])->name('scannerMlp.generateEdit');
             Route::get('/scannerMlp/{id}/edit', [InvScannerMlpController::class, 'edit'])->name('scannerMlp.edit');
             Route::delete('/scannerMlp/{id}/delete', [InvScannerMlpController::class, 'destroy'])->name('scannerMlp.delete');
             Route::post('/scannerMlp/update', [InvScannerMlpController::class, 'update'])->name('scannerMlp.update');
@@ -1434,6 +1452,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerMip', [InvScannerMipController::class, 'index'])->name('scannerMip.page');
             Route::get('/scannerMip/create', [InvScannerMipController::class, 'create'])->name('scannerMip.create');
             Route::post('/scannerMip/create', [InvScannerMipController::class, 'store'])->name('scannerMip.store');
+            Route::post('/scannerMip/generate', [InvScannerMipController::class, 'generateCode'])->name('scannerMip.generate');
+            Route::post('/scannerMip/generate/edit', [InvScannerMipController::class, 'generateCodeEdit'])->name('scannerMip.generateEdit');
             Route::get('/scannerMip/{id}/edit', [InvScannerMipController::class, 'edit'])->name('scannerMip.edit');
             Route::delete('/scannerMip/{id}/delete', [InvScannerMipController::class, 'destroy'])->name('scannerMip.delete');
             Route::post('/scannerMip/update', [InvScannerMipController::class, 'update'])->name('scannerMip.update');
@@ -1520,6 +1540,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerVale', [InvScannerValeController::class, 'index'])->name('scannerVale.page');
             Route::get('/scannerVale/create', [InvScannerValeController::class, 'create'])->name('scannerVale.create');
             Route::post('/scannerVale/create', [InvScannerValeController::class, 'store'])->name('scannerVale.store');
+            Route::post('/scannerVale/generate', [InvScannerValeController::class, 'generateCode'])->name('scannerVale.generate');
+            Route::post('/scannerVale/generate/edit', [InvScannerValeController::class, 'generateCodeEdit'])->name('scannerVale.generateEdit');
             Route::get('/scannerVale/{id}/edit', [InvScannerValeController::class, 'edit'])->name('scannerVale.edit');
             Route::delete('/scannerVale/{id}/delete', [InvScannerValeController::class, 'destroy'])->name('scannerVale.delete');
             Route::post('/scannerVale/update', [InvScannerValeController::class, 'update'])->name('scannerVale.update');
@@ -1606,6 +1628,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerSbs', [InvScannerSbsController::class, 'index'])->name('scannerSbs.page');
             Route::get('/scannerSbs/create', [InvScannerSbsController::class, 'create'])->name('scannerSbs.create');
             Route::post('/scannerSbs/create', [InvScannerSbsController::class, 'store'])->name('scannerSbs.store');
+            Route::post('/scannerSbs/generate', [InvScannerSbsController::class, 'generateCode'])->name('scannerSbs.generate');
+            Route::post('/scannerSbs/generate/edit', [InvScannerSbsController::class, 'generateCodeEdit'])->name('scannerSbs.generateEdit');
             Route::get('/scannerSbs/{id}/edit', [InvScannerSbsController::class, 'edit'])->name('scannerSbs.edit');
             Route::delete('/scannerSbs/{id}/delete', [InvScannerSbsController::class, 'destroy'])->name('scannerSbs.delete');
             Route::post('/scannerSbs/update', [InvScannerSbsController::class, 'update'])->name('scannerSbs.update');
@@ -1692,6 +1716,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerSks', [InvScannerSksController::class, 'index'])->name('scannerSks.page');
             Route::get('/scannerSks/create', [InvScannerSksController::class, 'create'])->name('scannerSks.create');
             Route::post('/scannerSks/create', [InvScannerSksController::class, 'store'])->name('scannerSks.store');
+            Route::post('/scannerSks/generate', [InvScannerSksController::class, 'generateCode'])->name('scannerSks.generate');
+            Route::post('/scannerSks/generate/edit', [InvScannerSksController::class, 'generateCodeEdit'])->name('scannerSks.generateEdit');
             Route::get('/scannerSks/{id}/edit', [InvScannerSksController::class, 'edit'])->name('scannerSks.edit');
             Route::delete('/scannerSks/{id}/delete', [InvScannerSksController::class, 'destroy'])->name('scannerSks.delete');
             Route::post('/scannerSks/update', [InvScannerSksController::class, 'update'])->name('scannerSks.update');
@@ -1778,6 +1804,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scannerWara', [InvScannerWARAController::class, 'index'])->name('scannerWARA.page');
             Route::get('/scannerWara/create', [InvScannerWARAController::class, 'create'])->name('scannerWARA.create');
             Route::post('/scannerWara/create', [InvScannerWARAController::class, 'store'])->name('scannerWARA.store');
+            Route::post('/scannerWARA/generate', [InvScannerWARAController::class, 'generateCode'])->name('scannerWARA.generate');
+            Route::post('/scannerWARA/generate/edit', [InvScannerWARAController::class, 'generateCodeEdit'])->name('scannerWARA.generateEdit');
             Route::get('/scannerWara/{id}/edit', [InvScannerWARAController::class, 'edit'])->name('scannerWARA.edit');
             Route::delete('/scannerWara/{id}/delete', [InvScannerWARAController::class, 'destroy'])->name('scannerWARA.delete');
             Route::post('/scannerWara/update', [InvScannerWARAController::class, 'update'])->name('scannerWARA.update');
