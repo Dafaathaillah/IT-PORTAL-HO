@@ -1,13 +1,12 @@
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
-import { Link } from "@inertiajs/vue3";
-import { Head, useForm } from "@inertiajs/vue3";
+import { Head, useForm, usePage, Link, router } from "@inertiajs/vue3";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
-import { ref, computed } from "vue";
+import { ref, nextTick, watch, computed } from "vue";
 
 const props = defineProps(["printer", "department", "department_select"]);
 
@@ -33,7 +32,7 @@ const customFormat = (date) => {
     if (!date) return "";
 
     const d = new Date(date);
-    
+
     // Gunakan getFullYear, getMonth, dan getDate untuk zona waktu lokal
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -41,6 +40,33 @@ const customFormat = (date) => {
 
     return `${year}-${month}-${day}`;
 };
+
+const page = usePage();
+const optionsCompany = [{ name: "PPA" }, { name: "AMM" }];
+const selectedOptionCompany = ref(
+    optionsCompany.find(
+        (option) => option.name === page.props.selectedCompany
+    ) || null
+);
+
+watch(selectedOptionCompany, async (newVal) => {
+    if (!newVal) return;
+
+    await nextTick(); // Menunggu Vue memperbarui DOM
+
+    router.post(
+        route("printer.generateEdit"),
+        { company: newVal, id: props.printer.id },
+        {
+            preserveState: true,
+            replace: true,
+            onSuccess: (page) => {
+                console.log(page);
+                form.printer_code = page.props.inventory_number;
+            },
+        }
+    );
+});
 
 const isDisabled = ref(true);
 const selectedValues = ref(
@@ -175,7 +201,7 @@ const save = () => {
                                 />
                                 <div class="flex flex-wrap -mx-3">
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -195,7 +221,27 @@ const save = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="assets-category"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Company</label
+                                            >
+                                            <VueMultiselect
+                                                v-model="selectedOptionCompany"
+                                                :options="optionsCompany"
+                                                :multiple="false"
+                                                :close-on-select="true"
+                                                placeholder="Select Company"
+                                                track-by="name"
+                                                label="name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

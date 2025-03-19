@@ -563,6 +563,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printer', [InvPrinterController::class, 'index'])->name(name: 'printer.page');
             Route::get('/printer/create', [InvPrinterController::class, 'create'])->name('printer.create');
             Route::post('/printer/create', [InvPrinterController::class, 'store'])->name('printer.store');
+            Route::post('/printer/generate', [InvPrinterController::class, 'generateCode'])->name('printer.generate');
+            Route::post('/printer/generate/edit', [InvPrinterController::class, 'generateCodeEdit'])->name('printer.generateEdit');
             Route::get('/printer/{id}/edit', [InvPrinterController::class, 'edit'])->name('printer.edit');
             Route::delete('/printer/{id}/delete', [InvPrinterController::class, 'destroy'])->name('printer.delete');
             Route::post('/printer/update', [InvPrinterController::class, 'update'])->name('printer.update');
@@ -647,6 +649,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerBa', [InvPrinterBaController::class, 'index'])->name(name: 'printerBa.page');
             Route::get('/printerBa/create', [InvPrinterBaController::class, 'create'])->name('printerBa.create');
             Route::post('/printerBa/create', [InvPrinterBaController::class, 'store'])->name('printerBa.store');
+            Route::post('/printerBa/generate', [InvPrinterBaController::class, 'generateCode'])->name('printerBa.generate');
+            Route::post('/printerBa/generate/edit', [InvPrinterBaController::class, 'generateCodeEdit'])->name('printerBa.generateEdit');
             Route::get('/printerBa/{id}/edit', [InvPrinterBaController::class, 'edit'])->name('printerBa.edit');
             Route::delete('/printerBa/{id}/delete', [InvPrinterBaController::class, 'destroy'])->name('printerBa.delete');
             Route::post('/printerBa/update', [InvPrinterBaController::class, 'update'])->name('printerBa.update');
@@ -731,6 +735,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerMifa', [InvPrinterMifaController::class, 'index'])->name(name: 'printerMifa.page');
             Route::get('/printerMifa/create', [InvPrinterMifaController::class, 'create'])->name('printerMifa.create');
             Route::post('/printerMifa/create', [InvPrinterMifaController::class, 'store'])->name('printerMifa.store');
+            Route::post('/printerMifa/generate', [InvPrinterMifaController::class, 'generateCode'])->name('printerMifa.generate');
+            Route::post('/printerMifa/generate/edit', [InvPrinterMifaController::class, 'generateCodeEdit'])->name('printerMifa.generateEdit');
             Route::get('/printerMifa/{id}/edit', [InvPrinterMifaController::class, 'edit'])->name('printerMifa.edit');
             Route::delete('/printerMifa/{id}/delete', [InvPrinterMifaController::class, 'destroy'])->name('printerMifa.delete');
             Route::post('/printerMifa/update', [InvPrinterMifaController::class, 'update'])->name('printerMifa.update');
@@ -815,6 +821,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerMhu', [InvPrinterMhuController::class, 'index'])->name(name: 'printerMhu.page');
             Route::get('/printerMhu/create', [InvPrinterMhuController::class, 'create'])->name('printerMhu.create');
             Route::post('/printerMhu/create', [InvPrinterMhuController::class, 'store'])->name('printerMhu.store');
+            Route::post('/printerMhu/generate', [InvPrinterMhuController::class, 'generateCode'])->name('printerMhu.generate');
+            Route::post('/printerMhu/generate/edit', [InvPrinterMhuController::class, 'generateCodeEdit'])->name('printerMhu.generateEdit');
             Route::get('/printerMhu/{id}/edit', [InvPrinterMhuController::class, 'edit'])->name('printerMhu.edit');
             Route::delete('/printerMhu/{id}/delete', [InvPrinterMhuController::class, 'destroy'])->name('printerMhu.delete');
             Route::post('/printerMhu/update', [InvPrinterMhuController::class, 'update'])->name('printerMhu.update');
@@ -899,6 +907,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerAmi', [InvPrinterAmiController::class, 'index'])->name(name: 'printerAmi.page');
             Route::get('/printerAmi/create', [InvPrinterAmiController::class, 'create'])->name('printerAmi.create');
             Route::post('/printerAmi/create', [InvPrinterAmiController::class, 'store'])->name('printerAmi.store');
+            Route::post('/printerAmi/generate', [InvPrinterAmiController::class, 'generateCode'])->name('printerAmi.generate');
+            Route::post('/printerAmi/generate/edit', [InvPrinterAmiController::class, 'generateCodeEdit'])->name('printerAmi.generateEdit');
             Route::get('/printerAmi/{id}/edit', [InvPrinterAmiController::class, 'edit'])->name('printerAmi.edit');
             Route::delete('/printerAmi/{id}/delete', [InvPrinterAmiController::class, 'destroy'])->name('printerAmi.delete');
             Route::post('/printerAmi/update', [InvPrinterAmiController::class, 'update'])->name('printerAmi.update');
@@ -983,6 +993,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerPik', [InvPrinterPikController::class, 'index'])->name(name: 'printerPik.page');
             Route::get('/printerPik/create', [InvPrinterPikController::class, 'create'])->name('printerPik.create');
             Route::post('/printerPik/create', [InvPrinterPikController::class, 'store'])->name('printerPik.store');
+            Route::post('/printerPik/generate', [InvPrinterPikController::class, 'generateCode'])->name('printerPik.generate');
+            Route::post('/printerPik/generate/edit', [InvPrinterPikController::class, 'generateCodeEdit'])->name('printerPik.generateEdit');
             Route::get('/printerPik/{id}/edit', [InvPrinterPikController::class, 'edit'])->name('printerPik.edit');
             Route::delete('/printerPik/{id}/delete', [InvPrinterPikController::class, 'destroy'])->name('printerPik.delete');
             Route::post('/printerPik/update', [InvPrinterPikController::class, 'update'])->name('printerPik.update');
@@ -1067,6 +1079,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerBge', [InvPrinterBgeController::class, 'index'])->name(name: 'printerBge.page');
             Route::get('/printerBge/create', [InvPrinterBgeController::class, 'create'])->name('printerBge.create');
             Route::post('/printerBge/create', [InvPrinterBgeController::class, 'store'])->name('printerBge.store');
+            Route::post('/printerBge/generate', [InvPrinterBgeController::class, 'generateCode'])->name('printerBge.generate');
+            Route::post('/printerBge/generate/edit', [InvPrinterBgeController::class, 'generateCodeEdit'])->name('printerBge.generateEdit');
             Route::get('/printerBge/{id}/edit', [InvPrinterBgeController::class, 'edit'])->name('printerBge.edit');
             Route::delete('/printerBge/{id}/delete', [InvPrinterBgeController::class, 'destroy'])->name('printerBge.delete');
             Route::post('/printerBge/update', [InvPrinterBgeController::class, 'update'])->name('printerBge.update');
@@ -1151,6 +1165,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerBib', [InvPrinterBibController::class, 'index'])->name(name: 'printerBib.page');
             Route::get('/printerBib/create', [InvPrinterBibController::class, 'create'])->name('printerBib.create');
             Route::post('/printerBib/create', [InvPrinterBibController::class, 'store'])->name('printerBib.store');
+            Route::post('/printerBib/generate', [InvPrinterBibController::class, 'generateCode'])->name('printerBib.generate');
+            Route::post('/printerBib/generate/edit', [InvPrinterBibController::class, 'generateCodeEdit'])->name('printerBib.generateEdit');
             Route::get('/printerBib/{id}/edit', [InvPrinterBibController::class, 'edit'])->name('printerBib.edit');
             Route::delete('/printerBib/{id}/delete', [InvPrinterBibController::class, 'destroy'])->name('printerBib.delete');
             Route::post('/printerBib/update', [InvPrinterBibController::class, 'update'])->name('printerBib.update');
@@ -1235,6 +1251,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerIpt', [InvPrinterIptController::class, 'index'])->name(name: 'printerIpt.page');
             Route::get('/printerIpt/create', [InvPrinterIptController::class, 'create'])->name('printerIpt.create');
             Route::post('/printerIpt/create', [InvPrinterIptController::class, 'store'])->name('printerIpt.store');
+            Route::post('/printerIpt/generate', [InvPrinterIptController::class, 'generateCode'])->name('printerIpt.generate');
+            Route::post('/printerIpt/generate/edit', [InvPrinterIptController::class, 'generateCodeEdit'])->name('printerIpt.generateEdit');
             Route::get('/printerIpt/{id}/edit', [InvPrinterIptController::class, 'edit'])->name('printerIpt.edit');
             Route::delete('/printerIpt/{id}/delete', [InvPrinterIptController::class, 'destroy'])->name('printerIpt.delete');
             Route::post('/printerIpt/update', [InvPrinterIptController::class, 'update'])->name('printerIpt.update');
@@ -1319,6 +1337,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerMlp', [InvPrinterMlpController::class, 'index'])->name(name: 'printerMlp.page');
             Route::get('/printerMlp/create', [InvPrinterMlpController::class, 'create'])->name('printerMlp.create');
             Route::post('/printerMlp/create', [InvPrinterMlpController::class, 'store'])->name('printerMlp.store');
+            Route::post('/printerMlp/generate', [InvPrinterMlpController::class, 'generateCode'])->name('printerMlp.generate');
+            Route::post('/printerMlp/generate/edit', [InvPrinterMlpController::class, 'generateCodeEdit'])->name('printerMlp.generateEdit');
             Route::get('/printerMlp/{id}/edit', [InvPrinterMlpController::class, 'edit'])->name('printerMlp.edit');
             Route::delete('/printerMlp/{id}/delete', [InvPrinterMlpController::class, 'destroy'])->name('printerMlp.delete');
             Route::post('/printerMlp/update', [InvPrinterMlpController::class, 'update'])->name('printerMlp.update');
@@ -1403,6 +1423,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerMip', [InvPrinterMipController::class, 'index'])->name(name: 'printerMip.page');
             Route::get('/printerMip/create', [InvPrinterMipController::class, 'create'])->name('printerMip.create');
             Route::post('/printerMip/create', [InvPrinterMipController::class, 'store'])->name('printerMip.store');
+            Route::post('/printerMip/generate', [InvPrinterMipController::class, 'generateCode'])->name('printerMip.generate');
+            Route::post('/printerMip/generate/edit', [InvPrinterMipController::class, 'generateCodeEdit'])->name('printerMip.generateEdit');
             Route::get('/printerMip/{id}/edit', [InvPrinterMipController::class, 'edit'])->name('printerMip.edit');
             Route::delete('/printerMip/{id}/delete', [InvPrinterMipController::class, 'destroy'])->name('printerMip.delete');
             Route::post('/printerMip/update', [InvPrinterMipController::class, 'update'])->name('printerMip.update');
@@ -1487,6 +1509,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerVale', [InvPrinterValeController::class, 'index'])->name(name: 'printerVale.page');
             Route::get('/printerVale/create', [InvPrinterValeController::class, 'create'])->name('printerVale.create');
             Route::post('/printerVale/create', [InvPrinterValeController::class, 'store'])->name('printerVale.store');
+            Route::post('/printerVale/generate', [InvPrinterValeController::class, 'generateCode'])->name('printerVale.generate');
+            Route::post('/printerVale/generate/edit', [InvPrinterValeController::class, 'generateCodeEdit'])->name('printerVale.generateEdit');
             Route::get('/printerVale/{id}/edit', [InvPrinterValeController::class, 'edit'])->name('printerVale.edit');
             Route::delete('/printerVale/{id}/delete', [InvPrinterValeController::class, 'destroy'])->name('printerVale.delete');
             Route::post('/printerVale/update', [InvPrinterValeController::class, 'update'])->name('printerVale.update');
@@ -1571,6 +1595,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerSbs', [InvPrinterSbsController::class, 'index'])->name(name: 'printerSbs.page');
             Route::get('/printerSbs/create', [InvPrinterSbsController::class, 'create'])->name('printerSbs.create');
             Route::post('/printerSbs/create', [InvPrinterSbsController::class, 'store'])->name('printerSbs.store');
+            Route::post('/printerSbs/generate', [InvPrinterSbsController::class, 'generateCode'])->name('printerSbs.generate');
+            Route::post('/printerSbs/generate/edit', [InvPrinterSbsController::class, 'generateCodeEdit'])->name('printerSbs.generateEdit');
             Route::get('/printerSbs/{id}/edit', [InvPrinterSbsController::class, 'edit'])->name('printerSbs.edit');
             Route::delete('/printerSbs/{id}/delete', [InvPrinterSbsController::class, 'destroy'])->name('printerSbs.delete');
             Route::post('/printerSbs/update', [InvPrinterSbsController::class, 'update'])->name('printerSbs.update');
@@ -1655,6 +1681,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerSks', [InvPrinterSksController::class, 'index'])->name(name: 'printerSks.page');
             Route::get('/printerSks/create', [InvPrinterSksController::class, 'create'])->name('printerSks.create');
             Route::post('/printerSks/create', [InvPrinterSksController::class, 'store'])->name('printerSks.store');
+            Route::post('/printerSks/generate', [InvPrinterSksController::class, 'generateCode'])->name('printerSks.generate');
+            Route::post('/printerSks/generate/edit', [InvPrinterSksController::class, 'generateCodeEdit'])->name('printerSks.generateEdit');
             Route::get('/printerSks/{id}/edit', [InvPrinterSksController::class, 'edit'])->name('printerSks.edit');
             Route::delete('/printerSks/{id}/delete', [InvPrinterSksController::class, 'destroy'])->name('printerSks.delete');
             Route::post('/printerSks/update', [InvPrinterSksController::class, 'update'])->name('printerSks.update');
@@ -1739,6 +1767,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/printerWara', [InvPrinterWARAController::class, 'index'])->name(name: 'printerWARA.page');
             Route::get('/printerWara/create', [InvPrinterWARAController::class, 'create'])->name('printerWARA.create');
             Route::post('/printerWara/create', [InvPrinterWARAController::class, 'store'])->name('printerWARA.store');
+            Route::post('/printerWARA/generate', [InvPrinterWARAController::class, 'generateCode'])->name('printerWARA.generate');
+            Route::post('/printerWARA/generate/edit', [InvPrinterWARAController::class, 'generateCodeEdit'])->name('printerWARA.generateEdit');
             Route::get('/printerWara/{id}/edit', [InvPrinterWARAController::class, 'edit'])->name('printerWARA.edit');
             Route::delete('/printerWara/{id}/delete', [InvPrinterWARAController::class, 'destroy'])->name('printerWARA.delete');
             Route::post('/printerWara/update', [InvPrinterWARAController::class, 'update'])->name('printerWARA.update');

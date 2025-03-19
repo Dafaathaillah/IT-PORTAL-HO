@@ -25,34 +25,72 @@ class InvPrinterAmiController extends Controller
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::tomorrow();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
-
-        $maxId = InvPrinter::where('site', 'AMI')->orderBy('max_id', 'desc')->first();
-        // dd($maxId->printer_code);
-
-        if (is_null($maxId)) {
-            $maxId = 0;
-        } else {
-            preg_match('/(\d+)$/', $maxId->printer_code, $matches);
-            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
-        }
-        
-        $uniqueString = 'PPAAMIPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-        // dd($uniqueString);
-
-        $request['printer_code'] = $uniqueString;
-
         $department = Department::pluck('department_name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
         // end generate code
 
-        return Inertia::render('Inventory/SiteAmi/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
+        return Inertia::render('Inventory/SiteAmi/Printer/PrinterCreate', ['inventory_number' => session('inventory_number') ?? null, 'department' => $department]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAAMIPRT' : 'AMMAMIPRT';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvPrinter::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'AMI')->where('printer_code', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->printer_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('printerAmi.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
+
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        // dd($id);
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAAMIPRT' : 'AMMAMIPRT';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvPrinter::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'AMI')->where('printer_code', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->printer_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('printerAmi.edit', ['id' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -123,8 +161,13 @@ class InvPrinterAmiController extends Controller
     {
         $printer = InvPrinter::find($printerId);
 
-        if (empty($printer)) {
-            abort(404, 'Data not found');
+        $inventoryNumber = $printer->printer_code;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPAAMIPRT')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMAMIPRT')) {
+            $company = 'AMM';
         }
 
         if (!empty($printer->department)) {
@@ -138,7 +181,14 @@ class InvPrinterAmiController extends Controller
         })->toArray();
 
         // return response()->json(['ap' => $accessPoint]);
-        return Inertia::render('Inventory/SiteAmi/Printer/PrinterEdit', ['printer' => $printer, 'department' => $department, 'department_select' => $department_select]);
+        return Inertia::render(
+            'Inventory/SiteAmi/Printer/PrinterEdit',
+            [
+                'printer' => $printer, 'department' => $department, 'department_select' => $department_select,
+                'selectedCompany' => $company,
+                'inventory_number' => session('inventory_number') ?? null,
+            ]
+        );
     }
 
     public function show($id)

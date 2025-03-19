@@ -16,7 +16,7 @@ class InvPrinterValeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvPrinter::where('site', 'VALE')->get();
+        $dataInventory = InvPrinter::where('site', 'VIB')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
@@ -25,33 +25,72 @@ class InvPrinterValeController extends Controller
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::tomorrow();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
-
-        $maxId = InvPrinter::where('site', 'VALE')->orderBy('max_id', 'desc')->first();
-        // dd($maxId->printer_code);
-
-        if (is_null($maxId)) {
-            $maxId = 0;
-        } else {
-            preg_match('/(\d+)$/', $maxId->printer_code, $matches);
-            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
-        }
-
-        $uniqueString = 'PPAVALEPRT' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-
-        $request['printer_code'] = $uniqueString;
-
         $department = Department::pluck('department_name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
         // end generate code
 
-        return Inertia::render('Inventory/SiteVale/Printer/PrinterCreate', ['printer_code' => $uniqueString, 'department' => $department]);
+        return Inertia::render('Inventory/SiteVale/Printer/PrinterCreate', ['inventory_number' => session('inventory_number') ?? null, 'department' => $department]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAVIBPRT' : 'AMMVIBPRT';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvPrinter::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'VIB')->where('printer_code', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->printer_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('printerVale.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
+
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        // dd($id);
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAVIBPRT' : 'AMMVIBPRT';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvPrinter::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'VIB')->where('printer_code', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->printer_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('printerVale.edit', ['id' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -82,7 +121,7 @@ class InvPrinterValeController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $formattedDate,
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         // DB::table('inv_aps')->insert($data);
         InvPrinter::create($data);
@@ -122,8 +161,13 @@ class InvPrinterValeController extends Controller
     {
         $printer = InvPrinter::find($printerId);
 
-        if (empty($printer)) {
-            abort(404, 'Data not found');
+        $inventoryNumber = $printer->printer_code;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPAVIBPRT')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMVIBPRT')) {
+            $company = 'AMM';
         }
 
         if (!empty($printer->department)) {
@@ -137,7 +181,11 @@ class InvPrinterValeController extends Controller
         })->toArray();
 
         // return response()->json(['ap' => $accessPoint]);
-        return Inertia::render('Inventory/SiteVale/Printer/PrinterEdit', ['printer' => $printer, 'department' => $department, 'department_select' => $department_select]);
+        return Inertia::render('Inventory/SiteVale/Printer/PrinterEdit', [
+            'printer' => $printer, 'department' => $department, 'department_select' => $department_select,
+            'selectedCompany' => $company,
+            'inventory_number' => session('inventory_number') ?? null,
+        ]);
     }
 
     public function show($id)
@@ -175,7 +223,7 @@ class InvPrinterValeController extends Controller
             'status' => $params['status'],
             'note' => $params['note'],
             'date_of_inventory' => $formattedDate,
-            'site' => 'VALE'
+            'site' => 'VIB'
         ];
         // DB::table('inv_aps')->insert($data);
         InvPrinter::firstWhere('id', $request->id)->update($data);
