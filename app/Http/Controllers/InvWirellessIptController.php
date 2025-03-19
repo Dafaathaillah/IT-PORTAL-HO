@@ -27,28 +27,66 @@ class InvWirellessIptController extends Controller
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::now();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        return Inertia::render('Inventory/SiteIpt/Wirelless/WirellessCreate', ['inventory_number' => session('inventory_number') ?? null]);
+    }
 
-        $maxId = InvWirelless::where('site', 'IPT')->orderBy('max_id', 'desc')->first();
-        // dd($maxId->inventory_number);
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAIPTBB' : 'AMMIPTBB';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvWirelless::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'IPT')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
         } else {
             preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
-            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
         }
 
-        $uniqueString = 'PPAIPTBB' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('wirellessIpt.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
 
-        $request['inventory_number'] = $uniqueString;
-        // end generate code
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        // dd($id);
+        $dataCompany = $request->input('company')['name'];
 
-        return Inertia::render('Inventory/SiteIpt/Wirelless/WirellessCreate', ['inventoryNumber' => $uniqueString]);
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAIPTBB' : 'AMMIPTBB';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvWirelless::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'IPT')->where('inventory_number', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->inventory_number, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('wirellessIpt.edit', ['id' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -122,7 +160,22 @@ class InvWirellessIptController extends Controller
         if (empty($wirelless)) {
             abort(404, 'Data not found');
         }
-        return Inertia::render('Inventory/SiteIpt/Wirelless/WirellessEdit', ['wirelless' => $wirelless]);
+
+        // Ambil prefix dari inventory_number untuk mendapatkan company
+        $inventoryNumber = $wirelless->inventory_number;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPAIPTBB')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMIPTBB')) {
+            $company = 'AMM';
+        }
+
+        return Inertia::render('Inventory/SiteIpt/Wirelless/WirellessEdit', [
+            'wirelless' => $wirelless,
+            'selectedCompany' => $company,
+            'inventory_number' => session('inventory_number') ?? null,
+        ]);
     }
 
     public function update(Request $request)
