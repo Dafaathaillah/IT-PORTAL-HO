@@ -574,6 +574,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/scanner', [InvScannerController::class, 'index'])->name('scanner.page');
             Route::get('/scanner/create', [InvScannerController::class, 'create'])->name('scanner.create');
             Route::post('/scanner/create', [InvScannerController::class, 'store'])->name('scanner.store');
+            Route::post('/scanner/generate', [InvScannerController::class, 'generateCode'])->name('scanner.generate');
+            Route::post('/scanner/generate/edit', [InvScannerController::class, 'generateCodeEdit'])->name('scanner.generateEdit');
             Route::get('/scanner/{id}/edit', [InvScannerController::class, 'edit'])->name('scanner.edit');
             Route::delete('/scanner/{id}/delete', [InvScannerController::class, 'destroy'])->name('scanner.delete');
             Route::post('/scanner/update', [InvScannerController::class, 'update'])->name('scanner.update');

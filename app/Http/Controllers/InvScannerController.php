@@ -29,32 +29,72 @@ class InvScannerController extends Controller
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::tomorrow();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
-
-        $maxId = InvScanner::where('site', null)->orWhere('site', 'HO')->orderBy('max_id', 'desc')->first();
-
-        if (is_null($maxId)) {
-            $maxId = 0;
-        } else {
-            preg_match('/(\d+)$/', $maxId->scanner_code, $matches);
-            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
-        }
-
-        $uniqueString = 'PPAHOSCN' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
-
-        $request['scanner_code'] = $uniqueString;
-
         $department = Department::pluck('department_name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
         // end generate code
 
-        return Inertia::render('Inventory/Scanner/ScannerCreate', ['scanner_code' => $uniqueString, 'department' => $department]);
+        return Inertia::render('Inventory/Scanner/ScannerCreate', ['inventory_number' => session('inventory_number') ?? null, 'department' => $department]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAHOSCN' : 'AMMHOSCN';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvScanner::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'HO')->where('scanner_code', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->scanner_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('scanner.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
+
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        // dd($id);
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAHOSCN' : 'AMMHOSCN';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvScanner::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'HO')->where('scanner_code', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
+
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->scanner_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('scanner.edit', ['id' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -117,11 +157,17 @@ class InvScannerController extends Controller
         ]);
     }
 
-    public function edit($id)
+    public function edit($scannerId)
     {
-        $scanner = InvScanner::find($id);
-        if (empty($scanner)) {
-            abort(404, 'Data not found');
+        $scanner = InvScanner::find($scannerId);
+
+        $inventoryNumber = $scanner->scanner_code;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPAHOSCN')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMHOSCN')) {
+            $company = 'AMM';
         }
 
         if (!empty($scanner->department)) {
@@ -134,7 +180,12 @@ class InvScannerController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        return Inertia::render('Inventory/Scanner/ScannerEdit', ['scanner' => $scanner, 'department' => $department, 'department_select' => $department_select]);
+        // return response()->json(['ap' => $accessPoint]);
+        return Inertia::render('Inventory/Scanner/ScannerEdit', [
+            'scanner' => $scanner, 'department' => $department, 'department_select' => $department_select,
+            'selectedCompany' => $company,
+            'inventory_number' => session('inventory_number') ?? null,
+        ]);
     }
 
     public function update(Request $request)
