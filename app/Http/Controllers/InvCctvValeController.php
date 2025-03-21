@@ -30,31 +30,69 @@ class InvCctvValeController extends Controller
 
     public function create()
     {
-        // start generate code
-        $currentDate = Carbon::tomorrow();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'VIB')->get();
 
-        $maxId = InvCctv::where('site', 'VIB')->orderBy('max_id', 'desc')->first();
-        // dd($maxId->cctv_code);
+
+        return Inertia::render('Inventory/SiteVale/Cctv/CctvCreate', ['inventory_number' => session('inventory_number') ?? null, 'switch' => $switch]);
+    }
+
+    public function generateCode(Request $request)
+    {
+        $dataCompany = $request->input('company')['name'];
+
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAVIBCCTV' : 'AMMVIBCCTV';
+
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvCctv::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'VIB')->where('cctv_code', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
         } else {
             preg_match('/(\d+)$/', $maxId->cctv_code, $matches);
-            $maxId = isset($matches[1]) ? (int) $matches[1] : null;
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
         }
 
-        $uniqueString = 'PPAVALECCTV' . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('cctvVale.create')->with([
+            'inventory_number' => $uniqueString,
+        ]);
+    }
 
-        $request['inventory_number'] = $uniqueString;
-        // end generate code
+    public function generateCodeEdit(Request $request)
+    {
+        $id = $request->input('id');
+        // dd($id);
+        $dataCompany = $request->input('company')['name'];
 
-        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'VIB')->get();
+        // Tentukan prefix berdasarkan perusahaan yang dipilih
+        $prefix = $dataCompany === 'PPA' ? 'PPAVIBCCTV' : 'AMMVIBCCTV';
 
+        // Ambil max_id hanya untuk perusahaan yang dipilih
+        $maxId = InvCctv::Where(function ($query) use ($dataCompany) {
+            $query->where('site', 'VIB')->where('cctv_code', 'like', $dataCompany . '%');
+        })
+            ->orderBy('max_id', 'desc')
+            ->first();
 
-        return Inertia::render('Inventory/SiteVale/Cctv/CctvCreate', ['inventoryNumber' => $uniqueString, 'switch' => $switch]);
+        if (is_null($maxId)) {
+            $maxId = 0;
+        } else {
+            preg_match('/(\d+)$/', $maxId->cctv_code, $matches);
+            $maxId = isset($matches[1]) ? (int) $matches[1] : 0;
+        }
+
+        // Buat nomor baru berdasarkan perusahaan
+        $uniqueString = $prefix . str_pad(($maxId % 10000) + 1, 3, '0', STR_PAD_LEFT);
+        // dd($uniqueString);
+        return redirect()->route('cctvVale.edit', ['id' => $id])
+            ->with(['inventory_number' => $uniqueString]);
     }
 
     public function store(Request $request)
@@ -113,17 +151,24 @@ class InvCctvValeController extends Controller
     {
         $cctv = InvCctv::find($id);
 
-        if (empty($cctv)) {
-            abort(404, 'Data not found');
+        $inventoryNumber = $cctv->cctv_code;
+        $company = null;
+
+        if (str_starts_with($inventoryNumber, 'PPAVIBCCTV')) {
+            $company = 'PPA';
+        } elseif (str_starts_with($inventoryNumber, 'AMMVIBCCTV')) {
+            $company = 'AMM';
         }
 
         $selectSwitch = $cctv->switch_id;
-         $switch = InvSwitch::select('id', 'inventory_number')->where('site', auth()->user()->site)->get();
+        $switch = InvSwitch::select('id', 'inventory_number')->where('site', 'VIB')->get();
 
         return Inertia::render('Inventory/SiteVale/Cctv/CctvEdit', [
             'cctv' => $cctv,
             'switch' => $switch,
-            'selectSwitch' => $selectSwitch
+            'selectSwitch' => $selectSwitch,
+            'selectedCompany' => $company,
+            'inventory_number' => session('inventory_number') ?? null,
         ]);
     }
 

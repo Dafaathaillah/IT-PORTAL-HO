@@ -1,14 +1,13 @@
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
-import { Link } from "@inertiajs/vue3";
-import { Head, useForm } from "@inertiajs/vue3";
+import { Head, useForm, usePage, Link, router } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
-import { ref, computed } from "vue";
+import { ref, nextTick, watch, computed } from "vue";
 
 const props = defineProps(["inventoryNumber", "switch"]);
 
@@ -54,6 +53,29 @@ const customFormat = (date) => {
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
+
+const page = usePage();
+const optionsCompany = [{ name: "PPA" }, { name: "AMM" }];
+const selectedOptionCompany = ref(null);
+
+watch(selectedOptionCompany, async (newVal) => {
+    if (!newVal) return;
+
+    await nextTick(); // Menunggu Vue memperbarui DOM
+
+    router.post(
+        route("cctvSks.generate"),
+        { company: newVal },
+        {
+            preserveState: true,
+            replace: true,
+            onSuccess: (page) => {
+                console.log(page);
+                form.cctv_code = page.props.inventory_number;
+            },
+        }
+    );
+});
 
 const selectedValues = ref([]); // Awalnya array kosong
 
@@ -154,7 +176,7 @@ const options = props.switch;
                                 />
                                 <div class="flex flex-wrap -mx-3">
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -173,7 +195,27 @@ const options = props.switch;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="assets-category"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Company</label
+                                            >
+                                            <VueMultiselect
+                                                v-model="selectedOptionCompany"
+                                                :options="optionsCompany"
+                                                :multiple="false"
+                                                :close-on-select="true"
+                                                placeholder="Select Company"
+                                                track-by="name"
+                                                label="name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -310,7 +352,7 @@ const options = props.switch;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -345,7 +387,7 @@ const options = props.switch;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -362,7 +404,7 @@ const options = props.switch;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -460,7 +502,9 @@ const options = props.switch;
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
                                         :href="route('cctvSks.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
@@ -482,7 +526,6 @@ const options = props.switch;
                                             Save
                                         </span>
                                     </button>
-                                    
                                 </div>
                             </form>
                         </div>

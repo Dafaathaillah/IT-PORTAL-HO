@@ -74,9 +74,9 @@ const formSubmitted = ref(false);
 const save = () => {
     if (selectedValues.value == null) {
         formSubmitted.value = true;
-        return; 
+        return;
     }
-    
+
     form.dept = selectedValues.value.name;
     form.post(route("scannerAmi.store"), {
         onSuccess: () => {
@@ -173,7 +173,7 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
-                                        <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -405,7 +405,7 @@ const save = () => {
                                                 v-model="form.date_of_inventory"
                                                 :format="customFormat"
                                                 :enable-time-picker="false"
-                                                 utc="false"
+                                                utc="false"
                                                 name="date_of_inventory"
                                                 placeholder="Select a date and time"
                                             />

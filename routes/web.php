@@ -585,6 +585,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctv', [InvCctvController::class, 'index'])->name('cctv.page');
             Route::get('/cctv/create', [InvCctvController::class, 'create'])->name('cctv.create');
             Route::post('/cctv/create', [InvCctvController::class, 'store'])->name('cctv.store');
+            Route::post('/cctv/generate', [InvcctvController::class, 'generateCode'])->name('cctv.generate');
+            Route::post('/cctv/generate/edit', [InvcctvController::class, 'generateCodeEdit'])->name('cctv.generateEdit');
             Route::get('/cctv/{id}/edit', [InvCctvController::class, 'edit'])->name('cctv.edit');
             Route::delete('/cctv/{id}/delete', [InvCctvController::class, 'destroy'])->name('cctv.delete');
             Route::post('/cctv/update', [InvCctvController::class, 'update'])->name('cctv.update');
@@ -673,6 +675,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvBa', [InvCctvBaController::class, 'index'])->name('cctvBa.page');
             Route::get('/cctvBa/create', [InvCctvBaController::class, 'create'])->name('cctvBa.create');
             Route::post('/cctvBa/create', [InvCctvBaController::class, 'store'])->name('cctvBa.store');
+            Route::post('/cctvBa/generate', [InvcctvBaController::class, 'generateCode'])->name('cctvBa.generate');
+            Route::post('/cctvBa/generate/edit', [InvcctvBaController::class, 'generateCodeEdit'])->name('cctvBa.generateEdit');
             Route::get('/cctvBa/{id}/edit', [InvCctvBaController::class, 'edit'])->name('cctvBa.edit');
             Route::delete('/cctvBa/{id}/delete', [InvCctvBaController::class, 'destroy'])->name('cctvBa.delete');
             Route::post('/cctvBa/update', [InvCctvBaController::class, 'update'])->name('cctvBa.update');
@@ -761,6 +765,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvMifa', [InvCctvMifaController::class, 'index'])->name('cctvMifa.page');
             Route::get('/cctvMifa/create', [InvCctvMifaController::class, 'create'])->name('cctvMifa.create');
             Route::post('/cctvMifa/create', [InvCctvMifaController::class, 'store'])->name('cctvMifa.store');
+            Route::post('/cctvMifa/generate', [InvcctvMifaController::class, 'generateCode'])->name('cctvMifa.generate');
+            Route::post('/cctvMifa/generate/edit', [InvcctvMifaController::class, 'generateCodeEdit'])->name('cctvMifa.generateEdit');
             Route::get('/cctvMifa/{id}/edit', [InvCctvMifaController::class, 'edit'])->name('cctvMifa.edit');
             Route::delete('/cctvMifa/{id}/delete', [InvCctvMifaController::class, 'destroy'])->name('cctvMifa.delete');
             Route::post('/cctvMifa/update', [InvCctvMifaController::class, 'update'])->name('cctvMifa.update');
@@ -849,6 +855,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvMhu', [InvCctvMhuController::class, 'index'])->name('cctvMhu.page');
             Route::get('/cctvMhu/create', [InvCctvMhuController::class, 'create'])->name('cctvMhu.create');
             Route::post('/cctvMhu/create', [InvCctvMhuController::class, 'store'])->name('cctvMhu.store');
+            Route::post('/cctvMhu/generate', [InvcctvMhuController::class, 'generateCode'])->name('cctvMhu.generate');
+            Route::post('/cctvMhu/generate/edit', [InvcctvMhuController::class, 'generateCodeEdit'])->name('cctvMhu.generateEdit');
             Route::get('/cctvMhu/{id}/edit', [InvCctvMhuController::class, 'edit'])->name('cctvMhu.edit');
             Route::delete('/cctvMhu/{id}/delete', [InvCctvMhuController::class, 'destroy'])->name('cctvMhu.delete');
             Route::post('/cctvMhu/update', [InvCctvMhuController::class, 'update'])->name('cctvMhu.update');
@@ -937,6 +945,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvAmi', [InvCctvAmiController::class, 'index'])->name('cctvAmi.page');
             Route::get('/cctvAmi/create', [InvCctvAmiController::class, 'create'])->name('cctvAmi.create');
             Route::post('/cctvAmi/create', [InvCctvAmiController::class, 'store'])->name('cctvAmi.store');
+            Route::post('/cctvAmi/generate', [InvcctvAmiController::class, 'generateCode'])->name('cctvAmi.generate');
+            Route::post('/cctvAmi/generate/edit', [InvcctvAmiController::class, 'generateCodeEdit'])->name('cctvAmi.generateEdit');
             Route::get('/cctvAmi/{id}/edit', [InvCctvAmiController::class, 'edit'])->name('cctvAmi.edit');
             Route::delete('/cctvAmi/{id}/delete', [InvCctvAmiController::class, 'destroy'])->name('cctvAmi.delete');
             Route::post('/cctvAmi/update', [InvCctvAmiController::class, 'update'])->name('cctvAmi.update');
@@ -1025,6 +1035,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvPik', [InvCctvPikController::class, 'index'])->name('cctvPik.page');
             Route::get('/cctvPik/create', [InvCctvPikController::class, 'create'])->name('cctvPik.create');
             Route::post('/cctvPik/create', [InvCctvPikController::class, 'store'])->name('cctvPik.store');
+            Route::post('/cctvPik/generate', [InvcctvPikController::class, 'generateCode'])->name('cctvPik.generate');
+            Route::post('/cctvPik/generate/edit', [InvcctvPikController::class, 'generateCodeEdit'])->name('cctvPik.generateEdit');
             Route::get('/cctvPik/{id}/edit', [InvCctvPikController::class, 'edit'])->name('cctvPik.edit');
             Route::delete('/cctvPik/{id}/delete', [InvCctvPikController::class, 'destroy'])->name('cctvPik.delete');
             Route::post('/cctvPik/update', [InvCctvPikController::class, 'update'])->name('cctvPik.update');
@@ -1113,6 +1125,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvBge', [InvCctvBgeController::class, 'index'])->name('cctvBge.page');
             Route::get('/cctvBge/create', [InvCctvBgeController::class, 'create'])->name('cctvBge.create');
             Route::post('/cctvBge/create', [InvCctvBgeController::class, 'store'])->name('cctvBge.store');
+            Route::post('/cctvBge/generate', [InvcctvBgeController::class, 'generateCode'])->name('cctvBge.generate');
+            Route::post('/cctvBge/generate/edit', [InvcctvBgeController::class, 'generateCodeEdit'])->name('cctvBge.generateEdit');
             Route::get('/cctvBge/{id}/edit', [InvCctvBgeController::class, 'edit'])->name('cctvBge.edit');
             Route::delete('/cctvBge/{id}/delete', [InvCctvBgeController::class, 'destroy'])->name('cctvBge.delete');
             Route::post('/cctvBge/update', [InvCctvBgeController::class, 'update'])->name('cctvBge.update');
@@ -1201,6 +1215,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvBib', [InvCctvBibController::class, 'index'])->name('cctvBib.page');
             Route::get('/cctvBib/create', [InvCctvBibController::class, 'create'])->name('cctvBib.create');
             Route::post('/cctvBib/create', [InvCctvBibController::class, 'store'])->name('cctvBib.store');
+            Route::post('/cctvBib/generate', [InvcctvBibController::class, 'generateCode'])->name('cctvBib.generate');
+            Route::post('/cctvBib/generate/edit', [InvcctvBibController::class, 'generateCodeEdit'])->name('cctvBib.generateEdit');
             Route::get('/cctvBib/{id}/edit', [InvCctvBibController::class, 'edit'])->name('cctvBib.edit');
             Route::delete('/cctvBib/{id}/delete', [InvCctvBibController::class, 'destroy'])->name('cctvBib.delete');
             Route::post('/cctvBib/update', [InvCctvBibController::class, 'update'])->name('cctvBib.update');
@@ -1289,6 +1305,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvIpt', [InvCctvIptController::class, 'index'])->name('cctvIpt.page');
             Route::get('/cctvIpt/create', [InvCctvIptController::class, 'create'])->name('cctvIpt.create');
             Route::post('/cctvIpt/create', [InvCctvIptController::class, 'store'])->name('cctvIpt.store');
+            Route::post('/cctvIpt/generate', [InvcctvIptController::class, 'generateCode'])->name('cctvIpt.generate');
+            Route::post('/cctvIpt/generate/edit', [InvcctvIptController::class, 'generateCodeEdit'])->name('cctvIpt.generateEdit');
             Route::get('/cctvIpt/{id}/edit', [InvCctvIptController::class, 'edit'])->name('cctvIpt.edit');
             Route::delete('/cctvIpt/{id}/delete', [InvCctvIptController::class, 'destroy'])->name('cctvIpt.delete');
             Route::post('/cctvIpt/update', [InvCctvIptController::class, 'update'])->name('cctvIpt.update');
@@ -1377,6 +1395,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvMlp', [InvCctvMlpController::class, 'index'])->name('cctvMlp.page');
             Route::get('/cctvMlp/create', [InvCctvMlpController::class, 'create'])->name('cctvMlp.create');
             Route::post('/cctvMlp/create', [InvCctvMlpController::class, 'store'])->name('cctvMlp.store');
+            Route::post('/cctvMlp/generate', [InvcctvMlpController::class, 'generateCode'])->name('cctvMlp.generate');
+            Route::post('/cctvMlp/generate/edit', [InvcctvMlpController::class, 'generateCodeEdit'])->name('cctvMlp.generateEdit');
             Route::get('/cctvMlp/{id}/edit', [InvCctvMlpController::class, 'edit'])->name('cctvMlp.edit');
             Route::delete('/cctvMlp/{id}/delete', [InvCctvMlpController::class, 'destroy'])->name('cctvMlp.delete');
             Route::post('/cctvMlp/update', [InvCctvMlpController::class, 'update'])->name('cctvMlp.update');
@@ -1465,6 +1485,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvMip', [InvCctvMipController::class, 'index'])->name('cctvMip.page');
             Route::get('/cctvMip/create', [InvCctvMipController::class, 'create'])->name('cctvMip.create');
             Route::post('/cctvMip/create', [InvCctvMipController::class, 'store'])->name('cctvMip.store');
+            Route::post('/cctvMip/generate', [InvcctvMipController::class, 'generateCode'])->name('cctvMip.generate');
+            Route::post('/cctvMip/generate/edit', [InvcctvMipController::class, 'generateCodeEdit'])->name('cctvMip.generateEdit');
             Route::get('/cctvMip/{id}/edit', [InvCctvMipController::class, 'edit'])->name('cctvMip.edit');
             Route::delete('/cctvMip/{id}/delete', [InvCctvMipController::class, 'destroy'])->name('cctvMip.delete');
             Route::post('/cctvMip/update', [InvCctvMipController::class, 'update'])->name('cctvMip.update');
@@ -1553,6 +1575,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvVale', [InvCctvValeController::class, 'index'])->name('cctvVale.page');
             Route::get('/cctvVale/create', [InvCctvValeController::class, 'create'])->name('cctvVale.create');
             Route::post('/cctvVale/create', [InvCctvValeController::class, 'store'])->name('cctvVale.store');
+            Route::post('/cctvVale/generate', [InvcctvValeController::class, 'generateCode'])->name('cctvVale.generate');
+            Route::post('/cctvVale/generate/edit', [InvcctvValeController::class, 'generateCodeEdit'])->name('cctvVale.generateEdit');
             Route::get('/cctvVale/{id}/edit', [InvCctvValeController::class, 'edit'])->name('cctvVale.edit');
             Route::delete('/cctvVale/{id}/delete', [InvCctvValeController::class, 'destroy'])->name('cctvVale.delete');
             Route::post('/cctvVale/update', [InvCctvValeController::class, 'update'])->name('cctvVale.update');
@@ -1641,6 +1665,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvSbs', [InvCctvSbsController::class, 'index'])->name('cctvSbs.page');
             Route::get('/cctvSbs/create', [InvCctvSbsController::class, 'create'])->name('cctvSbs.create');
             Route::post('/cctvSbs/create', [InvCctvSbsController::class, 'store'])->name('cctvSbs.store');
+            Route::post('/cctvSbs/generate', [InvcctvSbsController::class, 'generateCode'])->name('cctvSbs.generate');
+            Route::post('/cctvSbs/generate/edit', [InvcctvSbsController::class, 'generateCodeEdit'])->name('cctvSbs.generateEdit');
             Route::get('/cctvSbs/{id}/edit', [InvCctvSbsController::class, 'edit'])->name('cctvSbs.edit');
             Route::delete('/cctvSbs/{id}/delete', [InvCctvSbsController::class, 'destroy'])->name('cctvSbs.delete');
             Route::post('/cctvSbs/update', [InvCctvSbsController::class, 'update'])->name('cctvSbs.update');
@@ -1729,6 +1755,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvSks', [InvCctvSksController::class, 'index'])->name('cctvSks.page');
             Route::get('/cctvSks/create', [InvCctvSksController::class, 'create'])->name('cctvSks.create');
             Route::post('/cctvSks/create', [InvCctvSksController::class, 'store'])->name('cctvSks.store');
+            Route::post('/cctvSks/generate', [InvcctvSksController::class, 'generateCode'])->name('cctvSks.generate');
+            Route::post('/cctvSks/generate/edit', [InvcctvSksController::class, 'generateCodeEdit'])->name('cctvSks.generateEdit');
             Route::get('/cctvSks/{id}/edit', [InvCctvSksController::class, 'edit'])->name('cctvSks.edit');
             Route::delete('/cctvSks/{id}/delete', [InvCctvSksController::class, 'destroy'])->name('cctvSks.delete');
             Route::post('/cctvSks/update', [InvCctvSksController::class, 'update'])->name('cctvSks.update');
@@ -1817,6 +1845,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/cctvWara', [InvCctvWARAController::class, 'index'])->name('cctvWARA.page');
             Route::get('/cctvWara/create', [InvCctvWARAController::class, 'create'])->name('cctvWARA.create');
             Route::post('/cctvWara/create', [InvCctvWARAController::class, 'store'])->name('cctvWARA.store');
+            Route::post('/cctvWARA/generate', [InvcctvWARAController::class, 'generateCode'])->name('cctvWARA.generate');
+            Route::post('/cctvWARA/generate/edit', [InvcctvWARAController::class, 'generateCodeEdit'])->name('cctvWARA.generateEdit');
             Route::get('/cctvWara/{id}/edit', [InvCctvWARAController::class, 'edit'])->name('cctvWARA.edit');
             Route::delete('/cctvWara/{id}/delete', [InvCctvWARAController::class, 'destroy'])->name('cctvWARA.delete');
             Route::post('/cctvWara/update', [InvCctvWARAController::class, 'update'])->name('cctvWARA.update');

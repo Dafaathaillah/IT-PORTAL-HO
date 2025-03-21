@@ -1,14 +1,13 @@
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
 <script setup>
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
-import { Link } from "@inertiajs/vue3";
-import { Head, useForm } from "@inertiajs/vue3";
+import { Head, useForm, usePage, Link, router } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
-import { ref, onMounted } from "vue";
+import { ref, nextTick, watch, onMounted } from "vue";
 
 const props = defineProps(["cctv", "switch", "selectSwitch"]);
 
@@ -34,6 +33,33 @@ const form = useForm({
 });
 
 const formSubmitted = ref(false);
+
+const page = usePage();
+const optionsCompany = [{ name: "PPA" }, { name: "AMM" }];
+const selectedOptionCompany = ref(
+    optionsCompany.find(
+        (option) => option.name === page.props.selectedCompany
+    ) || null
+);
+
+watch(selectedOptionCompany, async (newVal) => {
+    if (!newVal) return;
+
+    await nextTick(); // Menunggu Vue memperbarui DOM
+
+    router.post(
+        route("cctvMlp.generateEdit"),
+        { company: newVal, id: props.cctv.id },
+        {
+            preserveState: true,
+            replace: true,
+            onSuccess: (page) => {
+                console.log(page);
+                form.cctv_code = page.props.inventory_number;
+            },
+        }
+    );
+});
 
 const isDisabled = ref(true);
 const file = ref(null);
@@ -66,15 +92,15 @@ const selectedValues = ref(null);
 
 onMounted(() => {
     if (props.switch && props.switch.length > 0) {
-        console.log("Options:", props.switch); // Debug opsi yang diterima
-        console.log("SelectedOptionId:", props.selectSwitch); // Debug ID yang diterima
+        // console.log("Options:", props.switch); // Debug opsi yang diterima
+        // console.log("SelectedOptionId:", props.selectSwitch); // Debug ID yang diterima
 
         // Pastikan options sudah terdefinisi dan tidak kosong
         const selectedOption = props.switch.find(
             (option) => option.id === props.selectSwitch
         );
 
-        console.log("SelectedOption:", selectedOption); // Debug opsi yang ditemukan
+        // console.log("SelectedOption:", selectedOption); // Debug opsi yang ditemukan
         selectedValues.value = selectedOption || null;
     } else {
         console.error("Options are not available or empty");
@@ -168,7 +194,7 @@ const update = () => {
                                 />
                                 <div class="flex flex-wrap -mx-3">
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -186,8 +212,28 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
+                                       <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="assets-category"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Company</label
+                                            >
+                                            <VueMultiselect
+                                                v-model="selectedOptionCompany"
+                                                :options="optionsCompany"
+                                                :multiple="false"
+                                                :close-on-select="true"
+                                                placeholder="Select Company"
+                                                track-by="name"
+                                                label="name"
+                                            />
+                                        </div>
+                                    </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -366,7 +412,7 @@ const update = () => {
                                         >
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -400,7 +446,7 @@ const update = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -417,7 +463,7 @@ const update = () => {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
