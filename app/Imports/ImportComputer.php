@@ -6,6 +6,7 @@ use App\Models\InvComputer;
 use App\Models\UserAll;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Carbon\Carbon;
 
 class ImportComputer implements ToModel, WithStartRow
 {
@@ -24,13 +25,13 @@ class ImportComputer implements ToModel, WithStartRow
     public function model(array $row)
     {
 
-        $row = array_slice($row, 0, 22); 
+        $row = array_slice($row, 0, 24); 
 
         $emptyCheck = array_filter(array_slice($row, 1, 3)); 
         if (count($emptyCheck) === 0) {
             return null; // Abaikan jika semua kolom utama kosong
         }
-        
+
         $inventoryNumber = $row[2] ?? '';
         $codeDept = $this->extractDept($inventoryNumber);
         $codeSite = $this->extractSite($inventoryNumber);
@@ -47,6 +48,8 @@ class ImportComputer implements ToModel, WithStartRow
             $existingDataSn = InvComputer::where('serial_number', $serialNumber)->first();
         }
         // $existingDataSn = InvComputer::where('serial_number', $row[13])->first();
+        $tanggal_inventory = $this->convertToDate($row[22]);
+        $tanggal_deploy = $this->convertToDate($row[23]);
 
         // dd($existingDataSn);
         if ($aduan_get_data_user) {
@@ -74,8 +77,8 @@ class ImportComputer implements ToModel, WithStartRow
                 'status' => $row[18],
                 'condition' => $row[19],
                 'note' => $row[21],
-                // 'date_of_inventory' => $row[22],
-                // 'date_of_deploy' => $row[23],
+                'date_of_inventory' => $tanggal_inventory,
+                'date_of_deploy' => $tanggal_deploy,
                 'user_alls_id' => $aduan_get_data_user['id'],
                 'site' => $codeSite,
                 'dept' => $codeDept
@@ -107,5 +110,14 @@ class ImportComputer implements ToModel, WithStartRow
     public function getDuplicateRecords()
     {
         return $this->duplicateRecords;
+    }
+
+    private function convertToDate($value)
+    {
+        if (is_numeric($value)) {
+            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 }

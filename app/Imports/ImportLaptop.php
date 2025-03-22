@@ -6,6 +6,7 @@ use App\Models\InvLaptop;
 use App\Models\UserAll;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Carbon\Carbon;
 
 class ImportLaptop implements ToModel, WithStartRow
 {
@@ -23,7 +24,7 @@ class ImportLaptop implements ToModel, WithStartRow
 
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 22); 
+        $row = array_slice($row, 0, 24); 
 
         $emptyCheck = array_filter(array_slice($row, 1, 3)); 
         if (count($emptyCheck) === 0) {
@@ -45,6 +46,9 @@ class ImportLaptop implements ToModel, WithStartRow
         } else {
             $existingDataSn = InvLaptop::where('serial_number', $serialNumber)->first();
         }
+
+        $tanggal_inventory = $this->convertToDate($row[22]);
+        $tanggal_deploy = $this->convertToDate($row[23]);
 
         // $existingDataSn = InvLaptop::where('serial_number', $row[13])->first();
         if ($aduan_get_data_user) {
@@ -72,6 +76,8 @@ class ImportLaptop implements ToModel, WithStartRow
                 'status' => $row[18],
                 'condition' => $row[19],
                 'note' => $row[21],
+                'date_of_inventory' => $tanggal_inventory,
+                'date_of_deploy' => $tanggal_deploy,
                 'user_alls_id' =>  $aduan_get_data_user ? $aduan_get_data_user->id : null,
                 'site' => $codeSite,
                 'dept' => $codeDept
@@ -103,5 +109,14 @@ class ImportLaptop implements ToModel, WithStartRow
     public function getDuplicateRecords()
     {
         return $this->duplicateRecords;
+    }
+
+    private function convertToDate($value)
+    {
+        if (is_numeric($value)) {
+            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 }
