@@ -29,7 +29,12 @@ class PrinterImport implements ToModel, WithStartRow
     public function model(array $row)
     {
 
-        $row = array_slice($row, 0, 14);
+        $row = array_slice($row, 0, 15);
+
+        $emptyCheck = array_filter(array_slice($row, 1, 3)); 
+        if (count($emptyCheck) === 0) {
+            return null; // Abaikan jika semua kolom utama kosong
+        }
 
         $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
 
@@ -40,10 +45,7 @@ class PrinterImport implements ToModel, WithStartRow
             $existingDataInvNumber = InvPrinter::where('printer_code', $inventoryNumber)->where('site', auth()->user()->site)->first();
         }
 
-        $currentDate = Carbon::now();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        $tanggal = $this->convertToDate($row[14]);
 
         $maxId = InvPrinter::max('max_id');
         if (is_null($maxId)) {
@@ -77,7 +79,7 @@ class PrinterImport implements ToModel, WithStartRow
             'location' => $row[11],
             'status' => strtoupper($row[12]),
             'note' => $row[13],
-            'date_of_inventory' => $currentDate->format('Y-m-d H:i:s'),
+            'date_of_inventory' => $tanggal,
             'site' => auth()->user()->site
         ]);
     }
@@ -85,5 +87,14 @@ class PrinterImport implements ToModel, WithStartRow
     public function getDuplicateRecords()
     {
         return $this->duplicateRecords;
+    }
+
+    private function convertToDate($value)
+    {
+        if (is_numeric($value)) {
+            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 }

@@ -8,7 +8,8 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
-import { ref, computed } from "vue";
+import { computed, watch, ref, onMounted } from "vue";
+import { DateTime } from "luxon";
 
 const props = defineProps(["aduan", "crew", "selectCrew", "categories"]);
 
@@ -33,10 +34,10 @@ const form = useForm({
 const isDisabled = ref(true);
 const file = ref(null);
 
-const dateOfComplaint = ref(props.aduan.date_of_complaint);
-const startResponse = ref(props.aduan.start_response);
-const startProgress = ref(props.aduan.start_progress);
-const endProgress = ref(props.aduan.end_progress);
+const dateOfComplaint = ref(null);
+const startResponse = ref(null);
+const startProgress = ref(null);
+const endProgress = ref(null);
 
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
@@ -52,6 +53,46 @@ const formSubmitted = ref(false);
 
 const crewString = computed(() => {
     return selectedValues.value.map((option) => option.name).join(", ");
+});
+
+const complaintData = ref({
+    date_of_complaint: props.aduan.date_of_complaint,
+});
+
+const startResponseUtc = ref({
+    start_response: props.aduan.start_response,
+});
+
+const startProgressUtc = ref({
+    start_progress: props.aduan.start_progress,
+});
+
+const endProgressUtc = ref({
+    end_progress: props.aduan.end_progress,
+});
+
+const convertToUserTimezone = (utcDate) => {
+    if (!utcDate) return null;
+    return new Date(utcDate + "Z"); // Pastikan string UTC memiliki 'Z' di akhirnya
+};
+
+onMounted(() => {
+    // console.log(props.aduan.date_of_complaint);
+    dateOfComplaint.value = convertToUserTimezone(
+        complaintData.value.date_of_complaint
+    );
+
+    startResponse.value = convertToUserTimezone(
+        startResponseUtc.value.start_response
+    );
+
+    startProgress.value = convertToUserTimezone(
+        startProgressUtc.value.start_progress
+    );
+
+    endProgress.value = convertToUserTimezone(
+        endProgressUtc.value.end_progress
+    );
 });
 
 const customFormat = (date) => {
@@ -70,6 +111,31 @@ const customFormat = (date) => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
+//send to backend
+const convertToUTC = (dateString) => {
+    if (!dateString) return null;
+
+    // Dapatkan zona waktu user
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Konversi dateString ke ISO format jika masih berupa object Date
+    const date =
+        typeof dateString === "string" ? dateString : dateString.toISOString();
+    // console.log("Input Date:", date, `(${userTimezone})`);
+
+    // Konversi dari zona waktu user ke UTC
+    const utcDate = DateTime.fromISO(date, { zone: userTimezone }).toUTC();
+
+    // Tampilkan hasil dengan zona waktu UTC
+    // console.log(
+    //     "Converted UTC:",
+    //     utcDate.toISO(),
+    //     `(GMT${utcDate.toFormat("ZZ")})`
+    // );
+
+    return utcDate.toISO();
+};
+
 const update = () => {
     const formData = new FormData();
 
@@ -79,10 +145,11 @@ const update = () => {
         return; // Stop execution if validation fails
     }
 
-    const formattedDateDateOfComplaint = customFormat(dateOfComplaint.value);
-    const formattedDateStartResponse = customFormat(startResponse.value);
-    const formattedDateStartProgress = customFormat(startProgress.value);
-    const formattedDateEndProgress = customFormat(endProgress.value);
+    const formattedDateOfComplaint = convertToUTC(dateOfComplaint.value);
+    const formattedDateStartResponse = convertToUTC(startResponse.value);
+    const formattedDateStartProgress = convertToUTC(startProgress.value);
+    const formattedDateEndProgress = convertToUTC(endProgress.value);
+
     formData.append("id", form.id);
     formData.append("complaint_name", form.complaint_name);
     formData.append("nrp", form.nrp);
@@ -93,7 +160,7 @@ const update = () => {
     formData.append("image", file.value);
     formData.append("location", form.location);
     formData.append("detail_location", form.detail_location);
-    formData.append("dateOfComplaint", formattedDateDateOfComplaint);
+    formData.append("dateOfComplaint", formattedDateOfComplaint);
     formData.append("startResponse", formattedDateStartResponse);
     formData.append("startProgress", formattedDateStartProgress);
     formData.append("endProgress", formattedDateEndProgress);

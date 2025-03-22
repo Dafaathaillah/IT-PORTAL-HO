@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\InvCctv;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Carbon\Carbon;
 
 class ImportCctv implements ToModel, WithStartRow
 {
@@ -22,7 +23,13 @@ class ImportCctv implements ToModel, WithStartRow
 
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 14); 
+        $row = array_slice($row, 0, 15); 
+
+        $emptyCheck = array_filter(array_slice($row, 1, 3)); 
+        if (count($emptyCheck) === 0) {
+            return null; // Abaikan jika semua kolom utama kosong
+        }
+
         $inventoryNumber = trim($row[2]); // Hilangkan spasi di awal dan akhir
 
         // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
@@ -49,6 +56,8 @@ class ImportCctv implements ToModel, WithStartRow
             return null;
         }
 
+        $tanggal = $this->convertToDate($row[14]);
+
         // return dd($maxId);
         return new InvCctv([
             'max_id' => $maxId,
@@ -65,6 +74,7 @@ class ImportCctv implements ToModel, WithStartRow
             'uplink' => $row[11],
             'status' => $row[12],
             'note' => $row[13],
+            'date_of_inventory' => $tanggal,
             'nvr_id' => null,
             'switch_id' => null,
             'site' => auth()->user()->site
@@ -74,6 +84,15 @@ class ImportCctv implements ToModel, WithStartRow
     public function getDuplicateRecords()
     {
         return $this->duplicateRecords;
+    }
+
+    private function convertToDate($value)
+    {
+        if (is_numeric($value)) {
+            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
 }

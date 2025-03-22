@@ -10,10 +10,10 @@ use Carbon\Carbon;
 class ScannerImport implements ToModel, WithStartRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     // public function startCell(): string
     // {
     //     return 'B3';
@@ -21,24 +21,46 @@ class ScannerImport implements ToModel, WithStartRow
 
     public function startRow(): int
     {
-        return 17;  
+        return 17;
     }
+
+    public $duplicateRecords = [];
 
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 14); 
+        $row = array_slice($row, 0, 15);
 
-        $currentDate = Carbon::now();
-        $year = $currentDate->format('y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
+        $emptyCheck = array_filter(array_slice($row, 1, 3));
+        if (count($emptyCheck) === 0) {
+            return null; // Abaikan jika semua kolom utama kosong
+        }
+
+        $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
+
+        // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
+        if ($inventoryNumber === '' || $inventoryNumber === '-' || $inventoryNumber === null) {
+            $existingDataInvNumber = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $existingDataInvNumber = InvScanner::where('scanner_code', $inventoryNumber)->where('site', auth()->user()->site)->first();
+        }
 
         $maxId = InvScanner::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
-        }else{
+        } else {
             $maxId = $maxId + 1;
         }
+
+        if ($existingDataInvNumber) {
+            $this->duplicateRecords[] = [
+                'inventory_number' => $existingDataInvNumber->inventory_number,
+                'location' => $existingDataInvNumber->location,
+                'site' => $existingDataInvNumber->site,
+            ];
+            return null;
+        }
+
+        $tanggal = $this->convertToDate($row[14]);
 
         return new InvScanner([
             'max_id' => $maxId,
@@ -55,8 +77,22 @@ class ScannerImport implements ToModel, WithStartRow
             'location' => $row[11],
             'status' => strtoupper($row[12]),
             'note' => $row[13],
-            'date_of_inventory'=> $currentDate->format('Y-m-d H:i:s'),
+            'date_of_inventory' => $tanggal,
             'site' => auth()->user()->site
         ]);
+    }
+
+    public function getDuplicateRecords()
+    {
+        return $this->duplicateRecords;
+    }
+
+    private function convertToDate($value)
+    {
+        if (is_numeric($value)) {
+            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
     }
 }

@@ -238,12 +238,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/cekNrp', [DataCheckerController::class, 'checkMissingNRP']);
     });
     // Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO,soc_ho:HO,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA'], function () {
-        Route::post('/encrypt-year', function (Request $request) {
-            $year = $request->year ?? Carbon::now()->year;
-            $encryptedYear = Crypt::encryptString($year);
-            return Inertia::location(route('export.inspectionLaptop', ['year' => $encryptedYear]));
-        })->name('encrypt.year');
-        Route::get('/export-pdf', [ExportInspeksiLaptopController::class, 'exportPdf'])->name('export.inspectionLaptop');
+    Route::post('/encrypt-year', function (Request $request) {
+        $year = $request->year ?? Carbon::now()->year;
+        $encryptedYear = Crypt::encryptString($year);
+        return Inertia::location(route('export.inspectionLaptop', ['year' => $encryptedYear]));
+    })->name('encrypt.year');
+    Route::get('/export-pdf', [ExportInspeksiLaptopController::class, 'exportPdf'])->name('export.inspectionLaptop');
     // });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
@@ -327,7 +327,7 @@ Route::middleware('auth')->group(function () {
         })->name('developerDashboard');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE'], function () {
         Route::get('/groupLeaderDashboard', function () {
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
             $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();

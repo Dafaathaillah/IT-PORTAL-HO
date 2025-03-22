@@ -30,6 +30,11 @@ class ImportAp implements ToModel, WithStartRow
     {
         $row = array_slice($row, 0, 15); 
 
+        $emptyCheck = array_filter(array_slice($row, 1, 3)); 
+        if (count($emptyCheck) === 0) {
+            return null; // Abaikan jika semua kolom utama kosong
+        }
+
         $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
 
         // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
@@ -55,7 +60,7 @@ class ImportAp implements ToModel, WithStartRow
             return null;
         }
         $tanggal = $this->convertToDate($row[14]);
-        // dd($tanggal);
+        // dd($row[1]);
         return new InvAp([
             'max_id' => $maxId,
             'device_name' => $row[1],

@@ -8,7 +8,8 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
-import { ref, computed } from "vue";
+import { computed, watch, ref, onMounted } from "vue";
+import { DateTime } from "luxon";
 
 const props = defineProps({
     crew: {
@@ -26,6 +27,7 @@ const form = useForm({
     complaint_note: props.aduan.complaint_note,
     actionRepair: props.aduan.action_repair,
     repair_note: props.aduan.repair_note,
+    userTimezone: "",
 });
 
 const isDisabled = ref(true);
@@ -36,8 +38,7 @@ const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
-const dateOfComplaint = ref(props.aduan.date_of_complaint);
-const startResponse = ref(props.aduan.start_response);
+const startResponse = ref(null);
 const startProgress = ref(null);
 const endProgress = ref(null);
 
@@ -46,6 +47,61 @@ const isDateRequired = computed(() => props.aduan.start_response !== null);
 const selectedValues = ref([]); // Awalnya array kosong
 const crewString = computed(() => {
     return selectedValues.value.map((option) => option.name).join(", ");
+});
+
+const dateOfComplaint = ref(null);
+
+// Ambil timezone browser
+const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const complaintData = ref({
+    date_of_complaint: props.aduan.date_of_complaint,
+});
+
+const startResponseUtc = ref({
+    start_response: props.aduan.start_response,
+});
+
+//send to backend
+const convertToUTC = (dateString) => {
+    if (!dateString) return null;
+
+    // Dapatkan zona waktu user
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Konversi dateString ke ISO format jika masih berupa object Date
+    const date =
+        typeof dateString === "string" ? dateString : dateString.toISOString();
+    // console.log("Input Date:", date, `(${userTimezone})`);
+
+    // Konversi dari zona waktu user ke UTC
+    const utcDate = DateTime.fromISO(date, { zone: userTimezone }).toUTC();
+
+    // Tampilkan hasil dengan zona waktu UTC
+    // console.log(
+    //     "Converted UTC:",
+    //     utcDate.toISO(),
+    //     `(GMT${utcDate.toFormat("ZZ")})`
+    // );
+
+    return utcDate.toISO();
+};
+
+// Fungsi untuk konversi ke timezone lokal
+const convertToUserTimezone = (utcDate) => {
+    if (!utcDate) return null;
+    return new Date(utcDate + "Z"); // Pastikan string UTC memiliki 'Z' di akhirnya
+};
+
+onMounted(() => {
+    // console.log(props.aduan.date_of_complaint);
+    dateOfComplaint.value = convertToUserTimezone(
+        complaintData.value.date_of_complaint
+    );
+
+    startResponse.value = convertToUserTimezone(
+        startResponseUtc.value.start_response
+    );
 });
 
 const customFormat = (date) => {
@@ -66,15 +122,17 @@ const customFormat = (date) => {
 
 const updateProgress = () => {
     const formData = new FormData();
-    const formattedDateDateOfComplaint = customFormat(dateOfComplaint.value);
-    const formattedDateStartResponse = customFormat(startResponse.value);
-    const formattedDateStartProgress = customFormat(startProgress.value);
-    const formattedDateEndProgress = customFormat(endProgress.value);
+    const formattedDateOfComplaint = convertToUTC(dateOfComplaint.value);
+    const formattedDateStartResponse = convertToUTC(startResponse.value);
+    const formattedDateStartProgress = convertToUTC(startProgress.value);
+    const formattedDateEndProgress = convertToUTC(endProgress.value);
+
     formData.append("id", form.id);
+    formData.append("userTimezone", userTimezone);
     formData.append("crew", crewString.value);
     formData.append("image", file.value);
     formData.append("actionRepair", form.actionRepair);
-    formData.append("dateOfComplaint", formattedDateDateOfComplaint);
+    formData.append("dateOfComplaint", formattedDateOfComplaint);
     formData.append("startResponse", formattedDateStartResponse);
     formData.append("startProgress", formattedDateStartProgress);
     formData.append("endProgress", formattedDateEndProgress);
@@ -328,7 +386,8 @@ const isImage = (url) => {
                                             <VueDatePicker
                                                 required
                                                 v-model="dateOfComplaint"
-                                                :format="customFormat"
+                                                :enable-time="true"
+                                                :format="'yyyy-MM-dd HH:mm:ss'"
                                                 placeholder="Select a date and time"
                                             />
                                         </div>
@@ -377,7 +436,8 @@ const isImage = (url) => {
                                             <VueDatePicker
                                                 required
                                                 v-model="startResponse"
-                                                :format="customFormat"
+                                                :enable-time="true"
+                                                :format="'yyyy-MM-dd HH:mm:ss'"
                                                 placeholder="Select Strat Response"
                                             />
                                         </div>

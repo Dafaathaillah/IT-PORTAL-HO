@@ -5726,7 +5726,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -6332,7 +6333,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -6947,7 +6949,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -7561,7 +7564,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -8075,7 +8079,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -8689,7 +8694,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -9303,7 +9309,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -9917,7 +9924,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -10527,7 +10535,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -11137,7 +11146,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -11747,7 +11757,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -12357,7 +12368,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -12969,7 +12981,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -13579,7 +13592,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -14189,7 +14203,8 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader'
+                                        'ict_group_leader' || $page.props.auth.user.role ===
+                                        'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"

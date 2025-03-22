@@ -20,6 +20,28 @@ const mount = onMounted(() => {
     $("#tableData").DataTable();
 });
 
+const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const formatTime = (utcTime) => {
+    if (!utcTime) return "-";
+
+    return new Date(utcTime + "Z")
+        .toLocaleString("id-ID", {
+            timeZone: userTimezone,
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false, // Format 24 jam
+        })
+        .replace(/\//g, "-")
+        .replace(",", "")
+        .replace(/\./g, ":")
+        .trim();
+};
+
 const isImage = (url) => {
     if (!url) return false;
     return url.match(/\.(jpeg|jpg|png|gif)$/i);
@@ -105,7 +127,7 @@ const isImage = (url) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="grid grid-cols-2">
+                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">
                                                 Complaint Date
@@ -115,8 +137,10 @@ const isImage = (url) => {
                                             <p>
                                                 :
                                                 {{
-                                                    props.aduan
-                                                        .date_of_complaint
+                                                    formatTime(
+                                                        props.aduan
+                                                            .date_of_complaint
+                                                    )
                                                 }}
                                             </p>
                                         </div>
@@ -256,7 +280,12 @@ const isImage = (url) => {
                                     </div>
                                     <div>
                                         <p>
-                                            : {{ props.aduan.start_response }}
+                                            :
+                                            {{
+                                                formatTime(
+                                                    props.aduan.start_response
+                                                )
+                                            }}
                                         </p>
                                     </div>
                                 </div>
@@ -267,7 +296,12 @@ const isImage = (url) => {
                                     </div>
                                     <div>
                                         <p>
-                                            : {{ props.aduan.start_progress }}
+                                            :
+                                            {{
+                                                formatTime(
+                                                    props.aduan.start_progress
+                                                )
+                                            }}
                                         </p>
                                     </div>
                                 </div>
@@ -277,7 +311,14 @@ const isImage = (url) => {
                                         <p class="text-base">End Progress</p>
                                     </div>
                                     <div>
-                                        <p>: {{ props.aduan.end_progress }}</p>
+                                        <p>
+                                            :
+                                            {{
+                                                formatTime(
+                                                    props.aduan.end_progress
+                                                )
+                                            }}
+                                        </p>
                                     </div>
                                 </div>
 

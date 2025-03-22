@@ -19,19 +19,19 @@ class AduanController extends Controller
     public function index()
     {
         $auth = auth()->user()->role;
-        if ($auth == 'soc_ho') {
+        if ($auth == 'soc_ho' || $auth == 'ict_developer') {
             # code...
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('category_name', 'SOC')->get();
-            $countOpen = Aduan::where('status', 'OPEN')->where('category_name', 'SOC')->count();  
+            $countOpen = Aduan::where('status', 'OPEN')->where('category_name', 'SOC')->count();
             $countClosed = Aduan::where('status', 'CLOSED')->where('category_name', 'SOC')->count();
             $countProgress = Aduan::where('status', 'PROGRESS')->where('category_name', 'SOC')->count();
             $countCancel = Aduan::where('status', 'CANCEL')->where('category_name', 'SOC')->count();
-        }else{
-            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site',auth()->user()->site)->get();
-            $countOpen = Aduan::where('status', 'OPEN')->where('site',auth()->user()->site)->count();
-            $countClosed = Aduan::where('status', 'CLOSED')->where('site',auth()->user()->site)->count();
-            $countProgress = Aduan::where('status', 'PROGRESS')->where('site',auth()->user()->site)->count();
-            $countCancel = Aduan::where('status', 'CANCEL')->where('site',auth()->user()->site)->count();
+        } else {
+            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
+            $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
+            $countClosed = Aduan::where('status', 'CLOSED')->where('site', auth()->user()->site)->count();
+            $countProgress = Aduan::where('status', 'PROGRESS')->where('site', auth()->user()->site)->count();
+            $countCancel = Aduan::where('status', 'CANCEL')->where('site', auth()->user()->site)->count();
         }
         return Inertia::render(
             'Aduan/Aduan',
@@ -66,11 +66,11 @@ class AduanController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site',auth()->user()->site)->orderBy('max_id', 'desc')->first();
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site', auth()->user()->site)->orderBy('max_id', 'desc')->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
-        }else{
+        } else {
             $split = explode('-', $maxId->complaint_code);
             $noUrut = (int) $split[2];
             $maxId = $noUrut;
@@ -79,7 +79,7 @@ class AduanController extends Controller
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
 
-        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
+        $crew = User::where('site', auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return response()->json($crew);
@@ -129,7 +129,7 @@ class AduanController extends Controller
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            }else{
+            } else {
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['inventory_number'] = $request->inventory_number;
@@ -140,7 +140,7 @@ class AduanController extends Controller
             $aduan_get_data_user = UserAll::where('nrp', $request->nrp)->first();
             if (!empty($aduan_get_data_user)) {
                 $data['complaint_position'] = $aduan_get_data_user['position'];
-            }else{
+            } else {
                 $data['complaint_position'] = 'User Belum Terdaftar Pada Sistem (NRP Not Detect!)';
             }
             $data['status'] = 'OPEN';
@@ -153,15 +153,17 @@ class AduanController extends Controller
     public function progress($id)
     {
         $aduan = Aduan::find($id);
+        // Pastikan date_of_complaint dalam format ISO 8601 UTC
+
+        // dd($aduan);
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
+        $crew = User::where('site', auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
-        // return response()->json($crew);
-        // dd($crew);
+        // dd($aduan);
         return Inertia::render('Aduan/AduanProgress', [
             'aduan' => $aduan,
             'crew' => $crew,
@@ -170,7 +172,7 @@ class AduanController extends Controller
 
     public function update_aduan_progress(Request $request)
     {
-        // return dd($request);
+        // dd($request->all());
         // start get response time
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
@@ -180,21 +182,48 @@ class AduanController extends Controller
 
         $jaditotal = sprintf('%02s', $hTotal) . ':' . sprintf('%02s', $diff->i) . ':' . sprintf('%02s', $diff->s);
 
+        if ($request->dateOfComplaint != 'null') {
+            $dateOfComplaintUTC = Carbon::parse($request->dateOfComplaint)->format('Y-m-d H:i:s');
+        } else {
+            $dateOfComplaintUTC = null;
+        }
+
+        if ($request->startResponse != 'null') {
+            $dateOfResponseUTC = Carbon::parse($request->startResponse)->format('Y-m-d H:i:s');
+        } else {
+            $dateOfResponseUTC = null;
+        }
+
+        // dd($request->startProgress);
+
+        if ($request->startProgress != 'null') {
+            $dateOfProgressUTC = Carbon::parse($request->startProgress)->format('Y-m-d H:i:s');
+        } else {
+            $dateOfProgressUTC = null;
+        }
+
+        if ($request->endProgress != 'null') {
+            $dateOfEndProgressUTC = Carbon::parse($request->endProgress)->format('Y-m-d H:i:s');
+        } else {
+            $dateOfEndProgressUTC = null;
+        }
+
         $response_time = $jaditotal;
         // end get response time
 
         $data = [
-            'repair_note' => $request->repair_note,
-            'status' => $request->status,
-            'location' => $request->location,
-            'detail_location' => $request->detail_location,
-            'complaint_note' => $request->complaint_note,
-            'action_repair' => $request->actionRepair,
-            'date_of_complaint' => $request->dateOfComplaint,
-            'start_response' => $request->startResponse,
-            'start_progress' => $request->startProgress,
-            'end_progress' => $request->endProgress,
+            'repair_note'     => ($request->repair_note === "null" || trim($request->repair_note) === "") ? null : $request->repair_note,
+            'status'          => $request->status,
+            'location'        => ($request->location === "null" || trim($request->location) === "") ? null : $request->location,
+            'detail_location' => ($request->detail_location === "null" || trim($request->detail_location) === "") ? null : $request->detail_location,
+            'complaint_note'  => ($request->complaint_note === "null" || trim($request->complaint_note) === "") ? null : $request->complaint_note,
+            'action_repair'   => ($request->actionRepair === "null" || trim($request->actionRepair) === "") ? null : $request->actionRepair,
+            'date_of_complaint' => $dateOfComplaintUTC,
+            'start_response'    => $dateOfResponseUTC,
+            'start_progress'    => $dateOfProgressUTC,
+            'end_progress'      => $dateOfEndProgressUTC,
         ];
+
         if ($request->crew != null || $request->crew != '') {
             $data['crew'] = $request->crew;
         }
@@ -235,10 +264,10 @@ class AduanController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        
+
         $selectCrew = explode(', ', $aduan->crew);
         // return dd($aduan);
-        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
+        $crew = User::where('site', auth()->user()->site)->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         return Inertia::render('Aduan/AduanEdit', [
@@ -251,7 +280,6 @@ class AduanController extends Controller
 
     public function update_aduan(Request $request)
     {
-        // return dd($request);
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
@@ -261,7 +289,32 @@ class AduanController extends Controller
         $jaditotal = sprintf('%02s', $hTotal) . ':' . sprintf('%02s', $diff->i) . ':' . sprintf('%02s', $diff->s);
 
         $response_time = $jaditotal;
-        // end get response time
+        
+        if ($request->dateOfComplaint != 'null') {
+            $dateOfComplaintUTC = Carbon::parse($request->dateOfComplaint)->format('Y-m-d H:i:s');
+        } else {
+            $dateOfComplaintUTC = null;
+        }
+
+        if ($request->startResponse != 'null') {
+            $dateOfResponseUTC = Carbon::parse($request->startResponse)->format('Y-m-d H:i:s');
+        } else {
+            $dateOfResponseUTC = null;
+        }
+
+        // dd($request->startProgress);
+
+        if ($request->startProgress != 'null') {
+            $dateOfProgressUTC = Carbon::parse($request->startProgress)->format('Y-m-d H:i:s');
+        } else {
+            $dateOfProgressUTC = null;
+        }
+
+        if ($request->endProgress != 'null') {
+            $dateOfEndProgressUTC = Carbon::parse($request->endProgress)->format('Y-m-d H:i:s');
+        } else {
+            $dateOfEndProgressUTC = null;
+        }
 
         $data = [
             'complaint_name' => $request->complaint_name,
@@ -274,11 +327,12 @@ class AduanController extends Controller
             'detail_location' => $request->detail_location,
             'complaint_note' => $request->complaint_note,
             'action_repair' => $request->action_repair,
-            'date_of_complaint' => $request->dateOfComplaint,
-            'start_response' => $request->startResponse,
-            'start_progress' => $request->startProgress,
-            'end_progress' => $request->endProgress,
+            'date_of_complaint' => $dateOfComplaintUTC,
+            'start_response'    => $dateOfResponseUTC,
+            'start_progress'    => $dateOfProgressUTC,
+            'end_progress'      => $dateOfEndProgressUTC,
         ];
+
         if ($request->crew != null || $request->crew != '') {
             $data['crew'] = $request->crew;
         }

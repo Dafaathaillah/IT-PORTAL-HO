@@ -24,7 +24,11 @@ class ImportLaptop implements ToModel, WithStartRow
     public function model(array $row)
     {
         $row = array_slice($row, 0, 22); 
-        // dd($row);
+
+        $emptyCheck = array_filter(array_slice($row, 1, 3)); 
+        if (count($emptyCheck) === 0) {
+            return null; // Abaikan jika semua kolom utama kosong
+        }
 
         $inventoryNumber = $row[2] ?? '';
         $codeDept = $this->extractDept($inventoryNumber);

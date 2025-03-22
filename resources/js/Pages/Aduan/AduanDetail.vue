@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
-import {Head, Link } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import moment from "moment";
 import { onMounted, ref } from "vue";
 
@@ -20,6 +20,28 @@ const mount = onMounted(() => {
     $("#tableData").DataTable();
 });
 
+const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const formatTime = (utcTime) => {
+    if (!utcTime) return "-";
+
+    return new Date(utcTime + "Z")
+        .toLocaleString("id-ID", {
+            timeZone: userTimezone,
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false, // Format 24 jam
+        })
+        .replace(/\//g, "-")
+        .replace(",", "")
+        .replace(/\./g, ":")
+        .trim();
+};
+
 const isImage = (url) => {
     if (!url) return false;
     return url.match(/\.(jpeg|jpg|png|gif)$/i);
@@ -34,7 +56,6 @@ const isImage = (url) => {
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
     >
-
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
@@ -58,70 +79,69 @@ const isImage = (url) => {
                                 </NavLinkCustom>
                             </div>
                             <div class="flex-auto p-12 pt-6 gap-4">
-                                
                                 <div
                                     class="pb-4 grid grid-cols-1 md:grid-cols-2"
                                 >
                                     <div class="grid grid-cols-2">
                                         <div>
+                                            <p class="text-base">Ticket Code</p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                :
+                                                {{ props.aduan.complaint_code }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">NRP</p>
+                                        </div>
+                                        <div>
+                                            <p>: {{ props.aduan.nrp }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
                                             <p class="text-base">
-                                                Ticket Code
+                                                Category Aduan
                                             </p>
                                         </div>
                                         <div>
                                             <p>
-                                                : {{ props.aduan.complaint_code }}
-                                                
+                                                :
+                                                {{ props.aduan.category_name }}
                                             </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">
-                                                NRP
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p>
-                                                : {{ props.aduan.nrp }}
-                                                
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-2">
-                                        <div>
-                                            <p class="text-base">Category Aduan</p>
-                                        </div>
-                                        <div>
-                                            <p>
-                                                : {{ props.aduan.category_name }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-2">
-                                        <div>
-                                            <p class="text-base">
-                                                
                                                 Complaint Name
                                             </p>
                                         </div>
                                         <div>
                                             <p>
-                                                : {{ props.aduan.complaint_name }}
-                                                
+                                                :
+                                                {{ props.aduan.complaint_name }}
                                             </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Complaint Date</p>
+                                            <p class="text-base">
+                                                Complaint Date
+                                            </p>
                                         </div>
                                         <div>
                                             <p>
-                                                : {{
-                                                props.aduan
-                                                    .date_of_complaint
-                                            }}
+                                                :
+                                                {{
+                                                    formatTime(
+                                                        props.aduan
+                                                            .date_of_complaint
+                                                    )
+                                                }}
                                             </p>
                                         </div>
                                     </div>
@@ -132,17 +152,17 @@ const isImage = (url) => {
                                             </p>
                                         </div>
                                         <div>
-                                            <p>: {{ props.aduan.phone_number }}</p>
+                                            <p>
+                                                : {{ props.aduan.phone_number }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Crew </p>
+                                            <p class="text-base">Crew</p>
                                         </div>
                                         <div>
-                                            <p>
-                                                : {{ props.aduan.crew }}
-                                            </p>
+                                            <p>: {{ props.aduan.crew }}</p>
                                         </div>
                                     </div>
 
@@ -220,7 +240,6 @@ const isImage = (url) => {
                                     </div>
                                 </div>
 
-                                
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
@@ -238,8 +257,7 @@ const isImage = (url) => {
                                         </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Status</p>
@@ -248,8 +266,7 @@ const isImage = (url) => {
                                         <p>: {{ props.aduan.status }}</p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Response Time</p>
@@ -258,42 +275,55 @@ const isImage = (url) => {
                                         <p>: {{ props.aduan.response_time }}</p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Start Response</p>
                                     </div>
                                     <div>
                                         <p>
-                                            : {{ props.aduan.start_response }}
+                                            :
+                                            {{
+                                                formatTime(
+                                                    props.aduan.start_response
+                                                )
+                                            }}
                                         </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Start Progress</p>
                                     </div>
                                     <div>
                                         <p>
-                                            : {{ props.aduan.start_progress }}
+                                            :
+                                            {{
+                                                formatTime(
+                                                    props.aduan.start_progress
+                                                )
+                                            }}
                                         </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">End Progress</p>
                                     </div>
                                     <div>
-                                        <p>: {{ props.aduan.end_progress }}</p>
+                                        <p>
+                                            :
+                                            {{
+                                                formatTime(
+                                                    props.aduan.end_progress
+                                                )
+                                            }}
+                                        </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">
@@ -306,16 +336,14 @@ const isImage = (url) => {
                                         </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>Action Repair</div>
                                     <div>
                                         <p>: {{ props.aduan.action_repair }}</p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Repair Note</p>
@@ -324,8 +352,6 @@ const isImage = (url) => {
                                         <p>: {{ props.aduan.repair_note }}</p>
                                     </div>
                                 </div>
-                                
-                                
                             </div>
                         </div>
                     </div>

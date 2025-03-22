@@ -26,6 +26,11 @@ class ImportComputer implements ToModel, WithStartRow
 
         $row = array_slice($row, 0, 22); 
 
+        $emptyCheck = array_filter(array_slice($row, 1, 3)); 
+        if (count($emptyCheck) === 0) {
+            return null; // Abaikan jika semua kolom utama kosong
+        }
+        
         $inventoryNumber = $row[2] ?? '';
         $codeDept = $this->extractDept($inventoryNumber);
         $codeSite = $this->extractSite($inventoryNumber);

@@ -72,7 +72,7 @@ class AduanHoController extends Controller
 
     public function store(Request $request)
     {
-        $currentDate = Carbon::now();
+        $currentDate = now()->utc()->toDateTimeString(); // Format: "Y-m-d H:i:s"
 
         // dd($request);
         $maxId = Aduan::max('max_id');
@@ -88,7 +88,7 @@ class AduanHoController extends Controller
             'complaint_name' => $request['complaint_name'],
             'complaint_note' => $request['complaint_note'],
             'phone_number' => $request['phone_number'],
-            'date_of_complaint' => $currentDate->format('Y-m-d H:i:s'),
+            'date_of_complaint' => $currentDate,
             'location' => $request['location'],
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],

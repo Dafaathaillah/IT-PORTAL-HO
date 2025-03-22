@@ -23,6 +23,11 @@ class UserPenggunaImport implements ToModel, WithStartRow
     {
         $row = array_slice($row, 0, 7); 
 
+        $emptyCheck = array_filter(array_slice($row, 1, 3)); 
+        if (count($emptyCheck) === 0) {
+            return null; // Abaikan jika semua kolom utama kosong
+        }
+        
         if (!isset($row[1]) || empty($row[1])) {
             return null; // Skip jika tidak ada data
         }

@@ -1,11 +1,10 @@
 <style>
-@import 'datatables.net-dt';
+@import "datatables.net-dt";
 
 .dt-search {
     margin-bottom: 1em;
     float: right !important;
     text-align: center !important;
-
 }
 .dt-paging {
     margin-top: 1em;
@@ -24,12 +23,11 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, computed } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Aduan Pages");
 const mainMenu = ref("Aduan Data");
-
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -39,25 +37,26 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-        dom: 'fBrtilp',
-        scrollY: '40vh',
+        dom: "fBrtilp",
+        scrollY: "40vh",
         scrollCollapse: true,
         buttons: [
-                {
-                    extend: 'spacer',
-                    style: 'bar',
-                    text: 'Export files:'
-                },
-                'csvHtml5',
-                'excelHtml5',
-                'spacer'
-            ],
+            {
+                extend: "spacer",
+                style: "bar",
+                text: "Export files:",
+            },
+            "csvHtml5",
+            "excelHtml5",
+            "spacer",
+        ],
         initComplete: function () {
-            var btns = $('.dt-button');
-            btns.addClass('text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2');
-            btns.removeClass('dt-button');
-
-        }
+            var btns = $(".dt-button");
+            btns.addClass(
+                "text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            );
+            btns.removeClass("dt-button");
+        },
     });
 });
 
@@ -78,6 +77,28 @@ const props = defineProps({
         type: Object,
     },
 });
+
+const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const formatTime = (utcTime) => {
+    if (!utcTime) return "-";
+
+    return new Date(utcTime + "Z")
+        .toLocaleString("id-ID", {
+            timeZone: userTimezone,
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false, // Format 24 jam
+        })
+        .replace(/\//g, "-")
+        .replace(",", "")
+        .replace(/\./g, ":")
+        .trim();
+};
 
 const form = useForm({});
 
@@ -171,7 +192,6 @@ const formatComplaint = (text) => {
     return text.replace(/(.{25})/g, "$1\n"); // Menyisipkan baris baru setiap 25 karakter
 };
 
-
 function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
@@ -179,27 +199,37 @@ function formatData(text) {
 </script>
 
 <template>
-
     <Head title="Complaint" />
 
-    <AuthenticatedLayout v-model:pages="pages" v-model:subMenu="subMenu" v-model:mainMenu="mainMenu">
-
+    <AuthenticatedLayout
+        v-model:pages="pages"
+        v-model:subMenu="subMenu"
+        v-model:mainMenu="mainMenu"
+    >
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3 mb-8">
                     <!-- card1 -->
-                    <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                    <div
+                        class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
+                    >
                         <div
-                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                        >
                             <div class="flex-auto p-4">
                                 <div class="flex flex-row -mx-3">
-                                    <div class="flex-none w-2/3 max-w-full px-3">
+                                    <div
+                                        class="flex-none w-2/3 max-w-full px-3"
+                                    >
                                         <div>
                                             <p
-                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
+                                            >
                                                 ADUAN OPEN
                                             </p>
-                                            <h5 class="mb-2 font-bold dark:text-white">
+                                            <h5
+                                                class="mb-2 font-bold dark:text-white"
+                                            >
                                                 {{ props.open }}
                                             </h5>
                                             <!-- <p
@@ -215,8 +245,11 @@ function formatData(text) {
                                     </div>
                                     <div class="px-3 text-right basis-1/3">
                                         <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500">
-                                            <i class="fas fa-envelope-open text-lg relative top-2.5 text-white"></i>
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500"
+                                        >
+                                            <i
+                                                class="fas fa-envelope-open text-lg relative top-2.5 text-white"
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
@@ -225,18 +258,26 @@ function formatData(text) {
                     </div>
 
                     <!-- card2 -->
-                    <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                    <div
+                        class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
+                    >
                         <div
-                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                        >
                             <div class="flex-auto p-4">
                                 <div class="flex flex-row -mx-3">
-                                    <div class="flex-none w-2/3 max-w-full px-3">
+                                    <div
+                                        class="flex-none w-2/3 max-w-full px-3"
+                                    >
                                         <div>
                                             <p
-                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
+                                            >
                                                 ADUAN PROGRESS
                                             </p>
-                                            <h5 class="mb-2 font-bold dark:text-white">
+                                            <h5
+                                                class="mb-2 font-bold dark:text-white"
+                                            >
                                                 {{ props.progress }}
                                             </h5>
                                             <!-- <p
@@ -252,8 +293,11 @@ function formatData(text) {
                                     </div>
                                     <div class="px-3 text-right basis-1/3">
                                         <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-400">
-                                            <i class="fas fa-clock text-lg relative top-2.5 text-white"></i>
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-400"
+                                        >
+                                            <i
+                                                class="fas fa-clock text-lg relative top-2.5 text-white"
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
@@ -261,21 +305,28 @@ function formatData(text) {
                         </div>
                     </div>
 
-
                     <!-- card3 -->
 
-                    <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                    <div
+                        class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
+                    >
                         <div
-                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                        >
                             <div class="flex-auto p-4">
                                 <div class="flex flex-row -mx-3">
-                                    <div class="flex-none w-2/3 max-w-full px-3">
+                                    <div
+                                        class="flex-none w-2/3 max-w-full px-3"
+                                    >
                                         <div>
                                             <p
-                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
+                                            >
                                                 ADUAN CLOSED
                                             </p>
-                                            <h5 class="mb-2 font-bold dark:text-white">
+                                            <h5
+                                                class="mb-2 font-bold dark:text-white"
+                                            >
                                                 {{ props.closed }}
                                             </h5>
                                             <!-- <p
@@ -291,8 +342,11 @@ function formatData(text) {
                                     </div>
                                     <div class="px-3 text-right basis-1/3">
                                         <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-green-600 to-green-600">
-                                            <i class="fas fa-check-square text-lg relative top-2.5 text-white"></i>
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-green-600 to-green-600"
+                                        >
+                                            <i
+                                                class="fas fa-check-square text-lg relative top-2.5 text-white"
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
@@ -301,18 +355,26 @@ function formatData(text) {
                     </div>
 
                     <!-- card4 -->
-                    <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
+                    <div
+                        class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4"
+                    >
                         <div
-                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                            class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                        >
                             <div class="flex-auto p-4">
                                 <div class="flex flex-row -mx-3">
-                                    <div class="flex-none w-2/3 max-w-full px-3">
+                                    <div
+                                        class="flex-none w-2/3 max-w-full px-3"
+                                    >
                                         <div>
                                             <p
-                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
+                                                class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
+                                            >
                                                 ADUN CANCEL
                                             </p>
-                                            <h5 class="mb-2 font-bold dark:text-white">
+                                            <h5
+                                                class="mb-2 font-bold dark:text-white"
+                                            >
                                                 {{ props.cancel }}
                                             </h5>
                                             <!-- <p
@@ -328,8 +390,11 @@ function formatData(text) {
                                     </div>
                                     <div class="px-3 text-right basis-1/3">
                                         <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-500 to-red-500">
-                                            <i class="fas fa-ban text-lg relative top-2.5 text-white"></i>
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-500 to-red-500"
+                                        >
+                                            <i
+                                                class="fas fa-ban text-lg relative top-2.5 text-white"
+                                            ></i>
                                         </div>
                                     </div>
                                 </div>
@@ -340,173 +405,231 @@ function formatData(text) {
                 <div class="flex flex-wrap -mx-3">
                     <div class="flex-none w-full max-w-full px-3">
                         <div
-                            class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                            <div class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
-                                <Link :href="route('aduan.create')"
-                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25">
-                                <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
-                                New Data
+                            class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                        >
+                            <div
+                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+                            >
+                                <Link
+                                    :href="route('aduan.create')"
+                                    class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
+                                >
+                                    <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
+                                    New Data
                                 </Link>
                             </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
-                                    <div class="p-0">
-                                        <div class="p-6 text-gray-900">
-                                            <table id="tableData" class="table table-striped">
-                                                <thead class="align-bottom">
-                                                    <tr>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            #
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Progress
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Ticket Code
-                                                        </th>
-                                                         <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Nrp
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Name
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Category
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Action Repair
-                                                        </th>
-                                                        <th
-                                                        style="min-width: 250px; max-width: 400px; word-break: break-word; white-space: normal; padding: 10px;"
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Issue
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            crew
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Status
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Report Date
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Start Response
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Response Time
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Start Progres
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Finish Progress
-                                                        </th>
-                                                        <th
-                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80">
-                                                            Action
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(
+                                <div class="p-0">
+                                    <div class="p-6 text-gray-900">
+                                        <table
+                                            id="tableData"
+                                            class="table table-striped"
+                                        >
+                                            <thead class="align-bottom">
+                                                <tr>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        #
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Progress
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Ticket Code
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Nrp
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Name
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Category
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Action Repair
+                                                    </th>
+                                                    <th
+                                                        style="
+                                                            min-width: 250px;
+                                                            max-width: 400px;
+                                                            word-break: break-word;
+                                                            white-space: normal;
+                                                            padding: 10px;
+                                                        "
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Issue
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        crew
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Status
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Report Date
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Start Response
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Response Time
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Start Progres
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Finish Progress
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    v-for="(
                                                         aduans, index
-                                                    ) in aduan" :key="index">
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{ index + 1 }}
-                                                            </span>
-                                                        </td>
-                                                         <td
-                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <NavLinkCustom 
-                                                                v-if="aduans.status != 'CLOSED'"
+                                                    ) in aduan"
+                                                    :key="index"
+                                                >
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{ index + 1 }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <NavLinkCustom
+                                                            v-if="
+                                                                aduans.status !=
+                                                                'CLOSED'
+                                                            "
                                                             @click="
                                                                 progressAduan(
                                                                     aduans.id
                                                                 )
-                                                                "
-                                                                class="mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                Progress Aduan
-                                                            </NavLinkCustom>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    aduans.complaint_code
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{ aduans.nrp }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    aduans.complaint_name
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    aduans.category_name
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    aduans.action_repair
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                                                                                <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                            "
+                                                            class="mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <span
-                                                                class="mb-0 text-sm break-words whitespace-pre-wrap font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                 {{ formatComplaint(aduans.complaint_note) }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{ aduans.crew }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span :class="{
+                                                            Progress Aduan
+                                                        </NavLinkCustom>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                aduans.complaint_code
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{ aduans.nrp }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                aduans.complaint_name
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                aduans.category_name
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                aduans.action_repair
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm break-words whitespace-pre-wrap font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formatComplaint(
+                                                                    aduans.complaint_note
+                                                                )
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{ aduans.crew }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            :class="{
                                                                 'bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
                                                                     aduans.status ===
                                                                     'CLOSED',
@@ -519,91 +642,116 @@ function formatData(text) {
                                                                 'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
                                                                     aduans.status ===
                                                                     'CANCEL',
-                                                            }">
-                                                                {{ aduans.status }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
+                                                            }"
+                                                        >
+                                                            {{ aduans.status }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formatTime(
                                                                     aduans.date_of_complaint
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
+                                                                )
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <p
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formatTime(
                                                                     aduans.start_response
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
-                                                                    aduans.response_time
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
+                                                                )
+                                                            }}
+                                                        </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                aduans.response_time
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formatTime(
                                                                     aduans.start_progress
-                                                                }}
-                                                            </span>
-                                                        </td>
-                                                        <td
-                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {{
+                                                                )
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                formatTime(
                                                                     aduans.end_progress
-                                                                }}
-                                                            </span>
-                                                        </td>
+                                                                )
+                                                            }}
+                                                        </span>
+                                                    </td>
 
-                                                        <td
-                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-
-                                                            <NavLinkCustom @click="
+                                                    <td
+                                                        class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <NavLinkCustom
+                                                            @click="
                                                                 detailData(
                                                                     aduans.id
                                                                 )
-                                                                "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                Detail
-                                                            </NavLinkCustom>
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Detail
+                                                        </NavLinkCustom>
 
-                                                            <NavLinkCustom @click="
+                                                        <NavLinkCustom
+                                                            @click="
                                                                 editData(
                                                                     aduans.id
                                                                 )
-                                                                "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                Edit
-                                                            </NavLinkCustom>
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Edit
+                                                        </NavLinkCustom>
 
-                                                            <NavLinkCustom @click="
+                                                        <NavLinkCustom
+                                                            @click="
                                                                 deleteData(
                                                                     aduans.id
                                                                 )
-                                                                "
-                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                Delete
-                                                            </NavLinkCustom>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Delete
+                                                        </NavLinkCustom>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
