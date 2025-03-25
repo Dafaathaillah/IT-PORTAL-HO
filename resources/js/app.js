@@ -24,17 +24,60 @@ import VueMultiselect from 'vue-multiselect';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
+const scrollToPageBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+};
+  
+const scrollToPageTop = () => {
+    window.scrollTo({
+        top: 100,
+        behavior: "smooth",
+    });
+};
+
+const watchTableScroll = () => {
+    const tableContainer = $('#tableData_wrapper .dt-scroll-body');
+
+    tableContainer.off("scroll").on("scroll", function () {
+    const { scrollHeight, scrollTop, clientHeight } = tableContainer[0];
+        // Check if the user has scrolled near the bottom of the table (within 1-2 pixels of the bottom)
+        if (scrollHeight - scrollTop - clientHeight <= 2) {
+        scrollToPageBottom();
+        }
+
+        // Check if the user has scrolled to the top of the table
+        if (scrollTop === 0) {
+            scrollToPageTop();
+        }
+    });
+};
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
+        const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
             .component('DataTable', DataTable) 
             .component('vueDatePicker', VueDatePicker) 
             .component('VueMultiselect', VueMultiselect)
             .mount(el);
+
+            setTimeout(() => {
+                watchTableScroll();
+            }, 1000);
+
+            const observer = new MutationObserver(() => {
+                watchTableScroll();
+            });
+        
+            observer.observe(document.body, { childList: true, subtree: true });
+        
+            return app;
     },
     progress: {
         color: '#4B5563',
