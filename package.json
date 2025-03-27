@@ -30,6 +30,7 @@
         "datatables.net-vue3": "^3.0.2",
         "highcharts": "^11.4.8",
         "highcharts-vue": "^2.0.1",
+        "howler": "^2.2.4",
         "jquery": "^3.7.1",
         "js-cookie": "^3.0.5",
         "jszip": "^3.10.1",

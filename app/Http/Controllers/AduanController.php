@@ -45,6 +45,22 @@ class AduanController extends Controller
         );
     }
 
+    public function checkAduan()
+    {
+        $aduanBaru = Aduan::where('site', 'HO')->orderBy('id', 'desc')->first();
+    
+        if ($aduanBaru) {
+            return response()->json([
+                'id' => $aduanBaru->max_id,
+                'site' => $aduanBaru->site,
+                //  'message' => "NRP: {$aduanBaru->nrp}\nNama: {$aduanBaru->username}\nComplaint Note: {$aduanBaru->complaint_note}"
+                'message' => $aduanBaru->complaint_note
+            ]);
+        }
+    
+        return response()->json(null);
+    }
+
     public function create()
     {
         $site = Auth::user()->site;

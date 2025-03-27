@@ -70,6 +70,21 @@ class AduanBibController extends Controller
         return Inertia::render('Inventory/SiteBib/Aduan/AduanCreate', ['ticket' => $uniqueString, 'crew' => $crew, 'categories' => $categories]);
     }
 
+    public function checkAduan()
+    {
+        $aduanBaru = Aduan::where('site', 'BIB')->orderBy('id', 'desc')->first();
+    
+        if ($aduanBaru) {
+            return response()->json([
+                'id' => $aduanBaru->max_id,
+                'site' => $aduanBaru->site,
+                'message' => $aduanBaru->complaint_note
+            ]);
+        }
+    
+        return response()->json(null);
+    }
+
     public function store(Request $request)
     {
         $maxId = Aduan::max('max_id');
@@ -195,9 +210,9 @@ class AduanBibController extends Controller
     public function edit($id)
     {
         $categories = DB::table('root_cause_categories')
-        ->select('id', 'category_root_cause')
-        ->where('site_type', 'SITE')
-        ->get();
+            ->select('id', 'category_root_cause')
+            ->where('site_type', 'SITE')
+            ->get();
 
         $aduan = Aduan::find($id);
         if (empty($aduan)) {

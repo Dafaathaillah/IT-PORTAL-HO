@@ -417,7 +417,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/asetDashboard/pengajuanAkses', [GuestAllController::class, 'pengajuanAkses'])->name('pengajuanAkses');
     });
 
-    Route::group(['middleware' => 'checkRole:guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB'], function () {
+    Route::group(['middleware' => 'checkRole:guest:HO,guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB'], function () {
         Route::get('/complaint/dashboard', [GuestReportController::class, 'index'])->name('guestAduan.page');
         Route::get('/complaint', [GuestReportController::class, 'create'])->name('guestAduan.create');
         Route::post('/complaint-store', [GuestReportController::class, 'store'])->name('guestAduan.store');
@@ -2216,6 +2216,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('itportal')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
+            Route::get('/admin/check-aduan/ho', [AduanController::class, 'checkAduan'])->name('aduan.check-aduan');
             Route::get('/aduan', [AduanController::class, 'index'])->name('aduan.page');
             Route::get('/aduan/create', [AduanController::class, 'create'])->name('aduan.create');
             Route::post('/aduan/create', [AduanController::class, 'store'])->name('aduan.store');
@@ -2228,6 +2229,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_ho:HO,ict_group_leader:BA,ict_admin:BA'], function () {
+            Route::get('/admin/check-aduan/ba', [AduanBaController::class, 'checkAduan'])->name('aduanBa.check-aduan');
             Route::get('/aduanBa', [AduanBaController::class, 'index'])->name('aduanBa.page');
             Route::get('/aduanBa/create', [AduanBaController::class, 'create'])->name('aduanBa.create');
             Route::post('/aduanBa/create', [AduanBaController::class, 'store'])->name('aduanBa.store');
@@ -2240,6 +2242,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_ho:HO,ict_group_leader:MIFA,ict_admin:MIFA'], function () {
+            Route::get('/admin/check-aduan/mifa', [AduanMifaController::class, 'checkAduan'])->name('aduanMifa.check-aduan');
             Route::get('/aduanMifa', [AduanMifaController::class, 'index'])->name('aduanMifa.page');
             Route::get('/aduanMifa/create', [AduanMifaController::class, 'create'])->name('aduanMifa.create');
             Route::post('/aduanMifa/create', [AduanMifaController::class, 'store'])->name('aduanMifa.store');
@@ -2252,6 +2255,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_ho:HO,ict_group_leader:MHU,ict_admin:MHU'], function () {
+            Route::get('/admin/check-aduan/mhu', [AduanMhuController::class, 'checkAduan'])->name('aduanMhu.check-aduan');
             Route::get('/aduanMhu', [AduanMhuController::class, 'index'])->name('aduanMhu.page');
             Route::get('/aduanMhu/create', [AduanMhuController::class, 'create'])->name('aduanMhu.create');
             Route::post('/aduanMhu/create', [AduanMhuController::class, 'store'])->name('aduanMhu.store');
@@ -2264,6 +2268,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
+            Route::get('/admin/check-aduan/wara', [AduanWARAController::class, 'checkAduan'])->name('aduanWARA.check-aduan');
             Route::get('/aduanWara', [AduanWARAController::class, 'index'])->name('aduanWARA.page');
             Route::get('/aduanWara/create', [AduanWARAController::class, 'create'])->name('aduanWARA.create');
             Route::post('/aduanWara/create', [AduanWARAController::class, 'store'])->name('aduanWARA.store');
@@ -2276,6 +2281,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_ho:HO,ict_group_leader:AMI,ict_admin:AMI'], function () {
+            Route::get('/admin/check-aduan/ami', [AduanAmiController::class, 'checkAduan'])->name('aduanAmi.check-aduan');
             Route::get('/aduanAmi', [AduanAmiController::class, 'index'])->name('aduanAmi.page');
             Route::get('/aduanAmi/create', [AduanAmiController::class, 'create'])->name('aduanAmi.create');
             Route::post('/aduanAmi/create', [AduanAmiController::class, 'store'])->name('aduanAmi.store');
@@ -2288,6 +2294,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_ho:HO,ict_group_leader:BIB,ict_admin:BIB'], function () {
+            Route::get('/admin/check-aduan/bib', [AduanBibController::class, 'checkAduan'])->name('aduanBib.check-aduan');
             Route::get('/aduanBib', [AduanBibController::class, 'index'])->name('aduanBib.page');
             Route::get('/aduanBib/create', [AduanBibController::class, 'create'])->name('aduanBib.create');
             Route::post('/aduanBib/create', [AduanBibController::class, 'store'])->name('aduanBib.store');
@@ -2300,6 +2307,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:IPT,ict_ho:HO,ict_group_leader:IPT,ict_admin:IPT'], function () {
+            Route::get('/admin/check-aduan/ipt', [AduanIptController::class, 'checkAduan'])->name('aduanIpt.check-aduan');
             Route::get('/aduanIpt', [AduanIptController::class, 'index'])->name('aduanIpt.page');
             Route::get('/aduanIpt/create', [AduanIptController::class, 'create'])->name('aduanIpt.create');
             Route::post('/aduanIpt/create', [AduanIptController::class, 'store'])->name('aduanIpt.store');
@@ -2312,6 +2320,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_ho:HO,ict_group_leader:MLP,ict_admin:MLP'], function () {
+            Route::get('/admin/check-aduan/mlp', [AduanMlpController::class, 'checkAduan'])->name('aduanMlp.check-aduan');
             Route::get('/aduanMlp', [AduanMlpController::class, 'index'])->name('aduanMlp.page');
             Route::get('/aduanMlp/create', [AduanMlpController::class, 'create'])->name('aduanMlp.create');
             Route::post('/aduanMlp/create', [AduanMlpController::class, 'store'])->name('aduanMlp.store');
@@ -2324,6 +2333,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIP,ict_ho:HO,ict_group_leader:MIP,ict_admin:MIP'], function () {
+            Route::get('/admin/check-aduan/mip', [AduanMipController::class, 'checkAduan'])->name('aduanMip.check-aduan');
             Route::get('/aduanMip', [AduanMipController::class, 'index'])->name('aduanMip.page');
             Route::get('/aduanMip/create', [AduanMipController::class, 'create'])->name('aduanMip.create');
             Route::post('/aduanMip/create', [AduanMipController::class, 'store'])->name('aduanMip.store');
@@ -2336,6 +2346,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_ho:HO,ict_group_leader:VIB,ict_admin:VIB'], function () {
+            Route::get('/admin/check-aduan/vib', [AduanValeController::class, 'checkAduan'])->name('aduanVale.check-aduan');
             Route::get('/aduanVale', [AduanValeController::class, 'index'])->name('aduanVale.page');
             Route::get('/aduanVale/create', [AduanValeController::class, 'create'])->name('aduanVale.create');
             Route::post('/aduanVale/create', [AduanValeController::class, 'store'])->name('aduanVale.store');
@@ -2348,6 +2359,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SBS,ict_ho:HO,ict_group_leader:SBS,ict_admin:SBS'], function () {
+            Route::get('/admin/check-aduan/sbs', [AduanSbsController::class, 'checkAduan'])->name('aduanSbs.check-aduan');
             Route::get('/aduanSbs', [AduanSbsController::class, 'index'])->name('aduanSbs.page');
             Route::get('/aduanSbs/create', [AduanSbsController::class, 'create'])->name('aduanSbs.create');
             Route::post('/aduanSbs/create', [AduanSbsController::class, 'store'])->name('aduanSbs.store');
@@ -2360,6 +2372,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_ho:HO,ict_group_leader:SKS,ict_admin:SKS'], function () {
+            Route::get('/admin/check-aduan/sks', [AduanSksController::class, 'checkAduan'])->name('aduanSks.check-aduan');
             Route::get('/aduanSks', [AduanSksController::class, 'index'])->name('aduanSks.page');
             Route::get('/aduanSks/create', [AduanSksController::class, 'create'])->name('aduanSks.create');
             Route::post('/aduanSks/create', [AduanSksController::class, 'store'])->name('aduanSks.store');
@@ -2372,6 +2385,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_ho:HO,ict_group_leader:PIK,ict_admin:PIK'], function () {
+            Route::get('/admin/check-aduan/pik', [AduanPikController::class, 'checkAduan'])->name('aduanPik.check-aduan');
             Route::get('/aduanPik', [AduanPikController::class, 'index'])->name('aduanPik.page');
             Route::get('/aduanPik/create', [AduanPikController::class, 'create'])->name('aduanPik.create');
             Route::post('/aduanPik/create', [AduanPikController::class, 'store'])->name('aduanPik.store');
@@ -2384,6 +2398,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_group_leader:BGE'], function () {
+            Route::get('/admin/check-aduan/bge', [AduanBgeController::class, 'checkAduan'])->name('aduanBge.check-aduan');
             Route::get('/aduanBge', [AduanBgeController::class, 'index'])->name('aduanBge.page');
             Route::get('/aduanBge/create', [AduanBgeController::class, 'create'])->name('aduanBge.create');
             Route::post('/aduanBge/create', [AduanBgeController::class, 'store'])->name('aduanBge.store');
