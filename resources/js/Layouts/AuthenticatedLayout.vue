@@ -13,11 +13,7 @@ import DashboardNavbar from "@/Components/inventory/DashboardNavbar.vue";
 import DashboardFooter from "@/Components/inventory/DashboardFooter.vue";
 import DashboardConfig from "@/Components/inventory/DashboardConfig.vue";
 import Swal from "sweetalert2";
-import { PerfectScrollbar } from "vue3-perfect-scrollbar";
 
-const scrollOptions = ref({
-    suppressScrollX: true,
-});
 
 const showingNavigationDropdown = ref(false);
 
@@ -236,7 +232,7 @@ const mainMenu = defineModel("mainMenu", {
 
     <!-- Page Content -->
     <main
-        class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl overflow-hidden"
+        class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl"
     >
         <audio
             id="notifSound"
@@ -245,7 +241,6 @@ const mainMenu = defineModel("mainMenu", {
             autoplay
             preload="auto"
         ></audio>
-        <PerfectScrollbar :options="scrollOptions">
             <DashboardNavbar
                 @toggleMobileSidebar="handleMobileSidebar"
                 @toggleConfig="handleConfigurator"
@@ -264,62 +259,3 @@ const mainMenu = defineModel("mainMenu", {
         v-model:isConfiguratorActive="isConfiguratorActive"
     />
 </template>
-<style>
-@import "/public/assets/css/perfect-scrollbar.css";
-
-@media only screen and (min-width: 150px) {
-    /* For mobile: */
-    .ps {
-        max-height: 38em !important;
-        /* or height: 100px; */
-    }
-}
-
-@media only screen and (min-width: 415px) {
-    /* For mobile: */
-    .ps {
-        max-height: 48em !important;
-        /* or height: 100px; */
-    }
-}
-
-@media only screen and (min-width: 600px) {
-    /* For laptop: */
-    .ps {
-        max-height: 42em !important;
-        /* or height: 100px; */
-    }
-}
-
-@media only screen and (min-width: 1024) {
-    /* For laptop: */
-    .ps {
-        max-height: 40em !important;
-        /* or height: 100px; */
-    }
-}
-
-@media only screen and (min-width: 1180) {
-    /* For laptop: */
-    .ps {
-        max-height: 40em !important;
-        /* or height: 100px; */
-    }
-}
-
-@media only screen and (min-width: 1366px) {
-    /* For laptop: */
-    .ps {
-        max-height: 42em !important;
-        /* or height: 100px; */
-    }
-}
-
-@media (min-width: 1800px) {
-    /* For big monitor */
-    .ps {
-        max-height: 52em !important;
-        /* or height: 100px; */
-    }
-}
-</style>
