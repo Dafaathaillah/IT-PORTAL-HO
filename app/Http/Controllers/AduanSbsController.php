@@ -37,6 +37,22 @@ class AduanSbsController extends Controller
         );
     }
 
+    public function checkAduan()
+    {
+        $aduanBaru = Aduan::where('site', 'SBS')->orderBy('id', 'desc')->first();
+    
+        if ($aduanBaru) {
+            return response()->json([
+                'id' => $aduanBaru->max_id,
+                'site' => $aduanBaru->site,
+                //  'message' => "NRP: {$aduanBaru->nrp}\nNama: {$aduanBaru->username}\nComplaint Note: {$aduanBaru->complaint_note}"
+                'message' => $aduanBaru->complaint_note
+            ]);
+        }
+    
+        return response()->json(null);
+    }
+
     public function create()
     {
         $categories = DB::table('root_cause_categories')

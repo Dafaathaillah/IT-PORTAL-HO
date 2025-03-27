@@ -34,7 +34,7 @@ class AduanHoController extends Controller
             ]
         );
     }
-
+    
     public function create()
     {
         $site = Auth::user()->site;

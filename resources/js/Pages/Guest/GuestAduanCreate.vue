@@ -9,7 +9,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import { usePage } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 
 const page = usePage();
 const authUser = page.props.auth.user;
@@ -37,6 +37,18 @@ const form = useForm({
     complaint_note: "",
     location_detail: "",
     image: "",
+});
+
+const notifyAdmin = () => {
+    localStorage.setItem("aduanSubmitted", Date.now().toString()); // Simpan timestamp di localStorage
+    console.log("✅ Notifikasi aduan dikirim ke admin.");
+};
+
+onMounted(() => {
+    const submitButton = document.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.addEventListener("click", notifyAdmin);
+    }
 });
 
 //start auto generate nama by nik
@@ -67,6 +79,14 @@ const save = () => {
     // console.log(form);
     form.post(route("guestAduan.store"), {
         onSuccess: () => {
+            // 🔥 Simpan aduan baru ke localStorage agar browser admin mendeteksi
+            const newAduan = {
+                id: Date.now(), // ID unik (bisa pakai dari response backend)
+                message: "Aduan Baru telah dikirim!",
+            };
+            localStorage.setItem("lastAduan", JSON.stringify(newAduan));
+            console.log("✅ Data disimpan di localStorage:", newAduan);
+            
             // Show SweetAlert2 success notification
             Swal.fire({
                 title: "Complaint has been submited!",
@@ -106,10 +126,10 @@ const getPlaceholder = computed(() => {
 
 const showAlertTrue = () => {
     Swal.fire({
-        title: 'Tabel Role Akses User!',
+        title: "Tabel Role Akses User!",
         html: '<img src="/step_no_inv.jpg" class="inline transition-all duration-200 ease-nav-brand max-h-60 mr-2" alt="main_logo" />',
     });
-}
+};
 </script>
 
 <template>
@@ -166,7 +186,6 @@ const showAlertTrue = () => {
                                         </span>
                                     </Link>
                                 </div>
-                                
                             </div>
                         </div>
                         <div class="flex-auto p-6">
@@ -302,8 +321,14 @@ const showAlertTrue = () => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Inventory Number</label
                                             >
-                                            <a style="cursor: pointer;" class="icon-button" @click="showAlertTrue">
-                                                <i class="ms-3 mt-1 text-red-700 fas fa-question-circle"></i>
+                                            <a
+                                                style="cursor: pointer"
+                                                class="icon-button"
+                                                @click="showAlertTrue"
+                                            >
+                                                <i
+                                                    class="ms-3 mt-1 text-red-700 fas fa-question-circle"
+                                                ></i>
                                             </a>
                                             <input
                                                 required
