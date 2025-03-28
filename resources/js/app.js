@@ -8,14 +8,14 @@ import DataTablesLib from 'datatables.net';
 import 'datatables.net-buttons';
 import 'datatables.net-buttons/js/buttons.html5';
 import jszip from 'jszip';
- 
+
 DataTable.use(DataTablesLib);
 DataTablesLib.Buttons.jszip(jszip);
 
 import $ from 'jquery';
 window.$ = window.jQuery = $;
 
-import { createApp, h } from 'vue';
+import { createApp, h, nextTick, onUnmounted } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
@@ -26,11 +26,11 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 const scrollToPageBottom = () => {
     window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
     });
 };
-  
+
 const scrollToPageTop = () => {
     window.scrollTo({
         top: 100,
@@ -42,15 +42,36 @@ const watchTableScroll = () => {
     const tableContainer = $('#tableData_wrapper .dt-scroll-body');
 
     tableContainer.off("scroll").on("scroll", function () {
-    const { scrollHeight, scrollTop, clientHeight } = tableContainer[0];
+        const { scrollHeight, scrollTop, clientHeight } = tableContainer[0];
         // Check if the user has scrolled near the bottom of the table (within 1-2 pixels of the bottom)
         if (scrollHeight - scrollTop - clientHeight <= 2) {
-        scrollToPageBottom();
+            scrollToPageBottom();
         }
 
         // Check if the user has scrolled to the top of the table
         if (scrollTop === 0) {
             scrollToPageTop();
+        }
+    });
+};
+
+// Function to synchronize DataTable scroll head with body
+const syncDataTableScroll = () => {
+    nextTick(() => {
+        const dataTableScrollBody = document.querySelector("#tableData_wrapper .dt-scroll-body");
+        const dataTableScrollHead = document.querySelector("#tableData_wrapper .dt-scroll-head");
+
+        if (dataTableScrollBody && dataTableScrollHead) {
+            const onScroll = () => {
+                dataTableScrollHead.scrollLeft = dataTableScrollBody.scrollLeft;
+            };
+
+            dataTableScrollBody.addEventListener("scroll", onScroll);
+
+            // Cleanup when the component is unmounted
+            onUnmounted(() => {
+                dataTableScrollBody.removeEventListener("scroll", onScroll);
+            });
         }
     });
 };
@@ -62,22 +83,24 @@ createInertiaApp({
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
-            .component('DataTable', DataTable) 
-            .component('vueDatePicker', VueDatePicker) 
+            .component('DataTable', DataTable)
+            .component('vueDatePicker', VueDatePicker)
             .component('VueMultiselect', VueMultiselect)
             .mount(el);
 
-            setTimeout(() => {
-                watchTableScroll();
-            }, 1000);
+        setTimeout(() => {
+            watchTableScroll();
+            syncDataTableScroll();
+        }, 1000);
 
-            const observer = new MutationObserver(() => {
-                watchTableScroll();
-            });
-        
-            observer.observe(document.body, { childList: true, subtree: true });
-        
-            return app;
+        const observer = new MutationObserver(() => {
+            watchTableScroll();
+            syncDataTableScroll();
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        return app;
     },
     progress: {
         color: '#4B5563',
