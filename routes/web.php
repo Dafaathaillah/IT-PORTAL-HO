@@ -212,6 +212,8 @@ use App\Http\Controllers\UserAllMifaController;
 use App\Http\Controllers\UserAllRcBinController;
 use App\Http\Controllers\UserController;
 use App\Models\Aduan;
+use App\Models\InspeksiComputer;
+use App\Models\InspeksiLaptop;
 use App\Models\InvAp;
 use App\Models\InvCctv;
 use App\Models\InvComputer;
@@ -309,6 +311,109 @@ Route::middleware('auth')->group(function () {
 
             $loginSession =  'tes';
 
+            $countAllDataInspeksiLaptop = 100;
+            $countSudahInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'Y')
+                ->where('site', 'HO')
+                ->whereYear('year', Carbon::now()->year)
+                ->count();
+            $countBelumInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'N')
+                ->where('site', 'HO')
+                ->whereYear('year', Carbon::now()->year)
+                ->count();
+            if ($countAllDataInspeksiLaptop > 0) {
+                $percentLaptopSudahInspeksi = ($countSudahInspeksiLaptop / $countAllDataInspeksiLaptop) * 100;
+                $percentLaptopBelumInspeksi = ($countBelumInspeksiLaptop / $countAllDataInspeksiLaptop) * 100;
+            } else {
+                $percentLaptopSudahInspeksi = 0;
+                $percentLaptopBelumInspeksi = 0;
+            }
+
+            $triwulanSekarang = Carbon::now()->quarter;
+
+            $countAllDataInspeksiComputer = InspeksiComputer::where('site', 'HO')
+                ->whereYear('triwulan', $triwulanSekarang)
+                ->count();
+            $countSudahInspeksiComputer = InspeksiComputer::where('inspection_status', 'Y')
+                ->where('site', 'HO')
+                ->whereYear('triwulan', $triwulanSekarang)
+                ->count();
+            $countBelumInspeksiComputer = InspeksiComputer::where('inspection_status', 'N')
+                ->where('site', 'HO')
+                ->whereYear('triwulan', $triwulanSekarang)
+                ->count();
+
+            if ($countAllDataInspeksiComputer > 0) {
+                $percentComputerSudahInspeksi = ($countSudahInspeksiComputer / $countAllDataInspeksiComputer) * 100;
+                $percentComputerBelumInspeksi = ($countBelumInspeksiComputer / $countAllDataInspeksiComputer) * 100;
+            } else {
+                $percentComputerSudahInspeksi = 0;
+                $percentComputerBelumInspeksi = 0;
+            }
+
+            $sudahInspeksiArray = [$percentLaptopSudahInspeksi, $percentComputerSudahInspeksi];
+            $belumInspeksiArray = [$percentLaptopBelumInspeksi, $percentComputerBelumInspeksi];
+
+            $totalAduanAll = Aduan::where('site', 'HO')->count();
+            if ($totalAduanAll > 0) {
+                $totalAduan = $totalAduanAll;
+
+                $aduanTelkomsel = Aduan::where('site', 'HO')->where('category_name', 'TELKOMSEL')->count();
+                $aduanTelkomselPercent = ($aduanTelkomsel / $totalAduan) * 100;
+
+                $aduanRadio = Aduan::where('site', 'HO')->where('category_name', 'RADIO')->count();
+                $aduanRadioPercent = ($aduanRadio / $totalAduan) * 100;
+
+                $aduanServer = Aduan::where('site', 'HO')->where('category_name', 'SERVER')->count();
+                $aduanServerPercent = ($aduanServer / $totalAduan) * 100;
+
+                $aduanSs6 = Aduan::where('site', 'HO')->where('category_name', 'SS6')->count();
+                $aduanSs6Percent = ($aduanSs6 / $totalAduan) * 100;
+
+                $aduanWebsite = Aduan::where('site', 'HO')->where('category_name', 'WEBSITE')->count();
+                $aduanWebsitePercent = ($aduanWebsite / $totalAduan) * 100;
+
+                $aduanNetwork = Aduan::where('site', 'HO')->where('category_name', 'NETWORK')->count();
+                $aduanNetworkPercent = ($aduanNetwork / $totalAduan) * 100;
+
+                $aduanSap = Aduan::where('site', 'HO')->where('category_name', 'SAP')->count();
+                $aduanSapPercent = ($aduanSap / $totalAduan) * 100;
+
+                $aduanPcNb = Aduan::where('site', 'HO')->where('category_name', 'PC/NB')->count();
+                $aduanPcNbPercent = ($aduanPcNb / $totalAduan) * 100;
+
+                $aduanPrinter = Aduan::where('site', 'HO')->where('category_name', 'PRINTER')->count();
+                $aduanPrinterPercent = ($aduanPrinter / $totalAduan) * 100;
+
+                $aduanSoc = Aduan::where('site', 'HO')->where('category_name', 'SOC')->count();
+                $aduanSocPercent = ($aduanSoc / $totalAduan) * 100;
+
+                $aduanOther = Aduan::where('site', 'HO')->where('category_name', 'OTHER')->count();
+                $aduanOtherPercent = ($aduanOther / $totalAduan) * 100;
+            }else{
+                $totalAduan = 0;
+                $aduanTelkomselPercent = 0;
+                $aduanRadioPercent = 0;
+                $aduanServerPercent = 0;
+                $aduanSs6Percent = 0;
+                $aduanWebsitePercent = 0;
+                $aduanNetworkPercent = 0;
+                $aduanSapPercent = 0;
+                $aduanPcNbPercent = 0;
+                $aduanPrinterPercent = 0;
+                $aduanOtherPercent = 0;
+                $aduanTelkomsel = 0;
+                $aduanRadio = 0;
+                $aduanServer = 0;
+                $aduanSs6 = 0;
+                $aduanWebsite = 0;
+                $aduanNetwork = 0;
+                $aduanSap = 0;
+                $aduanPcNb = 0;
+                $aduanPrinter = 0;
+                $aduanSoc = 0;
+                $aduanOther = 0;
+            }
+
             return Inertia::render(
                 'Inventory/Dashboard',
                 [
@@ -322,6 +427,31 @@ Route::middleware('auth')->group(function () {
                     'readyStandby_array' => $readyStandby_array,
                     'readyUsed_array' => $readyUsed_array,
                     'loginSession' => $loginSession,
+                    'sudahInspeksi' => $sudahInspeksiArray,
+                    'belumInspeksi' => $belumInspeksiArray,
+                    'totalAduan' => $totalAduan,
+                    'telkomsel' => $aduanTelkomselPercent,
+                    'soc' => $aduanSocPercent,
+                    'radio' => $aduanRadioPercent,
+                    'server' => $aduanServerPercent,
+                    'ss6' => $aduanSs6Percent,
+                    'website' => $aduanWebsitePercent,
+                    'network' => $aduanNetworkPercent,
+                    'sap' => $aduanSapPercent,
+                    'pcNb' => $aduanPcNbPercent,
+                    'printer' => $aduanPrinterPercent,
+                    'other' => $aduanOtherPercent,
+                    'aduanTelkomsel' => $aduanTelkomsel,
+                    'aduanRadio' => $aduanRadio,
+                    'aduanServer' => $aduanServer,
+                    'aduanSs6' => $aduanSs6,
+                    'aduanWebsite' => $aduanWebsite,
+                    'aduanNetwork' => $aduanNetwork,
+                    'aduanSap' => $aduanSap,
+                    'aduanPcNb' => $aduanPcNb,
+                    'aduanPrinter' => $aduanPrinter,
+                    'aduanSoc' => $aduanSoc,
+                    'aduanOther' => $aduanOther,
                 ]
             );
         })->name('developerDashboard');

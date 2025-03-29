@@ -47,8 +47,19 @@ class ImportLaptop implements ToModel, WithStartRow
             $existingDataSn = InvLaptop::where('serial_number', $serialNumber)->first();
         }
 
-        $tanggal_inventory = $this->convertToDate($row[22]);
-        $tanggal_deploy = $this->convertToDate($row[23]);
+        $tanggal_inventory = $row[22];
+        if ($tanggal_inventory === '' || $tanggal_inventory === '-' || $tanggal_inventory === null) {
+            $tanggal_inventory = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $tanggal_inventory = $this->convertToDate($row[22]);
+        }
+        $tanggal_deploy = $row[23];
+        if ($tanggal_deploy === '' || $tanggal_deploy === '-' || $tanggal_deploy === null) {
+            $tanggal_deploy = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $tanggal_deploy = $this->convertToDate($row[23]);
+
+        }
 
         // $existingDataSn = InvLaptop::where('serial_number', $row[13])->first();
         if ($aduan_get_data_user) {

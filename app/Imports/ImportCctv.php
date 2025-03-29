@@ -56,8 +56,12 @@ class ImportCctv implements ToModel, WithStartRow
             return null;
         }
 
-        $tanggal = $this->convertToDate($row[14]);
-
+        $tanggal = $row[14];
+        if ($tanggal === '' || $tanggal === '-' || $tanggal === null) {
+            $tanggal = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $tanggal = $this->convertToDate($row[14]);
+        }
         // return dd($maxId);
         return new InvCctv([
             'max_id' => $maxId,

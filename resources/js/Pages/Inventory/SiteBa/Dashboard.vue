@@ -36,193 +36,733 @@ const props = defineProps({
     readyStandby_array: {
         type: Array,
     },
+    sudahInspeksi: {
+        type: Array,
+    },
+    belumInspeksi: {
+        type: Array,
+    },
     readyUsed_array: {
         type: Array,
     },
     loginSession: {
         type: String,
     },
+    totalAduan: {
+        type: Number,
+    },
+    telkomsel: {
+        type: Number,
+    },
+    server: {
+        type: Number,
+    },
+    ss6: {
+        type: Number,
+    },
+    website: {
+        type: Number,
+    },
+    network: {
+        type: Number,
+    },
+    radio: {
+        type: Number,
+    },
+    sap: {
+        type: Number,
+    },
+    pcNb: {
+        type: Number,
+    },
+    printer: {
+        type: Number,
+    },
+    other: {
+        type: Number,
+    },
+    aduanTelkomsel: {
+        type: Number,
+    },
+    aduanRadio: {
+        type: Number,
+    },
+    aduanServer: {
+        type: Number,
+    },
+    aduanSs6: {
+        type: Number,
+    },
+    aduanWebsite: {
+        type: Number,
+    },
+    aduanNetwork: {
+        type: Number,
+    },
+    aduanSap: {
+        type: Number,
+    },
+    aduanPcNb: {
+        type: Number,
+    },
+    aduanPrinter: {
+        type: Number,
+    },
+    aduanOther: {
+        type: Number,
+    },
 });
 
 const chartContainer = ref(null);
+const chartAchievement = ref(null);
+const chartAduanAnalys = ref(null);
 
 const theme = ref(null);
 
 const isDark = useDark();
 
 watchEffect(() => {
-  
     if (isDark.value === true) {
         // dark
-        theme.value = 'dark';
-        
+        theme.value = "dark";
+
         nextTick(() => {
             initChartDark();
+            initChartAchievementDark();
+            initChartAduanAnalysDark();
         });
-        
-    }else{
+    } else {
         // light
-        theme.value = 'light';
+        theme.value = "light";
         nextTick(() => {
             initChartLight();
+            initChartAchievementLight();
+            initChartAduanAnalysLight();
         });
     }
-    
 });
-
 
 const initChartDark = () => {
     Highcharts.chart(chartContainer.value, {
-            chart: {
-                type: "bar",
-                backgroundColor: "#111C44"
+        chart: {
+            type: "bar",
+            backgroundColor: "#111C44",
+        },
+        title: {
+            text: "",
+            align: "left",
+        },
+        xAxis: {
+            categories: [
+                "Access Point",
+                "Switch",
+                "Wirelless",
+                "Printer",
+                "CCTV",
+                "Komputer",
+                "Laptop",
+            ],
+            labels: {
+                style: {
+                    color: "#fff",
+                },
             },
+        },
+        yAxis: {
+            min: 0,
             title: {
                 text: "",
-                align: "left",
             },
-            xAxis: {
-                categories: [
-                    "Access Point",
-                    "Switch",
-                    "Wirelless",
-                    "Printer",
-                    "CCTV",
-                    "Komputer",
-                    "Laptop",
-                ],
-                labels: {
-                    style: {
-                        color: "#fff",
-                    },
+            labels: {
+                style: {
+                    color: "#fff",
                 },
             },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: "",
-                },
-                labels: {
-                    style: {
-                        color: "#fff",
-                    },
+        },
+        legend: {
+            reversed: true,
+            itemStyle: {
+                color: "#fff",
+                hover: "#fff",
+                cursor: "pointer",
+            },
+        },
+        plotOptions: {
+            series: {
+                stacking: "normal",
+                dataLabels: {
+                    enabled: true,
                 },
             },
-            legend: {
-                reversed: true,
-                itemStyle: {
-                "color": "#fff",
-                "hover": "#fff",
-                "cursor": "pointer",
-                
-                }
+        },
+        series: [
+            {
+                name: "Breakdown",
+                color: "#F64865",
+                data: props.breakdown_array,
             },
-            plotOptions: {
-                series: {
-                    stacking: "normal",
-                    dataLabels: {
-                        enabled: true,
-                    },
-                },
+            {
+                name: "Scrap",
+                color: "#FA7B3A",
+                data: props.scrap_array,
             },
-            series: [
-                {
-                    name: "Breakdown",
-                    color: "#F64865",
-                    data: props.breakdown_array,
-                },
-                {
-                    name: "Scrap",
-                    color: "#FA7B3A",
-                    data: props.scrap_array,
-                },
-                {
-                    name: "Ready Stanby",
-                    color: "#FBCB33",
-                    data: props.readyStandby_array,
-                },
-                {
-                    name: "Ready Used",
-                    color: "#2FCFA4",
-                    data: props.readyUsed_array,
-                },
-            ],
-            credits: {
-                enabled: false,
+            {
+                name: "Ready Stanby",
+                color: "#FBCB33",
+                data: props.readyStandby_array,
             },
-        });
-    
-}
+            {
+                name: "Ready Used",
+                color: "#2FCFA4",
+                data: props.readyUsed_array,
+            },
+        ],
+        credits: {
+            enabled: false,
+        },
+    });
+};
 const initChartLight = () => {
     Highcharts.chart(chartContainer.value, {
-            chart: {
-                type: "bar",
+        chart: {
+            type: "bar",
+        },
+        title: {
+            text: "",
+            align: "left",
+        },
+        xAxis: {
+            categories: [
+                "Access Point",
+                "Switch",
+                "Wirelless",
+                "Printer",
+                "CCTV",
+                "Komputer",
+                "Laptop",
+            ],
+            labels: {
+                style: {
+                    // color: "#fff",
+                },
             },
+        },
+        yAxis: {
+            min: 0,
             title: {
                 text: "",
-                align: "left",
             },
-            xAxis: {
-                categories: [
-                    "Access Point",
-                    "Switch",
-                    "Wirelless",
-                    "Printer",
-                    "CCTV",
-                    "Komputer",
-                    "Laptop",
-                ],
-                labels: {
+        },
+        legend: {
+            reversed: true,
+        },
+        plotOptions: {
+            series: {
+                stacking: "normal",
+                dataLabels: {
+                    enabled: true,
+                },
+            },
+        },
+        series: [
+            {
+                name: "Breakdown",
+                color: "#F64865",
+                data: props.breakdown_array,
+            },
+            {
+                name: "Scrap",
+                color: "#FA7B3A",
+                data: props.scrap_array,
+            },
+            {
+                name: "Ready Stanby",
+                color: "#FBCB33",
+                data: props.readyStandby_array,
+            },
+            {
+                name: "Ready Used",
+                color: "#2FCFA4",
+                data: props.readyUsed_array,
+            },
+        ],
+        credits: {
+            enabled: false,
+        },
+    });
+};
+
+const initChartAchievementLight = () => {
+    Highcharts.chart(chartAchievement.value, {
+        chart: {
+            type: "bar",
+        },
+        title: {
+            text: "",
+            align: "left",
+        },
+        xAxis: {
+            categories: ["Laptop", "Komputer"],
+            labels: {
+                style: {
+                    // color: "#fff",
+                },
+            },
+        },
+        yAxis: {
+            min: 0,
+            max: 100,
+            title: {
+                text: "Inspection (%)",
+            },
+            labels: {
+                format: "{value}%",
+            },
+        },
+        legend: {
+            reversed: true,
+        },
+        tooltip: {
+            pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+        },
+        plotOptions: {
+            series: {
+                stacking: "percent",
+                dataLabels: {
+                    enabled: true, // Menampilkan angka di dalam batang
+                    format: "{y}%", // Menampilkan nilai dalam persen
                     style: {
-                        // color: "#fff",
+                        fontWeight: "bold",
+                        color: "black", // Warna teks untuk kontras dengan batang
+                        textOutline: "3px contrast",
                     },
                 },
             },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: "",
+        },
+
+        series: [
+            {
+                name: "Belum Inspeksi",
+                color: "#F64865",
+                data: props.belumInspeksi,
+            },
+            {
+                name: "Sudah Inspeksi",
+                color: "#2FCFA4",
+                data: props.sudahInspeksi,
+            },
+        ],
+        credits: {
+            enabled: false,
+        },
+    });
+};
+const initChartAchievementDark = () => {
+    Highcharts.chart(chartAchievement.value, {
+        chart: {
+            type: "bar",
+            backgroundColor: "#111C44",
+        },
+        title: {
+            text: "",
+            align: "left",
+        },
+        xAxis: {
+            categories: ["Laptop", "Komputer"],
+            labels: {
+                style: {
+                    color: "#fff",
                 },
             },
-            legend: {
-                reversed: true,
+        },
+        yAxis: {
+            min: 0,
+            max: 100,
+            title: {
+                text: "Inspection (%)",
+                style: {
+                    color: "#fff", // Mengubah warna title menjadi putih
+                    fontWeight: "bold",
+                },
             },
-            plotOptions: {
-                series: {
-                    stacking: "normal",
-                    dataLabels: {
+            labels: {
+                format: "{value}%",
+                style: {
+                    color: "#fff", // Mengubah warna title menjadi putih
+                    fontWeight: "bold",
+                },
+            },
+        },
+        legend: {
+            reversed: true,
+            itemStyle: {
+                color: "#fff",
+                hover: "#fff",
+                cursor: "pointer",
+            },
+        },
+        tooltip: {
+            pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+        },
+        plotOptions: {
+            series: {
+                stacking: "percent",
+                dataLabels: {
+                    enabled: true, // Menampilkan angka di dalam batang
+                    format: "{y}%", // Menampilkan nilai dalam persen
+                    style: {
+                        fontWeight: "bold",
+                        color: "black", // Warna teks untuk kontras dengan batang
+                        textOutline: "3px contrast",
+                    },
+                },
+            },
+        },
+
+        series: [
+            {
+                name: "Belum Inspeksi",
+                color: "#F64865",
+                data: props.belumInspeksi,
+            },
+            {
+                name: "Sudah Inspeksi",
+                color: "#2FCFA4",
+                data: props.sudahInspeksi,
+            },
+        ],
+        credits: {
+            enabled: false,
+        },
+    });
+};
+
+const initChartAduanAnalysLight = () => {
+    Highcharts.chart(chartAduanAnalys.value, {
+        chart: {
+            type: "pie",
+            custom: {},
+            events: {
+                render() {
+                    const chart = this,
+                        series = chart.series[0];
+                    let customLabel = chart.options.chart.custom.label;
+
+                    if (!customLabel) {
+                        customLabel = chart.options.chart.custom.label =
+                            chart.renderer
+                                .label(
+                                    `Total Aduan<br/><strong>${props.totalAduan}</strong>`
+                                )
+                                .css({
+                                    color: "#000",
+                                    textAnchor: "middle",
+                                })
+                                .add();
+                    }
+
+                    const x = series.center[0] + chart.plotLeft,
+                        y =
+                            series.center[1] +
+                            chart.plotTop -
+                            customLabel.attr("height") / 2;
+
+                    customLabel.attr({
+                        x,
+                        y,
+                    });
+                    // Set font size based on chart diameter
+                    customLabel.css({
+                        fontSize: `${series.center[2] / 12}px`,
+                    });
+                },
+            },
+        },
+        accessibility: {
+            point: {
+                valueSuffix: "%",
+            },
+        },
+        title: {
+            text: "Site BA",
+        },
+        subtitle: {
+            // text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">SSB</a>',
+        },
+        tooltip: {
+            pointFormat: "{series.name}: <b>{point.y:.1f}%</b>",
+        },
+        legend: {
+            layout: "vertical",
+            align: "right",
+            verticalAlign: "middle",
+            labelFormatter: function () {
+                // Contoh: Ambil nilai dari props
+                let customValues = {
+                    TELKOMSEL: props.aduanTelkomsel,
+                    RADIO: props.aduanRadio,
+                    SERVER: props.aduanServer,
+                    SS6: props.aduanSs6,
+                    WEBSITE: props.aduanWebsite,
+                    NETWORK: props.aduanNetwork,
+                    SAP: props.aduanSap,
+                    "PC/NB": props.aduanPcNb,
+                    PRINTER: props.aduanPrinter,
+                    OTHER: props.aduanOther,
+                };
+
+                // Gabungkan nama kategori + nilai dari props
+                return this.name + " (" + (customValues[this.name] || 0) + ")";
+            },
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect: true,
+                cursor: "pointer",
+                borderRadius: 8,
+                dataLabels: [
+                    {
                         enabled: true,
+                        distance: 20,
+                        format: "{point.name}",
                     },
+                    {
+                        enabled: true,
+                        distance: -15,
+                        format: "{point.y:.1f}%",
+                        style: {
+                            fontSize: "0.9em",
+                        },
+                    },
+                ],
+                showInLegend: true,
+            },
+        },
+        series: [
+            {
+                name: "Complaint",
+                colorByPoint: true,
+                innerSize: "75%",
+                data: [
+                    {
+                        name: "TELKOMSEL",
+                        y: props.telkomsel,
+                    },
+                    {
+                        name: "RADIO",
+                        y: props.radio,
+                    },
+                    {
+                        name: "SERVER",
+                        y: props.server,
+                    },
+                    {
+                        name: "SS6",
+                        y: props.ss6,
+                    },
+                    {
+                        name: "WEBISTE",
+                        y: props.website,
+                    },
+                    {
+                        name: "NETWORK",
+                        y: props.network,
+                    },
+                    {
+                        name: "SAP",
+                        y: props.sap,
+                    },
+                    {
+                        name: "PC/NB",
+                        y: props.pcNb,
+                    },
+                    {
+                        name: "PRINTER",
+                        y: props.printer,
+                    },
+                    {
+                        name: "OTHER",
+                        y: props.other,
+                    },
+                ],
+            },
+        ],
+        credits: {
+            enabled: false,
+        },
+    });
+};
+const initChartAduanAnalysDark = () => {
+    Highcharts.chart(chartAduanAnalys.value, {
+        chart: {
+            type: "pie",
+            backgroundColor: "#111C44",
+            custom: {},
+            events: {
+                render() {
+                    const chart = this,
+                        series = chart.series[0];
+                    let customLabel = chart.options.chart.custom.label;
+
+                    if (!customLabel) {
+                        customLabel = chart.options.chart.custom.label =
+                            chart.renderer
+                                .label(
+                                    `Total Aduan<br/><strong>${props.totalAduan}</strong>`
+                                )
+                                .css({
+                                    color: "#000",
+                                    textAnchor: "middle",
+                                })
+                                .add();
+                    }
+
+                    const x = series.center[0] + chart.plotLeft,
+                        y =
+                            series.center[1] +
+                            chart.plotTop -
+                            customLabel.attr("height") / 2;
+
+                    customLabel.attr({
+                        x,
+                        y,
+                    });
+                    // Set font size based on chart diameter
+                    customLabel.css({
+                        fontSize: `${series.center[2] / 12}px`,
+                        color: "#fff",
+                    });
                 },
             },
-            series: [
-                {
-                    name: "Breakdown",
-                    color: "#F64865",
-                    data: props.breakdown_array,
-                },
-                {
-                    name: "Scrap",
-                    color: "#FA7B3A",
-                    data: props.scrap_array,
-                },
-                {
-                    name: "Ready Stanby",
-                    color: "#FBCB33",
-                    data: props.readyStandby_array,
-                },
-                {
-                    name: "Ready Used",
-                    color: "#2FCFA4",
-                    data: props.readyUsed_array,
-                },
-            ],
-            credits: {
-                enabled: false,
+        },
+        accessibility: {
+            point: {
+                valueSuffix: "%",
             },
-        });
-    
-}
+        },
+        title: {
+            text: "Site BA",
+            style: {
+                color: "#fff", // Mengubah warna title menjadi putih
+                fontWeight: "bold",
+            },
+        },
+        subtitle: {
+            // text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">SSB</a>',
+        },
+        tooltip: {
+            pointFormat: "{series.name}: <b>{point.y:.1f}%</b>",
+        },
+        legend: {
+            layout: "vertical",
+            align: "right",
+            verticalAlign: "middle",
+            labelFormatter: function () {
+                // Contoh: Ambil nilai dari props
+                let customValues = {
+                    TELKOMSEL: props.aduanTelkomsel,
+                    RADIO: props.aduanRadio,
+                    SERVER: props.aduanServer,
+                    SS6: props.aduanSs6,
+                    WEBSITE: props.aduanWebsite,
+                    NETWORK: props.aduanNetwork,
+                    SAP: props.aduanSap,
+                    "PC/NB": props.aduanPcNb,
+                    PRINTER: props.aduanPrinter,
+                    OTHER: props.aduanOther,
+                };
+
+                // Gabungkan nama kategori + nilai dari props
+                return this.name + " (" + (customValues[this.name] || 0) + ")";
+            },
+            itemStyle: {
+                color: "#fff",
+                hover: "#fff",
+                cursor: "pointer",
+            },
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect: true,
+                cursor: "pointer",
+                borderRadius: 8,
+                dataLabels: [
+                    {
+                        enabled: true,
+                        distance: 20,
+                        format: "{point.name}",
+                        style: {
+                            color: "#fff", // Warna putih untuk nama
+                            fontSize: "0.9em",
+                        },
+                    },
+                    {
+                        enabled: true,
+                        distance: -15,
+                        format: "{point.y:.1f}%",
+                        style: {
+                            color: "#fff", // Warna putih untuk persentase
+                            fontSize: "0.9em",
+                        },
+                    },
+                ],
+                showInLegend: true,
+            },
+        },
+        series: [
+            {
+                name: "Complaint",
+                colorByPoint: true,
+                innerSize: "75%",
+                data: [
+                    {
+                        name: "TELKOMSEL",
+                        y: props.telkomsel,
+                    },
+                    {
+                        name: "RADIO",
+                        y: props.radio,
+                    },
+                    {
+                        name: "SERVER",
+                        y: props.server,
+                    },
+                    {
+                        name: "SS6",
+                        y: props.ss6,
+                    },
+                    {
+                        name: "WEBISTE",
+                        y: props.website,
+                    },
+                    {
+                        name: "NETWORK",
+                        y: props.network,
+                    },
+                    {
+                        name: "SAP",
+                        y: props.sap,
+                    },
+                    {
+                        name: "PC/NB",
+                        y: props.pcNb,
+                    },
+                    {
+                        name: "PRINTER",
+                        y: props.printer,
+                    },
+                    {
+                        name: "OTHER",
+                        y: props.other,
+                    },
+                ],
+            },
+        ],
+        credits: {
+            enabled: false,
+        },
+    });
+};
 </script>
 
 <template>
@@ -407,17 +947,19 @@ const initChartLight = () => {
 
         <!-- cards row 3 -->
 
+      
         <div class="flex flex-wrap mt-6 -mx-3">
             <div
                 class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-12/12 lg:flex-none"
             >
+                <!-- Table Monitoring Device PPA Site BA (Full Width) -->
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border"
                 >
                     <div class="p-4 pb-0 mb-0 rounded-t-4">
                         <div class="flex justify-between">
                             <h6 class="mb-2 dark:text-white">
-                                Table Monitoring Device PPA Site Bukit Asam
+                                Table Monitoring Device PPA Site BA
                             </h6>
                         </div>
                     </div>
@@ -426,7 +968,47 @@ const initChartLight = () => {
                             ref="chartContainer"
                             style="width: 100%; height: 400px"
                         ></div>
-                        
+                    </div>
+                </div>
+
+                <!-- Row Baru untuk 2 Chart di Satu Baris -->
+                <div class="flex mt-10 gap-4">
+                    <!-- Table Monitoring Achievement Inspeksi (50%) -->
+                    <div
+                        class="w-1/2 relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border"
+                    >
+                        <div class="p-4 pb-0 mb-0 rounded-t-4">
+                            <div class="flex justify-between">
+                                <h6 class="mb-2 dark:text-white">
+                                    Table Monitoring Achievement Inspeksi
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <div
+                                ref="chartAchievement"
+                                style="width: 100%; height: 400px"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <!-- Chart Tambahan (50%) -->
+                    <div
+                        class="w-1/2 relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border"
+                    >
+                        <div class="p-4 pb-0 mb-0 rounded-t-4">
+                            <div class="flex justify-between">
+                                <h6 class="mb-2 dark:text-white">
+                                    Table Analysis Aduan
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <div
+                                ref="chartAduanAnalys"
+                                style="width: 100%; height: 400px"
+                            ></div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -23,7 +23,7 @@ class WirellessImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 14);
+        $row = array_slice($row, 0, 15);
 
         $emptyCheck = array_filter(array_slice($row, 1, 3)); 
         if (count($emptyCheck) === 0) {
@@ -54,6 +54,13 @@ class WirellessImport implements ToModel, WithStartRow
             return null;
         }
 
+        $tanggal = $row[14];
+        if ($tanggal === '' || $tanggal === '-' || $tanggal === null) {
+            $tanggal = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $tanggal = $this->convertToDate($row[14]);
+        }
+
         return new InvWirelless([
             'max_id' => $maxId,
             'device_name' => $row[1],
@@ -68,6 +75,7 @@ class WirellessImport implements ToModel, WithStartRow
             'device_model' => $row[10],
             'location' => $row[11],
             'status' => $row[12],
+            'date_of_inventory' => $tanggal,
             'note' => $row[13],
             'site' => auth()->user()->site
         ]);

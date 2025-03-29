@@ -58,8 +58,12 @@ class SwitchImport implements ToModel, WithStartRow
             ];
             return null;
         }
-        $tanggal = $this->convertToDate($row[13]);
-
+        $tanggal = $row[13];
+        if ($tanggal === '' || $tanggal === '-' || $tanggal === null) {
+            $tanggal = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $tanggal = $this->convertToDate($row[13]);
+        }
 
         return new InvSwitch([
             'max_id' => $maxId,

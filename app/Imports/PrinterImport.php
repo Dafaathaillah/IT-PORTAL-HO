@@ -45,7 +45,12 @@ class PrinterImport implements ToModel, WithStartRow
             $existingDataInvNumber = InvPrinter::where('printer_code', $inventoryNumber)->where('site', auth()->user()->site)->first();
         }
 
-        $tanggal = $this->convertToDate($row[14]);
+        $tanggal = $row[14];
+        if ($tanggal === '' || $tanggal === '-' || $tanggal === null) {
+            $tanggal = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $tanggal = $this->convertToDate($row[14]);
+        }
 
         $maxId = InvPrinter::max('max_id');
         if (is_null($maxId)) {
