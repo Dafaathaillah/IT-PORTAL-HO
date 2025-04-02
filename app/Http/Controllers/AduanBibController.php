@@ -37,6 +37,15 @@ class AduanBibController extends Controller
         );
     }
 
+    public function getLatestAduan()
+    {
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')
+            ->where('site', 'BIB')
+            ->get();
+
+        return response()->json($aduan);
+    }
+
     public function create()
     {
         $categories = DB::table('root_cause_categories')
@@ -70,19 +79,21 @@ class AduanBibController extends Controller
         return Inertia::render('Inventory/SiteBib/Aduan/AduanCreate', ['ticket' => $uniqueString, 'crew' => $crew, 'categories' => $categories]);
     }
 
-    public function checkAduan()
+    public function checkAduan(Request $request)
     {
         $aduanBaru = Aduan::where('site', 'BIB')->orderBy('id', 'desc')->first();
-    
+
         if ($aduanBaru) {
-            return response()->json([
-                'id' => $aduanBaru->max_id,
+            $response = [
+                'id' => $aduanBaru->id,
                 'site' => $aduanBaru->site,
                 'message' => $aduanBaru->complaint_note
-            ]);
+            ];
+
+            if ($request->wantsJson() || $request->header('X-Inertia') !== 'true') {
+                return response()->json($response);
+            }
         }
-    
-        return response()->json(null);
     }
 
     public function store(Request $request)

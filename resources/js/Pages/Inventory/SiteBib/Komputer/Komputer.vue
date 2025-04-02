@@ -477,9 +477,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    komputers
-                                                                        .pengguna
-                                                                        .username
+                                                                    komputers.pengguna?.username || 'No User'
                                                                 }}
                                                             </p>
                                                         </td>
@@ -490,9 +488,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    komputers
-                                                                        .pengguna
-                                                                        .department
+                                                                    komputers.pengguna?.department || 'Tidak Ada Department'
                                                                 }}
                                                             </p>
                                                         </td>
@@ -503,9 +499,7 @@ const showAddAlert = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    komputers
-                                                                        .pengguna
-                                                                        .position
+                                                                    komputers.pengguna?.position || 'Posisi Tidak Ditemukan'
                                                                 }}
                                                             </p>
                                                         </td>

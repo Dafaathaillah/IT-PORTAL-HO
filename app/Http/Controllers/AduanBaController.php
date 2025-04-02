@@ -37,20 +37,21 @@ class AduanBaController extends Controller
         );
     }
 
-    public function checkAduan()
+    public function checkAduan(Request $request)
     {
         $aduanBaru = Aduan::where('site', 'BA')->orderBy('id', 'desc')->first();
     
         if ($aduanBaru) {
-            return response()->json([
+            $response = [
                 'id' => $aduanBaru->max_id,
                 'site' => $aduanBaru->site,
-                //  'message' => "NRP: {$aduanBaru->nrp}\nNama: {$aduanBaru->username}\nComplaint Note: {$aduanBaru->complaint_note}"
                 'message' => $aduanBaru->complaint_note
-            ]);
+            ];
+
+            if ($request->wantsJson() || $request->header('X-Inertia') !== 'true') {
+                return response()->json($response);
+            }
         }
-    
-        return response()->json(null);
     }
 
     public function create()
