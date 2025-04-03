@@ -81,7 +81,9 @@ class DashboardBaController extends Controller
 
         $loginSession =  'tes';
 
-        $countAllDataInspeksiLaptop = 100;
+        $countAllDataInspeksiLaptop = InspeksiLaptop::where('site', 'BA')
+        ->whereYear('year', Carbon::now()->year)
+        ->count();
         $countSudahInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'Y')
             ->where('site', 'BA')
             ->whereYear('year', Carbon::now()->year)
@@ -101,15 +103,15 @@ class DashboardBaController extends Controller
         $triwulanSekarang = Carbon::now()->quarter;
 
         $countAllDataInspeksiComputer = InspeksiComputer::where('site', 'BA')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
         $countSudahInspeksiComputer = InspeksiComputer::where('inspection_status', 'Y')
             ->where('site', 'BA')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
         $countBelumInspeksiComputer = InspeksiComputer::where('inspection_status', 'N')
             ->where('site', 'BA')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
 
         if ($countAllDataInspeksiComputer > 0) {

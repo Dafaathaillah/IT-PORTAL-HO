@@ -568,7 +568,7 @@ const initChartAduanAnalysLight = () => {
                         y: props.ss6,
                     },
                     {
-                        name: "WEBISTE",
+                        name: "WEBSITE",
                         y: props.website,
                     },
                     {
@@ -744,7 +744,7 @@ const initChartAduanAnalysDark = () => {
                         y: props.ss6,
                     },
                     {
-                        name: "WEBISTE",
+                        name: "WEBSITE",
                         y: props.website,
                     },
                     {

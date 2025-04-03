@@ -81,7 +81,9 @@ class DashboardBibController extends Controller
 
         $loginSession =  'tes';
 
-        $countAllDataInspeksiLaptop = 100;
+        $countAllDataInspeksiLaptop = InspeksiLaptop::where('site', 'BIB')
+            ->whereYear('year', Carbon::now()->year)
+            ->count();
         $countSudahInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'Y')
             ->where('site', 'BIB')
             ->whereYear('year', Carbon::now()->year)
@@ -101,15 +103,15 @@ class DashboardBibController extends Controller
         $triwulanSekarang = Carbon::now()->quarter;
 
         $countAllDataInspeksiComputer = InspeksiComputer::where('site', 'BIB')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
         $countSudahInspeksiComputer = InspeksiComputer::where('inspection_status', 'Y')
             ->where('site', 'BIB')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
         $countBelumInspeksiComputer = InspeksiComputer::where('inspection_status', 'N')
             ->where('site', 'BIB')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
 
         if ($countAllDataInspeksiComputer > 0) {
@@ -124,61 +126,61 @@ class DashboardBibController extends Controller
         $belumInspeksiArray = [$percentLaptopBelumInspeksi, $percentComputerBelumInspeksi];
 
         $totalAduanAll = Aduan::where('site', 'BIB')->count();
-            if ($totalAduanAll > 0) {
-                $totalAduan = $totalAduanAll;
+        if ($totalAduanAll > 0) {
+            $totalAduan = $totalAduanAll;
 
-                $aduanTelkomsel = Aduan::where('site', 'BIB')->where('category_name', 'TELKOMSEL')->count();
-                $aduanTelkomselPercent = ($aduanTelkomsel / $totalAduan) * 100;
+            $aduanTelkomsel = Aduan::where('site', 'BIB')->where('category_name', 'TELKOMSEL')->count();
+            $aduanTelkomselPercent = ($aduanTelkomsel / $totalAduan) * 100;
 
-                $aduanRadio = Aduan::where('site', 'BIB')->where('category_name', 'RADIO')->count();
-                $aduanRadioPercent = ($aduanRadio / $totalAduan) * 100;
+            $aduanRadio = Aduan::where('site', 'BIB')->where('category_name', 'RADIO')->count();
+            $aduanRadioPercent = ($aduanRadio / $totalAduan) * 100;
 
-                $aduanServer = Aduan::where('site', 'BIB')->where('category_name', 'SERVER')->count();
-                $aduanServerPercent = ($aduanServer / $totalAduan) * 100;
+            $aduanServer = Aduan::where('site', 'BIB')->where('category_name', 'SERVER')->count();
+            $aduanServerPercent = ($aduanServer / $totalAduan) * 100;
 
-                $aduanSs6 = Aduan::where('site', 'BIB')->where('category_name', 'SS6')->count();
-                $aduanSs6Percent = ($aduanSs6 / $totalAduan) * 100;
+            $aduanSs6 = Aduan::where('site', 'BIB')->where('category_name', 'SS6')->count();
+            $aduanSs6Percent = ($aduanSs6 / $totalAduan) * 100;
 
-                $aduanWebsite = Aduan::where('site', 'BIB')->where('category_name', 'WEBSITE')->count();
-                $aduanWebsitePercent = ($aduanWebsite / $totalAduan) * 100;
+            $aduanWebsite = Aduan::where('site', 'BIB')->where('category_name', 'WEBSITE')->count();
+            $aduanWebsitePercent = ($aduanWebsite / $totalAduan) * 100;
 
-                $aduanNetwork = Aduan::where('site', 'BIB')->where('category_name', 'NETWORK')->count();
-                $aduanNetworkPercent = ($aduanNetwork / $totalAduan) * 100;
+            $aduanNetwork = Aduan::where('site', 'BIB')->where('category_name', 'NETWORK')->count();
+            $aduanNetworkPercent = ($aduanNetwork / $totalAduan) * 100;
 
-                $aduanSap = Aduan::where('site', 'BIB')->where('category_name', 'SAP')->count();
-                $aduanSapPercent = ($aduanSap / $totalAduan) * 100;
+            $aduanSap = Aduan::where('site', 'BIB')->where('category_name', 'SAP')->count();
+            $aduanSapPercent = ($aduanSap / $totalAduan) * 100;
 
-                $aduanPcNb = Aduan::where('site', 'BIB')->where('category_name', 'PC/NB')->count();
-                $aduanPcNbPercent = ($aduanPcNb / $totalAduan) * 100;
+            $aduanPcNb = Aduan::where('site', 'BIB')->where('category_name', 'PC/NB')->count();
+            $aduanPcNbPercent = ($aduanPcNb / $totalAduan) * 100;
 
-                $aduanPrinter = Aduan::where('site', 'BIB')->where('category_name', 'PRINTER')->count();
-                $aduanPrinterPercent = ($aduanPrinter / $totalAduan) * 100;
+            $aduanPrinter = Aduan::where('site', 'BIB')->where('category_name', 'PRINTER')->count();
+            $aduanPrinterPercent = ($aduanPrinter / $totalAduan) * 100;
 
-                $aduanOther = Aduan::where('site', 'BIB')->where('category_name', 'OTHER')->count();
-                $aduanOtherPercent = ($aduanOther / $totalAduan) * 100;
-            }else{
-                $totalAduan = 0;
-                $aduanTelkomselPercent = 0;
-                $aduanRadioPercent = 0;
-                $aduanServerPercent = 0;
-                $aduanSs6Percent = 0;
-                $aduanWebsitePercent = 0;
-                $aduanNetworkPercent = 0;
-                $aduanSapPercent = 0;
-                $aduanPcNbPercent = 0;
-                $aduanPrinterPercent = 0;
-                $aduanOtherPercent = 0;
-                $aduanTelkomsel = 0;
-                $aduanRadio = 0;
-                $aduanServer = 0;
-                $aduanSs6 = 0;
-                $aduanWebsite = 0;
-                $aduanNetwork = 0;
-                $aduanSap = 0;
-                $aduanPcNb = 0;
-                $aduanPrinter = 0;
-                $aduanOther = 0;
-            }
+            $aduanOther = Aduan::where('site', 'BIB')->where('category_name', 'OTHER')->count();
+            $aduanOtherPercent = ($aduanOther / $totalAduan) * 100;
+        } else {
+            $totalAduan = 0;
+            $aduanTelkomselPercent = 0;
+            $aduanRadioPercent = 0;
+            $aduanServerPercent = 0;
+            $aduanSs6Percent = 0;
+            $aduanWebsitePercent = 0;
+            $aduanNetworkPercent = 0;
+            $aduanSapPercent = 0;
+            $aduanPcNbPercent = 0;
+            $aduanPrinterPercent = 0;
+            $aduanOtherPercent = 0;
+            $aduanTelkomsel = 0;
+            $aduanRadio = 0;
+            $aduanServer = 0;
+            $aduanSs6 = 0;
+            $aduanWebsite = 0;
+            $aduanNetwork = 0;
+            $aduanSap = 0;
+            $aduanPcNb = 0;
+            $aduanPrinter = 0;
+            $aduanOther = 0;
+        }
 
 
         return Inertia::render(

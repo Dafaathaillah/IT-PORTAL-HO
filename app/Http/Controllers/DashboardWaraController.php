@@ -81,7 +81,9 @@ class DashboardWaraController extends Controller
 
         $loginSession =  'tes';
 
-        $countAllDataInspeksiLaptop = 100;
+        $countAllDataInspeksiLaptop = InspeksiLaptop::where('site', 'ADW')
+            ->whereYear('year', Carbon::now()->year)
+            ->count();
         $countSudahInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'Y')
             ->where('site', 'ADW')
             ->whereYear('year', Carbon::now()->year)
@@ -101,15 +103,15 @@ class DashboardWaraController extends Controller
         $triwulanSekarang = Carbon::now()->quarter;
 
         $countAllDataInspeksiComputer = InspeksiComputer::where('site', 'ADW')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
         $countSudahInspeksiComputer = InspeksiComputer::where('inspection_status', 'Y')
             ->where('site', 'ADW')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
         $countBelumInspeksiComputer = InspeksiComputer::where('inspection_status', 'N')
             ->where('site', 'ADW')
-            ->whereYear('triwulan', $triwulanSekarang)
+            ->where('triwulan', $triwulanSekarang)
             ->count();
 
         if ($countAllDataInspeksiComputer > 0) {
@@ -140,6 +142,7 @@ class DashboardWaraController extends Controller
                 $aduanSs6Percent = ($aduanSs6 / $totalAduan) * 100;
 
                 $aduanWebsite = Aduan::where('site', 'ADW')->where('category_name', 'WEBSITE')->count();
+                // dd($aduanWebsite)
                 $aduanWebsitePercent = ($aduanWebsite / $totalAduan) * 100;
 
                 $aduanNetwork = Aduan::where('site', 'ADW')->where('category_name', 'NETWORK')->count();

@@ -81,7 +81,9 @@ class DashboardSbsController extends Controller
 
         $loginSession =  'tes';
 
-        $countAllDataInspeksiLaptop = 100;
+        $countAllDataInspeksiLaptop = InspeksiLaptop::where('site', 'SBS')
+            ->whereYear('year', Carbon::now()->year)
+            ->count();
         $countSudahInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'Y')
             ->where('site', 'SBS')
             ->whereYear('year', Carbon::now()->year)
