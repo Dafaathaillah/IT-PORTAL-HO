@@ -143,7 +143,7 @@ const save = () => {
         "link_documentation_asset_image",
         form.link_documentation_asset_image
     );
-    formData.append("user_alls_id", selectedValues.value.name);
+    formData.append("user_alls_id", selectedValues.value.nrp);
     Inertia.post(route("komputerSks.store"), formData, {
         forceFormData: true,
         onSuccess: () => {
@@ -719,8 +719,8 @@ const onInput = (data, some) => {
                                                 :multiple="false"
                                                 :close-on-select="true"
                                                 placeholder="pick name of user"
-                                                track-by="name"
-                                                label="name"
+                                                track-by="nrp"
+                                                label="label"
                                             />
                                         </div>
                                         <span

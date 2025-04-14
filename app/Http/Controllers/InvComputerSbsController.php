@@ -40,9 +40,18 @@ class InvComputerSbsController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        $pengguna = UserAll::where('site', 'SBS')->pluck('username')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+        // $pengguna = UserAll::where('site', 'SBS')->pluck('username')->map(function ($name) {
+        //     return ['name' => $name];
+        // })->toArray();
+
+        $pengguna = UserAll::where('site', 'SBS')->select('username', 'nrp', 'department')->get()->map(function ($item) {
+            return [
+                'nrp' => $item->nrp,
+                'name' => $item->username,
+                'dept' => $item->department,
+                'label' => $item->nrp . ' | ' . $item->username . ' | ' . $item->department,
+            ];
+        });
 
         return Inertia::render('Inventory/SiteSbs/Komputer/KomputerCreate', ['pengguna' => $pengguna, 'department' => $department, 'computer_code' => session('computer_code') ?? null, 'dept' => session('dept') ?? null]);
     }
@@ -104,7 +113,7 @@ class InvComputerSbsController extends Controller
         $new_path_documentation_image = $path_documentation_image;
         $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-        $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+        $aduan_get_data_user = UserAll::where('site', 'SBS')->where('nrp', $params['user_alls_id'])->first();
 
         $dept = $params['dept'];
 

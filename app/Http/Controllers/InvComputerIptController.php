@@ -40,9 +40,9 @@ class InvComputerIptController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        $pengguna = UserAll::where('site', 'IPT')->pluck('username')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+        // $pengguna = UserAll::where('site', 'IPT')->pluck('username')->map(function ($name) {
+        //     return ['name' => $name];
+        // })->toArray();
 
         $pengguna = UserAll::where('site', 'IPT')->select('username', 'nrp', 'department')->get()->map(function ($item) {
             return [
@@ -113,7 +113,7 @@ class InvComputerIptController extends Controller
         $new_path_documentation_image = $path_documentation_image;
         $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-        $aduan_get_data_user = UserAll::where('nrp', $params['user_alls_id'])->first();
+        $aduan_get_data_user = UserAll::where('site', 'IPT')->where('nrp', $params['user_alls_id'])->first();
 
         $dept = $params['dept'];
 
