@@ -142,7 +142,7 @@ class InvLaptopBibController extends Controller
             $request->validate([
                 'file' => 'required|mimes:xls,xlsx,csv|max:10240', // 10MB = 10240 KB
             ]);
-            
+
             $import = new ImportLaptop();
             Excel::import($import, $request->file('file'));
 
@@ -165,16 +165,25 @@ class InvLaptopBibController extends Controller
         }
 
         if (!empty($laptop->user_alls_id)) {
-            $aduan_get_data_user = UserAll::where('id', $laptop->user_alls_id)->first()->username;
+            $aduan_get_data_user = UserAll::where('id', $laptop->user_alls_id)->first()->nrp;
 
             $pengguna_selected = array($aduan_get_data_user);
         } else {
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site', 'BIB')->pluck('username')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+        // $pengguna_all = UserAll::where('site', 'BIB')->pluck('username')->map(function ($name) {
+        //     return ['name' => $name];
+        // })->toArray();
+
+        $pengguna_all = UserAll::where('site', 'BIB')->select('username', 'nrp', 'department')->get()->map(function ($item) {
+            return [
+                'nrp' => $item->nrp,
+                'name' => $item->username,
+                'dept' => $item->department,
+                'label' => $item->nrp . ' | ' . $item->username . ' | ' . $item->department,
+            ];
+        });
 
         // dd($aduan_get_data_user);
 
@@ -236,7 +245,7 @@ class InvLaptopBibController extends Controller
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+            $aduan_get_data_user = UserAll::where('site', 'BIB')->where('nrp', $request->user_alls_id)->first();
 
             $data = [
                 'max_id' => $request->max_id,
@@ -261,7 +270,7 @@ class InvLaptopBibController extends Controller
             ];
         } else {
 
-            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+            $aduan_get_data_user = UserAll::where('site', 'BIB')->where('nrp', $request->user_alls_id)->first();
 
             $data = [
                 'max_id' => $request->max_id,

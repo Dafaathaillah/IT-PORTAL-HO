@@ -40,9 +40,18 @@ class InvComputerPikController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        $pengguna = UserAll::where('site', 'PIK')->pluck('username')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+        // $pengguna = UserAll::where('site', 'PIK')->pluck('username')->map(function ($name) {
+        //     return ['name' => $name];
+        // })->toArray();
+
+        $pengguna = UserAll::where('site', 'PIK')->select('username', 'nrp', 'department')->get()->map(function ($item) {
+            return [
+                'nrp' => $item->nrp,
+                'name' => $item->username,
+                'dept' => $item->department,
+                'label' => $item->nrp . ' | ' . $item->username . ' | ' . $item->department,
+            ];
+        });
 
         return Inertia::render('Inventory/SitePik/Komputer/KomputerCreate', ['pengguna' => $pengguna, 'department' => $department, 'computer_code' => session('computer_code') ?? null, 'dept' => session('dept') ?? null]);
     }
@@ -92,47 +101,47 @@ class InvComputerPikController extends Controller
         }
 
         $maxId = InvComputer::max('max_id');
-            if (is_null($maxId) || empty($maxId)) {
-                $maxId = 1;
-            } else {
-                $maxId = $maxId + 1;
-            }
+        if (is_null($maxId) || empty($maxId)) {
+            $maxId = 1;
+        } else {
+            $maxId = $maxId + 1;
+        }
 
-            $documentation_image = $request->file('image');
-            $destinationPath = 'images/';
-            $path_documentation_image = $documentation_image->store('images', 'public');
-            $new_path_documentation_image = $path_documentation_image;
-            $documentation_image->move($destinationPath, $new_path_documentation_image);
+        $documentation_image = $request->file('image');
+        $destinationPath = 'images/';
+        $path_documentation_image = $documentation_image->store('images', 'public');
+        $new_path_documentation_image = $path_documentation_image;
+        $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+        $aduan_get_data_user = UserAll::where('site', 'PIK')->where('nrp', $params['user_alls_id'])->first();
 
-            $dept = $params['dept'];
+        $dept = $params['dept'];
 
-            $data = [
-                'max_id' => $maxId,
-                'computer_name' => $params['computer_name'],
-                'computer_code' => $params['computer_code'],
-                'number_asset_ho' => $params['number_asset_ho'],
-                'assets_category' => $params['assets_category'],
-                'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_komputer'] . ', ' . $params['os_komputer'],
-                'serial_number' => $params['serial_number'],
-                'aplikasi' => $params['aplikasi'],
-                'license' => $params['license'],
-                'ip_address' => $params['ip_address'],
-                'date_of_inventory' => $params['date_of_inventory'],
-                'date_of_deploy' => $params['date_of_deploy'],
-                'location' => $params['location'],
-                'status' => $params['status'],
-                'condition' => $params['condition'],
-                'note' => $params['note'],
-                'link_documentation_asset_image' => url($new_path_documentation_image),
-                'user_alls_id' => $aduan_get_data_user['id'],
-                'site' => 'PIK',
-                'dept' => $dept
-            ];
+        $data = [
+            'max_id' => $maxId,
+            'computer_name' => $params['computer_name'],
+            'computer_code' => $params['computer_code'],
+            'number_asset_ho' => $params['number_asset_ho'],
+            'assets_category' => $params['assets_category'],
+            'spesifikasi' => $params['model'] . ', ' . $params['processor'] . ', ' . $params['hdd'] . ', ' . $params['ssd'] . ', ' . $params['ram'] . ', ' . $params['vga'] . ', ' . $params['warna_komputer'] . ', ' . $params['os_komputer'],
+            'serial_number' => $params['serial_number'],
+            'aplikasi' => $params['aplikasi'],
+            'license' => $params['license'],
+            'ip_address' => $params['ip_address'],
+            'date_of_inventory' => $params['date_of_inventory'],
+            'date_of_deploy' => $params['date_of_deploy'],
+            'location' => $params['location'],
+            'status' => $params['status'],
+            'condition' => $params['condition'],
+            'note' => $params['note'],
+            'link_documentation_asset_image' => url($new_path_documentation_image),
+            'user_alls_id' => $aduan_get_data_user['id'],
+            'site' => 'PIK',
+            'dept' => $dept
+        ];
 
-            InvComputer::create($data);
-            return redirect()->route('komputerPik.page');
+        InvComputer::create($data);
+        return redirect()->route('komputerPik.page');
     }
 
     public function uploadCsv(Request $request)
@@ -162,16 +171,25 @@ class InvComputerPikController extends Controller
         }
 
         if (!empty($komputer->user_alls_id)) {
-            $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->username;
+            $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->nrp;
 
             $pengguna_selected = array($aduan_get_data_user);
         } else {
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site', 'PIK')->pluck('username')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+        // $pengguna_all = UserAll::where('site', 'PIK')->pluck('username')->map(function ($name) {
+        //     return ['name' => $name];
+        // })->toArray();
+
+        $pengguna_all = UserAll::where('site', 'PIK')->select('username', 'nrp', 'department')->get()->map(function ($item) {
+            return [
+                'nrp' => $item->nrp,
+                'name' => $item->username,
+                'dept' => $item->department,
+                'label' => $item->nrp . ' | ' . $item->username . ' | ' . $item->department,
+            ];
+        });
 
         $spesifikasi = explode(',', $komputer->spesifikasi);
         $model = trim($spesifikasi[0]);
@@ -222,7 +240,7 @@ class InvComputerPikController extends Controller
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+            $aduan_get_data_user = UserAll::where('site', 'PIK')->where('nrp', $request->user_alls_id)->first();
 
             $data = [
                 'max_id' => $request->max_id,
@@ -247,7 +265,7 @@ class InvComputerPikController extends Controller
             ];
         } else {
 
-            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+            $aduan_get_data_user = UserAll::where('site', 'PIK')->where('nrp', $request->user_alls_id)->first();
 
             $data = [
                 'max_id' => $request->max_id,

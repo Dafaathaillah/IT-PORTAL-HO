@@ -85,11 +85,11 @@ const formSubmitted = ref(false);
 const options = props.pengguna_all;
 
 const selectedValues = ref(
-    props.pengguna_all.filter((option) => props.pengguna_selected.includes(option.name))
+    props.pengguna_all.filter((option) => props.pengguna_selected.includes(option.nrp))
 );
 
 const penggunaString = computed(() => {
-    return selectedValues.value.map((option) => option.name).join("");
+    return selectedValues.value.map((option) => option.nrp).join("");
 });
 
 const update = () => {
@@ -100,11 +100,11 @@ const update = () => {
         return; 
     }else{
         if(props.pengguna_selected.includes('data tidak ada !')){
-            formData.append("user_alls_id", selectedValues.value.name);
+            formData.append("user_alls_id", selectedValues.value.nrp);
         }else{
 
-            if(props.pengguna_selected.includes(selectedValues.value.name) == false && selectedValues.value.name != undefined) {
-                formData.append("user_alls_id", selectedValues.value.name);
+            if(props.pengguna_selected.includes(selectedValues.value.nrp) == false && selectedValues.value.nrp != undefined) {
+                formData.append("user_alls_id", selectedValues.value.nrp);
             }else{
                 formData.append("user_alls_id", penggunaString.value);
             }
@@ -303,11 +303,10 @@ const update = () => {
                                             >
                                             <input
                                                 required
-                                                :disabled="isDisabled"
                                                 type="text"
                                                 v-model="form.number_asset_ho"
                                                 name="number_asset_ho"
-                                                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="10700xxx"
                                             />
                                         </div>
@@ -667,8 +666,8 @@ const update = () => {
                                                 :multiple="false"
                                                 :close-on-select="true"
                                                 placeholder="pick name of user"
-                                                track-by="name"
-                                                label="name"
+                                                track-by="nrp"
+                                                label="label"
                                             />
                                         </div>
                                         <span

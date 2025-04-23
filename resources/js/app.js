@@ -1,3 +1,26 @@
+// === Disable dark mode globally ===
+
+// Remove dark class from <html>
+document.documentElement.classList.remove('dark');
+
+// Remove saved theme preference (vueuse-color-scheme)
+localStorage.removeItem('vueuse-color-scheme');
+
+// Monkey patch useDark to always return false
+globalThis.useDark = () => {
+    return {
+        value: false
+    };
+};
+
+// Optional: Prevent adding the "dark" class again
+const originalAdd = DOMTokenList.prototype.add;
+DOMTokenList.prototype.add = function (...args) {
+    if (args.includes('dark')) return;
+    return originalAdd.apply(this, args);
+};
+
+
 import './bootstrap';
 import '../css/app.css';
 import 'select2/dist/css/select2.min.css';

@@ -40,9 +40,18 @@ class InvComputerSbsController extends Controller
             return ['name' => $name];
         })->toArray();
 
-        $pengguna = UserAll::where('site', 'SBS')->pluck('username')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+        // $pengguna = UserAll::where('site', 'SBS')->pluck('username')->map(function ($name) {
+        //     return ['name' => $name];
+        // })->toArray();
+
+        $pengguna = UserAll::where('site', 'SBS')->select('username', 'nrp', 'department')->get()->map(function ($item) {
+            return [
+                'nrp' => $item->nrp,
+                'name' => $item->username,
+                'dept' => $item->department,
+                'label' => $item->nrp . ' | ' . $item->username . ' | ' . $item->department,
+            ];
+        });
 
         return Inertia::render('Inventory/SiteSbs/Komputer/KomputerCreate', ['pengguna' => $pengguna, 'department' => $department, 'computer_code' => session('computer_code') ?? null, 'dept' => session('dept') ?? null]);
     }
@@ -104,7 +113,7 @@ class InvComputerSbsController extends Controller
         $new_path_documentation_image = $path_documentation_image;
         $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-        $aduan_get_data_user = UserAll::where('username', $params['user_alls_id'])->first();
+        $aduan_get_data_user = UserAll::where('site', 'SBS')->where('nrp', $params['user_alls_id'])->first();
 
         $dept = $params['dept'];
 
@@ -162,16 +171,25 @@ class InvComputerSbsController extends Controller
         }
 
         if (!empty($komputer->user_alls_id)) {
-            $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->username;
+            $aduan_get_data_user = UserAll::where('id', $komputer->user_alls_id)->first()->nrp;
 
             $pengguna_selected = array($aduan_get_data_user);
         } else {
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $pengguna_all = UserAll::where('site', 'SBS')->pluck('username')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+        // $pengguna_all = UserAll::where('site', 'SBS')->pluck('username')->map(function ($name) {
+        //     return ['name' => $name];
+        // })->toArray();
+
+        $pengguna_all = UserAll::where('site', 'SBS')->select('username', 'nrp', 'department')->get()->map(function ($item) {
+            return [
+                'nrp' => $item->nrp,
+                'name' => $item->username,
+                'dept' => $item->department,
+                'label' => $item->nrp . ' | ' . $item->username . ' | ' . $item->department,
+            ];
+        });
 
         $spesifikasi = explode(',', $komputer->spesifikasi);
         $model = trim($spesifikasi[0]);
@@ -222,7 +240,7 @@ class InvComputerSbsController extends Controller
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+            $aduan_get_data_user = UserAll::where('site', 'SBS')->where('nrp', $request->user_alls_id)->first();
 
             $data = [
                 'max_id' => $request->max_id,
@@ -247,7 +265,7 @@ class InvComputerSbsController extends Controller
             ];
         } else {
 
-            $aduan_get_data_user = UserAll::where('username', $request->user_alls_id)->first();
+            $aduan_get_data_user = UserAll::where('site', 'SBS')->where('nrp', $request->user_alls_id)->first();
 
             $data = [
                 'max_id' => $request->max_id,

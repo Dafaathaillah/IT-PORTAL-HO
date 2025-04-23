@@ -85,11 +85,11 @@ const formSubmitted = ref(false);
 const options = props.pengguna_all;
 
 const selectedValues = ref(
-    props.pengguna_all.filter((option) => props.pengguna_selected.includes(option.name))
+    props.pengguna_all.filter((option) => props.pengguna_selected.includes(option.nrp))
 );
 
 const penggunaString = computed(() => {
-    return selectedValues.value.map((option) => option.name).join("");
+    return selectedValues.value.map((option) => option.nrp).join("");
 });
 
 const update = () => {
@@ -100,11 +100,11 @@ const update = () => {
         return; 
     }else{
         if(props.pengguna_selected.includes('data tidak ada !')){
-            formData.append("user_alls_id", selectedValues.value.name);
+            formData.append("user_alls_id", selectedValues.value.nrp);
         }else{
 
-            if(props.pengguna_selected.includes(selectedValues.value.name) == false && selectedValues.value.name != undefined) {
-                formData.append("user_alls_id", selectedValues.value.name);
+            if(props.pengguna_selected.includes(selectedValues.value.nrp) == false && selectedValues.value.nrp != undefined) {
+                formData.append("user_alls_id", selectedValues.value.nrp);
             }else{
                 formData.append("user_alls_id", penggunaString.value);
             }
@@ -667,8 +667,8 @@ const update = () => {
                                                 :multiple="false"
                                                 :close-on-select="true"
                                                 placeholder="pick name of user"
-                                                track-by="name"
-                                                label="name"
+                                                track-by="nrp"
+                                                label="label"
                                             />
                                         </div>
                                         <span
