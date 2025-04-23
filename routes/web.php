@@ -2426,6 +2426,7 @@ Route::middleware('auth')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_ho:HO,ict_group_leader:BIB,ict_admin:BIB'], function () {
             Route::get('/admin/check-aduan/bib', [AduanBibController::class, 'checkAduan'])->name('aduanBib.check-aduan');
             Route::get('/aduanBib', [AduanBibController::class, 'index'])->name('aduanBib.page');
+            Route::get('/latest-aduan', [AduanBibController::class, 'getLatestAduan']);
             Route::get('/aduanBib/create', [AduanBibController::class, 'create'])->name('aduanBib.create');
             Route::post('/aduanBib/create', [AduanBibController::class, 'store'])->name('aduanBib.store');
             Route::get('/aduanBib/{id}/edit', [AduanBibController::class, 'edit'])->name('aduanBib.edit');
