@@ -330,7 +330,7 @@ const initChartAchievementLight = () => {
                 stacking: "percent",
                 dataLabels: {
                     enabled: true, // Menampilkan angka di dalam batang
-                    format: "{y}%", // Menampilkan nilai dalam persen
+                    format: "{point.percentage:.1f}%", // Menampilkan nilai dalam persen
                     style: {
                         fontWeight: "bold",
                         color: "black", // Warna teks untuk kontras dengan batang
@@ -409,7 +409,7 @@ const initChartAchievementDark = () => {
                 stacking: "percent",
                 dataLabels: {
                     enabled: true, // Menampilkan angka di dalam batang
-                    format: "{y}%", // Menampilkan nilai dalam persen
+                    format: "{point.percentage:.1f}%", // Menampilkan nilai dalam persen
                     style: {
                         fontWeight: "bold",
                         color: "black", // Warna teks untuk kontras dengan batang

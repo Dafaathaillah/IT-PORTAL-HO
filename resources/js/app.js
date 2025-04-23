@@ -14,6 +14,8 @@ DataTablesLib.Buttons.jszip(jszip);
 
 import $ from 'jquery';
 window.$ = window.jQuery = $;
+import 'datatables.net-dt';
+import 'datatables.net-dt/css/dataTables.dataTables.css';
 
 import { createApp, h, nextTick, onUnmounted } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';

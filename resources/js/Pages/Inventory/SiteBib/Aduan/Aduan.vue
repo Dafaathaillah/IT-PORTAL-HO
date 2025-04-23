@@ -27,6 +27,25 @@ import { Inertia } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/vue3";
 import { computed, watch, onMounted, onUnmounted } from "vue";
 import { Howl } from "howler";
+import axios from "axios";
+
+const props = defineProps({
+    aduan: {
+        type: Array,
+    },
+    open: {
+        type: Object,
+    },
+    closed: {
+        type: Object,
+    },
+    progress: {
+        type: Object,
+    },
+    cancel: {
+        type: Object,
+    },
+});
 
 const pages = ref("Pages");
 const subMenu = ref("Aduan Pages");
@@ -37,10 +56,41 @@ function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
 }
 
+// Pantau perubahan pada props dan update data lokal// Buat state reaktif untuk tabel
+const aduanData = ref([...props.aduan]);
+
+// Watch perubahan props.aduan untuk update data tabel
+watch(
+    () => props.aduan,
+    (newAduan) => {
+        aduanData.value = [...newAduan];
+    }
+);
+
+// Fungsi untuk fetch data terbaru
+const fetchAduan = () => {
+    axios
+        .get("/itportal/latest-aduan")
+        .then((response) => {
+            aduanData.value = response.data; // Update tabel
+        })
+        .catch((error) => {
+            // console.error("Error fetching data:", error);
+        });
+};
+
+onUnmounted(() => {
+    clearInterval(intervalId); // Hentikan interval saat komponen dihancurkan
+});
+
 const page = usePage();
+let intervalId = null;
 
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
+    fetchAduan(); // Fetch pertama kali saat komponen dimuat
+    intervalId = setInterval(fetchAduan, 1000); // Polling setiap 5 detik
+
     $("#tableData").DataTable({
         dom: "fBrtilp",
         scrollY: "40vh",
@@ -65,23 +115,7 @@ const mount = onMounted(() => {
     });
 });
 
-const props = defineProps({
-    aduan: {
-        type: Array,
-    },
-    open: {
-        type: Object,
-    },
-    closed: {
-        type: Object,
-    },
-    progress: {
-        type: Object,
-    },
-    cancel: {
-        type: Object,
-    },
-});
+//
 
 const form = useForm({});
 
@@ -502,7 +536,7 @@ function formatData(text) {
                                                 <tr
                                                     v-for="(
                                                         aduans, index
-                                                    ) in aduan"
+                                                    ) in aduanData"
                                                     :key="index"
                                                 >
                                                     <td

@@ -4,9 +4,8 @@ import { Head, Link, useForm } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, nextTick, ref } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Management Pengguna Pages");
@@ -18,9 +17,22 @@ function formattedDate(date) {
 }
 
 const mount = onMounted(() => {
-    // Inisialisasi DataTable tanpa AJAX
-    $("#tableData").DataTable();
-    // var table = new DataTable('#tableData');
+    // // Inisialisasi DataTable tanpa AJAX
+    // $("#tableData").DataTable();
+    // // var table = new DataTable('#tableData');
+     nextTick(() => {
+        $("#tableData").DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "/aduan",
+            columns: [
+                { data: "id", name: "id" },
+                { data: "nama_pelapor", name: "nama_pelapor" },
+                { data: "status", name: "status" },
+                { data: "action", name: "action", orderable: false, searchable: false },
+            ],
+        });
+    });
 });
 
 const props = defineProps({
