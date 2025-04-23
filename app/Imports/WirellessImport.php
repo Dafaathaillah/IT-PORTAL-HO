@@ -85,4 +85,24 @@ class WirellessImport implements ToModel, WithStartRow
     {
         return $this->duplicateRecords;
     }
+
+    private function convertToDate($value)
+    {
+        try {
+            $value = trim($value);
+    
+            // Jika format serial Excel (numeric)
+            if (is_numeric($value)) {
+                return \Carbon\Carbon::instance(
+                    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value)
+                );
+            }
+    
+            // Jika format tanggal string 'd/m/Y'
+            return \Carbon\Carbon::createFromFormat('d/m/Y', $value);
+        } catch (\Exception $e) {
+            \Log::info('Gagal parsing tanggal: ' . $value . ' | Error: ' . $e->getMessage());
+            return null;
+        }
+    }
 }

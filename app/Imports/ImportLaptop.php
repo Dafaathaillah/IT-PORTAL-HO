@@ -6,7 +6,6 @@ use App\Models\InvLaptop;
 use App\Models\UserAll;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
-use Carbon\Carbon;
 
 class ImportLaptop implements ToModel, WithStartRow
 {
@@ -24,9 +23,9 @@ class ImportLaptop implements ToModel, WithStartRow
 
     public function model(array $row)
     {
-        $row = array_slice($row, 0, 24); 
+        $row = array_slice($row, 0, 24);
 
-        $emptyCheck = array_filter(array_slice($row, 1, 3)); 
+        $emptyCheck = array_filter(array_slice($row, 1, 3));
         if (count($emptyCheck) === 0) {
             return null; // Abaikan jika semua kolom utama kosong
         }
@@ -47,18 +46,18 @@ class ImportLaptop implements ToModel, WithStartRow
             $existingDataSn = InvLaptop::where('serial_number', $serialNumber)->first();
         }
 
-        $tanggal_inventory = $row[22];
+        $tanggal_inventory = trim($row[22]);
         if ($tanggal_inventory === '' || $tanggal_inventory === '-' || $tanggal_inventory === null) {
             $tanggal_inventory = null; // Biarkan lanjut tanpa mendeteksi duplikasi
         } else {
-            $tanggal_inventory = $this->convertToDate($row[22]);
+            // dd($tanggal_inventory);
+            $tanggal_inventory = $this->convertToDate(trim($row[22]));
         }
-        $tanggal_deploy = $row[23];
+        $tanggal_deploy = trim($row[23]);
         if ($tanggal_deploy === '' || $tanggal_deploy === '-' || $tanggal_deploy === null) {
             $tanggal_deploy = null; // Biarkan lanjut tanpa mendeteksi duplikasi
         } else {
-            $tanggal_deploy = $this->convertToDate($row[23]);
-
+            $tanggal_deploy = $this->convertToDate(trim($row[23]));
         }
 
         // $existingDataSn = InvLaptop::where('serial_number', $row[13])->first();
@@ -94,7 +93,7 @@ class ImportLaptop implements ToModel, WithStartRow
                 'dept' => $codeDept
             ]);
         }
-        }
+    }
 
     private function extractDept($inventoryNumber)
     {
@@ -124,10 +123,21 @@ class ImportLaptop implements ToModel, WithStartRow
 
     private function convertToDate($value)
     {
-        if (is_numeric($value)) {
-            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        try {
+            $value = trim($value);
+    
+            // Jika format serial Excel (numeric)
+            if (is_numeric($value)) {
+                return \Carbon\Carbon::instance(
+                    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value)
+                );
+            }
+    
+            // Jika format tanggal string 'd/m/Y'
+            return \Carbon\Carbon::createFromFormat('d/m/Y', $value);
+        } catch (\Exception $e) {
+            \Log::info('Gagal parsing tanggal: ' . $value . ' | Error: ' . $e->getMessage());
+            return null;
         }
-
-        return Carbon::parse($value)->format('Y-m-d');
     }
 }

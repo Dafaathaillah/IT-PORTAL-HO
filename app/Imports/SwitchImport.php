@@ -28,6 +28,7 @@ class SwitchImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+        // dd($row[1]);
         $row = array_slice($row, 0, 14);
 
         $emptyCheck = array_filter(array_slice($row, 1, 3)); 
@@ -91,10 +92,21 @@ class SwitchImport implements ToModel, WithStartRow
 
     private function convertToDate($value)
     {
-        if (is_numeric($value)) {
-            return Carbon::createFromTimestamp(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($value))->format('Y-m-d');
+        try {
+            $value = trim($value);
+    
+            // Jika format serial Excel (numeric)
+            if (is_numeric($value)) {
+                return \Carbon\Carbon::instance(
+                    \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value)
+                );
+            }
+    
+            // Jika format tanggal string 'd/m/Y'
+            return \Carbon\Carbon::createFromFormat('d/m/Y', $value);
+        } catch (\Exception $e) {
+            \Log::info('Gagal parsing tanggal: ' . $value . ' | Error: ' . $e->getMessage());
+            return null;
         }
-
-        return Carbon::parse($value)->format('Y-m-d');
     }
 }
