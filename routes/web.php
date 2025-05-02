@@ -41,6 +41,7 @@ use App\Http\Controllers\DataCheckerController;
 use App\Http\Controllers\DepartmentBaController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentMifaController;
+use App\Http\Controllers\ExportInspeksiComputerController;
 use App\Http\Controllers\ExportInspeksiLaptopController;
 use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
@@ -233,6 +234,7 @@ use Illuminate\Http\Request;
 // Route::get('/phpinfo', function () {
 //     phpinfo();
 // });
+// Route::get('/checklist', [ChecklistCpuController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
     Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
@@ -246,6 +248,13 @@ Route::middleware('auth')->group(function () {
         return Inertia::location(route('export.inspectionLaptop', ['year' => $encryptedYear]));
     })->name('encrypt.year');
     Route::get('/export-pdf', [ExportInspeksiLaptopController::class, 'exportPdf'])->name('export.inspectionLaptop');
+
+    Route::post('/encrypt-year-computer', function (Request $request) {
+        $year = $request->year ?? Carbon::now()->year;
+        $encryptedYear = Crypt::encryptString($year);
+        return Inertia::location(route('export.inspectionComputerAll', ['year' => $encryptedYear, 'triwulan' => $request->quarter, 'site' => $request->site, 'month', 'month' => $request->month]));
+    })->name('encrypt.yearComputer');
+    Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
     // });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {

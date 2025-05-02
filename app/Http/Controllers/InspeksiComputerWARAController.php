@@ -15,7 +15,9 @@ class InspeksiComputerWARAController extends Controller
 {
     public function index()
     {
-        $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site', 'ADW')->get();
+        $month = Carbon::now()->month;
+
+        $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site', 'ADW')->where('month', $month)->get();
 
         $site = 'ADW';
 

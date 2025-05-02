@@ -343,9 +343,9 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.condition == ""
+                                                inspeksi.conditions == ""
                                                     ? "-"
-                                                    : inspeksi.condition
+                                                    : inspeksi.conditions
                                             }}</label
                                         >
                                     </div>

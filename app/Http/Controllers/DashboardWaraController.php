@@ -100,18 +100,19 @@ class DashboardWaraController extends Controller
             $percentLaptopBelumInspeksi = 0;
         }
 
-        $triwulanSekarang = Carbon::now()->quarter;
+        // $triwulanSekarang = Carbon::now()->quarter;
+        $monthSekarang = Carbon::now()->month;
 
         $countAllDataInspeksiComputer = InspeksiComputer::where('site', 'ADW')
-            ->where('triwulan', $triwulanSekarang)
+            ->where('month', $monthSekarang)
             ->count();
         $countSudahInspeksiComputer = InspeksiComputer::where('inspection_status', 'Y')
             ->where('site', 'ADW')
-            ->where('triwulan', $triwulanSekarang)
+            ->where('month', $monthSekarang)
             ->count();
         $countBelumInspeksiComputer = InspeksiComputer::where('inspection_status', 'N')
             ->where('site', 'ADW')
-            ->where('triwulan', $triwulanSekarang)
+            ->where('month', $monthSekarang)
             ->count();
 
         if ($countAllDataInspeksiComputer > 0) {

@@ -31,14 +31,14 @@ class ImportInventoryToInspeksiLaptop extends Command
         // Retrieve data from inventory
         $inventories_laptop = InvLaptop::get();
         $currentDate = Carbon::now();
-
+        // dd($inventories_laptop);
         // Insert data into inspeksi
         foreach ($inventories_laptop as $inventory_laptop) {
             $cek = InspeksiLaptop::where('inv_laptop_id',  $inventory_laptop->id)
             ->where('year', $currentDate->format('Y'))
-            ->get();
+            ->first();
 
-            if($cek->isEmpty())
+            if(!$cek)
             {
                 InspeksiLaptop::create([
                     'inv_laptop_id' => $inventory_laptop->id,
@@ -48,6 +48,12 @@ class ImportInventoryToInspeksiLaptop extends Command
                     'inventory_status' => $inventory_laptop->status,
                     'created_at' => $currentDate->format('Y-m-d H:i:s'),
                     'site' => $inventory_laptop->site
+                ]);
+            } elseif ($cek->inspection_status === 'N') {
+                // Jika sudah ada dan statusnya N → update dari inventory
+                $cek->update([
+                    'inventory_status' => $inventory_laptop->status,
+                    'site' => $inventory_laptop->site,
                 ]);
             }
         }

@@ -18,7 +18,7 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, router } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -39,7 +39,7 @@ const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
         dom: "fBrtilp",
-        scrollY: '40vh',
+        scrollY: "40vh",
         scrollCollapse: true,
         buttons: [
             {
@@ -88,6 +88,98 @@ const editDataInspeksi = (id) => {
             form.get(route("inspeksiKomputerWARA.edit", { id: id }));
         }
     });
+};
+
+const year = ref(""); // State untuk input year
+const triwulan = ref(""); // State untuk input year
+
+const validateYear = (event) => {
+    const value = event.target.value;
+    if (!/^\d*$/.test(value)) {
+        year.value = value.replace(/\D/g, ""); // Hapus karakter selain angka
+    }
+};
+
+const getEncryptedYear = () => {
+    // Ambil tahun yang dimasukkan atau gunakan tahun saat ini
+    const selectedYear = year.value
+        ? parseInt(year.value)
+        : new Date().getFullYear();
+
+    // Ambil triwulan (quarter) yang diinput user atau auto-deteksi dari bulan sekarang
+    const selectedQuarter = triwulan.value
+        ? parseInt(triwulan.value)
+        : new Date().getMonth() + 1;
+
+    console.log(selectedYear);
+    console.log(selectedQuarter);
+
+    // Validasi tahun (tidak boleh lebih dari 2500)
+    if (selectedYear > 2500) {
+        Swal.fire({
+            icon: "error",
+            title: "Tahun Tidak Valid!",
+            text: "Tahun tidak terdeteksi, silakan masukkan tahun yang benar (<=2500).",
+        });
+        return; // Stop eksekusi jika tahun tidak valid
+    }
+
+    // Validasi quarter juga (optional, kalau mau)
+    // if (selectedQuarter < 1 || selectedQuarter > 4) {
+    //     Swal.fire({
+    //         icon: "error",
+    //         title: "Triwulan Tidak Valid!",
+    //         text: "Triwulan harus antara 1 sampai 4.",
+    //     });
+    //     return;
+    // }
+
+    // Tampilkan loading popup
+    Swal.fire({
+        title: "Menyiapkan PDF...",
+        text: "Harap tunggu sebentar.",
+        allowOutsideClick: false,
+        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    // Kirim permintaan ke backend untuk enkripsi tahun
+    router.post(
+        route("encrypt.yearComputer"),
+        { year: selectedYear, month: selectedQuarter, site: "ADW" },
+        {
+            onSuccess: ({ props }) => {
+                const encryptedYear = props.encryptedYear;
+                if (encryptedYear) {
+                    Swal.close(); // Tutup popup loading setelah selesai
+                    window.open(
+                        route("export.inspectionComputerAll", {
+                            year: encryptedYear,
+                            month: selectedQuarter,
+                            site: "ADW",
+                        }),
+                        "_blank"
+                    );
+                } else {
+                    Swal.fire(
+                        "Terjadi Kesalahan",
+                        "Gagal mengenkripsi tahun.",
+                        "error"
+                    );
+                }
+            },
+            onError: () => {
+                Swal.close(); // Tutup popup loading jika ada error
+                Swal.fire(
+                    "Gagal!",
+                    "Terjadi kesalahan dalam permintaan.",
+                    "error"
+                );
+            },
+        }
+    );
 };
 
 const detailData = (id) => {
@@ -163,10 +255,64 @@ const getBadgeTextStatusInventory = (status) => {
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
                     <div class="flex-none w-full max-w-full px-3">
-                        <div
-                            class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-                        >
-                            <div class="flex-auto px-0 pt-0 pb-2">
+                        <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
+                            <div class="flex flex-wrap md:flex-nowrap gap-4">
+                                <div
+                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
+                                >
+                                    <span
+                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
+                                    >
+                                        <i
+                                            class="fas fa-search"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </span>
+                                    <input
+                                        v-model="triwulan"
+                                        type="number"
+                                        min="1"
+                                        max="12"
+                                        step="1"
+                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        placeholder="Masukkan Bulan"
+                                        @input="validateYear"
+                                    />
+                                </div>
+                                <div
+                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
+                                >
+                                    <span
+                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
+                                    >
+                                        <i
+                                            class="fas fa-search"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </span>
+                                    <input
+                                        v-model="year"
+                                        type="number"
+                                        min="2025"
+                                        max="2500"
+                                        step="1"
+                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        placeholder="Masukkan Tahun"
+                                        @input="validateYear"
+                                    />
+                                </div>
+                                <button
+                                    @click="getEncryptedYear"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-10 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Rekap Inspeksi
+                                </button>
+                            </div>
+                            <div
+                                class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                            >
+                                <div class="flex-auto px-0 pt-0 pb-2">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <div
@@ -466,6 +612,7 @@ const getBadgeTextStatusInventory = (status) => {
                                             </table>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>

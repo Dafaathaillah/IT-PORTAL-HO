@@ -115,7 +115,7 @@ const getEncryptedYear = () => {
                 if (encryptedYear) {
                     Swal.close(); // Tutup popup loading setelah selesai
                     window.open(
-                        route("export.inspectionLaptop", {
+                        route("export.inspectionLaptopAll", {
                             year: encryptedYear,
                         }),
                         "_blank"

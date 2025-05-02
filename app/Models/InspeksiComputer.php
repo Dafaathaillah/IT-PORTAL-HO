@@ -55,4 +55,5 @@ class InspeksiComputer extends Model
     {
         return $this->belongsTo(InvComputer::class, 'inv_computer_id', 'id');
     }
+    
 }
