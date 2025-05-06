@@ -77,54 +77,6 @@ const validateYear = (event) => {
     }
 };
 
-// const getEncryptedYear = () => {
-//     // Tampilkan popup loading sebelum redirect
-//     Swal.fire({
-//         title: "Menyiapkan PDF...",
-//         text: "Harap tunggu sebentar.",
-//         allowOutsideClick: false,
-//         showConfirmButton: true,
-//          confirmButtonText: "Close",
-//         didOpen: () => {
-//             Swal.showLoading();
-//         },
-//     });
-
-//     // Kirim permintaan ke Laravel untuk enkripsi year
-//     router.post(
-//         route("encrypt.year"),
-//         { year: year.value },
-//         {
-//             onSuccess: ({ props }) => {
-//                 const encryptedYear = props.encryptedYear;
-//                 if (encryptedYear) {
-//                     Swal.close(); // Tutup popup loading
-//                     window.open(
-//                         route("export.inspectionLaptop", {
-//                             year: encryptedYear,
-//                         }),
-//                         "_blank"
-//                     ); // Buka PDF di tab baru
-//                 } else {
-//                     Swal.fire(
-//                         "Terjadi Kesalahan",
-//                         "Gagal mengenkripsi tahun.",
-//                         "error"
-//                     );
-//                 }
-//             },
-//             onError: () => {
-//                 Swal.close(); // Tutup popup loading
-//                 Swal.fire(
-//                     "Gagal!",
-//                     "Terjadi kesalahan dalam permintaan.",
-//                     "error"
-//                 );
-//             },
-//         }
-//     );
-// };
-
 const getEncryptedYear = () => {
     // Ambil tahun yang dimasukkan atau gunakan tahun saat ini
     const selectedYear = year.value
@@ -155,7 +107,7 @@ const getEncryptedYear = () => {
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.year"),
-        { year: selectedYear },
+        { year: selectedYear, site: 'HO' },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -164,6 +116,7 @@ const getEncryptedYear = () => {
                     window.open(
                         route("export.inspectionLaptop", {
                             year: encryptedYear,
+                            site: 'HO',
                         }),
                         "_blank"
                     );

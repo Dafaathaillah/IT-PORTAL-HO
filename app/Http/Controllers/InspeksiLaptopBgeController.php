@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InspeksiLaptop;
 use App\Models\InvLaptop;
+use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class InspeksiLaptopBgeController extends Controller
 
         // dd($laptopx);
 
-        $penggunax = UserAll::where('site', 'BGE')->pluck('username')->map(function ($name) {
+        $penggunax = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'BGE')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -152,7 +153,7 @@ class InspeksiLaptopBgeController extends Controller
             $pengguna_selected = array('data tidak ada !');
         }
 
-        $penggunax = UserAll::where('site', 'BGE')->pluck('username')->map(function ($name) {
+        $penggunax = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'BGE')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 

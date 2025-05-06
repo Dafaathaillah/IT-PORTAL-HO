@@ -48,7 +48,7 @@ class InspeksiComputerController extends Controller
         if (empty($dataInspeksi)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'HO')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return dd($dataInspeksi);
@@ -394,7 +394,7 @@ class InspeksiComputerController extends Controller
         // $crew_select = array($dataInspeksi->crew);
         $crew_select = explode(', ', $dataInspeksi->crew);
 
-        $crew = User::where('site',auth()->user()->site)->pluck('name')->map(function ($name) {
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'HO')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return dd($crew_select);

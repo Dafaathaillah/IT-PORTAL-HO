@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Checklist CPU</title>
+    <title>Checklist Inspeksi Computer Periode Triwulan {{ $thisTriwulan }} - {{ $thisYear }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -96,7 +96,7 @@
             </tr>
         </table>
 
-        <div class="title">FORM CHECKLIST INSPEKSI LAPTOP</div>
+        <div class="title">FORM CHECKLIST INSPEKSI COMPUTER</div>
         <table style="width: 100%; margin-bottom: 10px; font-size: 12px; border-collapse: collapse;">
             <tr>
                 <td style="text-align: left; font-weight: bold; border: none;">
@@ -104,7 +104,7 @@
                         {{ $thisYear }}</span>
                 </td>
                 <td style="text-align: right; font-weight: bold; border: none;">
-                    PPA-BIB-F-COE-02D
+                    {{-- PPA-{{ $site }}-F-COE-02D --}}
                 </td>
             </tr>
         </table>
@@ -142,7 +142,7 @@
                         <td>{{ $item->computer->number_asset_ho }}</td>
                         <td>{{ $item->created_date }}</td>
                         <td>{{ $item->computer->computer_name }} - {{ $item->computer->spesifikasi }}</td>
-                        <td class="text-left">{{ $item->location }}</td>
+                        <td class="text-left">{{ $item->computer->location }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->physique_condition_cpu == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">

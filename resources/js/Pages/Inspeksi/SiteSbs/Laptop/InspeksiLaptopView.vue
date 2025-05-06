@@ -107,7 +107,7 @@ const getEncryptedYear = () => {
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.year"),
-        { year: selectedYear },
+        { year: selectedYear, site: 'SBS' },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -116,6 +116,7 @@ const getEncryptedYear = () => {
                     window.open(
                         route("export.inspectionLaptop", {
                             year: encryptedYear,
+                            site: 'SBS',
                         }),
                         "_blank"
                     );

@@ -243,11 +243,12 @@ Route::middleware('auth')->group(function () {
     });
     // Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO,soc_ho:HO,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA'], function () {
     Route::post('/encrypt-year', function (Request $request) {
+        // dd($request);
         $year = $request->year ?? Carbon::now()->year;
         $encryptedYear = Crypt::encryptString($year);
-        return Inertia::location(route('export.inspectionLaptop', ['year' => $encryptedYear]));
+        return Inertia::location(route('export.inspectionLaptopAll', ['year' => $encryptedYear, 'site' => $request->site]));
     })->name('encrypt.year');
-    Route::get('/export-pdf', [ExportInspeksiLaptopController::class, 'exportPdf'])->name('export.inspectionLaptop');
+    Route::get('/export-pdf', [ExportInspeksiLaptopController::class, 'exportPdfAll'])->name('export.inspectionLaptopAll');
 
     Route::post('/encrypt-year-computer', function (Request $request) {
         $year = $request->year ?? Carbon::now()->year;
@@ -256,6 +257,8 @@ Route::middleware('auth')->group(function () {
     })->name('encrypt.yearComputer');
     Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
     // });
+
+    // Route::get('/accessPoint/{id}/export', [InvApController::class, 'detail'])->name('accessPoint.detail');
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
         Route::get('/dashboard', function () {
@@ -320,14 +323,17 @@ Route::middleware('auth')->group(function () {
 
             $loginSession =  'tes';
 
-            $countAllDataInspeksiLaptop = 100;
+            $countAllDataInspeksiLaptop = InspeksiLaptop::where('site', 'HO')
+            ->where('year', Carbon::now()->year)
+            ->count();
+            // $countAllDataInspeksiLaptop = 100;
             $countSudahInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'Y')
                 ->where('site', 'HO')
-                ->whereYear('year', Carbon::now()->year)
+                ->where('year', Carbon::now()->year)
                 ->count();
             $countBelumInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'N')
                 ->where('site', 'HO')
-                ->whereYear('year', Carbon::now()->year)
+                ->where('year', Carbon::now()->year)
                 ->count();
             if ($countAllDataInspeksiLaptop > 0) {
                 $percentLaptopSudahInspeksi = ($countSudahInspeksiLaptop / $countAllDataInspeksiLaptop) * 100;
@@ -340,15 +346,15 @@ Route::middleware('auth')->group(function () {
             $triwulanSekarang = Carbon::now()->quarter;
 
             $countAllDataInspeksiComputer = InspeksiComputer::where('site', 'HO')
-                ->whereYear('triwulan', $triwulanSekarang)
+                ->where('triwulan', $triwulanSekarang)
                 ->count();
             $countSudahInspeksiComputer = InspeksiComputer::where('inspection_status', 'Y')
                 ->where('site', 'HO')
-                ->whereYear('triwulan', $triwulanSekarang)
+                ->where('triwulan', $triwulanSekarang)
                 ->count();
             $countBelumInspeksiComputer = InspeksiComputer::where('inspection_status', 'N')
                 ->where('site', 'HO')
-                ->whereYear('triwulan', $triwulanSekarang)
+                ->where('triwulan', $triwulanSekarang)
                 ->count();
 
             if ($countAllDataInspeksiComputer > 0) {

@@ -82,15 +82,15 @@ class DashboardValeController extends Controller
         $loginSession =  'tes';
 
         $countAllDataInspeksiLaptop = InspeksiLaptop::where('site', 'VIB')
-            ->whereYear('year', Carbon::now()->year)
+            ->where('year', Carbon::now()->year)
             ->count();
         $countSudahInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'Y')
             ->where('site', 'VIB')
-            ->whereYear('year', Carbon::now()->year)
+            ->where('year', Carbon::now()->year)
             ->count();
         $countBelumInspeksiLaptop = InspeksiLaptop::where('inspection_status', 'N')
             ->where('site', 'VIB')
-            ->whereYear('year', Carbon::now()->year)
+            ->where('year', Carbon::now()->year)
             ->count();
         if ($countAllDataInspeksiLaptop > 0) {
             $percentLaptopSudahInspeksi = ($countSudahInspeksiLaptop / $countAllDataInspeksiLaptop) * 100;

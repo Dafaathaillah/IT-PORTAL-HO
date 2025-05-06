@@ -39,7 +39,7 @@ const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
         dom: "fBrtilp",
-        scrollY: '40vh',
+        scrollY: "40vh",
         scrollCollapse: true,
         buttons: [
             {
@@ -108,7 +108,7 @@ const getEncryptedYear = () => {
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.year"),
-        { year: selectedYear },
+        { year: selectedYear, site: "AMI" },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -117,6 +117,7 @@ const getEncryptedYear = () => {
                     window.open(
                         route("export.inspectionLaptop", {
                             year: encryptedYear,
+                            site: "AMI",
                         }),
                         "_blank"
                     );
@@ -233,42 +234,42 @@ function formatData(text) {
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
                     <div class="flex-none w-full max-w-full px-3">
-                     <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div class="flex flex-wrap md:flex-nowrap gap-4">
-                            <div
-                                class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
-                            >
-                                <span
-                                    class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
+                        <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
+                            <div class="flex flex-wrap md:flex-nowrap gap-4">
+                                <div
+                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
                                 >
-                                    <i
-                                        class="fas fa-search"
-                                        aria-hidden="true"
-                                    ></i>
-                                </span>
-                                <input
-                                    v-model="year"
-                                    type="number"
-                                    min="2025"
-                                    max="2500"
-                                    step="1"
-                                    class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                    placeholder="Masukkan Tahun"
-                                    @input="validateYear"
-                                />
+                                    <span
+                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
+                                    >
+                                        <i
+                                            class="fas fa-search"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </span>
+                                    <input
+                                        v-model="year"
+                                        type="number"
+                                        min="2025"
+                                        max="2500"
+                                        step="1"
+                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        placeholder="Masukkan Tahun"
+                                        @input="validateYear"
+                                    />
+                                </div>
+                                <button
+                                    @click="getEncryptedYear"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-10 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Rekap Inspeksi
+                                </button>
                             </div>
-                            <button
-                                @click="getEncryptedYear"
-                                class="flex items-center text-sm justify-center gap-2 w-40 h-10 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                            <div
+                                class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                             >
-                                <i class="fas fa-download"></i>
-                                Rekap Inspeksi
-                            </button>
-                        </div>
-                        <div
-                            class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-                        >
-                            <div class="flex-auto px-0 pt-0 pb-2">
+                                <div class="flex-auto px-0 pt-0 pb-2">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <table
@@ -282,11 +283,13 @@ function formatData(text) {
                                                         >
                                                             #
                                                         </th>
-                                                         <th
+
+                                                        <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Inspection
                                                         </th>
+
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -531,21 +534,6 @@ function formatData(text) {
                                                         >
                                                             <NavLinkCustom
                                                                 @click="
-                                                                    processData(
-                                                                        inspeksiLaptops.id
-                                                                    )
-                                                                "
-                                                                v-if="
-                                                                    inspeksiLaptops.inspection_status ===
-                                                                    'N'
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Do Inspection
-                                                            </NavLinkCustom>
-
-                                                            <NavLinkCustom
-                                                                @click="
                                                                     detailData(
                                                                         inspeksiLaptops.id
                                                                     )
@@ -579,9 +567,9 @@ function formatData(text) {
                                             </table>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>

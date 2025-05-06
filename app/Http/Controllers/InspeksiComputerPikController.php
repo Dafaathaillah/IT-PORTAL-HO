@@ -33,7 +33,7 @@ class InspeksiComputerPikController extends Controller
         if (empty($dataInspeksi)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site', 'PIK')->pluck('name')->map(function ($name) {
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'PIK')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         // return dd($dataInspeksi);
@@ -368,7 +368,7 @@ class InspeksiComputerPikController extends Controller
         }
         $crew_select = explode(', ', $dataInspeksi->crew);
 
-        $crew = User::where('site', 'PIK')->pluck('name')->map(function ($name) {
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'PIK')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         return Inertia::render('Inspeksi/SitePik/Komputer/InspeksiKomputerFormEdit', ['inspeksi' => $dataInspeksi, 'crew' => $crew, 'crew_select' => $crew_select]);

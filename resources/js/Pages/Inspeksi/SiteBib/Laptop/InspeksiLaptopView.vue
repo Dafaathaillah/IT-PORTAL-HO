@@ -39,7 +39,7 @@ const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
         dom: "fBrtilp",
-        scrollY: '40vh',
+        scrollY: "40vh",
         scrollCollapse: true,
         buttons: [
             {
@@ -108,7 +108,7 @@ const getEncryptedYear = () => {
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.year"),
-        { year: selectedYear },
+        { year: selectedYear, site: "BIB" },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -117,6 +117,7 @@ const getEncryptedYear = () => {
                     window.open(
                         route("export.inspectionLaptopAll", {
                             year: encryptedYear,
+                            site: "BIB",
                         }),
                         "_blank"
                     );
@@ -269,293 +270,304 @@ function formatData(text) {
                                 class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                             >
                                 <div class="flex-auto px-0 pt-0 pb-2">
-                                        <div class="p-0">
-                                            <div class="p-6 text-gray-900">
-                                                <table
-                                                    id="tableData"
-                                                    class="table table-striped"
-                                                >
-                                                    <thead class="align-bottom">
-                                                        <tr>
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                #
-                                                            </th>
-                                                             <th
+                                    <div class="p-0">
+                                        <div class="p-6 text-gray-900">
+                                            <table
+                                                id="tableData"
+                                                class="table table-striped"
+                                            >
+                                                <thead class="align-bottom">
+                                                    <tr>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            #
+                                                        </th>
+                                                        <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Inspection
                                                         </th>
-                                                            <th
-                                                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Inventory Number
-                                                            </th>
-
-                                                            <th
-                                                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                User
-                                                            </th>
-                                                            <th
-                                                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Department
-                                                            </th>
-
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Temuan
-                                                            </th>
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Inspection date
-                                                            </th>
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Inspection
-                                                                Status
-                                                            </th>
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Laptop Status
-                                                            </th>
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Laptop Condition
-                                                            </th>
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Remark
-                                                            </th>
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Approval Status
-                                                            </th>
-                                                            <th
-                                                                class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Action
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr
-                                                            v-for="(
-                                                                inspeksiLaptops,
-                                                                index
-                                                            ) in inspeksiLaptopx"
-                                                            :key="index"
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            <td
-                                                                class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                            >
-                                                                <span
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    {{
-                                                                        index +
-                                                                        1
-                                                                    }}
-                                                                </span>
-                                                            </td>
-                                                            <td
-                                                                class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                            >
-                                                                <NavLinkCustom
-                                                                    @click="
-                                                                        processData(
-                                                                            inspeksiLaptops.id
-                                                                        )
-                                                                    "
-                                                                    v-if="
-                                                                        inspeksiLaptops.inspection_status ===
-                                                                        'N'
-                                                                    "
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    Do
-                                                                    Inspection
-                                                                </NavLinkCustom>
-                                                            </td>
-                                                            <td
-                                                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                            >
-                                                                <p
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    {{ inspeksiLaptops?.inventory?.laptop_code|| 'Tidak ada no inventory' }}
-                                                                </p>
-                                                            </td>
+                                                            Inventory Number
+                                                        </th>
 
-                                                            <td
-                                                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                            >
-                                                                <p
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    {{ inspeksiLaptops?.inventory?.pengguna.username || 'Tidak ada pengguna' }}
-                                                                </p>
-                                                            </td>
-                                                            <td
-                                                                class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                            >
-                                                                <p
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    {{ inspeksiLaptops?.inventory?.pengguna?.department || 'Tidak ada Department' }}
-                                                                </p>
-                                                            </td>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            User
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Department
+                                                        </th>
 
-                                                            <td
-                                                                class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Temuan
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inspection date
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Inspection Status
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Laptop Status
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Laptop Condition
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Remark
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Approval Status
+                                                        </th>
+                                                        <th
+                                                            class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        v-for="(
+                                                            inspeksiLaptops,
+                                                            index
+                                                        ) in inspeksiLaptopx"
+                                                        :key="index"
+                                                    >
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                <span
-                                                                    :class="
-                                                                        getBadgeClassStatusFindings(
-                                                                            inspeksiLaptops.findings
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    {{
-                                                                        getBadgeTextStatusFindings(
-                                                                            inspeksiLaptops.findings
-                                                                        )
-                                                                    }}
-                                                                </span>
-                                                            </td>
-                                                            <td
-                                                                class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                                {{ index + 1 }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    processData(
+                                                                        inspeksiLaptops.id
+                                                                    )
+                                                                "
+                                                                v-if="
+                                                                    inspeksiLaptops.inspection_status ===
+                                                                    'N'
+                                                                "
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                <span
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    {{
-                                                                        inspeksiLaptops.inspection_at ==
-                                                                        null
-                                                                            ? "-"
-                                                                            : formattedDate(
-                                                                                  inspeksiLaptops.inspection_at
-                                                                              )
-                                                                    }}
-                                                                </span>
-                                                            </td>
-                                                            <td
-                                                                class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                                Do Inspection
+                                                            </NavLinkCustom>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                <span
-                                                                    :class="
-                                                                        getBadgeClassStatusInspeksi(
-                                                                            inspeksiLaptops.inspection_status
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    {{
-                                                                        getBadgeTextStatusInspeksi(
-                                                                            inspeksiLaptops.inspection_status
-                                                                        )
-                                                                    }}
-                                                                </span>
-                                                            </td>
-                                                            <td
-                                                                class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                            >
-                                                                <span
-                                                                    :class="
-                                                                        getBadgeClassStatusInventory(
-                                                                            inspeksiLaptops.inventory_status
-                                                                        )
-                                                                    "
-                                                                >
-                                                                    {{
-                                                                        getBadgeTextStatusInventory(
-                                                                            inspeksiLaptops.inventory_status
-                                                                        )
-                                                                    }}
-                                                                </span>
-                                                            </td>
-                                                            <td
-                                                                class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                            >
-                                                                <span
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    {{
-                                                                        inspeksiLaptops.condition
-                                                                    }}
-                                                                </span>
-                                                            </td>
-                                                            <td
-                                                                class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                            >
-                                                                <span
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    {{
-                                                                        inspeksiLaptops.remarks
-                                                                    }}
-                                                                </span>
-                                                            </td>
+                                                                {{
+                                                                    inspeksiLaptops
+                                                                        ?.inventory
+                                                                        ?.laptop_code ||
+                                                                    "Tidak ada no inventory"
+                                                                }}
+                                                            </p>
+                                                        </td>
 
-                                                            <td
-                                                                class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                <span
-                                                                    class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    {{
-                                                                        inspeksiLaptops.status_approval
-                                                                    }}
-                                                                </span>
-                                                            </td>
-
-                                                            <td
-                                                                class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                                {{
+                                                                    inspeksiLaptops
+                                                                        ?.inventory
+                                                                        ?.pengguna
+                                                                        .username ||
+                                                                    "Tidak ada pengguna"
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
+                                                                {{
+                                                                    inspeksiLaptops
+                                                                        ?.inventory
+                                                                        ?.pengguna
+                                                                        ?.department ||
+                                                                    "Tidak ada Department"
+                                                                }}
+                                                            </p>
+                                                        </td>
 
-                                                                <NavLinkCustom
-                                                                    @click="
-                                                                        detailData(
-                                                                            inspeksiLaptops.id
-                                                                        )
-                                                                    "
-                                                                    v-if="
-                                                                        inspeksiLaptops.inspection_status ===
-                                                                        'Y'
-                                                                    "
-                                                                    class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    Detail
-                                                                </NavLinkCustom>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                :class="
+                                                                    getBadgeClassStatusFindings(
+                                                                        inspeksiLaptops.findings
+                                                                    )
+                                                                "
+                                                            >
+                                                                {{
+                                                                    getBadgeTextStatusFindings(
+                                                                        inspeksiLaptops.findings
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    inspeksiLaptops.inspection_at ==
+                                                                    null
+                                                                        ? "-"
+                                                                        : formattedDate(
+                                                                              inspeksiLaptops.inspection_at
+                                                                          )
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                :class="
+                                                                    getBadgeClassStatusInspeksi(
+                                                                        inspeksiLaptops.inspection_status
+                                                                    )
+                                                                "
+                                                            >
+                                                                {{
+                                                                    getBadgeTextStatusInspeksi(
+                                                                        inspeksiLaptops.inspection_status
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                :class="
+                                                                    getBadgeClassStatusInventory(
+                                                                        inspeksiLaptops.inventory_status
+                                                                    )
+                                                                "
+                                                            >
+                                                                {{
+                                                                    getBadgeTextStatusInventory(
+                                                                        inspeksiLaptops.inventory_status
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    inspeksiLaptops.condition
+                                                                }}
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    inspeksiLaptops.remarks
+                                                                }}
+                                                            </span>
+                                                        </td>
 
-                                                                <NavLinkCustom
-                                                                    @click="
-                                                                        editData(
-                                                                            inspeksiLaptops.id
-                                                                        )
-                                                                    "
-                                                                    v-if="
-                                                                        inspeksiLaptops.inspection_status ===
-                                                                        'Y'
-                                                                    "
-                                                                    class="ml-3 mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                                >
-                                                                    Edit
-                                                                </NavLinkCustom>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                        <td
+                                                            class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <span
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    inspeksiLaptops.status_approval
+                                                                }}
+                                                            </span>
+                                                        </td>
+
+                                                        <td
+                                                            class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    detailData(
+                                                                        inspeksiLaptops.id
+                                                                    )
+                                                                "
+                                                                v-if="
+                                                                    inspeksiLaptops.inspection_status ===
+                                                                    'Y'
+                                                                "
+                                                                class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Detail
+                                                            </NavLinkCustom>
+
+                                                            <NavLinkCustom
+                                                                @click="
+                                                                    editData(
+                                                                        inspeksiLaptops.id
+                                                                    )
+                                                                "
+                                                                v-if="
+                                                                    inspeksiLaptops.inspection_status ===
+                                                                    'Y'
+                                                                "
+                                                                class="ml-3 mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Edit
+                                                            </NavLinkCustom>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

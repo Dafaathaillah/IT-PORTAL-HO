@@ -11,35 +11,10 @@ use Illuminate\Support\Facades\Crypt;
 
 class ExportInspeksiComputerController extends Controller
 {
-    // public function exportPdf(Request $request)
-    // {
-    //     $user = Auth::user();
-    //     $thisYearEncrypt = $request->query('year') ?? Carbon::now()->year;
-    //     try {
-    //         $thisYear = Crypt::decryptString($thisYearEncrypt); // Dekripsi year dari URL
-    //     } catch (\Exception $e) {
-    //         abort(403, "Akses tidak valid");
-    //     }
-
-    //     if ($thisYear > 2500) {
-    //         return back()->with('error', 'Tahun tidak terdeteksi.');
-    //     }
-
-
-    //     $inspeksiLaptop = InspeksiLaptop::with('inventory.pengguna')
-    //         ->where('site', $user->site)
-    //         ->where('year', $thisYear)
-    //         ->get();
-
-    //     $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptop', compact('inspeksiLaptop', 'thisYear'))
-    //         ->setPaper('A4', 'landscape');
-
-    //     return $pdf->stream('inspection-laptop-report-periode-' . $thisYear . '.pdf');
-    // }
-
     public function exportPdfAll(Request $request)
     {   
         // dd($request->site);
+        $site = $request->site;
         if ($request->site != 'ADW') {
             if ($request->triwulan) {
                 $thisTriwulan = $request->triwulan;    
@@ -89,7 +64,7 @@ class ExportInspeksiComputerController extends Controller
             ->where('inventory_status', '!=' ,'SCRAP')
             ->count();
 
-            $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAll', compact('inspeksiComputerAll', 'thisYear', 'thisTriwulan', 'unitScrap', 'unitUtilize'))
+            $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAll', compact('inspeksiComputerAll', 'thisYear', 'thisTriwulan', 'unitScrap', 'unitUtilize', 'site'))
             ->setPaper('A4', 'landscape');
         }else{
             $inspeksiComputerAll = InspeksiComputer::with('computer.pengguna')
@@ -112,11 +87,11 @@ class ExportInspeksiComputerController extends Controller
             ->where('inventory_status', '!=' ,'SCRAP')
             ->count();
 
-            $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAllMonth', compact('inspeksiComputerAll', 'thisYear', 'thisMonth', 'unitScrap', 'unitUtilize'))
+            $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAllMonth', compact('inspeksiComputerAll', 'thisYear', 'thisMonth', 'unitScrap', 'unitUtilize', 'site'))
                 ->setPaper('A4', 'landscape');
         }
 
 
-        return $pdf->stream('inspection-laptop-report-periode-' . '.pdf');
+        return $pdf->stream('inspection-computer-report-periode-' . 'triwulan-' .$thisTriwulan . '-' . $thisYear . '.pdf');
     }
 }
