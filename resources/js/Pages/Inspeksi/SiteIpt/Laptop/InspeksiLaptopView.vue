@@ -152,7 +152,7 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("inspeksiLaptopBge.edit", { id: id }));
+            form.get(route("inspeksiLaptopIpt.edit", { id: id }));
         }
     });
 };
@@ -208,11 +208,11 @@ const getBadgeTextStatusFindings = (temuan) => {
 };
 
 const detailData = (id) => {
-    form.get(route("inspeksiLaptopBge.detail", { id: id }));
+    form.get(route("inspeksiLaptopIpt.detail", { id: id }));
 };
 
 const processData = (id) => {
-    form.get(route("inspeksiLaptopBge.process", { id: id }));
+    form.get(route("inspeksiLaptopIpt.process", { id: id }));
 };
 
 function formatData(text) {

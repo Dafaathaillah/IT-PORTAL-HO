@@ -30,17 +30,30 @@ class InspeksiLaptopController extends Controller
     }
     public function index()
     {
+        // $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'HO')->get();
 
-        
-        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site',null)->orWhere('site','HO')->get();
+        $inspeksi_laptop = InspeksiLaptop::where('site', 'HO')
+            ->whereHas('inventory') // pastikan ada laptop
+            ->whereHas('inventory.pengguna') // pastikan ada user juga
+            ->with('inventory.pengguna')
+            ->get();
 
-        $site = '';
+        // foreach ($inspeksi_laptop as $row) {
+        //     dump([
+        //         'id' => $row->id,
+        //         'id_laptop' => $row->inv_laptop_id,
+        //         'inventory' => $row->inventory?->laptop_code,
+        //         'pengguna' => $row->inventory?->pengguna?->username,
+        //     ]);
+        // }
+
+        $site = 'HO';
 
         $role = auth()->user()->role;
 
         return Inertia::render(
             'Inspeksi/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop,'site' => $site,'role' => $role]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
         );
     }
 
@@ -74,7 +87,7 @@ class InspeksiLaptopController extends Controller
         // dd($request->file('image_temuan'));
 
         // $maxId = InspeksiLaptop::where('site',auth()->user()->site)->where('year', $year)->get()->count();
-        $maxId = InspeksiLaptop::where('site',auth()->user()->site)->where('year', $year)->max('pica_number');
+        $maxId = InspeksiLaptop::where('site', auth()->user()->site)->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -165,7 +178,7 @@ class InspeksiLaptopController extends Controller
         // dd($laptopx);
 
         if (!empty($dataInspeksix->inspector)) {
-            
+
             $pengguna_selected = array($dataInspeksix->inspector);
         } else {
             $pengguna_selected = array('data tidak ada !');
@@ -188,7 +201,7 @@ class InspeksiLaptopController extends Controller
         // dd($request->file('image_temuan'));
 
         // $maxId = InspeksiLaptop::max('id');
-        $maxId = InspeksiLaptop::where('site',auth()->user()->site)->where('year', $year)->max('pica_number');
+        $maxId = InspeksiLaptop::where('site', auth()->user()->site)->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -230,7 +243,7 @@ class InspeksiLaptopController extends Controller
 
         if ($params['temuan'] != null || $params['temuan'] != '') {
             $dataInspeksix = InspeksiLaptop::find($request->id);
-            if ($dataInspeksix->pica_number == null){
+            if ($dataInspeksix->pica_number == null) {
                 $data['pica_number'] = $no_pica;
             }
         }

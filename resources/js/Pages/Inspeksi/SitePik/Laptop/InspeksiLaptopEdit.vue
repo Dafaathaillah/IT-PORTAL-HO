@@ -323,7 +323,7 @@ const update = () => {
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="device-name"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Defrag</label>
@@ -347,7 +347,7 @@ const update = () => {
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="number-asset-ho"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
@@ -371,7 +371,7 @@ const update = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="assets-category"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
@@ -395,32 +395,7 @@ const update = () => {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
-                                        <div class="mb-4">
-                                            <label for="model"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Tidak
-                                                Terdapat Software Ilegal</label>
-
-                                            <br>
-                                            <div class="inline-flex items-center space-x-4">
-                                                <label class="inline-flex items-center space-x-2">
-                                                    <input required type="radio" name="ilegal" v-model="form.software_check_ilegal_software"
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Ya</span>
-                                                </label>
-
-                                                <label class="inline-flex items-center space-x-2">
-                                                    <input required type="radio" name="ilegal" v-model="form.software_check_ilegal_software"
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Tidak</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="processor"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
@@ -444,7 +419,7 @@ const update = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="hdd"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
@@ -468,7 +443,7 @@ const update = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="ssd"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
@@ -492,7 +467,7 @@ const update = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="ram"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
@@ -516,55 +491,30 @@ const update = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
-                                        <div class="mb-4">
-                                            <label for="vga"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
-                                                Cek Update Sinology</label>
-
-                                            <br>
-                                            <div class="inline-flex items-center space-x-4">
-                                                <label class="inline-flex items-center space-x-2">
-                                                    <input required type="radio" name="sinology"
-                                                        v-model="form.software_update_sinology" value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Ya</span>
-                                                </label>
-
-                                                <label class="inline-flex items-center space-x-2">
-                                                    <input required type="radio" name="sinology"
-                                                        v-model="form.software_update_sinology" value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Tidak</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="warna_laptop"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
                                                 Cek Turn Off Windows Update</label>
-
                                             <br>
                                             <div class="inline-flex items-center space-x-4">
                                                 <label class="inline-flex items-center space-x-2">
                                                     <input required type="radio" name="off" v-model="form.software_turn_off_windows_update"
-                                                        value="Y"
+                                                        value="ON"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Ya</span>
+                                                    <span class="text-gray-700">On</span>
                                                 </label>
 
                                                 <label class="inline-flex items-center space-x-2">
                                                     <input required type="radio" name="off" v-model="form.software_turn_off_windows_update"
-                                                        value="N"
+                                                        value="OFF"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Tidak</span>
+                                                    <span class="text-gray-700">Off</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="os_laptop"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan
@@ -588,7 +538,7 @@ const update = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                                         <div class="mb-4">
                                             <label for="serial-number"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Melakukan

@@ -394,9 +394,7 @@ function formatData(text) {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    inspeksiLaptops
-                                                                        .inventory
-                                                                        .laptop_code
+                                                                    inspeksiLaptops.inventory.laptop_code
                                                                 }}
                                                             </p>
                                                         </td>

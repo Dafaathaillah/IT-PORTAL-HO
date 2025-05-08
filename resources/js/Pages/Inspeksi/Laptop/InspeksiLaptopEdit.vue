@@ -550,16 +550,16 @@ const update = () => {
                                             <div class="inline-flex items-center space-x-4">
                                                 <label class="inline-flex items-center space-x-2">
                                                     <input required type="radio" name="off" v-model="form.software_turn_off_windows_update"
-                                                        value="Y"
+                                                        value="ON"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Ya</span>
+                                                    <span class="text-gray-700">On</span>
                                                 </label>
 
                                                 <label class="inline-flex items-center space-x-2">
                                                     <input required type="radio" name="off" v-model="form.software_turn_off_windows_update"
-                                                        value="N"
+                                                        value="OFF"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Tidak</span>
+                                                    <span class="text-gray-700">Off</span>
                                                 </label>
                                             </div>
                                         </div>

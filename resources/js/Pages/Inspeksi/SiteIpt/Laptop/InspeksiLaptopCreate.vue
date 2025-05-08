@@ -31,12 +31,12 @@ const form = useForm({
     software_defrag: "",
     software_check_system_restore: "",
     software_clean_cache_data: "",
-    software_check_ilegal_software: "",
+    software_check_ilegal_software: "MERGED",
     software_change_password: "",
     software_windows_license: "",
     software_office_license: "",
     software_standaritation_software: "",
-    software_update_sinology: "",
+    software_update_sinology: "DELETED",
     software_turn_off_windows_update: "",
     software_cheking_ssd_health: "",
     software_standaritation_device_name: "",
@@ -60,7 +60,6 @@ const form = useForm({
     image_temuan: "",
     image_tindakan: "",
     image_inspeksi: "",
-
 });
 
 const isDisabled = ref(true);
@@ -101,12 +100,12 @@ const selectedValuesPIC = ref([]);
 const selectedDefrag = ref([]);
 const selectedRestore = ref([]);
 const selectedCache = ref([]);
-const selectedIlegal = ref([]);
+// const selectedIlegal = ref([]);
 const selectedPassword = ref([]);
 const selectedLicense = ref([]);
 const selectedOffice = ref([]);
 const selectedStandarisasi = ref([]);
-const selectedSinology = ref([]);
+// const selectedSinology = ref([]);
 const selectedOff = ref([]);
 const selectedHealth = ref([]);
 const selectedNama = ref([]);
@@ -133,12 +132,12 @@ const save = () => {
     form.software_defrag = selectedDefrag.value;
     form.software_check_system_restore = selectedRestore.value;
     form.software_clean_cache_data = selectedCache.value;
-    form.software_check_ilegal_software = selectedIlegal.value;
+    // form.software_check_ilegal_software = selectedIlegal.value;
     form.software_change_password = selectedPassword.value;
     form.software_windows_license = selectedLicense.value;
     form.software_office_license = selectedOffice.value;
     form.software_standaritation_software = selectedStandarisasi.value;
-    form.software_update_sinology = selectedSinology.value;
+    // form.software_update_sinology = selectedSinology.value;
     form.software_turn_off_windows_update = selectedOff.value;
     form.software_cheking_ssd_health = selectedHealth.value;
     form.software_standaritation_device_name = selectedNama.value;
