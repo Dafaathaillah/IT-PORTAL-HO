@@ -37,6 +37,7 @@ class Aduan extends Model
         'action_repair',
         'crew',
         'site',
-        'site_pelapor'
+        'site_pelapor',
+        'user_rating'
     ];
 }

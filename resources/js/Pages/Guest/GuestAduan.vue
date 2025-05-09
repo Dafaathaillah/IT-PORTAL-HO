@@ -1,12 +1,11 @@
 <script setup>
 import GuestLayoutCrud from "@/Layouts/GuestLayoutDashboard.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, router } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -128,6 +127,139 @@ function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
+
+const canAddData = ref(true);
+
+// Fungsi tampilkan rating bintang dengan SweetAlert2
+const showStarRating = async (ticketCode, complaintId, complaint_note) => {
+    return new Promise((resolve) => {
+        let selectedRating = 0;
+
+        const renderStars = () => {
+            let html = "";
+            for (let i = 1; i <= 5; i++) {
+                html += `
+          <i 
+            class="fa-star fa-2x fas star ${
+                i <= selectedRating ? "text-yellow-400" : "text-gray-400"
+            }"
+            data-value="${i}"
+            style="cursor: pointer; margin: 0 4px;"
+          ></i>`;
+            }
+            return html;
+        };
+
+        Swal.fire({
+            title: "Beri Rating Kepuasan",
+            html: `
+        <p>Untuk tiket: <strong>${ticketCode}</strong></p>
+        <p>Note aduan: <strong>${complaint_note}</strong></p>
+        <div id="star-container" style="display: flex; justify-content: center; margin-top: 10px;">
+          ${renderStars()}
+        </div>
+      `,
+            confirmButtonText: "Kirim",
+            focusConfirm: false,
+            allowOutsideClick: false, // ⛔ tidak bisa klik luar
+            allowEscapeKey: false, // ⛔ tidak bisa ESC
+            customClass: {
+                confirmButton:
+                    "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded",
+            },
+            didOpen: () => {
+                const container =
+                    Swal.getHtmlContainer().querySelector("#star-container");
+                container.addEventListener("click", (e) => {
+                    if (e.target.classList.contains("star")) {
+                        selectedRating = parseInt(e.target.dataset.value);
+                        container.innerHTML = renderStars();
+                    }
+                });
+            },
+            preConfirm: () => {
+                if (selectedRating === 0) {
+                    Swal.showValidationMessage("Pilih minimal 1 bintang");
+                    return false;
+                }
+                return selectedRating;
+            },
+        }).then((result) => {
+            if (result.isConfirmed && result.value > 0) {
+                resolve(result.value);
+            }
+        });
+    });
+};
+
+// Ambil semua aduan CLOSED milik user yang belum diberi rating
+const fetchUnratedComplaints = async () => {
+    try {
+        const { data } = await axios.get("/user-unrated-closed-complaints");
+
+        if (data.length > 0) {
+            canAddData.value = false;
+
+            for (const complaint of data) {
+                const rating = await showStarRating(
+                    complaint.complaint_code,
+                    complaint.id,
+                    complaint.complaint_note
+                );
+
+                if (rating) {
+                    // console.log(rating);
+                    router.post(
+                        route("guestAduan.storeRating"),
+                        {
+                            complaint_id: complaint.id,
+                            rating: rating,
+                        },
+                        {
+                            preserveScroll: true,
+                            preserveState: true,
+                            onSuccess: () => {
+                                console.log("Rating dikirim via Inertia");
+                            },
+                        }
+                    );
+                }
+            }
+
+            canAddData.value = true;
+            Swal.fire({
+                title: "Terima kasih!",
+                text: "Rating Anda berhasil dikirim.",
+                icon: "success",
+                confirmButtonText: "OK",
+                allowOutsideClick: false, // ⛔ tidak bisa klik luar
+                allowEscapeKey: false, // ⛔ tidak bisa ESC
+                customClass: {
+                    confirmButton:
+                        "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded",
+                },
+            });
+        }
+    } catch (error) {
+        console.error("Gagal cek rating:", error);
+    }
+};
+
+// Jalankan saat halaman dimuat
+onMounted(() => {
+    fetchUnratedComplaints();
+});
+
+// Fungsi ketika klik tombol
+const handleAddClick = async () => {
+    if (!canAddData.value) {
+        await fetchUnratedComplaints();
+    }
+
+    if (canAddData.value) {
+        router.visit(route("guestAduan.create"));
+    }
+};
 </script>
 
 <template>
@@ -152,7 +284,9 @@ function formatData(text) {
                         Complaint Pages
                     </li>
                 </ol>
-                <h6 class="mb-0 font-bold text-white capitalize">All Complaint</h6>
+                <h6 class="mb-0 font-bold text-white capitalize">
+                    All Complaint
+                </h6>
             </nav>
         </template>
 
@@ -164,7 +298,9 @@ function formatData(text) {
                         enctype="multipart/form-data"
                     >
                         <div class="flex flex-wrap">
-                            <div class="max-w-full sm:w-2/3 md:w-2/3 lg:w-2/3 px-3">
+                            <div
+                                class="max-w-full sm:w-2/3 md:w-2/3 lg:w-2/3 px-3"
+                            >
                                 <div
                                     class="h-11 relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease"
                                 >
@@ -181,7 +317,9 @@ function formatData(text) {
                                     />
                                 </div>
                             </div>
-                            <div class="max-w-full mobile-sm:px-3 mobile-sm:mt-1">
+                            <div
+                                class="max-w-full mobile-sm:px-3 mobile-sm:mt-1"
+                            >
                                 <button
                                     type="submit"
                                     class="h-11 htext-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -241,6 +379,11 @@ function formatData(text) {
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Status
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Rating
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -319,6 +462,50 @@ function formatData(text) {
                                                         >
                                                             {{ aduans.status }}
                                                         </span>
+                                                    </td>
+
+                                                    <td
+                                                        class="p-2 space-x-1 text-yellow-500"
+                                                    >
+                                                        <template
+                                                            v-for="i in 5"
+                                                        >
+                                                            <svg
+                                                                v-if="
+                                                                    i <=
+                                                                    aduans.user_rating
+                                                                "
+                                                                :key="
+                                                                    'filled-' +
+                                                                    i
+                                                                "
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                class="h-5 w-5 fill-current"
+                                                                viewBox="0 0 20 20"
+                                                            >
+                                                                <path
+                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.2 3.685h3.875c.969 0 1.371 1.24.588 1.81l-3.136 2.28 1.2 3.685c.3.921-.755 1.688-1.54 1.118L10 13.347l-3.136 2.28c-.785.57-1.84-.197-1.54-1.118l1.2-3.685-3.136-2.28c-.783-.57-.38-1.81.588-1.81H7.85l1.2-3.685z"
+                                                                />
+                                                            </svg>
+                                                            <svg
+                                                                v-else
+                                                                :key="
+                                                                    'empty-' + i
+                                                                "
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                class="h-5 w-5 text-gray-300"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                stroke="currentColor"
+                                                            >
+                                                                <path
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.2 3.685h3.875c.969 0 1.371 1.24.588 1.81l-3.136 2.28 1.2 3.685c.3.921-.755 1.688-1.54 1.118L12 13.347l-3.136 2.28c-.785.57-1.84-.197-1.54-1.118l1.2-3.685-3.136-2.28c-.783-.57-.38-1.81.588-1.81h3.875l1.2-3.685z"
+                                                                />
+                                                            </svg>
+                                                        </template>
                                                     </td>
 
                                                     <td

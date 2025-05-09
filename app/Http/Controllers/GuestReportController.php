@@ -13,6 +13,14 @@ use Inertia\Inertia;
 
 class GuestReportController extends Controller
 {
+    public function unratedClosed(Request $request)
+    {
+        return Aduan::where('nrp', auth()->user()->nrp)
+            ->where('status', 'CLOSED')
+            ->whereNull('user_rating')
+            ->get();
+    }
+
     public function index(Request $request)
     {
         if (empty($request->search) || $request->search == null) {
@@ -23,14 +31,14 @@ class GuestReportController extends Controller
 
         // return dd($search);
         $aduan = Aduan::query()
-        ->when(!$request->search, function($query) {
-            return $query->where('nrp',auth()->user()->nrp)
-                         ->orderBy('date_of_complaint', 'desc');
-        })
-        ->when($request->search, function($query, $search) {
-            return $query->where('complaint_code', 'like', '%' . $search . '%');
-        })
-        ->get();
+            ->when(!$request->search, function ($query) {
+                return $query->where('nrp', auth()->user()->nrp)
+                    ->orderBy('date_of_complaint', 'desc');
+            })
+            ->when($request->search, function ($query, $search) {
+                return $query->where('complaint_code', 'like', '%' . $search . '%');
+            })
+            ->get();
 
         // $aduan = Aduan::whereDate('created_date', Carbon::today())->orderBy('date_of_complaint', 'desc')->get();
         return Inertia::render(
@@ -63,11 +71,11 @@ class GuestReportController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site',auth()->user()->site)->orderBy('max_id', 'desc')->first();
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site', auth()->user()->site)->orderBy('max_id', 'desc')->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
-        }else{
+        } else {
             $split = explode('-', $maxId->complaint_code);
             $noUrut = (int) $split[2];
             $maxId = $noUrut;
@@ -150,6 +158,12 @@ class GuestReportController extends Controller
         }
         // return dd($data);
         // return redirect()->route('guestAduan.page');
+    }
+
+    public function storeRating(Request $request)
+    {
+        $aduan = Aduan::findOrFail($request->complaint_id);
+        $aduan->update(['user_rating' => $request->rating]);
     }
 
     public function destroy($id)
