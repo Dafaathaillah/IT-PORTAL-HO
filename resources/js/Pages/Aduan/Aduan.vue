@@ -642,6 +642,9 @@ function formatData(text) {
                                                                 'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
                                                                     aduans.status ===
                                                                     'CANCEL',
+                                                                'bg-gradient-to-tl from-rose-500 to-rose-800 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                    aduans.status ===
+                                                                    'OUTSTANDING',
                                                             }"
                                                         >
                                                             {{ aduans.status }}
