@@ -421,6 +421,9 @@ const isImage = (url) => {
                                                 <option value="CLOSED">
                                                     CLOSED
                                                 </option>
+                                                <option value="OUTSTANDING">
+                                                    OUTSTANDING
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
