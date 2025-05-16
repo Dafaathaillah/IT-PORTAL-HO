@@ -125,38 +125,39 @@ class DashboardBaController extends Controller
         $sudahInspeksiArray = [$percentLaptopSudahInspeksi, $percentComputerSudahInspeksi];
         $belumInspeksiArray = [$percentLaptopBelumInspeksi, $percentComputerBelumInspeksi];
 
-        $totalAduanAll = Aduan::where('site', 'BA')->count();
+        $bulanSekarang = Carbon::now()->month;
+        $totalAduanAll = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->count();
         if ($totalAduanAll > 0) {
             $totalAduan = $totalAduanAll;
 
-            $aduanTelkomsel = Aduan::where('site', 'BA')->where('category_name', 'TELKOMSEL')->count();
+            $aduanTelkomsel = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'TELKOMSEL')->count();
             $aduanTelkomselPercent = ($aduanTelkomsel / $totalAduan) * 100;
 
-            $aduanRadio = Aduan::where('site', 'BA')->where('category_name', 'RADIO')->count();
+            $aduanRadio = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'RADIO')->count();
             $aduanRadioPercent = ($aduanRadio / $totalAduan) * 100;
 
-            $aduanServer = Aduan::where('site', 'BA')->where('category_name', 'SERVER')->count();
+            $aduanServer = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'SERVER')->count();
             $aduanServerPercent = ($aduanServer / $totalAduan) * 100;
 
-            $aduanSs6 = Aduan::where('site', 'BA')->where('category_name', 'SS6')->count();
+            $aduanSs6 = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'SS6')->count();
             $aduanSs6Percent = ($aduanSs6 / $totalAduan) * 100;
 
-            $aduanWebsite = Aduan::where('site', 'BA')->where('category_name', 'WEBSITE')->count();
+            $aduanWebsite = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'WEBSITE')->count();
             $aduanWebsitePercent = ($aduanWebsite / $totalAduan) * 100;
 
-            $aduanNetwork = Aduan::where('site', 'BA')->where('category_name', 'NETWORK')->count();
+            $aduanNetwork = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'NETWORK')->count();
             $aduanNetworkPercent = ($aduanNetwork / $totalAduan) * 100;
 
-            $aduanSap = Aduan::where('site', 'BA')->where('category_name', 'SAP')->count();
+            $aduanSap = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'SAP')->count();
             $aduanSapPercent = ($aduanSap / $totalAduan) * 100;
 
-            $aduanPcNb = Aduan::where('site', 'BA')->where('category_name', 'PC/NB')->count();
+            $aduanPcNb = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'PC/NB')->count();
             $aduanPcNbPercent = ($aduanPcNb / $totalAduan) * 100;
 
-            $aduanPrinter = Aduan::where('site', 'BA')->where('category_name', 'PRINTER')->count();
+            $aduanPrinter = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'PRINTER')->count();
             $aduanPrinterPercent = ($aduanPrinter / $totalAduan) * 100;
 
-            $aduanOther = Aduan::where('site', 'BA')->where('category_name', 'OTHER')->count();
+            $aduanOther = Aduan::where('site', 'BA')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'OTHER')->count();
             $aduanOtherPercent = ($aduanOther / $totalAduan) * 100;
         }else{
             $totalAduan = 0;

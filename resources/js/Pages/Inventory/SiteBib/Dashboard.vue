@@ -296,6 +296,19 @@ const initChartAchievementLight = () => {
     Highcharts.chart(chartAchievement.value, {
         chart: {
             type: "bar",
+            events: {
+                load: function () {
+                    const chart = this;
+                    drawCustomLegend(chart);
+                },
+                render: function () {
+                    const chart = this;
+                    if (chart.customLegendTexts) {
+                        chart.customLegendTexts.forEach((el) => el.destroy());
+                    }
+                    drawCustomLegend(chart);
+                },
+            },
         },
         title: {
             text: "",
@@ -362,6 +375,19 @@ const initChartAchievementDark = () => {
         chart: {
             type: "bar",
             backgroundColor: "#111C44",
+            events: {
+                load: function () {
+                    const chart = this;
+                    drawCustomLegend(chart);
+                },
+                render: function () {
+                    const chart = this;
+                    if (chart.customLegendTexts) {
+                        chart.customLegendTexts.forEach((el) => el.destroy());
+                    }
+                    drawCustomLegend(chart);
+                },
+            },
         },
         title: {
             text: "",
@@ -436,6 +462,23 @@ const initChartAchievementDark = () => {
         },
     });
 };
+
+function drawCustomLegend(chart) {
+    const leftX = 10;
+    const bottomY = chart.chartHeight; // titik bawah chart
+
+    const text1 = chart.renderer
+        .text("🟩 Data Inspeksi Laptop Per-Year", leftX, bottomY - 40)
+        .css({ color: "#fff", fontSize: "12px" })
+        .add();
+
+    const text2 = chart.renderer
+        .text("🟥 Data Inspeksi Computer Per-Quarter", leftX, bottomY - 25)
+        .css({ color: "#fff", fontSize: "12px" })
+        .add();
+
+    chart.customLegendTexts = [text1, text2];
+}
 
 const initChartAduanAnalysLight = () => {
     Highcharts.chart(chartAduanAnalys.value, {
@@ -977,7 +1020,7 @@ const initChartAduanAnalysDark = () => {
                         <div class="p-4 pb-0 mb-0 rounded-t-4">
                             <div class="flex justify-between">
                                 <h6 class="mb-2 dark:text-white">
-                                    Table Monitoring Achievement Inspeksi
+                                    Table Monitoring Achievement Inspeksi/Periode
                                 </h6>
                             </div>
                         </div>
@@ -996,7 +1039,7 @@ const initChartAduanAnalysDark = () => {
                         <div class="p-4 pb-0 mb-0 rounded-t-4">
                             <div class="flex justify-between">
                                 <h6 class="mb-2 dark:text-white">
-                                    Table Analysis Aduan
+                                    Table Analysis Aduan/Month
                                 </h6>
                             </div>
                         </div>

@@ -71,7 +71,7 @@ class InspeksiLaptopController extends Controller
 
         // dd($laptopx);
 
-        $penggunax = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'HO')->pluck('name')->map(function ($name) {
+        $penggunax = UserAll::where('site', 'HO')->pluck('username')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 

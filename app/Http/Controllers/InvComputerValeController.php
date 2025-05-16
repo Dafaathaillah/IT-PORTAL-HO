@@ -85,7 +85,12 @@ class InvComputerValeController extends Controller
 
         $params = $request->all();
 
-        $existingDataSn = InvComputer::where('serial_number', $params['serial_number'])->first();
+        if ($request->serial_number === '' || $request->serial_number === '-' || $request->serial_number === null) {
+            $existingDataSn = null; // Biarkan lanjut tanpa mendeteksi duplikasi
+        } else {
+            $existingDataSn = InvComputer::where('serial_number', $params['serial_number'])->first();
+        }
+        
         if ($existingDataSn) {
             $duplicatesInsertSn[] = [
                 'number_asset_ho' => $existingDataSn->number_asset_ho,

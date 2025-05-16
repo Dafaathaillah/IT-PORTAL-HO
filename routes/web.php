@@ -204,6 +204,7 @@ use App\Http\Controllers\InvWirellessRcbinController;
 use App\Http\Controllers\InvWirellessSbsController;
 use App\Http\Controllers\InvWirellessSksController;
 use App\Http\Controllers\InvWirellessValeController;
+use App\Http\Controllers\KpiInspeksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
 use App\Http\Controllers\UserAllBaController;
@@ -368,41 +369,42 @@ Route::middleware('auth')->group(function () {
             $sudahInspeksiArray = [$percentLaptopSudahInspeksi, $percentComputerSudahInspeksi];
             $belumInspeksiArray = [$percentLaptopBelumInspeksi, $percentComputerBelumInspeksi];
 
-            $totalAduanAll = Aduan::where('site', 'HO')->count();
+        $bulanSekarang = Carbon::now()->month;
+        $totalAduanAll = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->count();
             if ($totalAduanAll > 0) {
                 $totalAduan = $totalAduanAll;
 
-                $aduanTelkomsel = Aduan::where('site', 'HO')->where('category_name', 'TELKOMSEL')->count();
+                $aduanTelkomsel = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'TELKOMSEL')->count();
                 $aduanTelkomselPercent = ($aduanTelkomsel / $totalAduan) * 100;
 
-                $aduanRadio = Aduan::where('site', 'HO')->where('category_name', 'RADIO')->count();
+                $aduanRadio = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'RADIO')->count();
                 $aduanRadioPercent = ($aduanRadio / $totalAduan) * 100;
 
-                $aduanServer = Aduan::where('site', 'HO')->where('category_name', 'SERVER')->count();
+                $aduanServer = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'SERVER')->count();
                 $aduanServerPercent = ($aduanServer / $totalAduan) * 100;
 
-                $aduanSs6 = Aduan::where('site', 'HO')->where('category_name', 'SS6')->count();
+                $aduanSs6 = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'SS6')->count();
                 $aduanSs6Percent = ($aduanSs6 / $totalAduan) * 100;
 
-                $aduanWebsite = Aduan::where('site', 'HO')->where('category_name', 'WEBSITE')->count();
+                $aduanWebsite = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'WEBSITE')->count();
                 $aduanWebsitePercent = ($aduanWebsite / $totalAduan) * 100;
 
-                $aduanNetwork = Aduan::where('site', 'HO')->where('category_name', 'NETWORK')->count();
+                $aduanNetwork = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'NETWORK')->count();
                 $aduanNetworkPercent = ($aduanNetwork / $totalAduan) * 100;
 
-                $aduanSap = Aduan::where('site', 'HO')->where('category_name', 'SAP')->count();
+                $aduanSap = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'SAP')->count();
                 $aduanSapPercent = ($aduanSap / $totalAduan) * 100;
 
-                $aduanPcNb = Aduan::where('site', 'HO')->where('category_name', 'PC/NB')->count();
+                $aduanPcNb = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'PC/NB')->count();
                 $aduanPcNbPercent = ($aduanPcNb / $totalAduan) * 100;
 
-                $aduanPrinter = Aduan::where('site', 'HO')->where('category_name', 'PRINTER')->count();
+                $aduanPrinter = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'PRINTER')->count();
                 $aduanPrinterPercent = ($aduanPrinter / $totalAduan) * 100;
 
-                $aduanSoc = Aduan::where('site', 'HO')->where('category_name', 'SOC')->count();
+                $aduanSoc = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'SOC')->count();
                 $aduanSocPercent = ($aduanSoc / $totalAduan) * 100;
 
-                $aduanOther = Aduan::where('site', 'HO')->where('category_name', 'OTHER')->count();
+                $aduanOther = Aduan::where('site', 'HO')->whereMonth('created_at', $bulanSekarang)->where('category_name', 'OTHER')->count();
                 $aduanOtherPercent = ($aduanOther / $totalAduan) * 100;
             }else{
                 $totalAduan = 0;
@@ -415,6 +417,7 @@ Route::middleware('auth')->group(function () {
                 $aduanSapPercent = 0;
                 $aduanPcNbPercent = 0;
                 $aduanPrinterPercent = 0;
+                $aduanSocPercent = 0;
                 $aduanOtherPercent = 0;
                 $aduanTelkomsel = 0;
                 $aduanRadio = 0;
@@ -654,6 +657,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('inventory')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO'], function () {
+            Route::get('/kpi-inspeksi-ho', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiHo');
+            Route::post('/kpi-inspeksi-ho-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowHo');
+
             Route::get('/accessPoint', [InvApController::class, 'index'])->name('accessPoint.page');
             Route::post('/accessPoint/generate', [InvApController::class, 'generateCode'])->name('accessPoint.generate');
             Route::post('/accessPoint/generate/edit', [InvApController::class, 'generateCodeEdit'])->name('accessPoint.generateEdit');
@@ -743,6 +749,9 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {
             Route::get('/dashboardSiteBa', [DashboardBaController::class, 'index'])->name('dashboardBa.page');
+
+            Route::get('/kpi-inspeksi-ba', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBa');
+            Route::post('/kpi-inspeksi-ba-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowBa');
 
             Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
             Route::post('/accessPointSiteBa/generate', [InvApBaController::class, 'generateCode'])->name('accessPointBa.generate');
@@ -834,6 +843,9 @@ Route::middleware('auth')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMifa', [DashboardMifaController::class, 'index'])->name('dashboardMifa.page');
 
+            Route::get('/kpi-inspeksi-mifa', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMifa');
+            Route::post('/kpi-inspeksi-mifa-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMifa');
+
             Route::get('/accessPointSiteMifa', [InvApMifaController::class, 'index'])->name('accessPointMifa.page');
             Route::get('/accessPointSiteMifa/create', [InvApMifaController::class, 'create'])->name('accessPointMifa.create');
             Route::post('/accessPointSiteMifa/create', [InvApMifaController::class, 'store'])->name('accessPointMifa.store');
@@ -923,6 +935,9 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_group_leader:MHU,ict_admin:MHU,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMhu', [DashboardMhuController::class, 'index'])->name('dashboardMhu.page');
+
+            Route::get('/kpi-inspeksi-mhu', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMhu');
+            Route::post('/kpi-inspeksi-mhu-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMhu');
 
             Route::get('/accessPointSiteMHU', [InvApMhuController::class, 'index'])->name('accessPointMhu.page');
             Route::get('/accessPointSiteMHU/create', [InvApMhuController::class, 'create'])->name('accessPointMhu.create');
@@ -1014,6 +1029,9 @@ Route::middleware('auth')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
             Route::get('/dashboardSiteAmi', [DashboardAmiController::class, 'index'])->name('dashboardAmi.page');
 
+            Route::get('/kpi-inspeksi-ami', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiAmi');
+            Route::post('/kpi-inspeksi-ami-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowAmi');
+
             Route::get('/accessPointSiteAmi', [InvApAmiController::class, 'index'])->name('accessPointAmi.page');
             Route::post('/accessPointSiteAmi/generate', [InvApAmiController::class, 'generateCode'])->name('accessPointAmi.generate');
             Route::post('/accessPointSiteAmi/generate/edit', [InvApAmiController::class, 'generateCodeEdit'])->name('accessPointAmi.generateEdit');
@@ -1103,6 +1121,9 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_group_leader:PIK,ict_admin:PIK,ict_ho:HO'], function () {
             Route::get('/dashboardSitePik', [DashboardPikController::class, 'index'])->name('dashboardPik.page');
+
+            Route::get('/kpi-inspeksi-pik', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiPik');
+            Route::post('/kpi-inspeksi-pik-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowPik');
 
             Route::get('/accessPointSitePik', [InvApPikController::class, 'index'])->name('accessPointPik.page');
             Route::get('/accessPointSitePik/create', [InvApPikController::class, 'create'])->name('accessPointPik.create');
@@ -1194,6 +1215,9 @@ Route::middleware('auth')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BGE,ict_ho:HO'], function () {
             Route::get('/dashboardSiteBge', [DashboardBgeController::class, 'index'])->name('dashboardBge.page');
 
+            Route::get('/kpi-inspeksi-bge', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBge');
+            Route::post('/kpi-inspeksi-bge-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowBge');
+
             Route::get('/accessPointSiteBge', [InvApBgeController::class, 'index'])->name('accessPointBge.page');
             Route::get('/accessPointSiteBge/create', [InvApBgeController::class, 'create'])->name('accessPointBge.create');
             Route::post('/accessPointSiteBge/generate', [InvApBgeController::class, 'generateCode'])->name('accessPointBge.generate');
@@ -1283,6 +1307,9 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
             Route::get('/dashboardSiteBib', [DashboardBibController::class, 'index'])->name('dashboardBib.page');
+
+            Route::get('/kpi-inspeksi-bib', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBib');
+            Route::post('/kpi-inspeksi-bib-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowBib');
 
             Route::get('/accessPointSiteBib', [InvApBibController::class, 'index'])->name('accessPointBib.page');
             Route::get('/accessPointSiteBib/create', [InvApBibController::class, 'create'])->name('accessPointBib.create');
@@ -1374,6 +1401,9 @@ Route::middleware('auth')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:IPT,ict_group_leader:IPT,ict_admin:IPT,ict_ho:HO'], function () {
             Route::get('/dashboardSiteIpt', [DashboardIptController::class, 'index'])->name('dashboardIpt.page');
 
+            Route::get('/kpi-inspeksi-ipt', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiIpt');
+            Route::post('/kpi-inspeksi-ipt-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowIpt');
+
             Route::get('/accessPointSiteIpt', [InvApIptController::class, 'index'])->name('accessPointIpt.page');
             Route::get('/accessPointSiteIpt/create', [InvApIptController::class, 'create'])->name('accessPointIpt.create');
             Route::post('/accessPointSiteIpt/generate', [InvApIptController::class, 'generateCode'])->name('accessPointIpt.generate');
@@ -1463,6 +1493,9 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMlp', [DashboardMlpController::class, 'index'])->name('dashboardMlp.page');
+
+            Route::get('/kpi-inspeksi-mlp', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMlp');
+            Route::post('/kpi-inspeksi-mlp-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMlp');
 
             Route::get('/accessPointSiteMlp', [InvApMlpController::class, 'index'])->name('accessPointMlp.page');
             Route::get('/accessPointSiteMlp/create', [InvApMlpController::class, 'create'])->name('accessPointMlp.create');
@@ -1554,6 +1587,9 @@ Route::middleware('auth')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIP,ict_group_leader:MIP,ict_admin:MIP,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMip', [DashboardMipController::class, 'index'])->name('dashboardMip.page');
 
+            Route::get('/kpi-inspeksi-mip', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMip');
+            Route::post('/kpi-inspeksi-mip-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMip');
+
             Route::get('/accessPointSiteMip', [InvApMipController::class, 'index'])->name('accessPointMip.page');
             Route::get('/accessPointSiteMip/create', [InvApMipController::class, 'create'])->name('accessPointMip.create');
             Route::post('/accessPointSiteMip/create', [InvApMipController::class, 'store'])->name('accessPointMip.store');
@@ -1643,6 +1679,9 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
             Route::get('/dashboardSiteVale', [DashboardValeController::class, 'index'])->name('dashboardVale.page');
+
+            Route::get('/kpi-inspeksi-vib', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiVib');
+            Route::post('/kpi-inspeksi-vib-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowVib');
 
             Route::get('/accessPointSiteVale', [InvApValeController::class, 'index'])->name('accessPointVale.page');
             Route::get('/accessPointSiteVale/create', [InvApValeController::class, 'create'])->name('accessPointVale.create');
@@ -1734,6 +1773,9 @@ Route::middleware('auth')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SBS,ict_group_leader:SBS,ict_admin:SBS,ict_ho:HO'], function () {
             Route::get('/dashboardSiteSbs', [DashboardSbsController::class, 'index'])->name('dashboardSbs.page');
 
+            Route::get('/kpi-inspeksi-sbs', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiSbs');
+            Route::post('/kpi-inspeksi-sbs-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowSbs');
+
             Route::get('/accessPointSiteSbs', [InvApSbsController::class, 'index'])->name('accessPointSbs.page');
             Route::get('/accessPointSiteSbs/create', [InvApSbsController::class, 'create'])->name('accessPointSbs.create');
             Route::post('/accessPointSiteSbs/create', [InvApSbsController::class, 'store'])->name('accessPointSbs.store');
@@ -1824,6 +1866,9 @@ Route::middleware('auth')->group(function () {
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
             Route::get('/dashboardSiteSks', [DashboardSksController::class, 'index'])->name('dashboardSks.page');
 
+            Route::get('/kpi-inspeksi-sks', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiSks');
+            Route::post('/kpi-inspeksi-sks-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowSks');
+
             Route::get('/accessPointSiteSks', [InvApSksController::class, 'index'])->name('accessPointSks.page');
             Route::get('/accessPointSiteSks/create', [InvApSksController::class, 'create'])->name('accessPointSks.create');
             Route::post('/accessPointSiteSks/create', [InvApSksController::class, 'store'])->name('accessPointSks.store');
@@ -1913,6 +1958,9 @@ Route::middleware('auth')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
             Route::get('/dashboardSiteWara', [DashboardWaraController::class, 'index'])->name('dashboardWara.page');
+            
+            Route::get('/kpi-inspeksi-adw', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiAdw');
+            Route::post('/kpi-inspeksi-adw-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowAdw');
 
             Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
             Route::get('/accessPointSiteWara/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');

@@ -111,7 +111,7 @@ const toggleLevel1RcBin = () => {
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
-    
+
     level1OpenHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
@@ -303,6 +303,7 @@ const toggleLevel3ScannerRcBin = () => {
 const level1OpenHo = ref(false);
 const level2OpenHo = ref(false);
 const level2OpenAduanHo = ref(false);
+const level2PerformanceHo = ref(false);
 const level2OpenSettingHo = ref(false);
 const level2OpenInspeksiHo = ref(false);
 const level3OpenHo = ref(false);
@@ -317,6 +318,8 @@ onMounted(() => {
     level2OpenHo.value = localStorage.getItem("level2OpenHo") === "true";
     level2OpenAduanHo.value =
         localStorage.getItem("level2OpenAduanHo") === "true";
+    level2PerformanceHo.value =
+        localStorage.getItem("level2PerformanceHo") === "true";
     level2OpenSettingHo.value =
         localStorage.getItem("level2OpenSettingHo") === "true";
     level2OpenInspeksiHo.value =
@@ -338,6 +341,7 @@ watch(
         level1OpenHo,
         level2OpenHo,
         level2OpenSettingHo,
+        level2PerformanceHo,
         level2OpenInspeksiHo,
         level2OpenAduanHo,
         level3OpenHo,
@@ -350,6 +354,7 @@ watch(
         localStorage.setItem("level1OpenHo", level1OpenHo.value);
         localStorage.setItem("level2OpenHo", level2OpenHo.value);
         localStorage.setItem("level2OpenAduanHo", level2OpenAduanHo.value);
+        localStorage.setItem("level2PerformanceHo", level2PerformanceHo.value);
         localStorage.setItem("level2OpenSettingHo", level2OpenSettingHo.value);
         localStorage.setItem(
             "level2OpenInspeksiHo",
@@ -376,36 +381,43 @@ const toggleLevel1Ho = () => {
     level2OpenInspeksiBge.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenAmi.value = false;
     level2OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
@@ -456,6 +468,7 @@ const toggleLevel2Ho = () => {
     console.log(level1OpenHo.value);
     if (!level2OpenHo.value) {
         level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingHo.value = false;
         level2OpenInspeksiHo.value = false;
         level3OpenHo.value = false;
@@ -467,10 +480,27 @@ const toggleLevel2Ho = () => {
     level2OpenHo.value = !level2OpenHo.value;
 };
 
+const toggleLevel2PerformanceHo = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceHo.value) {
+        level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenHo.value = false;
+        level2OpenSettingHo.value = false;
+        level2OpenInspeksiHo.value = false;
+        level3OpenHo.value = false;
+        level3KomputerOpenHo.value = false;
+        level3PrinterOpenHo.value = false;
+        level3ScannerOpenHo.value = false;
+        level3CctvOpenHo.value = false;
+    }
+    level2PerformanceHo.value = !level2PerformanceHo.value;
+};
+
 const toggleLevel2AduanHo = () => {
     console.log(level1OpenHo.value);
     if (!level2OpenAduanHo.value) {
         level2OpenHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenHo.value = false;
@@ -489,6 +519,7 @@ const toggleLevel2SettingHo = () => {
         level1OpenBa.value = false;
         level1OpenMifa.value = false;
         level1OpenMhu.value = false;
+        level2PerformanceHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenWARA.value = false;
         level1OpenAmi.value = false;
         level1OpenBib.value = false;
@@ -509,6 +540,7 @@ const toggleLevel2InspeksiHo = () => {
         level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenHo.value = false;
         level2OpenSettingHo.value = false;
+        level2PerformanceHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
@@ -577,6 +609,7 @@ const toggleLevel3ScannerHo = () => {
 const level1OpenBa = ref(false);
 const level2OpenBa = ref(false);
 const level2OpenAduanBa = ref(false);
+const level2PerformanceBa = ref(false);
 const level2OpenSettingBa = ref(false);
 const level2OpenInspeksiBa = ref(false);
 const level3OpenBa = ref(false);
@@ -593,6 +626,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanBa") === "true";
     level2OpenSettingBa.value =
         localStorage.getItem("level2OpenSettingBa") === "true";
+    level2PerformanceBa.value =
+        localStorage.getItem("level2PerformanceBa") === "true";
     level2OpenInspeksiBa.value =
         localStorage.getItem("level2OpenInspeksiBa") === "true";
     level3OpenBa.value = localStorage.getItem("level3OpenBa") === "true";
@@ -612,6 +647,7 @@ watch(
         level1OpenBa,
         level2OpenBa,
         level2OpenSettingBa,
+        level2PerformanceBa,
         level2OpenInspeksiBa,
         level2OpenAduanBa,
         level3OpenBa,
@@ -623,6 +659,7 @@ watch(
     () => {
         localStorage.setItem("level1OpenBa", level1OpenBa.value);
         localStorage.setItem("level2OpenBa", level2OpenBa.value);
+        localStorage.setItem("level2PerformanceBa", level2PerformanceBa.value);
         localStorage.setItem("level2OpenAduanBa", level2OpenAduanBa.value);
         localStorage.setItem("level2OpenSettingBa", level2OpenSettingBa.value);
         localStorage.setItem(
@@ -650,36 +687,43 @@ const toggleLevel1Ba = () => {
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
@@ -729,6 +773,7 @@ const toggleLevel2Ba = () => {
     console.log(level1OpenBa.value);
     if (!level2OpenBa.value) {
         level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBa.value = false;
         level2OpenInspeksiBa.value = false;
         level3OpenBa.value = false;
@@ -740,10 +785,27 @@ const toggleLevel2Ba = () => {
     level2OpenBa.value = !level2OpenBa.value;
 };
 
+const toggleLevel2PerformanceBa = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceBa.value) {
+        level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBa.value = false;
+        level2OpenSettingBa.value = false;
+        level2OpenInspeksiBa.value = false;
+        level3OpenBa.value = false;
+        level3KomputerOpenBa.value = false;
+        level3PrinterOpenBa.value = false;
+        level3ScannerOpenBa.value = false;
+        level3CctvOpenBa.value = false;
+    }
+    level2PerformanceBa.value = !level2PerformanceBa.value;
+};
+
 const toggleLevel2AduanBa = () => {
     console.log(level1OpenBa.value);
     if (!level2OpenAduanBa.value) {
         level2OpenBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenBa.value = false;
@@ -760,6 +822,7 @@ const toggleLevel2SettingBa = () => {
     if (!level2OpenSettingBa.value) {
         level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiBa.value = false;
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
@@ -776,6 +839,7 @@ const toggleLevel2InspeksiBa = () => {
         level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenBa.value = false;
+        level2PerformanceBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBa.value = false;
         level3KomputerOpenBa.value = false;
         level3PrinterOpenBa.value = false;
@@ -844,6 +908,7 @@ const toggleLevel3ScannerBa = () => {
 const level1OpenMifa = ref(false);
 const level2OpenMifa = ref(false);
 const level2OpenAduanMifa = ref(false);
+const level2PerformanceMifa = ref(false);
 const level2OpenSettingMifa = ref(false);
 const level2OpenInspeksiMifa = ref(false);
 const level3OpenMifa = ref(false);
@@ -860,6 +925,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanMifa") === "true";
     level2OpenSettingMifa.value =
         localStorage.getItem("level2OpenSettingMifa") === "true";
+         level2PerformanceMifa.value =
+        localStorage.getItem("level2PerformanceMifa") === "true";
     level2OpenInspeksiMifa.value =
         localStorage.getItem("level2OpenInspeksiMifa") === "true";
     level3OpenMifa.value = localStorage.getItem("level3OpenMifa") === "true";
@@ -879,6 +946,7 @@ watch(
         level1OpenMifa,
         level2OpenMifa,
         level2OpenSettingMifa,
+        level2PerformanceMifa,
         level2OpenInspeksiMifa,
         level2OpenAduanMifa,
         level3OpenMifa,
@@ -890,6 +958,7 @@ watch(
     () => {
         localStorage.setItem("level1OpenMifa", level1OpenMifa.value);
         localStorage.setItem("level2OpenMifa", level2OpenMifa.value);
+        localStorage.setItem("level2PerformanceMifa", level2PerformanceMifa.value);
         localStorage.setItem("level2OpenAduanMifa", level2OpenAduanMifa.value);
         localStorage.setItem(
             "level2OpenSettingMifa",
@@ -926,36 +995,43 @@ const toggleLevel1Mifa = () => {
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
@@ -1005,6 +1081,7 @@ const toggleLevel2Mifa = () => {
     console.log(level1OpenMifa.value);
     if (!level2OpenMifa.value) {
         level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMifa.value = false;
         level2OpenInspeksiMifa.value = false;
         level3OpenMifa.value = false;
@@ -1016,10 +1093,27 @@ const toggleLevel2Mifa = () => {
     level2OpenMifa.value = !level2OpenMifa.value;
 };
 
+const toggleLevel2PerformanceMifa = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceMifa.value) {
+        level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMifa.value = false;
+        level2OpenSettingMifa.value = false;
+        level2OpenInspeksiMifa.value = false;
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level2PerformanceMifa.value = !level2PerformanceMifa.value;
+};
+
 const toggleLevel2AduanMifa = () => {
     console.log(level1OpenMifa.value);
     if (!level2OpenAduanMifa.value) {
         level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenMifa.value = false;
@@ -1035,6 +1129,7 @@ const toggleLevel2SettingMifa = () => {
     console.log(level1OpenMifa.value);
     if (!level2OpenSettingMifa.value) {
         level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiMifa.value = false;
         level3OpenMifa.value = false;
@@ -1050,6 +1145,7 @@ const toggleLevel2InspeksiMifa = () => {
     console.log(level1OpenMifa.value);
     if (!level2OpenInspeksiMifa.value) {
         level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMifa.value = false;
         level3OpenMifa.value = false;
@@ -1120,6 +1216,7 @@ const toggleLevel3ScannerMifa = () => {
 const level1OpenMhu = ref(false);
 const level2OpenMhu = ref(false);
 const level2OpenAduanMhu = ref(false);
+const level2PerformanceMhu = ref(false);
 const level2OpenSettingMhu = ref(false);
 const level2OpenInspeksiMhu = ref(false);
 const level3OpenMhu = ref(false);
@@ -1136,6 +1233,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanMhu") === "true";
     level2OpenSettingMhu.value =
         localStorage.getItem("level2OpenSettingMhu") === "true";
+            level2PerformanceMhu.value =
+        localStorage.getItem("level2PerformanceMhu") === "true";
     level2OpenInspeksiMhu.value =
         localStorage.getItem("level2OpenInspeksiMhu") === "true";
     level3OpenMhu.value = localStorage.getItem("level3OpenMhu") === "true";
@@ -1155,6 +1254,7 @@ watch(
         level1OpenMhu,
         level2OpenMhu,
         level2OpenSettingMhu,
+        level2PerformanceMhu,
         level2OpenInspeksiMhu,
         level2OpenAduanMhu,
         level3OpenMhu,
@@ -1165,6 +1265,7 @@ watch(
     ],
     () => {
         localStorage.setItem("level1OpenMhu", level1OpenMhu.value);
+        localStorage.setItem("level2PerformanceMhu", level2PerformanceMhu.value);
         localStorage.setItem("level2OpenMhu", level2OpenMhu.value);
         localStorage.setItem("level2OpenAduanMhu", level2OpenAduanMhu.value);
         localStorage.setItem(
@@ -1202,36 +1303,43 @@ const toggleLevel1Mhu = () => {
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
@@ -1281,6 +1389,7 @@ const toggleLevel2Mhu = () => {
     console.log(level1OpenMhu.value);
     if (!level2OpenMhu.value) {
         level1OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMhu.value = false;
         level2OpenInspeksiMhu.value = false;
         level3OpenMhu.value = false;
@@ -1292,10 +1401,27 @@ const toggleLevel2Mhu = () => {
     level2OpenMhu.value = !level2OpenMhu.value;
 };
 
+const toggleLevel2PerformanceMhu = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceMhu.value) {
+        level1OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMhu.value = false;
+        level2OpenSettingMhu.value = false;
+        level2OpenInspeksiMhu.value = false;
+        level3OpenMhu.value = false;
+        level3KomputerOpenMhu.value = false;
+        level3PrinterOpenMhu.value = false;
+        level3ScannerOpenMhu.value = false;
+        level3CctvOpenMhu.value = false;
+    }
+    level2PerformanceMhu.value = !level2PerformanceMhu.value;
+};
+
 const toggleLevel2AduanMhu = () => {
     console.log(level1OpenMhu.value);
     if (!level2OpenAduanMhu.value) {
         level2OpenMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenMhu.value = false;
@@ -1311,6 +1437,7 @@ const toggleLevel2SettingMhu = () => {
     console.log(level1OpenMhu.value);
     if (!level2OpenSettingMhu.value) {
         level1OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiMhu.value = false;
         level3OpenMhu.value = false;
@@ -1326,6 +1453,7 @@ const toggleLevel2InspeksiMhu = () => {
     console.log(level1OpenMhu.value);
     if (!level2OpenInspeksiMhu.value) {
         level1OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMhu.value = false;
         level3OpenMhu.value = false;
@@ -1395,6 +1523,7 @@ const toggleLevel3ScannerMhu = () => {
 // toggle WARA
 const level1OpenWARA = ref(false);
 const level2OpenWARA = ref(false);
+const level2PerformanceWARA = ref(false);
 const level2OpenAduanWARA = ref(false);
 const level2OpenSettingWARA = ref(false);
 const level2OpenInspeksiWARA = ref(false);
@@ -1408,6 +1537,8 @@ const level3CctvOpenWARA = ref(false);
 onMounted(() => {
     level1OpenWARA.value = localStorage.getItem("level1OpenWARA") === "true";
     level2OpenWARA.value = localStorage.getItem("level2OpenWARA") === "true";
+    level2PerformanceWARA.value =
+        localStorage.getItem("level2PerformanceWARA") === "true";
     level2OpenAduanWARA.value =
         localStorage.getItem("level2OpenAduanWARA") === "true";
     level2OpenSettingWARA.value =
@@ -1430,6 +1561,7 @@ watch(
     [
         level1OpenWARA,
         level2OpenWARA,
+        level2PerformanceWARA,
         level2OpenSettingWARA,
         level2OpenInspeksiWARA,
         level2OpenAduanWARA,
@@ -1442,6 +1574,10 @@ watch(
     () => {
         localStorage.setItem("level1OpenWARA", level1OpenWARA.value);
         localStorage.setItem("level2OpenWARA", level2OpenWARA.value);
+        localStorage.setItem(
+            "level2PerformanceWARA",
+            level2PerformanceWARA.value
+        );
         localStorage.setItem("level2OpenAduanWARA", level2OpenAduanWARA.value);
         localStorage.setItem(
             "level2OpenSettingWARA",
@@ -1473,41 +1609,49 @@ const toggleLevel1WARA = () => {
     level1OpenWARA.value = !level1OpenWARA.value;
 
     level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
@@ -1557,6 +1701,7 @@ const toggleLevel2WARA = () => {
     console.log(level1OpenWARA.value);
     if (!level2OpenWARA.value) {
         level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingWARA.value = false;
         level2OpenInspeksiWARA.value = false;
         level3OpenWARA.value = false;
@@ -1568,10 +1713,27 @@ const toggleLevel2WARA = () => {
     level2OpenWARA.value = !level2OpenWARA.value;
 };
 
+const toggleLevel2PerformanceWARA = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceWARA.value) {
+        level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenWARA.value = false;
+        level2OpenSettingWARA.value = false;
+        level2OpenInspeksiWARA.value = false;
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level2PerformanceWARA.value = !level2PerformanceWARA.value;
+};
+
 const toggleLevel2AduanWARA = () => {
     console.log(level1OpenWARA.value);
     if (!level2OpenAduanWARA.value) {
         level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level3OpenWARA.value = false;
@@ -1588,6 +1750,7 @@ const toggleLevel2SettingWARA = () => {
     if (!level2OpenSettingWARA.value) {
         level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiWARA.value = false;
         level3OpenWARA.value = false;
         level3KomputerOpenWARA.value = false;
@@ -1603,6 +1766,7 @@ const toggleLevel2InspeksiWARA = () => {
     if (!level2OpenInspeksiWARA.value) {
         level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingWARA.value = false;
         level3OpenWARA.value = false;
         level3KomputerOpenWARA.value = false;
@@ -1671,6 +1835,7 @@ const toggleLevel3ScannerWARA = () => {
 // toggle BIB
 const level1OpenBib = ref(false);
 const level2OpenBib = ref(false);
+const level2PerformanceBib = ref(false);
 const level2OpenAduanBib = ref(false);
 const level2OpenSettingBib = ref(false);
 const level2OpenInspeksiBib = ref(false);
@@ -1686,6 +1851,8 @@ onMounted(() => {
     level2OpenBib.value = localStorage.getItem("level2OpenBib") === "true";
     level2OpenAduanBib.value =
         localStorage.getItem("level2OpenAduanBib") === "true";
+            level2PerformanceBib.value =
+        localStorage.getItem("level2PerformanceBib") === "true";
     level2OpenSettingBib.value =
         localStorage.getItem("level2OpenSettingBib") === "true";
     level2OpenInspeksiBib.value =
@@ -1707,6 +1874,7 @@ watch(
         level1OpenBib,
         level2OpenBib,
         level2OpenSettingBib,
+        level2PerformanceBib,
         level2OpenInspeksiBib,
         level2OpenAduanBib,
         level3OpenBib,
@@ -1719,6 +1887,10 @@ watch(
         localStorage.setItem("level1OpenBib", level1OpenBib.value);
         localStorage.setItem("level2OpenBib", level2OpenBib.value);
         localStorage.setItem("level2OpenAduanBib", level2OpenAduanBib.value);
+             localStorage.setItem(
+            "level2PerformanceBib",
+            level2PerformanceBib.value
+        );
         localStorage.setItem(
             "level2OpenSettingBib",
             level2OpenSettingBib.value
@@ -1749,41 +1921,49 @@ const toggleLevel1Bib = () => {
     level1OpenBib.value = !level1OpenBib.value;
 
     level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
@@ -1833,6 +2013,7 @@ const toggleLevel2Bib = () => {
     console.log(level1OpenBib.value);
     if (!level2OpenBib.value) {
         level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBib.value = false;
         level2OpenInspeksiBib.value = false;
         level3OpenBib.value = false;
@@ -1844,9 +2025,26 @@ const toggleLevel2Bib = () => {
     level2OpenBib.value = !level2OpenBib.value;
 };
 
+const toggleLevel2PerformanceBib = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceBib.value) {
+        level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBib.value = false;
+        level2OpenSettingBib.value = false;
+        level2OpenInspeksiBib.value = false;
+        level3OpenBib.value = false;
+        level3KomputerOpenBib.value = false;
+        level3PrinterOpenBib.value = false;
+        level3ScannerOpenBib.value = false;
+        level3CctvOpenBib.value = false;
+    }
+    level2PerformanceBib.value = !level2PerformanceBib.value;
+};
+
 const toggleLevel2AduanBib = () => {
     console.log(level1OpenBib.value);
     if (!level2OpenAduanBib.value) {
+        level2PerformanceBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -1863,6 +2061,7 @@ const toggleLevel2SettingBib = () => {
     console.log(level1OpenBib.value);
     if (!level2OpenSettingBib.value) {
         level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiBib.value = false;
         level3OpenBib.value = false;
@@ -1878,6 +2077,7 @@ const toggleLevel2InspeksiBib = () => {
     console.log(level1OpenBib.value);
     if (!level2OpenInspeksiBib.value) {
         level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBib.value = false;
         level3OpenBib.value = false;
@@ -1947,6 +2147,7 @@ const toggleLevel3ScannerBib = () => {
 // toggle Ami
 const level1OpenAmi = ref(false);
 const level2OpenAmi = ref(false);
+const level2PerformanceAmi = ref(false);
 const level2OpenAduanAmi = ref(false);
 const level2OpenSettingAmi = ref(false);
 const level2OpenInspeksiAmi = ref(false);
@@ -1964,6 +2165,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanAmi") === "true";
     level2OpenSettingAmi.value =
         localStorage.getItem("level2OpenSettingAmi") === "true";
+                    level2PerformanceAmi.value =
+        localStorage.getItem("level2PerformanceAmi") === "true";
     level2OpenInspeksiAmi.value =
         localStorage.getItem("level2OpenInspeksiAmi") === "true";
     level3OpenAmi.value = localStorage.getItem("level3OpenAmi") === "true";
@@ -1983,6 +2186,7 @@ watch(
         level1OpenAmi,
         level2OpenAmi,
         level2OpenSettingAmi,
+        level2PerformanceAmi,
         level2OpenInspeksiAmi,
         level2OpenAduanAmi,
         level3OpenAmi,
@@ -1995,6 +2199,10 @@ watch(
         localStorage.setItem("level1OpenAmi", level1OpenAmi.value);
         localStorage.setItem("level2OpenAmi", level2OpenAmi.value);
         localStorage.setItem("level2OpenAduanAmi", level2OpenAduanAmi.value);
+          localStorage.setItem(
+            "level2PerformanceAmi",
+            level2PerformanceAmi.value
+        );
         localStorage.setItem(
             "level2OpenSettingAmi",
             level2OpenSettingAmi.value
@@ -2030,36 +2238,43 @@ const toggleLevel1Ami = () => {
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
@@ -2108,6 +2323,7 @@ const toggleLevel1Ami = () => {
 const toggleLevel2Ami = () => {
     console.log(level1OpenAmi.value);
     if (!level2OpenAmi.value) {
+        level2PerformanceAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingAmi.value = false;
         level2OpenInspeksiAmi.value = false;
@@ -2120,9 +2336,26 @@ const toggleLevel2Ami = () => {
     level2OpenAmi.value = !level2OpenAmi.value;
 };
 
+const toggleLevel2PerformanceAmi = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceAmi.value) {
+        level1OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenAmi.value = false;
+        level2OpenSettingAmi.value = false;
+        level2OpenInspeksiAmi.value = false;
+        level3OpenAmi.value = false;
+        level3KomputerOpenAmi.value = false;
+        level3PrinterOpenAmi.value = false;
+        level3ScannerOpenAmi.value = false;
+        level3CctvOpenAmi.value = false;
+    }
+    level2PerformanceAmi.value = !level2PerformanceAmi.value;
+};
+
 const toggleLevel2AduanAmi = () => {
     console.log(level1OpenAmi.value);
     if (!level2OpenAduanAmi.value) {
+        level2PerformanceAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -2139,6 +2372,7 @@ const toggleLevel2SettingAmi = () => {
     console.log(level1OpenAmi.value);
     if (!level2OpenSettingAmi.value) {
         level1OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiAmi.value = false;
         level3OpenAmi.value = false;
@@ -2154,6 +2388,7 @@ const toggleLevel2InspeksiAmi = () => {
     console.log(level1OpenAmi.value);
     if (!level2OpenInspeksiAmi.value) {
         level1OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingAmi.value = false;
         level3OpenAmi.value = false;
@@ -2222,6 +2457,7 @@ const toggleLevel3ScannerAmi = () => {
 // toggle Pik
 const level1OpenPik = ref(false);
 const level2OpenPik = ref(false);
+const level2PerformancePik = ref(false);
 const level2OpenAduanPik = ref(false);
 const level2OpenSettingPik = ref(false);
 const level2OpenInspeksiPik = ref(false);
@@ -2239,6 +2475,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanPik") === "true";
     level2OpenSettingPik.value =
         localStorage.getItem("level2OpenSettingPik") === "true";
+level2PerformancePik.value =
+        localStorage.getItem("level2PerformancePik") === "true";
     level2OpenInspeksiPik.value =
         localStorage.getItem("level2OpenInspeksiPik") === "true";
     level3OpenPik.value = localStorage.getItem("level3OpenPik") === "true";
@@ -2258,6 +2496,7 @@ watch(
         level1OpenPik,
         level2OpenPik,
         level2OpenSettingPik,
+        level2PerformancePik,
         level2OpenInspeksiPik,
         level2OpenAduanPik,
         level3OpenPik,
@@ -2270,6 +2509,10 @@ watch(
         localStorage.setItem("level1OpenPik", level1OpenPik.value);
         localStorage.setItem("level2OpenPik", level2OpenPik.value);
         localStorage.setItem("level2OpenAduanPik", level2OpenAduanPik.value);
+                  localStorage.setItem(
+            "level2PerformancePik",
+            level2PerformancePik.value
+        );
         localStorage.setItem(
             "level2OpenSettingPik",
             level2OpenSettingPik.value
@@ -2300,36 +2543,43 @@ const toggleLevel1Pik = () => {
     level1OpenPik.value = !level1OpenPik.value;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
@@ -2378,6 +2628,7 @@ const toggleLevel1Pik = () => {
 const toggleLevel2Pik = () => {
     console.log(level1OpenPik.value);
     if (!level2OpenPik.value) {
+        level2PerformancePik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingPik.value = false;
         level2OpenInspeksiPik.value = false;
@@ -2390,9 +2641,26 @@ const toggleLevel2Pik = () => {
     level2OpenPik.value = !level2OpenPik.value;
 };
 
+const toggleLevel2PerformancePik = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformancePik.value) {
+        level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenPik.value = false;
+        level2OpenSettingPik.value = false;
+        level2OpenInspeksiPik.value = false;
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level2PerformancePik.value = !level2PerformancePik.value;
+};
+
 const toggleLevel2AduanPik = () => {
     console.log(level1OpenPik.value);
     if (!level2OpenAduanPik.value) {
+        level2PerformancePik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -2409,6 +2677,7 @@ const toggleLevel2SettingPik = () => {
     console.log(level1OpenPik.value);
     if (!level2OpenSettingPik.value) {
         level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformancePik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiPik.value = false;
         level3OpenPik.value = false;
@@ -2424,6 +2693,7 @@ const toggleLevel2InspeksiPik = () => {
     console.log(level1OpenPik.value);
     if (!level2OpenInspeksiPik.value) {
         level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformancePik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingPik.value = false;
         level3OpenPik.value = false;
@@ -2493,6 +2763,7 @@ const toggleLevel3ScannerPik = () => {
 // toggle BGE
 const level1OpenBge = ref(false);
 const level2OpenBge = ref(false);
+const level2PerformanceBge = ref(false);
 const level2OpenAduanBge = ref(false);
 const level2OpenSettingBge = ref(false);
 const level2OpenInspeksiBge = ref(false);
@@ -2510,6 +2781,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanBge") === "true";
     level2OpenSettingBge.value =
         localStorage.getItem("level2OpenSettingBge") === "true";
+        level2PerformanceBge.value =
+        localStorage.getItem("level2PerformanceBge") === "true";
     level2OpenInspeksiBge.value =
         localStorage.getItem("level2OpenInspeksiBge") === "true";
     level3OpenBge.value = localStorage.getItem("level3OpenBge") === "true";
@@ -2528,6 +2801,7 @@ watch(
     [
         level1OpenBge,
         level2OpenBge,
+        level2PerformanceBge,
         level2OpenSettingBge,
         level2OpenInspeksiBge,
         level2OpenAduanBge,
@@ -2544,6 +2818,11 @@ watch(
         localStorage.setItem(
             "level2OpenSettingBge",
             level2OpenSettingBge.value
+        );
+                localStorage.setItem("level2OpenAduanPik", level2OpenAduanPik.value);
+                  localStorage.setItem(
+            "level2PerformanceBge",
+            level2PerformanceBge.value
         );
         localStorage.setItem(
             "level2OpenInspeksiBge",
@@ -2571,42 +2850,56 @@ const toggleLevel1Bge = () => {
     // console.log('CEK')
     level1OpenBge.value = !level1OpenBge.value;
 
+    level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
     level1OpenHo.value = false;
     level2OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
@@ -2656,6 +2949,7 @@ const toggleLevel2Bge = () => {
     console.log(level1OpenBge.value);
     if (!level2OpenBge.value) {
         level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBge.value = false;
         level2OpenInspeksiBge.value = false;
         level3OpenBge.value = false;
@@ -2667,9 +2961,26 @@ const toggleLevel2Bge = () => {
     level2OpenBge.value = !level2OpenBge.value;
 };
 
+const toggleLevel2PerformanceBge = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceBge.value) {
+        level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBge.value = false;
+        level2OpenSettingBge.value = false;
+        level2OpenInspeksiBge.value = false;
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level2PerformanceBge.value = !level2PerformanceBge.value;
+};
+
 const toggleLevel2AduanBge = () => {
     console.log(level1OpenBge.value);
     if (!level2OpenAduanBge.value) {
+        level2PerformanceBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -2685,6 +2996,7 @@ const toggleLevel2AduanBge = () => {
 const toggleLevel2SettingBge = () => {
     console.log(level1OpenBge.value);
     if (!level2OpenSettingBge.value) {
+        level2PerformanceBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiBge.value = false;
@@ -2701,6 +3013,7 @@ const toggleLevel2InspeksiBge = () => {
     console.log(level1OpenBge.value);
     if (!level2OpenInspeksiBge.value) {
         level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingBge.value = false;
         level3OpenBge.value = false;
@@ -2770,6 +3083,7 @@ const toggleLevel3ScannerBge = () => {
 // toggle IPT
 const level1OpenIpt = ref(false);
 const level2OpenIpt = ref(false);
+const level2PerformanceIpt = ref(false);
 const level2OpenAduanIpt = ref(false);
 const level2OpenSettingIpt = ref(false);
 const level2OpenInspeksiIpt = ref(false);
@@ -2787,6 +3101,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanIpt") === "true";
     level2OpenSettingIpt.value =
         localStorage.getItem("level2OpenSettingIpt") === "true";
+                level2PerformanceIpt.value =
+        localStorage.getItem("level2PerformanceIpt") === "true";
     level2OpenInspeksiIpt.value =
         localStorage.getItem("level2OpenInspeksiIpt") === "true";
     level3OpenIpt.value = localStorage.getItem("level3OpenIpt") === "true";
@@ -2805,6 +3121,7 @@ watch(
     [
         level1OpenIpt,
         level2OpenIpt,
+        level2PerformanceIpt,
         level2OpenSettingIpt,
         level2OpenInspeksiIpt,
         level2OpenAduanIpt,
@@ -2821,6 +3138,10 @@ watch(
         localStorage.setItem(
             "level2OpenSettingIpt",
             level2OpenSettingIpt.value
+        );
+                          localStorage.setItem(
+            "level2PerformanceIpt",
+            level2PerformanceIpt.value
         );
         localStorage.setItem(
             "level2OpenInspeksiIpt",
@@ -2848,46 +3169,55 @@ const toggleLevel1Ipt = () => {
     level1OpenIpt.value = !level1OpenIpt.value;
 
     level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
@@ -2932,6 +3262,7 @@ const toggleLevel2Ipt = () => {
     console.log(level1OpenIpt.value);
     if (!level2OpenIpt.value) {
         level1OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingIpt.value = false;
         level2OpenInspeksiIpt.value = false;
         level3OpenIpt.value = false;
@@ -2943,9 +3274,26 @@ const toggleLevel2Ipt = () => {
     level2OpenIpt.value = !level2OpenIpt.value;
 };
 
+const toggleLevel2PerformanceIpt = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceIpt.value) {
+        level1OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenIpt.value = false;
+        level2OpenSettingIpt.value = false;
+        level2OpenInspeksiIpt.value = false;
+        level3OpenIpt.value = false;
+        level3KomputerOpenIpt.value = false;
+        level3PrinterOpenIpt.value = false;
+        level3ScannerOpenIpt.value = false;
+        level3CctvOpenIpt.value = false;
+    }
+    level2PerformanceIpt.value = !level2PerformanceIpt.value;
+};
+
 const toggleLevel2AduanIpt = () => {
     console.log(level1OpenIpt.value);
     if (!level2OpenAduanIpt.value) {
+        level2PerformanceIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -2962,6 +3310,7 @@ const toggleLevel2SettingIpt = () => {
     console.log(level1OpenIpt.value);
     if (!level2OpenSettingIpt.value) {
         level1OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiIpt.value = false;
         level3OpenIpt.value = false;
@@ -2977,6 +3326,7 @@ const toggleLevel2InspeksiIpt = () => {
     console.log(level1OpenIpt.value);
     if (!level2OpenInspeksiIpt.value) {
         level1OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingIpt.value = false;
         level3OpenIpt.value = false;
@@ -3046,6 +3396,7 @@ const toggleLevel3ScannerIpt = () => {
 // toggle MLP
 const level1OpenMlp = ref(false);
 const level2OpenMlp = ref(false);
+const level2PerformanceMlp = ref(false);
 const level2OpenAduanMlp = ref(false);
 const level2OpenSettingMlp = ref(false);
 const level2OpenInspeksiMlp = ref(false);
@@ -3063,6 +3414,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanMlp") === "true";
     level2OpenSettingMlp.value =
         localStorage.getItem("level2OpenSettingMlp") === "true";
+                        level2PerformanceMlp.value =
+        localStorage.getItem("level2PerformanceMlp") === "true";
     level2OpenInspeksiMlp.value =
         localStorage.getItem("level2OpenInspeksiMlp") === "true";
     level3OpenMlp.value = localStorage.getItem("level3OpenMlp") === "true";
@@ -3081,6 +3434,7 @@ watch(
     [
         level1OpenMlp,
         level2OpenMlp,
+        level2PerformanceMlp,
         level2OpenSettingMlp,
         level2OpenInspeksiMlp,
         level2OpenAduanMlp,
@@ -3097,6 +3451,10 @@ watch(
         localStorage.setItem(
             "level2OpenSettingMlp",
             level2OpenSettingMlp.value
+        );
+                                  localStorage.setItem(
+            "level2PerformanceMlp",
+            level2PerformanceMlp.value
         );
         localStorage.setItem(
             "level2OpenInspeksiMlp",
@@ -3123,58 +3481,69 @@ watch(
 const toggleLevel1Mlp = () => {
     level1OpenMlp.value = !level1OpenMlp.value;
 
-    level1OpenBge.value = false;
+     level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenIpt.value = false;
+    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2PerformanceMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
@@ -3208,6 +3577,7 @@ const toggleLevel2Mlp = () => {
     console.log(level1OpenMlp.value);
     if (!level2OpenMlp.value) {
         level1OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMlp.value = false;
         level2OpenInspeksiMlp.value = false;
         level3OpenMlp.value = false;
@@ -3219,9 +3589,26 @@ const toggleLevel2Mlp = () => {
     level2OpenMlp.value = !level2OpenMlp.value;
 };
 
+const toggleLevel2PerformanceMlp = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceMlp.value) {
+        level1OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMlp.value = false;
+        level2OpenSettingMlp.value = false;
+        level2OpenInspeksiMlp.value = false;
+        level3OpenMlp.value = false;
+        level3KomputerOpenMlp.value = false;
+        level3PrinterOpenMlp.value = false;
+        level3ScannerOpenMlp.value = false;
+        level3CctvOpenMlp.value = false;
+    }
+    level2PerformanceMlp.value = !level2PerformanceMlp.value;
+};
+
 const toggleLevel2AduanMlp = () => {
     console.log(level1OpenMlp.value);
     if (!level2OpenAduanMlp.value) {
+        level2PerformanceMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -3237,6 +3624,7 @@ const toggleLevel2AduanMlp = () => {
 const toggleLevel2SettingMlp = () => {
     console.log(level1OpenMlp.value);
     if (!level2OpenSettingMlp.value) {
+        level2PerformanceMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiMlp.value = false;
@@ -3253,6 +3641,7 @@ const toggleLevel2InspeksiMlp = () => {
     console.log(level1OpenMlp.value);
     if (!level2OpenInspeksiMlp.value) {
         level1OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMlp.value = false;
         level3OpenMlp.value = false;
@@ -3322,6 +3711,7 @@ const toggleLevel3ScannerMlp = () => {
 // toggle MIP
 const level1OpenMip = ref(false);
 const level2OpenMip = ref(false);
+const level2PerformanceMip = ref(false);
 const level2OpenAduanMip = ref(false);
 const level2OpenSettingMip = ref(false);
 const level2OpenInspeksiMip = ref(false);
@@ -3339,6 +3729,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanMip") === "true";
     level2OpenSettingMip.value =
         localStorage.getItem("level2OpenSettingMip") === "true";
+                                level2PerformanceMip.value =
+        localStorage.getItem("level2PerformanceMip") === "true";
     level2OpenInspeksiMip.value =
         localStorage.getItem("level2OpenInspeksiMip") === "true";
     level3OpenMip.value = localStorage.getItem("level3OpenMip") === "true";
@@ -3357,6 +3749,7 @@ watch(
     [
         level1OpenMip,
         level2OpenMip,
+        level2PerformanceMip,
         level2OpenSettingMip,
         level2OpenInspeksiMip,
         level2OpenAduanMip,
@@ -3370,6 +3763,10 @@ watch(
         localStorage.setItem("level1OpenMip", level1OpenMip.value);
         localStorage.setItem("level2OpenMip", level2OpenMip.value);
         localStorage.setItem("level2OpenAduanMip", level2OpenAduanMip.value);
+                                          localStorage.setItem(
+            "level2PerformanceMip",
+            level2PerformanceMip.value
+        );
         localStorage.setItem(
             "level2OpenSettingMip",
             level2OpenSettingMip.value
@@ -3399,58 +3796,69 @@ watch(
 const toggleLevel1Mip = () => {
     level1OpenMip.value = !level1OpenMip.value;
 
-    level1OpenBge.value = false;
+     level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenIpt.value = false;
+    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2PerformanceMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
@@ -3484,6 +3892,7 @@ const toggleLevel2Mip = () => {
     console.log(level1OpenMip.value);
     if (!level2OpenMip.value) {
         level1OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMip.value = false;
         level2OpenInspeksiMip.value = false;
         level3OpenMip.value = false;
@@ -3495,9 +3904,26 @@ const toggleLevel2Mip = () => {
     level2OpenMip.value = !level2OpenMip.value;
 };
 
+const toggleLevel2PerformanceMip = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceMip.value) {
+        level1OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMip.value = false;
+        level2OpenSettingMip.value = false;
+        level2OpenInspeksiMip.value = false;
+        level3OpenMip.value = false;
+        level3KomputerOpenMip.value = false;
+        level3PrinterOpenMip.value = false;
+        level3ScannerOpenMip.value = false;
+        level3CctvOpenMip.value = false;
+    }
+    level2PerformanceMip.value = !level2PerformanceMip.value;
+};
+
 const toggleLevel2AduanMip = () => {
     console.log(level1OpenMip.value);
     if (!level2OpenAduanMip.value) {
+        level2PerformanceMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -3513,6 +3939,7 @@ const toggleLevel2AduanMip = () => {
 const toggleLevel2SettingMip = () => {
     console.log(level1OpenMip.value);
     if (!level2OpenSettingMip.value) {
+        level2PerformanceMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiMip.value = false;
@@ -3529,6 +3956,7 @@ const toggleLevel2InspeksiMip = () => {
     console.log(level1OpenMip.value);
     if (!level2OpenInspeksiMip.value) {
         level1OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingMip.value = false;
         level3OpenMip.value = false;
@@ -3598,6 +4026,7 @@ const toggleLevel3ScannerMip = () => {
 // toggle VALE
 const level1OpenVale = ref(false);
 const level2OpenVale = ref(false);
+const level2PerformanceVale = ref(false);
 const level2OpenAduanVale = ref(false);
 const level2OpenSettingVale = ref(false);
 const level2OpenInspeksiVale = ref(false);
@@ -3615,6 +4044,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanVale") === "true";
     level2OpenSettingVale.value =
         localStorage.getItem("level2OpenSettingVale") === "true";
+                                        level2PerformanceVale.value =
+        localStorage.getItem("level2PerformanceVale") === "true";
     level2OpenInspeksiVale.value =
         localStorage.getItem("level2OpenInspeksiVale") === "true";
     level3OpenVale.value = localStorage.getItem("level3OpenVale") === "true";
@@ -3633,6 +4064,7 @@ watch(
     [
         level1OpenVale,
         level2OpenVale,
+        level2PerformanceVale,
         level2OpenSettingVale,
         level2OpenInspeksiVale,
         level2OpenAduanVale,
@@ -3646,6 +4078,10 @@ watch(
         localStorage.setItem("level1OpenVale", level1OpenVale.value);
         localStorage.setItem("level2OpenVale", level2OpenVale.value);
         localStorage.setItem("level2OpenAduanVale", level2OpenAduanVale.value);
+                                                  localStorage.setItem(
+            "level2PerformanceVale",
+            level2PerformanceVale.value
+        );
         localStorage.setItem(
             "level2OpenSettingVale",
             level2OpenSettingVale.value
@@ -3675,63 +4111,75 @@ watch(
 const toggleLevel1Vale = () => {
     level1OpenVale.value = !level1OpenVale.value;
 
-    level1OpenBge.value = false;
+      level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenIpt.value = false;
+    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2PerformanceMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2PerformanceMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
@@ -3760,6 +4208,7 @@ const toggleLevel2Vale = () => {
     console.log(level1OpenVale.value);
     if (!level2OpenVale.value) {
         level1OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingVale.value = false;
         level2OpenInspeksiVale.value = false;
         level3OpenVale.value = false;
@@ -3771,9 +4220,26 @@ const toggleLevel2Vale = () => {
     level2OpenVale.value = !level2OpenVale.value;
 };
 
+const toggleLevel2PerformanceVale = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceVale.value) {
+        level1OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenVale.value = false;
+        level2OpenSettingVale.value = false;
+        level2OpenInspeksiVale.value = false;
+        level3OpenVale.value = false;
+        level3KomputerOpenVale.value = false;
+        level3PrinterOpenVale.value = false;
+        level3ScannerOpenVale.value = false;
+        level3CctvOpenVale.value = false;
+    }
+    level2PerformanceVale.value = !level2PerformanceVale.value;
+};
+
 const toggleLevel2AduanVale = () => {
     console.log(level1OpenVale.value);
     if (!level2OpenAduanVale.value) {
+        level2PerformanceVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -3789,6 +4255,7 @@ const toggleLevel2AduanVale = () => {
 const toggleLevel2SettingVale = () => {
     console.log(level1OpenVale.value);
     if (!level2OpenSettingVale.value) {
+        level2PerformanceVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiVale.value = false;
@@ -3805,6 +4272,7 @@ const toggleLevel2InspeksiVale = () => {
     console.log(level1OpenVale.value);
     if (!level2OpenInspeksiVale.value) {
         level1OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingVale.value = false;
         level3OpenVale.value = false;
@@ -3874,6 +4342,7 @@ const toggleLevel3ScannerVale = () => {
 // toggle SBS
 const level1OpenSbs = ref(false);
 const level2OpenSbs = ref(false);
+const level2PerformanceSbs = ref(false);
 const level2OpenAduanSbs = ref(false);
 const level2OpenSettingSbs = ref(false);
 const level2OpenInspeksiSbs = ref(false);
@@ -3889,6 +4358,8 @@ onMounted(() => {
     level2OpenSbs.value = localStorage.getItem("level2OpenSbs") === "true";
     level2OpenAduanSbs.value =
         localStorage.getItem("level2OpenAduanSbs") === "true";
+                                                level2PerformanceSbs.value =
+        localStorage.getItem("level2PerformanceSbs") === "true";
     level2OpenSettingSbs.value =
         localStorage.getItem("level2OpenSettingSbs") === "true";
     level2OpenInspeksiSbs.value =
@@ -3909,6 +4380,7 @@ watch(
     [
         level1OpenSbs,
         level2OpenSbs,
+        level2PerformanceSbs,
         level2OpenSettingSbs,
         level2OpenInspeksiSbs,
         level2OpenAduanSbs,
@@ -3922,6 +4394,10 @@ watch(
         localStorage.setItem("level1OpenSbs", level1OpenSbs.value);
         localStorage.setItem("level2OpenSbs", level2OpenSbs.value);
         localStorage.setItem("level2OpenAduanSbs", level2OpenAduanSbs.value);
+                                                          localStorage.setItem(
+            "level2PerformanceSbs",
+            level2PerformanceSbs.value
+        );
         localStorage.setItem(
             "level2OpenSettingSbs",
             level2OpenSettingSbs.value
@@ -3952,72 +4428,86 @@ const toggleLevel1Sbs = () => {
     level1OpenSbs.value = !level1OpenSbs.value;
 
     level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenIpt.value = false;
+    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2PerformanceMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2PerformanceMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2PerformanceVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2PerformanceSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -4036,6 +4526,7 @@ const toggleLevel2Sbs = () => {
     console.log(level1OpenSbs.value);
     if (!level2OpenSbs.value) {
         level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingSbs.value = false;
         level2OpenInspeksiSbs.value = false;
         level3OpenSbs.value = false;
@@ -4047,9 +4538,26 @@ const toggleLevel2Sbs = () => {
     level2OpenSbs.value = !level2OpenSbs.value;
 };
 
+const toggleLevel2PerformanceSbs = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceSbs.value) {
+        level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSbs.value = false;
+        level2OpenSettingSbs.value = false;
+        level2OpenInspeksiSbs.value = false;
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level2PerformanceSbs.value = !level2PerformanceSbs.value;
+};
+
 const toggleLevel2AduanSbs = () => {
     console.log(level1OpenSbs.value);
     if (!level2OpenAduanSbs.value) {
+        level2PerformanceSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -4065,6 +4573,7 @@ const toggleLevel2AduanSbs = () => {
 const toggleLevel2SettingSbs = () => {
     console.log(level1OpenSbs.value);
     if (!level2OpenSettingSbs.value) {
+        level2PerformanceSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiSbs.value = false;
@@ -4080,6 +4589,7 @@ const toggleLevel2SettingSbs = () => {
 const toggleLevel2InspeksiSbs = () => {
     console.log(level1OpenSbs.value);
     if (!level2OpenInspeksiSbs.value) {
+        level2PerformanceSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingSbs.value = false;
@@ -4150,6 +4660,7 @@ const toggleLevel3ScannerSbs = () => {
 // toggle SKS
 const level1OpenSks = ref(false);
 const level2OpenSks = ref(false);
+const level2PerformanceSks = ref(false);
 const level2OpenAduanSks = ref(false);
 const level2OpenSettingSks = ref(false);
 const level2OpenInspeksiSks = ref(false);
@@ -4165,6 +4676,8 @@ onMounted(() => {
     level2OpenSks.value = localStorage.getItem("level2OpenSks") === "true";
     level2OpenAduanSks.value =
         localStorage.getItem("level2OpenAduanSks") === "true";
+                                                        level2PerformanceSks.value =
+        localStorage.getItem("level2PerformanceSks") === "true";
     level2OpenSettingSks.value =
         localStorage.getItem("level2OpenSettingSks") === "true";
     level2OpenInspeksiSks.value =
@@ -4185,6 +4698,7 @@ watch(
     [
         level1OpenSks,
         level2OpenSks,
+        level2PerformanceSks,
         level2OpenSettingSks,
         level2OpenInspeksiSks,
         level2OpenAduanSks,
@@ -4198,6 +4712,10 @@ watch(
         localStorage.setItem("level1OpenSks", level1OpenSks.value);
         localStorage.setItem("level2OpenSks", level2OpenSks.value);
         localStorage.setItem("level2OpenAduanSks", level2OpenAduanSks.value);
+                                                                  localStorage.setItem(
+            "level2PerformanceSks",
+            level2PerformanceSks.value
+        );
         localStorage.setItem(
             "level2OpenSettingSks",
             level2OpenSettingSks.value
@@ -4227,73 +4745,87 @@ watch(
 const toggleLevel1Sks = () => {
     level1OpenSks.value = !level1OpenSks.value;
 
-    level1OpenBge.value = false;
+     level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
     level2OpenInspeksiBge.value = false;
 
     level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
     level2OpenHo.value = false;
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
     level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenPik.value = false;
+    level2PerformancePik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenIpt.value = false;
+    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2PerformanceMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2PerformanceMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2PerformanceVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2PerformanceSks.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
@@ -4312,6 +4844,7 @@ const toggleLevel2Sks = () => {
     console.log(level1OpenSks.value);
     if (!level2OpenSks.value) {
         level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingSks.value = false;
         level2OpenInspeksiSks.value = false;
         level3OpenSks.value = false;
@@ -4323,9 +4856,27 @@ const toggleLevel2Sks = () => {
     level2OpenSks.value = !level2OpenSks.value;
 };
 
+const toggleLevel2PerformanceSks = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceSks.value) {
+        level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSks.value = false;
+        level2OpenSettingSks.value = false;
+        level2OpenInspeksiSks.value = false;
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level2PerformanceSks.value = !level2PerformanceSks.value;
+};
+
+
 const toggleLevel2AduanSks = () => {
     console.log(level1OpenSks.value);
     if (!level2OpenAduanSks.value) {
+        level2PerformanceSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
@@ -4341,6 +4892,7 @@ const toggleLevel2AduanSks = () => {
 const toggleLevel2SettingSks = () => {
     console.log(level1OpenSks.value);
     if (!level2OpenSettingSks.value) {
+        level2PerformanceSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenInspeksiSks.value = false;
@@ -4356,6 +4908,7 @@ const toggleLevel2SettingSks = () => {
 const toggleLevel2InspeksiSks = () => {
     console.log(level1OpenSks.value);
     if (!level2OpenInspeksiSks.value) {
+        level2PerformanceSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
         level2OpenSettingSks.value = false;
@@ -5245,6 +5798,95 @@ const toggleLevel3ScannerSks = () => {
                                     v-if="
                                         $page.props.auth.user.role != 'soc_ho'
                                     "
+                                    @click="toggleLevel2PerformanceHo"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceHo"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceHo">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiHo')"
+                                        :active="
+                                            route().current('kpi.inspeksiHo')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
                                     @click="toggleLevel2Ho"
                                     style="cursor: pointer"
                                     class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
@@ -5726,8 +6368,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -5835,6 +6478,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceBa"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceBa"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceBa">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiBa')"
+                                        :active="
+                                            route().current('kpi.inspeksiBa')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -6333,8 +7065,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -6443,6 +7176,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceMifa"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceMifa"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceMifa">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiMifa')"
+                                        :active="
+                                            route().current('kpi.inspeksiMifa')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -6949,8 +7771,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -7060,6 +7883,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceMhu"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceMhu"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceMhu">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiMhu')"
+                                        :active="
+                                            route().current('kpi.inspeksiMhu')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -7564,8 +8476,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -7675,6 +8588,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceWARA"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceWARA"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceWARA">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiAdw')"
+                                        :active="
+                                            route().current('kpi.inspeksiAdw')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -8079,8 +9081,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -8190,6 +9193,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceAmi"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceAmi"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceAmi">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiAmi')"
+                                        :active="
+                                            route().current('kpi.inspeksiAmi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -8694,8 +9786,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -8805,6 +9898,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformancePik"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformancePik"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformancePik">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiPik')"
+                                        :active="
+                                            route().current('kpi.inspeksiPik')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -9309,8 +10491,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -9420,6 +10603,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceBge"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceBge"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceBge">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiBge')"
+                                        :active="
+                                            route().current('kpi.inspeksiBge')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -9924,8 +11196,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -10035,6 +11308,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceBib"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceBib"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceBib">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiBib')"
+                                        :active="
+                                            route().current('kpi.inspeksiBib')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -10535,8 +11897,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -10646,6 +12009,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceIpt"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceIpt"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceIpt">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiIpt')"
+                                        :active="
+                                            route().current('kpi.inspeksiIpt')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -10971,6 +12423,7 @@ const toggleLevel3ScannerSks = () => {
                                     </li>
                                 </ul>
 
+
                                 <div
                                     v-if="
                                         $page.props.auth.user.role != 'soc_ho'
@@ -11146,8 +12599,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -11257,6 +12711,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceMlp"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceMlp"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceMlp">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiMlp')"
+                                        :active="
+                                            route().current('kpi.inspeksiMlp')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -11757,8 +13300,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -11868,6 +13412,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceMip"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceMip"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceMip">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiMip')"
+                                        :active="
+                                            route().current('kpi.inspeksiMip')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -12368,8 +14001,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -12479,6 +14113,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceVale"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceVale"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceVale">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiVib')"
+                                        :active="
+                                            route().current('kpi.inspeksiVib')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -12981,8 +14704,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -13092,6 +14816,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceSbs"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceSbs"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceSbs">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiSbs')"
+                                        :active="
+                                            route().current('kpi.inspeksiSbs')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -13592,8 +15405,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
@@ -13703,6 +15517,95 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2PerformanceSks"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Performance</span
+                                    >
+                                    <i
+                                        v-if="!level2PerformanceSks"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2PerformanceSks">
+                                    <!-- <NavLink
+                                        :href="route('accessPointWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'accessPointWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Response Time
+                                        </span>
+                                    </NavLink> -->
+                                    <NavLink
+                                        :href="route('kpi.inspeksiSks')"
+                                        :active="
+                                            route().current('kpi.inspeksiSks')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Inspeksi</span
+                                        >
+                                    </NavLink>
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                </ul>
 
                                 <div
                                     v-if="
@@ -14203,8 +16106,9 @@ const toggleLevel3ScannerSks = () => {
                                 <NavLink
                                     v-if="
                                         $page.props.auth.user.role ===
-                                        'ict_group_leader' || $page.props.auth.user.role ===
-                                        'ict_developer'
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
                                     "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"

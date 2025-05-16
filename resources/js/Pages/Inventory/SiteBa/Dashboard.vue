@@ -1,11 +1,11 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-import { ref, onMounted, watchEffect, nextTick  } from "vue";
+import { ref, onMounted, watchEffect, nextTick } from "vue";
 import Highcharts from "highcharts";
 import brandDark from "highcharts/themes/brand-dark";
 import brandLight from "highcharts/themes/brand-light";
-import { useDark } from '@vueuse/core';
+import { useDark } from "@vueuse/core";
 
 const pages = ref("Pages");
 const subMenu = ref("Dashboard Pages");
@@ -296,6 +296,19 @@ const initChartAchievementLight = () => {
     Highcharts.chart(chartAchievement.value, {
         chart: {
             type: "bar",
+            events: {
+                load: function () {
+                    const chart = this;
+                    drawCustomLegend(chart);
+                },
+                render: function () {
+                    const chart = this;
+                    if (chart.customLegendTexts) {
+                        chart.customLegendTexts.forEach((el) => el.destroy());
+                    }
+                    drawCustomLegend(chart);
+                },
+            },
         },
         title: {
             text: "",
@@ -362,6 +375,19 @@ const initChartAchievementDark = () => {
         chart: {
             type: "bar",
             backgroundColor: "#111C44",
+            events: {
+                load: function () {
+                    const chart = this;
+                    drawCustomLegend(chart);
+                },
+                render: function () {
+                    const chart = this;
+                    if (chart.customLegendTexts) {
+                        chart.customLegendTexts.forEach((el) => el.destroy());
+                    }
+                    drawCustomLegend(chart);
+                },
+            },
         },
         title: {
             text: "",
@@ -436,6 +462,23 @@ const initChartAchievementDark = () => {
         },
     });
 };
+
+function drawCustomLegend(chart) {
+    const leftX = 10;
+    const bottomY = chart.chartHeight; // titik bawah chart
+
+    const text1 = chart.renderer
+        .text("🟩 Data Inspeksi Laptop Per-Year", leftX, bottomY - 40)
+        .css({ color: "#fff", fontSize: "12px" })
+        .add();
+
+    const text2 = chart.renderer
+        .text("🟥 Data Inspeksi Computer Per-Quarter", leftX, bottomY - 25)
+        .css({ color: "#fff", fontSize: "12px" })
+        .add();
+
+    chart.customLegendTexts = [text1, text2];
+}
 
 const initChartAduanAnalysLight = () => {
     Highcharts.chart(chartAduanAnalys.value, {
@@ -789,7 +832,6 @@ const initChartAduanAnalysDark = () => {
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60"
-                                        
                                     >
                                         ALL ADUAN OPEN
                                     </p>
@@ -864,10 +906,9 @@ const initChartAduanAnalysDark = () => {
                     </div>
                 </div>
             </div>
-            
 
             <!-- card3 -->
-            
+
             <div
                 class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
             >
@@ -947,7 +988,6 @@ const initChartAduanAnalysDark = () => {
 
         <!-- cards row 3 -->
 
-      
         <div class="flex flex-wrap mt-6 -mx-3">
             <div
                 class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-12/12 lg:flex-none"
@@ -980,7 +1020,7 @@ const initChartAduanAnalysDark = () => {
                         <div class="p-4 pb-0 mb-0 rounded-t-4">
                             <div class="flex justify-between">
                                 <h6 class="mb-2 dark:text-white">
-                                    Table Monitoring Achievement Inspeksi
+                                    Table Monitoring Achievement Inspeksi/Periode
                                 </h6>
                             </div>
                         </div>
@@ -999,7 +1039,7 @@ const initChartAduanAnalysDark = () => {
                         <div class="p-4 pb-0 mb-0 rounded-t-4">
                             <div class="flex justify-between">
                                 <h6 class="mb-2 dark:text-white">
-                                    Table Analysis Aduan
+                                    Table Analysis Aduan/Month
                                 </h6>
                             </div>
                         </div>

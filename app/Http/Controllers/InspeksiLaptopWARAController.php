@@ -16,7 +16,10 @@ class InspeksiLaptopWARAController extends Controller
 {
     public function index()
     {
-        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'ADW')->get();
+        $inspeksi_laptop = InspeksiLaptop::where('site', 'ADW')->whereHas('inventory') // pastikan ada laptop
+            ->whereHas('inventory.pengguna') // pastikan ada user juga
+            ->with('inventory.pengguna')
+            ->get();
 
         $site = auth()->user()->site;
         $role = auth()->user()->role;
