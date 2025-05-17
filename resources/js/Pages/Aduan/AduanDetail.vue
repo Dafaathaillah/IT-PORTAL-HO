@@ -352,6 +352,20 @@ const isImage = (url) => {
                                         <p>: {{ props.aduan.repair_note }}</p>
                                     </div>
                                 </div>
+
+                                <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">
+                                            Location & Detail Location
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            : {{ props.aduan.location }} (
+                                            {{ props.aduan.detail_location }})
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

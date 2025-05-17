@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
-import {Head, Link } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import moment from "moment";
 import { onMounted, ref } from "vue";
 
@@ -29,7 +29,6 @@ const mount = onMounted(() => {
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
     >
-
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
@@ -53,70 +52,67 @@ const mount = onMounted(() => {
                                 </NavLinkCustom>
                             </div>
                             <div class="flex-auto p-12 pt-6 gap-4">
-                                
                                 <div
                                     class="pb-4 grid grid-cols-1 md:grid-cols-2"
                                 >
                                     <div class="grid grid-cols-2">
                                         <div>
+                                            <p class="text-base">Ticket Code</p>
+                                        </div>
+                                        <div>
+                                            <p>
+                                                :
+                                                {{ props.aduan.complaint_code }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
+                                            <p class="text-base">NRP</p>
+                                        </div>
+                                        <div>
+                                            <p>: {{ props.aduan.nrp }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div>
                                             <p class="text-base">
-                                                Ticket Code
+                                                Category Aduan
                                             </p>
                                         </div>
                                         <div>
                                             <p>
-                                                : {{ props.aduan.complaint_code }}
-                                                
+                                                :
+                                                {{ props.aduan.category_name }}
                                             </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">
-                                                NRP
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p>
-                                                : {{ props.aduan.nrp }}
-                                                
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-2">
-                                        <div>
-                                            <p class="text-base">Category Aduan</p>
-                                        </div>
-                                        <div>
-                                            <p>
-                                                : {{ props.aduan.category_name }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-2">
-                                        <div>
-                                            <p class="text-base">
-                                                
                                                 Complaint Name
                                             </p>
                                         </div>
                                         <div>
                                             <p>
-                                                : {{ props.aduan.complaint_name }}
-                                                
+                                                :
+                                                {{ props.aduan.complaint_name }}
                                             </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Complaint Date</p>
+                                            <p class="text-base">
+                                                Complaint Date
+                                            </p>
                                         </div>
                                         <div>
                                             <p>
-                                                : {{
-                                                props.aduan
-                                                    .date_of_complaint
-                                            }}
+                                                :
+                                                {{
+                                                    props.aduan
+                                                        .date_of_complaint
+                                                }}
                                             </p>
                                         </div>
                                     </div>
@@ -127,17 +123,17 @@ const mount = onMounted(() => {
                                             </p>
                                         </div>
                                         <div>
-                                            <p>: {{ props.aduan.phone_number }}</p>
+                                            <p>
+                                                : {{ props.aduan.phone_number }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Crew </p>
+                                            <p class="text-base">Crew</p>
                                         </div>
                                         <div>
-                                            <p>
-                                                : {{ props.aduan.crew }}
-                                            </p>
+                                            <p>: {{ props.aduan.crew }}</p>
                                         </div>
                                     </div>
 
@@ -148,24 +144,34 @@ const mount = onMounted(() => {
                                             </p>
                                         </div>
                                         <div>
-                                            <p 
-                                            v-if="props.aduan.complaint_image != null"
-                                            >
-                                                : <img
-                                                :src="
-                                                    props.aduan.complaint_image
+                                            <p
+                                                v-if="
+                                                    props.aduan
+                                                        .complaint_image != null
                                                 "
-                                                alt="documentation image"
-                                                class="ml-40 w-50 h-30 shadow-2xl rounded-xl"
-                                            />
-                                                
+                                            >
+                                                :
+                                                <img
+                                                    :src="
+                                                        props.aduan
+                                                            .complaint_image
+                                                    "
+                                                    alt="documentation image"
+                                                    class="ml-40 w-50 h-30 shadow-2xl rounded-xl"
+                                                />
                                             </p>
-                                            <p v-if="props.aduan.complaint_image == null">: - </p>
+                                            <p
+                                                v-if="
+                                                    props.aduan
+                                                        .complaint_image == null
+                                                "
+                                            >
+                                                : -
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
 
-                                
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
@@ -183,8 +189,7 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Status</p>
@@ -193,8 +198,7 @@ const mount = onMounted(() => {
                                         <p>: {{ props.aduan.status }}</p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Response Time</p>
@@ -203,8 +207,7 @@ const mount = onMounted(() => {
                                         <p>: {{ props.aduan.response_time }}</p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Start Response</p>
@@ -215,8 +218,7 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Start Progress</p>
@@ -227,8 +229,7 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">End Progress</p>
@@ -237,8 +238,7 @@ const mount = onMounted(() => {
                                         <p>: {{ props.aduan.end_progress }}</p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">
@@ -251,16 +251,14 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>Action Repair</div>
                                     <div>
                                         <p>: {{ props.aduan.action_repair }}</p>
                                     </div>
                                 </div>
-                                
-                                
+
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">Repair Note</p>
@@ -269,8 +267,20 @@ const mount = onMounted(() => {
                                         <p>: {{ props.aduan.repair_note }}</p>
                                     </div>
                                 </div>
-                                
-                                
+
+                                <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">
+                                            Location & Detail Location
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            : {{ props.aduan.location }} (
+                                            {{ props.aduan.detail_location }})
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
