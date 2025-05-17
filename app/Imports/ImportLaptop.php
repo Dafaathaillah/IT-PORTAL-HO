@@ -60,40 +60,66 @@ class ImportLaptop implements ToModel, WithStartRow
             $tanggal_deploy = $this->convertToDate(trim($row[23]));
         }
 
-        // $existingDataSn = InvLaptop::where('serial_number', $row[13])->first();
+        $existingDataInv = InvLaptop::where('laptop_code', $row[2])->first();
         if ($aduan_get_data_user) {
-            if ($existingDataSn) {
-                $this->duplicateRecords[] = [
-                    'number_asset_ho' => $existingDataSn->number_asset_ho,
-                    'laptop_code' => $existingDataSn->laptop_code,
-                    'serial_number' => $existingDataSn->serial_number,
-                    'site' => $existingDataSn->site,
-                ];
-                return null;
+            if ($existingDataInv) {
+                InvLaptop::updateOrCreate(
+                    ['laptop_code' => $row[2]],
+                    [
+                        'max_id' => $codeMaxId,
+                        'laptop_name' => $row[3],
+                        'laptop_code' => $row[2],
+                        'number_asset_ho' => $row[1],
+                        'assets_category' => $row[4],
+                        'spesifikasi' => $row[5] . ', ' . $row[6] . ', ' . $row[7] . ', ' . $row[8] . ', ' . $row[9] . ', ' . $row[10] . ', ' . $row[11] . ', ' . $row[12],
+                        'aplikasi' => $row[14],
+                        'license' => $row[15],
+                        'ip_address' => $row[16],
+                        'location' => $row[17],
+                        'status' => $row[18],
+                        'condition' => $row[19],
+                        'note' => $row[21],
+                        'date_of_inventory' => $tanggal_inventory,
+                        'date_of_deploy' => $tanggal_deploy,
+                        'user_alls_id' => $aduan_get_data_user->id,
+                        'site' => $codeSite,
+                        'dept' => $codeDept
+                    ]
+                );
+            } else {
+                if ($existingDataSn) {
+                    $this->duplicateRecords[] = [
+                        'number_asset_ho' => $existingDataSn->number_asset_ho,
+                        'laptop_code' => $existingDataSn->laptop_code,
+                        'serial_number' => $existingDataSn->serial_number,
+                        'site' => $existingDataSn->site,
+                    ];
+                    return null;
+                }
+                InvLaptop::updateOrCreate(
+                    ['laptop_code' => $row[2]],
+                    [
+                        'max_id' => $codeMaxId,
+                        'laptop_name' => $row[3],
+                        'laptop_code' => $row[2],
+                        'number_asset_ho' => $row[1],
+                        'assets_category' => $row[4],
+                        'spesifikasi' => $row[5] . ', ' . $row[6] . ', ' . $row[7] . ', ' . $row[8] . ', ' . $row[9] . ', ' . $row[10] . ', ' . $row[11] . ', ' . $row[12],
+                        'aplikasi' => $row[14],
+                        'license' => $row[15],
+                        'ip_address' => $row[16],
+                        'location' => $row[17],
+                        'status' => $row[18],
+                        'condition' => $row[19],
+                        'note' => $row[21],
+                        'date_of_inventory' => $tanggal_inventory,
+                        'date_of_deploy' => $tanggal_deploy,
+                        'user_alls_id' => $aduan_get_data_user->id,
+                        'site' => $codeSite,
+                        'dept' => $codeDept
+                    ]
+                );
             }
-            InvLaptop::updateOrCreate(
-                ['laptop_code' => $row[2]],
-                [
-                    'max_id' => $codeMaxId,
-                    'laptop_name' => $row[3],
-                    'laptop_code' => $row[2],
-                    'number_asset_ho' => $row[1],
-                    'assets_category' => $row[4],
-                    'spesifikasi' => $row[5] . ', ' . $row[6] . ', ' . $row[7] . ', ' . $row[8] . ', ' . $row[9] . ', ' . $row[10] . ', ' . $row[11] . ', ' . $row[12],
-                    'aplikasi' => $row[14],
-                    'license' => $row[15],
-                    'ip_address' => $row[16],
-                    'location' => $row[17],
-                    'status' => $row[18],
-                    'condition' => $row[19],
-                    'note' => $row[21],
-                    'date_of_inventory' => $tanggal_inventory,
-                    'date_of_deploy' => $tanggal_deploy,
-                    'user_alls_id' => $aduan_get_data_user->id,
-                    'site' => $codeSite,
-                    'dept' => $codeDept
-                ]
-            );
         }
     }
 
@@ -127,14 +153,14 @@ class ImportLaptop implements ToModel, WithStartRow
     {
         try {
             $value = trim($value);
-    
+
             // Jika format serial Excel (numeric)
             if (is_numeric($value)) {
                 return \Carbon\Carbon::instance(
                     \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value)
                 );
             }
-    
+
             // Jika format tanggal string 'd/m/Y'
             return \Carbon\Carbon::createFromFormat('d/m/Y', $value);
         } catch (\Exception $e) {
