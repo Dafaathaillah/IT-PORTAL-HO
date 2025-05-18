@@ -6,6 +6,7 @@ use App\Models\Aduan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class KpiResponseTimeController extends Controller
 {
@@ -322,5 +323,92 @@ class KpiResponseTimeController extends Controller
         //     ->count(DB::raw('DISTINCT server_name'));
 
         // return response()->json($count);
+    }
+
+    public function index()
+    {
+        $auth = auth()->user();
+
+        return Inertia::render(
+            'Inventory/Kpi/KpiResponseTime/KpiResponseTimeIndex',
+            [
+                // 'chartData' => [
+                //     'labels' => [],
+                //     'sudah_inspeksi' => [],
+                //     'belum_inspeksi' => [],
+                // ],
+                'site' => $auth->site,
+            ]
+        );
+    }
+
+    public function countKpi(Request $request)
+    {
+        $auth = auth()->user();
+        $site = $auth->site;
+        $typeKategori = $site === 'HO' ? 'HO' : 'SITE';
+
+        // Ambil semua kategori sesuai type (HO / SITE)
+        $categories = DB::table('root_cause_categories')->where('site_type', $typeKategori)->get();
+
+        // Query dasar aduan
+        $query = DB::table('aduans')->where('site', $site);
+
+        // Filter waktu
+        if ($request->year) {
+            $query->whereYear('created_date', $request->year);
+        } elseif ($request->startDate && $request->endDate) {
+            $query->whereBetween('created_date', [$request->startDate, $request->endDate]);
+        }
+
+        $baseQuery = clone $query;
+
+        // KPI umum
+        $data['countAduan'] = $baseQuery->count();
+        $data['countAduanClosed'] = (clone $query)->where('status', 'CLOSED')->count();
+        $data['countAduanOpen'] = (clone $query)->where('status', 'OPEN')->count();
+        $data['countAduanProcess'] = (clone $query)->where('status', 'PROCESS')->count();
+        $data['countAduanOutstanding'] = (clone $query)->where('status', 'OUTSTANDING')->count();
+
+        // Hitung response time total
+        $responseTimeData = (clone $query)
+            ->whereNotNull('response_time')
+            ->selectRaw('
+            COUNT(*) as total_data,
+            SUM(TIME_TO_SEC(response_time)) as total_seconds,
+            AVG(TIME_TO_SEC(response_time)) as avg_seconds,
+            SUM(CASE WHEN TIME_TO_SEC(response_time) <= 1800 THEN 1 ELSE 0 END) as achievement_count
+        ')
+            ->first();
+
+        // Format rata-rata ke HH:MM:SS
+        $avgInSeconds = $responseTimeData->avg_seconds ?? 0;
+        $data['avgResponseTime'] = gmdate('H:i:s', (int) $avgInSeconds);
+
+        // Hitung achievement 30 menit (%)
+        $data['achievement30minPercent'] = $avgInSeconds > 0
+            ? round((1800 / $avgInSeconds) * 100, 2)
+            : 0;
+
+        // Hitung response time rata-rata per kategori
+        $kategoriList = $categories->map(function ($category) use ($query) {
+            $avgSeconds = (clone $query)
+                ->where('category_name', $category->category_root_cause)
+                ->whereNotNull('response_time')
+                ->avg(DB::raw('TIME_TO_SEC(response_time)'));
+
+            return [
+                'kategori' => strtoupper($category->category_root_cause),
+                'time' => $avgSeconds ? gmdate("H:i:s", (int) $avgSeconds) : '00:00:00',
+            ];
+        });
+
+        $data['kategoriList'] = $kategoriList;
+        $data['aduanDiAtas30Menit'] = (clone $query)
+            ->whereNotNull('response_time')
+            ->whereRaw('TIME_TO_SEC(response_time) > 1800')
+            ->get();
+
+        return response()->json($data);
     }
 }
