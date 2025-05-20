@@ -757,6 +757,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-inspeksi-ba', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBa');
             Route::post('/kpi-inspeksi-ba-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowBa');
 
+            Route::get('/kpi-response-time-ba', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeBa');
+            Route::post('/kpi-response-time-ba-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowBa');
+
             Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
             Route::post('/accessPointSiteBa/generate', [InvApBaController::class, 'generateCode'])->name('accessPointBa.generate');
             Route::post('/accessPointSiteBa/generate/edit', [InvApBaController::class, 'generateCodeEdit'])->name('accessPointBa.generateEdit');
@@ -849,6 +852,9 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-inspeksi-mifa', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMifa');
             Route::post('/kpi-inspeksi-mifa-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMifa');
+
+            Route::get('/kpi-response-time-mifa', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMifa');
+            Route::post('/kpi-response-time-mifa-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMifa');
 
             Route::get('/accessPointSiteMifa', [InvApMifaController::class, 'index'])->name('accessPointMifa.page');
             Route::get('/accessPointSiteMifa/create', [InvApMifaController::class, 'create'])->name('accessPointMifa.create');
@@ -943,6 +949,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-inspeksi-mhu', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMhu');
             Route::post('/kpi-inspeksi-mhu-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMhu');
 
+            Route::get('/kpi-response-time-mhu', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMhu');
+            Route::post('/kpi-response-time-mhu-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMhu');
+
             Route::get('/accessPointSiteMHU', [InvApMhuController::class, 'index'])->name('accessPointMhu.page');
             Route::get('/accessPointSiteMHU/create', [InvApMhuController::class, 'create'])->name('accessPointMhu.create');
             Route::post('/accessPointSiteMhu/generate', [InvApMhuController::class, 'generateCode'])->name('accessPointMhu.generate');
@@ -1035,6 +1044,9 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-inspeksi-ami', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiAmi');
             Route::post('/kpi-inspeksi-ami-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowAmi');
+
+            Route::get('/kpi-response-time-ami', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeAmi');
+            Route::post('/kpi-response-time-ami-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowAmi');
 
             Route::get('/accessPointSiteAmi', [InvApAmiController::class, 'index'])->name('accessPointAmi.page');
             Route::post('/accessPointSiteAmi/generate', [InvApAmiController::class, 'generateCode'])->name('accessPointAmi.generate');
@@ -1129,6 +1141,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-inspeksi-pik', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiPik');
             Route::post('/kpi-inspeksi-pik-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowPik');
 
+            Route::get('/kpi-response-time-pik', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimePik');
+            Route::post('/kpi-response-time-pik-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowPik');
+
             Route::get('/accessPointSitePik', [InvApPikController::class, 'index'])->name('accessPointPik.page');
             Route::get('/accessPointSitePik/create', [InvApPikController::class, 'create'])->name('accessPointPik.create');
             Route::post('/accessPointSitePik/create', [InvApPikController::class, 'store'])->name('accessPointPik.store');
@@ -1221,6 +1236,9 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-inspeksi-bge', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBge');
             Route::post('/kpi-inspeksi-bge-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowBge');
+
+            Route::get('/kpi-response-time-bge', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeBge');
+            Route::post('/kpi-response-time-bge-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowBge');
 
             Route::get('/accessPointSiteBge', [InvApBgeController::class, 'index'])->name('accessPointBge.page');
             Route::get('/accessPointSiteBge/create', [InvApBgeController::class, 'create'])->name('accessPointBge.create');
@@ -1315,8 +1333,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-inspeksi-bib', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBib');
             Route::post('/kpi-inspeksi-bib-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowBib');
 
-            Route::get('/kpi-response-time-Bib', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeBib');
-            Route::post('/kpi-response-time-Bib-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowBib');
+            Route::get('/kpi-response-time-bib', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeBib');
+            Route::post('/kpi-response-time-bib-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowBib');
 
             Route::get('/accessPointSiteBib', [InvApBibController::class, 'index'])->name('accessPointBib.page');
             Route::get('/accessPointSiteBib/create', [InvApBibController::class, 'create'])->name('accessPointBib.create');
@@ -1411,6 +1429,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-inspeksi-ipt', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiIpt');
             Route::post('/kpi-inspeksi-ipt-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowIpt');
 
+            Route::get('/kpi-response-time-ipt', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeIpt');
+            Route::post('/kpi-response-time-ipt-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowIpt');
+
             Route::get('/accessPointSiteIpt', [InvApIptController::class, 'index'])->name('accessPointIpt.page');
             Route::get('/accessPointSiteIpt/create', [InvApIptController::class, 'create'])->name('accessPointIpt.create');
             Route::post('/accessPointSiteIpt/generate', [InvApIptController::class, 'generateCode'])->name('accessPointIpt.generate');
@@ -1503,6 +1524,9 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-inspeksi-mlp', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMlp');
             Route::post('/kpi-inspeksi-mlp-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMlp');
+
+            Route::get('/kpi-response-time-mlp', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMlp');
+            Route::post('/kpi-response-time-mlp-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMlp');
 
             Route::get('/accessPointSiteMlp', [InvApMlpController::class, 'index'])->name('accessPointMlp.page');
             Route::get('/accessPointSiteMlp/create', [InvApMlpController::class, 'create'])->name('accessPointMlp.create');
@@ -1597,6 +1621,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-inspeksi-mip', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMip');
             Route::post('/kpi-inspeksi-mip-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMip');
 
+            Route::get('/kpi-response-time-mip', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMip');
+            Route::post('/kpi-response-time-mip-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMip');
+
             Route::get('/accessPointSiteMip', [InvApMipController::class, 'index'])->name('accessPointMip.page');
             Route::get('/accessPointSiteMip/create', [InvApMipController::class, 'create'])->name('accessPointMip.create');
             Route::post('/accessPointSiteMip/create', [InvApMipController::class, 'store'])->name('accessPointMip.store');
@@ -1689,6 +1716,9 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-inspeksi-vib', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiVib');
             Route::post('/kpi-inspeksi-vib-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowVib');
+
+            Route::get('/kpi-response-time-vib', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeVib');
+            Route::post('/kpi-response-time-vib-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowVib');
 
             Route::get('/accessPointSiteVale', [InvApValeController::class, 'index'])->name('accessPointVale.page');
             Route::get('/accessPointSiteVale/create', [InvApValeController::class, 'create'])->name('accessPointVale.create');
@@ -1783,6 +1813,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-inspeksi-sbs', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiSbs');
             Route::post('/kpi-inspeksi-sbs-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowSbs');
 
+            Route::get('/kpi-response-time-sbs', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeSbs');
+            Route::post('/kpi-response-time-sbs-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowSbs');
+
             Route::get('/accessPointSiteSbs', [InvApSbsController::class, 'index'])->name('accessPointSbs.page');
             Route::get('/accessPointSiteSbs/create', [InvApSbsController::class, 'create'])->name('accessPointSbs.create');
             Route::post('/accessPointSiteSbs/create', [InvApSbsController::class, 'store'])->name('accessPointSbs.store');
@@ -1875,6 +1908,9 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-inspeksi-sks', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiSks');
             Route::post('/kpi-inspeksi-sks-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowSks');
+
+            Route::get('/kpi-response-time-sks', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeSks');
+            Route::post('/kpi-response-time-sks-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowSks');
 
             Route::get('/accessPointSiteSks', [InvApSksController::class, 'index'])->name('accessPointSks.page');
             Route::get('/accessPointSiteSks/create', [InvApSksController::class, 'create'])->name('accessPointSks.create');
@@ -1969,8 +2005,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-inspeksi-adw', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiAdw');
             Route::post('/kpi-inspeksi-adw-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowAdw');
 
-            Route::get('/kpi-response-time-Adw', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeAdw');
-            Route::post('/kpi-response-time-Adw-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowAdw');
+            Route::get('/kpi-response-time-adw', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeAdw');
+            Route::post('/kpi-response-time-adw-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowAdw');
 
             Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
             Route::get('/accessPointSiteWara/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');
@@ -2473,7 +2509,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
-            Route::get('/admin/check-aduan/wara', [AduanWARAController::class, 'checkAduan'])->name('aduanWARA.check-aduan');
+            Route::get('/admin/check-aduan/adw', [AduanWARAController::class, 'checkAduan'])->name('aduanWARA.check-aduan');
             Route::get('/aduanWara', [AduanWARAController::class, 'index'])->name('aduanWARA.page');
             Route::get('/aduanWara/create', [AduanWARAController::class, 'create'])->name('aduanWARA.create');
             Route::post('/aduanWara/create', [AduanWARAController::class, 'store'])->name('aduanWARA.store');
