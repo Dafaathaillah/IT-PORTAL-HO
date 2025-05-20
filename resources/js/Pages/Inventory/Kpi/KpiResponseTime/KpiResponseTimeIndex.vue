@@ -1,31 +1,19 @@
 <style>
-@import "datatables.net-dt";
-
-.dt-search {
-    margin-bottom: 1em;
-    float: right !important;
-    text-align: center !important;
-}
-.dt-paging {
-    margin-top: 1em;
-    float: right !important;
-    text-align: right !important;
-}
-.dt-buttons {
-    margin-top: 1em;
+/* tanpa scoped */
+.customize-table thead tr {
+  @apply bg-red-500 text-white;
 }
 </style>
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm, router, usePage } from "@inertiajs/vue3";
-import NavLinkCustom from "@/Components/NavLinkCustom.vue";
-import moment from "moment";
 import Swal from "sweetalert2";
 import VueMultiselect from "vue-multiselect";
 import Highcharts from "highcharts";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import EasyDataTable from "vue3-easy-data-table";
+import "vue3-easy-data-table/dist/style.css";
 import brandDark from "highcharts/themes/brand-dark";
 import brandLight from "highcharts/themes/brand-light";
 import { ref, onMounted, computed, watch } from "vue";
@@ -55,6 +43,10 @@ const formatToIndonesianDate = (date) => {
 };
 
 const periodLabel = computed(() => {
+    if (isYear.value && year.value) {
+        return `Tahun ${year.value}`;
+    }
+
     if (!startDate.value || !endDate.value) return "";
 
     const start = formatToIndonesianDate(startDate.value);
@@ -96,6 +88,8 @@ const searchData = async () => {
 
     if (isYear.value) {
         params.year = year.value;
+        startDate.value = "";
+        endDate.value = "";
     } else {
         params.startDate = customFormat(startDate.value);
         params.endDate = customFormat(endDate.value);
@@ -111,13 +105,33 @@ const searchData = async () => {
         const response = await axios.post(route(routeName), params);
         kpiData.value = response.data;
         kategoriList.value = response.data.kategoriList;
-        aduanDiAtas30Menit.value = response.data.aduanDiAtas30Menit;
+        aduanDiAtas30Menit.value = response.data.aduanDiAtas30Menit.map(
+            (item, index) => ({
+                ...item,
+                no: index + 1,
+            })
+        );
         console.log(response.data);
     } catch (error) {
         console.log(error);
         Swal.fire("Gagal", "Tidak dapat mengambil data KPI", "error");
     }
 };
+
+const headers = [
+    { text: "No", value: "no" },
+    { text: "Kode Tiket", value: "complaint_code" },
+    { text: "Issues", value: "complaint_note" },
+    { text: "Tgl Permohonan", value: "date_of_complaint" },
+    { text: "Start Response", value: "start_response" },
+    { text: "Response Time", value: "response_time", sortable: true },
+    { text: "Tgl Selesai", value: "end_progress" },
+    { text: "Nama Pelapor", value: "complaint_name" },
+    { text: "Lokasi", value: "location" },
+    { text: "Jenis Permohonan", value: "category_name" },
+    { text: "Crew", value: "crew" },
+    { text: "Action Problem", value: "action_repair" },
+];
 
 const summaryItems = computed(() => [
     { label: "PERIODE", value: periodLabel.value },
@@ -143,7 +157,63 @@ const chartData = computed(() => [
     { name: "OUTSTANDING", y: kpiData.value.countAduanOutstanding },
 ]);
 
+// onMounted(() => {
+//     chartInstance.value = Highcharts.chart("kpi-pie-chart", {
+//         chart: {
+//             type: "pie",
+//         },
+//         title: {
+//             text: "Chart Aduan",
+//         },
+//         tooltip: {
+//             pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+//         },
+//         accessibility: {
+//             point: {
+//                 valueSuffix: "%",
+//             },
+//         },
+//         plotOptions: {
+//             pie: {
+//                 allowPointSelect: true,
+//                 cursor: "pointer",
+//                 dataLabels: {
+//                     enabled: true,
+//                     format: "<b>{point.name}</b>: {point.percentage:.1f} %",
+//                 },
+//             },
+//         },
+//         credits: {
+//             enabled: true,
+//             text: "ICT PPA-AMM Development System",
+//             href: "https://ict.ppa-ho.net",
+//             style: {
+//                 color: "#666",
+//                 fontSize: "11px",
+//             },
+//         },
+//         series: [
+//             {
+//                 name: "Status",
+//                 colorByPoint: true,
+//                 data: chartData.value, // awalnya kosong / nol
+//             },
+//         ],
+//     });
+// });
+
 onMounted(() => {
+    // Set tanggal default ke awal dan akhir bulan sekarang
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    startDate.value = firstDay;
+    endDate.value = lastDay;
+
+    // Panggil data langsung saat halaman dimuat
+    searchData();
+
+    // Inisialisasi chart
     chartInstance.value = Highcharts.chart("kpi-pie-chart", {
         chart: {
             type: "pie",
@@ -182,7 +252,7 @@ onMounted(() => {
             {
                 name: "Status",
                 colorByPoint: true,
-                data: chartData.value, // awalnya kosong / nol
+                data: chartData.value,
             },
         ],
     });
@@ -366,171 +436,18 @@ watch(chartData, (newData) => {
                                         <h6
                                             class="mb-2 dark:text-white text-center font-semibold text-lg"
                                         >
-                                            RESPONSE TIME UP TO (30 Minutes)
+                                            RESPONSE TIME UP TO 30 MINUTES
                                         </h6>
                                     </div>
 
                                     <div class="overflow-x-auto p-3">
-                                        <table
-                                            class="min-w-full table-auto border border-gray-300 mt-4"
-                                        >
-                                            <thead
-                                                class="bg-red-500 text-white"
-                                            >
-                                                <tr>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        No.
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Kode Tiket
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Issues
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Tgl Permohonan
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Start Response
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Response Time
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Tgl Selesai
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Nama Pelapor
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Lokasi
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Jenis Permohonan
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Crew
-                                                    </th>
-                                                    <!-- <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Root Cause
-                                                    </th> -->
-                                                    <th
-                                                        class="px-4 py-2 rounded"
-                                                    >
-                                                        Action Problem
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr
-                                                    v-for="(
-                                                        aduan, index
-                                                    ) in aduanDiAtas30Menit"
-                                                    :key="aduan.complaint_code"
-                                                    class="odd:bg-white even:bg-gray-50"
-                                                >
-                                                    <td
-                                                        class="px-4 py-2 border text-center"
-                                                    >
-                                                        {{ index + 1 }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{ aduan.complaint_code }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{ aduan.complaint_note }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{ aduan.date_of_complaint }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{
-                                                            aduan.start_response
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{
-                                                            aduan.response_time
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{
-                                                            aduan.end_progress
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{ aduan.complaint_name }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{ aduan.location }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{
-                                                            aduan.category_name
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{ aduan.crew }}
-                                                    </td>
-                                                    <!-- <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{ aduan.root_cause }}
-                                                    </td> -->
-                                                    <td
-                                                        class="px-4 py-2 border rounded"
-                                                    >
-                                                        {{
-                                                            aduan.action_repair
-                                                        }}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <EasyDataTable
+                                            table-class-name="customize-table"
+                                            :headers="headers"
+                                            :items="aduanDiAtas30Menit"
+                                            :rows-per-page="10"
+                                            :search-field="true"
+                                        />
                                     </div>
                                 </div>
                             </div>

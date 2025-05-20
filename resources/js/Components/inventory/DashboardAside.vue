@@ -925,7 +925,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanMifa") === "true";
     level2OpenSettingMifa.value =
         localStorage.getItem("level2OpenSettingMifa") === "true";
-         level2PerformanceMifa.value =
+    level2PerformanceMifa.value =
         localStorage.getItem("level2PerformanceMifa") === "true";
     level2OpenInspeksiMifa.value =
         localStorage.getItem("level2OpenInspeksiMifa") === "true";
@@ -958,7 +958,10 @@ watch(
     () => {
         localStorage.setItem("level1OpenMifa", level1OpenMifa.value);
         localStorage.setItem("level2OpenMifa", level2OpenMifa.value);
-        localStorage.setItem("level2PerformanceMifa", level2PerformanceMifa.value);
+        localStorage.setItem(
+            "level2PerformanceMifa",
+            level2PerformanceMifa.value
+        );
         localStorage.setItem("level2OpenAduanMifa", level2OpenAduanMifa.value);
         localStorage.setItem(
             "level2OpenSettingMifa",
@@ -1233,7 +1236,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanMhu") === "true";
     level2OpenSettingMhu.value =
         localStorage.getItem("level2OpenSettingMhu") === "true";
-            level2PerformanceMhu.value =
+    level2PerformanceMhu.value =
         localStorage.getItem("level2PerformanceMhu") === "true";
     level2OpenInspeksiMhu.value =
         localStorage.getItem("level2OpenInspeksiMhu") === "true";
@@ -1265,7 +1268,10 @@ watch(
     ],
     () => {
         localStorage.setItem("level1OpenMhu", level1OpenMhu.value);
-        localStorage.setItem("level2PerformanceMhu", level2PerformanceMhu.value);
+        localStorage.setItem(
+            "level2PerformanceMhu",
+            level2PerformanceMhu.value
+        );
         localStorage.setItem("level2OpenMhu", level2OpenMhu.value);
         localStorage.setItem("level2OpenAduanMhu", level2OpenAduanMhu.value);
         localStorage.setItem(
@@ -1851,7 +1857,7 @@ onMounted(() => {
     level2OpenBib.value = localStorage.getItem("level2OpenBib") === "true";
     level2OpenAduanBib.value =
         localStorage.getItem("level2OpenAduanBib") === "true";
-            level2PerformanceBib.value =
+    level2PerformanceBib.value =
         localStorage.getItem("level2PerformanceBib") === "true";
     level2OpenSettingBib.value =
         localStorage.getItem("level2OpenSettingBib") === "true";
@@ -1887,7 +1893,7 @@ watch(
         localStorage.setItem("level1OpenBib", level1OpenBib.value);
         localStorage.setItem("level2OpenBib", level2OpenBib.value);
         localStorage.setItem("level2OpenAduanBib", level2OpenAduanBib.value);
-             localStorage.setItem(
+        localStorage.setItem(
             "level2PerformanceBib",
             level2PerformanceBib.value
         );
@@ -2165,7 +2171,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanAmi") === "true";
     level2OpenSettingAmi.value =
         localStorage.getItem("level2OpenSettingAmi") === "true";
-                    level2PerformanceAmi.value =
+    level2PerformanceAmi.value =
         localStorage.getItem("level2PerformanceAmi") === "true";
     level2OpenInspeksiAmi.value =
         localStorage.getItem("level2OpenInspeksiAmi") === "true";
@@ -2199,7 +2205,7 @@ watch(
         localStorage.setItem("level1OpenAmi", level1OpenAmi.value);
         localStorage.setItem("level2OpenAmi", level2OpenAmi.value);
         localStorage.setItem("level2OpenAduanAmi", level2OpenAduanAmi.value);
-          localStorage.setItem(
+        localStorage.setItem(
             "level2PerformanceAmi",
             level2PerformanceAmi.value
         );
@@ -2475,7 +2481,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanPik") === "true";
     level2OpenSettingPik.value =
         localStorage.getItem("level2OpenSettingPik") === "true";
-level2PerformancePik.value =
+    level2PerformancePik.value =
         localStorage.getItem("level2PerformancePik") === "true";
     level2OpenInspeksiPik.value =
         localStorage.getItem("level2OpenInspeksiPik") === "true";
@@ -2509,7 +2515,7 @@ watch(
         localStorage.setItem("level1OpenPik", level1OpenPik.value);
         localStorage.setItem("level2OpenPik", level2OpenPik.value);
         localStorage.setItem("level2OpenAduanPik", level2OpenAduanPik.value);
-                  localStorage.setItem(
+        localStorage.setItem(
             "level2PerformancePik",
             level2PerformancePik.value
         );
@@ -2781,7 +2787,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanBge") === "true";
     level2OpenSettingBge.value =
         localStorage.getItem("level2OpenSettingBge") === "true";
-        level2PerformanceBge.value =
+    level2PerformanceBge.value =
         localStorage.getItem("level2PerformanceBge") === "true";
     level2OpenInspeksiBge.value =
         localStorage.getItem("level2OpenInspeksiBge") === "true";
@@ -2819,8 +2825,8 @@ watch(
             "level2OpenSettingBge",
             level2OpenSettingBge.value
         );
-                localStorage.setItem("level2OpenAduanPik", level2OpenAduanPik.value);
-                  localStorage.setItem(
+        localStorage.setItem("level2OpenAduanPik", level2OpenAduanPik.value);
+        localStorage.setItem(
             "level2PerformanceBge",
             level2PerformanceBge.value
         );
@@ -3101,7 +3107,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanIpt") === "true";
     level2OpenSettingIpt.value =
         localStorage.getItem("level2OpenSettingIpt") === "true";
-                level2PerformanceIpt.value =
+    level2PerformanceIpt.value =
         localStorage.getItem("level2PerformanceIpt") === "true";
     level2OpenInspeksiIpt.value =
         localStorage.getItem("level2OpenInspeksiIpt") === "true";
@@ -3139,7 +3145,7 @@ watch(
             "level2OpenSettingIpt",
             level2OpenSettingIpt.value
         );
-                          localStorage.setItem(
+        localStorage.setItem(
             "level2PerformanceIpt",
             level2PerformanceIpt.value
         );
@@ -3414,7 +3420,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanMlp") === "true";
     level2OpenSettingMlp.value =
         localStorage.getItem("level2OpenSettingMlp") === "true";
-                        level2PerformanceMlp.value =
+    level2PerformanceMlp.value =
         localStorage.getItem("level2PerformanceMlp") === "true";
     level2OpenInspeksiMlp.value =
         localStorage.getItem("level2OpenInspeksiMlp") === "true";
@@ -3452,7 +3458,7 @@ watch(
             "level2OpenSettingMlp",
             level2OpenSettingMlp.value
         );
-                                  localStorage.setItem(
+        localStorage.setItem(
             "level2PerformanceMlp",
             level2PerformanceMlp.value
         );
@@ -3481,7 +3487,7 @@ watch(
 const toggleLevel1Mlp = () => {
     level1OpenMlp.value = !level1OpenMlp.value;
 
-     level1OpenBge.value = false;
+    level1OpenBge.value = false;
     level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
@@ -3729,7 +3735,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanMip") === "true";
     level2OpenSettingMip.value =
         localStorage.getItem("level2OpenSettingMip") === "true";
-                                level2PerformanceMip.value =
+    level2PerformanceMip.value =
         localStorage.getItem("level2PerformanceMip") === "true";
     level2OpenInspeksiMip.value =
         localStorage.getItem("level2OpenInspeksiMip") === "true";
@@ -3763,7 +3769,7 @@ watch(
         localStorage.setItem("level1OpenMip", level1OpenMip.value);
         localStorage.setItem("level2OpenMip", level2OpenMip.value);
         localStorage.setItem("level2OpenAduanMip", level2OpenAduanMip.value);
-                                          localStorage.setItem(
+        localStorage.setItem(
             "level2PerformanceMip",
             level2PerformanceMip.value
         );
@@ -3796,7 +3802,7 @@ watch(
 const toggleLevel1Mip = () => {
     level1OpenMip.value = !level1OpenMip.value;
 
-     level1OpenBge.value = false;
+    level1OpenBge.value = false;
     level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
@@ -4044,7 +4050,7 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanVale") === "true";
     level2OpenSettingVale.value =
         localStorage.getItem("level2OpenSettingVale") === "true";
-                                        level2PerformanceVale.value =
+    level2PerformanceVale.value =
         localStorage.getItem("level2PerformanceVale") === "true";
     level2OpenInspeksiVale.value =
         localStorage.getItem("level2OpenInspeksiVale") === "true";
@@ -4078,7 +4084,7 @@ watch(
         localStorage.setItem("level1OpenVale", level1OpenVale.value);
         localStorage.setItem("level2OpenVale", level2OpenVale.value);
         localStorage.setItem("level2OpenAduanVale", level2OpenAduanVale.value);
-                                                  localStorage.setItem(
+        localStorage.setItem(
             "level2PerformanceVale",
             level2PerformanceVale.value
         );
@@ -4111,7 +4117,7 @@ watch(
 const toggleLevel1Vale = () => {
     level1OpenVale.value = !level1OpenVale.value;
 
-      level1OpenBge.value = false;
+    level1OpenBge.value = false;
     level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
@@ -4358,7 +4364,7 @@ onMounted(() => {
     level2OpenSbs.value = localStorage.getItem("level2OpenSbs") === "true";
     level2OpenAduanSbs.value =
         localStorage.getItem("level2OpenAduanSbs") === "true";
-                                                level2PerformanceSbs.value =
+    level2PerformanceSbs.value =
         localStorage.getItem("level2PerformanceSbs") === "true";
     level2OpenSettingSbs.value =
         localStorage.getItem("level2OpenSettingSbs") === "true";
@@ -4394,7 +4400,7 @@ watch(
         localStorage.setItem("level1OpenSbs", level1OpenSbs.value);
         localStorage.setItem("level2OpenSbs", level2OpenSbs.value);
         localStorage.setItem("level2OpenAduanSbs", level2OpenAduanSbs.value);
-                                                          localStorage.setItem(
+        localStorage.setItem(
             "level2PerformanceSbs",
             level2PerformanceSbs.value
         );
@@ -4676,7 +4682,7 @@ onMounted(() => {
     level2OpenSks.value = localStorage.getItem("level2OpenSks") === "true";
     level2OpenAduanSks.value =
         localStorage.getItem("level2OpenAduanSks") === "true";
-                                                        level2PerformanceSks.value =
+    level2PerformanceSks.value =
         localStorage.getItem("level2PerformanceSks") === "true";
     level2OpenSettingSks.value =
         localStorage.getItem("level2OpenSettingSks") === "true";
@@ -4712,7 +4718,7 @@ watch(
         localStorage.setItem("level1OpenSks", level1OpenSks.value);
         localStorage.setItem("level2OpenSks", level2OpenSks.value);
         localStorage.setItem("level2OpenAduanSks", level2OpenAduanSks.value);
-                                                                  localStorage.setItem(
+        localStorage.setItem(
             "level2PerformanceSks",
             level2PerformanceSks.value
         );
@@ -4745,7 +4751,7 @@ watch(
 const toggleLevel1Sks = () => {
     level1OpenSks.value = !level1OpenSks.value;
 
-     level1OpenBge.value = false;
+    level1OpenBge.value = false;
     level2PerformanceBge.value = false;
     level2OpenBge.value = false;
     level2OpenSettingBge.value = false;
@@ -4871,7 +4877,6 @@ const toggleLevel2PerformanceSks = () => {
     }
     level2PerformanceSks.value = !level2PerformanceSks.value;
 };
-
 
 const toggleLevel2AduanSks = () => {
     console.log(level1OpenSks.value);
@@ -5823,11 +5828,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceHo">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.responseTimeHo')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeHo'
                                             )
                                         "
                                     >
@@ -5835,14 +5840,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiHo')"
                                         :active="
@@ -6508,11 +6513,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceBa">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.responseTimeBa')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeBa'
                                             )
                                         "
                                     >
@@ -6520,14 +6525,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiBa')"
                                         :active="
@@ -7206,11 +7211,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceMifa">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.responseTimeMifa')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeMifa'
                                             )
                                         "
                                     >
@@ -7218,14 +7223,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiMifa')"
                                         :active="
@@ -7913,11 +7918,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceMhu">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.responseTimeMhu')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeMhu'
                                             )
                                         "
                                     >
@@ -7925,14 +7930,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiMhu')"
                                         :active="
@@ -8618,11 +8623,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceWARA">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.responseTimeAdw')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeAdw'
                                             )
                                         "
                                     >
@@ -8630,14 +8635,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiAdw')"
                                         :active="
@@ -9223,11 +9228,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceAmi">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                           :href="route('kpi.responseTimeAmi')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeAmi'
                                             )
                                         "
                                     >
@@ -9235,14 +9240,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiAmi')"
                                         :active="
@@ -9928,11 +9933,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformancePik">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                           :href="route('kpi.responseTimePik')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimePik'
                                             )
                                         "
                                     >
@@ -9940,14 +9945,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiPik')"
                                         :active="
@@ -10633,11 +10638,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceBge">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                         :href="route('kpi.responseTimeBge')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeBge'
                                             )
                                         "
                                     >
@@ -10645,14 +10650,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiBge')"
                                         :active="
@@ -11338,11 +11343,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceBib">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                         :href="route('kpi.responseTimeBib')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeBib'
                                             )
                                         "
                                     >
@@ -11350,14 +11355,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiBib')"
                                         :active="
@@ -12039,11 +12044,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceIpt">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.responseTimeIpt')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeIpt'
                                             )
                                         "
                                     >
@@ -12051,14 +12056,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiIpt')"
                                         :active="
@@ -12423,7 +12428,6 @@ const toggleLevel3ScannerSks = () => {
                                     </li>
                                 </ul>
 
-
                                 <div
                                     v-if="
                                         $page.props.auth.user.role != 'soc_ho'
@@ -12741,11 +12745,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceMlp">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                                     :href="route('kpi.responseTimeMlp')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeMlp'
                                             )
                                         "
                                     >
@@ -12753,14 +12757,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiMlp')"
                                         :active="
@@ -13442,11 +13446,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceMip">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                                      :href="route('kpi.responseTimeMip')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeMip'
                                             )
                                         "
                                     >
@@ -13454,14 +13458,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiMip')"
                                         :active="
@@ -14143,11 +14147,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceVale">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                                       :href="route('kpi.responseTimeVib')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeVib'
                                             )
                                         "
                                     >
@@ -14155,14 +14159,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiVib')"
                                         :active="
@@ -14846,11 +14850,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceSbs">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                                     :href="route('kpi.responseTimeSbs')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeSbs'
                                             )
                                         "
                                     >
@@ -14858,14 +14862,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiSbs')"
                                         :active="
@@ -15547,11 +15551,11 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2PerformanceSks">
-                                    <!-- <NavLink
-                                        :href="route('accessPointWARA.page')"
+                                    <NavLink
+                                                                        :href="route('kpi.responseTimeSks')"
                                         :active="
                                             route().current(
-                                                'accessPointWARA.page'
+                                                'kpi.responseTimeSks'
                                             )
                                         "
                                     >
@@ -15559,14 +15563,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >KPI Response Time
                                         </span>
-                                    </NavLink> -->
+                                    </NavLink>
                                     <NavLink
                                         :href="route('kpi.inspeksiSks')"
                                         :active="
