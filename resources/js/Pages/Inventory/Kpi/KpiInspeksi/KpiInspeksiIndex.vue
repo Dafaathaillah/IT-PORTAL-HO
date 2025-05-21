@@ -74,7 +74,7 @@ const searchData = async () => {
     } else {
         params.quarter = triwulan.value;
     }
-    console.log(params)
+    // console.log(/params);
     try {
         const site =
             props.site.charAt(0).toUpperCase() +
@@ -146,6 +146,14 @@ watch(
         }
     }
 );
+
+onMounted(() => {
+    // Set default tahun ke tahun saat ini
+    year.value = new Date().getFullYear();
+
+    // Panggil data awal
+    searchData();
+});
 </script>
 
 <template>
