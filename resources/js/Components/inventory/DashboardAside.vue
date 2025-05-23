@@ -5866,26 +5866,24 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.jobAnalysisHo')"
                                         :active="
-                                            route().current(
-                                                'wirellessWARA.page'
-                                            )
+                                            route().current('kpi.jobAnalysisHo')
                                         "
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -6551,26 +6549,24 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.jobAnalysisBa')"
                                         :active="
-                                            route().current(
-                                                'wirellessWARA.page'
-                                            )
+                                            route().current('kpi.jobAnalysisBa')
                                         "
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -7249,11 +7245,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.jobAnalysisMifa')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisMifa'
                                             )
                                         "
                                     >
@@ -7261,14 +7257,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -7956,11 +7952,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                      <NavLink
+                                        :href="route('kpi.jobAnalysisMhu')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisMhu'
                                             )
                                         "
                                     >
@@ -7968,14 +7964,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -8661,11 +8657,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                     <NavLink
+                                        :href="route('kpi.jobAnalysisAdw')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisAdw'
                                             )
                                         "
                                     >
@@ -8673,14 +8669,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -9229,7 +9225,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformanceAmi">
                                     <NavLink
-                                                           :href="route('kpi.responseTimeAmi')"
+                                        :href="route('kpi.responseTimeAmi')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimeAmi'
@@ -9266,11 +9262,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                    <NavLink
+                                        :href="route('kpi.jobAnalysisAmi')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisMifa'
                                             )
                                         "
                                     >
@@ -9278,14 +9274,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -9934,7 +9930,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformancePik">
                                     <NavLink
-                                                           :href="route('kpi.responseTimePik')"
+                                        :href="route('kpi.responseTimePik')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimePik'
@@ -9971,11 +9967,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                       <NavLink
+                                        :href="route('kpi.jobAnalysisPik')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisPik'
                                             )
                                         "
                                     >
@@ -9983,14 +9979,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -10639,7 +10635,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformanceBge">
                                     <NavLink
-                                                         :href="route('kpi.responseTimeBge')"
+                                        :href="route('kpi.responseTimeBge')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimeBge'
@@ -10676,11 +10672,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                       <NavLink
+                                        :href="route('kpi.jobAnalysisBge')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisBge'
                                             )
                                         "
                                     >
@@ -10688,14 +10684,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -11344,7 +11340,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformanceBib">
                                     <NavLink
-                                                         :href="route('kpi.responseTimeBib')"
+                                        :href="route('kpi.responseTimeBib')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimeBib'
@@ -11381,11 +11377,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                   <NavLink
+                                        :href="route('kpi.jobAnalysisBib')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisBib'
                                             )
                                         "
                                     >
@@ -11393,14 +11389,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -12082,11 +12078,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                      <NavLink
+                                        :href="route('kpi.jobAnalysisIpt')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisIpt'
                                             )
                                         "
                                     >
@@ -12094,14 +12090,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -12746,7 +12742,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformanceMlp">
                                     <NavLink
-                                                                     :href="route('kpi.responseTimeMlp')"
+                                        :href="route('kpi.responseTimeMlp')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimeMlp'
@@ -12783,11 +12779,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                       <NavLink
+                                        :href="route('kpi.jobAnalysisMlp')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisMlp'
                                             )
                                         "
                                     >
@@ -12795,14 +12791,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -13447,7 +13443,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformanceMip">
                                     <NavLink
-                                                                      :href="route('kpi.responseTimeMip')"
+                                        :href="route('kpi.responseTimeMip')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimeMip'
@@ -13484,11 +13480,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                <NavLink
+                                        :href="route('kpi.jobAnalysisMip')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisMip'
                                             )
                                         "
                                     >
@@ -13496,14 +13492,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -14148,7 +14144,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformanceVale">
                                     <NavLink
-                                                                       :href="route('kpi.responseTimeVib')"
+                                        :href="route('kpi.responseTimeVib')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimeVib'
@@ -14185,11 +14181,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                      <NavLink
+                                        :href="route('kpi.jobAnalysisVib')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisVib'
                                             )
                                         "
                                     >
@@ -14197,14 +14193,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -14851,7 +14847,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformanceSbs">
                                     <NavLink
-                                                                     :href="route('kpi.responseTimeSbs')"
+                                        :href="route('kpi.responseTimeSbs')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimeSbs'
@@ -14888,11 +14884,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                       <NavLink
+                                        :href="route('kpi.jobAnalysisSbs')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisSbs'
                                             )
                                         "
                                     >
@@ -14900,14 +14896,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -15552,7 +15548,7 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2PerformanceSks">
                                     <NavLink
-                                                                        :href="route('kpi.responseTimeSks')"
+                                        :href="route('kpi.responseTimeSks')"
                                         :active="
                                             route().current(
                                                 'kpi.responseTimeSks'
@@ -15589,11 +15585,11 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <!-- <NavLink
-                                        :href="route('wirellessWARA.page')"
+                                       <NavLink
+                                        :href="route('kpi.jobAnalysisSks')"
                                         :active="
                                             route().current(
-                                                'wirellessWARA.page'
+                                                'kpi.jobAnalysisSks'
                                             )
                                         "
                                     >
@@ -15601,14 +15597,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Job Analisis</span
+                                            >KPI Aduan Analysis</span
                                         >
-                                    </NavLink> -->
+                                    </NavLink>
                                 </ul>
 
                                 <div

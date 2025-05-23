@@ -25,16 +25,12 @@ import Swal from "sweetalert2";
 import VueMultiselect from "vue-multiselect";
 import Highcharts from "highcharts";
 import brandDark from "highcharts/themes/brand-dark";
+import EasyDataTable from "vue3-easy-data-table";
+import "vue3-easy-data-table/dist/style.css";
 import brandLight from "highcharts/themes/brand-light";
 import { ref, onMounted, computed, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
-
-const selectedOptionDept = ref({ name: "Laptop" });
-
-const isComputer = computed(() => {
-    return selectedOptionDept.value?.name === "Computer";
-});
 
 const pages = ref("Pages");
 const subMenu = ref("KPI Inspeksi");
@@ -49,8 +45,6 @@ function formattedDate(date) {
 }
 
 const year = ref(""); // State untuk input year
-const triwulan = ref(""); // State untuk input triwulan
-const bulan = ref(""); // State untuk input bulan
 
 const validateYear = (event) => {
     const value = event.target.value;
@@ -59,33 +53,20 @@ const validateYear = (event) => {
     }
 };
 
-const isADW = computed(() => {
-    return props.site?.toUpperCase() === "ADW";
-});
-
 const searchData = async () => {
     const params = {
-        device: selectedOptionDept.value.name,
         year: year.value,
     };
-
-    if (isComputer.value && isADW.value) {
-        params.month = bulan.value;
-    } else {
-        params.quarter = triwulan.value;
-    }
-    // console.log(/params);
     try {
         const site =
             props.site.charAt(0).toUpperCase() +
             props.site.slice(1).toLowerCase();
 
-        const routeName = `kpi.inspeksiShow${site}`;
+        const routeName = `kpi.jobAnalysisShow${site}`;
 
         const response = await axios.post(route(routeName), params);
         page.props.chartData = response.data.chartData;
     } catch (error) {
-        console.log(error);
         Swal.fire("Gagal", "Tidak dapat mengambil data KPI", "error");
     }
 };
@@ -94,17 +75,86 @@ const chartInspeksi = ref(null);
 
 const page = usePage();
 
+const getMonthNumber = (monthName) => {
+    const months = {
+        JAN: "01",
+        FEB: "02",
+        MAR: "03",
+        APR: "04",
+        MEI: "05",
+        JUN: "06",
+        JUL: "07",
+        AGU: "08",
+        SEP: "09",
+        OKT: "10",
+        NOV: "11",
+        DES: "12",
+    };
+    return months[monthName.toUpperCase()] || "00";
+};
+
+const detailData = ref([]);
+const selectedCategory = ref(null);
+
+const fetchDetailData = async (category, month, year, site) => {
+
+        // Array nama bulan
+    const monthNames = [
+        "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
+        "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"
+    ];
+
+    // Convert "01" → 0, "02" → 1, dst.
+    const monthIndex = parseInt(month, 10) - 1;
+    const monthName = monthNames[monthIndex] || month;
+
+    selectedCategory.value = `${category} ${monthName} ${year}`;
+    try {
+        const site =
+            props.site.charAt(0).toUpperCase() +
+            props.site.slice(1).toLowerCase();
+
+        const routeName = `kpi.jobAnalysis${site}Detail`;
+        const response = await axios.post(route(routeName), {
+            category,
+            month,
+            year,
+            site,
+        });
+        detailData.value = response.data.complaints.map((item, index) => ({
+            ...item,
+            no: index + 1,
+        })); // sesuaikan dengan response-mu
+    } catch (error) {
+        console.error("Gagal ambil detail KPI", error);
+    }
+};
+
+const headers = [
+    { text: "No", value: "no" },
+    { text: "Kode Tiket", value: "complaint_code" },
+    { text: "Issues", value: "complaint_note" },
+    { text: "Tgl Permohonan", value: "date_of_complaint" },
+    { text: "Start Response", value: "start_response" },
+    { text: "Response Time", value: "response_time", sortable: true },
+    { text: "Tgl Selesai", value: "end_progress" },
+    { text: "Nama Pelapor", value: "complaint_name" },
+    { text: "Lokasi", value: "location" },
+    { text: "Jenis Permohonan", value: "category_name" },
+    { text: "Crew", value: "crew" },
+    { text: "Action Problem", value: "action_repair" },
+];
+
 watch(
     () => page.props.chartData,
     (chartData) => {
-        console.log(isADW.value);
         if (chartInspeksi.value && chartData?.labels?.length) {
             Highcharts.chart(chartInspeksi.value, {
                 chart: {
                     type: "column",
                 },
                 title: {
-                    text: "KPI INSPEKSI",
+                    text: "KPI ADUAN ANALYSIS",
                 },
                 xAxis: {
                     categories: chartData.labels,
@@ -112,21 +162,33 @@ watch(
                 yAxis: {
                     min: 0,
                     title: {
-                        text: "Persentase (%)",
+                        text: "Jumlah",
                     },
                 },
-                series: [
-                    {
-                        name: "Sudah Inspeksi",
-                        data: chartData.sudah_inspeksi,
-                        color: "#28a745",
+                series: chartData.series,
+                plotOptions: {
+                    series: {
+                        cursor: "pointer",
+                        point: {
+                            events: {
+                                click: function () {
+                                    const category = this.series.name;
+                                    const monthTeks = this.category;
+                                    const month = getMonthNumber(monthTeks);
+                                    const yearKlik = year.value;
+                                    const site = props.site;
+                                  
+                                    fetchDetailData(
+                                        category,
+                                        month,
+                                        yearKlik,
+                                        site
+                                    );
+                                },
+                            },
+                        },
                     },
-                    {
-                        name: "Belum Inspeksi",
-                        data: chartData.belum_inspeksi,
-                        color: "#dc3545",
-                    },
-                ],
+                },
                 credits: {
                     enabled: true,
                     text: "ICT PPA-AMM Development System",
@@ -147,12 +209,28 @@ watch(
     }
 );
 
-onMounted(() => {
-    // Set default tahun ke tahun saat ini
-    year.value = new Date().getFullYear();
+const isChartEmpty = computed(() => {
+    const chartData = page.props.chartData;
+    if (!chartData || !chartData.series) return true;
 
-    // Panggil data awal
-    searchData();
+    return chartData.series.every((series) => {
+        return (
+            !series.data ||
+            series.data.every((value) => value === 0 || value === null)
+        );
+    });
+});
+
+watch(isChartEmpty, (newVal) => {
+    if (newVal) {
+        detailData.value = [];
+    }
+});
+
+onMounted(() => {
+    const currentYear = new Date().getFullYear();
+    year.value = currentYear.toString(); // set default tahun sekarang
+    searchData(); // langsung panggil data saat halaman dibuka
 });
 </script>
 
@@ -170,69 +248,6 @@ onMounted(() => {
                     <div class="flex-none w-full max-w-full px-3">
                         <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                             <div class="flex flex-wrap md:flex-nowrap gap-4">
-                                <div
-                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
-                                >
-                                    <VueMultiselect
-                                        v-model="selectedOptionDept"
-                                        :options="[
-                                            { name: 'Computer' },
-                                            { name: 'Laptop' },
-                                        ]"
-                                        :multiple="false"
-                                        :close-on-select="true"
-                                        placeholder="Select Device"
-                                        track-by="name"
-                                        label="name"
-                                    />
-                                </div>
-                                <div
-                                    v-show="isComputer && !isADW"
-                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
-                                >
-                                    <span
-                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
-                                    >
-                                        <i
-                                            class="fas fa-search"
-                                            aria-hidden="true"
-                                        ></i>
-                                    </span>
-                                    <input
-                                        v-model="triwulan"
-                                        type="number"
-                                        min="1"
-                                        max="4"
-                                        step="1"
-                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                        placeholder="Masukkan Quarter"
-                                        @input="validateYear"
-                                    />
-                                </div>
-
-                                <div
-                                    v-show="isComputer && isADW"
-                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
-                                >
-                                    <span
-                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
-                                    >
-                                        <i
-                                            class="fas fa-search"
-                                            aria-hidden="true"
-                                        ></i>
-                                    </span>
-                                    <input
-                                        v-model="bulan"
-                                        type="number"
-                                        min="1"
-                                        max="12"
-                                        step="1"
-                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                        placeholder="Masukkan Bulan"
-                                        @input="validateYear"
-                                    />
-                                </div>
                                 <div
                                     class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
                                 >
@@ -272,7 +287,7 @@ onMounted(() => {
                                     <div class="p-4 pb-0 mb-0 rounded-t-4">
                                         <div class="flex justify-between">
                                             <h6 class="mb-2 dark:text-white">
-                                                KPI Inspeksi PPA Site
+                                                KPI Aduan Analysis PPA Site
                                                 {{ props.site }}
                                             </h6>
                                         </div>
@@ -282,6 +297,30 @@ onMounted(() => {
                                             ref="chartInspeksi"
                                             style="width: 100%; height: 400px"
                                         ></div>
+                                    </div>
+
+                                    <div
+                                        v-if="detailData.length > 0"
+                                        class="p-4 pb-0 mb-0 rounded-t-4 mt-3"
+                                    >
+                                        <h6
+                                            class="mb-2 dark:text-white text-center font-semibold text-lg"
+                                        >
+                                            DATA CATEGORY {{ selectedCategory }}
+                                        </h6>
+                                    </div>
+
+                                    <div
+                                        v-if="detailData.length > 0"
+                                        class="overflow-x-auto p-3"
+                                    >
+                                        <EasyDataTable
+                                            table-class-name="customize-table"
+                                            :headers="headers"
+                                            :items="detailData"
+                                            :rows-per-page="10"
+                                            :search-field="true"
+                                        />
                                     </div>
                                 </div>
                             </div>

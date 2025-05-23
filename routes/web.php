@@ -204,6 +204,7 @@ use App\Http\Controllers\InvWirellessRcbinController;
 use App\Http\Controllers\InvWirellessSbsController;
 use App\Http\Controllers\InvWirellessSksController;
 use App\Http\Controllers\InvWirellessValeController;
+use App\Http\Controllers\KpiAduanAnalysisController;
 use App\Http\Controllers\KpiInspeksiController;
 use App\Http\Controllers\KpiResponseTimeController;
 use App\Http\Controllers\ProfileController;
@@ -664,6 +665,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-response-time-ho', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeHo');
             Route::post('/kpi-inspeksi-ho-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowHo');
 
+            Route::get('/kpi-aduan-analysis-ho', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisHo');
+            Route::post('/kpi-aduan-analysis-ho-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowHo');
+            Route::post('/kpi-aduan-analysis-ho-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisHoDetail');
+
             Route::get('/accessPoint', [InvApController::class, 'index'])->name('accessPoint.page');
             Route::post('/accessPoint/generate', [InvApController::class, 'generateCode'])->name('accessPoint.generate');
             Route::post('/accessPoint/generate/edit', [InvApController::class, 'generateCodeEdit'])->name('accessPoint.generateEdit');
@@ -759,6 +764,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-response-time-ba', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeBa');
             Route::post('/kpi-response-time-ba-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowBa');
+
+            Route::get('/kpi-aduan-analysis-ba', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisBa');
+            Route::post('/kpi-aduan-analysis-ba-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBa');
+            Route::post('/kpi-aduan-analysis-ba-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBaDetail');
 
             Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
             Route::post('/accessPointSiteBa/generate', [InvApBaController::class, 'generateCode'])->name('accessPointBa.generate');
@@ -856,6 +865,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-response-time-mifa', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMifa');
             Route::post('/kpi-response-time-mifa-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMifa');
 
+            Route::get('/kpi-aduan-analysis-mifa', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMifa');
+            Route::post('/kpi-aduan-analysis-mifa-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMifa');
+            Route::post('/kpi-aduan-analysis-mifa-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMifaDetail');
+
             Route::get('/accessPointSiteMifa', [InvApMifaController::class, 'index'])->name('accessPointMifa.page');
             Route::get('/accessPointSiteMifa/create', [InvApMifaController::class, 'create'])->name('accessPointMifa.create');
             Route::post('/accessPointSiteMifa/create', [InvApMifaController::class, 'store'])->name('accessPointMifa.store');
@@ -951,6 +964,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-response-time-mhu', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMhu');
             Route::post('/kpi-response-time-mhu-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMhu');
+
+            Route::get('/kpi-aduan-analysis-mhu', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMhu');
+            Route::post('/kpi-aduan-analysis-mhu-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMhu');
+            Route::post('/kpi-aduan-analysis-mhu-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMhuDetail');
 
             Route::get('/accessPointSiteMHU', [InvApMhuController::class, 'index'])->name('accessPointMhu.page');
             Route::get('/accessPointSiteMHU/create', [InvApMhuController::class, 'create'])->name('accessPointMhu.create');
@@ -1048,6 +1065,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-response-time-ami', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeAmi');
             Route::post('/kpi-response-time-ami-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowAmi');
 
+            Route::get('/kpi-aduan-analysis-ami', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisAmi');
+            Route::post('/kpi-aduan-analysis-ami-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowAmi');
+            Route::post('/kpi-aduan-analysis-ami-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisAmiDetail');
+
             Route::get('/accessPointSiteAmi', [InvApAmiController::class, 'index'])->name('accessPointAmi.page');
             Route::post('/accessPointSiteAmi/generate', [InvApAmiController::class, 'generateCode'])->name('accessPointAmi.generate');
             Route::post('/accessPointSiteAmi/generate/edit', [InvApAmiController::class, 'generateCodeEdit'])->name('accessPointAmi.generateEdit');
@@ -1143,6 +1164,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-response-time-pik', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimePik');
             Route::post('/kpi-response-time-pik-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowPik');
+
+            Route::get('/kpi-aduan-analysis-pik', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisPik');
+            Route::post('/kpi-aduan-analysis-pik-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowPik');
+            Route::post('/kpi-aduan-analysis-pik-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisPikDetail');
 
             Route::get('/accessPointSitePik', [InvApPikController::class, 'index'])->name('accessPointPik.page');
             Route::get('/accessPointSitePik/create', [InvApPikController::class, 'create'])->name('accessPointPik.create');
@@ -1240,6 +1265,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-response-time-bge', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeBge');
             Route::post('/kpi-response-time-bge-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowBge');
 
+            Route::get('/kpi-aduan-analysis-bge', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisBge');
+            Route::post('/kpi-aduan-analysis-bge-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBge');
+            Route::post('/kpi-aduan-analysis-bge-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBgeDetail');
+
             Route::get('/accessPointSiteBge', [InvApBgeController::class, 'index'])->name('accessPointBge.page');
             Route::get('/accessPointSiteBge/create', [InvApBgeController::class, 'create'])->name('accessPointBge.create');
             Route::post('/accessPointSiteBge/generate', [InvApBgeController::class, 'generateCode'])->name('accessPointBge.generate');
@@ -1335,6 +1364,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-response-time-bib', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeBib');
             Route::post('/kpi-response-time-bib-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowBib');
+
+            Route::get('/kpi-aduan-analysis-bib', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisBib');
+            Route::post('/kpi-aduan-analysis-bib-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBib');
+            Route::post('/kpi-aduan-analysis-bib-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBibDetail');
 
             Route::get('/accessPointSiteBib', [InvApBibController::class, 'index'])->name('accessPointBib.page');
             Route::get('/accessPointSiteBib/create', [InvApBibController::class, 'create'])->name('accessPointBib.create');
@@ -1432,6 +1465,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-response-time-ipt', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeIpt');
             Route::post('/kpi-response-time-ipt-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowIpt');
 
+            Route::get('/kpi-aduan-analysis-ipt', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisIpt');
+            Route::post('/kpi-aduan-analysis-ipt-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowIpt');
+            Route::post('/kpi-aduan-analysis-ipt-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisIptDetail');
+
             Route::get('/accessPointSiteIpt', [InvApIptController::class, 'index'])->name('accessPointIpt.page');
             Route::get('/accessPointSiteIpt/create', [InvApIptController::class, 'create'])->name('accessPointIpt.create');
             Route::post('/accessPointSiteIpt/generate', [InvApIptController::class, 'generateCode'])->name('accessPointIpt.generate');
@@ -1527,6 +1564,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-response-time-mlp', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMlp');
             Route::post('/kpi-response-time-mlp-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMlp');
+
+            Route::get('/kpi-aduan-analysis-mlp', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMlp');
+            Route::post('/kpi-aduan-analysis-mlp-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMlp');
+            Route::post('/kpi-aduan-analysis-mlp-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMlpDetail');
 
             Route::get('/accessPointSiteMlp', [InvApMlpController::class, 'index'])->name('accessPointMlp.page');
             Route::get('/accessPointSiteMlp/create', [InvApMlpController::class, 'create'])->name('accessPointMlp.create');
@@ -1624,6 +1665,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-response-time-mip', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMip');
             Route::post('/kpi-response-time-mip-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMip');
 
+            Route::get('/kpi-aduan-analysis-mip', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMip');
+            Route::post('/kpi-aduan-analysis-mip-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMip');
+            Route::post('/kpi-aduan-analysis-mip-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMipDetail');
+
             Route::get('/accessPointSiteMip', [InvApMipController::class, 'index'])->name('accessPointMip.page');
             Route::get('/accessPointSiteMip/create', [InvApMipController::class, 'create'])->name('accessPointMip.create');
             Route::post('/accessPointSiteMip/create', [InvApMipController::class, 'store'])->name('accessPointMip.store');
@@ -1719,6 +1764,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-response-time-vib', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeVib');
             Route::post('/kpi-response-time-vib-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowVib');
+
+            Route::get('/kpi-aduan-analysis-vib', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisVib');
+            Route::post('/kpi-aduan-analysis-vib-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowVib');
+            Route::post('/kpi-aduan-analysis-vib-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisVibDetail');
 
             Route::get('/accessPointSiteVale', [InvApValeController::class, 'index'])->name('accessPointVale.page');
             Route::get('/accessPointSiteVale/create', [InvApValeController::class, 'create'])->name('accessPointVale.create');
@@ -1816,6 +1865,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-response-time-sbs', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeSbs');
             Route::post('/kpi-response-time-sbs-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowSbs');
 
+            Route::get('/kpi-aduan-analysis-sbs', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisSbs');
+            Route::post('/kpi-aduan-analysis-sbs-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowSbs');
+            Route::post('/kpi-aduan-analysis-sbs-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisSbsDetail');
+
             Route::get('/accessPointSiteSbs', [InvApSbsController::class, 'index'])->name('accessPointSbs.page');
             Route::get('/accessPointSiteSbs/create', [InvApSbsController::class, 'create'])->name('accessPointSbs.create');
             Route::post('/accessPointSiteSbs/create', [InvApSbsController::class, 'store'])->name('accessPointSbs.store');
@@ -1912,6 +1965,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-response-time-sks', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeSks');
             Route::post('/kpi-response-time-sks-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowSks');
 
+            Route::get('/kpi-aduan-analysis-sks', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisSks');
+            Route::post('/kpi-aduan-analysis-sks-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowSks');
+            Route::post('/kpi-aduan-analysis-sks-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisSksDetail');
+
             Route::get('/accessPointSiteSks', [InvApSksController::class, 'index'])->name('accessPointSks.page');
             Route::get('/accessPointSiteSks/create', [InvApSksController::class, 'create'])->name('accessPointSks.create');
             Route::post('/accessPointSiteSks/create', [InvApSksController::class, 'store'])->name('accessPointSks.store');
@@ -2007,6 +2064,10 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/kpi-response-time-adw', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeAdw');
             Route::post('/kpi-response-time-adw-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowAdw');
+
+            Route::get('/kpi-aduan-analysis-adw', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisAdw');
+            Route::post('/kpi-aduan-analysis-adw-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowAdw');
+            Route::post('/kpi-aduan-analysis-adw-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisAdwDetail');
 
             Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
             Route::get('/accessPointSiteWara/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');
