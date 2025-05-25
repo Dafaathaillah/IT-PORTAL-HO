@@ -21,53 +21,53 @@ class DashboardValeController extends Controller
 {
     public function index()
     {
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site','VALE')->get();
-        $countOpen = Aduan::where('status', 'OPEN')->where('site','VALE')->count();
-        $countClosed = Aduan::where('status', 'CLOSED')->where('site','VALE')->count();
-        $countProgress = Aduan::where('status', 'PROGRESS')->where('site','VALE')->count();
-        $countCancel = Aduan::where('status', 'CANCEL')->where('site','VALE')->count();
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site','VIB')->get();
+        $countOpen = Aduan::where('status', 'OPEN')->where('site','VIB')->count();
+        $countClosed = Aduan::where('status', 'CLOSED')->where('site','VIB')->count();
+        $countProgress = Aduan::where('status', 'PROGRESS')->where('site','VIB')->count();
+        $countCancel = Aduan::where('status', 'CANCEL')->where('site','VIB')->count();
 
         // access point
-        $countAPreadyused = InvAp::where('status', 'READY_USED')->where('site','VALE')->count();
-        $countAPstandby = InvAp::where('status', 'READY_STANDBY')->where('site','VALE')->count();
-        $countAPBreakdown = InvAp::where('status', 'BREAKDOWN')->where('site','VALE')->count();
-        $countAPScrap = InvAp::where('status', 'SCRAP')->where('site','VALE')->count();
+        $countAPreadyused = InvAp::where('status', 'READY_USED')->where('site','VIB')->count();
+        $countAPstandby = InvAp::where('status', 'READY_STANDBY')->where('site','VIB')->count();
+        $countAPBreakdown = InvAp::where('status', 'BREAKDOWN')->where('site','VIB')->count();
+        $countAPScrap = InvAp::where('status', 'SCRAP')->where('site','VIB')->count();
 
         // Switch
-        $countSwitchreadyused = InvSwitch::where('status', 'READY_USED')->where('site','VALE')->count();
-        $countSwitchstandby = InvSwitch::where('status', 'READY_STANDBY')->where('site','VALE')->count();
-        $countSwitchBreakdown = InvSwitch::where('status', 'BREAKDOWN')->where('site','VALE')->count();
-        $countSwitchScrap = InvSwitch::where('status', 'SCRAP')->where('site','VALE')->count();
+        $countSwitchreadyused = InvSwitch::where('status', 'READY_USED')->where('site','VIB')->count();
+        $countSwitchstandby = InvSwitch::where('status', 'READY_STANDBY')->where('site','VIB')->count();
+        $countSwitchBreakdown = InvSwitch::where('status', 'BREAKDOWN')->where('site','VIB')->count();
+        $countSwitchScrap = InvSwitch::where('status', 'SCRAP')->where('site','VIB')->count();
 
         // Wirelless
-        $countWirellessreadyused = InvWirelless::where('status', 'READY_USED')->where('site','VALE')->count();
-        $countWirellessstandby = InvWirelless::where('status', 'READY_STANDBY')->where('site','VALE')->count();
-        $countWirellessBreakdown = InvWirelless::where('status', 'BREAKDOWN')->where('site','VALE')->count();
-        $countWirellessScrap = InvWirelless::where('status', 'SCRAP')->where('site','VALE')->count();
+        $countWirellessreadyused = InvWirelless::where('status', 'READY_USED')->where('site','VIB')->count();
+        $countWirellessstandby = InvWirelless::where('status', 'READY_STANDBY')->where('site','VIB')->count();
+        $countWirellessBreakdown = InvWirelless::where('status', 'BREAKDOWN')->where('site','VIB')->count();
+        $countWirellessScrap = InvWirelless::where('status', 'SCRAP')->where('site','VIB')->count();
 
         // Printer
-        $countPrinterreadyused = InvPrinter::where('status', 'READY_USED')->where('site','VALE')->count();
-        $countPrinterstandby = InvPrinter::where('status', 'READY_STANDBY')->where('site','VALE')->count();
-        $countPrinterBreakdown = InvPrinter::where('status', 'BREAKDOWN')->where('site','VALE')->count();
-        $countPrinterScrap = InvPrinter::where('status', 'SCRAP')->where('site','VALE')->count();
+        $countPrinterreadyused = InvPrinter::where('status', 'READY_USED')->where('site','VIB')->count();
+        $countPrinterstandby = InvPrinter::where('status', 'READY_STANDBY')->where('site','VIB')->count();
+        $countPrinterBreakdown = InvPrinter::where('status', 'BREAKDOWN')->where('site','VIB')->count();
+        $countPrinterScrap = InvPrinter::where('status', 'SCRAP')->where('site','VIB')->count();
 
         // CCTV
-        $countCCTVreadyused = InvCctv::where('status', 'READY_USED')->where('site','VALE')->count();
-        $countCCTVstandby = InvCctv::where('status', 'READY_STANDBY')->where('site','VALE')->count();
-        $countCCTVBreakdown = InvCctv::where('status', 'BREAKDOWN')->where('site','VALE')->count();
-        $countCCTVScrap = InvCctv::where('status', 'SCRAP')->where('site','VALE')->count();
+        $countCCTVreadyused = InvCctv::where('status', 'READY_USED')->where('site','VIB')->count();
+        $countCCTVstandby = InvCctv::where('status', 'READY_STANDBY')->where('site','VIB')->count();
+        $countCCTVBreakdown = InvCctv::where('status', 'BREAKDOWN')->where('site','VIB')->count();
+        $countCCTVScrap = InvCctv::where('status', 'SCRAP')->where('site','VIB')->count();
 
         // Komputer
-        $countKomputerreadyused = InvComputer::where('status', 'READY_USED')->where('site','VALE')->count();
-        $countKomputerstandby = InvComputer::where('status', 'READY_STANDBY')->where('site','VALE')->count();
-        $countKomputerBreakdown = InvComputer::where('status', 'BREAKDOWN')->where('site','VALE')->count();
-        $countKomputerScrap = InvComputer::where('status', 'SCRAP')->where('site','VALE')->count();
+        $countKomputerreadyused = InvComputer::where('status', 'READY_USED')->where('site','VIB')->count();
+        $countKomputerstandby = InvComputer::where('status', 'READY_STANDBY')->where('site','VIB')->count();
+        $countKomputerBreakdown = InvComputer::where('status', 'BREAKDOWN')->where('site','VIB')->count();
+        $countKomputerScrap = InvComputer::where('status', 'SCRAP')->where('site','VIB')->count();
 
         // Laptop
-        $countLaptopreadyused = InvLaptop::where('status', 'READY_USED')->where('site','VALE')->count();
-        $countLaptopstandby = InvLaptop::where('status', 'READY_STANDBY')->where('site','VALE')->count();
-        $countLaptopBreakdown = InvLaptop::where('status', 'BREAKDOWN')->where('site','VALE')->count();
-        $countLaptopScrap = InvLaptop::where('status', 'SCRAP')->where('site','VALE')->count();
+        $countLaptopreadyused = InvLaptop::where('status', 'READY_USED')->where('site','VIB')->count();
+        $countLaptopstandby = InvLaptop::where('status', 'READY_STANDBY')->where('site','VIB')->count();
+        $countLaptopBreakdown = InvLaptop::where('status', 'BREAKDOWN')->where('site','VIB')->count();
+        $countLaptopScrap = InvLaptop::where('status', 'SCRAP')->where('site','VIB')->count();
 
         // AP,SW,BB,PRT,CCTV,KOMP,Laptop
 
