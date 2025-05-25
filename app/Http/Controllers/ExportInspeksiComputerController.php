@@ -66,6 +66,7 @@ class ExportInspeksiComputerController extends Controller
 
             $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAll', compact('inspeksiComputerAll', 'thisYear', 'thisTriwulan', 'unitScrap', 'unitUtilize', 'site'))
             ->setPaper('A4', 'landscape');
+        return $pdf->stream('inspection-computer-report-periode-' . 'triwulan-' .$thisTriwulan . '-' . $thisYear . '.pdf');
         }else{
             $inspeksiComputerAll = InspeksiComputer::with('computer.pengguna')
             ->where('site', $request->site)
@@ -89,9 +90,8 @@ class ExportInspeksiComputerController extends Controller
 
             $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAllMonth', compact('inspeksiComputerAll', 'thisYear', 'thisMonth', 'unitScrap', 'unitUtilize', 'site'))
                 ->setPaper('A4', 'landscape');
+        return $pdf->stream('inspection-computer-report-periode-' . 'triwulan-' .$thisMonth . '-' . $thisYear . '.pdf');
         }
 
-
-        return $pdf->stream('inspection-computer-report-periode-' . 'triwulan-' .$thisTriwulan . '-' . $thisYear . '.pdf');
     }
 }
