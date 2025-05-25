@@ -14,6 +14,9 @@
 .dt-buttons {
     margin-top: 1em;
 }
+#dt-length-0 {
+    width: 60px !important; 
+}
 </style>
 
 <script setup>

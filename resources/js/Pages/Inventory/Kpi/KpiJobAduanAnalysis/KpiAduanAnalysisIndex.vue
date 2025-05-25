@@ -97,11 +97,20 @@ const detailData = ref([]);
 const selectedCategory = ref(null);
 
 const fetchDetailData = async (category, month, year, site) => {
-
-        // Array nama bulan
+    // Array nama bulan
     const monthNames = [
-        "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
-        "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"
+        "JANUARI",
+        "FEBRUARI",
+        "MARET",
+        "APRIL",
+        "MEI",
+        "JUNI",
+        "JULI",
+        "AGUSTUS",
+        "SEPTEMBER",
+        "OKTOBER",
+        "NOVEMBER",
+        "DESEMBER",
     ];
 
     // Convert "01" → 0, "02" → 1, dst.
@@ -145,10 +154,204 @@ const headers = [
     { text: "Action Problem", value: "action_repair" },
 ];
 
+// watch(
+//     () => page.props.chartData,
+//     (chartData) => {
+//         if (chartInspeksi.value && chartData?.labels?.length) {
+//             Highcharts.chart(chartInspeksi.value, {
+//                 chart: {
+//                     type: "column",
+//                 },
+//                 title: {
+//                     text: "KPI ADUAN ANALYSIS",
+//                 },
+//                 xAxis: {
+//                     categories: chartData.labels,
+//                 },
+//                 yAxis: {
+//                     min: 0,
+//                     title: {
+//                         text: "Jumlah",
+//                     },
+//                 },
+//                 series: chartData.series,
+//                 plotOptions: {
+//                     series: {
+//                         cursor: "pointer",
+//                         dataLabels: {
+//                             enabled: true,
+//                             format: "{y}", // atau '{y}%' jika kamu ingin pakai persen
+//                             style: {
+//                                 fontSize: "12px",
+//                                 color: "#000000",
+//                             },
+//                         },
+//                         point: {
+//                             events: {
+//                                 click: function () {
+//                                     const category = this.series.name;
+//                                     const monthTeks = this.category;
+//                                     const month = getMonthNumber(monthTeks);
+//                                     const yearKlik = year.value;
+//                                     const site = props.site;
+
+//                                     fetchDetailData(
+//                                         category,
+//                                         month,
+//                                         yearKlik,
+//                                         site
+//                                     );
+//                                 },
+//                             },
+//                         },
+//                     },
+//                 },
+//                 credits: {
+//                     enabled: true,
+//                     text: "ICT PPA-AMM Development System",
+//                     href: null,
+//                     position: {
+//                         align: "right",
+//                         x: -10,
+//                         verticalAlign: "bottom",
+//                         y: -5,
+//                     },
+//                     style: {
+//                         fontSize: "10px",
+//                         color: "#666666",
+//                     },
+//                 },
+//             });
+//         }
+//     }
+// );
+
+// watch(
+//     () => page.props.chartData,
+//     (chartData) => {
+//         if (chartInspeksi.value && chartData?.labels?.length) {
+//             const currentMonth = new Date().getMonth() + 1; // bulan berjalan (1-12)
+
+//             // Buat salinan series dengan 0 diubah menjadi null, kecuali untuk bulan berjalan
+//             const filteredSeries = chartData.series.map((serie) => {
+//                 const filteredData = serie.data.map((value, idx) => {
+//                     const monthLabel = chartData.labels[idx];
+//                     const monthNumber = getMonthNumber(monthLabel);
+//                     if (monthNumber === currentMonth) {
+//                         return value;
+//                     } else {
+//                         return value === 0 ? null : value;
+//                     }
+//                 });
+//                 return { ...serie, data: filteredData };
+//             });
+
+//             Highcharts.chart(chartInspeksi.value, {
+//                 chart: {
+//                     type: "column",
+//                 },
+//                 title: {
+//                     text: "KPI ADUAN ANALYSIS",
+//                 },
+//                 xAxis: {
+//                     categories: chartData.labels,
+//                     maxPadding: 0.2, // tambahkan padding kanan agar tidak terpotong
+//                 },
+//                 yAxis: {
+//                     min: 0,
+//                     title: {
+//                         text: "Jumlah",
+//                     },
+//                 },
+//                 series: filteredSeries,
+//                 plotOptions: {
+//                     series: {
+//                         cursor: "pointer",
+//                         dataLabels: {
+//                             enabled: true,
+//                             format: "{y}",
+//                             style: {
+//                                 fontSize: "12px",
+//                                 color: "#000000",
+//                             },
+//                         },
+//                         point: {
+//                             events: {
+//                                 click: function () {
+//                                     const category = this.series.name;
+//                                     const monthTeks = this.category;
+//                                     const month = getMonthNumber(monthTeks);
+//                                     const yearKlik = year.value;
+//                                     const site = props.site;
+
+//                                     fetchDetailData(
+//                                         category,
+//                                         month,
+//                                         yearKlik,
+//                                         site
+//                                     );
+//                                 },
+//                             },
+//                         },
+//                     },
+//                 },
+//                 credits: {
+//                     enabled: true,
+//                     text: "ICT PPA-AMM Development System",
+//                     href: null,
+//                     position: {
+//                         align: "right",
+//                         x: -10,
+//                         verticalAlign: "bottom",
+//                         y: -5,
+//                     },
+//                     style: {
+//                         fontSize: "10px",
+//                         color: "#666666",
+//                     },
+//                 },
+//             });
+//         }
+//     }
+// );
+
 watch(
     () => page.props.chartData,
     (chartData) => {
         if (chartInspeksi.value && chartData?.labels?.length) {
+            const currentMonth = new Date().getMonth() + 1;
+
+            // 1. Buat salinan series dan filter data 0 => null (kecuali bulan sekarang)
+            const processedSeries = chartData.series.map((serie) => {
+                const newData = serie.data.map((value, idx) => {
+                    const monthLabel = chartData.labels[idx];
+                    const monthNumber = getMonthNumber(monthLabel);
+                    if (monthNumber === currentMonth) return value;
+                    return value === 0 ? null : value;
+                });
+                return { ...serie, data: newData };
+            });
+
+            // 2. Hapus series yang seluruh datanya null
+            const filteredSeries = processedSeries.filter((serie) => {
+                return serie.data.some((val) => val !== null && val !== undefined);
+            });
+
+            // 3. Hitung ulang max category berdasarkan labels yang masih memiliki data
+            const validIndexes = chartData.labels.map((_, idx) =>
+                filteredSeries.some((serie) => serie.data[idx] !== null && serie.data[idx] !== undefined)
+            );
+
+            // 4. Filter ulang labels agar sinkron
+            const filteredLabels = chartData.labels.filter((_, idx) => validIndexes[idx]);
+
+            // 5. Sinkronisasi data series berdasarkan validIndexes
+            const finalSeries = filteredSeries.map((serie) => {
+                const newData = serie.data.filter((_, idx) => validIndexes[idx]);
+                return { ...serie, data: newData };
+            });
+
+            // 6. Render chart
             Highcharts.chart(chartInspeksi.value, {
                 chart: {
                     type: "column",
@@ -157,7 +360,8 @@ watch(
                     text: "KPI ADUAN ANALYSIS",
                 },
                 xAxis: {
-                    categories: chartData.labels,
+                    categories: filteredLabels,
+                    maxPadding: 0.2,
                 },
                 yAxis: {
                     min: 0,
@@ -165,10 +369,18 @@ watch(
                         text: "Jumlah",
                     },
                 },
-                series: chartData.series,
+                series: finalSeries,
                 plotOptions: {
                     series: {
                         cursor: "pointer",
+                        dataLabels: {
+                            enabled: true,
+                            format: "{y}",
+                            style: {
+                                fontSize: "12px",
+                                color: "#000000",
+                            },
+                        },
                         point: {
                             events: {
                                 click: function () {
@@ -177,13 +389,8 @@ watch(
                                     const month = getMonthNumber(monthTeks);
                                     const yearKlik = year.value;
                                     const site = props.site;
-                                  
-                                    fetchDetailData(
-                                        category,
-                                        month,
-                                        yearKlik,
-                                        site
-                                    );
+
+                                    fetchDetailData(category, month, yearKlik, site);
                                 },
                             },
                         },
@@ -208,6 +415,7 @@ watch(
         }
     }
 );
+
 
 const isChartEmpty = computed(() => {
     const chartData = page.props.chartData;

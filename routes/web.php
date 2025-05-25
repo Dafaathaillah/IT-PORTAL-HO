@@ -2031,7 +2031,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/printerSks/{id}/delete', [InvPrinterSksController::class, 'destroy'])->name('printerSks.delete');
             Route::post('/printerSks/update', [InvPrinterSksController::class, 'update'])->name('printerSks.update');
             Route::get('/printerSks/{id}/detail', [InvPrinterSksController::class, 'detail'])->name('printerSks.detail');
-            Route::post('/uploadCsvPrtSbs', [InvPrinterSksController::class, 'uploadCsv'])->name('printerSks.import');
+            Route::post('/uploadCsvPrtSks', [InvPrinterSksController::class, 'uploadCsv'])->name('printerSks.import');
 
             Route::get('/scannerSks', [InvScannerSksController::class, 'index'])->name('scannerSks.page');
             Route::get('/scannerSks/create', [InvScannerSksController::class, 'create'])->name('scannerSks.create');
@@ -2042,7 +2042,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/scannerSks/{id}/delete', [InvScannerSksController::class, 'destroy'])->name('scannerSks.delete');
             Route::post('/scannerSks/update', [InvScannerSksController::class, 'update'])->name('scannerSks.update');
             Route::get('/scannerSks/{id}/detail', [InvScannerSksController::class, 'detail'])->name('scannerSks.detail');
-            Route::post('/uploadCsvScnSbs', [InvScannerSksController::class, 'uploadCsv'])->name('scannerSks.import');
+            Route::post('/uploadCsvScnSks', [InvScannerSksController::class, 'uploadCsv'])->name('scannerSks.import');
 
             Route::get('/cctvSks', [InvCctvSksController::class, 'index'])->name('cctvSks.page');
             Route::get('/cctvSks/create', [InvCctvSksController::class, 'create'])->name('cctvSks.create');
@@ -2053,7 +2053,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/cctvSks/{id}/delete', [InvCctvSksController::class, 'destroy'])->name('cctvSks.delete');
             Route::post('/cctvSks/update', [InvCctvSksController::class, 'update'])->name('cctvSks.update');
             Route::get('/cctvSks/{id}/detail', [InvCctvSksController::class, 'detail'])->name('cctvSks.detail');
-            Route::post('/uploadCsvCCTVSbs', [InvCctvSksController::class, 'uploadCsv'])->name('cctvSks.import');
+            Route::post('/uploadCsvCCTVSks', [InvCctvSksController::class, 'uploadCsv'])->name('cctvSks.import');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {

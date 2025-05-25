@@ -5845,7 +5845,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -5863,7 +5863,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                     <NavLink
@@ -5881,7 +5881,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -6528,7 +6528,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -6546,7 +6546,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                     <NavLink
@@ -6564,7 +6564,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -7224,7 +7224,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -7242,7 +7242,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                     <NavLink
@@ -7262,7 +7262,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -7931,7 +7931,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -7949,7 +7949,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                       <NavLink
@@ -7969,7 +7969,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -8636,7 +8636,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -8654,7 +8654,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                      <NavLink
@@ -8674,7 +8674,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -9241,7 +9241,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -9259,7 +9259,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                     <NavLink
@@ -9279,7 +9279,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -9946,7 +9946,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -9964,7 +9964,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                        <NavLink
@@ -9984,7 +9984,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -10651,7 +10651,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -10669,7 +10669,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                        <NavLink
@@ -10689,7 +10689,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -11356,7 +11356,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -11374,7 +11374,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                    <NavLink
@@ -11394,7 +11394,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -12057,7 +12057,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -12075,7 +12075,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                       <NavLink
@@ -12095,7 +12095,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -12758,7 +12758,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -12776,7 +12776,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                        <NavLink
@@ -12796,7 +12796,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -13459,7 +13459,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -13477,7 +13477,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                 <NavLink
@@ -13497,7 +13497,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -14160,7 +14160,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -14178,7 +14178,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                       <NavLink
@@ -14198,7 +14198,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -14863,7 +14863,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -14881,7 +14881,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                        <NavLink
@@ -14901,7 +14901,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -15564,7 +15564,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Response Time
+                                            >Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -15582,7 +15582,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Inspeksi</span
+                                            >Monitoring Inspeksi</span
                                         >
                                     </NavLink>
                                        <NavLink
@@ -15602,7 +15602,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >KPI Aduan Analysis</span
+                                            >Job Analysis</span
                                         >
                                     </NavLink>
                                 </ul>

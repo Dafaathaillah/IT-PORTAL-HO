@@ -1,6 +1,14 @@
 <style>
 @import "datatables.net-dt";
 
+/* Sembunyikan teks 'Press enter to select' */
+.multiselect__option--highlight::after {
+    display: none !important;
+}
+
+/* Tambahan styling-mu sebelumnya */
+@import "datatables.net-dt";
+
 .dt-search {
     margin-bottom: 1em;
     float: right !important;
@@ -99,12 +107,27 @@ watch(
     (chartData) => {
         console.log(isADW.value);
         if (chartInspeksi.value && chartData?.labels?.length) {
+            let periode = "";
+
+            if (isComputer.value) {
+                if (isADW.value) {
+                    // Komputer dan site ADW -> bulan + tahun
+                    periode = `MONTH ${bulan.value} ${year.value}`;
+                } else {
+                    // Komputer dan site bukan ADW -> hanya tahun
+                    periode = `QUARTER ${triwulan.value} ${year.value}`;
+                }
+            } else {
+                // Selain komputer -> triwulan + tahun
+                periode = `PERIODE ${year.value}`;
+            }
+
             Highcharts.chart(chartInspeksi.value, {
                 chart: {
                     type: "column",
                 },
                 title: {
-                    text: "KPI INSPEKSI",
+                    text: `ACHIEVEMENT INSPEKSI ${periode}`,
                 },
                 xAxis: {
                     categories: chartData.labels,
@@ -113,6 +136,18 @@ watch(
                     min: 0,
                     title: {
                         text: "Persentase (%)",
+                    },
+                },
+                plotOptions: {
+                    column: {
+                        dataLabels: {
+                            enabled: true,
+                            format: "{y}%", // atau '{point.y}' jika tidak pakai simbol persen
+                            style: {
+                                fontSize: "12px",
+                                color: "#000000",
+                            },
+                        },
                     },
                 },
                 series: [
@@ -272,7 +307,7 @@ onMounted(() => {
                                     <div class="p-4 pb-0 mb-0 rounded-t-4">
                                         <div class="flex justify-between">
                                             <h6 class="mb-2 dark:text-white">
-                                                KPI Inspeksi PPA Site
+                                                MONITORING INSPEKSI PPA SITE
                                                 {{ props.site }}
                                             </h6>
                                         </div>
