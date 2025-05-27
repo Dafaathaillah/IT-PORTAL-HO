@@ -261,6 +261,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
     // });
 
+
+    Route::post('/single-export', function (Request $request) {
+        return Inertia::location(route('laptop.singleExportPdf', ['inspeksiId' => $request->inspeksiId]));
+    })->name('laptop.singleExport');
+    Route::get('/export-pdf-single-laptop', [ExportInspeksiLaptopController::class, 'exportPdfSingle'])->name('laptop.singleExportPdf');
+
     // Route::get('/accessPoint/{id}/export', [InvApController::class, 'detail'])->name('accessPoint.detail');
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
