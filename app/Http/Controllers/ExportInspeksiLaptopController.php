@@ -57,15 +57,11 @@ class ExportInspeksiLaptopController extends Controller
         return $pdf->stream('inspection-laptop-report-periode-' . '.pdf');
     }
 
-    public function exportPdf(Request $request)
+    public function exportPdfSingle(Request $request)
     {
         $user = Auth::user();
-        $thisYearEncrypt = $request->query('year') ?? Carbon::now()->year;
-        try {
-            $thisYear = Crypt::decryptString($thisYearEncrypt); // Dekripsi year dari URL
-        } catch (\Exception $e) {
-            abort(403, "Akses tidak valid");
-        }
+        $site = $user->site;
+        $thisYear = Carbon::now()->year;
 
         if ($thisYear > 2500) {
             return back()->with('error', 'Tahun tidak terdeteksi.');
@@ -73,13 +69,11 @@ class ExportInspeksiLaptopController extends Controller
 
 
         $inspeksiLaptop = InspeksiLaptop::with('inventory.pengguna')
-            ->where('site', $user->site)
-            ->where('year', $thisYear)
+            ->where('id', $request->inspeksiId)
             ->get();
 
-        $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptopAll', compact('inspeksiLaptop', 'thisYear'))
-            ->setPaper('A4', 'landscape');
-
+        $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptop', compact('inspeksiLaptop', 'thisYear', 'site'))
+            ->setPaper('A4', 'potrait');
         return $pdf->stream('inspection-laptop-report-periode-' . $thisYear . '.pdf');
     }
 }

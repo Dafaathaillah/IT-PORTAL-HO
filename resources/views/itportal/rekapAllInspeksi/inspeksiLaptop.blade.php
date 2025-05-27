@@ -197,9 +197,9 @@
 
 <body>
     <div class="container">
-        @foreach ($inspeksiLaptop->chunk(2) as $chunk)
+        @foreach ($inspeksiLaptop as $inspection)
             <div class="form-container">
-                @foreach ($chunk as $inspection)
+                {{-- @foreach ($chunk as $inspection) --}}
                     <div class="section">
                         <div class="header">
                             <div class="header-content">
@@ -419,10 +419,10 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
-                @if ($chunk->count() == 1)
+                {{-- @endforeach --}}
+                {{-- @if ($chunk->count() == 1)
                     <div class="section"></div>
-                @endif
+                @endif --}}
             </div>
         @endforeach
     </div>
