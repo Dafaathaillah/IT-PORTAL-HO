@@ -352,7 +352,7 @@ class KpiResponseTimeController extends Controller
         $categories = DB::table('root_cause_categories')->where('site_type', $typeKategori)->get();
 
         // Query dasar aduan
-        $query = DB::table('aduans')->where('site', $site);
+        $query = DB::table('aduans')->where('site', $site)->whereNull('deleted_at');
 
         // Filter waktu
         if ($request->year) {
