@@ -442,11 +442,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    computers
-                                                                        .computer
-                                                                        .computer_code
-                                                                }}
+                                                                {{ computers.computer ? computers.computer.computer_code : '-' }}
                                                             </p>
                                                         </td>
 
@@ -456,12 +452,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    computers
-                                                                        .computer
-                                                                        .pengguna
-                                                                        .username
-                                                                }}
+                                                                 {{ computers.computer && computers.computer.pengguna ? computers.computer.pengguna.username : '-' }}
                                                             </p>
                                                         </td>
                                                         <td
@@ -470,12 +461,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    computers
-                                                                        .computer
-                                                                        .pengguna
-                                                                        .department
-                                                                }}
+                                                                 {{ computers.computer && computers.computer.pengguna ? computers.computer.pengguna.department : '-' }}
                                                             </p>
                                                         </td>
 
