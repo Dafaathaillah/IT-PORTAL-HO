@@ -561,7 +561,9 @@ Route::middleware('auth')->group(function () {
                 ]
             );
         })->name('groupLeaderDashboard');
+    });
 
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE,ict_technician:BIB,ict_technician:ADW,ict_technician:BA,ict_technician:MIFA,ict_technician:MHU,ict_technician:AMI,ict_technician:PIK,ict_technician:IPT,ict_technician:MLP,ict_technician:MIP,ict_technician:VIB,ict_technician:SBS,ict_technician:BGE'], function () {
         Route::get('/aduan-ho', [AduanHoController::class, 'index'])->name('aduan-ho.page');
         Route::get('/aduan-ho/create', [AduanHoController::class, 'create'])->name('aduan-ho.create');
         Route::post('/aduan-ho/create', [AduanHoController::class, 'store'])->name('aduan-ho.store');
