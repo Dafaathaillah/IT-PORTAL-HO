@@ -15,13 +15,23 @@ class InspeksiComputerMipController extends Controller
 {
     public function index()
     {
-        $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'MIP')->get();
+        // $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'MIP')->get();
+
+        // $inspeksi_computer = InspeksiComputer::with(['computer.pengguna'])
+        //     ->where('site', 'MIP')
+        //     ->whereHas('computer', function ($query) {
+        //         $query->whereNotNull('computer_code');
+        //     })
+        //     ->get();
+
+        $inspeksi_computer = InspeksiComputer::with(['computer' => function ($query) {
+            $query->whereNotNull('computer_code');
+        }, 'computer.pengguna'])->where('site', 'MIP')->get();
 
         $site = 'MIP';
 
         $role = auth()->user()->role;
 
-        // return dd($inspeksi_computer);
         return Inertia::render(
             'Inspeksi/SiteMip/Komputer/InspeksiKomputerIndex',
             ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role]
@@ -88,11 +98,15 @@ class InspeksiComputerMipController extends Controller
                     'inspection_status' => 'Y',
                     'inspector' => Auth::user()->name,
                     'physique_condition_cpu' => $request->cpu,
+                    'physique_condition_internal_cpu' => $request->internalCpu,
                     'physique_condition_monitor' => $request->monitor,
                     'software_license' => $request->license,
-                    'software_standaritation' => $request->standaritation,
+                    'software_standaritation' => $request->softwareStandaritation,
+                    'software_device_name_standaritation' => $request->deviceNameStandaritation,
                     'software_clear_cache' => $request->cache,
                     'software_system_restore' => $request->restore,
+                    'software_windows_update' => $request->winUpdate,
+                    'software_storage_health' => $request->storageHealth,
                     'defrag' => $request->defrag,
                     'hard_maintenance' => $request->hard_maintenance,
                     'change_user_pass' => $request->change_user_pass,
@@ -133,11 +147,15 @@ class InspeksiComputerMipController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
                         'change_user_pass' => $request->change_user_pass,
@@ -170,11 +188,15 @@ class InspeksiComputerMipController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
                         'change_user_pass' => $request->change_user_pass,
@@ -216,11 +238,15 @@ class InspeksiComputerMipController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
                         'change_user_pass' => $request->change_user_pass,
@@ -254,11 +280,15 @@ class InspeksiComputerMipController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
                         'change_user_pass' => $request->change_user_pass,
@@ -294,11 +324,15 @@ class InspeksiComputerMipController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
                         'change_user_pass' => $request->change_user_pass,
@@ -321,11 +355,15 @@ class InspeksiComputerMipController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
                         'change_user_pass' => $request->change_user_pass,
