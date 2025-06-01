@@ -32,7 +32,6 @@ const mount = onMounted(() => {
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
     >
-
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
@@ -63,7 +62,7 @@ const mount = onMounted(() => {
                                         <p
                                             class="mb-0 dark:text-white/80 font-semibold"
                                         >
-                                            KONDISI FISIK
+                                            INSPEKSI DAN PERAWATAN HARDWARE
                                         </p>
                                         <hr
                                             class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
@@ -78,7 +77,8 @@ const mount = onMounted(() => {
                                         <label
                                             for="number-asset-ho"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >CPU</label
+                                            >Check dan Pembersihan Bagian Luar
+                                            CPU</label
                                         >
                                     </div>
                                 </div>
@@ -95,12 +95,45 @@ const mount = onMounted(() => {
                                             {{
                                                 inspeksi.physique_condition_cpu ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
                                 </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Pembersihan Bagian Internal
+                                            CPU</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.physique_condition_internal_cpu ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
                                 <div
                                     class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                 >
@@ -124,8 +157,8 @@ const mount = onMounted(() => {
                                             {{
                                                 inspeksi.physique_condition_monitor ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -138,10 +171,10 @@ const mount = onMounted(() => {
                                         <p
                                             class="mb-0 dark:text-white/80 font-semibold"
                                         >
-                                            SOFTWARE
+                                            PEMERIKSAAN SOFTWARE
                                         </p>
                                         <hr
-                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                            class="h-px mx-0 my-4 bg-gradient-to-r from-transparent via-black/40 to-transparent border-0 opacity-100"
                                         />
                                     </div>
                                 </div>
@@ -153,7 +186,7 @@ const mount = onMounted(() => {
                                         <label
                                             for="aplikasi"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >LISENSI</label
+                                            >Standarisasi Software</label
                                         >
                                     </div>
                                 </div>
@@ -168,8 +201,8 @@ const mount = onMounted(() => {
                                             :
                                             {{
                                                 inspeksi.software_license == "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -181,7 +214,7 @@ const mount = onMounted(() => {
                                         <label
                                             for="license"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >STANDARISASI</label
+                                            >Standarisasi Device Name</label
                                         >
                                     </div>
                                 </div>
@@ -195,10 +228,10 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.software_standaritation ==
+                                                inspeksi.software_device_name_standaritation ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -211,7 +244,36 @@ const mount = onMounted(() => {
                                         <label
                                             for="ip-address"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >CLEAR CACHE</label
+                                            >License Software</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_license == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="ip-address"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Clear Cache</label
                                         >
                                     </div>
                                 </div>
@@ -227,8 +289,8 @@ const mount = onMounted(() => {
                                             {{
                                                 inspeksi.software_clear_cache ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -241,7 +303,7 @@ const mount = onMounted(() => {
                                         <label
                                             for="ssd_persen"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >SYSTEM RESTORE</label
+                                            >System Restore</label
                                         >
                                     </div>
                                 </div>
@@ -257,8 +319,35 @@ const mount = onMounted(() => {
                                             {{
                                                 inspeksi.software_system_restore ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="ssd_persen"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Check Windows Update</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_windows_update
                                             }}</label
                                         >
                                     </div>
@@ -286,8 +375,8 @@ const mount = onMounted(() => {
                                             :
                                             {{
                                                 inspeksi.defrag == "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -300,7 +389,7 @@ const mount = onMounted(() => {
                                         <label
                                             for="device-name"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >MAINTENANCE BERAT</label
+                                            >SSD/HDD Health</label
                                         >
                                     </div>
                                 </div>
@@ -314,11 +403,136 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.hard_maintenance == "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                inspeksi.software_storage_health
                                             }}</label
                                         >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                >
+                                    <div class="text-center mb-4">
+                                        <p
+                                            class="mb-0 dark:text-white/80 font-semibold"
+                                        >
+                                            PEMERIKSAAN SECURITY
+                                        </p>
+                                        <hr
+                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Penggantian Username</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.change_user_pass == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Setting Auto Lock Screen</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.autolock == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="assets-category"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Setting Input Password After Lock
+                                            Screen</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.enter_password == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="assets-category"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                        ></label>
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                        </label>
                                     </div>
                                 </div>
 
