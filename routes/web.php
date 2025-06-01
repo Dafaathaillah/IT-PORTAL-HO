@@ -256,7 +256,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/encrypt-year-computer', function (Request $request) {
         $year = $request->year ?? Carbon::now()->year;
         $encryptedYear = Crypt::encryptString($year);
-        return Inertia::location(route('export.inspectionComputerAll', ['year' => $encryptedYear, 'triwulan' => $request->quarter, 'site' => $request->site, 'month', 'month' => $request->month]));
+        return Inertia::location(route('export.inspectionComputerAll', ['year' => $encryptedYear, 'triwulan' => $request->quarter, 'site' => $request->site, 'month' => $request->month]));
     })->name('encrypt.yearComputer');
     Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
     // });

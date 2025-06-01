@@ -106,10 +106,10 @@ const getEncryptedYear = () => {
         ? parseInt(year.value)
         : new Date().getFullYear();
 
-    // Ambil triwulan (quarter) yang diinput user atau auto-deteksi dari bulan sekarang
-    const selectedQuarter = triwulan.value
-        ? parseInt(triwulan.value)
-        : new Date().getMonth() + 1;
+    const selectedQuarter =
+        triwulan.value !== "" && triwulan.value !== null
+            ? parseInt(triwulan.value)
+            : new Date().getMonth() + 1;
 
     console.log(selectedYear);
     console.log(selectedQuarter);
@@ -123,17 +123,6 @@ const getEncryptedYear = () => {
         });
         return; // Stop eksekusi jika tahun tidak valid
     }
-
-    // Validasi quarter juga (optional, kalau mau)
-    // if (selectedQuarter < 1 || selectedQuarter > 4) {
-    //     Swal.fire({
-    //         icon: "error",
-    //         title: "Triwulan Tidak Valid!",
-    //         text: "Triwulan harus antara 1 sampai 4.",
-    //     });
-    //     return;
-    // }
-
     // Tampilkan loading popup
     Swal.fire({
         title: "Menyiapkan PDF...",
@@ -276,7 +265,6 @@ const getBadgeTextStatusInventory = (status) => {
                                         step="1"
                                         class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
                                         placeholder="Masukkan Bulan"
-                                        @input="validateYear"
                                     />
                                 </div>
                                 <div
