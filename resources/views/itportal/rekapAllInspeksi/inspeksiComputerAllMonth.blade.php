@@ -96,7 +96,7 @@
             </tr>
         </table>
 
-        <div class="title">FORM CHECKLIST INSPEKSI LAPTOP</div>
+        <div class="title">FORM CHECKLIST INSPEKSI COMPUTER</div>
         <table style="width: 100%; margin-bottom: 10px; font-size: 12px; border-collapse: collapse;">
             <tr>
                 <td style="text-align: left; font-weight: bold; border: none;">
@@ -171,7 +171,7 @@
         <div style="font-size: 12px; font-weight: bold; margin-bottom: 10px;">CATATAN</div>
 
         <ul style="font-size: 11px; margin-bottom: 20px;">
-            <li>Checklist ini dilakukan secara berkala setiap 3 bulan.</li>
+            <li>Checklist ini dilakukan secara berkala setiap bulan.</li>
             <li>Unit utilize adalah total keseluruhan unit yang tidak termasuk unit scrap.</li>
         </ul>
 
