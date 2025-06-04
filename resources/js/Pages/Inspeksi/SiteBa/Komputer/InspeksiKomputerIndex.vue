@@ -574,18 +574,6 @@ const getBadgeTextStatusInventory = (status) => {
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'N'"
-                                                                @click="
-                                                                    editData(
-                                                                        computers.id
-                                                                    )
-                                                                "
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                Do Inspection
-                                                            </NavLinkCustom>
-
-                                                            <NavLinkCustom
                                                                 @click="
                                                                     editDataInspeksi(
                                                                         computers.id
