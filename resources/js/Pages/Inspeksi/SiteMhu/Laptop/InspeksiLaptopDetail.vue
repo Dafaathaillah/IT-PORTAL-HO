@@ -13,7 +13,6 @@ const mainMenu = ref("Detail Inspeksi Laptop");
 const props = defineProps(["inspeksi"]);
 
 const inspeksiId = props.inspeksi.id;
-
 // Fungsi untuk format tanggal
 function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
@@ -113,387 +112,6 @@ const getEncryptedYear = () => {
                                         <p
                                             class="mb-0 dark:text-white/80 font-semibold"
                                         >
-                                            SOFTWARE
-                                        </p>
-                                        <hr
-                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Defrag</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_defrag == "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="number-asset-ho"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Cek System Restore</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_check_system_restore ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="assets-category"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Clean Temporary & Cache
-                                            Data</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_clean_cache_data ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="model"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Tidak Terdapat Software
-                                            Ilegal</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_check_ilegal_software ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="processor"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Change Password</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_change_password ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="hdd"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Cek Windows
-                                            License</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_windows_license ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="ssd"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Cek Office License</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_office_license ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="ram"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Cek Standarisasi
-                                            Software</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_standaritation_software ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="vga"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Cek Update
-                                            Sinology</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_update_sinology ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="warna_laptop"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Cek Turn Off Windows
-                                            Update</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_turn_off_windows_update ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="os_laptop"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Cek SSD Health</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_cheking_ssd_health ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="serial-number"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >Melakukan Standarisasi Nama
-                                            Device</label
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                >
-                                    <div class="mb-4">
-                                        <label
-                                            for="device-name"
-                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
-                                        >
-                                            :
-                                            {{
-                                                inspeksi.software_standaritation_device_name ==
-                                                "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
-                                            }}</label
-                                        >
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
-                                >
-                                    <div class="text-center mb-4">
-                                        <p
-                                            class="mb-0 dark:text-white/80 font-semibold"
-                                        >
                                             HARDWARE
                                         </p>
                                         <hr
@@ -525,8 +143,8 @@ const getEncryptedYear = () => {
                                             {{
                                                 inspeksi.hardware_fan_cleaning ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -554,8 +172,8 @@ const getEncryptedYear = () => {
                                             {{
                                                 inspeksi.hardware_change_pasta ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -584,8 +202,238 @@ const getEncryptedYear = () => {
                                             {{
                                                 inspeksi.hardware_any_maintenance ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                >
+                                    <div class="text-center mb-4">
+                                        <p
+                                            class="mb-0 dark:text-white/80 font-semibold"
+                                        >
+                                            SOFTWARE
+                                        </p>
+                                        <hr
+                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                        />
+                                    </div>
+                                </div>
+
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="ram"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Melakukan Cek Standarisasi
+                                            Software</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_standaritation_software ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="serial-number"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Melakukan Standarisasi Nama
+                                            Device</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_standaritation_device_name ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="ssd"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Melakukan Cek License Software</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_office_license ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="assets-category"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Melakukan Clean Temporary & Cache
+                                            Data</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_clean_cache_data ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Melakukan Cek System Restore</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_check_system_restore ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="warna_laptop"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Melakukan Cek Turn Off Windows
+                                            Update</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_turn_off_windows_update ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Defrag</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_defrag == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -618,6 +466,133 @@ const getEncryptedYear = () => {
                                                     : inspeksi.software_percentage_ssd_health
                                             }}</label
                                         >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                >
+                                    <div class="text-center mb-4">
+                                        <p
+                                            class="mb-0 dark:text-white/80 font-semibold"
+                                        >
+                                            PEMERIKSAAN SECURITY
+                                        </p>
+                                        <hr
+                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Penggantian Username</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.change_user_pass == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Setting Auto Lock Screen</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.autolock == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="assets-category"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Setting Input Password After Lock
+                                            Screen</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.enter_password == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="assets-category"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                        ></label>
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                        </label>
                                     </div>
                                 </div>
 
