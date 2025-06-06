@@ -24,9 +24,9 @@ const form = useForm({
     winUpdate: props.inspeksi.software_windows_update,
     defrag: props.inspeksi.defrag,
     storageHealth: props.inspeksi.software_storage_health,
-    change_user_pass: props.inspeksi.change_user_pass,
-    autolock: props.inspeksi.autolock,
-    enter_password: props.inspeksi.enter_password,
+    change_user_pass: props.inspeksi.security_change_password,
+    autolock: props.inspeksi.security_auto_lock,
+    enter_password: props.inspeksi.security_input_password,
     findings: props.inspeksi.findings,
     findings_image: props.inspeksi.findings_image,
     action: props.inspeksi.findings_action,
@@ -830,7 +830,7 @@ const save = () => {
                                         class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
-                                            Penggantian Username
+                                            Change Password
                                         </h3>
                                         <div
                                             class="mb-4 flex items-center space-x-4"

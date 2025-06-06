@@ -446,7 +446,7 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.change_user_pass == "N"
+                                                inspeksi.security_change_password == "N"
                                                     ? "Tidak"
                                                     : "Ya"
                                             }}</label
@@ -476,7 +476,7 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.autolock == "N"
+                                                inspeksi.security_auto_lock == "N"
                                                     ? "Tidak"
                                                     : "Ya"
                                             }}</label
@@ -506,7 +506,7 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.enter_password == "N"
+                                                inspeksi.security_input_password == "N"
                                                     ? "Tidak"
                                                     : "Ya"
                                             }}</label
