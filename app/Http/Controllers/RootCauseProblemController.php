@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RootCauseProblem;
 use Illuminate\Http\Request;
 
 class RootCauseProblemController extends Controller
@@ -16,7 +17,7 @@ class RootCauseProblemController extends Controller
     {
         $getData = DB::table('root_cause_problems')->where('id', $request->id)->first();
         if (empty($getData)) {
-           $rootCauseProblem = DB::table('root_cause_problems')->insert($request->all());
+            $rootCauseProblem = DB::table('root_cause_problems')->insert($request->all());
             return response()->json($rootCauseProblem, 201);
         } else {
             $rootCauseProblem = DB::table('root_cause_problems')->where('id', 1)->update($request->all());
@@ -28,12 +29,24 @@ class RootCauseProblemController extends Controller
     {
         $getData = DB::table('root_cause_categories')->where('id', $request->id)->first();
         if (empty($getData)) {
-           $rootCauseCategory = DB::table('root_cause_categories')->insert($request->all());
+            $rootCauseCategory = DB::table('root_cause_categories')->insert($request->all());
             return response()->json($rootCauseCategory, 201);
         } else {
             $rootCauseCategory = DB::table('root_cause_categories')->where('id', 1)->update($request->all());
             return response()->json($rootCauseCategory, 201);
         }
+    }
+
+    public function getRootCauseProblems(Request $request)
+    {
+        $category = $request->get('category');
+
+        if (!$category) {
+            return response()->json([]);
+        }
+
+        return RootCauseProblem::where('kategori_name', $category)
+            ->pluck('root_cause_problem');
     }
 
     // public function show($id)

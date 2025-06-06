@@ -23,6 +23,8 @@ use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DailyJobController;
+use App\Http\Controllers\DailyJobMonitorController;
 use App\Http\Controllers\DashboardAmiController;
 use App\Http\Controllers\DashboardBaController;
 use App\Http\Controllers\DashboardBgeController;
@@ -207,7 +209,9 @@ use App\Http\Controllers\InvWirellessValeController;
 use App\Http\Controllers\KpiInspeksiController;
 use App\Http\Controllers\KpiResponseTimeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RootCauseProblemController;
 use App\Http\Controllers\TestingAuthApiController;
+use App\Http\Controllers\UnscheduleJobController;
 use App\Http\Controllers\UserAllBaController;
 use App\Http\Controllers\UserAllController;
 use App\Http\Controllers\UserAllMhuController;
@@ -224,6 +228,7 @@ use App\Models\InvLaptop;
 use App\Models\InvPrinter;
 use App\Models\InvSwitch;
 use App\Models\InvWirelless;
+use App\Models\RootCauseProblem;
 use App\Models\UserAll;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
@@ -260,7 +265,56 @@ Route::middleware('auth')->group(function () {
     Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
     // });
 
-    // Route::get('/accessPoint/{id}/export', [InvApController::class, 'detail'])->name('accessPoint.detail');
+
+    foreach (['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'] as $site) {
+        Route::group([
+            'prefix' => "daily-jobs-$site",
+            'as' => "daily-jobs.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [DailyJobController::class, 'index'])->name('index');
+            Route::get('/create', [DailyJobController::class, 'create'])->name('create');
+            Route::post('/', [DailyJobController::class, 'store'])->name('store');
+            Route::get('/{code}', [DailyJobController::class, 'show'])->name('show');
+            Route::get('/{code}/edit', [DailyJobController::class, 'edit'])->name('edit');
+            Route::put('/{code}', [DailyJobController::class, 'update'])->name('update');
+            Route::delete('/{code}', [DailyJobController::class, 'destroy'])->name('destroy');
+        });
+    }
+
+
+    foreach (['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'] as $site) {
+        Route::group([
+            'prefix' => "monitoring-jobs-$site",
+            'as' => "monitoring-jobs.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [DailyJobMonitorController::class, 'index'])->name('index');
+
+            Route::get('/export-report', [DailyJobMonitorController::class, 'exportReportMonitoring'])
+                ->name('export');
+        });
+    }
+
+
+    foreach (['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'] as $site) {
+        Route::group([
+            'prefix' => "unschedule-jobs-$site",
+            'as' => "unschedule-jobs.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [UnscheduleJobController::class, 'index'])->name('index');
+            Route::get('/create', [UnscheduleJobController::class, 'create'])->name('create');
+            Route::post('/', [UnscheduleJobController::class, 'store'])->name('store');
+            Route::get('/{code}', [UnscheduleJobController::class, 'show'])->name('show');
+            Route::get('/{code}/edit', [UnscheduleJobController::class, 'edit'])->name('edit');
+            Route::put('/{code}', [UnscheduleJobController::class, 'update'])->name('update');
+            Route::delete('/{code}', [UnscheduleJobController::class, 'destroy'])->name('destroy');
+        });
+    }
+
+
+    Route::get('/root-cause-problems', [RootCauseProblemController::class, 'getRootCauseProblems']);
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
         Route::get('/dashboard', function () {
@@ -323,7 +377,7 @@ Route::middleware('auth')->group(function () {
 
             $readyUsed_array = [$countAPreadyused, $countSwitchreadyused, $countWirellessreadyused, $countPrinterreadyused, $countCCTVreadyused, $countKomputerreadyused, $countLaptopreadyused];
 
-            $loginSession =  'tes';
+            $loginSession = 'tes';
 
             $countAllDataInspeksiLaptop = InspeksiLaptop::where('site', 'HO')
                 ->where('year', Carbon::now()->year)
@@ -536,7 +590,7 @@ Route::middleware('auth')->group(function () {
 
             $readyUsed_array = [$countAPreadyused, $countSwitchreadyused, $countWirellessreadyused, $countPrinterreadyused, $countCCTVreadyused, $countKomputerreadyused, $countLaptopreadyused];
 
-            $loginSession =  'tes';
+            $loginSession = 'tes';
 
             return Inertia::render(
                 'Inventory/DashboardGroupLeader',
@@ -635,7 +689,7 @@ Route::middleware('auth')->group(function () {
 
             $readyUsed_array = [$countAPreadyused, $countSwitchreadyused, $countWirellessreadyused, $countPrinterreadyused, $countCCTVreadyused, $countKomputerreadyused, $countLaptopreadyused];
 
-            $loginSession =  'tes';
+            $loginSession = 'tes';
 
             return Inertia::render(
                 'Inventory/DashboardTechnician',
