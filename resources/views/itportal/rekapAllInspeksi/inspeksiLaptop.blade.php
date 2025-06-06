@@ -262,28 +262,16 @@
                                             class="checkbox {{ $inspection->software_clean_cache_data == 'Y' ? 'checked' : '' }}"></span>
                                         Clean Temporary & Cache Data</li>
                                     <li><span
-                                            class="checkbox {{ $inspection->software_check_ilegal_software == 'Y' ? 'checked' : '' }}"></span>
-                                        Tidak Terdapat Software Ilegal</li>
-                                    <li><span
-                                            class="checkbox {{ $inspection->software_change_password == 'Y' ? 'checked' : '' }}"></span>
-                                        Change Password</li>
-                                    <li><span
-                                            class="checkbox {{ $inspection->software_windows_license == 'Y' ? 'checked' : '' }}"></span>
-                                        Windows License</li>
-                                    <li><span
                                             class="checkbox {{ $inspection->software_office_license == 'Y' ? 'checked' : '' }}"></span>
                                         Ms Office License</li>
                                     <li><span
                                             class="checkbox {{ $inspection->software_standaritation_software == 'Y' ? 'checked' : '' }}"></span>
                                         Standarisasi Software</li>
                                     <li><span
-                                            class="checkbox {{ $inspection->software_update_sinology == 'Y' ? 'checked' : '' }}"></span>
-                                        Update Sinology</li>
-                                    <li><span
-                                            class="checkbox {{ $inspection->software_turn_off_windows_update == 'Y' ? 'checked' : '' }}"></span>
+                                            class="checkbox {{ $inspection->software_turn_off_windows_update == 'ON' ? 'checked' : '' }}"></span>
                                         Turn-Off Windows Update</li>
                                     <li><span
-                                            class="checkbox {{ $inspection->software_checking_ssd_health == 'Y' ? 'checked' : '' }}"></span>
+                                            class="checkbox {{ $inspection->software_percentage_ssd_health != null ? 'checked' : '' }}"></span>
                                         SSD Health</li>
                                     <li><span
                                             class="checkbox {{ $inspection->software_standaritation_device_name == 'Y' ? 'checked' : '' }}"></span>
@@ -303,11 +291,32 @@
                                             class="checkbox {{ $inspection->hardware_any_maintenance == 'Y' ? 'checked' : '' }}"></span>
                                         Other</li>
                                 </ul>
+
+                                 <h4 style="margin-top: 5px">SECURITY CHECK CONDITION</h4>
+                                <ul>
+                                    <li><span
+                                            class="checkbox {{ $inspection->security_change_password == 'Y' ? 'checked' : '' }}"></span>
+                                        Change Pass</li>
+                                    <li><span
+                                            class="checkbox {{ $inspection->security_auto_lock == 'Y' ? 'checked' : '' }}"></span>
+                                        Sett Auto Lock Scrn</li>
+                                    <li><span
+                                            class="checkbox {{ $inspection->security_input_password == 'Y' ? 'checked' : '' }}"></span>
+                                        Input Password After Lock</li>
+                                </ul>
                             </div>
                         </div>
 
                         <h4>HASIL INSPEKSI</h4>
                         <table>
+                             <tr>
+                                <th>SSD Percentage</th>
+                                <td>{{ $inspection->software_percentage_ssd_health }}</td>
+                            </tr>
+                             <tr>
+                                <th>Windows Update Condition</th>
+                                <td>{{ $inspection->software_turn_off_windows_update }}</td>
+                            </tr>
                             <tr>
                                 <th>Catatan Temuan</th>
                                 <td>{{ $inspection->findings }}</td>

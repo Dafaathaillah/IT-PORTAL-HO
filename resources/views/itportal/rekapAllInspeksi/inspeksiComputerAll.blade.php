@@ -16,6 +16,11 @@
             margin: 20mm 10mm 20mm 10mm;
         } */
 
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+
         footer {
             position: fixed;
             bottom: 0;
@@ -36,7 +41,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 9px;
+            font-size: 8px;
         }
 
         .container {
@@ -65,6 +70,9 @@
             padding: 4px;
             text-align: center;
             vertical-align: middle;
+            word-wrap: break-word;
+            white-space: normal;
+            font-size: 8px;
         }
 
         th {
@@ -97,9 +105,9 @@
         </table>
 
         <div class="title">FORM CHECKLIST INSPEKSI COMPUTER</div>
-        <table style="width: 100%; margin-bottom: 10px; font-size: 12px; border-collapse: collapse;">
+        <table style="width: 100%; margin-bottom: 10px; border-collapse: collapse;">
             <tr>
-                <td style="text-align: left; font-weight: bold; border: none;">
+                <td style="text-align: left; font-size: 9px !important; font-weight: bold; border: none;">
                     Periode Inspeksi: <span style="font-weight: normal;">Triwulan {{ $thisTriwulan }} -
                         {{ $thisYear }}</span>
                 </td>
@@ -117,8 +125,9 @@
                     <th rowspan="2" style="border: 1px solid #000;">Tanggal Inspeksi</th>
                     <th rowspan="2" style="border: 1px solid #000;">Merek - Tipe</th>
                     <th rowspan="2" style="border: 1px solid #000;">Lokasi</th>
-                    <th colspan="2" style="border: 1px solid #000;">Kondisi Fisik</th>
-                    <th colspan="5" style="border: 1px solid #000;">Software</th>
+                    <th colspan="3" style="border: 1px solid #000;">Hardware</th>
+                    <th colspan="8" style="border: 1px solid #000;">Software</th>
+                    <th colspan="3" style="border: 1px solid #000;">Security</th>
                     <th rowspan="2" style="border: 1px solid #000;">Kondisi</th>
                     <th rowspan="2" style="border: 1px solid #000;">Status Komputer</th>
                     <th rowspan="2" style="border: 1px solid #000;">Remark</th>
@@ -126,12 +135,19 @@
                 </tr>
                 <tr>
                     <th style="border: 1px solid #000;">CPU</th>
+                    <th style="border: 1px solid #000;">Int CPU</th>
                     <th style="border: 1px solid #000;">Monitor</th>
-                    <th style="border: 1px solid #000;">Lisensi</th>
-                    <th style="border: 1px solid #000;">Standardisasi</th>
+                    <th style="border: 1px solid #000;">Soft Lic</th>
+                    <th style="border: 1px solid #000;">Std Software</th>
+                    <th style="border: 1px solid #000;">Dev Name</th>
                     <th style="border: 1px solid #000;">Clear Cache</th>
                     <th style="border: 1px solid #000;">System Restore</th>
+                    <th style="border: 1px solid #000;">Win Update</th>
                     <th style="border: 1px solid #000;">Defrag</th>
+                    <th style="border: 1px solid #000;">Health %</th>
+                    <th style="border: 1px solid #000;">Uname</th>
+                    <th style="border: 1px solid #000;">Auto Lck</th>
+                    <th style="border: 1px solid #000;">Inp Pwd</th>
                 </tr>
             </thead>
             <tbody>
@@ -146,16 +162,28 @@
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->physique_condition_cpu == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
+                            {{ $item->physique_condition_internal_cpu == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->physique_condition_monitor == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_license == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_standaritation == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
+                            {{ $item->software_device_name_standaritation == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_clear_cache == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_system_restore == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->software_windows_update }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->defrag == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->software_storage_health }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">
+                            {{ $item->security_change_password == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">
+                            {{ $item->security_auto_lock == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">
+                            {{ $item->security_input_password == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->conditions }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->inventory_status }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->remarks }}</td>
