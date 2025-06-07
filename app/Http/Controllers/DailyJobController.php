@@ -32,8 +32,10 @@ class DailyJobController extends Controller
         $auth = $user->role;
         $userSite = $user->site;
 
-        if ($auth == 'ict_technician' && $auth == 'ict_group_leader' && $auth == 'ict_admin' && $site != $userSite) {
-            abort(403, 'You dont have permission to access this page.');
+        if ($auth == 'ict_technician' || $auth == 'ict_group_leader' || $auth == 'ict_admin') {
+            if ($site != $userSite) {
+                abort(403, 'You dont have permission to access this page.');
+            }
         }
 
         // Optional filters

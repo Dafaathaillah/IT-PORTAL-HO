@@ -23,6 +23,7 @@ class User extends Authenticatable
         'position',
         'department',
         'site',
+        'ict_group',
         'role',
         'last_login',
         'password',
