@@ -253,7 +253,7 @@
                         <ul>
                             <li><span
                                     class="checkbox {{ $inspection->software_defrag == 'Y' ? 'checked' : '' }}"></span>
-                                Defrag</li>
+                                Defrag(HDD)</li>
                             <li><span
                                     class="checkbox {{ $inspection->software_check_system_restore == 'Y' ? 'checked' : '' }}"></span>
                                 System Restore</li>
@@ -271,7 +271,7 @@
                                 Turn-Off Windows Update</li>
                             <li><span
                                     class="checkbox {{ $inspection->software_percentage_ssd_health != null ? 'checked' : '' }}"></span>
-                                SSD Health</li>
+                                SSD/HDD Health</li>
                             <li><span
                                     class="checkbox {{ $inspection->software_standaritation_device_name == 'Y' ? 'checked' : '' }}"></span>
                                 Standarisasi Nama Device</li>
@@ -309,7 +309,7 @@
                 <h4>HASIL INSPEKSI</h4>
                 <table>
                     <tr>
-                        <th>SSD Percentage</th>
+                        <th>SSD/HDD Percentage</th>
                         <td>{{ $inspection->software_percentage_ssd_health }}</td>
                     </tr>
                     <tr>
@@ -363,7 +363,7 @@
                             <img src="{{ $inspection->qr_base64Inspector }}" alt="QR Code"
                                 style="width: 100px; height: 100px;">
                         @else
-                            <p><i>QR tidak tersedia</i></p>
+                            <p><i>Belum Inspeksi</i></p>
                         @endif
                         <p>__________________</p>
                         <p style="margin-bottom: 0px;">{{ $inspection->inspector }}</p>
@@ -377,7 +377,7 @@
                             <img src="{{ $inspection->qr_base64Approved }}" alt="QR Code"
                                 style="width: 100px; height: 100px;">
                         @else
-                            <p><i>QR tidak tersedia</i></p>
+                            <p><i>Perlu Approval</i></p>
                         @endif
                         <p>__________________</p>
 

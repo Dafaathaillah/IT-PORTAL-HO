@@ -126,7 +126,7 @@ class ExportInspeksiLaptopController extends Controller
         // Ambil hanya satu data inspeksi yang sesuai dan sudah disetujui
         $inspection = InspeksiLaptop::with('inventory.pengguna')
             ->where('id', $request->inspeksiId)
-            ->where('inspection_status', 'Y')
+            // ->where('inspection_status', 'Y')
             ->first();
 
         if (!$inspection) {
@@ -134,8 +134,13 @@ class ExportInspeksiLaptopController extends Controller
         }
 
         // Ambil data user yang menyetujui
-        $approvedUser = User::where('name', $inspection->approved_by)->first();
-        $inspectorUser = User::where('name', $inspection->inspector)->first();
+        if ($inspection->inspection_status == 'Y') {
+            $approvedUser = User::where('name', $inspection->approved_by)->first();
+            $inspectorUser = User::where('name', $inspection->inspector)->first();
+        }else{
+             $approvedUser = '';
+            $inspectorUser = '';
+        }
 
         // Tambahkan data tambahan untuk QR Code
         if ($approvedUser) {
