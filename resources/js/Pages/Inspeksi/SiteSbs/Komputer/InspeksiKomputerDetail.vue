@@ -1,8 +1,9 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, router } from "@inertiajs/vue3";
 import moment from "moment";
+import Swal from "sweetalert2";
 import { onMounted, ref } from "vue";
 
 const pages = ref("Pages");
@@ -10,6 +11,7 @@ const subMenu = ref("Inspeksi Komputer Pages");
 const mainMenu = ref("Detail Inspeksi Komputer");
 
 const props = defineProps(["inspeksi"]);
+const inspeksiId = props.inspeksi.id;
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -22,6 +24,44 @@ const mount = onMounted(() => {
     $("#tableData2").DataTable();
     $("#tableData3").DataTable();
 });
+
+const getEncryptedQuarter = () => {
+    // Tampilkan loading popup
+    Swal.fire({
+        title: "Menyiapkan PDF...",
+        text: "Harap tunggu sebentar.",
+        allowOutsideClick: false,
+        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    // Kirim permintaan ke backend untuk enkripsi tahun
+    router.post(
+        route("computer.singleExport"),
+        { inspeksiId: inspeksiId },
+        {
+            onSuccess: ({ props }) => {
+                Swal.close(); // Tutup popup loading setelah selesai
+                window.open(
+                    route("computer.singleExportPdf", {
+                        inspeksiId: inspeksiId,
+                    }),
+                    "_blank"
+                );
+            },
+            onError: () => {
+                Swal.close(); // Tutup popup loading jika ada error
+                Swal.fire(
+                    "Gagal!",
+                    "Terjadi kesalahan dalam permintaan.",
+                    "error"
+                );
+            },
+        }
+    );
+};
 </script>
 
 <template>
@@ -34,6 +74,15 @@ const mount = onMounted(() => {
     >
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="flex flex-wrap md:flex-nowrap gap-4">
+                    <button
+                        @click="getEncryptedQuarter"
+                        class="flex items-center text-sm justify-center gap-2 w-60 h-10 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                    >
+                        <i class="fas fa-download"></i>
+                        Download Hasil Inspeksi
+                    </button>
+                </div>
                 <div class="flex flex-wrap -mx-3">
                     <div
                         class="w-full max-w-full px-3 mt-6 md:w-7/12 md:flex-none"
@@ -446,7 +495,8 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.security_change_password == "N"
+                                                inspeksi.security_change_password ==
+                                                "N"
                                                     ? "Tidak"
                                                     : "Ya"
                                             }}</label
@@ -476,7 +526,8 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.security_auto_lock == "N"
+                                                inspeksi.security_auto_lock ==
+                                                "N"
                                                     ? "Tidak"
                                                     : "Ya"
                                             }}</label
@@ -506,7 +557,8 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.security_input_password == "N"
+                                                inspeksi.security_input_password ==
+                                                "N"
                                                     ? "Tidak"
                                                     : "Ya"
                                             }}</label

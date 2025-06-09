@@ -154,11 +154,11 @@
                 @foreach ($inspeksiComputerAll as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->computer->computer_code }}</td>
-                        <td>{{ $item->computer->number_asset_ho }}</td>
+                        <td>{{ $item->computer->computer_code ?? '-' }}</td>
+                        <td>{{ $item->computer->number_asset_ho ?? '-'  }}</td>
                         <td>{{ $item->created_date }}</td>
-                        <td>{{ $item->computer->computer_name }} - {{ $item->computer->spesifikasi }}</td>
-                        <td class="text-left">{{ $item->computer->location }}</td>
+                        <td>{{ $item->computer->computer_name ?? '-'  }} - {{ $item->computer->spesifikasi ?? '-'  }}</td>
+                        <td class="text-left">{{ $item->computer->location ?? '-'  }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->physique_condition_cpu == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
@@ -214,13 +214,25 @@
             <tr>
                 <td style="text-align: center; border: none;">
                     Mengetahui,<br>
-                    Group Leader<br><br><br><br><br>
-                    ( ________________ )
+                    Group Leader<br><br>
+                    @if ($qr_base64Approved)
+                        <img src="{{ $qr_base64Approved }}" alt="QR Code" style="width: 100px; height: 100px;"><br>
+                    @else
+                        <p><i>Perlu Approval</i></p>
+                    @endif
+                    <br>
+                    ( {{ $picApproved }} )
                 </td>
                 <td style="text-align: center; border: none;">
                     Inspektor,<br>
-                    Petugas Inspeksi<br><br><br><br><br>
-                    ( ________________ )
+                    IT Support<br><br>
+                    @if ($qr_base64Pic)
+                        <img src="{{ $qr_base64Pic }}" alt="QR Code" style="width: 100px; height: 100px;"><br>
+                    @else
+                        <p><i>Perlu Inspector</i></p>
+                    @endif
+                    <br>
+                    ( {{ $pic }} )
                 </td>
             </tr>
         </table>

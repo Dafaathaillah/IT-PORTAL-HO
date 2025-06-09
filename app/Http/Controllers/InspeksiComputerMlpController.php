@@ -16,6 +16,9 @@ class InspeksiComputerMlpController extends Controller
     public function index()
     {
         $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'MLP')->get();
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'MLP')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $site = 'MLP';
 
@@ -24,7 +27,7 @@ class InspeksiComputerMlpController extends Controller
         // return dd($inspeksi_computer);
         return Inertia::render(
             'Inspeksi/SiteMlp/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role]
+            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 

@@ -21,7 +21,7 @@ class ImportAp implements ToModel, WithStartRow
 
     public function startRow(): int
     {
-        return 17; // Mulai dari baris kedua
+        return 17; // Mulai dari baris ke-17
     }
 
     public $duplicateRecords = [];

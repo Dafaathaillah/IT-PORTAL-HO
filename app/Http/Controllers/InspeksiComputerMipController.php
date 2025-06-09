@@ -15,18 +15,13 @@ class InspeksiComputerMipController extends Controller
 {
     public function index()
     {
-        // $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'MIP')->get();
-
-        // $inspeksi_computer = InspeksiComputer::with(['computer.pengguna'])
-        //     ->where('site', 'MIP')
-        //     ->whereHas('computer', function ($query) {
-        //         $query->whereNotNull('computer_code');
-        //     })
-        //     ->get();
-
         $inspeksi_computer = InspeksiComputer::with(['computer' => function ($query) {
             $query->whereNotNull('computer_code');
         }, 'computer.pengguna'])->where('site', 'MIP')->get();
+
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'MIP')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $site = 'MIP';
 
@@ -34,7 +29,7 @@ class InspeksiComputerMipController extends Controller
 
         return Inertia::render(
             'Inspeksi/SiteMip/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role]
+            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 

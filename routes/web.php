@@ -246,26 +246,28 @@ Route::middleware('auth')->group(function () {
     });
     // Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO,soc_ho:HO,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA'], function () {
     Route::post('/encrypt-year', function (Request $request) {
-        // dd($request);
         $year = $request->year ?? Carbon::now()->year;
         $encryptedYear = Crypt::encryptString($year);
-        return Inertia::location(route('export.inspectionLaptopAll', ['year' => $encryptedYear, 'site' => $request->site]));
+        return Inertia::location(route('export.inspectionLaptopAll', ['year' => $encryptedYear, 'site' => $request->site, 'pic' => $request->pic]));
     })->name('encrypt.year');
     Route::get('/export-pdf', [ExportInspeksiLaptopController::class, 'exportPdfAll'])->name('export.inspectionLaptopAll');
 
     Route::post('/encrypt-year-computer', function (Request $request) {
         $year = $request->year ?? Carbon::now()->year;
         $encryptedYear = Crypt::encryptString($year);
-        return Inertia::location(route('export.inspectionComputerAll', ['year' => $encryptedYear, 'triwulan' => $request->quarter, 'site' => $request->site, 'month' => $request->month]));
+        return Inertia::location(route('export.inspectionComputerAll', ['year' => $encryptedYear, 'triwulan' => $request->quarter, 'site' => $request->site, 'month' => $request->month, 'pic' => $request->pic]));
     })->name('encrypt.yearComputer');
     Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
-    // });
-
 
     Route::post('/single-export', function (Request $request) {
         return Inertia::location(route('laptop.singleExportPdf', ['inspeksiId' => $request->inspeksiId]));
     })->name('laptop.singleExport');
     Route::get('/export-pdf-single-laptop', [ExportInspeksiLaptopController::class, 'exportPdfSingle'])->name('laptop.singleExportPdf');
+
+    Route::post('/single-export-computer', function (Request $request) {
+        return Inertia::location(route('computer.singleExportPdf', ['inspeksiId' => $request->inspeksiId]));
+    })->name('computer.singleExport');
+    Route::get('/export-pdf-single-computer', [ExportInspeksiComputerController::class, 'exportPdfSingle'])->name('computer.singleExportPdf');
 
     // Route::get('/accessPoint/{id}/export', [InvApController::class, 'detail'])->name('accessPoint.detail');
 

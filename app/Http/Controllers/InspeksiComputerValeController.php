@@ -15,16 +15,19 @@ class InspeksiComputerValeController extends Controller
 {
     public function index()
     {
-        $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'VALE')->get();
+        $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'VIB')->get();
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'VIB')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
-        $site = 'VALE';
+        $site = 'VIB';
 
         $role = auth()->user()->role;
 
         // return dd($inspeksi_computer);
         return Inertia::render(
             'Inspeksi/SiteVale/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role]
+            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 
@@ -49,7 +52,7 @@ class InspeksiComputerValeController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = InspeksiComputer::where('site', 'VALE')->where('year', $year)->max('pica_number');
+        $maxId = InspeksiComputer::where('site', 'VIB')->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;

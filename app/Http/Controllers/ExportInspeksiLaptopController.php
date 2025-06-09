@@ -18,6 +18,9 @@ class ExportInspeksiLaptopController extends Controller
     public function exportPdfAll(Request $request)
     {
         $user = Auth::user();
+
+        $pic = $request->pic;
+
         $site = $request->site;
         $thisYearEncrypt = $request->query('year') ?? Carbon::now()->year;
         // dd('OKE');
@@ -53,65 +56,37 @@ class ExportInspeksiLaptopController extends Controller
             ->where('inventory_status', '!=', 'SCRAP')
             ->count();
 
-        $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptopAll', compact('inspeksiLaptopAll', 'thisYear', 'unitScrap', 'unitUtilize', 'site'))
+
+        $inspectionY = $inspeksiLaptopAll->firstWhere('inspection_status', 'Y');
+        $picApproved = $inspectionY->approved_by;
+        $qr_base64Approved = null;
+        if ($inspectionY && $picApproved) {
+            $approvedUser = User::where('name', $picApproved)->first();
+            if ($approvedUser) {
+                $qrString = "NRP: {$approvedUser->nrp}, Nama: {$approvedUser->name}, Jabatan: {$approvedUser->position}";
+                $barcode = new \Milon\Barcode\DNS2D();
+                $barcode->setStorPath(storage_path('framework/barcodes/'));
+                $pngData = $barcode->getBarcodePNG($qrString, 'QRCODE');
+                $qr_base64Approved = 'data:image/png;base64,' . $pngData;
+            }
+        }
+
+        $qr_base64Pic = null;
+        $picInspeksi = User::where('name', $pic)->first();
+        if ($picInspeksi) {
+            $qrString = "NRP: {$picInspeksi->nrp}, Nama: {$picInspeksi->name}, Jabatan: {$picInspeksi->position}";
+            $barcode = new \Milon\Barcode\DNS2D();
+            $barcode->setStorPath(storage_path('framework/barcodes/'));
+            $pngData = $barcode->getBarcodePNG($qrString, 'QRCODE');
+            $qr_base64Pic = 'data:image/png;base64,' . $pngData;
+        }
+
+        $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptopAll', compact('inspeksiLaptopAll', 'thisYear', 'unitScrap', 'unitUtilize', 'site', 'pic','picApproved','qr_base64Approved', 'qr_base64Pic'))
             ->setPaper('A4', 'landscape');
 
 
         return $pdf->stream('inspection-laptop-report-periode-' . '.pdf');
     }
-
-    // public function exportPdfSingle(Request $request)
-    // {
-    //     $user = Auth::user();
-    //     $site = $user->site;
-    //     $thisYear = Carbon::now()->year;
-
-    //     if ($thisYear > 2500) {
-    //         return back()->with('error', 'Tahun tidak terdeteksi.');
-    //     }
-
-
-    //     $inspeksiLaptop = InspeksiLaptop::with('inventory.pengguna')
-    //         ->where('id', $request->inspeksiId)
-    //         ->get();
-
-    //     // Filter hanya inspeksi yang approved (status == 'Y')
-    //     $inspectionStatus = $inspeksiLaptop->where('inspection_status', 'Y');
-
-    //     if ($inspectionStatus->isNotEmpty()) {
-    //         // Ambil nama approved_by yang unik
-    //         $approvedNames = $inspectionStatus->pluck('approved_by')->unique();
-
-    //         // Ambil user berdasarkan nama saja
-    //         $users = User::whereIn('name', $approvedNames)->get();
-
-    //         // Buat map nama → user
-    //         $userMap = $users->keyBy('name');
-
-    //         // Tambahkan approved_user ke setiap inspeksi
-    //         $inspeksiLaptop->transform(function ($inspeksi) use ($userMap) {
-    //             $inspeksi->approved_user = $userMap[$inspeksi->approved_by] ?? null;
-    //             return $inspeksi;
-    //         });
-
-    //         $dataQr = $inspeksiLaptop->map(function ($item) {
-    //             return [
-    //                 'nrp' => $item->approved_user->nrp,
-    //                 'nama' => $item->approved_user->name,
-    //                 'jabatan' => $item->approved_user->position,
-    //             ];
-    //         });
-
-    //         dd($dataQr);
-
-    //         $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptop', compact('inspeksiLaptop', 'thisYear', 'site'))
-    //             ->setPaper('A4', 'potrait');
-    //         return $pdf->stream('inspection-laptop-report-periode-' . $thisYear . '.pdf');
-    //     }
-    //     $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptop', compact('inspeksiLaptop', 'thisYear', 'site'))
-    //         ->setPaper('A4', 'potrait');
-    //     return $pdf->stream('inspection-laptop-report-periode-' . $thisYear . '.pdf');
-    // }
 
     public function exportPdfSingle(Request $request)
     {
@@ -137,8 +112,8 @@ class ExportInspeksiLaptopController extends Controller
         if ($inspection->inspection_status == 'Y') {
             $approvedUser = User::where('name', $inspection->approved_by)->first();
             $inspectorUser = User::where('name', $inspection->inspector)->first();
-        }else{
-             $approvedUser = '';
+        } else {
+            $approvedUser = '';
             $inspectorUser = '';
         }
 
@@ -168,6 +143,12 @@ class ExportInspeksiLaptopController extends Controller
             $inspection->qr_string = null;
             $inspection->qr_base64Inspector = null;
         }
+
+        // return view('itportal.rekapAllInspeksi.inspeksiLaptop', [
+        //     'inspection' => $inspection,
+        //     'thisYear' => $thisYear,
+        //     'site' => $site,
+        // ]);
 
         // Kirim ke view
         $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptop', [

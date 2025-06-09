@@ -1,11 +1,10 @@
 <style>
-@import 'datatables.net-dt';
+@import "datatables.net-dt";
 
 .dt-search {
     margin-bottom: 1em;
     float: right !important;
     text-align: center !important;
-
 }
 .dt-paging {
     margin-top: 1em;
@@ -14,6 +13,31 @@
 }
 .dt-buttons {
     margin-top: 1em;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shake-border {
+    animation: shake 0.3s ease;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6); /* biru lembut (tailwind blue-500) */
+    border: 1px solid rgba(59, 130, 246, 1); /* biru solid */
+    border-radius: 0.5rem;
 }
 </style>
 
@@ -39,25 +63,26 @@ function formattedDate(date) {
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
     $("#tableData").DataTable({
-        dom: 'fBrtilp',
-        scrollY: '40vh',
+        dom: "fBrtilp",
+        scrollY: "40vh",
         scrollCollapse: true,
         buttons: [
-                {
-                    extend: 'spacer',
-                    style: 'bar',
-                    text: 'Export files:'
-                },
-                'csvHtml5',
-                'excelHtml5',
-                'spacer'
-            ],
+            {
+                extend: "spacer",
+                style: "bar",
+                text: "Export files:",
+            },
+            "csvHtml5",
+            "excelHtml5",
+            "spacer",
+        ],
         initComplete: function () {
-            var btns = $('.dt-button');
-            btns.addClass('text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2');
-            btns.removeClass('dt-button');
-
-        }
+            var btns = $(".dt-button");
+            btns.addClass(
+                "text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            );
+            btns.removeClass("dt-button");
+        },
     });
 });
 
@@ -65,7 +90,14 @@ const props = defineProps({
     computer: {
         type: Array,
     },
+    crew: {
+        type: Array,
+    },
 });
+
+const options = props.crew;
+const selectedValues = ref(null); // Awalnya array kosong
+const showValidation = ref(false);
 
 const form = useForm({});
 
@@ -101,7 +133,29 @@ const validateYear = (event) => {
 };
 
 const getEncryptedYear = () => {
-    // Ambil tahun yang dimasukkan atau gunakan tahun saat ini
+    if (!selectedValues.value || !selectedValues.value.name) {
+        showValidation.value = true;
+
+        // Hilangkan efek setelah beberapa saat
+        setTimeout(() => {
+            showValidation.value = false;
+        }, 1000);
+
+        Swal.fire({
+            icon: "warning",
+            title: "Wajib Memilih PIC",
+            text: "Silakan pilih PIC terlebih dahulu sebelum mengekspor data.",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+        return;
+    }
+
+    const selectPic = selectedValues.value.name;
+
     const selectedYear = year.value
         ? parseInt(year.value)
         : new Date().getFullYear();
@@ -117,8 +171,6 @@ const getEncryptedYear = () => {
               return 4;
           })();
 
-    console.log(selectedYear);
-    console.log(selectedQuarter);
 
     // Validasi tahun (tidak boleh lebih dari 2500)
     if (selectedYear > 2500) {
@@ -150,11 +202,15 @@ const getEncryptedYear = () => {
             Swal.showLoading();
         },
     });
-
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.yearComputer"),
-        { year: selectedYear, quarter: selectedQuarter, site: "BA" },
+        {
+            year: selectedYear,
+            quarter: selectedQuarter,
+            site: "BA",
+            pic: selectPic,
+        },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -165,6 +221,7 @@ const getEncryptedYear = () => {
                             year: encryptedYear,
                             quarter: selectedQuarter,
                             site: "BA",
+                            pic: selectPic,
                         }),
                         "_blank"
                     );
@@ -211,7 +268,7 @@ const getBadgeTextStatusInspeksi = (status) => {
 const getBadgeClassStatusFindings = (temuan) => {
     if (temuan === "" || temuan === null) {
         return "bg-gradient-to-tl from-cyan-500 to-sky-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white";
-    }else {
+    } else {
         return "bg-gradient-to-tl from-red-500 to-orange-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white"; // Default untuk status yang tidak dikenal
     }
 };
@@ -219,7 +276,7 @@ const getBadgeClassStatusFindings = (temuan) => {
 const getBadgeTextStatusFindings = (temuan) => {
     if (temuan === "" || temuan === null) {
         return "Tidak ada temuan";
-    }else {
+    } else {
         return temuan; // Default teks untuk status yang tidak dikenal
     }
 };
@@ -253,16 +310,15 @@ const getBadgeTextStatusInventory = (status) => {
     <Head title="Inspeksi Komputer" />
 
     <AuthenticatedLayout
-            v-model:pages="pages"
+        v-model:pages="pages"
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
-        >
-
+    >
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
                     <div class="flex-none w-full max-w-full px-3">
-                                            <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                             <div class="flex flex-wrap md:flex-nowrap gap-4">
                                 <div
                                     class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
@@ -308,18 +364,35 @@ const getBadgeTextStatusInventory = (status) => {
                                         @input="validateYear"
                                     />
                                 </div>
+                                <div
+                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
+                                >
+                                    <VueMultiselect
+                                        ref="picSelect"
+                                        v-model="selectedValues"
+                                        :options="options"
+                                        :multiple="false"
+                                        :close-on-select="true"
+                                        placeholder="Pilih PIC"
+                                        track-by="name"
+                                        label="name"
+                                        :class="{
+                                            'shake-border': showValidation,
+                                        }"
+                                    />
+                                </div>
                                 <button
                                     @click="getEncryptedYear"
-                                    class="flex items-center text-sm justify-center gap-2 w-40 h-10 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-12` bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
                                 >
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi
                                 </button>
                             </div>
-                        <div
-                            class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
-                        >
-                            <div class="flex-auto px-0 pt-0 pb-2">
+                            <div
+                                class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
+                            >
+                                <div class="flex-auto px-0 pt-0 pb-2">
                                     <div class="p-0">
                                         <div class="p-6 text-gray-900">
                                             <div
@@ -339,7 +412,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                         >
                                                             #
                                                         </th>
-                                                         <th
+                                                        <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             Inspection
@@ -349,7 +422,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                         >
                                                             Inventory Number
                                                         </th>
-                                                        
+
                                                         <th
                                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -360,7 +433,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                         >
                                                             Department
                                                         </th>
-                                                        
+
                                                         <th
                                                             class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                         >
@@ -401,7 +474,6 @@ const getBadgeTextStatusInventory = (status) => {
                                                         >
                                                             Action
                                                         </th>
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -411,7 +483,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                         ) in computer"
                                                         :key="index"
                                                     >
-                                                    <td
+                                                        <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
@@ -424,7 +496,10 @@ const getBadgeTextStatusInventory = (status) => {
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'N'"
+                                                                v-if="
+                                                                    computers.inspection_status ===
+                                                                    'N'
+                                                                "
                                                                 @click="
                                                                     editData(
                                                                         computers.id
@@ -434,8 +509,21 @@ const getBadgeTextStatusInventory = (status) => {
                                                             >
                                                                 Do Inspection
                                                             </NavLinkCustom>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        >
+                                                            <p
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                {{
+                                                                    computers
+                                                                        .computer
+                                                                        .computer_code
+                                                                }}
+                                                            </p>
+                                                        </td>
 
-                                                        </td>
                                                         <td
                                                             class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
@@ -443,19 +531,10 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.computer.computer_code
-                                                                }}
-                                                            </p>
-                                                        </td>
-                                                        
-                                                        <td
-                                                            class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
-                                                        >
-                                                            <p
-                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
-                                                            >
-                                                                {{
-                                                                    computers.computer.pengguna.username
+                                                                    computers
+                                                                        .computer
+                                                                        .pengguna
+                                                                        .username
                                                                 }}
                                                             </p>
                                                         </td>
@@ -465,15 +544,15 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
+                                                                {{
+                                                                    computers
+                                                                        .computer
+                                                                        .pengguna
+                                                                        .department
+                                                                }}
+                                                            </p>
+                                                        </td>
 
-                                                                {{
-                                                                    computers.computer.pengguna.department
-                                                                }}
-                                                                
-                                                            </p>
-                                                        </td>
-                                                        
-                                                        
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
@@ -497,10 +576,13 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ 
-                                                                    computers.updated_at == null ? '-' : formattedDate(
-                                                                        computers.updated_at
-                                                                    )
+                                                                {{
+                                                                    computers.updated_at ==
+                                                                    null
+                                                                        ? "-"
+                                                                        : formattedDate(
+                                                                              computers.updated_at
+                                                                          )
                                                                 }}
                                                             </span>
                                                         </td>
@@ -560,14 +642,16 @@ const getBadgeTextStatusInventory = (status) => {
                                                                 }}
                                                             </span>
                                                         </td>
-                                                        
+
                                                         <td
                                                             class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
                                                             <span
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ computers.status_approval }}
+                                                                {{
+                                                                    computers.status_approval
+                                                                }}
                                                             </span>
                                                         </td>
                                                         <td
@@ -579,15 +663,20 @@ const getBadgeTextStatusInventory = (status) => {
                                                                         computers.id
                                                                     )
                                                                 "
-                                                                v-if="computers.inspection_status === 'Y'"
+                                                                v-if="
+                                                                    computers.inspection_status ===
+                                                                    'Y'
+                                                                "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 Edit
                                                             </NavLinkCustom>
-                                                            
 
                                                             <NavLinkCustom
-                                                            v-if="computers.inspection_status === 'Y'"
+                                                                v-if="
+                                                                    computers.inspection_status ===
+                                                                    'Y'
+                                                                "
                                                                 @click="
                                                                     detailData(
                                                                         computers.id
@@ -597,16 +686,15 @@ const getBadgeTextStatusInventory = (status) => {
                                                             >
                                                                 Detail
                                                             </NavLinkCustom>
-
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>

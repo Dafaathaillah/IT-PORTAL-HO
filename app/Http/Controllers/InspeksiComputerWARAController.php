@@ -19,6 +19,10 @@ class InspeksiComputerWARAController extends Controller
 
         $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site', 'ADW')->where('month', $month)->get();
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'ADW')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         $site = 'ADW';
 
         $role = auth()->user()->role;
@@ -26,7 +30,7 @@ class InspeksiComputerWARAController extends Controller
         // return dd($inspeksiKomputer);
         return Inertia::render(
             'Inspeksi/SiteWARA/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
+            ['computer' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 

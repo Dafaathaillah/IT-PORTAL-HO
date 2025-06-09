@@ -216,13 +216,26 @@
             <tr>
                 <td style="text-align: center; border: none;">
                     Mengetahui,<br>
-                    Group Leader<br><br><br><br><br>
-                    ( ________________ )
+                    Group Leader<br><br>
+                    @if ($qr_base64Approved)
+                        <img src="{{ $qr_base64Approved }}" alt="QR Code" style="width: 100px; height: 100px;"><br>
+                    @else
+                        <p><i>Perlu Approval</i></p>
+                    @endif
+                    <br>
+                    ( {{ $picApproved }} )
                 </td>
                 <td style="text-align: center; border: none;">
                     Inspektor,<br>
-                    Petugas Inspeksi<br><br><br><br><br>
-                    ( ________________ )
+                    IT Support<br><br>
+                    @if ($qr_base64Pic)
+                        <img src="{{ $qr_base64Pic }}" alt="QR Code" style="width: 100px; height: 100px;"><br>
+                    @else
+                        <p><i>Perlu Approval</i></p>
+                    @endif
+                    <br>
+                    ( {{ $pic }} )
+
                 </td>
             </tr>
         </table>

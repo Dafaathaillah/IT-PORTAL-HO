@@ -18,12 +18,16 @@ class InspeksiComputerPikController extends Controller
         $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'PIK')->get();
         $site = 'PIK';
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'PIK')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         $role = auth()->user()->role;
 
         // return dd($inspeksi_computer);
         return Inertia::render(
             'Inspeksi/SitePik/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role]
+            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 

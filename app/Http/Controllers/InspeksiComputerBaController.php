@@ -16,7 +16,10 @@ class InspeksiComputerBaController extends Controller
     public function index()
     {
         $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site', 'BA')->get();
-
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'BA')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+        // dd($crew);
         $site = 'BA';
 
         $role = auth()->user()->role;
@@ -24,7 +27,7 @@ class InspeksiComputerBaController extends Controller
         // return dd($inspeksiKomputer);
         return Inertia::render(
             'Inspeksi/SiteBa/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
+            ['computer' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 
