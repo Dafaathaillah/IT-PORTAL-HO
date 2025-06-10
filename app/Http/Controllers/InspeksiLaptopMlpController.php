@@ -17,13 +17,16 @@ class InspeksiLaptopMlpController extends Controller
     public function index()
     {
         $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'MLP')->get();
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'MLP')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $site = 'MLP';
         $role = auth()->user()->role;
 
         return Inertia::render(
             'Inspeksi/SiteMlp/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 

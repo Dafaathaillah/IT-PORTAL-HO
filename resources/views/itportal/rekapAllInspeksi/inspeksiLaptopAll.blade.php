@@ -152,11 +152,11 @@
                 @foreach ($inspeksiLaptopAll as $item)
                     <tr class="dataContent">
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->inventory->laptop_code }}</td>
-                        <td>{{ $item->inventory->number_asset_ho }}</td>
+                        <td>{{ $item->inventory->laptop_code ?? '-' }}</td>
+                        <td>{{ $item->inventory->number_asset_ho ?? '-'}}</td>
                         <td>{{ $item->created_date }}</td>
-                        <td>{{ $item->inventory->laptop_name }} {{ $item->spesifikasi_singkat ?? '-' }}</td>
-                        <td class="text-left">{{ $item->inventory->location }}</td>
+                        <td>{{ $item->inventory->laptop_name ?? '-' }} {{ $item->spesifikasi_singkat ?? '-' }}</td>
+                        <td class="text-left">{{ $item->inventory->location ?? '-' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_defrag == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">

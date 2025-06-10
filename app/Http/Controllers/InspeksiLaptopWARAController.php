@@ -20,13 +20,16 @@ class InspeksiLaptopWARAController extends Controller
             ->whereHas('inventory.pengguna') // pastikan ada user juga
             ->with('inventory.pengguna')
             ->get();
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'ADW')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
         return Inertia::render(
             'Inspeksi/SiteWARA/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 

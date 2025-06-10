@@ -38,14 +38,9 @@ class InspeksiLaptopController extends Controller
             ->with('inventory.pengguna')
             ->get();
 
-        // foreach ($inspeksi_laptop as $row) {
-        //     dump([
-        //         'id' => $row->id,
-        //         'id_laptop' => $row->inv_laptop_id,
-        //         'inventory' => $row->inventory?->laptop_code,
-        //         'pengguna' => $row->inventory?->pengguna?->username,
-        //     ]);
-        // }
+        $crew = User::whereIn('role', ['ict_ho'])->where('site', 'HO')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $site = 'HO';
 
@@ -53,7 +48,7 @@ class InspeksiLaptopController extends Controller
 
         return Inertia::render(
             'Inspeksi/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 
@@ -210,7 +205,7 @@ class InspeksiLaptopController extends Controller
         // $no_pica = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $no_pica = $maxId + 1;
 
-       $data = [
+        $data = [
             'software_defrag' => $params['software_defrag'],
             'software_check_system_restore' => $params['software_check_system_restore'],
             'software_clean_cache_data' => $params['software_clean_cache_data'],

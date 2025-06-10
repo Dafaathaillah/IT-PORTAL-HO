@@ -17,13 +17,16 @@ class InspeksiLaptopValeController extends Controller
     public function index()
     {
         $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'VALE')->get();
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'VIB')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $site = 'VALE';
         $role = auth()->user()->role;
 
         return Inertia::render(
             'Inspeksi/SiteVale/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 

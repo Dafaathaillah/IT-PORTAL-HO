@@ -17,13 +17,16 @@ class InspeksiLaptopPikController extends Controller
     public function index()
     {
         $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'PIK')->get();
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'PIK')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
         return Inertia::render(
             'Inspeksi/SitePik/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 

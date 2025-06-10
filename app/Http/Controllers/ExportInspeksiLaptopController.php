@@ -58,7 +58,11 @@ class ExportInspeksiLaptopController extends Controller
 
 
         $inspectionY = $inspeksiLaptopAll->firstWhere('inspection_status', 'Y');
-        $picApproved = $inspectionY->approved_by;
+        if ($inspectionY) {
+            $picApproved = $inspectionY->approved_by;
+        } else {
+            $picApproved = '';
+        }
         $qr_base64Approved = null;
         if ($inspectionY && $picApproved) {
             $approvedUser = User::where('name', $picApproved)->first();
@@ -81,7 +85,7 @@ class ExportInspeksiLaptopController extends Controller
             $qr_base64Pic = 'data:image/png;base64,' . $pngData;
         }
 
-        $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptopAll', compact('inspeksiLaptopAll', 'thisYear', 'unitScrap', 'unitUtilize', 'site', 'pic','picApproved','qr_base64Approved', 'qr_base64Pic'))
+        $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiLaptopAll', compact('inspeksiLaptopAll', 'thisYear', 'unitScrap', 'unitUtilize', 'site', 'pic', 'picApproved', 'qr_base64Approved', 'qr_base64Pic'))
             ->setPaper('A4', 'landscape');
 
 

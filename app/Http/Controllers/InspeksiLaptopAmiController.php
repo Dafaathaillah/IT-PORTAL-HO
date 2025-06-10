@@ -18,12 +18,16 @@ class InspeksiLaptopAmiController extends Controller
     {
         $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'AMI')->get();
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'AMI')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
         return Inertia::render(
             'Inspeksi/SiteAmi/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 
@@ -65,7 +69,7 @@ class InspeksiLaptopAmiController extends Controller
         // $no_pica = 'PICA/CU/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $no_pica = $maxId + 1;
 
-       $data = [
+        $data = [
             'software_defrag' => $params['software_defrag'],
             'software_check_system_restore' => $params['software_check_system_restore'],
             'software_clean_cache_data' => $params['software_clean_cache_data'],
