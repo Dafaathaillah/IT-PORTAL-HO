@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InspeksiLaptop;
 use App\Models\InvLaptop;
+use App\Models\PicaInspeksi;
 use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
@@ -54,13 +55,14 @@ class InspeksiLaptopAmiController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $params = $request->all();
         $currentDate = Carbon::now();
         $year = $currentDate->format('Y');
 
         // dd($request->file('image_temuan'));
 
-        $maxId = InspeksiLaptop::where('site', "BA")->where('year', $year)->max('pica_number');
+        $maxId = InspeksiLaptop::where('site', "AMI")->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -73,10 +75,8 @@ class InspeksiLaptopAmiController extends Controller
             'software_defrag' => $params['software_defrag'],
             'software_check_system_restore' => $params['software_check_system_restore'],
             'software_clean_cache_data' => $params['software_clean_cache_data'],
-            'software_check_ilegal_software' => $params['software_check_ilegal_software'],
             'software_office_license' => $params['software_office_license'],
             'software_standaritation_software' => $params['software_standaritation_software'],
-            'software_update_sinology' => $params['software_update_sinology'],
             'software_turn_off_windows_update' => $params['software_turn_off_windows_update'],
             'software_standaritation_device_name' => $params['software_standaritation_device_name'],
             'hardware_fan_cleaning' => $params['hardware_fan_cleaning'],
@@ -102,6 +102,19 @@ class InspeksiLaptopAmiController extends Controller
 
         if ($params['temuan'] != null || $params['temuan'] != '') {
             $data['pica_number'] = $no_pica;
+
+            $dataPica = [
+                'pica_number' => $no_pica,
+                'inspeksi_id' => $request->id,
+                'temuan' => $params['temuan'],
+                'tindakan' => $params['tindakan'],
+                'due_date' => $params['due_date'],
+                'remark' => $params['remark'],
+                'status_pica' => $params['findings_status'],
+                'close_by' => auth()->user()->name,
+                'site' => 'AMI',
+
+            ];
         }
 
         if ($request->file('image_temuan') != null) {
@@ -112,6 +125,7 @@ class InspeksiLaptopAmiController extends Controller
             $document_image->move($destinationPath, $new_path_document_image);
 
             $data['findings_image'] =  url($new_path_document_image);
+            $dataPica['foto_temuan'] =  url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -122,6 +136,7 @@ class InspeksiLaptopAmiController extends Controller
             $document_image->move($destinationPath, $new_path_document_image);
 
             $data['action_image'] =  url($new_path_document_image);
+            $dataPica['foto_tindakan'] =  url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -133,8 +148,10 @@ class InspeksiLaptopAmiController extends Controller
 
             $data['inspection_image'] =  url($new_path_document_image);
         }
-
-
+        // dd($dataPica);
+        if ($params['temuan']) {
+            PicaInspeksi::create($dataPica);
+        }
         InspeksiLaptop::firstWhere('id', $request->id)->update($data);
         return redirect()->route('inspeksiLaptopAmi.page');
     }
@@ -187,10 +204,8 @@ class InspeksiLaptopAmiController extends Controller
             'software_defrag' => $params['software_defrag'],
             'software_check_system_restore' => $params['software_check_system_restore'],
             'software_clean_cache_data' => $params['software_clean_cache_data'],
-            'software_check_ilegal_software' => $params['software_check_ilegal_software'],
             'software_office_license' => $params['software_office_license'],
             'software_standaritation_software' => $params['software_standaritation_software'],
-            'software_update_sinology' => $params['software_update_sinology'],
             'software_turn_off_windows_update' => $params['software_turn_off_windows_update'],
             'software_standaritation_device_name' => $params['software_standaritation_device_name'],
             'hardware_fan_cleaning' => $params['hardware_fan_cleaning'],
@@ -218,6 +233,19 @@ class InspeksiLaptopAmiController extends Controller
             $dataInspeksix = InspeksiLaptop::find($request->id);
             if ($dataInspeksix->pica_number == null) {
                 $data['pica_number'] = $no_pica;
+            } else {
+                $dataPica = [
+                    'pica_number' => $no_pica,
+                    'inspeksi_id' => $request->id,
+                    'temuan' => $params['temuan'],
+                    'tindakan' => $params['tindakan'],
+                    'due_date' => $params['due_date'],
+                    'remark' => $params['remark'],
+                    'status_pica' => $params['findings_status'],
+                    'close_by' => auth()->user()->name,
+                    'site' => 'AMI',
+
+                ];
             }
         }
 
@@ -229,6 +257,7 @@ class InspeksiLaptopAmiController extends Controller
             $document_image->move($destinationPath, $new_path_document_image);
 
             $data['findings_image'] =  url($new_path_document_image);
+            $dataPica['foto_temuan'] =  url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -239,6 +268,7 @@ class InspeksiLaptopAmiController extends Controller
             $document_image->move($destinationPath, $new_path_document_image);
 
             $data['action_image'] =  url($new_path_document_image);
+            $dataPica['foto_tindakan'] =  url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -251,7 +281,9 @@ class InspeksiLaptopAmiController extends Controller
             $data['inspection_image'] =  url($new_path_document_image);
         }
 
-
+        if ($params['temuan']) {
+            PicaInspeksi::firstWhere('inspeksi_id', $request->id)->update($dataPica);
+        }
         InspeksiLaptop::firstWhere('id', $request->id)->update($data);
         return redirect()->route('inspeksiLaptopAmi.page');
     }

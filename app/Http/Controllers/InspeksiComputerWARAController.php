@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InspeksiComputer;
 use App\Models\InvComputer;
+use App\Models\PicaInspeksi;
 use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
@@ -71,6 +72,19 @@ class InspeksiComputerWARAController extends Controller
         // end generate code
         $destinationPath = 'images/';
 
+        if ($request->findings) {
+            $dataPica = [
+                'pica_number' => '0',
+                'inspeksi_id' => $request->id,
+                'temuan' => $request->findings,
+                'tindakan' => $request->action,
+                'due_date' => $request->due_date,
+                'remark' => $request->remark,
+                'status_pica' => $request->status,
+                'close_by' => auth()->user()->name,
+                'site' => 'ADW',
+            ];
+        }
         if (!empty($request->file('findings_image'))) {
             if (!empty($request->file('action_image'))) {
                 //upload image
@@ -125,6 +139,8 @@ class InspeksiComputerWARAController extends Controller
                     'created_date' => Carbon::now()->format('Y-m-d'),
                     'last_edited_by' => auth()->user()->nrp
                 ];
+                $dataPica['foto_tindakan'] = url($new_path_findings);
+
                 $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
             } else {
                 if (!empty($request->file('inspection_image'))) {
@@ -173,6 +189,7 @@ class InspeksiComputerWARAController extends Controller
                         'created_date' => Carbon::now()->format('Y-m-d'),
                         'last_edited_by' => auth()->user()->nrp
                     ];
+                    $dataPica['foto_temuan'] = url($new_path_findings);
                 } else {
                     //upload image
                     $findings_image = $request->file('findings_image');
@@ -213,6 +230,7 @@ class InspeksiComputerWARAController extends Controller
                         'created_date' => Carbon::now()->format('Y-m-d'),
                         'last_edited_by' => auth()->user()->nrp
                     ];
+                    $dataPica['foto_temuan'] = url($new_path_findings);
                 }
             }
             $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
@@ -264,6 +282,8 @@ class InspeksiComputerWARAController extends Controller
                         'created_date' => Carbon::now()->format('Y-m-d'),
                         'last_edited_by' => auth()->user()->nrp
                     ];
+                    $dataPica['foto_tindakan'] = url($new_path_action);
+
                     $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
                 } else {
                     //upload image
@@ -305,6 +325,8 @@ class InspeksiComputerWARAController extends Controller
                         'created_date' => Carbon::now()->format('Y-m-d'),
                         'last_edited_by' => auth()->user()->nrp
                     ];
+                    $dataPica['foto_tindakan'] = url($new_path_action);
+
                     $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
                 }
             } else {
@@ -382,6 +404,12 @@ class InspeksiComputerWARAController extends Controller
                 }
                 $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
             }
+        }
+        if ($request->findings) {
+            PicaInspeksi::updateOrCreate(
+                ['inspeksi_id' => $request->id],
+                $dataPica
+            );
         }
 
         if (!empty($request->inventory_status)) {
