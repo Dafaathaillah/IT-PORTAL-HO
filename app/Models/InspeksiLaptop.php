@@ -24,19 +24,19 @@ class InspeksiLaptop extends Model
         'software_check_system_restore',
         'software_clean_cache_data',
         'software_check_ilegal_software',
-        'software_change_password',
-        'software_windows_license',
         'software_office_license',
         'software_standaritation_software',
         'software_update_sinology',
         'software_turn_off_windows_update',
-        'software_cheking_ssd_health',
         'software_percentage_ssd_health',
         'software_standaritation_device_name',
         'hardware_fan_cleaning',
         'hardware_change_pasta',
         'hardware_any_maintenance',
         'hardware_any_maintenance_explain',
+        'security_change_password',
+        'security_auto_lock',
+        'security_input_password',
         'findings',
         'findings_image',
         'findings_action',
@@ -56,5 +56,4 @@ class InspeksiLaptop extends Model
     {
         return $this->belongsTo(InvLaptop::class, 'inv_laptop_id', 'id');
     }
-    
 }

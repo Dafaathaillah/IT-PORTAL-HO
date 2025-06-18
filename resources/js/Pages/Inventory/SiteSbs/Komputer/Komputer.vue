@@ -24,9 +24,8 @@ import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import VueMultiselect from "vue-multiselect";
 import { onMounted } from "vue";
 
 const pages = ref("Pages");

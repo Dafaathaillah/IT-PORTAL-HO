@@ -150,10 +150,12 @@ const submitCsv = () => {
 
     formx.post(route("cctvSbs.import"), {
         onSuccess: () => {
+        console.log('oke')
+
             // Ambil data flash dari Laravel setelah request berhasil
             const page = usePage();
             const duplicates = page.props.flash?.duplicates || [];
-
+            
             if (duplicates.length > 0) {
                 let duplicateMsg = duplicates
                     .map(

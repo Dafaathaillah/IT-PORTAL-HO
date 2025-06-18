@@ -94,7 +94,7 @@ class InvLaptopController extends Controller
             ]);
         }
 
-        
+
         $maxId = InvLaptop::max('max_id');
         if (is_null($maxId)) {
             $maxId = 1;
@@ -296,6 +296,7 @@ class InvLaptopController extends Controller
             abort(404, 'Data not found');
         }
         // return response()->json(['ap' => $laptop]);
+        InspeksiLaptop::where('inv_laptop_id', $id)->delete();
         $laptop->delete();
         return redirect()->back();
     }

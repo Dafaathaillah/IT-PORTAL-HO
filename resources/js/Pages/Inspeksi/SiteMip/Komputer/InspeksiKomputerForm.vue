@@ -14,13 +14,16 @@ const props = defineProps(["inspeksi", "crew"]);
 const form = useForm({
     id: props.inspeksi.id,
     cpu: "",
+    internalCpu: "",
     monitor: "",
     license: "",
-    standaritation: "",
+    softwareStandaritation: "",
+    deviceNameStandaritation: "",
     cache: "",
     restore: "",
+    winUpdate: "",
+    storageHealth: "",
     defrag: "",
-    hard_maintenance: "",
     change_user_pass: "",
     autolock: "",
     enter_password: "",
@@ -98,13 +101,6 @@ const customFormat = (date) => {
     return `${year}-${month}-${day}`;
 };
 
-// const handleDueDate = () => {
-//     if (!selectedDate.value) {
-//         form.due_date = null; // Set nilai ke null jika kosong
-//     } else {
-//         form.due_date = customFormat(selectedDate.value);
-//     }
-// };
 const formSubmittedCrew = ref(false);
 
 const save = () => {
@@ -113,7 +109,7 @@ const save = () => {
         // console.log('ga oke')
         return; // Stop execution if validation fails
     }
-    
+
     if (selectedDate.value != null) {
         form.due_date = customFormat(selectedDate.value);
     }
@@ -168,7 +164,7 @@ const save = () => {
                     <li class="text-sm leading-normal">
                         <a class="text-white opacity-50">Pages</a>
                     </li>
-                       <li
+                    <li
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
@@ -349,22 +345,19 @@ const save = () => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="max-w-md mx-auto p-4">
+                                <div class="max-w-8xl mx-auto p-1 mt-10">
                                     <h2
-                                        class="text-lg text-center font-bold mb-4"
+                                        class="text-lg text-left font-bold mb-4"
                                     >
-                                        Kondisi Fisik
+                                        INSPEKSI DAN PERWATAN HARDWARE
                                     </h2>
                                 </div>
                                 <div class="flex flex-wrap p-4 -mx-3">
                                     <div
-                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
-                                    ></div>
-
-                                    <div
-                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
+                                            Check dan Perbersihan Bagian Luar
                                             CPU
                                         </h3>
                                         <div
@@ -382,7 +375,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -397,17 +390,56 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
                                     </div>
-                                    <div
-                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
-                                    ></div>
 
                                     <div
-                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Perbersihan Komponen Internal CPU
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                    required
+                                                    v-model="form.internalCpu"
+                                                    type="radio"
+                                                    name="internalCpu"
+                                                    value="Y"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Ya</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                    required
+                                                    v-model="form.internalCpu"
+                                                    type="radio"
+                                                    name="internalCpu"
+                                                    value="N"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
                                             Monitor
@@ -427,7 +459,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -442,18 +474,18 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="max-w-md mx-auto p-4">
+                                <div class="max-w-8xl mx-auto p-1 mt-3">
                                     <h2
-                                        class="text-lg text-center font-bold mb-4"
+                                        class="text-lg text-left font-bold mb-4"
                                     >
-                                        Software
+                                        PEMERIKSAAN SOFTWARE
                                     </h2>
                                 </div>
                                 <div class="flex flex-wrap p-4 -mx-3">
@@ -461,7 +493,89 @@ const save = () => {
                                         class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
-                                            License
+                                            Standarisasi Software
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                    required
+                                                    v-model="form.softwareStandaritation"
+                                                    type="radio"
+                                                    name="softwareStandaritation"
+                                                    value="Y"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Ya</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                    required
+                                                    v-model="form.softwareStandaritation"
+                                                    type="radio"
+                                                    name="softwareStandaritation"
+                                                    value="N"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Standarisasi Device Name
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                    required
+                                                    v-model="form.deviceNameStandaritation"
+                                                    type="radio"
+                                                    name="deviceNameStandaritation"
+                                                    value="Y"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Ya</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                    required
+                                                    v-model="form.deviceNameStandaritation"
+                                                    type="radio"
+                                                    name="deviceNameStandaritation"
+                                                    value="N"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Tidak</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            License Software
                                         </h3>
                                         <div
                                             class="mb-4 flex items-center space-x-4"
@@ -478,7 +592,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -493,7 +607,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
@@ -503,53 +617,7 @@ const save = () => {
                                         class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
-                                            Standaritation
-                                        </h3>
-                                        <div
-                                            class="mb-4 flex items-center space-x-4"
-                                        >
-                                            <label
-                                                class="flex items-center space-x-2"
-                                            >
-                                                <input
-                                                    required
-                                                    v-model="
-                                                        form.standaritation
-                                                    "
-                                                    type="radio"
-                                                    name="standaritation"
-                                                    value="Y"
-                                                    class="text-blue-600 focus:ring-blue-500"
-                                                />
-                                                <span class="text-sm"
-                                                    >Aman</span
-                                                >
-                                            </label>
-                                            <label
-                                                class="flex items-center space-x-2"
-                                            >
-                                                <input
-                                                    required
-                                                    v-model="
-                                                        form.standaritation
-                                                    "
-                                                    type="radio"
-                                                    name="standaritation"
-                                                    value="N"
-                                                    class="text-blue-600 focus:ring-blue-500"
-                                                />
-                                                <span class="text-sm"
-                                                    >Tidak Aman</span
-                                                >
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
-                                    >
-                                        <h3 class="text-sm font-semibold">
-                                            Clear Cache
+                                            Pembersihan Cache
                                         </h3>
                                         <div
                                             class="mb-4 flex items-center space-x-4"
@@ -566,7 +634,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -581,12 +649,14 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
                                     </div>
+                                </div>
 
+                                <div class="flex flex-wrap p-4 -mx-3">
                                     <div
                                         class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
                                     >
@@ -608,7 +678,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -623,24 +693,57 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="max-w-md mx-auto p-4">
-                                    <h2
-                                        class="text-lg text-center font-bold mb-4"
-                                    >
-                                        Defrag
-                                    </h2>
-                                </div>
-                                <div class="flex flex-wrap p-4 -mx-3">
                                     <div
                                         class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
-                                    ></div>
+                                    >
+                                        <h3 class="text-sm font-semibold">
+                                            Check Windows Update
+                                        </h3>
+                                        <div
+                                            class="mb-4 flex items-center space-x-4"
+                                        >
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                    required
+                                                    v-model="
+                                                        form.winUpdate
+                                                    "
+                                                    type="radio"
+                                                    name="winUpdate"
+                                                    value="ON"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >On</span
+                                                >
+                                            </label>
+                                            <label
+                                                class="flex items-center space-x-2"
+                                            >
+                                                <input
+                                                    required
+                                                    v-model="
+                                                        form.winUpdate
+                                                    "
+                                                    type="radio"
+                                                    name="winUpdate"
+                                                    value="OFF"
+                                                    class="text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span class="text-sm"
+                                                    >Off</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </div>
 
                                     <div
                                         class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
@@ -663,7 +766,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -678,67 +781,42 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
                                     </div>
-                                    <div
-                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
-                                    ></div>
 
-                                    <div
-                                        class="w-full max-w-full shrink-0 md:w-3/12 md:flex-0"
+                                     <div
+                                        class="w-full max-w-full shrink-0 md:w-2/12 md:flex-0"
                                     >
-                                        <h3 class="text-sm font-semibold">
-                                            Maintenance Berat
-                                        </h3>
-                                        <div
-                                            class="mb-4 flex items-center space-x-4"
-                                        >
+                                        <div class="mb-4">
                                             <label
-                                                class="flex items-center space-x-2"
+                                                for="serial-number"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >SSD/HDD Health</label
                                             >
-                                                <input
-                                                    required
-                                                    v-model="
-                                                        form.hard_maintenance
-                                                    "
-                                                    type="radio"
-                                                    name="hard_maintenance"
-                                                    value="Y"
-                                                    class="text-blue-600 focus:ring-blue-500"
-                                                />
-                                                <span class="text-sm"
-                                                    >Aman</span
-                                                >
-                                            </label>
-                                            <label
-                                                class="flex items-center space-x-2"
-                                            >
-                                                <input
-                                                    required
-                                                    v-model="
-                                                        form.hard_maintenance
-                                                    "
-                                                    type="radio"
-                                                    name="hard_maintenance"
-                                                    value="N"
-                                                    class="text-blue-600 focus:ring-blue-500"
-                                                />
-                                                <span class="text-sm"
-                                                    >Tidak Aman</span
-                                                >
-                                            </label>
+                                            <input
+                                                type="text"
+                                                name="serial_number"
+                                                v-model="form.storageHealth"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="90%"
+                                            />
                                         </div>
+                                    </div>
+                                      <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-1/12 md:flex-0"
+                                    >
+                                        
                                     </div>
                                 </div>
 
-                                <div class="max-w-md mx-auto p-4">
+                                <div class="max-w-8xl mx-auto p-1">
                                     <h2
-                                        class="text-lg text-center font-bold mb-4"
+                                        class="text-lg text-left font-bold mb-4"
                                     >
-                                        Security
+                                        PEMERIKSAAN SECURITY
                                     </h2>
                                 </div>
                                 <div class="flex flex-wrap p-4 -mx-3">
@@ -746,8 +824,7 @@ const save = () => {
                                         class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
-                                            Change The User Password According
-                                            To The Computer Unit Name
+                                            Penggantian Username
                                         </h3>
                                         <div
                                             class="mb-4 flex items-center space-x-4"
@@ -766,7 +843,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -783,7 +860,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
@@ -793,8 +870,7 @@ const save = () => {
                                         class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
-                                            Computer Autoolock and Sleep After
-                                            10 Minutes Standby
+                                            Setting Auto Lock Screen
                                         </h3>
                                         <div
                                             class="mb-4 flex items-center space-x-4"
@@ -811,7 +887,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -826,7 +902,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
@@ -836,8 +912,7 @@ const save = () => {
                                         class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
-                                            Make Sure To Enter Password After
-                                            Locking
+                                            Setting Input Password After Lock Screen
                                         </h3>
                                         <div
                                             class="mb-4 flex items-center space-x-4"
@@ -856,7 +931,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Aman</span
+                                                    >Ya</span
                                                 >
                                             </label>
                                             <label
@@ -873,7 +948,7 @@ const save = () => {
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
                                                 <span class="text-sm"
-                                                    >Tidak Aman</span
+                                                    >Tidak</span
                                                 >
                                             </label>
                                         </div>
@@ -1045,9 +1120,14 @@ const save = () => {
                                                 label="name"
                                             />
                                         </div>
-                                        <span v-if="
-                                            !selectedOption && formSubmittedCrew
-                                        " class="text-red-500">Crew Tidak boleh kosong!</span>
+                                        <span
+                                            v-if="
+                                                !selectedOption &&
+                                                formSubmittedCrew
+                                            "
+                                            class="text-red-500"
+                                            >Crew Tidak boleh kosong!</span
+                                        >
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"

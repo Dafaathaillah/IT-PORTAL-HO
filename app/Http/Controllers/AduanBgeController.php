@@ -40,7 +40,7 @@ class AduanBgeController extends Controller
     public function checkAduan(Request $request)
     {
         $aduanBaru = Aduan::where('site', 'BGE')->orderBy('id', 'desc')->first();
-    
+
         if ($aduanBaru) {
             $response = [
                 'id' => $aduanBaru->max_id,
@@ -80,9 +80,14 @@ class AduanBgeController extends Controller
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
 
-        $crew = User::where('site', 'BGE')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+        $excludedNrps = ['230020730', '200003220'];
+
+        $crew = User::whereIn('site', ['BGE', 'PIK'])
+            ->where('ict_group', 'Y')
+            ->whereNotIn('nrp', $excludedNrps)
+            ->pluck('name')
+            ->map(fn ($name) => ['name' => $name])
+            ->toArray();
 
         return Inertia::render('Inventory/SiteBge/Aduan/AduanCreate', ['ticket' => $uniqueString, 'crew' => $crew, 'categories' => $categories]);
     }
@@ -154,9 +159,15 @@ class AduanBgeController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site', 'BGE')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+
+        $excludedNrps = ['230020730', '20003220'];
+
+        $crew = User::whereIn('site', ['BGE', 'PIK'])
+            ->where('ict_group', 'Y')
+            ->whereNotIn('nrp', $excludedNrps)
+            ->pluck('name')
+            ->map(fn ($name) => ['name' => $name])
+            ->toArray();
 
         return Inertia::render('Inventory/SiteBge/Aduan/AduanProgress', [
             'aduan' => $aduan,
@@ -222,9 +233,16 @@ class AduanBgeController extends Controller
         }
 
         $selectCrew = explode(', ', $aduan->crew);
-        $crew = User::where('site', 'BGE')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+
+        $excludedNrps = ['230020730', '20003220'];
+
+        $crew = User::whereIn('site', ['BGE', 'PIK'])
+            ->where('ict_group', 'Y')
+            ->whereNotIn('nrp', $excludedNrps)
+            ->pluck('name')
+            ->map(fn ($name) => ['name' => $name])
+            ->toArray();
+
         return Inertia::render('Inventory/SiteBge/Aduan/AduanEdit', [
             'aduan' => $aduan,
             'crew' => $crew,

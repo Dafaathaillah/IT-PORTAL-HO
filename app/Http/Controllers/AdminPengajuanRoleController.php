@@ -32,7 +32,8 @@ class AdminPengajuanRoleController extends Controller
         ];
 
         $data_role_user = [
-            'role' => $request->status
+            'role' => $request->status,
+            'ict_group' => 'Y',
         ];
 
         pengajuanAksesUser::firstWhere('id', $request->id)->update($data_pengajuan);

@@ -19,11 +19,11 @@ class AduanValeController extends Controller
     public function index()
     {
 
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'VALE')->get();
-        $countOpen = Aduan::where('status', 'OPEN')->where('site', 'VALE')->count();
-        $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'VALE')->count();
-        $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'VALE')->count();
-        $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'VALE')->count();
+        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'VIB')->get();
+        $countOpen = Aduan::where('status', 'OPEN')->where('site', 'VIB')->count();
+        $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'VIB')->count();
+        $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'VIB')->count();
+        $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'VIB')->count();
 
         return Inertia::render(
             'Inventory/SiteVale/Aduan/Aduan',
@@ -67,7 +67,7 @@ class AduanValeController extends Controller
         $month = $currentDate->month;
         $day = $currentDate->day;
 
-        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site', 'VALE')->orderBy('max_id', 'desc')->first();
+        $maxId = Aduan::whereDate('created_at', $currentDate->format('Y-m-d'))->where('site', 'VIB')->orderBy('max_id', 'desc')->first();
 
         if (is_null($maxId)) {
             $maxId = 0;
@@ -80,7 +80,7 @@ class AduanValeController extends Controller
         $uniqueString = 'ADUAN-' . $year . $month . $day . '-' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
         $request['ticket'] = $uniqueString;
 
-        $crew = User::where('site', 'VALE')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'VIB')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -107,8 +107,8 @@ class AduanValeController extends Controller
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'crew' => $request['crew'],
-            'site' => 'VALE',
-            'site_pelapor' => 'VALE'
+            'site' => 'VIB',
+            'site_pelapor' => 'VIB'
         ];
 
         if ($request->file('image') != null) {
@@ -154,7 +154,7 @@ class AduanValeController extends Controller
         if (empty($aduan)) {
             abort(404, 'Data not found');
         }
-        $crew = User::where('site', 'VALE')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'VIB')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
 
@@ -222,7 +222,7 @@ class AduanValeController extends Controller
         }
 
         $selectCrew = explode(', ', $aduan->crew);
-        $crew = User::where('site', 'VALE')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
+        $crew = User::where('site', 'VIB')->where('ict_group', 'Y')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
         return Inertia::render('Inventory/SiteVale/Aduan/AduanEdit', [

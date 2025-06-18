@@ -37,7 +37,7 @@ class RedirectAuthenticatedUsersController extends Controller
             return redirect()->route('dashboardSbs.page');
         } elseif (auth()->user()->role == 'ict_technician' && auth()->user()->site == 'SKS' || auth()->user()->role ==  'ict_group_leader' && auth()->user()->site == 'SKS' || auth()->user()->role ==  'ict_admin' && auth()->user()->site == 'SKS') {
             return redirect()->route('dashboardSks.page');
-        } elseif (auth()->user()->role  ==  'ict_group_leader' && auth()->user()->site == 'BGE') {
+        } elseif (auth()->user()->role  ==  'ict_group_leader' && auth()->user()->site == 'BGE' || auth()->user()->role == 'ict_technician' && auth()->user()->site == 'BGE') {
             return redirect()->route('dashboardBge.page');
         } elseif (auth()->user()->role == 'soc_ho') {
             return redirect()->route('aduan.page');

@@ -1,6 +1,5 @@
 <style>
 @import "datatables.net-dt";
-
 .dt-search {
     margin-bottom: 1em;
     float: right !important;
@@ -13,6 +12,9 @@
 }
 .dt-buttons {
     margin-top: 1em;
+}
+#dt-length-0 {
+    width: 60px !important; 
 }
 </style>
 <script setup>

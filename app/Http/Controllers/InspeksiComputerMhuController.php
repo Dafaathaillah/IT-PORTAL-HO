@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InspeksiComputer;
 use App\Models\InvComputer;
+use App\Models\PicaInspeksi;
 use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
@@ -17,6 +18,9 @@ class InspeksiComputerMhuController extends Controller
     public function index()
     {
         $inspeksi_computer = InspeksiComputer::with('computer.pengguna')->where('site', 'MHU')->get();
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'MHU')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         $site = 'MHU';
 
@@ -25,7 +29,7 @@ class InspeksiComputerMhuController extends Controller
         // return dd($inspeksi_computer);
         return Inertia::render(
             'Inspeksi/SiteMhu/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role]
+            ['computer' => $inspeksi_computer, 'site' => $site, 'role' => $role, 'crew' => $crew]
         );
     }
 
@@ -66,6 +70,19 @@ class InspeksiComputerMhuController extends Controller
         // end generate code
         $destinationPath = 'images/';
 
+        if ($request->findings) {
+            $dataPica = [
+                'pica_number' => '0',
+                'inspeksi_id' => $request->id,
+                'temuan' => $request->findings,
+                'tindakan' => $request->action,
+                'due_date' => $request->due_date,
+                'remark' => $request->remark,
+                'status_pica' => $request->status,
+                'close_by' => auth()->user()->name,
+                'site' => 'MHU',
+            ];
+        }
         if (!empty($request->file('findings_image'))) {
             if (!empty($request->file('action_image'))) {
                 //upload image
@@ -89,16 +106,20 @@ class InspeksiComputerMhuController extends Controller
                     'inspection_status' => 'Y',
                     'inspector' => Auth::user()->name,
                     'physique_condition_cpu' => $request->cpu,
+                    'physique_condition_internal_cpu' => $request->internalCpu,
                     'physique_condition_monitor' => $request->monitor,
                     'software_license' => $request->license,
-                    'software_standaritation' => $request->standaritation,
+                    'software_standaritation' => $request->softwareStandaritation,
+                    'software_device_name_standaritation' => $request->deviceNameStandaritation,
                     'software_clear_cache' => $request->cache,
                     'software_system_restore' => $request->restore,
+                    'software_windows_update' => $request->winUpdate,
+                    'software_storage_health' => $request->storageHealth,
                     'defrag' => $request->defrag,
                     'hard_maintenance' => $request->hard_maintenance,
-                    'change_user_pass' => $request->change_user_pass,
-                    'autolock' => $request->autolock,
-                    'enter_password' => $request->enter_password,
+                    'security_change_password' => $request->change_user_pass,
+                    'security_auto_lock' => $request->autolock,
+                    'security_input_password' => $request->enter_password,
                     'crew' => $request->crew,
                     'findings' => $request->findings,
                     'findings_action' => $request->action,
@@ -116,6 +137,8 @@ class InspeksiComputerMhuController extends Controller
                     'created_date' => Carbon::now()->format('Y-m-d'),
                     'last_edited_by' => auth()->user()->nrp
                 ];
+                $dataPica['foto_tindakan'] = url($new_path_findings);
+
                 $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
             } else {
                 if (!empty($request->file('inspection_image'))) {
@@ -134,16 +157,20 @@ class InspeksiComputerMhuController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
-                        'change_user_pass' => $request->change_user_pass,
-                        'autolock' => $request->autolock,
-                        'enter_password' => $request->enter_password,
+                        'security_change_password' => $request->change_user_pass,
+                        'security_auto_lock' => $request->autolock,
+                        'security_input_password' => $request->enter_password,
                         'crew' => $request->crew,
                         'findings' => $request->findings,
                         'findings_action' => $request->action,
@@ -160,6 +187,7 @@ class InspeksiComputerMhuController extends Controller
                         'created_date' => Carbon::now()->format('Y-m-d'),
                         'last_edited_by' => auth()->user()->nrp
                     ];
+                    $dataPica['foto_temuan'] = url($new_path_findings);
                 } else {
                     //upload image
                     $findings_image = $request->file('findings_image');
@@ -171,16 +199,20 @@ class InspeksiComputerMhuController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
-                        'change_user_pass' => $request->change_user_pass,
-                        'autolock' => $request->autolock,
-                        'enter_password' => $request->enter_password,
+                        'security_change_password' => $request->change_user_pass,
+                        'security_auto_lock' => $request->autolock,
+                        'security_input_password' => $request->enter_password,
                         'crew' => $request->crew,
                         'findings' => $request->findings,
                         'findings_action' => $request->action,
@@ -196,6 +228,7 @@ class InspeksiComputerMhuController extends Controller
                         'created_date' => Carbon::now()->format('Y-m-d'),
                         'last_edited_by' => auth()->user()->nrp
                     ];
+                    $dataPica['foto_temuan'] = url($new_path_findings);
                 }
             }
             $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
@@ -217,16 +250,20 @@ class InspeksiComputerMhuController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
-                        'change_user_pass' => $request->change_user_pass,
-                        'autolock' => $request->autolock,
-                        'enter_password' => $request->enter_password,
+                        'security_change_password' => $request->change_user_pass,
+                        'security_auto_lock' => $request->autolock,
+                        'security_input_password' => $request->enter_password,
                         'crew' => $request->crew,
                         'findings' => $request->findings,
                         'findings_action' => $request->action,
@@ -243,6 +280,8 @@ class InspeksiComputerMhuController extends Controller
                         'created_date' => Carbon::now()->format('Y-m-d'),
                         'last_edited_by' => auth()->user()->nrp
                     ];
+                    $dataPica['foto_tindakan'] = url($new_path_action);
+
                     $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
                 } else {
                     //upload image
@@ -255,16 +294,20 @@ class InspeksiComputerMhuController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
-                        'change_user_pass' => $request->change_user_pass,
-                        'autolock' => $request->autolock,
-                        'enter_password' => $request->enter_password,
+                        'security_change_password' => $request->change_user_pass,
+                        'security_auto_lock' => $request->autolock,
+                        'security_input_password' => $request->enter_password,
                         'crew' => $request->crew,
                         'findings' => $request->findings,
                         'findings_action' => $request->action,
@@ -280,6 +323,8 @@ class InspeksiComputerMhuController extends Controller
                         'created_date' => Carbon::now()->format('Y-m-d'),
                         'last_edited_by' => auth()->user()->nrp
                     ];
+                    $dataPica['foto_tindakan'] = url($new_path_action);
+
                     $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
                 }
             } else {
@@ -295,16 +340,20 @@ class InspeksiComputerMhuController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
-                        'change_user_pass' => $request->change_user_pass,
-                        'autolock' => $request->autolock,
-                        'enter_password' => $request->enter_password,
+                        'security_change_password' => $request->change_user_pass,
+                        'security_auto_lock' => $request->autolock,
+                        'security_input_password' => $request->enter_password,
                         'crew' => $request->crew,
                         'remarks' => $request->remark,
                         'inspection_image' => url($new_path_inspection),
@@ -322,16 +371,20 @@ class InspeksiComputerMhuController extends Controller
                         'inspection_status' => 'Y',
                         'inspector' => Auth::user()->name,
                         'physique_condition_cpu' => $request->cpu,
+                        'physique_condition_internal_cpu' => $request->internalCpu,
                         'physique_condition_monitor' => $request->monitor,
                         'software_license' => $request->license,
-                        'software_standaritation' => $request->standaritation,
+                        'software_standaritation' => $request->softwareStandaritation,
+                        'software_device_name_standaritation' => $request->deviceNameStandaritation,
                         'software_clear_cache' => $request->cache,
                         'software_system_restore' => $request->restore,
+                        'software_windows_update' => $request->winUpdate,
+                        'software_storage_health' => $request->storageHealth,
                         'defrag' => $request->defrag,
                         'hard_maintenance' => $request->hard_maintenance,
-                        'change_user_pass' => $request->change_user_pass,
-                        'autolock' => $request->autolock,
-                        'enter_password' => $request->enter_password,
+                        'security_change_password' => $request->change_user_pass,
+                        'security_auto_lock' => $request->autolock,
+                        'security_input_password' => $request->enter_password,
                         'crew' => $request->crew,
                         'findings' => $request->findings,
                         'findings_action' => $request->action,
@@ -349,6 +402,12 @@ class InspeksiComputerMhuController extends Controller
                 }
                 $data['udpateInspeksi'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataInspection);
             }
+        }
+        if ($request->findings) {
+            PicaInspeksi::updateOrCreate(
+                ['inspeksi_id' => $request->id],
+                $dataPica
+            );
         }
 
         if (!empty($request->inventory_status)) {
