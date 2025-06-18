@@ -47,6 +47,8 @@ use App\Http\Controllers\ExportInspeksiComputerController;
 use App\Http\Controllers\ExportInspeksiLaptopController;
 use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
+use App\Http\Controllers\InspectionScheduleComputerController;
+use App\Http\Controllers\InspectionScheduleController;
 use App\Http\Controllers\InspeksiComputerAmiController;
 use App\Http\Controllers\InspeksiComputerBaController;
 use App\Http\Controllers\InspeksiComputerBgeController;
@@ -265,8 +267,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
     // });
 
+    $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'];
 
-    foreach (['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'] as $site) {
+    foreach ($sites as $site) {
         Route::group([
             'prefix' => "daily-jobs-$site",
             'as' => "daily-jobs.$site.",
@@ -283,7 +286,7 @@ Route::middleware('auth')->group(function () {
     }
 
 
-    foreach (['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'] as $site) {
+    foreach ($sites as $site) {
         Route::group([
             'prefix' => "monitoring-jobs-$site",
             'as' => "monitoring-jobs.$site.",
@@ -297,7 +300,7 @@ Route::middleware('auth')->group(function () {
     }
 
 
-    foreach (['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'] as $site) {
+    foreach ($sites as $site) {
         Route::group([
             'prefix' => "unschedule-jobs-$site",
             'as' => "unschedule-jobs.$site.",
@@ -315,6 +318,46 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/root-cause-problems', [RootCauseProblemController::class, 'getRootCauseProblems']);
+
+    foreach ($sites as $site) {
+        // Laptop
+        Route::group([
+            'prefix' => "inspection-scheduler-laptop-$site",
+            'as' => "inspection-scheduler-laptop.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [InspectionScheduleController::class, 'index'])->name('index');
+            Route::put('/{id}', [InspectionScheduleController::class, 'update'])->name('update');
+        });
+
+        Route::get("generate-inspection-scheduler-laptop-$site", [InspectionScheduleController::class, 'generate'])
+            ->name("inspection-scheduler-laptop.$site.generate")
+            ->defaults('site', $site);
+
+        // Computer
+        Route::group([
+            'prefix' => "inspection-scheduler-computer-$site",
+            'as' => "inspection-scheduler-computer.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [InspectionScheduleComputerController::class, 'index'])->name('index');
+            Route::put('/{id}', [InspectionScheduleComputerController::class, 'update'])->name('update');
+        });
+
+        Route::get("generate-inspection-scheduler-computer-$site", [InspectionScheduleComputerController::class, 'generate'])
+            ->name("inspection-scheduler-computer.$site.generate")
+            ->defaults('site', $site);
+    }
+
+    // Route::get('/inspection-scheduler-laptop', [InspectionScheduleController::class, 'index'])->name('inspection-schedule.index');
+    // Route::put('/inspection-scheduler-laptop/{id}', [InspectionScheduleController::class, 'update'])->name('inspection-schedule.update');
+
+    // Route::get('/generate-inspection-scheduler-laptop', [InspectionScheduleController::class, 'generate']);
+
+    // Route::get('/inspection-scheduler-computer', [InspectionScheduleComputerController::class, 'index'])->name('inspection-scheduler-computer.index');
+    // Route::put('/inspection-scheduler-computer/{id}', [InspectionScheduleComputerController::class, 'update'])->name('inspection-scheduler-computer.update');
+
+    // Route::get('/generate-inspection-scheduler-computer', [InspectionScheduleComputerController::class, 'generate']);
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
         Route::get('/dashboard', function () {

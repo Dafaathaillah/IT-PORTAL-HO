@@ -7523,6 +7523,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiBa">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.ba.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.ba.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopBa.page')"
                                         :active="
                                             route().current(
@@ -7540,6 +7565,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.ba.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.ba.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -8320,6 +8370,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiMifa">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.mifa.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.mifa.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopMifa.page')"
                                         :active="
                                             route().current(
@@ -8337,6 +8412,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.mifa.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.mifa.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -9120,6 +9220,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiMhu">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.mhu.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.mhu.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopMhu.page')"
                                         :active="
                                             route().current(
@@ -9137,6 +9262,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.mhu.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.mhu.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -9922,6 +10072,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiWARA">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.adw.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.adw.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopWARA.page')"
                                         :active="
                                             route().current(
@@ -9939,6 +10114,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.adw.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.adw.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -10620,6 +10820,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiAmi">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.ami.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.ami.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopAmi.page')"
                                         :active="
                                             route().current(
@@ -10637,6 +10862,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.ami.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.ami.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -11420,6 +11670,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiPik">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.pik.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.pik.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopPik.page')"
                                         :active="
                                             route().current(
@@ -11437,6 +11712,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.pik.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.pik.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -12220,6 +12520,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiBge">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.bge.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.bge.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopBge.page')"
                                         :active="
                                             route().current(
@@ -12237,6 +12562,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.bge.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.bge.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -13020,6 +13370,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiBib">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.bib.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.bib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopBib.page')"
                                         :active="
                                             route().current(
@@ -13037,6 +13412,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.bib.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.bib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -13816,6 +14216,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiIpt">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.ipt.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.ipt.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopIpt.page')"
                                         :active="
                                             route().current(
@@ -13833,6 +14258,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.ipt.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.ipt.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -14611,6 +15061,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiMlp">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.mlp.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.mlp.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopMlp.page')"
                                         :active="
                                             route().current(
@@ -14628,6 +15103,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.mlp.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.mlp.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -15406,6 +15906,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiMip">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.mip.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.mip.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopMip.page')"
                                         :active="
                                             route().current(
@@ -15423,6 +15948,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.mip.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.mip.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -16203,6 +16753,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiVale">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.vib.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.vib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopVale.page')"
                                         :active="
                                             route().current(
@@ -16220,6 +16795,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.vib.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.vib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -16999,6 +17599,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiSbs">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.sbs.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.sbs.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopSbs.page')"
                                         :active="
                                             route().current(
@@ -17016,6 +17641,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.sbs.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.sbs.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -17795,6 +18445,31 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiSks">
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.sks.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.sks.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopSks.page')"
                                         :active="
                                             route().current(
@@ -17812,6 +18487,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.sks.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.sks.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
