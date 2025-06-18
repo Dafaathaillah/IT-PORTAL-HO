@@ -23,6 +23,8 @@ use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DailyJobController;
+use App\Http\Controllers\DailyJobMonitorController;
 use App\Http\Controllers\DashboardAmiController;
 use App\Http\Controllers\DashboardBaController;
 use App\Http\Controllers\DashboardBgeController;
@@ -45,6 +47,8 @@ use App\Http\Controllers\ExportInspeksiComputerController;
 use App\Http\Controllers\ExportInspeksiLaptopController;
 use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
+use App\Http\Controllers\InspectionScheduleComputerController;
+use App\Http\Controllers\InspectionScheduleController;
 use App\Http\Controllers\InspeksiComputerAmiController;
 use App\Http\Controllers\InspeksiComputerBaController;
 use App\Http\Controllers\InspeksiComputerBgeController;
@@ -209,7 +213,9 @@ use App\Http\Controllers\KpiInspeksiController;
 use App\Http\Controllers\KpiResponseTimeController;
 use App\Http\Controllers\PicaInspeksiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RootCauseProblemController;
 use App\Http\Controllers\TestingAuthApiController;
+use App\Http\Controllers\UnscheduleJobController;
 use App\Http\Controllers\UserAllBaController;
 use App\Http\Controllers\UserAllController;
 use App\Http\Controllers\UserAllMhuController;
@@ -226,6 +232,7 @@ use App\Models\InvLaptop;
 use App\Models\InvPrinter;
 use App\Models\InvSwitch;
 use App\Models\InvWirelless;
+use App\Models\RootCauseProblem;
 use App\Models\UserAll;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
@@ -276,7 +283,97 @@ Route::middleware('auth')->group(function () {
     })->name('pica.export');
     Route::get('/export-pdf-all-pica-inspeksi', [PicaInspeksiController::class, 'exportPdf'])->name('export.picaInspeksi');
 
-    // Route::get('/accessPoint/{id}/export', [InvApController::class, 'detail'])->name('accessPoint.detail');
+    $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'];
+
+    foreach ($sites as $site) {
+        Route::group([
+            'prefix' => "daily-jobs-$site",
+            'as' => "daily-jobs.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [DailyJobController::class, 'index'])->name('index');
+            Route::get('/create', [DailyJobController::class, 'create'])->name('create');
+            Route::post('/', [DailyJobController::class, 'store'])->name('store');
+            Route::get('/{code}', [DailyJobController::class, 'show'])->name('show');
+            Route::get('/{code}/edit', [DailyJobController::class, 'edit'])->name('edit');
+            Route::put('/{code}', [DailyJobController::class, 'update'])->name('update');
+            Route::delete('/{code}', [DailyJobController::class, 'destroy'])->name('destroy');
+        });
+    }
+
+
+    foreach ($sites as $site) {
+        Route::group([
+            'prefix' => "monitoring-jobs-$site",
+            'as' => "monitoring-jobs.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [DailyJobMonitorController::class, 'index'])->name('index');
+
+            Route::get('/export-report', [DailyJobMonitorController::class, 'exportReportMonitoring'])
+                ->name('export');
+        });
+    }
+
+
+    foreach ($sites as $site) {
+        Route::group([
+            'prefix' => "unschedule-jobs-$site",
+            'as' => "unschedule-jobs.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [UnscheduleJobController::class, 'index'])->name('index');
+            Route::get('/create', [UnscheduleJobController::class, 'create'])->name('create');
+            Route::post('/', [UnscheduleJobController::class, 'store'])->name('store');
+            Route::get('/{code}', [UnscheduleJobController::class, 'show'])->name('show');
+            Route::get('/{code}/edit', [UnscheduleJobController::class, 'edit'])->name('edit');
+            Route::put('/{code}', [UnscheduleJobController::class, 'update'])->name('update');
+            Route::delete('/{code}', [UnscheduleJobController::class, 'destroy'])->name('destroy');
+        });
+    }
+
+
+    Route::get('/root-cause-problems', [RootCauseProblemController::class, 'getRootCauseProblems']);
+
+    foreach ($sites as $site) {
+        // Laptop
+        Route::group([
+            'prefix' => "inspection-scheduler-laptop-$site",
+            'as' => "inspection-scheduler-laptop.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [InspectionScheduleController::class, 'index'])->name('index');
+            Route::put('/{id}', [InspectionScheduleController::class, 'update'])->name('update');
+        });
+
+        Route::get("generate-inspection-scheduler-laptop-$site", [InspectionScheduleController::class, 'generate'])
+            ->name("inspection-scheduler-laptop.$site.generate")
+            ->defaults('site', $site);
+
+        // Computer
+        Route::group([
+            'prefix' => "inspection-scheduler-computer-$site",
+            'as' => "inspection-scheduler-computer.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [InspectionScheduleComputerController::class, 'index'])->name('index');
+            Route::put('/{id}', [InspectionScheduleComputerController::class, 'update'])->name('update');
+        });
+
+        Route::get("generate-inspection-scheduler-computer-$site", [InspectionScheduleComputerController::class, 'generate'])
+            ->name("inspection-scheduler-computer.$site.generate")
+            ->defaults('site', $site);
+    }
+
+    // Route::get('/inspection-scheduler-laptop', [InspectionScheduleController::class, 'index'])->name('inspection-schedule.index');
+    // Route::put('/inspection-scheduler-laptop/{id}', [InspectionScheduleController::class, 'update'])->name('inspection-schedule.update');
+
+    // Route::get('/generate-inspection-scheduler-laptop', [InspectionScheduleController::class, 'generate']);
+
+    // Route::get('/inspection-scheduler-computer', [InspectionScheduleComputerController::class, 'index'])->name('inspection-scheduler-computer.index');
+    // Route::put('/inspection-scheduler-computer/{id}', [InspectionScheduleComputerController::class, 'update'])->name('inspection-scheduler-computer.update');
+
+    // Route::get('/generate-inspection-scheduler-computer', [InspectionScheduleComputerController::class, 'generate']);
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
         Route::get('/dashboard', function () {
@@ -339,7 +436,7 @@ Route::middleware('auth')->group(function () {
 
             $readyUsed_array = [$countAPreadyused, $countSwitchreadyused, $countWirellessreadyused, $countPrinterreadyused, $countCCTVreadyused, $countKomputerreadyused, $countLaptopreadyused];
 
-            $loginSession =  'tes';
+            $loginSession = 'tes';
 
             $countAllDataInspeksiLaptop = InspeksiLaptop::where('site', 'HO')
                 ->where('year', Carbon::now()->year)
@@ -552,7 +649,7 @@ Route::middleware('auth')->group(function () {
 
             $readyUsed_array = [$countAPreadyused, $countSwitchreadyused, $countWirellessreadyused, $countPrinterreadyused, $countCCTVreadyused, $countKomputerreadyused, $countLaptopreadyused];
 
-            $loginSession =  'tes';
+            $loginSession = 'tes';
 
             return Inertia::render(
                 'Inventory/DashboardGroupLeader',
@@ -659,7 +756,7 @@ Route::middleware('auth')->group(function () {
 
             $readyUsed_array = [$countAPreadyused, $countSwitchreadyused, $countWirellessreadyused, $countPrinterreadyused, $countCCTVreadyused, $countKomputerreadyused, $countLaptopreadyused];
 
-            $loginSession =  'tes';
+            $loginSession = 'tes';
 
             return Inertia::render(
                 'Inventory/DashboardTechnician',

@@ -187,7 +187,7 @@ const toggleLevel1RcBin = () => {
 const toggleLevel2RcBin = () => {
     console.log(level1OpenRcBin.value);
     if (!level2OpenRcBin.value) {
-        level1OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenRcBin.value = true;
         level2OpenSettingRcBin.value = false;
         level2OpenInspeksiRcBin.value = false;
         level3OpenRcBin.value = false;
@@ -202,9 +202,9 @@ const toggleLevel2RcBin = () => {
 const toggleLevel2AduanRcBin = () => {
     console.log(level1OpenRcBin.value);
     if (!level2OpenAduanRcBin.value) {
-        level2OpenRcBin.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingRcBin.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiRcBin.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenRcBin.value = false;
+        level2OpenSettingRcBin.value = false;
+        level2OpenInspeksiRcBin.value = false;
         level3OpenRcBin.value = false;
         level3KomputerOpenRcBin.value = false;
         level3PrinterOpenRcBin.value = false;
@@ -231,7 +231,7 @@ const toggleLevel2SettingRcBin = () => {
 const toggleLevel2InspeksiRcBin = () => {
     console.log(level1OpenRcBin.value);
     if (!level2OpenInspeksiRcBin.value) {
-        level1OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenRcBin.value = true;
         level2OpenRcBin.value = false;
         level2OpenSettingRcBin.value = false;
         level3OpenRcBin.value = false;
@@ -267,7 +267,7 @@ const toggleLevel3KomputerRcBin = () => {
 
 const toggleLevel3CctvRcBin = () => {
     if (!level3CctvOpenRcBin.value) {
-        level2OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenRcBin.value = true;
         level3OpenRcBin.value = false;
         level3KomputerOpenRcBin.value = false;
         level3PrinterOpenRcBin.value = false;
@@ -278,7 +278,7 @@ const toggleLevel3CctvRcBin = () => {
 
 const toggleLevel3PrinterRcBin = () => {
     if (!level3PrinterOpenRcBin.value) {
-        level2OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenRcBin.value = true;
         level3OpenRcBin.value = false;
         level3KomputerOpenRcBin.value = false;
         level3ScannerOpenRcBin.value = false;
@@ -289,7 +289,7 @@ const toggleLevel3PrinterRcBin = () => {
 
 const toggleLevel3ScannerRcBin = () => {
     if (!level3ScannerOpenRcBin.value) {
-        level2OpenRcBin.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenRcBin.value = true;
         level3OpenRcBin.value = false;
         level3KomputerOpenRcBin.value = false;
         level3PrinterOpenRcBin.value = false;
@@ -381,19 +381,22 @@ const toggleLevel1Ho = () => {
     level2OpenInspeksiBge.value = false;
 
     level1OpenBa.value = false;
-    level2PerformanceBib.value = false;
+    level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
     level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
@@ -401,54 +404,64 @@ const toggleLevel1Ho = () => {
     level1OpenAmi.value = false;
     level2OpenAmi.value = false;
     level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
     level2PerformancePik.value = false;
+    level2OperationPik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIPT.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -467,8 +480,8 @@ const toggleLevel1Ho = () => {
 const toggleLevel2Ho = () => {
     console.log(level1OpenHo.value);
     if (!level2OpenHo.value) {
-        level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenHo.value = true;
+        level2PerformanceHo.value = false;
         level2OpenSettingHo.value = false;
         level2OpenInspeksiHo.value = false;
         level3OpenHo.value = false;
@@ -483,7 +496,7 @@ const toggleLevel2Ho = () => {
 const toggleLevel2PerformanceHo = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceHo.value) {
-        level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenHo.value = true;
         level2OpenHo.value = false;
         level2OpenSettingHo.value = false;
         level2OpenInspeksiHo.value = false;
@@ -499,10 +512,10 @@ const toggleLevel2PerformanceHo = () => {
 const toggleLevel2AduanHo = () => {
     console.log(level1OpenHo.value);
     if (!level2OpenAduanHo.value) {
-        level2OpenHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenHo.value = false;
+        level2PerformanceHo.value = false;
+        level2OpenSettingHo.value = false;
+        level2OpenInspeksiHo.value = false;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
@@ -519,7 +532,7 @@ const toggleLevel2SettingHo = () => {
         level1OpenBa.value = false;
         level1OpenMifa.value = false;
         level1OpenMhu.value = false;
-        level2PerformanceHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceHo.value = false;
         level1OpenWARA.value = false;
         level1OpenAmi.value = false;
         level1OpenBib.value = false;
@@ -537,10 +550,10 @@ const toggleLevel2SettingHo = () => {
 const toggleLevel2InspeksiHo = () => {
     console.log(level1OpenHo.value);
     if (!level2OpenInspeksiHo.value) {
-        level1OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenHo.value = true;
         level2OpenHo.value = false;
         level2OpenSettingHo.value = false;
-        level2PerformanceHo.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceHo.value = false;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
@@ -574,7 +587,7 @@ const toggleLevel3KomputerHo = () => {
 
 const toggleLevel3CctvHo = () => {
     if (!level3CctvOpenHo.value) {
-        level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenHo.value = true;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
@@ -585,7 +598,7 @@ const toggleLevel3CctvHo = () => {
 
 const toggleLevel3PrinterHo = () => {
     if (!level3PrinterOpenHo.value) {
-        level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenHo.value = true;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3ScannerOpenHo.value = false;
@@ -596,7 +609,7 @@ const toggleLevel3PrinterHo = () => {
 
 const toggleLevel3ScannerHo = () => {
     if (!level3ScannerOpenHo.value) {
-        level2OpenHo.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenHo.value = true;
         level3OpenHo.value = false;
         level3KomputerOpenHo.value = false;
         level3PrinterOpenHo.value = false;
@@ -610,6 +623,7 @@ const level1OpenBa = ref(false);
 const level2OpenBa = ref(false);
 const level2OpenAduanBa = ref(false);
 const level2PerformanceBa = ref(false);
+const level2OperationBa = ref(false);
 const level2OpenSettingBa = ref(false);
 const level2OpenInspeksiBa = ref(false);
 const level3OpenBa = ref(false);
@@ -628,6 +642,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingBa") === "true";
     level2PerformanceBa.value =
         localStorage.getItem("level2PerformanceBa") === "true";
+    level2OperationBa.value =
+        localStorage.getItem("level2OperationBa") === "true";
     level2OpenInspeksiBa.value =
         localStorage.getItem("level2OpenInspeksiBa") === "true";
     level3OpenBa.value = localStorage.getItem("level3OpenBa") === "true";
@@ -648,6 +664,7 @@ watch(
         level2OpenBa,
         level2OpenSettingBa,
         level2PerformanceBa,
+        level2OperationBa,
         level2OpenInspeksiBa,
         level2OpenAduanBa,
         level3OpenBa,
@@ -660,6 +677,7 @@ watch(
         localStorage.setItem("level1OpenBa", level1OpenBa.value);
         localStorage.setItem("level2OpenBa", level2OpenBa.value);
         localStorage.setItem("level2PerformanceBa", level2PerformanceBa.value);
+        localStorage.setItem("level2OperationBa", level2OperationBa.value);
         localStorage.setItem("level2OpenAduanBa", level2OpenAduanBa.value);
         localStorage.setItem("level2OpenSettingBa", level2OpenSettingBa.value);
         localStorage.setItem(
@@ -694,67 +712,79 @@ const toggleLevel1Ba = () => {
 
     level1OpenBib.value = false;
     level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenAmi.value = false;
     level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
     level2PerformancePik.value = false;
+    level2OperationPik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -772,8 +802,9 @@ const toggleLevel1Ba = () => {
 const toggleLevel2Ba = () => {
     console.log(level1OpenBa.value);
     if (!level2OpenBa.value) {
-        level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBa.value = true;
+        level2PerformanceBa.value = false;
+        level2OperationBa.value = false;
         level2OpenSettingBa.value = false;
         level2OpenInspeksiBa.value = false;
         level3OpenBa.value = false;
@@ -788,7 +819,7 @@ const toggleLevel2Ba = () => {
 const toggleLevel2PerformanceBa = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceBa.value) {
-        level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBa.value = true;
         level2OpenBa.value = false;
         level2OpenSettingBa.value = false;
         level2OpenInspeksiBa.value = false;
@@ -801,13 +832,30 @@ const toggleLevel2PerformanceBa = () => {
     level2PerformanceBa.value = !level2PerformanceBa.value;
 };
 
+const toggleLevel2OperationBa = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationBa.value) {
+        level1OpenBa.value = true;
+        level2OpenBa.value = false;
+        level2OpenSettingBa.value = false;
+        level2OpenInspeksiBa.value = false;
+        level3OpenBa.value = false;
+        level3KomputerOpenBa.value = false;
+        level3PrinterOpenBa.value = false;
+        level3ScannerOpenBa.value = false;
+        level3CctvOpenBa.value = false;
+    }
+    level2OperationBa.value = !level2OperationBa.value;
+};
+
 const toggleLevel2AduanBa = () => {
     console.log(level1OpenBa.value);
     if (!level2OpenAduanBa.value) {
-        level2OpenBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBa.value = false;
+        level2PerformanceBa.value = false;
+        level2OperationBa.value = false;
+        level2OpenSettingBa.value = false;
+        level2OpenInspeksiBa.value = false;
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
         level3PrinterOpenBa.value = false;
@@ -820,9 +868,10 @@ const toggleLevel2AduanBa = () => {
 const toggleLevel2SettingBa = () => {
     console.log(level1OpenBa.value);
     if (!level2OpenSettingBa.value) {
-        level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBa.value = true;
+        level2OpenBa.value = false;
+        level2PerformanceBa.value = false;
+        level2OperationBa.value = false;
         level2OpenInspeksiBa.value = false;
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
@@ -836,10 +885,11 @@ const toggleLevel2SettingBa = () => {
 const toggleLevel2InspeksiBa = () => {
     console.log(level1OpenBa.value);
     if (!level2OpenInspeksiBa.value) {
-        level1OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBa.value = true;
+        level2OpenBa.value = false;
         level3OpenBa.value = false;
-        level2PerformanceBa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBa.value = false;
+        level2OperationBa.value = false;
         level2OpenSettingBa.value = false;
         level3KomputerOpenBa.value = false;
         level3PrinterOpenBa.value = false;
@@ -873,7 +923,7 @@ const toggleLevel3KomputerBa = () => {
 
 const toggleLevel3CctvBa = () => {
     if (!level3CctvOpenBa.value) {
-        level2OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBa.value = true;
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
         level3PrinterOpenBa.value = false;
@@ -884,7 +934,7 @@ const toggleLevel3CctvBa = () => {
 
 const toggleLevel3PrinterBa = () => {
     if (!level3PrinterOpenBa.value) {
-        level2OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBa.value = true;
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
         level3ScannerOpenBa.value = false;
@@ -895,7 +945,7 @@ const toggleLevel3PrinterBa = () => {
 
 const toggleLevel3ScannerBa = () => {
     if (!level3ScannerOpenBa.value) {
-        level2OpenBa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBa.value = true;
         level3OpenBa.value = false;
         level3KomputerOpenBa.value = false;
         level3PrinterOpenBa.value = false;
@@ -909,6 +959,7 @@ const level1OpenMifa = ref(false);
 const level2OpenMifa = ref(false);
 const level2OpenAduanMifa = ref(false);
 const level2PerformanceMifa = ref(false);
+const level2OperationMifa = ref(false);
 const level2OpenSettingMifa = ref(false);
 const level2OpenInspeksiMifa = ref(false);
 const level3OpenMifa = ref(false);
@@ -927,6 +978,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingMifa") === "true";
     level2PerformanceMifa.value =
         localStorage.getItem("level2PerformanceMifa") === "true";
+    level2OperationMifa.value =
+        localStorage.getItem("level2OperationMifa") === "true";
     level2OpenInspeksiMifa.value =
         localStorage.getItem("level2OpenInspeksiMifa") === "true";
     level3OpenMifa.value = localStorage.getItem("level3OpenMifa") === "true";
@@ -947,6 +1000,7 @@ watch(
         level2OpenMifa,
         level2OpenSettingMifa,
         level2PerformanceMifa,
+        level2OperationMifa,
         level2OpenInspeksiMifa,
         level2OpenAduanMifa,
         level3OpenMifa,
@@ -962,6 +1016,7 @@ watch(
             "level2PerformanceMifa",
             level2PerformanceMifa.value
         );
+        localStorage.setItem("level2OperationMifa", level2OperationMifa.value);
         localStorage.setItem("level2OpenAduanMifa", level2OpenAduanMifa.value);
         localStorage.setItem(
             "level2OpenSettingMifa",
@@ -1005,67 +1060,79 @@ const toggleLevel1Mifa = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
     level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
-    level1OpenMhu.value = false;
-    level2PerformanceMhu.value = false;
-    level2OpenMhu.value = false;
-    level2OpenSettingMhu.value = false;
-    level2OpenInspeksiMhu.value = false;
-
     level1OpenAmi.value = false;
     level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
-    level2PerformanceAmi.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
+    level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -1083,8 +1150,9 @@ const toggleLevel1Mifa = () => {
 const toggleLevel2Mifa = () => {
     console.log(level1OpenMifa.value);
     if (!level2OpenMifa.value) {
-        level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMifa.value = true;
+        level2PerformanceMifa.value = false;
+        level2OperationMifa.value = false;
         level2OpenSettingMifa.value = false;
         level2OpenInspeksiMifa.value = false;
         level3OpenMifa.value = false;
@@ -1099,7 +1167,7 @@ const toggleLevel2Mifa = () => {
 const toggleLevel2PerformanceMifa = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceMifa.value) {
-        level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMifa.value = true;
         level2OpenMifa.value = false;
         level2OpenSettingMifa.value = false;
         level2OpenInspeksiMifa.value = false;
@@ -1112,13 +1180,30 @@ const toggleLevel2PerformanceMifa = () => {
     level2PerformanceMifa.value = !level2PerformanceMifa.value;
 };
 
+const toggleLevel2OperationMifa = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationMifa.value) {
+        level1OpenMifa.value = true;
+        level2OpenMifa.value = false;
+        level2OpenSettingMifa.value = false;
+        level2OpenInspeksiMifa.value = false;
+        level3OpenMifa.value = false;
+        level3KomputerOpenMifa.value = false;
+        level3PrinterOpenMifa.value = false;
+        level3ScannerOpenMifa.value = false;
+        level3CctvOpenMifa.value = false;
+    }
+    level2OperationMifa.value = !level2OperationMifa.value;
+};
+
 const toggleLevel2AduanMifa = () => {
     console.log(level1OpenMifa.value);
     if (!level2OpenAduanMifa.value) {
-        level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMifa.value = false;
+        level2PerformanceMifa.value = false;
+        level2OperationMifa.value = false;
+        level2OpenSettingMifa.value = false;
+        level2OpenInspeksiMifa.value = false;
         level3OpenMifa.value = false;
         level3KomputerOpenMifa.value = false;
         level3PrinterOpenMifa.value = false;
@@ -1131,9 +1216,10 @@ const toggleLevel2AduanMifa = () => {
 const toggleLevel2SettingMifa = () => {
     console.log(level1OpenMifa.value);
     if (!level2OpenSettingMifa.value) {
-        level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMifa.value = true;
+        level2PerformanceMifa.value = false;
+        level2OperationMifa.value = false;
+        level2OpenMifa.value = false;
         level2OpenInspeksiMifa.value = false;
         level3OpenMifa.value = false;
         level3KomputerOpenMifa.value = false;
@@ -1147,9 +1233,10 @@ const toggleLevel2SettingMifa = () => {
 const toggleLevel2InspeksiMifa = () => {
     console.log(level1OpenMifa.value);
     if (!level2OpenInspeksiMifa.value) {
-        level1OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMifa.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMifa.value = true;
+        level2PerformanceMifa.value = false;
+        level2OperationMifa.value = false;
+        level2OpenMifa.value = false;
         level2OpenSettingMifa.value = false;
         level3OpenMifa.value = false;
         level3KomputerOpenMifa.value = false;
@@ -1184,7 +1271,7 @@ const toggleLevel3KomputerMifa = () => {
 
 const toggleLevel3CctvMifa = () => {
     if (!level3CctvOpenMifa.value) {
-        level2OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMifa.value = true;
         level3OpenMifa.value = false;
         level3KomputerOpenMifa.value = false;
         level3PrinterOpenMifa.value = false;
@@ -1195,7 +1282,7 @@ const toggleLevel3CctvMifa = () => {
 
 const toggleLevel3PrinterMifa = () => {
     if (!level3PrinterOpenMifa.value) {
-        level2OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMifa.value = true;
         level3OpenMifa.value = false;
         level3KomputerOpenMifa.value = false;
         level3ScannerOpenMifa.value = false;
@@ -1206,7 +1293,7 @@ const toggleLevel3PrinterMifa = () => {
 
 const toggleLevel3ScannerMifa = () => {
     if (!level3ScannerOpenMifa.value) {
-        level2OpenMifa.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMifa.value = true;
         level3OpenMifa.value = false;
         level3KomputerOpenMifa.value = false;
         level3PrinterOpenMifa.value = false;
@@ -1220,6 +1307,7 @@ const level1OpenMhu = ref(false);
 const level2OpenMhu = ref(false);
 const level2OpenAduanMhu = ref(false);
 const level2PerformanceMhu = ref(false);
+const level2OperationMhu = ref(false);
 const level2OpenSettingMhu = ref(false);
 const level2OpenInspeksiMhu = ref(false);
 const level3OpenMhu = ref(false);
@@ -1238,6 +1326,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingMhu") === "true";
     level2PerformanceMhu.value =
         localStorage.getItem("level2PerformanceMhu") === "true";
+    level2OperationMhu.value =
+        localStorage.getItem("level2OperationMhu") === "true";
     level2OpenInspeksiMhu.value =
         localStorage.getItem("level2OpenInspeksiMhu") === "true";
     level3OpenMhu.value = localStorage.getItem("level3OpenMhu") === "true";
@@ -1258,6 +1348,7 @@ watch(
         level2OpenMhu,
         level2OpenSettingMhu,
         level2PerformanceMhu,
+        level2OperationMhu,
         level2OpenInspeksiMhu,
         level2OpenAduanMhu,
         level3OpenMhu,
@@ -1272,6 +1363,7 @@ watch(
             "level2PerformanceMhu",
             level2PerformanceMhu.value
         );
+        localStorage.setItem("level2OperationMhu", level2OperationMhu.value);
         localStorage.setItem("level2OpenMhu", level2OpenMhu.value);
         localStorage.setItem("level2OpenAduanMhu", level2OpenAduanMhu.value);
         localStorage.setItem(
@@ -1316,67 +1408,79 @@ const toggleLevel1Mhu = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
     level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenAmi.value = false;
     level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
     level2PerformancePik.value = false;
+    level2OperationPik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -1394,8 +1498,9 @@ const toggleLevel1Mhu = () => {
 const toggleLevel2Mhu = () => {
     console.log(level1OpenMhu.value);
     if (!level2OpenMhu.value) {
-        level1OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMhu.value = true;
+        level2PerformanceMhu.value = false;
+        level2OperationMhu.value = false;
         level2OpenSettingMhu.value = false;
         level2OpenInspeksiMhu.value = false;
         level3OpenMhu.value = false;
@@ -1410,7 +1515,7 @@ const toggleLevel2Mhu = () => {
 const toggleLevel2PerformanceMhu = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceMhu.value) {
-        level1OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMhu.value = true;
         level2OpenMhu.value = false;
         level2OpenSettingMhu.value = false;
         level2OpenInspeksiMhu.value = false;
@@ -1423,13 +1528,29 @@ const toggleLevel2PerformanceMhu = () => {
     level2PerformanceMhu.value = !level2PerformanceMhu.value;
 };
 
+const toggleLevel2OperationMhu = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationMhu.value) {
+        level1OpenMhu.value = true;
+        level2OpenMhu.value = false;
+        level2OpenSettingMhu.value = false;
+        level2OpenInspeksiMhu.value = false;
+        level3OpenMhu.value = false;
+        level3KomputerOpenMhu.value = false;
+        level3PrinterOpenMhu.value = false;
+        level3ScannerOpenMhu.value = false;
+        level3CctvOpenMhu.value = false;
+    }
+    level2OperationMhu.value = !level2OperationMhu.value;
+};
 const toggleLevel2AduanMhu = () => {
     console.log(level1OpenMhu.value);
     if (!level2OpenAduanMhu.value) {
-        level2OpenMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMhu.value = false;
+        level2PerformanceMhu.value = false;
+        level2OperationMhu.value = false;
+        level2OpenSettingMhu.value = false;
+        level2OpenInspeksiMhu.value = false;
         level3OpenMhu.value = false;
         level3KomputerOpenMhu.value = false;
         level3PrinterOpenMhu.value = false;
@@ -1442,9 +1563,10 @@ const toggleLevel2AduanMhu = () => {
 const toggleLevel2SettingMhu = () => {
     console.log(level1OpenMhu.value);
     if (!level2OpenSettingMhu.value) {
-        level1OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMhu.value = true;
+        level2PerformanceMhu.value = false;
+        level2OperationMhu.value = false;
+        level2OpenMhu.value = false;
         level2OpenInspeksiMhu.value = false;
         level3OpenMhu.value = false;
         level3KomputerOpenMhu.value = false;
@@ -1458,9 +1580,10 @@ const toggleLevel2SettingMhu = () => {
 const toggleLevel2InspeksiMhu = () => {
     console.log(level1OpenMhu.value);
     if (!level2OpenInspeksiMhu.value) {
-        level1OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMhu.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMhu.value = true;
+        level2PerformanceMhu.value = false;
+        level2OperationMhu.value = false;
+        level2OpenMhu.value = false;
         level2OpenSettingMhu.value = false;
         level3OpenMhu.value = false;
         level3KomputerOpenMhu.value = false;
@@ -1495,7 +1618,7 @@ const toggleLevel3KomputerMhu = () => {
 
 const toggleLevel3CctvMhu = () => {
     if (!level3CctvOpenMhu.value) {
-        level2OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMhu.value = true;
         level3OpenMhu.value = false;
         level3KomputerOpenMhu.value = false;
         level3PrinterOpenMhu.value = false;
@@ -1506,7 +1629,7 @@ const toggleLevel3CctvMhu = () => {
 
 const toggleLevel3PrinterMhu = () => {
     if (!level3PrinterOpenMhu.value) {
-        level2OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMhu.value = true;
         level3OpenMhu.value = false;
         level3KomputerOpenMhu.value = false;
         level3ScannerOpenMhu.value = false;
@@ -1517,7 +1640,7 @@ const toggleLevel3PrinterMhu = () => {
 
 const toggleLevel3ScannerMhu = () => {
     if (!level3ScannerOpenMhu.value) {
-        level2OpenMhu.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMhu.value = true;
         level3OpenMhu.value = false;
         level3KomputerOpenMhu.value = false;
         level3PrinterOpenMhu.value = false;
@@ -1530,6 +1653,7 @@ const toggleLevel3ScannerMhu = () => {
 const level1OpenWARA = ref(false);
 const level2OpenWARA = ref(false);
 const level2PerformanceWARA = ref(false);
+const level2OperationWARA = ref(false);
 const level2OpenAduanWARA = ref(false);
 const level2OpenSettingWARA = ref(false);
 const level2OpenInspeksiWARA = ref(false);
@@ -1545,6 +1669,8 @@ onMounted(() => {
     level2OpenWARA.value = localStorage.getItem("level2OpenWARA") === "true";
     level2PerformanceWARA.value =
         localStorage.getItem("level2PerformanceWARA") === "true";
+    level2OperationWARA.value =
+        localStorage.getItem("level2OperationWARA") === "true";
     level2OpenAduanWARA.value =
         localStorage.getItem("level2OpenAduanWARA") === "true";
     level2OpenSettingWARA.value =
@@ -1568,6 +1694,7 @@ watch(
         level1OpenWARA,
         level2OpenWARA,
         level2PerformanceWARA,
+        level2OperationWARA,
         level2OpenSettingWARA,
         level2OpenInspeksiWARA,
         level2OpenAduanWARA,
@@ -1584,6 +1711,7 @@ watch(
             "level2PerformanceWARA",
             level2PerformanceWARA.value
         );
+        localStorage.setItem("level2OperationWARA", level2OperationWARA.value);
         localStorage.setItem("level2OpenAduanWARA", level2OpenAduanWARA.value);
         localStorage.setItem(
             "level2OpenSettingWARA",
@@ -1628,67 +1756,79 @@ const toggleLevel1WARA = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
     level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
     level1OpenAmi.value = false;
     level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
     level2OpenAmi.value = false;
     level2OpenSettingAmi.value = false;
     level2OpenInspeksiAmi.value = false;
 
     level1OpenPik.value = false;
     level2PerformancePik.value = false;
+    level2OperationPik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -1706,8 +1846,9 @@ const toggleLevel1WARA = () => {
 const toggleLevel2WARA = () => {
     console.log(level1OpenWARA.value);
     if (!level2OpenWARA.value) {
-        level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenWARA.value = true;
+        level2PerformanceWARA.value = false;
+        level2OperationWARA.value = false;
         level2OpenSettingWARA.value = false;
         level2OpenInspeksiWARA.value = false;
         level3OpenWARA.value = false;
@@ -1722,7 +1863,7 @@ const toggleLevel2WARA = () => {
 const toggleLevel2PerformanceWARA = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceWARA.value) {
-        level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenWARA.value = true;
         level2OpenWARA.value = false;
         level2OpenSettingWARA.value = false;
         level2OpenInspeksiWARA.value = false;
@@ -1735,13 +1876,29 @@ const toggleLevel2PerformanceWARA = () => {
     level2PerformanceWARA.value = !level2PerformanceWARA.value;
 };
 
+const toggleLevel2OperationWARA = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationWARA.value) {
+        level1OpenWARA.value = true;
+        level2OpenWARA.value = false;
+        level2OpenSettingWARA.value = false;
+        level2OpenInspeksiWARA.value = false;
+        level3OpenWARA.value = false;
+        level3KomputerOpenWARA.value = false;
+        level3PrinterOpenWARA.value = false;
+        level3ScannerOpenWARA.value = false;
+        level3CctvOpenWARA.value = false;
+    }
+    level2OperationWARA.value = !level2OperationWARA.value;
+};
 const toggleLevel2AduanWARA = () => {
     console.log(level1OpenWARA.value);
     if (!level2OpenAduanWARA.value) {
-        level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenWARA.value = false;
+        level2PerformanceWARA.value = false;
+        level2OperationWARA.value = false;
+        level2OpenSettingWARA.value = false;
+        level2OpenInspeksiWARA.value = false;
         level3OpenWARA.value = false;
         level3KomputerOpenWARA.value = false;
         level3PrinterOpenWARA.value = false;
@@ -1754,9 +1911,10 @@ const toggleLevel2AduanWARA = () => {
 const toggleLevel2SettingWARA = () => {
     console.log(level1OpenWARA.value);
     if (!level2OpenSettingWARA.value) {
-        level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenWARA.value = true;
+        level2OpenWARA.value = false;
+        level2PerformanceWARA.value = false;
+        level2OperationWARA.value = false;
         level2OpenInspeksiWARA.value = false;
         level3OpenWARA.value = false;
         level3KomputerOpenWARA.value = false;
@@ -1770,9 +1928,10 @@ const toggleLevel2SettingWARA = () => {
 const toggleLevel2InspeksiWARA = () => {
     console.log(level1OpenWARA.value);
     if (!level2OpenInspeksiWARA.value) {
-        level1OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceWARA.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenWARA.value = true;
+        level2OpenWARA.value = false;
+        level2PerformanceWARA.value = false;
+        level2OperationWARA.value = false;
         level2OpenSettingWARA.value = false;
         level3OpenWARA.value = false;
         level3KomputerOpenWARA.value = false;
@@ -1807,7 +1966,7 @@ const toggleLevel3KomputerWARA = () => {
 
 const toggleLevel3CctvWARA = () => {
     if (!level3CctvOpenWARA.value) {
-        level2OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenWARA.value = true;
         level3OpenWARA.value = false;
         level3KomputerOpenWARA.value = false;
         level3PrinterOpenWARA.value = false;
@@ -1818,7 +1977,7 @@ const toggleLevel3CctvWARA = () => {
 
 const toggleLevel3PrinterWARA = () => {
     if (!level3PrinterOpenWARA.value) {
-        level2OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenWARA.value = true;
         level3OpenWARA.value = false;
         level3KomputerOpenWARA.value = false;
         level3ScannerOpenWARA.value = false;
@@ -1829,7 +1988,7 @@ const toggleLevel3PrinterWARA = () => {
 
 const toggleLevel3ScannerWARA = () => {
     if (!level3ScannerOpenWARA.value) {
-        level2OpenWARA.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenWARA.value = true;
         level3OpenWARA.value = false;
         level3KomputerOpenWARA.value = false;
         level3PrinterOpenWARA.value = false;
@@ -1842,6 +2001,7 @@ const toggleLevel3ScannerWARA = () => {
 const level1OpenBib = ref(false);
 const level2OpenBib = ref(false);
 const level2PerformanceBib = ref(false);
+const level2OperationBib = ref(false);
 const level2OpenAduanBib = ref(false);
 const level2OpenSettingBib = ref(false);
 const level2OpenInspeksiBib = ref(false);
@@ -1859,6 +2019,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanBib") === "true";
     level2PerformanceBib.value =
         localStorage.getItem("level2PerformanceBib") === "true";
+    level2OperationBib.value =
+        localStorage.getItem("level2OperationBib") === "true";
     level2OpenSettingBib.value =
         localStorage.getItem("level2OpenSettingBib") === "true";
     level2OpenInspeksiBib.value =
@@ -1881,6 +2043,7 @@ watch(
         level2OpenBib,
         level2OpenSettingBib,
         level2PerformanceBib,
+        level2OperationBib,
         level2OpenInspeksiBib,
         level2OpenAduanBib,
         level3OpenBib,
@@ -1897,6 +2060,7 @@ watch(
             "level2PerformanceBib",
             level2PerformanceBib.value
         );
+        localStorage.setItem("level2OperationBib", level2OperationBib.value);
         localStorage.setItem(
             "level2OpenSettingBib",
             level2OpenSettingBib.value
@@ -1940,67 +2104,79 @@ const toggleLevel1Bib = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenPik.value = false;
-    level2PerformancePik.value = false;
-    level2OpenPik.value = false;
-    level2OpenSettingPik.value = false;
-    level2OpenInspeksiPik.value = false;
-
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -2018,8 +2194,9 @@ const toggleLevel1Bib = () => {
 const toggleLevel2Bib = () => {
     console.log(level1OpenBib.value);
     if (!level2OpenBib.value) {
-        level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBib.value = true;
+        level2PerformanceBib.value = false;
+        level2OperationBib.value = false;
         level2OpenSettingBib.value = false;
         level2OpenInspeksiBib.value = false;
         level3OpenBib.value = false;
@@ -2034,7 +2211,7 @@ const toggleLevel2Bib = () => {
 const toggleLevel2PerformanceBib = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceBib.value) {
-        level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBib.value = true;
         level2OpenBib.value = false;
         level2OpenSettingBib.value = false;
         level2OpenInspeksiBib.value = false;
@@ -2047,13 +2224,29 @@ const toggleLevel2PerformanceBib = () => {
     level2PerformanceBib.value = !level2PerformanceBib.value;
 };
 
+const toggleLevel2OperationBib = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationBib.value) {
+        level1OpenBib.value = true;
+        level2OpenBib.value = false;
+        level2OpenSettingBib.value = false;
+        level2OpenInspeksiBib.value = false;
+        level3OpenBib.value = false;
+        level3KomputerOpenBib.value = false;
+        level3PrinterOpenBib.value = false;
+        level3ScannerOpenBib.value = false;
+        level3CctvOpenBib.value = false;
+    }
+    level2OperationBib.value = !level2OperationBib.value;
+};
 const toggleLevel2AduanBib = () => {
     console.log(level1OpenBib.value);
     if (!level2OpenAduanBib.value) {
-        level2PerformanceBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBib.value = false;
+        level2OperationBib.value = false;
+        level2OpenBib.value = false;
+        level2OpenSettingBib.value = false;
+        level2OpenInspeksiBib.value = false;
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
         level3PrinterOpenBib.value = false;
@@ -2066,9 +2259,10 @@ const toggleLevel2AduanBib = () => {
 const toggleLevel2SettingBib = () => {
     console.log(level1OpenBib.value);
     if (!level2OpenSettingBib.value) {
-        level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBib.value = true;
+        level2PerformanceBib.value = false;
+        level2OperationBib.value = false;
+        level2OpenBib.value = false;
         level2OpenInspeksiBib.value = false;
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
@@ -2082,9 +2276,10 @@ const toggleLevel2SettingBib = () => {
 const toggleLevel2InspeksiBib = () => {
     console.log(level1OpenBib.value);
     if (!level2OpenInspeksiBib.value) {
-        level1OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenBib.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBib.value = true;
+        level2PerformanceBib.value = false;
+        level2OperationBib.value = false;
+        level2OpenBib.value = false;
         level2OpenSettingBib.value = false;
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
@@ -2119,7 +2314,7 @@ const toggleLevel3KomputerBib = () => {
 
 const toggleLevel3CctvBib = () => {
     if (!level3CctvOpenBib.value) {
-        level2OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBib.value = true;
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
         level3PrinterOpenBib.value = false;
@@ -2130,7 +2325,7 @@ const toggleLevel3CctvBib = () => {
 
 const toggleLevel3PrinterBib = () => {
     if (!level3PrinterOpenBib.value) {
-        level2OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBib.value = true;
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
         level3ScannerOpenBib.value = false;
@@ -2141,7 +2336,7 @@ const toggleLevel3PrinterBib = () => {
 
 const toggleLevel3ScannerBib = () => {
     if (!level3ScannerOpenBib.value) {
-        level2OpenBib.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBib.value = true;
         level3OpenBib.value = false;
         level3KomputerOpenBib.value = false;
         level3PrinterOpenBib.value = false;
@@ -2154,6 +2349,7 @@ const toggleLevel3ScannerBib = () => {
 const level1OpenAmi = ref(false);
 const level2OpenAmi = ref(false);
 const level2PerformanceAmi = ref(false);
+const level2OperationAmi = ref(false);
 const level2OpenAduanAmi = ref(false);
 const level2OpenSettingAmi = ref(false);
 const level2OpenInspeksiAmi = ref(false);
@@ -2173,6 +2369,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingAmi") === "true";
     level2PerformanceAmi.value =
         localStorage.getItem("level2PerformanceAmi") === "true";
+    level2OperationAmi.value =
+        localStorage.getItem("level2OperationAmi") === "true";
     level2OpenInspeksiAmi.value =
         localStorage.getItem("level2OpenInspeksiAmi") === "true";
     level3OpenAmi.value = localStorage.getItem("level3OpenAmi") === "true";
@@ -2193,6 +2391,7 @@ watch(
         level2OpenAmi,
         level2OpenSettingAmi,
         level2PerformanceAmi,
+        level2OperationAmi,
         level2OpenInspeksiAmi,
         level2OpenAduanAmi,
         level3OpenAmi,
@@ -2209,6 +2408,7 @@ watch(
             "level2PerformanceAmi",
             level2PerformanceAmi.value
         );
+        localStorage.setItem("level2OperationAmi", level2OperationAmi.value);
         localStorage.setItem(
             "level2OpenSettingAmi",
             level2OpenSettingAmi.value
@@ -2251,67 +2451,79 @@ const toggleLevel1Ami = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
     level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
-    level1OpenMhu.value = false;
-    level2PerformanceMhu.value = false;
-    level2OpenMhu.value = false;
-    level2OpenSettingMhu.value = false;
-    level2OpenInspeksiMhu.value = false;
-
     level1OpenPik.value = false;
     level2PerformancePik.value = false;
+    level2OperationPik.value = false;
     level2OpenPik.value = false;
     level2OpenSettingPik.value = false;
     level2OpenInspeksiPik.value = false;
 
+    level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -2329,8 +2541,9 @@ const toggleLevel1Ami = () => {
 const toggleLevel2Ami = () => {
     console.log(level1OpenAmi.value);
     if (!level2OpenAmi.value) {
-        level2PerformanceAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceAmi.value = false;
+        level2OperationAmi.value = false;
+        level1OpenAmi.value = true;
         level2OpenSettingAmi.value = false;
         level2OpenInspeksiAmi.value = false;
         level3OpenAmi.value = false;
@@ -2345,7 +2558,7 @@ const toggleLevel2Ami = () => {
 const toggleLevel2PerformanceAmi = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceAmi.value) {
-        level1OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenAmi.value = true;
         level2OpenAmi.value = false;
         level2OpenSettingAmi.value = false;
         level2OpenInspeksiAmi.value = false;
@@ -2358,13 +2571,29 @@ const toggleLevel2PerformanceAmi = () => {
     level2PerformanceAmi.value = !level2PerformanceAmi.value;
 };
 
+const toggleLevel2OperationAmi = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationAmi.value) {
+        level1OpenAmi.value = true;
+        level2OpenAmi.value = false;
+        level2OpenSettingAmi.value = false;
+        level2OpenInspeksiAmi.value = false;
+        level3OpenAmi.value = false;
+        level3KomputerOpenAmi.value = false;
+        level3PrinterOpenAmi.value = false;
+        level3ScannerOpenAmi.value = false;
+        level3CctvOpenAmi.value = false;
+    }
+    level2OperationAmi.value = !level2OperationAmi.value;
+};
 const toggleLevel2AduanAmi = () => {
     console.log(level1OpenAmi.value);
     if (!level2OpenAduanAmi.value) {
-        level2PerformanceAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceAmi.value = false;
+        level2OperationAmi.value = false;
+        level2OpenAmi.value = false;
+        level2OpenSettingAmi.value = false;
+        level2OpenInspeksiAmi.value = false;
         level3OpenAmi.value = false;
         level3KomputerOpenAmi.value = false;
         level3PrinterOpenAmi.value = false;
@@ -2377,9 +2606,10 @@ const toggleLevel2AduanAmi = () => {
 const toggleLevel2SettingAmi = () => {
     console.log(level1OpenAmi.value);
     if (!level2OpenSettingAmi.value) {
-        level1OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenAmi.value = true;
+        level2PerformanceAmi.value = false;
+        level2OperationAmi.value = false;
+        level2OpenAmi.value = false;
         level2OpenInspeksiAmi.value = false;
         level3OpenAmi.value = false;
         level3KomputerOpenAmi.value = false;
@@ -2393,9 +2623,10 @@ const toggleLevel2SettingAmi = () => {
 const toggleLevel2InspeksiAmi = () => {
     console.log(level1OpenAmi.value);
     if (!level2OpenInspeksiAmi.value) {
-        level1OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenAmi.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenAmi.value = true;
+        level2PerformanceAmi.value = false;
+        level2OperationAmi.value = false;
+        level2OpenAmi.value = false;
         level2OpenSettingAmi.value = false;
         level3OpenAmi.value = false;
         level3KomputerOpenAmi.value = false;
@@ -2430,7 +2661,7 @@ const toggleLevel3KomputerAmi = () => {
 
 const toggleLevel3CctvAmi = () => {
     if (!level3CctvOpenAmi.value) {
-        level2OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenAmi.value = true;
         level3OpenAmi.value = false;
         level3KomputerOpenAmi.value = false;
         level3PrinterOpenAmi.value = false;
@@ -2441,7 +2672,7 @@ const toggleLevel3CctvAmi = () => {
 
 const toggleLevel3PrinterAmi = () => {
     if (!level3PrinterOpenAmi.value) {
-        level2OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenAmi.value = true;
         level3OpenAmi.value = false;
         level3KomputerOpenAmi.value = false;
         level3ScannerOpenAmi.value = false;
@@ -2452,7 +2683,7 @@ const toggleLevel3PrinterAmi = () => {
 
 const toggleLevel3ScannerAmi = () => {
     if (!level3ScannerOpenAmi.value) {
-        level2OpenAmi.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenAmi.value = true;
         level3OpenAmi.value = false;
         level3KomputerOpenAmi.value = false;
         level3PrinterOpenAmi.value = false;
@@ -2464,6 +2695,7 @@ const toggleLevel3ScannerAmi = () => {
 const level1OpenPik = ref(false);
 const level2OpenPik = ref(false);
 const level2PerformancePik = ref(false);
+const level2OperationPik = ref(false);
 const level2OpenAduanPik = ref(false);
 const level2OpenSettingPik = ref(false);
 const level2OpenInspeksiPik = ref(false);
@@ -2483,6 +2715,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingPik") === "true";
     level2PerformancePik.value =
         localStorage.getItem("level2PerformancePik") === "true";
+    level2OperationPik.value =
+        localStorage.getItem("level2OperationPik") === "true";
     level2OpenInspeksiPik.value =
         localStorage.getItem("level2OpenInspeksiPik") === "true";
     level3OpenPik.value = localStorage.getItem("level3OpenPik") === "true";
@@ -2503,6 +2737,7 @@ watch(
         level2OpenPik,
         level2OpenSettingPik,
         level2PerformancePik,
+        level2OperationPik,
         level2OpenInspeksiPik,
         level2OpenAduanPik,
         level3OpenPik,
@@ -2519,6 +2754,7 @@ watch(
             "level2PerformancePik",
             level2PerformancePik.value
         );
+        localStorage.setItem("level2OperationPik", level2OperationPik.value);
         localStorage.setItem(
             "level2OpenSettingPik",
             level2OpenSettingPik.value
@@ -2556,67 +2792,79 @@ const toggleLevel1Pik = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
     level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -2634,8 +2882,9 @@ const toggleLevel1Pik = () => {
 const toggleLevel2Pik = () => {
     console.log(level1OpenPik.value);
     if (!level2OpenPik.value) {
-        level2PerformancePik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformancePik.value = false;
+        level2OperationPik.value = false;
+        level1OpenPik.value = true;
         level2OpenSettingPik.value = false;
         level2OpenInspeksiPik.value = false;
         level3OpenPik.value = false;
@@ -2650,7 +2899,7 @@ const toggleLevel2Pik = () => {
 const toggleLevel2PerformancePik = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformancePik.value) {
-        level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenPik.value = true;
         level2OpenPik.value = false;
         level2OpenSettingPik.value = false;
         level2OpenInspeksiPik.value = false;
@@ -2663,13 +2912,29 @@ const toggleLevel2PerformancePik = () => {
     level2PerformancePik.value = !level2PerformancePik.value;
 };
 
+const toggleLevel2OperationPik = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationPik.value) {
+        level1OpenPik.value = true;
+        level2OpenPik.value = false;
+        level2OpenSettingPik.value = false;
+        level2OpenInspeksiPik.value = false;
+        level3OpenPik.value = false;
+        level3KomputerOpenPik.value = false;
+        level3PrinterOpenPik.value = false;
+        level3ScannerOpenPik.value = false;
+        level3CctvOpenPik.value = false;
+    }
+    level2OperationPik.value = !level2OperationPik.value;
+};
 const toggleLevel2AduanPik = () => {
     console.log(level1OpenPik.value);
     if (!level2OpenAduanPik.value) {
-        level2PerformancePik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformancePik.value = false;
+        level2OperationPik.value = false;
+        level2OpenPik.value = false;
+        level2OpenSettingPik.value = false;
+        level2OpenInspeksiPik.value = false;
         level3OpenPik.value = false;
         level3KomputerOpenPik.value = false;
         level3PrinterOpenPik.value = false;
@@ -2682,9 +2947,10 @@ const toggleLevel2AduanPik = () => {
 const toggleLevel2SettingPik = () => {
     console.log(level1OpenPik.value);
     if (!level2OpenSettingPik.value) {
-        level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformancePik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenPik.value = true;
+        level2PerformancePik.value = false;
+        level2OperationPik.value = false;
+        level2OpenPik.value = false;
         level2OpenInspeksiPik.value = false;
         level3OpenPik.value = false;
         level3KomputerOpenPik.value = false;
@@ -2698,9 +2964,10 @@ const toggleLevel2SettingPik = () => {
 const toggleLevel2InspeksiPik = () => {
     console.log(level1OpenPik.value);
     if (!level2OpenInspeksiPik.value) {
-        level1OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformancePik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenPik.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenPik.value = true;
+        level2PerformancePik.value = false;
+        level2OperationPik.value = false;
+        level2OpenPik.value = false;
         level2OpenSettingPik.value = false;
         level3OpenPik.value = false;
         level3KomputerOpenPik.value = false;
@@ -2735,7 +3002,7 @@ const toggleLevel3KomputerPik = () => {
 
 const toggleLevel3CctvPik = () => {
     if (!level3CctvOpenPik.value) {
-        level2OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenPik.value = true;
         level3OpenPik.value = false;
         level3KomputerOpenPik.value = false;
         level3PrinterOpenPik.value = false;
@@ -2746,7 +3013,7 @@ const toggleLevel3CctvPik = () => {
 
 const toggleLevel3PrinterPik = () => {
     if (!level3PrinterOpenPik.value) {
-        level2OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenPik.value = true;
         level3OpenPik.value = false;
         level3KomputerOpenPik.value = false;
         level3ScannerOpenPik.value = false;
@@ -2757,7 +3024,7 @@ const toggleLevel3PrinterPik = () => {
 
 const toggleLevel3ScannerPik = () => {
     if (!level3ScannerOpenPik.value) {
-        level2OpenPik.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenPik.value = true;
         level3OpenPik.value = false;
         level3KomputerOpenPik.value = false;
         level3PrinterOpenPik.value = false;
@@ -2770,6 +3037,7 @@ const toggleLevel3ScannerPik = () => {
 const level1OpenBge = ref(false);
 const level2OpenBge = ref(false);
 const level2PerformanceBge = ref(false);
+const level2OperationBge = ref(false);
 const level2OpenAduanBge = ref(false);
 const level2OpenSettingBge = ref(false);
 const level2OpenInspeksiBge = ref(false);
@@ -2789,6 +3057,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingBge") === "true";
     level2PerformanceBge.value =
         localStorage.getItem("level2PerformanceBge") === "true";
+    level2OperationBge.value =
+        localStorage.getItem("level2OperationBge") === "true";
     level2OpenInspeksiBge.value =
         localStorage.getItem("level2OpenInspeksiBge") === "true";
     level3OpenBge.value = localStorage.getItem("level3OpenBge") === "true";
@@ -2808,6 +3078,7 @@ watch(
         level1OpenBge,
         level2OpenBge,
         level2PerformanceBge,
+        level2OperationBge,
         level2OpenSettingBge,
         level2OpenInspeksiBge,
         level2OpenAduanBge,
@@ -2830,6 +3101,7 @@ watch(
             "level2PerformanceBge",
             level2PerformanceBge.value
         );
+        localStorage.setItem("level2OperationBge", level2OperationBge.value);
         localStorage.setItem(
             "level2OpenInspeksiBge",
             level2OpenInspeksiBge.value
@@ -2868,75 +3140,88 @@ const toggleLevel1Bge = () => {
     level2OpenSettingHo.value = false;
     level2OpenInspeksiHo.value = false;
 
-    level1OpenPik.value = false;
-    level2PerformancePik.value = false;
-    level2OpenPik.value = false;
-    level2OpenSettingPik.value = false;
-    level2OpenInspeksiPik.value = false;
-
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
     level1OpenBib.value = false;
     level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
     level2OpenBib.value = false;
     level2OpenSettingBib.value = false;
     level2OpenInspeksiBib.value = false;
 
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
     level1OpenIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -2954,8 +3239,9 @@ const toggleLevel1Bge = () => {
 const toggleLevel2Bge = () => {
     console.log(level1OpenBge.value);
     if (!level2OpenBge.value) {
-        level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBge.value = true;
+        level2PerformanceBge.value = false;
+        level2OperationBge.value = false;
         level2OpenSettingBge.value = false;
         level2OpenInspeksiBge.value = false;
         level3OpenBge.value = false;
@@ -2970,7 +3256,7 @@ const toggleLevel2Bge = () => {
 const toggleLevel2PerformanceBge = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceBge.value) {
-        level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBge.value = true;
         level2OpenBge.value = false;
         level2OpenSettingBge.value = false;
         level2OpenInspeksiBge.value = false;
@@ -2983,13 +3269,29 @@ const toggleLevel2PerformanceBge = () => {
     level2PerformanceBge.value = !level2PerformanceBge.value;
 };
 
+const toggleLevel2OperationBge = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationBge.value) {
+        level1OpenBge.value = true;
+        level2OpenBge.value = false;
+        level2OpenSettingBge.value = false;
+        level2OpenInspeksiBge.value = false;
+        level3OpenBge.value = false;
+        level3KomputerOpenBge.value = false;
+        level3PrinterOpenBge.value = false;
+        level3ScannerOpenBge.value = false;
+        level3CctvOpenBge.value = false;
+    }
+    level2OperationBge.value = !level2OperationBge.value;
+};
 const toggleLevel2AduanBge = () => {
     console.log(level1OpenBge.value);
     if (!level2OpenAduanBge.value) {
-        level2PerformanceBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBge.value = false;
+        level2OperationBge.value = false;
+        level2OpenBge.value = false;
+        level2OpenSettingBge.value = false;
+        level2OpenInspeksiBge.value = false;
         level3OpenBge.value = false;
         level3KomputerOpenBge.value = false;
         level3PrinterOpenBge.value = false;
@@ -3002,9 +3304,10 @@ const toggleLevel2AduanBge = () => {
 const toggleLevel2SettingBge = () => {
     console.log(level1OpenBge.value);
     if (!level2OpenSettingBge.value) {
-        level2PerformanceBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceBge.value = false;
+        level2OperationBge.value = false;
+        level1OpenBge.value = true;
+        level2OpenBge.value = false;
         level2OpenInspeksiBge.value = false;
         level3OpenBge.value = false;
         level3KomputerOpenBge.value = false;
@@ -3018,9 +3321,10 @@ const toggleLevel2SettingBge = () => {
 const toggleLevel2InspeksiBge = () => {
     console.log(level1OpenBge.value);
     if (!level2OpenInspeksiBge.value) {
-        level1OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenBge.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenBge.value = true;
+        level2PerformanceBge.value = false;
+        level2OperationBge.value = false;
+        level2OpenBge.value = false;
         level2OpenSettingBge.value = false;
         level3OpenBge.value = false;
         level3KomputerOpenBge.value = false;
@@ -3055,7 +3359,7 @@ const toggleLevel3KomputerBge = () => {
 
 const toggleLevel3CctvBge = () => {
     if (!level3CctvOpenBge.value) {
-        level2OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBge.value = true;
         level3OpenBge.value = false;
         level3KomputerOpenBge.value = false;
         level3PrinterOpenBge.value = false;
@@ -3066,7 +3370,7 @@ const toggleLevel3CctvBge = () => {
 
 const toggleLevel3PrinterBge = () => {
     if (!level3PrinterOpenBge.value) {
-        level2OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBge.value = true;
         level3OpenBge.value = false;
         level3KomputerOpenBge.value = false;
         level3ScannerOpenBge.value = false;
@@ -3077,7 +3381,7 @@ const toggleLevel3PrinterBge = () => {
 
 const toggleLevel3ScannerBge = () => {
     if (!level3ScannerOpenBge.value) {
-        level2OpenBge.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenBge.value = true;
         level3OpenBge.value = false;
         level3KomputerOpenBge.value = false;
         level3PrinterOpenBge.value = false;
@@ -3090,6 +3394,7 @@ const toggleLevel3ScannerBge = () => {
 const level1OpenIpt = ref(false);
 const level2OpenIpt = ref(false);
 const level2PerformanceIpt = ref(false);
+const level2OperationIpt = ref(false);
 const level2OpenAduanIpt = ref(false);
 const level2OpenSettingIpt = ref(false);
 const level2OpenInspeksiIpt = ref(false);
@@ -3109,6 +3414,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingIpt") === "true";
     level2PerformanceIpt.value =
         localStorage.getItem("level2PerformanceIpt") === "true";
+    level2OperationIpt.value =
+        localStorage.getItem("level2OperationIpt") === "true";
     level2OpenInspeksiIpt.value =
         localStorage.getItem("level2OpenInspeksiIpt") === "true";
     level3OpenIpt.value = localStorage.getItem("level3OpenIpt") === "true";
@@ -3128,6 +3435,7 @@ watch(
         level1OpenIpt,
         level2OpenIpt,
         level2PerformanceIpt,
+        level2OperationIpt,
         level2OpenSettingIpt,
         level2OpenInspeksiIpt,
         level2OpenAduanIpt,
@@ -3149,6 +3457,7 @@ watch(
             "level2PerformanceIpt",
             level2PerformanceIpt.value
         );
+        localStorage.setItem("level2OperationIpt", level2OperationIpt.value);
         localStorage.setItem(
             "level2OpenInspeksiIpt",
             level2OpenInspeksiIpt.value
@@ -3188,68 +3497,80 @@ const toggleLevel1Ipt = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
+    level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenPik.value = false;
-    level2PerformancePik.value = false;
-    level2OpenPik.value = false;
-    level2OpenSettingPik.value = false;
-    level2OpenInspeksiPik.value = false;
-
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
-    level1OpenBib.value = false;
-    level2PerformanceBib.value = false;
-    level2OpenBib.value = false;
-    level2OpenSettingBib.value = false;
-    level2OpenInspeksiBib.value = false;
-
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -3267,8 +3588,9 @@ const toggleLevel1Ipt = () => {
 const toggleLevel2Ipt = () => {
     console.log(level1OpenIpt.value);
     if (!level2OpenIpt.value) {
-        level1OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenIpt.value = true;
+        level2PerformanceIpt.value = false;
+        level2OperationIpt.value = false;
         level2OpenSettingIpt.value = false;
         level2OpenInspeksiIpt.value = false;
         level3OpenIpt.value = false;
@@ -3283,7 +3605,7 @@ const toggleLevel2Ipt = () => {
 const toggleLevel2PerformanceIpt = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceIpt.value) {
-        level1OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenIpt.value = true;
         level2OpenIpt.value = false;
         level2OpenSettingIpt.value = false;
         level2OpenInspeksiIpt.value = false;
@@ -3296,13 +3618,29 @@ const toggleLevel2PerformanceIpt = () => {
     level2PerformanceIpt.value = !level2PerformanceIpt.value;
 };
 
+const toggleLevel2OperationIpt = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationIpt.value) {
+        level1OpenIpt.value = true;
+        level2OpenIpt.value = false;
+        level2OpenSettingIpt.value = false;
+        level2OpenInspeksiIpt.value = false;
+        level3OpenIpt.value = false;
+        level3KomputerOpenIpt.value = false;
+        level3PrinterOpenIpt.value = false;
+        level3ScannerOpenIpt.value = false;
+        level3CctvOpenIpt.value = false;
+    }
+    level2OperationIpt.value = !level2OperationIpt.value;
+};
 const toggleLevel2AduanIpt = () => {
     console.log(level1OpenIpt.value);
     if (!level2OpenAduanIpt.value) {
-        level2PerformanceIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceIpt.value = false;
+        level2OperationIpt.value = false;
+        level2OpenIpt.value = false;
+        level2OpenSettingIpt.value = false;
+        level2OpenInspeksiIpt.value = false;
         level3OpenIpt.value = false;
         level3KomputerOpenIpt.value = false;
         level3PrinterOpenIpt.value = false;
@@ -3315,9 +3653,10 @@ const toggleLevel2AduanIpt = () => {
 const toggleLevel2SettingIpt = () => {
     console.log(level1OpenIpt.value);
     if (!level2OpenSettingIpt.value) {
-        level1OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenIpt.value = true;
+        level2PerformanceIpt.value = false;
+        level2OperationIpt.value = false;
+        level2OpenIpt.value = false;
         level2OpenInspeksiIpt.value = false;
         level3OpenIpt.value = false;
         level3KomputerOpenIpt.value = false;
@@ -3331,9 +3670,10 @@ const toggleLevel2SettingIpt = () => {
 const toggleLevel2InspeksiIpt = () => {
     console.log(level1OpenIpt.value);
     if (!level2OpenInspeksiIpt.value) {
-        level1OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenIpt.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenIpt.value = true;
+        level2PerformanceIpt.value = false;
+        level2OperationIpt.value = false;
+        level2OpenIpt.value = false;
         level2OpenSettingIpt.value = false;
         level3OpenIpt.value = false;
         level3KomputerOpenIpt.value = false;
@@ -3368,7 +3708,7 @@ const toggleLevel3KomputerIpt = () => {
 
 const toggleLevel3CctvIpt = () => {
     if (!level3CctvOpenIpt.value) {
-        level2OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenIpt.value = true;
         level3OpenIpt.value = false;
         level3KomputerOpenIpt.value = false;
         level3PrinterOpenIpt.value = false;
@@ -3379,7 +3719,7 @@ const toggleLevel3CctvIpt = () => {
 
 const toggleLevel3PrinterIpt = () => {
     if (!level3PrinterOpenIpt.value) {
-        level2OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenIpt.value = true;
         level3OpenIpt.value = false;
         level3KomputerOpenIpt.value = false;
         level3ScannerOpenIpt.value = false;
@@ -3390,7 +3730,7 @@ const toggleLevel3PrinterIpt = () => {
 
 const toggleLevel3ScannerIpt = () => {
     if (!level3ScannerOpenIpt.value) {
-        level2OpenIpt.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenIpt.value = true;
         level3OpenIpt.value = false;
         level3KomputerOpenIpt.value = false;
         level3PrinterOpenIpt.value = false;
@@ -3403,6 +3743,7 @@ const toggleLevel3ScannerIpt = () => {
 const level1OpenMlp = ref(false);
 const level2OpenMlp = ref(false);
 const level2PerformanceMlp = ref(false);
+const level2OperationMlp = ref(false);
 const level2OpenAduanMlp = ref(false);
 const level2OpenSettingMlp = ref(false);
 const level2OpenInspeksiMlp = ref(false);
@@ -3422,6 +3763,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingMlp") === "true";
     level2PerformanceMlp.value =
         localStorage.getItem("level2PerformanceMlp") === "true";
+    level2OperationMlp.value =
+        localStorage.getItem("level2OperationMlp") === "true";
     level2OpenInspeksiMlp.value =
         localStorage.getItem("level2OpenInspeksiMlp") === "true";
     level3OpenMlp.value = localStorage.getItem("level3OpenMlp") === "true";
@@ -3441,6 +3784,7 @@ watch(
         level1OpenMlp,
         level2OpenMlp,
         level2PerformanceMlp,
+        level2OperationMlp,
         level2OpenSettingMlp,
         level2OpenInspeksiMlp,
         level2OpenAduanMlp,
@@ -3462,6 +3806,7 @@ watch(
             "level2PerformanceMlp",
             level2PerformanceMlp.value
         );
+        localStorage.setItem("level2OperationMlp", level2OperationMlp.value);
         localStorage.setItem(
             "level2OpenInspeksiMlp",
             level2OpenInspeksiMlp.value
@@ -3501,70 +3846,80 @@ const toggleLevel1Mlp = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
+    level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenPik.value = false;
-    level2PerformancePik.value = false;
-    level2OpenPik.value = false;
-    level2OpenSettingPik.value = false;
-    level2OpenInspeksiPik.value = false;
-
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
-    level1OpenBib.value = false;
-    level2PerformanceBib.value = false;
-    level2OpenBib.value = false;
-    level2OpenSettingBib.value = false;
-    level2OpenInspeksiBib.value = false;
-
     level1OpenIpt.value = false;
-    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
-    level2PerformanceMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -3582,8 +3937,9 @@ const toggleLevel1Mlp = () => {
 const toggleLevel2Mlp = () => {
     console.log(level1OpenMlp.value);
     if (!level2OpenMlp.value) {
-        level1OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMlp.value = true;
+        level2PerformanceMlp.value = false;
+        level2OperationMlp.value = false;
         level2OpenSettingMlp.value = false;
         level2OpenInspeksiMlp.value = false;
         level3OpenMlp.value = false;
@@ -3598,7 +3954,7 @@ const toggleLevel2Mlp = () => {
 const toggleLevel2PerformanceMlp = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceMlp.value) {
-        level1OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMlp.value = true;
         level2OpenMlp.value = false;
         level2OpenSettingMlp.value = false;
         level2OpenInspeksiMlp.value = false;
@@ -3611,13 +3967,29 @@ const toggleLevel2PerformanceMlp = () => {
     level2PerformanceMlp.value = !level2PerformanceMlp.value;
 };
 
+const toggleLevel2OperationMlp = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationMlp.value) {
+        level1OpenMlp.value = true;
+        level2OpenMlp.value = false;
+        level2OpenSettingMlp.value = false;
+        level2OpenInspeksiMlp.value = false;
+        level3OpenMlp.value = false;
+        level3KomputerOpenMlp.value = false;
+        level3PrinterOpenMlp.value = false;
+        level3ScannerOpenMlp.value = false;
+        level3CctvOpenMlp.value = false;
+    }
+    level2OperationMlp.value = !level2OperationMlp.value;
+};
 const toggleLevel2AduanMlp = () => {
     console.log(level1OpenMlp.value);
     if (!level2OpenAduanMlp.value) {
-        level2PerformanceMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMlp.value = false;
+        level2OperationMlp.value = false;
+        level2OpenMlp.value = false;
+        level2OpenSettingMlp.value = false;
+        level2OpenInspeksiMlp.value = false;
         level3OpenMlp.value = false;
         level3KomputerOpenMlp.value = false;
         level3PrinterOpenMlp.value = false;
@@ -3630,9 +4002,10 @@ const toggleLevel2AduanMlp = () => {
 const toggleLevel2SettingMlp = () => {
     console.log(level1OpenMlp.value);
     if (!level2OpenSettingMlp.value) {
-        level2PerformanceMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMlp.value = false;
+        level2OperationMlp.value = false;
+        level1OpenMlp.value = true;
+        level2OpenMlp.value = false;
         level2OpenInspeksiMlp.value = false;
         level3OpenMlp.value = false;
         level3KomputerOpenMlp.value = false;
@@ -3646,9 +4019,10 @@ const toggleLevel2SettingMlp = () => {
 const toggleLevel2InspeksiMlp = () => {
     console.log(level1OpenMlp.value);
     if (!level2OpenInspeksiMlp.value) {
-        level1OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMlp.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMlp.value = true;
+        level2PerformanceMlp.value = false;
+        level2OperationMlp.value = false;
+        level2OpenMlp.value = false;
         level2OpenSettingMlp.value = false;
         level3OpenMlp.value = false;
         level3KomputerOpenMlp.value = false;
@@ -3683,7 +4057,7 @@ const toggleLevel3KomputerMlp = () => {
 
 const toggleLevel3CctvMlp = () => {
     if (!level3CctvOpenMlp.value) {
-        level2OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMlp.value = true;
         level3OpenMlp.value = false;
         level3KomputerOpenMlp.value = false;
         level3PrinterOpenMlp.value = false;
@@ -3694,7 +4068,7 @@ const toggleLevel3CctvMlp = () => {
 
 const toggleLevel3PrinterMlp = () => {
     if (!level3PrinterOpenMlp.value) {
-        level2OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMlp.value = true;
         level3OpenMlp.value = false;
         level3KomputerOpenMlp.value = false;
         level3ScannerOpenMlp.value = false;
@@ -3705,7 +4079,7 @@ const toggleLevel3PrinterMlp = () => {
 
 const toggleLevel3ScannerMlp = () => {
     if (!level3ScannerOpenMlp.value) {
-        level2OpenMlp.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMlp.value = true;
         level3OpenMlp.value = false;
         level3KomputerOpenMlp.value = false;
         level3PrinterOpenMlp.value = false;
@@ -3718,6 +4092,7 @@ const toggleLevel3ScannerMlp = () => {
 const level1OpenMip = ref(false);
 const level2OpenMip = ref(false);
 const level2PerformanceMip = ref(false);
+const level2OperationMip = ref(false);
 const level2OpenAduanMip = ref(false);
 const level2OpenSettingMip = ref(false);
 const level2OpenInspeksiMip = ref(false);
@@ -3737,6 +4112,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingMip") === "true";
     level2PerformanceMip.value =
         localStorage.getItem("level2PerformanceMip") === "true";
+    level2OperationMip.value =
+        localStorage.getItem("level2OperationMip") === "true";
     level2OpenInspeksiMip.value =
         localStorage.getItem("level2OpenInspeksiMip") === "true";
     level3OpenMip.value = localStorage.getItem("level3OpenMip") === "true";
@@ -3756,6 +4133,7 @@ watch(
         level1OpenMip,
         level2OpenMip,
         level2PerformanceMip,
+        level2OperationMip,
         level2OpenSettingMip,
         level2OpenInspeksiMip,
         level2OpenAduanMip,
@@ -3773,6 +4151,7 @@ watch(
             "level2PerformanceMip",
             level2PerformanceMip.value
         );
+        localStorage.setItem("level2OperationMip", level2OperationMip.value);
         localStorage.setItem(
             "level2OpenSettingMip",
             level2OpenSettingMip.value
@@ -3816,70 +4195,80 @@ const toggleLevel1Mip = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
+    level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenPik.value = false;
-    level2PerformancePik.value = false;
-    level2OpenPik.value = false;
-    level2OpenSettingPik.value = false;
-    level2OpenInspeksiPik.value = false;
-
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
-    level1OpenBib.value = false;
-    level2PerformanceBib.value = false;
-    level2OpenBib.value = false;
-    level2OpenSettingBib.value = false;
-    level2OpenInspeksiBib.value = false;
-
     level1OpenIpt.value = false;
-    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
-    level2PerformanceMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -3897,8 +4286,9 @@ const toggleLevel1Mip = () => {
 const toggleLevel2Mip = () => {
     console.log(level1OpenMip.value);
     if (!level2OpenMip.value) {
-        level1OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMip.value = true;
+        level2PerformanceMip.value = false;
+        level2OperationMip.value = false;
         level2OpenSettingMip.value = false;
         level2OpenInspeksiMip.value = false;
         level3OpenMip.value = false;
@@ -3913,7 +4303,7 @@ const toggleLevel2Mip = () => {
 const toggleLevel2PerformanceMip = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceMip.value) {
-        level1OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMip.value = true;
         level2OpenMip.value = false;
         level2OpenSettingMip.value = false;
         level2OpenInspeksiMip.value = false;
@@ -3926,13 +4316,29 @@ const toggleLevel2PerformanceMip = () => {
     level2PerformanceMip.value = !level2PerformanceMip.value;
 };
 
+const toggleLevel2OperationMip = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationMip.value) {
+        level1OpenMip.value = true;
+        level2OpenMip.value = false;
+        level2OpenSettingMip.value = false;
+        level2OpenInspeksiMip.value = false;
+        level3OpenMip.value = false;
+        level3KomputerOpenMip.value = false;
+        level3PrinterOpenMip.value = false;
+        level3ScannerOpenMip.value = false;
+        level3CctvOpenMip.value = false;
+    }
+    level2OperationMip.value = !level2OperationMip.value;
+};
 const toggleLevel2AduanMip = () => {
     console.log(level1OpenMip.value);
     if (!level2OpenAduanMip.value) {
-        level2PerformanceMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMip.value = false;
+        level2OperationMip.value = false;
+        level2OpenMip.value = false;
+        level2OpenSettingMip.value = false;
+        level2OpenInspeksiMip.value = false;
         level3OpenMip.value = false;
         level3KomputerOpenMip.value = false;
         level3PrinterOpenMip.value = false;
@@ -3945,9 +4351,10 @@ const toggleLevel2AduanMip = () => {
 const toggleLevel2SettingMip = () => {
     console.log(level1OpenMip.value);
     if (!level2OpenSettingMip.value) {
-        level2PerformanceMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceMip.value = false;
+        level2OperationMip.value = false;
+        level1OpenMip.value = true;
+        level2OpenMip.value = false;
         level2OpenInspeksiMip.value = false;
         level3OpenMip.value = false;
         level3KomputerOpenMip.value = false;
@@ -3961,9 +4368,10 @@ const toggleLevel2SettingMip = () => {
 const toggleLevel2InspeksiMip = () => {
     console.log(level1OpenMip.value);
     if (!level2OpenInspeksiMip.value) {
-        level1OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenMip.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenMip.value = true;
+        level2PerformanceMip.value = false;
+        level2OperationMip.value = false;
+        level2OpenMip.value = false;
         level2OpenSettingMip.value = false;
         level3OpenMip.value = false;
         level3KomputerOpenMip.value = false;
@@ -3998,7 +4406,7 @@ const toggleLevel3KomputerMip = () => {
 
 const toggleLevel3CctvMip = () => {
     if (!level3CctvOpenMip.value) {
-        level2OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMip.value = true;
         level3OpenMip.value = false;
         level3KomputerOpenMip.value = false;
         level3PrinterOpenMip.value = false;
@@ -4009,7 +4417,7 @@ const toggleLevel3CctvMip = () => {
 
 const toggleLevel3PrinterMip = () => {
     if (!level3PrinterOpenMip.value) {
-        level2OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMip.value = true;
         level3OpenMip.value = false;
         level3KomputerOpenMip.value = false;
         level3ScannerOpenMip.value = false;
@@ -4020,7 +4428,7 @@ const toggleLevel3PrinterMip = () => {
 
 const toggleLevel3ScannerMip = () => {
     if (!level3ScannerOpenMip.value) {
-        level2OpenMip.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenMip.value = true;
         level3OpenMip.value = false;
         level3KomputerOpenMip.value = false;
         level3PrinterOpenMip.value = false;
@@ -4033,6 +4441,7 @@ const toggleLevel3ScannerMip = () => {
 const level1OpenVale = ref(false);
 const level2OpenVale = ref(false);
 const level2PerformanceVale = ref(false);
+const level2OperationVale = ref(false);
 const level2OpenAduanVale = ref(false);
 const level2OpenSettingVale = ref(false);
 const level2OpenInspeksiVale = ref(false);
@@ -4052,6 +4461,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenSettingVale") === "true";
     level2PerformanceVale.value =
         localStorage.getItem("level2PerformanceVale") === "true";
+    level2OperationVale.value =
+        localStorage.getItem("level2OperationVale") === "true";
     level2OpenInspeksiVale.value =
         localStorage.getItem("level2OpenInspeksiVale") === "true";
     level3OpenVale.value = localStorage.getItem("level3OpenVale") === "true";
@@ -4071,6 +4482,7 @@ watch(
         level1OpenVale,
         level2OpenVale,
         level2PerformanceVale,
+        level2OperationVale,
         level2OpenSettingVale,
         level2OpenInspeksiVale,
         level2OpenAduanVale,
@@ -4088,6 +4500,7 @@ watch(
             "level2PerformanceVale",
             level2PerformanceVale.value
         );
+        localStorage.setItem("level2OperationVale", level2OperationVale.value);
         localStorage.setItem(
             "level2OpenSettingVale",
             level2OpenSettingVale.value
@@ -4131,71 +4544,80 @@ const toggleLevel1Vale = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
+    level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenPik.value = false;
-    level2PerformancePik.value = false;
-    level2OpenPik.value = false;
-    level2OpenSettingPik.value = false;
-    level2OpenInspeksiPik.value = false;
-
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
-    level1OpenBib.value = false;
-    level2PerformanceBib.value = false;
-    level2OpenBib.value = false;
-    level2OpenSettingBib.value = false;
-    level2OpenInspeksiBib.value = false;
-
     level1OpenIpt.value = false;
-    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
-    level2PerformanceMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
-    level2PerformanceMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -4213,8 +4635,9 @@ const toggleLevel1Vale = () => {
 const toggleLevel2Vale = () => {
     console.log(level1OpenVale.value);
     if (!level2OpenVale.value) {
-        level1OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenVale.value = true;
+        level2PerformanceVale.value = false;
+        level2OperationVale.value = false;
         level2OpenSettingVale.value = false;
         level2OpenInspeksiVale.value = false;
         level3OpenVale.value = false;
@@ -4229,7 +4652,7 @@ const toggleLevel2Vale = () => {
 const toggleLevel2PerformanceVale = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceVale.value) {
-        level1OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenVale.value = true;
         level2OpenVale.value = false;
         level2OpenSettingVale.value = false;
         level2OpenInspeksiVale.value = false;
@@ -4242,13 +4665,29 @@ const toggleLevel2PerformanceVale = () => {
     level2PerformanceVale.value = !level2PerformanceVale.value;
 };
 
+const toggleLevel2OperationVale = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationVale.value) {
+        level1OpenVale.value = true;
+        level2OpenVale.value = false;
+        level2OpenSettingVale.value = false;
+        level2OpenInspeksiVale.value = false;
+        level3OpenVale.value = false;
+        level3KomputerOpenVale.value = false;
+        level3PrinterOpenVale.value = false;
+        level3ScannerOpenVale.value = false;
+        level3CctvOpenVale.value = false;
+    }
+    level2OperationVale.value = !level2OperationVale.value;
+};
 const toggleLevel2AduanVale = () => {
     console.log(level1OpenVale.value);
     if (!level2OpenAduanVale.value) {
-        level2PerformanceVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceVale.value = false;
+        level2OperationVale.value = false;
+        level2OpenVale.value = false;
+        level2OpenSettingVale.value = false;
+        level2OpenInspeksiVale.value = false;
         level3OpenVale.value = false;
         level3KomputerOpenVale.value = false;
         level3PrinterOpenVale.value = false;
@@ -4261,9 +4700,10 @@ const toggleLevel2AduanVale = () => {
 const toggleLevel2SettingVale = () => {
     console.log(level1OpenVale.value);
     if (!level2OpenSettingVale.value) {
-        level2PerformanceVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceVale.value = false;
+        level2OperationVale.value = false;
+        level1OpenVale.value = true;
+        level2OpenVale.value = false;
         level2OpenInspeksiVale.value = false;
         level3OpenVale.value = false;
         level3KomputerOpenVale.value = false;
@@ -4277,9 +4717,10 @@ const toggleLevel2SettingVale = () => {
 const toggleLevel2InspeksiVale = () => {
     console.log(level1OpenVale.value);
     if (!level2OpenInspeksiVale.value) {
-        level1OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenVale.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenVale.value = true;
+        level2PerformanceVale.value = false;
+        level2OperationVale.value = false;
+        level2OpenVale.value = false;
         level2OpenSettingVale.value = false;
         level3OpenVale.value = false;
         level3KomputerOpenVale.value = false;
@@ -4314,7 +4755,7 @@ const toggleLevel3KomputerVale = () => {
 
 const toggleLevel3CctvVale = () => {
     if (!level3CctvOpenVale.value) {
-        level2OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenVale.value = true;
         level3OpenVale.value = false;
         level3KomputerOpenVale.value = false;
         level3PrinterOpenVale.value = false;
@@ -4325,7 +4766,7 @@ const toggleLevel3CctvVale = () => {
 
 const toggleLevel3PrinterVale = () => {
     if (!level3PrinterOpenVale.value) {
-        level2OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenVale.value = true;
         level3OpenVale.value = false;
         level3KomputerOpenVale.value = false;
         level3ScannerOpenVale.value = false;
@@ -4336,7 +4777,7 @@ const toggleLevel3PrinterVale = () => {
 
 const toggleLevel3ScannerVale = () => {
     if (!level3ScannerOpenVale.value) {
-        level2OpenVale.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenVale.value = true;
         level3OpenVale.value = false;
         level3KomputerOpenVale.value = false;
         level3PrinterOpenVale.value = false;
@@ -4349,6 +4790,7 @@ const toggleLevel3ScannerVale = () => {
 const level1OpenSbs = ref(false);
 const level2OpenSbs = ref(false);
 const level2PerformanceSbs = ref(false);
+const level2OperationSbs = ref(false);
 const level2OpenAduanSbs = ref(false);
 const level2OpenSettingSbs = ref(false);
 const level2OpenInspeksiSbs = ref(false);
@@ -4366,6 +4808,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanSbs") === "true";
     level2PerformanceSbs.value =
         localStorage.getItem("level2PerformanceSbs") === "true";
+    level2OperationSbs.value =
+        localStorage.getItem("level2OperationSbs") === "true";
     level2OpenSettingSbs.value =
         localStorage.getItem("level2OpenSettingSbs") === "true";
     level2OpenInspeksiSbs.value =
@@ -4387,6 +4831,7 @@ watch(
         level1OpenSbs,
         level2OpenSbs,
         level2PerformanceSbs,
+        level2OperationSbs,
         level2OpenSettingSbs,
         level2OpenInspeksiSbs,
         level2OpenAduanSbs,
@@ -4404,6 +4849,7 @@ watch(
             "level2PerformanceSbs",
             level2PerformanceSbs.value
         );
+        localStorage.setItem("level2OperationSbs", level2OperationSbs.value);
         localStorage.setItem(
             "level2OpenSettingSbs",
             level2OpenSettingSbs.value
@@ -4447,73 +4893,80 @@ const toggleLevel1Sbs = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
+    level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenPik.value = false;
-    level2PerformancePik.value = false;
-    level2OpenPik.value = false;
-    level2OpenSettingPik.value = false;
-    level2OpenInspeksiPik.value = false;
-
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
-    level1OpenBib.value = false;
-    level2PerformanceBib.value = false;
-    level2OpenBib.value = false;
-    level2OpenSettingBib.value = false;
-    level2OpenInspeksiBib.value = false;
-
     level1OpenIpt.value = false;
-    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
-    level2PerformanceMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
-    level2PerformanceMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
-    level2PerformanceVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSks.value = false;
     level2OpenSks.value = false;
-    level2PerformanceSks.value = false;
+    level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
@@ -4531,8 +4984,9 @@ const toggleLevel1Sbs = () => {
 const toggleLevel2Sbs = () => {
     console.log(level1OpenSbs.value);
     if (!level2OpenSbs.value) {
-        level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenSbs.value = true;
+        level2PerformanceSbs.value = false;
+        level2OperationSbs.value = false;
         level2OpenSettingSbs.value = false;
         level2OpenInspeksiSbs.value = false;
         level3OpenSbs.value = false;
@@ -4547,7 +5001,7 @@ const toggleLevel2Sbs = () => {
 const toggleLevel2PerformanceSbs = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceSbs.value) {
-        level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenSbs.value = true;
         level2OpenSbs.value = false;
         level2OpenSettingSbs.value = false;
         level2OpenInspeksiSbs.value = false;
@@ -4560,13 +5014,29 @@ const toggleLevel2PerformanceSbs = () => {
     level2PerformanceSbs.value = !level2PerformanceSbs.value;
 };
 
+const toggleLevel2OperationSbs = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationSbs.value) {
+        level1OpenSbs.value = true;
+        level2OpenSbs.value = false;
+        level2OpenSettingSbs.value = false;
+        level2OpenInspeksiSbs.value = false;
+        level3OpenSbs.value = false;
+        level3KomputerOpenSbs.value = false;
+        level3PrinterOpenSbs.value = false;
+        level3ScannerOpenSbs.value = false;
+        level3CctvOpenSbs.value = false;
+    }
+    level2OperationSbs.value = !level2OperationSbs.value;
+};
 const toggleLevel2AduanSbs = () => {
     console.log(level1OpenSbs.value);
     if (!level2OpenAduanSbs.value) {
-        level2PerformanceSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceSbs.value = false;
+        level2OperationSbs.value = false;
+        level2OpenSbs.value = false;
+        level2OpenSettingSbs.value = false;
+        level2OpenInspeksiSbs.value = false;
         level3OpenSbs.value = false;
         level3KomputerOpenSbs.value = false;
         level3PrinterOpenSbs.value = false;
@@ -4579,9 +5049,10 @@ const toggleLevel2AduanSbs = () => {
 const toggleLevel2SettingSbs = () => {
     console.log(level1OpenSbs.value);
     if (!level2OpenSettingSbs.value) {
-        level2PerformanceSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceSbs.value = false;
+        level2OperationSbs.value = false;
+        level1OpenSbs.value = true;
+        level2OpenSbs.value = false;
         level2OpenInspeksiSbs.value = false;
         level3OpenSbs.value = false;
         level3KomputerOpenSbs.value = false;
@@ -4595,9 +5066,10 @@ const toggleLevel2SettingSbs = () => {
 const toggleLevel2InspeksiSbs = () => {
     console.log(level1OpenSbs.value);
     if (!level2OpenInspeksiSbs.value) {
-        level2PerformanceSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSbs.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceSbs.value = false;
+        level2OperationSbs.value = false;
+        level1OpenSbs.value = true;
+        level2OpenSbs.value = false;
         level2OpenSettingSbs.value = false;
         level3OpenSbs.value = false;
         level3KomputerOpenSbs.value = false;
@@ -4632,7 +5104,7 @@ const toggleLevel3KomputerSbs = () => {
 
 const toggleLevel3CctvSbs = () => {
     if (!level3CctvOpenSbs.value) {
-        level2OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSbs.value = true;
         level3OpenSbs.value = false;
         level3KomputerOpenSbs.value = false;
         level3PrinterOpenSbs.value = false;
@@ -4643,7 +5115,7 @@ const toggleLevel3CctvSbs = () => {
 
 const toggleLevel3PrinterSbs = () => {
     if (!level3PrinterOpenSbs.value) {
-        level2OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSbs.value = true;
         level3OpenSbs.value = false;
         level3KomputerOpenSbs.value = false;
         level3ScannerOpenSbs.value = false;
@@ -4654,7 +5126,7 @@ const toggleLevel3PrinterSbs = () => {
 
 const toggleLevel3ScannerSbs = () => {
     if (!level3ScannerOpenSbs.value) {
-        level2OpenSbs.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSbs.value = true;
         level3OpenSbs.value = false;
         level3KomputerOpenSbs.value = false;
         level3PrinterOpenSbs.value = false;
@@ -4667,6 +5139,7 @@ const toggleLevel3ScannerSbs = () => {
 const level1OpenSks = ref(false);
 const level2OpenSks = ref(false);
 const level2PerformanceSks = ref(false);
+const level2OperationSks = ref(false);
 const level2OpenAduanSks = ref(false);
 const level2OpenSettingSks = ref(false);
 const level2OpenInspeksiSks = ref(false);
@@ -4684,6 +5157,8 @@ onMounted(() => {
         localStorage.getItem("level2OpenAduanSks") === "true";
     level2PerformanceSks.value =
         localStorage.getItem("level2PerformanceSks") === "true";
+    level2OperationSks.value =
+        localStorage.getItem("level2OperationSks") === "true";
     level2OpenSettingSks.value =
         localStorage.getItem("level2OpenSettingSks") === "true";
     level2OpenInspeksiSks.value =
@@ -4705,6 +5180,7 @@ watch(
         level1OpenSks,
         level2OpenSks,
         level2PerformanceSks,
+        level2OperationSks,
         level2OpenSettingSks,
         level2OpenInspeksiSks,
         level2OpenAduanSks,
@@ -4722,6 +5198,7 @@ watch(
             "level2PerformanceSks",
             level2PerformanceSks.value
         );
+        localStorage.setItem("level2OperationSks", level2OperationSks.value);
         localStorage.setItem(
             "level2OpenSettingSks",
             level2OpenSettingSks.value
@@ -4765,73 +5242,80 @@ const toggleLevel1Sks = () => {
 
     level1OpenBa.value = false;
     level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
     level2OpenBa.value = false;
     level2OpenSettingBa.value = false;
     level2OpenInspeksiBa.value = false;
 
+    level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
     level1OpenMifa.value = false;
     level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
     level2OpenMifa.value = false;
     level2OpenSettingMifa.value = false;
     level2OpenInspeksiMifa.value = false;
 
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
     level1OpenMhu.value = false;
     level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
     level2OpenMhu.value = false;
     level2OpenSettingMhu.value = false;
     level2OpenInspeksiMhu.value = false;
 
     level1OpenWARA.value = false;
     level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
     level2OpenWARA.value = false;
     level2OpenSettingWARA.value = false;
     level2OpenInspeksiWARA.value = false;
 
-    level1OpenPik.value = false;
-    level2PerformancePik.value = false;
-    level2OpenPik.value = false;
-    level2OpenSettingPik.value = false;
-    level2OpenInspeksiPik.value = false;
-
-    level1OpenAmi.value = false;
-    level2PerformanceAmi.value = false;
-    level2OpenAmi.value = false;
-    level2OpenSettingAmi.value = false;
-    level2OpenInspeksiAmi.value = false;
-
-    level1OpenBib.value = false;
-    level2PerformanceBib.value = false;
-    level2OpenBib.value = false;
-    level2OpenSettingBib.value = false;
-    level2OpenInspeksiBib.value = false;
-
     level1OpenIpt.value = false;
-    level2PerformanceIpt.value = false;
     level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
     level2OpenSettingIpt.value = false;
     level2OpenInspeksiIpt.value = false;
 
     level1OpenMlp.value = false;
     level2OpenMlp.value = false;
-    level2PerformanceMlp.value = false;
+    level2OperationMlp.value = false;
     level2OpenSettingMlp.value = false;
     level2OpenInspeksiMlp.value = false;
 
     level1OpenMip.value = false;
     level2OpenMip.value = false;
-    level2PerformanceMip.value = false;
+    level2OperationMip.value = false;
     level2OpenSettingMip.value = false;
     level2OpenInspeksiMip.value = false;
 
     level1OpenVale.value = false;
     level2OpenVale.value = false;
-    level2PerformanceVale.value = false;
+    level2OperationVale.value = false;
     level2OpenSettingVale.value = false;
     level2OpenInspeksiVale.value = false;
 
     level1OpenSbs.value = false;
     level2OpenSbs.value = false;
-    level2PerformanceSks.value = false;
+    level2OperationSbs.value = false;
     level2OpenSettingSbs.value = false;
     level2OpenInspeksiSbs.value = false;
 
@@ -4849,8 +5333,9 @@ const toggleLevel1Sks = () => {
 const toggleLevel2Sks = () => {
     console.log(level1OpenSks.value);
     if (!level2OpenSks.value) {
-        level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2PerformanceSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenSks.value = true;
+        level2PerformanceSks.value = false;
+        level2OperationSks.value = false;
         level2OpenSettingSks.value = false;
         level2OpenInspeksiSks.value = false;
         level3OpenSks.value = false;
@@ -4865,7 +5350,7 @@ const toggleLevel2Sks = () => {
 const toggleLevel2PerformanceSks = () => {
     // console.log(level1OpenWARA.value);
     if (!level2PerformanceSks.value) {
-        level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level1OpenSks.value = true;
         level2OpenSks.value = false;
         level2OpenSettingSks.value = false;
         level2OpenInspeksiSks.value = false;
@@ -4878,13 +5363,29 @@ const toggleLevel2PerformanceSks = () => {
     level2PerformanceSks.value = !level2PerformanceSks.value;
 };
 
+const toggleLevel2OperationSks = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationSks.value) {
+        level1OpenSks.value = true;
+        level2OpenSks.value = false;
+        level2OpenSettingSks.value = false;
+        level2OpenInspeksiSks.value = false;
+        level3OpenSks.value = false;
+        level3KomputerOpenSks.value = false;
+        level3PrinterOpenSks.value = false;
+        level3ScannerOpenSks.value = false;
+        level3CctvOpenSks.value = false;
+    }
+    level2OperationSks.value = !level2OperationSks.value;
+};
 const toggleLevel2AduanSks = () => {
     console.log(level1OpenSks.value);
     if (!level2OpenAduanSks.value) {
-        level2PerformanceSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSettingSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenInspeksiSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceSks.value = false;
+        level2OperationSks.value = false;
+        level2OpenSks.value = false;
+        level2OpenSettingSks.value = false;
+        level2OpenInspeksiSks.value = false;
         level3OpenSks.value = false;
         level3KomputerOpenSks.value = false;
         level3PrinterOpenSks.value = false;
@@ -4897,9 +5398,10 @@ const toggleLevel2AduanSks = () => {
 const toggleLevel2SettingSks = () => {
     console.log(level1OpenSks.value);
     if (!level2OpenSettingSks.value) {
-        level2PerformanceSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceSks.value = false;
+        level2OperationSks.value = false;
+        level1OpenSks.value = true;
+        level2OpenSks.value = false;
         level2OpenInspeksiSks.value = false;
         level3OpenSks.value = false;
         level3KomputerOpenSks.value = false;
@@ -4913,9 +5415,10 @@ const toggleLevel2SettingSks = () => {
 const toggleLevel2InspeksiSks = () => {
     console.log(level1OpenSks.value);
     if (!level2OpenInspeksiSks.value) {
-        level2PerformanceSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
-        level1OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
-        level2OpenSks.value = false; // pastikan level 1 terbuka jika level 2 dibuka
+        level2PerformanceSks.value = false;
+        level2OperationSks.value = false;
+        level1OpenSks.value = true;
+        level2OpenSks.value = false;
         level2OpenSettingSks.value = false;
         level3OpenSks.value = false;
         level3KomputerOpenSks.value = false;
@@ -4950,7 +5453,7 @@ const toggleLevel3KomputerSks = () => {
 
 const toggleLevel3CctvSks = () => {
     if (!level3CctvOpenSks.value) {
-        level2OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSks.value = true;
         level3OpenSks.value = false;
         level3KomputerOpenSks.value = false;
         level3PrinterOpenSks.value = false;
@@ -4961,7 +5464,7 @@ const toggleLevel3CctvSks = () => {
 
 const toggleLevel3PrinterSks = () => {
     if (!level3PrinterOpenSks.value) {
-        level2OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSks.value = true;
         level3OpenSks.value = false;
         level3KomputerOpenSks.value = false;
         level3ScannerOpenSks.value = false;
@@ -4972,7 +5475,7 @@ const toggleLevel3PrinterSks = () => {
 
 const toggleLevel3ScannerSks = () => {
     if (!level3ScannerOpenSks.value) {
-        level2OpenSks.value = true; // pastikan level 1 terbuka jika level 2 dibuka
+        level2OpenSks.value = true;
         level3OpenSks.value = false;
         level3KomputerOpenSks.value = false;
         level3PrinterOpenSks.value = false;
@@ -6500,6 +7003,101 @@ const toggleLevel3ScannerSks = () => {
                                     v-if="
                                         $page.props.auth.user.role != 'soc_ho'
                                     "
+                                    @click="toggleLevel2OperationBa"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationBa"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationBa">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.ba.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.ba.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.ba.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.ba.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.ba.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.ba.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
                                     @click="toggleLevel2PerformanceBa"
                                     style="cursor: pointer"
                                     class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
@@ -6935,10 +7533,21 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiBa">
                                     <NavLink
+
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.ba.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.ba.index'
+
                                         :href="route('picaInspeksi.page', { site: 'BA' })"
                                         :active="
                                             route().current(
                                                 'picaInspeksi.page', { site: 'BA' }
+
                                             )
                                         "
                                     >
@@ -6946,12 +7555,20 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
+
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+
                                                 class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+
+                                            >Jadwal Laptop</span
+
                                             >Pica Inspeksi</span
+
                                         >
                                     </NavLink>
 
@@ -6973,6 +7590,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.ba.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.ba.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -7206,6 +7848,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationMifa"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationMifa"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationMifa">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.mifa.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.mifa.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.mifa.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.mifa.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.mifa.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.mifa.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -7672,6 +8409,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.mifa.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.mifa.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopMifa.page')"
                                         :active="
                                             route().current(
@@ -7689,6 +8451,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.mifa.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.mifa.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -7927,6 +8714,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationMhu"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationMhu"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationMhu">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.mhu.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.mhu.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.mhu.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.mhu.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.mhu.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.mhu.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -8391,6 +9273,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.mhu.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.mhu.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopMhu.page')"
                                         :active="
                                             route().current(
@@ -8408,6 +9315,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.mhu.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.mhu.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -8646,6 +9578,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationWARA"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationWARA"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationWARA">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.adw.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.adw.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.adw.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.adw.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.adw.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.adw.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -9112,6 +10139,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.adw.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.adw.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopWARA.page')"
                                         :active="
                                             route().current(
@@ -9129,6 +10181,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.adw.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.adw.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -9265,6 +10342,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationAmi"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationAmi"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationAmi">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.ami.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.ami.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.ami.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.ami.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.ami.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.ami.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -9729,6 +10901,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.ami.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.ami.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopAmi.page')"
                                         :active="
                                             route().current(
@@ -9746,6 +10943,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.ami.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.ami.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -9984,6 +11206,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationPik"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationPik"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationPik">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.pik.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.pik.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.pik.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.pik.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.pik.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.pik.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -10448,6 +11765,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.pik.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.pik.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopPik.page')"
                                         :active="
                                             route().current(
@@ -10465,6 +11807,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.pik.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.pik.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -10703,6 +12070,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationBge"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationBge"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationBge">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.bge.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.bge.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.bge.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.bge.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.bge.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.bge.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -11167,6 +12629,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.bge.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.bge.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopBge.page')"
                                         :active="
                                             route().current(
@@ -11184,6 +12671,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.bge.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.bge.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -11422,6 +12934,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationBib"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationBib"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationBib">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.bib.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.bib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.bib.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.bib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.bib.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.bib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -11886,6 +13493,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.bib.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.bib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopBib.page')"
                                         :active="
                                             route().current(
@@ -11903,6 +13535,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.bib.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.bib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -12137,6 +13794,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationIpt"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationIpt"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationIpt">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.ipt.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.ipt.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.ipt.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.ipt.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.ipt.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.ipt.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -12601,6 +14353,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.ipt.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.ipt.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopIpt.page')"
                                         :active="
                                             route().current(
@@ -12618,6 +14395,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.ipt.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.ipt.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -12852,6 +14654,100 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationMlp"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationMlp"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationMlp">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.mlp.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.mlp.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.mlp.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.mlp.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.mlp.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.mlp.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -13316,6 +15212,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.mlp.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.mlp.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopMlp.page')"
                                         :active="
                                             route().current(
@@ -13333,6 +15254,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.mlp.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.mlp.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -13567,6 +15513,100 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationMip"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationMip"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationMip">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.mip.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.mip.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.mip.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.mip.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.mip.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.mip.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -14031,6 +16071,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.mip.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.mip.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopMip.page')"
                                         :active="
                                             route().current(
@@ -14048,6 +16113,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.mip.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.mip.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -14282,6 +16372,100 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationVale"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationVale"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationVale">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.vib.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.vib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.vib.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.vib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.vib.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.vib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -14748,6 +16932,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.vib.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.vib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopVale.page')"
                                         :active="
                                             route().current(
@@ -14765,6 +16974,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.vib.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.vib.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -14999,6 +17233,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationSbs"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationSbs"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationSbs">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.sbs.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.sbs.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.sbs.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.sbs.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.sbs.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.sbs.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -15463,6 +17792,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.sbs.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.sbs.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopSbs.page')"
                                         :active="
                                             route().current(
@@ -15480,6 +17834,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.sbs.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.sbs.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 
@@ -15714,6 +18093,101 @@ const toggleLevel3ScannerSks = () => {
                                         >Aduan</span
                                     >
                                 </NavLink>
+
+                                <div
+                                    v-if="
+                                        $page.props.auth.user.role != 'soc_ho'
+                                    "
+                                    @click="toggleLevel2OperationSks"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Operation</span
+                                    >
+                                    <i
+                                        v-if="!level2OperationSks"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OperationSks">
+                                    <NavLink
+                                        :href="
+                                            route('monitoring-jobs.sks.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'monitoring-jobs.sks.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Monitoring Jobs
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="route('daily-jobs.sks.index')"
+                                        :active="
+                                            route().current(
+                                                'daily-jobs.sks.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Assignment
+                                        </span>
+                                    </NavLink>
+                                    <NavLink
+                                        :href="
+                                            route('unschedule-jobs.sks.index')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'unschedule-jobs.sks.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Job Unchedule</span
+                                        >
+                                    </NavLink>
+                                </ul>
 
                                 <div
                                     v-if="
@@ -16178,6 +18652,31 @@ const toggleLevel3ScannerSks = () => {
                                         >
                                     </NavLink>
                                     <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-laptop.sks.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-laptop.sks.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
                                         :href="route('inspeksiLaptopSks.page')"
                                         :active="
                                             route().current(
@@ -16195,6 +18694,31 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspection-scheduler-computer.sks.index'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspection-scheduler-computer.sks.index'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 

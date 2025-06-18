@@ -51,4 +51,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function jobs()
+    {
+        return DailyJob::whereJsonContains('crew', (string) $this->id)->get();
+    }
+
+    public function todaysJobs()
+    {
+        return $this->jobs()->filter(function ($job) {
+            return $job->date->isToday();
+        });
+    }
 }

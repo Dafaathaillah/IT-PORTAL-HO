@@ -2,20 +2,20 @@
 import { usePage, Link } from "@inertiajs/vue3";
 import { computed, onMounted, defineProps } from "vue";
 
-const pages = defineModel('pages', {
+const pages = defineModel("pages", {
     type: String,
 });
 
-const subMenu = defineModel('subMenu', {
+const subMenu = defineModel("subMenu", {
     type: String,
 });
 
-const mainMenu = defineModel('mainMenu', {
+const mainMenu = defineModel("mainMenu", {
     type: String,
 });
 
 const cekData = onMounted(() => {
-    console.log('cek Bolo');
+    console.log("cek Bolo");
     console.log(subMenu.value);
 });
 </script>
@@ -30,7 +30,6 @@ const cekData = onMounted(() => {
                 <a class="text-white opacity-50">{{ pages }}</a>
             </li>
             <Link
-                :href="route('accessPoint.page')"
                 class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                 aria-current="page"
             >
