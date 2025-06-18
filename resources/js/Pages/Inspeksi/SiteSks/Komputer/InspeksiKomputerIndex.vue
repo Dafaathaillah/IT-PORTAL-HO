@@ -14,6 +14,31 @@
 .dt-buttons {
     margin-top: 1em;
 }
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shake-border {
+    animation: shake 0.3s ease;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6); /* biru lembut (tailwind blue-500) */
+    border: 1px solid rgba(59, 130, 246, 1); /* biru solid */
+    border-radius: 0.5rem;
+}
 </style>
 
 <script setup>
@@ -65,7 +90,13 @@ const props = defineProps({
     computer: {
         type: Array,
     },
+    crew: {
+        type: Array,
+    },
 });
+const options = props.crew;
+const selectedValues = ref(null); // Awalnya array kosong
+const showValidation = ref(false);
 
 const form = useForm({});
 
@@ -101,6 +132,29 @@ const validateYear = (event) => {
 };
 
 const getEncryptedYear = () => {
+    if (!selectedValues.value || !selectedValues.value.name) {
+        showValidation.value = true;
+
+        // Hilangkan efek setelah beberapa saat
+        setTimeout(() => {
+            showValidation.value = false;
+        }, 1000);
+
+        Swal.fire({
+            icon: "warning",
+            title: "Wajib Memilih PIC",
+            text: "Silakan pilih PIC terlebih dahulu sebelum mengekspor data.",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+        return;
+    }
+
+    const selectPic = selectedValues.value.name;
+
     // Ambil tahun yang dimasukkan atau gunakan tahun saat ini
     const selectedYear = year.value
         ? parseInt(year.value)
@@ -116,9 +170,6 @@ const getEncryptedYear = () => {
               if (month >= 7 && month <= 9) return 3;
               return 4;
           })();
-
-    console.log(selectedYear);
-    console.log(selectedQuarter);
 
     // Validasi tahun (tidak boleh lebih dari 2500)
     if (selectedYear > 2500) {
@@ -154,7 +205,12 @@ const getEncryptedYear = () => {
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.yearComputer"),
-        { year: selectedYear, quarter: selectedQuarter, site: "SKS" },
+        {
+            year: selectedYear,
+            quarter: selectedQuarter,
+            site: "SKS",
+            pic: selectPic,
+        },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -165,6 +221,7 @@ const getEncryptedYear = () => {
                             year: encryptedYear,
                             quarter: selectedQuarter,
                             site: "SKS",
+                            pic: selectPic,
                         }),
                         "_blank"
                     );
@@ -307,9 +364,26 @@ const getBadgeTextStatusInventory = (status) => {
                                         @input="validateYear"
                                     />
                                 </div>
+                                <div
+                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
+                                >
+                                    <VueMultiselect
+                                        ref="picSelect"
+                                        v-model="selectedValues"
+                                        :options="options"
+                                        :multiple="false"
+                                        :close-on-select="true"
+                                        placeholder="Pilih PIC"
+                                        track-by="name"
+                                        label="name"
+                                        :class="{
+                                            'shake-border': showValidation,
+                                        }"
+                                    />
+                                </div>
                                 <button
                                     @click="getEncryptedYear"
-                                    class="flex items-center text-sm justify-center gap-2 w-40 h-10 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
                                 >
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi
@@ -442,11 +516,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    computers
-                                                                        .computer
-                                                                        .computer_code
-                                                                }}
+                                                                {{ computers.computer ? computers.computer.computer_code : '-' }}
                                                             </p>
                                                         </td>
 
@@ -456,12 +526,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    computers
-                                                                        .computer
-                                                                        .pengguna
-                                                                        .username
-                                                                }}
+                                                                 {{ computers.computer && computers.computer.pengguna ? computers.computer.pengguna.username : '-' }}
                                                             </p>
                                                         </td>
                                                         <td
@@ -470,12 +535,7 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{
-                                                                    computers
-                                                                        .computer
-                                                                        .pengguna
-                                                                        .department
-                                                                }}
+                                                                 {{ computers.computer && computers.computer.pengguna ? computers.computer.pengguna.department : '-' }}
                                                             </p>
                                                         </td>
 
@@ -583,6 +643,21 @@ const getBadgeTextStatusInventory = (status) => {
                                                         <td
                                                             class="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                         >
+                                                            <NavLinkCustom
+                                                                v-if="
+                                                                    computers.inspection_status ===
+                                                                    'N'
+                                                                "
+                                                                @click="
+                                                                    editData(
+                                                                        computers.id
+                                                                    )
+                                                                "
+                                                                class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            >
+                                                                Do Inspection
+                                                            </NavLinkCustom>
+
                                                             <NavLinkCustom
                                                                 @click="
                                                                     editDataInspeksi(

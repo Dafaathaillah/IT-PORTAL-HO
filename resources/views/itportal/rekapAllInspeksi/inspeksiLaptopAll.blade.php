@@ -123,8 +123,9 @@
                     <th rowspan="2" style="border: 1px solid #000;">Tanggal Inspeksi</th>
                     <th rowspan="2" style="border: 1px solid #000;">Merek - Tipe</th>
                     <th rowspan="2" style="border: 1px solid #000;">Lokasi</th>
-                    <th colspan="10" style="border: 1px solid #000;">Software</th>
+                    <th colspan="7" style="border: 1px solid #000;">Software</th>
                     <th colspan="3" style="border: 1px solid #000;">Hardware</th>
+                    <th colspan="3" style="border: 1px solid #000;">Security</th>
                     <th rowspan="2" style="border: 1px solid #000;">SSD(%)</th>
                     <th rowspan="2" style="border: 1px solid #000;">Kondisi</th>
                     <th rowspan="2" style="border: 1px solid #000;">Status Komputer</th>
@@ -136,26 +137,26 @@
                     <th style="border: 1px solid #000;">Sys Restore</th>
                     <th style="border: 1px solid #000;">Cache Data</th>
                     <th style="border: 1px solid #000;">Std Software</th>
-                    <th style="border: 1px solid #000;">Pwd</th>
-                    <th style="border: 1px solid #000;">Win Lic</th>
-                    <th style="border: 1px solid #000;">Off Lic</th>
+                    <th style="border: 1px solid #000;">Soft Lic</th>
                     <th style="border: 1px solid #000;">Win Update</th>
-                    <th style="border: 1px solid #000;">SSD Check</th>
                     <th style="border: 1px solid #000;">Dev Name</th>
                     <th style="border: 1px solid #000;">Fan</th>
                     <th style="border: 1px solid #000;">Pasta</th>
                     <th style="border: 1px solid #000;">Other</th>
+                    <th style="border: 1px solid #000;">Uname</th>
+                    <th style="border: 1px solid #000;">Auto Lck</th>
+                    <th style="border: 1px solid #000;">Inp Pwd</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($inspeksiLaptopAll as $item)
                     <tr class="dataContent">
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->inventory->laptop_code }}</td>
-                        <td>{{ $item->inventory->number_asset_ho }}</td>
+                        <td>{{ $item->inventory->laptop_code ?? '-' }}</td>
+                        <td>{{ $item->inventory->number_asset_ho ?? '-'}}</td>
                         <td>{{ $item->created_date }}</td>
-                        <td>{{ $item->inventory->laptop_name }} {{ $item->spesifikasi_singkat ?? '-' }}</td>
-                        <td class="text-left">{{ $item->inventory->location }}</td>
+                        <td>{{ $item->inventory->laptop_name ?? '-' }} {{ $item->spesifikasi_singkat ?? '-' }}</td>
+                        <td class="text-left">{{ $item->inventory->location ?? '-' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_defrag == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
@@ -165,14 +166,8 @@
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_standaritation_software == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->software_change_password == 'Y' ? '✔' : '✖' }}</td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->software_windows_license == 'Y' ? '✔' : '✖' }}</td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_office_license == 'Y' ? '✔' : '✖' }}</td>
                         <td>{{ $item->software_turn_off_windows_update }}</td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->software_checking_ssd_health == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->software_standaritation_device_name == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
@@ -181,6 +176,12 @@
                             {{ $item->hardware_change_pasta == 'Y' ? '✔' : '✖' }}</td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->hardware_any_maintenance == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">
+                            {{ $item->security_change_password == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">
+                            {{ $item->security_auto_lock == 'Y' ? '✔' : '✖' }}</td>
+                        <td style="font-family: 'DejaVu Sans', sans-serif;">
+                            {{ $item->security_input_password == 'Y' ? '✔' : '✖' }}</td>
                         <td>{{ $item->software_percentage_ssd_health }}
                         </td>
                         <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->condition }}</td>
@@ -215,13 +216,26 @@
             <tr>
                 <td style="text-align: center; border: none;">
                     Mengetahui,<br>
-                    Group Leader<br><br><br><br><br>
-                    ( ________________ )
+                    Group Leader<br><br>
+                    @if ($qr_base64Approved)
+                        <img src="{{ $qr_base64Approved }}" alt="QR Code" style="width: 100px; height: 100px;"><br>
+                    @else
+                        <p><i>Perlu Approval</i></p>
+                    @endif
+                    <br>
+                    ( {{ $picApproved }} )
                 </td>
                 <td style="text-align: center; border: none;">
                     Inspektor,<br>
-                    Petugas Inspeksi<br><br><br><br><br>
-                    ( ________________ )
+                    IT Support<br><br>
+                    @if ($qr_base64Pic)
+                        <img src="{{ $qr_base64Pic }}" alt="QR Code" style="width: 100px; height: 100px;"><br>
+                    @else
+                        <p><i>Perlu Approval</i></p>
+                    @endif
+                    <br>
+                    ( {{ $pic }} )
+
                 </td>
             </tr>
         </table>

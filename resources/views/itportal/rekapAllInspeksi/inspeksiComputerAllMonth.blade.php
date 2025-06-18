@@ -96,7 +96,7 @@
             </tr>
         </table>
 
-        <div class="title">FORM CHECKLIST INSPEKSI LAPTOP</div>
+        <div class="title">FORM CHECKLIST INSPEKSI COMPUTER</div>
         <table style="width: 100%; margin-bottom: 10px; font-size: 12px; border-collapse: collapse;">
             <tr>
                 <td style="text-align: left; font-weight: bold; border: none;">
@@ -171,7 +171,7 @@
         <div style="font-size: 12px; font-weight: bold; margin-bottom: 10px;">CATATAN</div>
 
         <ul style="font-size: 11px; margin-bottom: 20px;">
-            <li>Checklist ini dilakukan secara berkala setiap 3 bulan.</li>
+            <li>Checklist ini dilakukan secara berkala setiap bulan.</li>
             <li>Unit utilize adalah total keseluruhan unit yang tidak termasuk unit scrap.</li>
         </ul>
 
@@ -186,13 +186,25 @@
             <tr>
                 <td style="text-align: center; border: none;">
                     Mengetahui,<br>
-                    Group Leader<br><br><br><br><br>
-                    ( ________________ )
+                    Group Leader<br><br>
+                    @if ($qr_base64Approved)
+                        <img src="{{ $qr_base64Approved }}" alt="QR Code" style="width: 100px; height: 100px;"><br>
+                    @else
+                        <p><i>Perlu Approval</i></p>
+                    @endif
+                    <br>
+                    ( {{ $picApproved }} )
                 </td>
                 <td style="text-align: center; border: none;">
                     Inspektor,<br>
-                    Petugas Inspeksi<br><br><br><br><br>
-                    ( ________________ )
+                    IT Support<br><br>
+                    @if ($qr_base64Pic)
+                        <img src="{{ $qr_base64Pic }}" alt="QR Code" style="width: 100px; height: 100px;"><br>
+                    @else
+                        <p><i>Perlu Inspector</i></p>
+                    @endif
+                    <br>
+                    ( {{ $pic }} )
                 </td>
             </tr>
         </table>

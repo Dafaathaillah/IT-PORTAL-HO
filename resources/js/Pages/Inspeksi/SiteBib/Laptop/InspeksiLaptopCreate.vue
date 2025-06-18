@@ -8,7 +8,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Swal from "sweetalert2";
 import { Inertia } from "@inertiajs/inertia";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import moment from "moment";
 
 const props = defineProps({
@@ -29,14 +29,13 @@ function formattedDate(date) {
 
 const form = useForm({
     id: props.dataInspeksi.id,
+    software_standaritation_software: "",
     software_defrag: "",
     software_check_system_restore: "",
     software_clean_cache_data: "",
     software_check_ilegal_software: "MERGED",
-    software_change_password: "",
     software_windows_license: "",
     software_office_license: "",
-    software_standaritation_software: "",
     software_update_sinology: "DELETED",
     software_turn_off_windows_update: "",
     software_cheking_ssd_health: "",
@@ -44,6 +43,9 @@ const form = useForm({
     hardware_fan_cleaning: "",
     hardware_change_pasta: "",
     hardware_any_maintenance: "",
+    security_change_password: "",
+    security_auto_lock: "",
+    security_input_password: "",
     ssd_persen: "",
     condition: "",
     status_inv: "",
@@ -98,11 +100,14 @@ const customFormat = (date) => {
 
 const selectedValuesPIC = ref([]);
 
+const storageTipe = ref("");
+
 const selectedDefrag = ref([]);
 const selectedRestore = ref([]);
 const selectedCache = ref([]);
-// const selectedIlegal = ref([]);
-const selectedPassword = ref([]);
+const selectedChangePassword = ref([]);
+const selectedAutoLock = ref([]);
+const selectedInputPassword = ref([]);
 const selectedLicense = ref([]);
 const selectedOffice = ref([]);
 const selectedStandarisasi = ref([]);
@@ -116,6 +121,13 @@ const selectedLainnya = ref([]);
 
 const penggunaString = computed(() => {
     return selectedValuesPIC.value.map((option) => option.name).join("");
+});
+
+// Optional: reset defrag if SSD dipilih
+watch(storageTipe, (newVal) => {
+    if (newVal === "SSD") {
+        selectedDefrag.value = "";
+    }
 });
 
 const save = () => {
@@ -133,18 +145,18 @@ const save = () => {
     form.software_defrag = selectedDefrag.value;
     form.software_check_system_restore = selectedRestore.value;
     form.software_clean_cache_data = selectedCache.value;
-    // form.software_check_ilegal_software = props.software_check_ilegal_software;
-    form.software_change_password = selectedPassword.value;
     form.software_windows_license = selectedLicense.value;
     form.software_office_license = selectedOffice.value;
     form.software_standaritation_software = selectedStandarisasi.value;
-    // form.software_update_sinology = props.software_update_sinology;
     form.software_turn_off_windows_update = selectedOff.value;
-    form.software_cheking_ssd_health = selectedHealth.value;
+    // form.software_cheking_ssd_health = selectedHealth.value;
     form.software_standaritation_device_name = selectedNama.value;
     form.hardware_fan_cleaning = selectedFan.value;
     form.hardware_change_pasta = selectedPasta.value;
     form.hardware_any_maintenance = selectedLainnya.value;
+    form.security_change_password = selectedChangePassword.value;
+    form.security_auto_lock = selectedAutoLock.value;
+    form.security_input_password = selectedInputPassword.value;
 
     form.image_temuan = file_temuan.value;
     form.image_tindakan = file_tindakan.value;
@@ -407,6 +419,174 @@ const options = props.pengguna;
                                 />
                                 <div class="flex flex-wrap -mx-3">
                                     <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-1/12 md:flex-0"
+                                    ></div>
+
+                                    <div
+                                        class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                    >
+                                        <div class="text-center mb-4">
+                                            <p
+                                                class="mb-0 dark:text-white/80 font-semibold"
+                                            >
+                                                HARDWARE
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="aplikasi"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Melakukan Fan Cleaning</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="fan"
+                                                        v-model="selectedFan"
+                                                        value="Y"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Ya</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="fan"
+                                                        v-model="selectedFan"
+                                                        value="N"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Tidak</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="license"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Melakukan Pergantian
+                                                Pasta</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="pasta"
+                                                        v-model="selectedPasta"
+                                                        value="Y"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Ya</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="pasta"
+                                                        v-model="selectedPasta"
+                                                        value="N"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Tidak</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="ip-address"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Melakukan Perbaikan
+                                                Lainnya</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="lainnya"
+                                                        v-model="
+                                                            selectedLainnya
+                                                        "
+                                                        value="Y"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Ya</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="lainnya"
+                                                        v-model="
+                                                            selectedLainnya
+                                                        "
+                                                        value="N"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Tidak</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
                                         class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
                                     >
                                         <div class="text-center mb-4">
@@ -421,352 +601,7 @@ const options = props.pengguna;
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
-                                        <div
-                                            class="mb-4"
-                                        >
-                                            <label
-                                                for="device-name"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Defrag</label
-                                            >
-
-                                            <br />
-                                            <div
-                                                class="inline-flex items-center space-x-4 mb-2"
-                                            >
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="defrag"
-                                                        v-model="selectedDefrag"
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Ya</span
-                                                    >
-                                                </label>
-
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="defrag"
-                                                        v-model="selectedDefrag"
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Tidak</span
-                                                    >
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
-                                            <label
-                                                for="number-asset-ho"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Cek System
-                                                Restore</label
-                                            >
-
-                                            <br />
-                                            <div
-                                                class="inline-flex items-center space-x-4 mb-2"
-                                            >
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="restore"
-                                                        v-model="
-                                                            selectedRestore
-                                                        "
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Ya</span
-                                                    >
-                                                </label>
-
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="restore"
-                                                        v-model="
-                                                            selectedRestore
-                                                        "
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Tidak</span
-                                                    >
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
-                                            <label
-                                                for="assets-category"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Clean Temporary &
-                                                Cache Data</label
-                                            >
-
-                                            <br />
-                                            <div
-                                                class="inline-flex items-center space-x-4 mb-2"
-                                            >
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="cache"
-                                                        v-model="selectedCache"
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Ya</span
-                                                    >
-                                                </label>
-
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="cache"
-                                                        v-model="selectedCache"
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Tidak</span
-                                                    >
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
                                         <div class="mb-4">
-                                            <label for="model"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80">Tidak
-                                                Terdapat Software Ilegal</label>
-
-                                            <br>
-                                            <div class="inline-flex items-center space-x-4 mb-2">
-                                                <label class="inline-flex items-center space-x-2">
-                                                    <input required type="radio" name="ilegal" v-model="selectedIlegal"
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Ya</span>
-                                                </label>
-
-                                                <label class="inline-flex items-center space-x-2">
-                                                    <input required type="radio" name="ilegal" v-model="selectedIlegal"
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500" />
-                                                    <span class="text-gray-700">Tidak</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
-                                            <label
-                                                for="processor"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Change
-                                                Password</label
-                                            >
-
-                                            <br />
-                                            <div
-                                                class="inline-flex items-center space-x-4 mb-2"
-                                            >
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="password"
-                                                        v-model="
-                                                            selectedPassword
-                                                        "
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Ya</span
-                                                    >
-                                                </label>
-
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="password"
-                                                        v-model="
-                                                            selectedPassword
-                                                        "
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Tidak</span
-                                                    >
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
-                                            <label
-                                                for="hdd"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Cek Windows
-                                                License</label
-                                            >
-
-                                            <br />
-                                            <div
-                                                class="inline-flex items-center space-x-4 mb-2"
-                                            >
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="lisensi"
-                                                        v-model="
-                                                            selectedLicense
-                                                        "
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Ya</span
-                                                    >
-                                                </label>
-
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="lisensi"
-                                                        v-model="
-                                                            selectedLicense
-                                                        "
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Tidak</span
-                                                    >
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
-                                            <label
-                                                for="ssd"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Cek Office
-                                                License</label
-                                            >
-
-                                            <br />
-                                            <div
-                                                class="inline-flex items-center space-x-4 mb-2"
-                                            >
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="office"
-                                                        v-model="selectedOffice"
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Ya</span
-                                                    >
-                                                </label>
-
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="office"
-                                                        v-model="selectedOffice"
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Tidak</span
-                                                    >
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
                                             <label
                                                 for="ram"
                                                 class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
@@ -819,113 +654,7 @@ const options = props.pengguna;
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
-                                        <div
-                                            class="mb-4"
-                                        >
-                                            <label
-                                                for="warna_laptop"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Cek Turn Off Windows
-                                                Update</label
-                                            >
-
-                                            <br />
-                                            <div
-                                                class="inline-flex items-center space-x-4 mb-2"
-                                            >
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="off"
-                                                        v-model="selectedOff"
-                                                        value="ON"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >On</span
-                                                    >
-                                                </label>
-
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="off"
-                                                        v-model="selectedOff"
-                                                        value="OFF"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Off</span
-                                                    >
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-2/12 md:flex-0"
-                                    ></div> -->
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
-                                            <label
-                                                for="os_laptop"
-                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Cek SSD Health</label
-                                            >
-
-                                            <br />
-                                            <div
-                                                class="inline-flex items-center space-x-4 mb-2"
-                                            >
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="health"
-                                                        v-model="selectedHealth"
-                                                        value="Y"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Ya</span
-                                                    >
-                                                </label>
-
-                                                <label
-                                                    class="inline-flex items-center space-x-2"
-                                                >
-                                                    <input
-                                                        required
-                                                        type="radio"
-                                                        name="health"
-                                                        v-model="selectedHealth"
-                                                        value="N"
-                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
-                                                    />
-                                                    <span class="text-gray-700"
-                                                        >Tidak</span
-                                                    >
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
+                                        <div class="mb-4">
                                             <label
                                                 for="serial-number"
                                                 class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
@@ -971,32 +700,16 @@ const options = props.pengguna;
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-1/12 md:flex-0">
-                                        
-                                    </div>
 
                                     <div
-                                        class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
-                                        <div class="text-center mb-4">
-                                            <p
-                                                class="mb-0 dark:text-white/80 font-semibold"
-                                            >
-                                                HARDWARE
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                                    >
-                                        <div
-                                            class="mb-4"
-                                        >
+                                        <div class="mb-4">
                                             <label
-                                                for="aplikasi"
+                                                for="ssd"
                                                 class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Fan Cleaning</label
+                                                >Melakukan Cek License
+                                                Software</label
                                             >
 
                                             <br />
@@ -1009,8 +722,8 @@ const options = props.pengguna;
                                                     <input
                                                         required
                                                         type="radio"
-                                                        name="fan"
-                                                        v-model="selectedFan"
+                                                        name="office"
+                                                        v-model="selectedOffice"
                                                         value="Y"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -1025,8 +738,8 @@ const options = props.pengguna;
                                                     <input
                                                         required
                                                         type="radio"
-                                                        name="fan"
-                                                        v-model="selectedFan"
+                                                        name="office"
+                                                        v-model="selectedOffice"
                                                         value="N"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -1037,17 +750,16 @@ const options = props.pengguna;
                                             </div>
                                         </div>
                                     </div>
+
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
-                                        <div
-                                            class="mb-4"
-                                        >
+                                        <div class="mb-4">
                                             <label
-                                                for="license"
+                                                for="assets-category"
                                                 class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Pergantian
-                                                Pasta</label
+                                                >Melakukan Clean Temporary &
+                                                Cache Data</label
                                             >
 
                                             <br />
@@ -1060,8 +772,8 @@ const options = props.pengguna;
                                                     <input
                                                         required
                                                         type="radio"
-                                                        name="pasta"
-                                                        v-model="selectedPasta"
+                                                        name="cache"
+                                                        v-model="selectedCache"
                                                         value="Y"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -1076,8 +788,8 @@ const options = props.pengguna;
                                                     <input
                                                         required
                                                         type="radio"
-                                                        name="pasta"
-                                                        v-model="selectedPasta"
+                                                        name="cache"
+                                                        v-model="selectedCache"
                                                         value="N"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -1090,16 +802,14 @@ const options = props.pengguna;
                                     </div>
 
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
-                                        <div
-                                            class="mb-4"
-                                        >
+                                        <div class="mb-4">
                                             <label
-                                                for="ip-address"
+                                                for="number-asset-ho"
                                                 class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Melakukan Perbaikan
-                                                Lainnya</label
+                                                >Melakukan Cek System
+                                                Restore</label
                                             >
 
                                             <br />
@@ -1112,9 +822,9 @@ const options = props.pengguna;
                                                     <input
                                                         required
                                                         type="radio"
-                                                        name="lainnya"
+                                                        name="restore"
                                                         v-model="
-                                                            selectedLainnya
+                                                            selectedRestore
                                                         "
                                                         value="Y"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
@@ -1130,10 +840,168 @@ const options = props.pengguna;
                                                     <input
                                                         required
                                                         type="radio"
-                                                        name="lainnya"
+                                                        name="restore"
                                                         v-model="
-                                                            selectedLainnya
+                                                            selectedRestore
                                                         "
+                                                        value="N"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Tidak</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="warna_laptop"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Melakukan Cek Windows
+                                                Update</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="off"
+                                                        v-model="selectedOff"
+                                                        value="ON"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >On</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="off"
+                                                        v-model="selectedOff"
+                                                        value="OFF"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Off</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="device-name"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Storage Tipe</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="storage"
+                                                        v-model="storageTipe"
+                                                        value="SSD"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >SSD</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="storage"
+                                                        v-model="storageTipe"
+                                                        value="HDD"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >HDD</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                      <div
+                                        v-if="storageTipe != 'HDD'"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-2/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                   
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        v-if="storageTipe === 'HDD'"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-2/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="device-name"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Defrag</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="defrag"
+                                                        v-model="selectedDefrag"
+                                                        value="Y"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Ya</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="defrag"
+                                                        v-model="selectedDefrag"
                                                         value="N"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -1152,7 +1020,8 @@ const options = props.pengguna;
                                             <label
                                                 for="ssd_persen"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Percentage SSD Health</label
+                                                >Percentage SSD/HDD
+                                                Health</label
                                             >
                                             <input
                                                 type="text"
@@ -1164,9 +1033,182 @@ const options = props.pengguna;
                                             />
                                         </div>
                                     </div>
-
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4"></div>
+                                    </div>
+
+                                    <div
+                                        class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                    >
+                                        <div class="text-center mb-4">
+                                            <p
+                                                class="mb-0 dark:text-white/80 font-semibold"
+                                            >
+                                                PEMERIKSAAN SECURITY
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="processor"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Melakukan Change
+                                                Password</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="password"
+                                                        v-model="
+                                                            selectedChangePassword
+                                                        "
+                                                        value="Y"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Ya</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="password"
+                                                        v-model="
+                                                            selectedChangePassword
+                                                        "
+                                                        value="N"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Tidak</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="hdd"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Setting Auto Lock Screen</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="autolock"
+                                                        v-model="
+                                                            selectedAutoLock
+                                                        "
+                                                        value="Y"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Ya</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="autolock"
+                                                        v-model="
+                                                            selectedAutoLock
+                                                        "
+                                                        value="N"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Tidak</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="os_laptop"
+                                                class="inline-block ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Setting Input Password After
+                                                Lock Screen</label
+                                            >
+
+                                            <br />
+                                            <div
+                                                class="inline-flex items-center space-x-4 mb-2"
+                                            >
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="inputPassword"
+                                                        v-model="selectedInputPassword"
+                                                        value="Y"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Ya</span
+                                                    >
+                                                </label>
+
+                                                <label
+                                                    class="inline-flex items-center space-x-2"
+                                                >
+                                                    <input
+                                                        required
+                                                        type="radio"
+                                                        name="inputPassword"
+                                                        v-model="selectedInputPassword"
+                                                        value="N"
+                                                        class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                    />
+                                                    <span class="text-gray-700"
+                                                        >Tidak</span
+                                                    >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1192,7 +1234,7 @@ const options = props.pengguna;
                                     </div>
 
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1228,7 +1270,7 @@ const options = props.pengguna;
                                     </div>
 
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

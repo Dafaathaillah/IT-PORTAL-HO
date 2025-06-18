@@ -14,6 +14,31 @@
 .dt-buttons {
     margin-top: 1em;
 }
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shake-border {
+    animation: shake 0.3s ease;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6); /* biru lembut (tailwind blue-500) */
+    border: 1px solid rgba(59, 130, 246, 1); /* biru solid */
+    border-radius: 0.5rem;
+}
 </style>
 
 <script setup>
@@ -65,7 +90,13 @@ const props = defineProps({
     computer: {
         type: Array,
     },
+    crew: {
+        type: Array,
+    },
 });
+const options = props.crew;
+const selectedValues = ref(null); // Awalnya array kosong
+const showValidation = ref(false);
 
 const form = useForm({});
 
@@ -101,15 +132,38 @@ const validateYear = (event) => {
 };
 
 const getEncryptedYear = () => {
+      if (!selectedValues.value || !selectedValues.value.name) {
+        showValidation.value = true;
+
+        // Hilangkan efek setelah beberapa saat
+        setTimeout(() => {
+            showValidation.value = false;
+        }, 1000);
+
+        Swal.fire({
+            icon: "warning",
+            title: "Wajib Memilih PIC",
+            text: "Silakan pilih PIC terlebih dahulu sebelum mengekspor data.",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+        return;
+    }
+
+    const selectPic = selectedValues.value.name;
+
     // Ambil tahun yang dimasukkan atau gunakan tahun saat ini
     const selectedYear = year.value
         ? parseInt(year.value)
         : new Date().getFullYear();
 
-    // Ambil triwulan (quarter) yang diinput user atau auto-deteksi dari bulan sekarang
-    const selectedQuarter = triwulan.value
-        ? parseInt(triwulan.value)
-        : new Date().getMonth() + 1;
+    const selectedQuarter =
+        triwulan.value !== "" && triwulan.value !== null
+            ? parseInt(triwulan.value)
+            : new Date().getMonth() + 1;
 
     console.log(selectedYear);
     console.log(selectedQuarter);
@@ -123,17 +177,6 @@ const getEncryptedYear = () => {
         });
         return; // Stop eksekusi jika tahun tidak valid
     }
-
-    // Validasi quarter juga (optional, kalau mau)
-    // if (selectedQuarter < 1 || selectedQuarter > 4) {
-    //     Swal.fire({
-    //         icon: "error",
-    //         title: "Triwulan Tidak Valid!",
-    //         text: "Triwulan harus antara 1 sampai 4.",
-    //     });
-    //     return;
-    // }
-
     // Tampilkan loading popup
     Swal.fire({
         title: "Menyiapkan PDF...",
@@ -148,7 +191,7 @@ const getEncryptedYear = () => {
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.yearComputer"),
-        { year: selectedYear, month: selectedQuarter, site: "ADW" },
+        { year: selectedYear, month: selectedQuarter, site: "ADW",  pic: selectPic, },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -159,6 +202,7 @@ const getEncryptedYear = () => {
                             year: encryptedYear,
                             month: selectedQuarter,
                             site: "ADW",
+                             pic: selectPic,
                         }),
                         "_blank"
                     );
@@ -276,7 +320,6 @@ const getBadgeTextStatusInventory = (status) => {
                                         step="1"
                                         class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
                                         placeholder="Masukkan Bulan"
-                                        @input="validateYear"
                                     />
                                 </div>
                                 <div
@@ -301,9 +344,26 @@ const getBadgeTextStatusInventory = (status) => {
                                         @input="validateYear"
                                     />
                                 </div>
+                                      <div
+                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
+                                >
+                                    <VueMultiselect
+                                        ref="picSelect"
+                                        v-model="selectedValues"
+                                        :options="options"
+                                        :multiple="false"
+                                        :close-on-select="true"
+                                        placeholder="Pilih PIC"
+                                        track-by="name"
+                                        label="name"
+                                        :class="{
+                                            'shake-border': showValidation,
+                                        }"
+                                    />
+                                </div>
                                 <button
                                     @click="getEncryptedYear"
-                                    class="flex items-center text-sm justify-center gap-2 w-40 h-10 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
                                 >
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi

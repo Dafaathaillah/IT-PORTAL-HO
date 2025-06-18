@@ -1,8 +1,9 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, router } from "@inertiajs/vue3";
 import moment from "moment";
+import Swal from "sweetalert2";
 import { onMounted, ref } from "vue";
 
 const pages = ref("Pages");
@@ -10,6 +11,7 @@ const subMenu = ref("Inspeksi Komputer Pages");
 const mainMenu = ref("Detail Inspeksi Komputer");
 
 const props = defineProps(["inspeksi"]);
+const inspeksiId = props.inspeksi.id;
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -22,6 +24,44 @@ const mount = onMounted(() => {
     $("#tableData2").DataTable();
     $("#tableData3").DataTable();
 });
+
+const getEncryptedQuarter = () => {
+    // Tampilkan loading popup
+    Swal.fire({
+        title: "Menyiapkan PDF...",
+        text: "Harap tunggu sebentar.",
+        allowOutsideClick: false,
+        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    // Kirim permintaan ke backend untuk enkripsi tahun
+    router.post(
+        route("computer.singleExport"),
+        { inspeksiId: inspeksiId },
+        {
+            onSuccess: ({ props }) => {
+                Swal.close(); // Tutup popup loading setelah selesai
+                window.open(
+                    route("computer.singleExportPdf", {
+                        inspeksiId: inspeksiId,
+                    }),
+                    "_blank"
+                );
+            },
+            onError: () => {
+                Swal.close(); // Tutup popup loading jika ada error
+                Swal.fire(
+                    "Gagal!",
+                    "Terjadi kesalahan dalam permintaan.",
+                    "error"
+                );
+            },
+        }
+    );
+};
 </script>
 
 <template>
@@ -32,9 +72,17 @@ const mount = onMounted(() => {
         v-model:subMenu="subMenu"
         v-model:mainMenu="mainMenu"
     >
-
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="flex flex-wrap md:flex-nowrap gap-4">
+                    <button
+                        @click="getEncryptedQuarter"
+                        class="flex items-center text-sm justify-center gap-2 w-60 h-10 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                    >
+                        <i class="fas fa-download"></i>
+                        Download Hasil Inspeksi
+                    </button>
+                </div>
                 <div class="flex flex-wrap -mx-3">
                     <div
                         class="w-full max-w-full px-3 mt-6 md:w-7/12 md:flex-none"
@@ -50,7 +98,7 @@ const mount = onMounted(() => {
                                 </h6>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('inspeksiKomputerIpt.page')"
+                                    :href="route('inspeksiKomputerAmi.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>
@@ -63,7 +111,7 @@ const mount = onMounted(() => {
                                         <p
                                             class="mb-0 dark:text-white/80 font-semibold"
                                         >
-                                            KONDISI FISIK
+                                            INSPEKSI DAN PERAWATAN HARDWARE
                                         </p>
                                         <hr
                                             class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
@@ -78,7 +126,8 @@ const mount = onMounted(() => {
                                         <label
                                             for="number-asset-ho"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >CPU</label
+                                            >Check dan Pembersihan Bagian Luar
+                                            CPU</label
                                         >
                                     </div>
                                 </div>
@@ -95,12 +144,45 @@ const mount = onMounted(() => {
                                             {{
                                                 inspeksi.physique_condition_cpu ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
                                 </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Pembersihan Bagian Internal
+                                            CPU</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.physique_condition_internal_cpu ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
                                 <div
                                     class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                 >
@@ -124,8 +206,8 @@ const mount = onMounted(() => {
                                             {{
                                                 inspeksi.physique_condition_monitor ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -138,10 +220,10 @@ const mount = onMounted(() => {
                                         <p
                                             class="mb-0 dark:text-white/80 font-semibold"
                                         >
-                                            SOFTWARE
+                                            PEMERIKSAAN SOFTWARE
                                         </p>
                                         <hr
-                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                            class="h-px mx-0 my-4 bg-gradient-to-r from-transparent via-black/40 to-transparent border-0 opacity-100"
                                         />
                                     </div>
                                 </div>
@@ -153,7 +235,7 @@ const mount = onMounted(() => {
                                         <label
                                             for="aplikasi"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >LISENSI</label
+                                            >Standarisasi Software</label
                                         >
                                     </div>
                                 </div>
@@ -168,8 +250,8 @@ const mount = onMounted(() => {
                                             :
                                             {{
                                                 inspeksi.software_license == "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -181,7 +263,7 @@ const mount = onMounted(() => {
                                         <label
                                             for="license"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >STANDARISASI</label
+                                            >Standarisasi Device Name</label
                                         >
                                     </div>
                                 </div>
@@ -195,10 +277,10 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.software_standaritation ==
+                                                inspeksi.software_device_name_standaritation ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -211,7 +293,36 @@ const mount = onMounted(() => {
                                         <label
                                             for="ip-address"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >CLEAR CACHE</label
+                                            >License Software</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_license == "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="ip-address"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Clear Cache</label
                                         >
                                     </div>
                                 </div>
@@ -227,8 +338,8 @@ const mount = onMounted(() => {
                                             {{
                                                 inspeksi.software_clear_cache ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -241,7 +352,7 @@ const mount = onMounted(() => {
                                         <label
                                             for="ssd_persen"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >SYSTEM RESTORE</label
+                                            >System Restore</label
                                         >
                                     </div>
                                 </div>
@@ -257,8 +368,35 @@ const mount = onMounted(() => {
                                             {{
                                                 inspeksi.software_system_restore ==
                                                 "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="ssd_persen"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Check Windows Update</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.software_windows_update
                                             }}</label
                                         >
                                     </div>
@@ -286,8 +424,8 @@ const mount = onMounted(() => {
                                             :
                                             {{
                                                 inspeksi.defrag == "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                    ? "Tidak"
+                                                    : "Ya"
                                             }}</label
                                         >
                                     </div>
@@ -300,7 +438,7 @@ const mount = onMounted(() => {
                                         <label
                                             for="device-name"
                                             class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >MAINTENANCE BERAT</label
+                                            >SSD/HDD Health</label
                                         >
                                     </div>
                                 </div>
@@ -314,11 +452,139 @@ const mount = onMounted(() => {
                                         >
                                             :
                                             {{
-                                                inspeksi.hard_maintenance == "N"
-                                                    ? "Tidak Aman"
-                                                    : "Aman"
+                                                inspeksi.software_storage_health
                                             }}</label
                                         >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                >
+                                    <div class="text-center mb-4">
+                                        <p
+                                            class="mb-0 dark:text-white/80 font-semibold"
+                                        >
+                                            PEMERIKSAAN SECURITY
+                                        </p>
+                                        <hr
+                                            class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Penggantian Username</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.security_change_password ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="number-asset-ho"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Setting Auto Lock Screen</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.security_auto_lock ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="assets-category"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >Setting Input Password After Lock
+                                            Screen</label
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                            :
+                                            {{
+                                                inspeksi.security_input_password ==
+                                                "N"
+                                                    ? "Tidak"
+                                                    : "Ya"
+                                            }}</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="assets-category"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                        ></label>
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                >
+                                    <div class="mb-4">
+                                        <label
+                                            for="device-name"
+                                            class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80 font-bold"
+                                        >
+                                        </label>
                                     </div>
                                 </div>
 

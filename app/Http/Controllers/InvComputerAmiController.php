@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\ImportComputer;
 use App\Models\Aduan;
 use App\Models\Department;
+use App\Models\InspeksiComputer;
 use App\Models\InvComputer;
 use App\Models\UserAll;
 use Carbon\Carbon;
@@ -304,6 +305,7 @@ class InvComputerAmiController extends Controller
             abort(404, 'Data not found');
         }
         // return response()->json(['ap' => $komputer]);
+        InspeksiComputer::where('inv_computer_id', $id)->delete();
         $komputer->delete();
         return redirect()->back();
     }

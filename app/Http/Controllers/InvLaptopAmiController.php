@@ -76,7 +76,7 @@ class InvLaptopAmiController extends Controller
     {
 
         $params = $request->all();
-        
+
         $existingDataSn = InvLaptop::where('serial_number', $params['serial_number'])->first();
         if ($existingDataSn) {
             $duplicatesInsertSn[] = [
@@ -302,6 +302,7 @@ class InvLaptopAmiController extends Controller
             abort(404, 'Data not found');
         }
         // return response()->json(['ap' => $laptop]);
+        InspeksiLaptop::where('inv_laptop_id', $id)->delete();
         $laptop->delete();
         return redirect()->back();
     }
