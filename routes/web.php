@@ -207,6 +207,7 @@ use App\Http\Controllers\InvWirellessValeController;
 use App\Http\Controllers\KpiAduanAnalysisController;
 use App\Http\Controllers\KpiInspeksiController;
 use App\Http\Controllers\KpiResponseTimeController;
+use App\Http\Controllers\PicaInspeksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestingAuthApiController;
 use App\Http\Controllers\UserAllBaController;
@@ -268,6 +269,12 @@ Route::middleware('auth')->group(function () {
         return Inertia::location(route('computer.singleExportPdf', ['inspeksiId' => $request->inspeksiId]));
     })->name('computer.singleExport');
     Route::get('/export-pdf-single-computer', [ExportInspeksiComputerController::class, 'exportPdfSingle'])->name('computer.singleExportPdf');
+
+
+    Route::post('/export-pica-inspeksi', function (Request $request) {
+        return Inertia::location(route('export.picaInspeksi', ['startDate' => $request->startDate, 'site' => $request->site, 'endDate' => $request->endDate, 'device' => $request->device, 'pic' => $request->pic]));
+    })->name('pica.export');
+    Route::get('/export-pdf-all-pica-inspeksi', [PicaInspeksiController::class, 'exportPdf'])->name('export.picaInspeksi');
 
     // Route::get('/accessPoint/{id}/export', [InvApController::class, 'detail'])->name('accessPoint.detail');
 
@@ -566,6 +573,12 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE,ict_technician:BIB,ict_technician:ADW,ict_technician:BA,ict_technician:MIFA,ict_technician:MHU,ict_technician:AMI,ict_technician:PIK,ict_technician:IPT,ict_technician:MLP,ict_technician:MIP,ict_technician:VIB,ict_technician:SBS,ict_technician:BGE'], function () {
+        Route::get('/pica-inspeksi/{site}', [PicaInspeksiController::class, 'index'])->name('picaInspeksi.page');
+        Route::get('/pica-inspeksi-by-device', [PicaInspeksiController::class, 'getDataPicaByDevice']);
+        Route::get('/pica-inspeksi/{id}/edit', [PicaInspeksiController::class, 'edit'])->name('picaInspeksi.edit');
+        Route::post('/pica-inspeksi/update', [PicaInspeksiController::class, 'update'])->name('picaInspeksi.update');
+        Route::get('/pica-inspeksi/{id}/detail', [PicaInspeksiController::class, 'detail'])->name('picaInspeksi.detail');
+
         Route::get('/aduan-ho', [AduanHoController::class, 'index'])->name('aduan-ho.page');
         Route::get('/aduan-ho/create', [AduanHoController::class, 'create'])->name('aduan-ho.create');
         Route::post('/aduan-ho/create', [AduanHoController::class, 'store'])->name('aduan-ho.store');

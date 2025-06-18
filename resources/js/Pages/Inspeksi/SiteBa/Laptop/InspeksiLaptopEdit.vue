@@ -93,25 +93,31 @@ const handleFileUploadInspeksi = (event) => {
 };
 
 onMounted(() => {
-    if (form.software_defrag === 'Y' || form.software_defrag === 'N') {
-        storageTipe.value = 'HDD';
+    if (form.software_defrag === "Y" || form.software_defrag === "N") {
+        storageTipe.value = "HDD";
     } else {
-        storageTipe.value = 'SSD';
+        storageTipe.value = "SSD";
     }
 });
 
 const storageTipe = ref("");
-watch(() => form.storageTipe, (newVal) => {
-    if (newVal === 'SSD') {
-        form.software_defrag = '';
+watch(
+    () => form.storageTipe,
+    (newVal) => {
+        if (newVal === "SSD") {
+            form.software_defrag = "";
+        }
     }
-});
+);
 
-watch(() => form.software_defrag, (newVal) => {
-    if (newVal === 'Y' || newVal === 'N') {
-        form.storageTipe = 'HDD';
+watch(
+    () => form.software_defrag,
+    (newVal) => {
+        if (newVal === "Y" || newVal === "N") {
+            form.storageTipe = "HDD";
+        }
     }
-});
+);
 
 const formSubmittedPIC = ref(false);
 
@@ -926,9 +932,7 @@ const update = () => {
                                                         required
                                                         type="radio"
                                                         name="storage"
-                                                        v-model="
-                                                            storageTipe
-                                                        "
+                                                        v-model="storageTipe"
                                                         value="SSD"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -944,9 +948,7 @@ const update = () => {
                                                         required
                                                         type="radio"
                                                         name="storage"
-                                                        v-model="
-                                                            storageTipe
-                                                        "
+                                                        v-model="storageTipe"
                                                         value="HDD"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -1312,100 +1314,168 @@ const update = () => {
                                         </div>
                                     </div>
 
-                                      <div
-                                        class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0">
+                                    <div
+                                        class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                    >
                                         <div class="text-center mb-4">
-                                            <p class="mb-0 dark:text-white/80 font-semibold">
+                                            <p
+                                                class="mb-0 dark:text-white/80 font-semibold"
+                                            >
                                                 Temuan
                                             </p>
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="temuan"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Deskripsi
-                                                Temuan</label>
-                                            <input type="text" v-model="form.temuan" name="temuan"
+                                            <label
+                                                for="temuan"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Deskripsi Temuan</label
+                                            >
+                                            <input
+                                                type="text"
+                                                v-model="form.temuan"
+                                                name="temuan"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="" />
+                                                placeholder=""
+                                            />
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="inspection_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Lampiran
-                                                Foto Temuan</label>
-                                            <img :src="dataInspeksi.findings_image
-                                                " alt="Lampiran
-                                                Foto Temuan" class="w-50 h-30 shadow-2xl rounded-xl" />
+                                            <label
+                                                for="inspection_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Lampiran Foto Temuan</label
+                                            >
+                                            <img
+                                                :src="
+                                                    dataInspeksi.findings_image
+                                                "
+                                                alt="Lampiran
+                                                Foto Temuan"
+                                                class="w-50 h-30 shadow-2xl rounded-xl"
+                                            />
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="findings_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Update Lampiran
-                                                Foto Temuan</label>
-                                            <input type="file" ref="fileInput"
+                                            <label
+                                                for="findings_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Update Lampiran Foto
+                                                Temuan</label
+                                            >
+                                            <input
+                                                type="file"
+                                                ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                @change="handleFileUploadTemuan" />
+                                                @change="handleFileUploadTemuan"
+                                            />
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="tindakan"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Tindak
-                                                Lanjut</label>
-                                            <input type="text" v-model="form.tindakan" name="tindakan"
+                                            <label
+                                                for="tindakan"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Tindak Lanjut</label
+                                            >
+                                            <input
+                                                type="text"
+                                                v-model="form.tindakan"
+                                                name="tindakan"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="" />
+                                                placeholder=""
+                                            />
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="inspection_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Lampiran
-                                                Foto Tindakan</label>
-                                            <img :src="dataInspeksi.action_image
-                                                " alt="Lampiran
-                                                Foto Tindakan" class="w-50 h-30 shadow-2xl rounded-xl" />
+                                            <label
+                                                for="inspection_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Lampiran Foto Tindakan</label
+                                            >
+                                            <img
+                                                :src="dataInspeksi.action_image"
+                                                alt="Lampiran
+                                                Foto Tindakan"
+                                                class="w-50 h-30 shadow-2xl rounded-xl"
+                                            />
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="action_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Update Lampiran
-                                                Foto Tindakan</label>
-                                            <input type="file" ref="fileInput"
+                                            <label
+                                                for="action_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Update Lampiran Foto
+                                                Tindakan</label
+                                            >
+                                            <input
+                                                type="file"
+                                                ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                @change="handleFileUploadTindakan" />
+                                                @change="
+                                                    handleFileUploadTindakan
+                                                "
+                                            />
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="date-of-inventory"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Due
-                                                Date</label>
-                                            <VueDatePicker v-model="selectedDateDueDate" :format="customFormat"
-                                                name="date_of_inventory" placeholder="Select a date and time" />
+                                            <label
+                                                for="date-of-inventory"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Due Date</label
+                                            >
+                                            <VueDatePicker
+                                                v-model="selectedDateDueDate"
+                                                :format="customFormat"
+                                                name="date_of_inventory"
+                                                placeholder="Select a date and time"
+                                            />
                                         </div>
                                     </div>
 
-
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="findings_status"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">
-                                                Status Temuan</label>
-                                            <select id="findings_status" v-model="form.findings_status"
+                                            <label
+                                                for="findings_status"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                Status Temuan</label
+                                            >
+                                            <select
+                                                id="findings_status"
+                                                v-model="form.findings_status"
                                                 name="findings_status"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
                                                 <option value="OPEN">
                                                     OPEN
                                                 </option>
@@ -1416,49 +1486,95 @@ const update = () => {
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="device-location"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Remark</label>
-                                            <textarea id="message" name="remark" v-model="form.remark" rows="4"
+                                            <label
+                                                for="device-location"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Remark</label
+                                            >
+                                            <textarea
+                                                id="message"
+                                                name="remark"
+                                                v-model="form.remark"
+                                                rows="4"
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Leave a note..."></textarea>
+                                                placeholder="Leave a note..."
+                                            ></textarea>
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-5/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="select_pic"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">
-                                                Select PIC</label>
-                                            <VueMultiselect v-model="selectedValuesPIC" :options="options"
-                                                :multiple="true" :max="1" :close-on-select="true"
-                                                placeholder="Pilih PIC" track-by="name" label="name" />
+                                            <label
+                                                for="select_pic"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                Select PIC</label
+                                            >
+                                            <VueMultiselect
+                                                v-model="selectedValuesPIC"
+                                                :options="options"
+                                                :multiple="true"
+                                                :max="1"
+                                                :close-on-select="true"
+                                                placeholder="Pilih PIC"
+                                                track-by="name"
+                                                label="name"
+                                            />
                                         </div>
-                                        <span v-if="
-                                            !selectedOption && formSubmittedPIC
-                                        " class="text-red-500">PIC Tidak boleh kosong!</span>
+                                        <span
+                                            v-if="
+                                                !selectedOption &&
+                                                formSubmittedPIC
+                                            "
+                                            class="text-red-500"
+                                            >PIC Tidak boleh kosong!</span
+                                        >
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="inspection_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Lampiran
-                                                Foto Inspeksi</label>
-                                            <img :src="dataInspeksi.inspection_image
-                                                " alt="Lampiran
-                                                Foto Inspeksi" class="w-50 h-30 shadow-2xl rounded-xl" />
+                                            <label
+                                                for="inspection_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Lampiran Foto Inspeksi</label
+                                            >
+                                            <img
+                                                :src="
+                                                    dataInspeksi.inspection_image
+                                                "
+                                                alt="Lampiran
+                                                Foto Inspeksi"
+                                                class="w-50 h-30 shadow-2xl rounded-xl"
+                                            />
                                         </div>
                                     </div>
 
-                                    <div class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0">
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
                                         <div class="mb-4">
-                                            <label for="inspection_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80">Update Lampiran
-                                                Foto Inspeksi</label>
-                                            <input type="file" ref="fileInput"
+                                            <label
+                                                for="inspection_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Update Lampiran Foto
+                                                Inspeksi</label
+                                            >
+                                            <input
+                                                type="file"
+                                                ref="fileInput"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                @change="handleFileUploadInspeksi" />
+                                                @change="
+                                                    handleFileUploadInspeksi
+                                                "
+                                            />
                                         </div>
                                     </div>
                                 </div>
