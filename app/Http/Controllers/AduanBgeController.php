@@ -19,7 +19,15 @@ class AduanBgeController extends Controller
     public function index()
     {
 
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'BGE')->get();
+            $aduan = Aduan::where('site', 'BGE')
+            ->orderByRaw("
+        CASE 
+            WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
+            ELSE 1
+        END
+    ")
+            ->orderBy('date_of_complaint', 'desc')
+            ->get();
         $countOpen = Aduan::where('status', 'OPEN')->where('site', 'BGE')->count();
         $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'BGE')->count();
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'BGE')->count();
@@ -150,7 +158,7 @@ class AduanBgeController extends Controller
 
             $aduan = Aduan::create($data);
         }
-        return redirect()->route('aduanPik.page');
+        return redirect()->route('aduanBge.page');
     }
 
     public function progress($id)
@@ -217,7 +225,22 @@ class AduanBgeController extends Controller
         $data['response_time'] = $response_time;
 
         $closing_aduan = Aduan::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('aduanPik.page');
+        return redirect()->route('aduanBge.page');
+    }
+
+    public function updateUrgency(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required|uuid', // atau 'required|integer' sesuai dengan tipe ID kamu
+            'urgency' => 'required|in:NORMAL,URGENT',
+        ]);
+
+        $aduan = Aduan::findOrFail($request->id);
+        $aduan->urgency = $request->urgency;
+        $aduan->save();
+
+        return response()->json(['message' => 'Urgency updated successfully']);
     }
 
     public function edit($id)
@@ -307,7 +330,7 @@ class AduanBgeController extends Controller
         // return dd($data);
 
         $closing_aduan = Aduan::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('aduanPik.page');
+        return redirect()->route('aduanBge.page');
     }
 
     public function show($id)

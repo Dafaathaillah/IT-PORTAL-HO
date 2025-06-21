@@ -15,7 +15,7 @@
     margin-top: 1em;
 }
 #dt-length-0 {
-    width: 60px !important; 
+    width: 60px !important;
 }
 </style>
 
@@ -28,6 +28,7 @@ import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { onMounted } from "vue";
+import axios from "axios";
 
 const pages = ref("Pages");
 const subMenu = ref("Aduan Pages");
@@ -177,6 +178,38 @@ const formatComplaint = (text) => {
 function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+}
+
+function updateUrgency(id, value) {
+    Swal.fire({
+        title: "Memproses...",
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+    axios
+        .post(route("aduanSks.updateUrgency"), {
+            id: id,
+            urgency: value,
+        })
+        .then((res) => {
+            Swal.fire({
+                icon: "success",
+                title: "Berhasil",
+                text: "Urgency berhasil diupdate!",
+                timer: 1500,
+                showConfirmButton: false,
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            Swal.fire({
+                icon: "error",
+                title: "Gagal",
+                text: "Urgency gagal diupdate!",
+            });
+        });
 }
 </script>
 
@@ -425,6 +458,11 @@ function formatData(text) {
                                                         Ticket Code
                                                     </th>
                                                     <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Urgency
+                                                    </th>
+                                                    <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Nrp
@@ -542,6 +580,40 @@ function formatData(text) {
                                                                 aduans.complaint_code
                                                             }}
                                                         </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40"
+                                                    >
+                                                        <select
+                                                            class="text-sm font-semibold leading-tight dark:text-white rounded-2"
+                                                            @change="
+                                                                updateUrgency(
+                                                                    aduans.id,
+                                                                    $event
+                                                                        .target
+                                                                        .value
+                                                                )
+                                                            "
+                                                        >
+                                                            <option
+                                                                value="NORMAL"
+                                                                :selected="
+                                                                    aduans.urgency ===
+                                                                    'NORMAL'
+                                                                "
+                                                            >
+                                                                NORMAL
+                                                            </option>
+                                                            <option
+                                                                value="URGENT"
+                                                                :selected="
+                                                                    aduans.urgency ===
+                                                                    'URGENT'
+                                                                "
+                                                            >
+                                                                URGENT
+                                                            </option>
+                                                        </select>
                                                     </td>
                                                     <td
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"

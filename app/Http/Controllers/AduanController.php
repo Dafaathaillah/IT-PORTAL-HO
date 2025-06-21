@@ -21,13 +21,29 @@ class AduanController extends Controller
         $auth = auth()->user()->role;
         if ($auth == 'soc_ho' || $auth == 'ict_developer') {
             # code...
-            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('category_name', 'SOC')->get();
+            $aduan = Aduan::where('category_name', 'SOC')
+                ->orderByRaw("
+        CASE 
+            WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
+            ELSE 1
+        END
+    ")
+                ->orderBy('date_of_complaint', 'desc')
+                ->get();
             $countOpen = Aduan::where('status', 'OPEN')->where('category_name', 'SOC')->count();
             $countClosed = Aduan::where('status', 'CLOSED')->where('category_name', 'SOC')->count();
             $countProgress = Aduan::where('status', 'PROGRESS')->where('category_name', 'SOC')->count();
             $countCancel = Aduan::where('status', 'CANCEL')->where('category_name', 'SOC')->count();
         } else {
-            $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
+            $aduan = Aduan::where('site', auth()->user()->site)
+                ->orderByRaw("
+        CASE 
+            WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
+            ELSE 1
+        END
+    ")
+                ->orderBy('date_of_complaint', 'desc')
+                ->get();
             $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
             $countClosed = Aduan::where('status', 'CLOSED')->where('site', auth()->user()->site)->count();
             $countProgress = Aduan::where('status', 'PROGRESS')->where('site', auth()->user()->site)->count();
@@ -48,7 +64,7 @@ class AduanController extends Controller
     public function checkAduan(Request $request)
     {
         $aduanBaru = Aduan::where('site', 'HO')->orderBy('id', 'desc')->first();
-    
+
         if ($aduanBaru) {
             $response = [
                 'id' => $aduanBaru->max_id,
@@ -262,6 +278,21 @@ class AduanController extends Controller
         return redirect()->route('aduan.page');
     }
 
+    public function updateUrgency(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required|uuid', // atau 'required|integer' sesuai dengan tipe ID kamu
+            'urgency' => 'required|in:NORMAL,URGENT',
+        ]);
+
+        $aduan = Aduan::findOrFail($request->id);
+        $aduan->urgency = $request->urgency;
+        $aduan->save();
+
+        return response()->json(['message' => 'Urgency updated successfully']);
+    }
+
     public function edit($id)
     {
         $site = Auth::user()->site;
@@ -306,7 +337,7 @@ class AduanController extends Controller
         $jaditotal = sprintf('%02s', $hTotal) . ':' . sprintf('%02s', $diff->i) . ':' . sprintf('%02s', $diff->s);
 
         $response_time = $jaditotal;
-        
+
         if ($request->dateOfComplaint != 'null') {
             $dateOfComplaintUTC = Carbon::parse($request->dateOfComplaint)->format('Y-m-d H:i:s');
         } else {

@@ -19,7 +19,15 @@ class AduanMhuController extends Controller
     public function index()
     {
 
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'MHU')->get();
+        $aduan = Aduan::where('site', 'MHU')
+            ->orderByRaw("
+        CASE 
+            WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
+            ELSE 1
+        END
+    ")
+            ->orderBy('date_of_complaint', 'desc')
+            ->get();
         $countOpen = Aduan::where('status', 'OPEN')->where('site', 'MHU')->count();
         $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'MHU')->count();
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'MHU')->count();
@@ -40,7 +48,7 @@ class AduanMhuController extends Controller
     public function checkAduan(Request $request)
     {
         $aduanBaru = Aduan::where('site', 'MHU')->orderBy('id', 'desc')->first();
-    
+
         if ($aduanBaru) {
             $response = [
                 'id' => $aduanBaru->max_id,
@@ -207,6 +215,21 @@ class AduanMhuController extends Controller
 
         $closing_aduan = Aduan::firstWhere('id', $request->id)->update($data);
         return redirect()->route('aduanMhu.page');
+    }
+
+    public function updateUrgency(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required|uuid', // atau 'required|integer' sesuai dengan tipe ID kamu
+            'urgency' => 'required|in:NORMAL,URGENT',
+        ]);
+
+        $aduan = Aduan::findOrFail($request->id);
+        $aduan->urgency = $request->urgency;
+        $aduan->save();
+
+        return response()->json(['message' => 'Urgency updated successfully']);
     }
 
     public function edit($id)

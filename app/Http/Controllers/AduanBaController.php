@@ -19,7 +19,15 @@ class AduanBaController extends Controller
     public function index()
     {
 
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'BA')->get();
+        $aduan = Aduan::where('site', 'BA')
+            ->orderByRaw("
+        CASE 
+            WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
+            ELSE 1
+        END
+    ")
+            ->orderBy('date_of_complaint', 'desc')
+            ->get();
         $countOpen = Aduan::where('status', 'OPEN')->where('site', 'BA')->count();
         $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'BA')->count();
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'BA')->count();
@@ -40,7 +48,7 @@ class AduanBaController extends Controller
     public function checkAduan(Request $request)
     {
         $aduanBaru = Aduan::where('site', 'BA')->orderBy('id', 'desc')->first();
-    
+
         if ($aduanBaru) {
             $response = [
                 'id' => $aduanBaru->max_id,
@@ -104,6 +112,7 @@ class AduanBaController extends Controller
             'phone_number' => $request['phone_number'],
             'date_of_complaint' => $request['date_of_complaint'],
             'location' => $request['location'],
+            'urgency' => 'NORMAL',
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'crew' => $request['crew'],
@@ -207,6 +216,21 @@ class AduanBaController extends Controller
 
         $closing_aduan = Aduan::firstWhere('id', $request->id)->update($data);
         return redirect()->route('aduanBa.page');
+    }
+
+    public function updateUrgency(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required|uuid', // atau 'required|integer' sesuai dengan tipe ID kamu
+            'urgency' => 'required|in:NORMAL,URGENT',
+        ]);
+
+        $aduan = Aduan::findOrFail($request->id);
+        $aduan->urgency = $request->urgency;
+        $aduan->save();
+
+        return response()->json(['message' => 'Urgency updated successfully']);
     }
 
     public function edit($id)

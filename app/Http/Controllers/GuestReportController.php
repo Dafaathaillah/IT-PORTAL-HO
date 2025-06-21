@@ -108,6 +108,7 @@ class GuestReportController extends Controller
             'phone_number' => $request['phone_number'],
             'date_of_complaint' => Carbon::now('Asia/Ujung_Pandang')->format('Y-m-d H:i:s'),
             'location' => $request['location'],
+            'urgency' => 'NORMAL',
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'site' => auth()->user()->site,

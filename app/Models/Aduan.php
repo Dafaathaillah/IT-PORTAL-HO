@@ -29,6 +29,7 @@ class Aduan extends Model
         'nrp',
         'max_id',
         'location',
+        'urgency',
         'detail_location',
         'repair_note',
         'repair_image',

@@ -15,7 +15,7 @@
     margin-top: 1em;
 }
 #dt-length-0 {
-    width: 60px !important; 
+    width: 60px !important;
 }
 </style>
 
@@ -27,28 +27,8 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { usePage } from "@inertiajs/vue3";
-import { computed, watch, onMounted, onUnmounted } from "vue";
-import { Howl } from "howler";
+import { onMounted } from "vue";
 import axios from "axios";
-
-const props = defineProps({
-    aduan: {
-        type: Array,
-    },
-    open: {
-        type: Object,
-    },
-    closed: {
-        type: Object,
-    },
-    progress: {
-        type: Object,
-    },
-    cancel: {
-        type: Object,
-    },
-});
 
 const pages = ref("Pages");
 const subMenu = ref("Aduan Pages");
@@ -59,41 +39,8 @@ function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
 }
 
-// Pantau perubahan pada props dan update data lokal// Buat state reaktif untuk tabel
-const aduanData = ref([...props.aduan]);
-
-// Watch perubahan props.aduan untuk update data tabel
-watch(
-    () => props.aduan,
-    (newAduan) => {
-        aduanData.value = [...newAduan];
-    }
-);
-
-// Fungsi untuk fetch data terbaru
-const fetchAduan = () => {
-    axios
-        .get("/itportal/latest-aduan")
-        .then((response) => {
-            aduanData.value = response.data; // Update tabel
-        })
-        .catch((error) => {
-            // console.error("Error fetching data:", error);
-        });
-};
-
-onUnmounted(() => {
-    clearInterval(intervalId); // Hentikan interval saat komponen dihancurkan
-});
-
-const page = usePage();
-let intervalId = null;
-
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
-    fetchAduan(); // Fetch pertama kali saat komponen dimuat
-    intervalId = setInterval(fetchAduan, 1000); // Polling setiap 5 detik
-
     $("#tableData").DataTable({
         dom: "fBrtilp",
         scrollY: "40vh",
@@ -118,7 +65,23 @@ const mount = onMounted(() => {
     });
 });
 
-//
+const props = defineProps({
+    aduan: {
+        type: Array,
+    },
+    open: {
+        type: Object,
+    },
+    closed: {
+        type: Object,
+    },
+    progress: {
+        type: Object,
+    },
+    cancel: {
+        type: Object,
+    },
+});
 
 const form = useForm({});
 
@@ -216,10 +179,43 @@ function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
+
+function updateUrgency(id, value) {
+    Swal.fire({
+        title: "Memproses...",
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+    axios
+        .post(route("aduanBib.updateUrgency"), {
+            id: id,
+            urgency: value,
+        })
+        .then((res) => {
+            Swal.fire({
+                icon: "success",
+                title: "Berhasil",
+                text: "Urgency berhasil diupdate!",
+                timer: 1500,
+                showConfirmButton: false,
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            Swal.fire({
+                icon: "error",
+                title: "Gagal",
+                text: "Urgency gagal diupdate!",
+            });
+        });
+}
 </script>
 
 <template>
     <Head title="Complaint" />
+
     <AuthenticatedLayout
         v-model:pages="pages"
         v-model:subMenu="subMenu"
@@ -462,6 +458,11 @@ function formatData(text) {
                                                         Ticket Code
                                                     </th>
                                                     <th
+                                                        class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Urgency
+                                                    </th>
+                                                    <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Nrp
@@ -489,7 +490,7 @@ function formatData(text) {
                                                             white-space: normal;
                                                             padding: 10px;
                                                         "
-                                                        class="font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Issue
                                                     </th>
@@ -539,7 +540,7 @@ function formatData(text) {
                                                 <tr
                                                     v-for="(
                                                         aduans, index
-                                                    ) in aduanData"
+                                                    ) in aduan"
                                                     :key="index"
                                                 >
                                                     <td
@@ -566,7 +567,7 @@ function formatData(text) {
                                                             "
                                                             class="mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Progress
+                                                            Progress Aduan
                                                         </NavLinkCustom>
                                                     </td>
                                                     <td
@@ -579,6 +580,40 @@ function formatData(text) {
                                                                 aduans.complaint_code
                                                             }}
                                                         </p>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40"
+                                                    >
+                                                        <select
+                                                            class="text-sm font-semibold leading-tight dark:text-white rounded-2"
+                                                            @change="
+                                                                updateUrgency(
+                                                                    aduans.id,
+                                                                    $event
+                                                                        .target
+                                                                        .value
+                                                                )
+                                                            "
+                                                        >
+                                                            <option
+                                                                value="NORMAL"
+                                                                :selected="
+                                                                    aduans.urgency ===
+                                                                    'NORMAL'
+                                                                "
+                                                            >
+                                                                NORMAL
+                                                            </option>
+                                                            <option
+                                                                value="URGENT"
+                                                                :selected="
+                                                                    aduans.urgency ===
+                                                                    'URGENT'
+                                                                "
+                                                            >
+                                                                URGENT
+                                                            </option>
+                                                        </select>
                                                     </td>
                                                     <td
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
@@ -623,7 +658,7 @@ function formatData(text) {
                                                         </span>
                                                     </td>
                                                     <td
-                                                        class="p-2 align-middle w-1/4 bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                        class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
                                                             class="mb-0 text-sm break-words whitespace-pre-wrap font-semibold leading-tight dark:text-white dark:opacity-80"
@@ -661,7 +696,7 @@ function formatData(text) {
                                                                 'bg-gradient-to-tl from-rose-500 to-rose-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
                                                                     aduans.status ===
                                                                     'CANCEL',
-                                                                    'bg-gradient-to-tl from-rose-500 to-rose-800 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
+                                                                'bg-gradient-to-tl from-rose-500 to-rose-800 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white':
                                                                     aduans.status ===
                                                                     'OUTSTANDING',
                                                             }"
@@ -673,7 +708,7 @@ function formatData(text) {
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <p
-                                                            class="mb-0 text-sm font-semibold break-words whitespace-normal leading-tight dark:text-white dark:opacity-80"
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
                                                                 aduans.date_of_complaint

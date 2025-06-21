@@ -19,7 +19,15 @@ class AduanMifaController extends Controller
     public function index()
     {
 
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'MIFA')->get();
+        $aduan = Aduan::where('site', 'MIFA')
+            ->orderByRaw("
+        CASE 
+            WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
+            ELSE 1
+        END
+    ")
+            ->orderBy('date_of_complaint', 'desc')
+            ->get();
         $countOpen = Aduan::where('status', 'OPEN')->where('site', 'MIFA')->count();
         $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'MIFA')->count();
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'MIFA')->count();
@@ -40,7 +48,7 @@ class AduanMifaController extends Controller
     public function checkAduan(Request $request)
     {
         $aduanBaru = Aduan::where('site', 'MIFA')->orderBy('id', 'desc')->first();
-    
+
         if ($aduanBaru) {
             $response = [
                 'id' => $aduanBaru->max_id,
@@ -209,13 +217,28 @@ class AduanMifaController extends Controller
         return redirect()->route('aduanMifa.page');
     }
 
+    public function updateUrgency(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required|uuid', // atau 'required|integer' sesuai dengan tipe ID kamu
+            'urgency' => 'required|in:NORMAL,URGENT',
+        ]);
+
+        $aduan = Aduan::findOrFail($request->id);
+        $aduan->urgency = $request->urgency;
+        $aduan->save();
+
+        return response()->json(['message' => 'Urgency updated successfully']);
+    }
+
     public function edit($id)
     {
         $categories = DB::table('root_cause_categories')
             ->select('id', 'category_root_cause')
             ->where('site_type', 'SITE')
             ->get();
-            
+
         $aduan = Aduan::find($id);
         if (empty($aduan)) {
             abort(404, 'Data not found');

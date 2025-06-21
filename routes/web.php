@@ -2648,6 +2648,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduan/{id}/delete', [AduanController::class, 'destroy'])->name('aduan.delete');
             Route::post('/aduan/update', [AduanController::class, 'update_aduan'])->name('aduan.update');
             Route::get('/aduan/{id}/detail', [AduanController::class, 'detail'])->name('aduan.detail');
+            Route::post('/aduan/update-urgency', [AduanController::class, 'updateUrgency'])->name('aduan.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_ho:HO,ict_group_leader:BA,ict_admin:BA'], function () {
@@ -2661,6 +2662,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanBa/{id}/delete', [AduanBaController::class, 'destroy'])->name('aduanBa.delete');
             Route::post('/aduanBa/update', [AduanBaController::class, 'update_aduan'])->name('aduanBa.update');
             Route::get('/aduanBa/{id}/detail', [AduanBaController::class, 'detail'])->name('aduanBa.detail');
+            Route::post('/aduanBa/update-urgency', [AduanBaController::class, 'updateUrgency'])->name('aduanBa.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_ho:HO,ict_group_leader:MIFA,ict_admin:MIFA'], function () {
@@ -2674,6 +2676,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanMifa/{id}/delete', [AduanMifaController::class, 'destroy'])->name('aduanMifa.delete');
             Route::post('/aduanMifa/update', [AduanMifaController::class, 'update_aduan'])->name('aduanMifa.update');
             Route::get('/aduanMifa/{id}/detail', [AduanMifaController::class, 'detail'])->name('aduanMifa.detail');
+            Route::post('/aduanMifa/update-urgency', [AduanMifaController::class, 'updateUrgency'])->name('aduanMifa.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_ho:HO,ict_group_leader:MHU,ict_admin:MHU'], function () {
@@ -2687,6 +2690,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanMhu/{id}/delete', [AduanMhuController::class, 'destroy'])->name('aduanMhu.delete');
             Route::post('/aduanMhu/update', [AduanMhuController::class, 'update_aduan'])->name('aduanMhu.update');
             Route::get('/aduanMhu/{id}/detail', [AduanMhuController::class, 'detail'])->name('aduanMhu.detail');
+            Route::post('/aduanMhu/update-urgency', [AduanMhuController::class, 'updateUrgency'])->name('aduanMhu.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
@@ -2700,6 +2704,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanWara/{id}/delete', [AduanWARAController::class, 'destroy'])->name('aduanWARA.delete');
             Route::post('/aduanWara/update', [AduanWARAController::class, 'update_aduan'])->name('aduanWARA.update');
             Route::get('/aduanWara/{id}/detail', [AduanWARAController::class, 'detail'])->name('aduanWARA.detail');
+            Route::post('/aduanWara/update-urgency', [AduanWaraController::class, 'updateUrgency'])->name('aduanWARA.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_ho:HO,ict_group_leader:AMI,ict_admin:AMI'], function () {
@@ -2713,6 +2718,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanAmi/{id}/delete', [AduanAmiController::class, 'destroy'])->name('aduanAmi.delete');
             Route::post('/aduanAmi/update', [AduanAmiController::class, 'update_aduan'])->name('aduanAmi.update');
             Route::get('/aduanAmi/{id}/detail', [AduanAmiController::class, 'detail'])->name('aduanAmi.detail');
+            Route::post('/aduanAmi/update-urgency', [AduanAmiController::class, 'updateUrgency'])->name('aduanAmi.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_ho:HO,ict_group_leader:BIB,ict_admin:BIB'], function () {
@@ -2727,6 +2733,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanBib/{id}/delete', [AduanBibController::class, 'destroy'])->name('aduanBib.delete');
             Route::post('/aduanBib/update', [AduanBibController::class, 'update_aduan'])->name('aduanBib.update');
             Route::get('/aduanBib/{id}/detail', [AduanBibController::class, 'detail'])->name('aduanBib.detail');
+            Route::post('/aduanBib/update-urgency', [AduanBibController::class, 'updateUrgency'])->name('aduanBib.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:IPT,ict_ho:HO,ict_group_leader:IPT,ict_admin:IPT'], function () {
@@ -2740,6 +2747,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanIpt/{id}/delete', [AduanIptController::class, 'destroy'])->name('aduanIpt.delete');
             Route::post('/aduanIpt/update', [AduanIptController::class, 'update_aduan'])->name('aduanIpt.update');
             Route::get('/aduanIpt/{id}/detail', [AduanIptController::class, 'detail'])->name('aduanIpt.detail');
+            Route::post('/aduanIpt/update-urgency', [AduanIptController::class, 'updateUrgency'])->name('aduanIpt.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_ho:HO,ict_group_leader:MLP,ict_admin:MLP'], function () {
@@ -2753,6 +2761,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanMlp/{id}/delete', [AduanMlpController::class, 'destroy'])->name('aduanMlp.delete');
             Route::post('/aduanMlp/update', [AduanMlpController::class, 'update_aduan'])->name('aduanMlp.update');
             Route::get('/aduanMlp/{id}/detail', [AduanMlpController::class, 'detail'])->name('aduanMlp.detail');
+            Route::post('/aduanMlp/update-urgency', [AduanMlpController::class, 'updateUrgency'])->name('aduanMlp.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIP,ict_ho:HO,ict_group_leader:MIP,ict_admin:MIP'], function () {
@@ -2766,6 +2775,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanMip/{id}/delete', [AduanMipController::class, 'destroy'])->name('aduanMip.delete');
             Route::post('/aduanMip/update', [AduanMipController::class, 'update_aduan'])->name('aduanMip.update');
             Route::get('/aduanMip/{id}/detail', [AduanMipController::class, 'detail'])->name('aduanMip.detail');
+            Route::post('/aduanMip/update-urgency', [AduanMipController::class, 'updateUrgency'])->name('aduanMip.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_ho:HO,ict_group_leader:VIB,ict_admin:VIB'], function () {
@@ -2779,6 +2789,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanVale/{id}/delete', [AduanValeController::class, 'destroy'])->name('aduanVale.delete');
             Route::post('/aduanVale/update', [AduanValeController::class, 'update_aduan'])->name('aduanVale.update');
             Route::get('/aduanVale/{id}/detail', [AduanValeController::class, 'detail'])->name('aduanVale.detail');
+            Route::post('/aduanVale/update-urgency', [AduanValeController::class, 'updateUrgency'])->name('aduanVale.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SBS,ict_ho:HO,ict_group_leader:SBS,ict_admin:SBS'], function () {
@@ -2792,6 +2803,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanSbs/{id}/delete', [AduanSbsController::class, 'destroy'])->name('aduanSbs.delete');
             Route::post('/aduanSbs/update', [AduanSbsController::class, 'update_aduan'])->name('aduanSbs.update');
             Route::get('/aduanSbs/{id}/detail', [AduanSbsController::class, 'detail'])->name('aduanSbs.detail');
+            Route::post('/aduanSbs/update-urgency', [AduanSbsController::class, 'updateUrgency'])->name('aduanSbs.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_ho:HO,ict_group_leader:SKS,ict_admin:SKS'], function () {
@@ -2805,6 +2817,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanSks/{id}/delete', [AduanSksController::class, 'destroy'])->name('aduanSks.delete');
             Route::post('/aduanSks/update', [AduanSksController::class, 'update_aduan'])->name('aduanSks.update');
             Route::get('/aduanSks/{id}/detail', [AduanSksController::class, 'detail'])->name('aduanSks.detail');
+            Route::post('/aduanSks/update-urgency', [AduanSksController::class, 'updateUrgency'])->name('aduanSks.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_ho:HO,ict_group_leader:PIK,ict_admin:PIK'], function () {
@@ -2818,6 +2831,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanPik/{id}/delete', [AduanPikController::class, 'destroy'])->name('aduanPik.delete');
             Route::post('/aduanPik/update', [AduanPikController::class, 'update_aduan'])->name('aduanPik.update');
             Route::get('/aduanPik/{id}/detail', [AduanPikController::class, 'detail'])->name('aduanPik.detail');
+            Route::post('/aduanPik/update-urgency', [AduanPikController::class, 'updateUrgency'])->name('aduanPik.updateUrgency');
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_group_leader:BGE'], function () {
@@ -2831,6 +2845,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/aduanBge/{id}/delete', [AduanBgeController::class, 'destroy'])->name('aduanBge.delete');
             Route::post('/aduanBge/update', [AduanBgeController::class, 'update_aduan'])->name('aduanBge.update');
             Route::get('/aduanBge/{id}/detail', [AduanBgeController::class, 'detail'])->name('aduanBge.detail');
+            Route::post('/aduanBge/update-urgency', [AduanBgeController::class, 'updateUrgency'])->name('aduanBge.updateUrgency');
         });
 
         Route::prefix('/recycleBin')->group(function () {

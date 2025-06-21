@@ -19,7 +19,15 @@ class AduanAmiController extends Controller
     public function index()
     {
 
-        $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', 'AMI')->get();
+        $aduan = Aduan::where('site', 'AMI')
+            ->orderByRaw("
+        CASE 
+            WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
+            ELSE 1
+        END
+    ")
+            ->orderBy('date_of_complaint', 'desc')
+            ->get();
         $countOpen = Aduan::where('status', 'OPEN')->where('site', 'AMI')->count();
         $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'AMI')->count();
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'AMI')->count();
@@ -40,7 +48,7 @@ class AduanAmiController extends Controller
     public function checkAduan(Request $request)
     {
         $aduanBaru = Aduan::where('site', 'AMI')->orderBy('id', 'desc')->first();
-    
+
         if ($aduanBaru) {
             $response = [
                 'id' => $aduanBaru->max_id,
@@ -104,6 +112,7 @@ class AduanAmiController extends Controller
             'phone_number' => $request['phone_number'],
             'date_of_complaint' => $request['date_of_complaint'],
             'location' => $request['location'],
+            'urgency' => 'NORMAL',
             'detail_location' => $request['location_detail'],
             'category_name' => $request['category_name'],
             'crew' => $request['crew'],
@@ -209,12 +218,27 @@ class AduanAmiController extends Controller
         return redirect()->route('aduanAmi.page');
     }
 
+    public function updateUrgency(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required|uuid', // atau 'required|integer' sesuai dengan tipe ID kamu
+            'urgency' => 'required|in:NORMAL,URGENT',
+        ]);
+
+        $aduan = Aduan::findOrFail($request->id);
+        $aduan->urgency = $request->urgency;
+        $aduan->save();
+
+        return response()->json(['message' => 'Urgency updated successfully']);
+    }
+
     public function edit($id)
     {
         $categories = DB::table('root_cause_categories')
-        ->select('id', 'category_root_cause')
-        ->where('site_type', 'SITE')
-        ->get();
+            ->select('id', 'category_root_cause')
+            ->where('site_type', 'SITE')
+            ->get();
         $aduan = Aduan::find($id);
         if (empty($aduan)) {
             abort(404, 'Data not found');
