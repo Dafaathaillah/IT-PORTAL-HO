@@ -20,6 +20,7 @@ class AduanMlpController extends Controller
     {
 
         $aduan = Aduan::where('site', 'MLP')
+        ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -33,10 +34,16 @@ class AduanMlpController extends Controller
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'MLP')->count();
         $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'MLP')->count();
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'MLP')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+
         return Inertia::render(
             'Inventory/SiteMlp/Aduan/Aduan',
             [
                 'aduan' => $aduan,
+                'crew' => $crew,
                 'open' => $countOpen,
                 'closed' => $countClosed,
                 'progress' => $countProgress,

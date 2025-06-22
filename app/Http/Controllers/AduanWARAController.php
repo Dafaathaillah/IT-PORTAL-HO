@@ -33,10 +33,15 @@ class AduanWARAController extends Controller
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'ADW')->count();
         $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'ADW')->count();
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'ADW')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         return Inertia::render(
             'Inventory/SiteWARA/Aduan/Aduan',
             [
                 'aduan' => $aduan,
+                'crew' => $crew,
                 'open' => $countOpen,
                 'closed' => $countClosed,
                 'progress' => $countProgress,

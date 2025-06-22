@@ -6348,7 +6348,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -6366,27 +6366,29 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisHo')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
-                                            route().current('kpi.jobAnalysisHo')
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
                                         "
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -6730,26 +6732,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiHo">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'HO' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'BO' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="route('inspeksiLaptop.page')"
                                         :active="
@@ -6789,6 +6771,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'HO' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'HO' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -6892,6 +6895,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -7140,7 +7149,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -7158,27 +7167,29 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisBa')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
-                                            route().current('kpi.jobAnalysisBa')
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
                                         "
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -7533,7 +7544,6 @@ const toggleLevel3ScannerSks = () => {
                                 </div>
                                 <ul v-if="level2OpenInspeksiBa">
                                     <NavLink
-
                                         :href="
                                             route(
                                                 'inspection-scheduler-laptop.ba.index'
@@ -7542,12 +7552,6 @@ const toggleLevel3ScannerSks = () => {
                                         :active="
                                             route().current(
                                                 'inspection-scheduler-laptop.ba.index'
-
-                                        :href="route('picaInspeksi.page', { site: 'BA' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'BA' }
-
                                             )
                                         "
                                     >
@@ -7555,20 +7559,12 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-
                                                 class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
-
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-
                                             >Jadwal Laptop</span
-
-                                            >Pica Inspeksi</span
-
                                         >
                                     </NavLink>
 
@@ -7636,6 +7632,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'BA' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'BA' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -7741,6 +7758,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -7990,7 +8013,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -8008,14 +8031,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisMifa')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisMifa'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -8023,14 +8046,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -8388,26 +8411,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiMifa">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'MIFA' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'MIFA' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -8499,6 +8502,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'MIFA' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'MIFA' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -8606,6 +8630,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -8856,7 +8886,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -8874,14 +8904,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisMhu')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisMhu'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -8889,14 +8919,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -9252,26 +9282,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiMhu">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'MHU' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'MHU' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -9363,6 +9373,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'MHU' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'MHU' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -9470,6 +9501,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -9720,7 +9757,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -9738,14 +9775,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisAdw')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisAdw'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -9753,14 +9790,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -10118,26 +10155,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiWARA">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'ADW' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'ADW' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -10231,9 +10248,36 @@ const toggleLevel3ScannerSks = () => {
                                             >Inspeksi Komputer</span
                                         >
                                     </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'ADW' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'ADW' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -10484,7 +10528,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -10502,14 +10546,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisAmi')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisMifa'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -10517,14 +10561,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -10880,26 +10924,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiAmi">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'AMI' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'AMI' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -10991,6 +11015,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'AMI' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'AMI' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -11098,6 +11143,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -11348,7 +11399,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -11366,14 +11417,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisPik')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisPik'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -11381,14 +11432,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -11744,26 +11795,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiPik">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'PIK' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'PIK' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -11855,6 +11886,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'PIK' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'PIK' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -11962,6 +12014,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -12212,7 +12270,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -12230,14 +12288,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisBge')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisBge'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -12245,14 +12303,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -12608,26 +12666,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiBge">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'BGE' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'BGE' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -12719,6 +12757,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'BGE' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'BGE' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -12826,6 +12885,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -13076,7 +13141,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -13094,14 +13159,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisBib')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisBib'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -13109,14 +13174,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -13472,26 +13537,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiBib">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'BIB' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'BIB' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -13583,6 +13628,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'BIB' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'BIB' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -13686,6 +13752,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -13936,7 +14008,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -13954,14 +14026,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisIpt')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisIpt'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -13969,14 +14041,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -14332,26 +14404,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiIpt">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'IPT' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'IPT' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -14443,6 +14495,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'IPT' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'IPT' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -14546,6 +14619,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -14795,7 +14874,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -14813,14 +14892,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisMlp')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisMlp'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -14828,14 +14907,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -15191,26 +15270,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiMlp">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'MLP' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'MLP' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -15302,6 +15361,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'MLP' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'MLP' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -15405,6 +15485,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -15654,7 +15740,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -15672,14 +15758,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisMip')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisMip'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -15687,14 +15773,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -16050,26 +16136,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiMip">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'MIP' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'MIP' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -16161,6 +16227,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'MIP' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'MIP' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -16264,6 +16351,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -16513,7 +16606,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -16531,14 +16624,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisVib')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisVib'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -16546,14 +16639,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -16911,26 +17004,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiVale">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'VIB' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'VIB' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -17022,6 +17095,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'VIB' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'VIB' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -17125,6 +17219,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -17375,7 +17475,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -17393,14 +17493,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisSbs')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisSbs'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -17408,14 +17508,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -17771,26 +17871,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiSbs">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'SBS' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'SBS' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -17882,6 +17962,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'SBS' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'SBS' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -17985,6 +18086,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >
@@ -18235,7 +18342,7 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Response Time
+                                            >KPI Response Time
                                         </span>
                                     </NavLink>
                                     <NavLink
@@ -18253,14 +18360,14 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Monitoring Inspeksi</span
+                                            >KPI Inspeksi</span
                                         >
                                     </NavLink>
-                                    <NavLink
-                                        :href="route('kpi.jobAnalysisSks')"
+                                    <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
                                         :active="
                                             route().current(
-                                                'kpi.jobAnalysisSks'
+                                                'wirellessWARA.page'
                                             )
                                         "
                                     >
@@ -18268,14 +18375,14 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-message"
+                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Job Analysis</span
+                                            >KPI Job Analisis</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                 </ul>
 
                                 <div
@@ -18631,26 +18738,6 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OpenInspeksiSks">
-                                  <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'SKS' })"
-                                        :active="
-                                            route().current(
-                                                'picaInspeksi.page', { site: 'SKS' }
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Pica Inspeksi</span
-                                        >
-                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route(
@@ -18742,6 +18829,27 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('picaInspeksi.page', { site: 'SKS' })"
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page', { site: 'SKS' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pica Inspeksi</span
                                         >
                                     </NavLink>
                                 </ul>
@@ -18845,6 +18953,12 @@ const toggleLevel3ScannerSks = () => {
                                 </ul> -->
 
                                 <NavLink
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                            'ict_group_leader' ||
+                                        $page.props.auth.user.role ===
+                                            'ict_developer'
+                                    "
                                     :href="route('aduan-ho.page')"
                                     :active="route().current('aduan-ho.page')"
                                 >

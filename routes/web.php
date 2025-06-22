@@ -43,6 +43,7 @@ use App\Http\Controllers\DataCheckerController;
 use App\Http\Controllers\DepartmentBaController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DepartmentMifaController;
+use App\Http\Controllers\ExportAduanAllSiteController;
 use App\Http\Controllers\ExportInspeksiComputerController;
 use App\Http\Controllers\ExportInspeksiLaptopController;
 use App\Http\Controllers\GuestAllController;
@@ -282,6 +283,11 @@ Route::middleware('auth')->group(function () {
         return Inertia::location(route('export.picaInspeksi', ['startDate' => $request->startDate, 'site' => $request->site, 'endDate' => $request->endDate, 'device' => $request->device, 'pic' => $request->pic]));
     })->name('pica.export');
     Route::get('/export-pdf-all-pica-inspeksi', [PicaInspeksiController::class, 'exportPdf'])->name('export.picaInspeksi');
+
+    Route::post('/export-aduan', function (Request $request) {
+        return Inertia::location(route('export.aduan', ['startDate' => $request->startDate, 'site' => $request->site, 'endDate' => $request->endDate, 'pic' => $request->pic]));
+    })->name('export.aduanData');
+    Route::get('/export-pdf-aduan', [ExportAduanAllSiteController::class, 'exportPdf'])->name('export.aduan');
 
     $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'];
 

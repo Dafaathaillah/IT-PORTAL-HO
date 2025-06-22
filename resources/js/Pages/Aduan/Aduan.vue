@@ -17,12 +17,63 @@
 #dt-length-0 {
     width: 60px !important;
 }
+
+/* Untuk VueDatePicker */
+.dp__input {
+    height: 3rem; /* sama dengan h-12 */
+    line-height: 3rem;
+}
+
+.multiselect {
+    min-height: 3rem; /* h-12 */
+}
+
+.multiselect__tags {
+    min-height: 3rem !important;
+    display: flex;
+    align-items: center;
+}
+
+.custom-image-zoom-out {
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    transform: scale(0.95); /* sedikit dikecilkan */
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shake-border {
+    animation: shake 0.3s ease;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6); /* biru lembut (tailwind blue-500) */
+    border: 1px solid rgba(59, 130, 246, 1); /* biru solid */
+    border-radius: 0.5rem;
+}
 </style>
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, router } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
@@ -38,6 +89,15 @@ const mainMenu = ref("Aduan Data");
 function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
 }
+
+const customFormat = (date) => {
+    if (!date) return null;
+    const d = new Date(date);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+        2,
+        "0"
+    )}-${String(d.getDate()).padStart(2, "0")}`;
+};
 
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
@@ -67,6 +127,9 @@ const mount = onMounted(() => {
 
 const props = defineProps({
     aduan: {
+        type: Array,
+    },
+    crew: {
         type: Array,
     },
     open: {
@@ -211,6 +274,94 @@ function updateUrgency(id, value) {
             });
         });
 }
+
+const options = props.crew;
+const startDate = ref(null);
+const endDate = ref(null);
+const selectedValues = ref(null); // Awalnya array kosong
+const showValidation = ref(false);
+const data = ref([]);
+
+const exportPdf = () => {
+    console.log(customFormat(startDate.value));
+    console.log(customFormat(endDate.value));
+    console.log(props.site);
+
+    if (!selectedValues.value || !selectedValues.value.name) {
+        showValidation.value = true;
+
+        // Hilangkan efek setelah beberapa saat
+        setTimeout(() => {
+            showValidation.value = false;
+        }, 1000);
+
+        Swal.fire({
+            icon: "warning",
+            title: "Wajib Memilih PIC",
+            text: "Silakan pilih PIC terlebih dahulu sebelum mengekspor data.",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+        return;
+    }
+
+    const selectPic = selectedValues.value.name;
+
+    // Tampilkan loading popup
+    Swal.fire({
+        title: "Menyiapkan PDF...",
+        text: "Harap tunggu sebentar.",
+        allowOutsideClick: false,
+        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    // Kirim permintaan ke backend untuk enkripsi tahun
+    router.post(
+        route("export.aduanData"),
+        {
+            startDate: customFormat(startDate.value),
+            endDate: customFormat(endDate.value),
+            site: 'HO',
+            pic: selectPic,
+        },
+        {
+            onSuccess: ({ props }) => {
+                if (encryptedYear) {
+                    Swal.close(); // Tutup popup loading setelah selesai
+                    window.open(
+                        route("export.aduan", {
+                            startDate: customFormat(startDate.value),
+                            endDate: customFormat(endDate.value),
+                            site: 'HO',
+                            pic: selectPic,
+                        }),
+                        "_blank"
+                    );
+                } else {
+                    Swal.fire(
+                        "Terjadi Kesalahan",
+                        "Gagal mengenkripsi tahun.",
+                        "error"
+                    );
+                }
+            },
+            onError: () => {
+                Swal.close(); // Tutup popup loading jika ada error
+                Swal.fire(
+                    "Gagal!",
+                    "Terjadi kesalahan dalam permintaan.",
+                    "error"
+                );
+            },
+        }
+    );
+};
 </script>
 
 <template>
@@ -223,7 +374,7 @@ function updateUrgency(id, value) {
     >
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex flex-wrap -mx-3 mb-8">
+                <div class="flex flex-wrap -mx-3 mb-3">
                     <!-- card1 -->
                     <div
                         class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4"
@@ -417,14 +568,15 @@ function updateUrgency(id, value) {
                         </div>
                     </div>
                 </div>
+
                 <div class="flex flex-wrap -mx-3">
                     <div class="flex-none w-full max-w-full px-3">
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
-                            <div
-                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
-                            >
+                               <div
+                                    class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+                                >
                                 <Link
                                     :href="route('aduan.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
@@ -432,7 +584,55 @@ function updateUrgency(id, value) {
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
                                     New Data
                                 </Link>
+                            <div class="flex flex-wrap md:flex-nowrap gap-3 mt-4">
+                                <div
+                                    class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
+                                >
+                                    <VueDatePicker
+                                        required
+                                        v-model="startDate"
+                                        :format="customFormat"
+                                        placeholder="Start Date"
+                                        :enable-time-picker="false"
+                                    />
+                                </div>
+                                <div
+                                    class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
+                                >
+                                    <VueDatePicker
+                                        required
+                                        v-model="endDate"
+                                        :format="customFormat"
+                                        placeholder="End Date"
+                                        :enable-time-picker="false"
+                                    />
+                                </div>
+                                <div
+                                    class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
+                                >
+                                    <VueMultiselect
+                                        ref="picSelect"
+                                        v-model="selectedValues"
+                                        :options="options"
+                                        :multiple="false"
+                                        :close-on-select="true"
+                                        placeholder="Pilih PIC"
+                                        track-by="name"
+                                        label="name"
+                                        :class="{
+                                            'shake-border': showValidation,
+                                        }"
+                                    />
+                                </div>
+                                <button
+                                    @click="exportPdf"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Rekap Inspeksi
+                                </button>
                             </div>
+                                </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0">
                                     <div class="p-6 text-gray-900">

@@ -109,13 +109,13 @@
             </tr>
         </table>
 
-        <div class="title">FORM DATA PICA INSPEKSI {{ $devicePage }}</div>
+        <div class="title">FORM DATA ADUAN SITE {{ $site }}</div>
         <table style="width: 100%; margin-bottom: 10px; font-size: 12px; border-collapse: collapse;">
             <tr>
                 <td style="text-align: left; font-weight: bold; border: none;">
-                    Pica Inspeksi Periode : <span style="font-weight: normal;">
+                    Data Aduan Periode : <span style="font-weight: normal;">
                         @if (!empty($year))
-                            Tahun - {{ $year }}
+                            All Periode Data
                         @else
                             {{ $startDateConv }} - {{ $endDateConv }}
                         @endif
@@ -130,46 +130,34 @@
             <thead>
                 <tr>
                     <th colspan="1" style="border: 1px solid #000;">No</th>
-                    <th colspan="1" style="border: 1px solid #000;">No Inventory</th>
-                    <th colspan="1" style="border: 1px solid #000;">Lokasi</th>
-                    <th colspan="1" style="border: 1px solid #000;">Due Date</th>
-                    <th colspan="1" style="border: 1px solid #000;">Inspector</th>
-                    <th colspan="1" style="border: 1px solid #000;">Temuan</th>
-                    <th colspan="1" style="border: 1px solid #000;">Foto temuan</th>
-                    <th colspan="1" style="border: 1px solid #000;">Tindakan</th>
-                    <th colspan="1" style="border: 1px solid #000;">Foto Tindakan</th>
-                    <th colspan="1" style="border: 1px solid #000;">Status</th>
-                    <th colspan="1" style="border: 1px solid #000;">Remark</th>
+                    <th colspan="1" style="border: 1px solid #000;">Ticket Code</th>
+                    <th colspan="1" style="border: 1px solid #000;">Category</th>
+                    <th colspan="1" style="border: 1px solid #000;">Nrp</th>
+                    <th colspan="1" style="border: 1px solid #000;">Complaint Name</th>
+                    <th colspan="1" style="border: 1px solid #000;">Complaint Position</th>
+                    <th colspan="1" style="border: 1px solid #000;">Phone Number</th>
+                    <th colspan="1" style="border: 1px solid #000;">Issue</th>
+                    <th colspan="1" style="border: 1px solid #000;">Location - Detail Location</th>
+                    <th colspan="1" style="border: 1px solid #000;">Action</th>
+                    <th colspan="1" style="border: 1px solid #000;">Note</th>
+                    <th colspan="1" style="border: 1px solid #000;">Status Aduan</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($dataPica as $item)
+                @foreach ($dataAduan as $item)
                     <tr class="dataContent">
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->no_inv ?? '-' }}</td>
-                        <td>{{ $item->loc ?? '-' }}</td>
-                        <td>{{ $item->due_date ?? '-' }}</td>
-                        <td>{{ $item->inspector ?? '-' }}</td>
-                        <td>{{ $item->findings }}</td>
-                        <td>
-                            @if ($item->findings_image)
-                                <img src="{{ public_path('images/' . $item->findings_image) }}" alt="foto temuan"
-                                    style="width: 50px; height: 50px;">
-                            @else
-                                <span>Tidak ada gambar</span>
-                            @endif
-                        </td>
-                        <td>{{ $item->findings_action }}
-                        <td>
-                            @if ($item->action_image)
-                                <img src="{{ public_path('images/' . $item->action_image) }}" alt="foto tindakan"
-                                    style="width: 50px; height: 50px;">
-                            @else
-                                <span>Tidak ada gambar</span>
-                            @endif
-                        </td>
-                        <td>{{ $item->findings_status }}
-                        <td>{{ $item->remarks }}
+                        <td>{{ $item->complaint_code ?? '-' }}</td>
+                        <td>{{ $item->category_name }}
+                        <td>{{ $item->nrp ?? '-' }}</td>
+                        <td>{{ $item->complaint_name ?? '-' }}</td>
+                        <td>{{ $item->complaint_position ?? '-' }}</td>
+                        <td>{{ $item->phone_number ?? '-' }}</td>
+                        <td>{{ $item->complaint_note ?? '-' }}</td>
+                        <td>{{ $item->location . ' - ' . $item->detail_location ?? '-' }}
+                        <td>{{ $item->action_repair ?? '-' }}
+                        <td>{{ $item->repair_note ?? '-' }}
+                        <td>{{ $item->status ?? '-' }}
                         </td>
                     </tr>
                 @endforeach
@@ -182,9 +170,9 @@
         <div style="font-size: 12px; font-weight: bold; margin-bottom: 10px;">CATATAN</div>
 
         <ul style="font-size: 11px; margin-bottom: 20px;">
-            <li>Diatas terlampir data pica inspeksi device laptop/computer sesuai dengan interval data yang sudah di
-                pilih.</li>
-            <li>Data pica all status (open dan close) di tampilkan pada export ini.</li>
+            <li>Diatas terlampir data aduan berdasarkan range date yang sudah id pilih, jika range date tidak di pilih
+                maka menampilkan semua data.</li>
+            <li>Data aduan all status (open, progress, outstanding, cancel, dan close) di tampilkan pada export ini.</li>
         </ul>
 
         <!-- Tambahan total -->

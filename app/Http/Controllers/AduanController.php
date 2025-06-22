@@ -9,10 +9,13 @@ use Carbon\Carbon;
 use Dedoc\Scramble\Scramble;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
+use DNS2D;
 
 class AduanController extends Controller
 {
@@ -22,6 +25,7 @@ class AduanController extends Controller
         if ($auth == 'soc_ho' || $auth == 'ict_developer') {
             # code...
             $aduan = Aduan::where('category_name', 'SOC')
+            ->whereNull('deleted_at')
                 ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -34,8 +38,13 @@ class AduanController extends Controller
             $countClosed = Aduan::where('status', 'CLOSED')->where('category_name', 'SOC')->count();
             $countProgress = Aduan::where('status', 'PROGRESS')->where('category_name', 'SOC')->count();
             $countCancel = Aduan::where('status', 'CANCEL')->where('category_name', 'SOC')->count();
+
+            $crew = User::whereIn('role', ['soc_ho'])->where('site', 'HO')->pluck('name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
         } else {
             $aduan = Aduan::where('site', auth()->user()->site)
+            ->whereNull('deleted_at')
                 ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -48,6 +57,10 @@ class AduanController extends Controller
             $countClosed = Aduan::where('status', 'CLOSED')->where('site', auth()->user()->site)->count();
             $countProgress = Aduan::where('status', 'PROGRESS')->where('site', auth()->user()->site)->count();
             $countCancel = Aduan::where('status', 'CANCEL')->where('site', auth()->user()->site)->count();
+
+            $crew = User::whereIn('role', ['ict_ho'])->where('site', 'HO')->pluck('name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
         }
         return Inertia::render(
             'Aduan/Aduan',
@@ -57,6 +70,7 @@ class AduanController extends Controller
                 'closed' => $countClosed,
                 'progress' => $countProgress,
                 'cancel' => $countCancel,
+                'crew' => $crew,
             ]
         );
     }
@@ -443,5 +457,98 @@ class AduanController extends Controller
         // return response()->json(['ap' => $aduan]);
         $aduan->delete();
         return redirect()->back();
+    }
+
+    public function exportPdf(Request $request)
+    {
+        // 1. Validasi input
+        $validated = $request->validate([
+            'site' => 'required|string',
+            'startDate' => 'nullable|date',
+            'endDate' => 'nullable|date',
+            'pic' => 'nullable|string',
+        ]);
+
+        // 2. Ambil data dari request
+        $site = $validated['site'];
+        $startDate = $validated['startDate'] ?? null;
+        $endDate = $validated['endDate'] ?? null;
+        $picName = $validated['pic'] ?? null;
+
+        $startDateConv = $startDate ? Carbon::parse($startDate)->translatedFormat('d F Y') : null;
+        $endDateConv = $endDate ? Carbon::parse($endDate)->translatedFormat('d F Y') : null;
+
+        // 3. Ambil data inspeksi berdasarkan device
+        $dataAduan = $this->getDataAduan($site, $startDate, $endDate);
+        // dd($dataAduan);
+
+        // 5. Cari data yang berstatus "Y" untuk mendapatkan PIC approval
+        if ($site == 'HO') {
+            $picApproved = 'EDI NUGROHO';
+        }else{
+            if (auth()->user()->role == 'ict_group_leader') {
+                $picApproved = auth()->user()->name;
+            } else {
+                $picApproved = 'Export Menggunakan Akun GL!';
+            }
+        }
+        $qr_base64Approved = $picApproved ? $this->generateQrFromUserName($picApproved) : null;
+
+        // 6. Generate QR untuk PIC inspeksi (yang dipilih manual)
+        $qr_base64Pic = $picName ? $this->generateQrFromUserName($picName) : null;
+
+        // 7. Generate PDF
+        Pdf::setOptions(['isRemoteEnabled' => true]); // <--- WAJIB agar gambar URL bisa muncu
+
+        // 8. Return PDF response
+        if ($startDate && $endDate) {
+            $pdf = Pdf::loadView('itportal.rekapAllInspeksi.rekapAduan', compact(
+                'dataAduan',
+                'site',
+                'picName',
+                'picApproved',
+                'qr_base64Approved',
+                'qr_base64Pic',
+                'startDateConv',
+                'endDateConv',
+            ))->setPaper('A4', 'landscape');
+            return $pdf->stream('Data-aduan-' . '-report-periode' . $startDate . '-' . $endDate . 'pdf');
+        } else {
+            $year = Carbon::now()->year;
+            $pdf = Pdf::loadView('itportal.rekapAllInspeksi.rekapAduan', compact(
+                'dataAduan',
+                'site',
+                'picName',
+                'picApproved',
+                'qr_base64Approved',
+                'qr_base64Pic',
+                'year',
+            ))->setPaper('A4', 'landscape');
+            return $pdf->stream('Data-aduan-' . '-report-periode' . $year . 'pdf');
+        }
+    }
+
+    private function getDataAduan($site, $startDate, $endDate)
+    {
+        $query = Aduan::where('site', $site);
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('created_date', [$startDate, $endDate]);
+        }
+
+        return $query->get();
+    }
+
+    private function generateQrFromUserName($name)
+    {
+        $user = User::where('name', $name)->first();
+        if (!$user) return null;
+
+        $qrString = "NRP: {$user->nrp}, Nama: {$user->name}, Jabatan: {$user->position}";
+        $barcode = new \Milon\Barcode\DNS2D();
+        $barcode->setStorPath(storage_path('framework/barcodes/'));
+        $pngData = $barcode->getBarcodePNG($qrString, 'QRCODE');
+
+        return 'data:image/png;base64,' . $pngData;
     }
 }

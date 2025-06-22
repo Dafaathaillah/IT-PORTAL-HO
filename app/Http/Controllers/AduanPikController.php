@@ -20,6 +20,7 @@ class AduanPikController extends Controller
     {
 
         $aduan = Aduan::where('site', 'PIK')
+        ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -33,10 +34,15 @@ class AduanPikController extends Controller
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'PIK')->count();
         $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'PIK')->count();
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'PIK')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         return Inertia::render(
             'Inventory/SitePik/Aduan/Aduan',
             [
                 'aduan' => $aduan,
+                'crew' => $crew,
                 'open' => $countOpen,
                 'closed' => $countClosed,
                 'progress' => $countProgress,

@@ -20,6 +20,7 @@ class AduanBibController extends Controller
     {
 
         $aduan = Aduan::where('site', 'BIB')
+        ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -28,15 +29,35 @@ class AduanBibController extends Controller
     ")
             ->orderBy('date_of_complaint', 'desc')
             ->get();
-        $countOpen = Aduan::where('status', 'OPEN')->where('site', 'BIB')->count();
-        $countClosed = Aduan::where('status', 'CLOSED')->where('site', 'BIB')->count();
-        $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'BIB')->count();
-        $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'BIB')->count();
+        $countOpen = Aduan::where('status', 'OPEN')
+            ->where('site', 'BIB')
+            ->whereNull('deleted_at')
+            ->count();
+
+        $countClosed = Aduan::where('status', 'CLOSED')
+            ->where('site', 'BIB')
+            ->whereNull('deleted_at')
+            ->count();
+
+        $countProgress = Aduan::where('status', 'PROGRESS')
+            ->where('site', 'BIB')
+            ->whereNull('deleted_at')
+            ->count();
+
+        $countCancel = Aduan::where('status', 'CANCEL')
+            ->where('site', 'BIB')
+            ->whereNull('deleted_at')
+            ->count();
+
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'BGE')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
 
         return Inertia::render(
             'Inventory/SiteBib/Aduan/Aduan',
             [
                 'aduan' => $aduan,
+                'crew' => $crew,
                 'open' => $countOpen,
                 'closed' => $countClosed,
                 'progress' => $countProgress,

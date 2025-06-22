@@ -20,6 +20,7 @@ class AduanSksController extends Controller
     {
 
         $aduan = Aduan::where('site', 'SKS')
+        ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -33,10 +34,15 @@ class AduanSksController extends Controller
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'SKS')->count();
         $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'SKS')->count();
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'SKS')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         return Inertia::render(
             'Inventory/SiteSks/Aduan/Aduan',
             [
                 'aduan' => $aduan,
+                'crew' => $crew,
                 'open' => $countOpen,
                 'closed' => $countClosed,
                 'progress' => $countProgress,

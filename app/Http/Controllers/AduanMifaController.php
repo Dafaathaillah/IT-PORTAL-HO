@@ -20,6 +20,7 @@ class AduanMifaController extends Controller
     {
 
         $aduan = Aduan::where('site', 'MIFA')
+        ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -33,10 +34,16 @@ class AduanMifaController extends Controller
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'MIFA')->count();
         $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'MIFA')->count();
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'MIFA')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+
         return Inertia::render(
             'Inventory/SiteMifa/Aduan/Aduan',
             [
                 'aduan' => $aduan,
+                'crew' => $crew,
                 'open' => $countOpen,
                 'closed' => $countClosed,
                 'progress' => $countProgress,

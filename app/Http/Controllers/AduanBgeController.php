@@ -19,7 +19,8 @@ class AduanBgeController extends Controller
     public function index()
     {
 
-            $aduan = Aduan::where('site', 'BGE')
+        $aduan = Aduan::where('site', 'BGE')
+        ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -33,10 +34,15 @@ class AduanBgeController extends Controller
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'BGE')->count();
         $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'BGE')->count();
 
+        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'BGE')->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
         return Inertia::render(
             'Inventory/SiteBge/Aduan/Aduan',
             [
                 'aduan' => $aduan,
+                'crew' => $crew,
                 'open' => $countOpen,
                 'closed' => $countClosed,
                 'progress' => $countProgress,

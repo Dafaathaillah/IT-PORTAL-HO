@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
+use DNS2D;
+
 
 class AduanAmiController extends Controller
 {
@@ -20,6 +24,7 @@ class AduanAmiController extends Controller
     {
 
         $aduan = Aduan::where('site', 'AMI')
+        ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -33,10 +38,16 @@ class AduanAmiController extends Controller
         $countProgress = Aduan::where('status', 'PROGRESS')->where('site', 'AMI')->count();
         $countCancel = Aduan::where('status', 'CANCEL')->where('site', 'AMI')->count();
 
+        
+            $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'AMI')->pluck('name')->map(function ($name) {
+                return ['name' => $name];
+            })->toArray();
+
         return Inertia::render(
             'Inventory/SiteAmi/Aduan/Aduan',
             [
                 'aduan' => $aduan,
+                'crew' => $crew,
                 'open' => $countOpen,
                 'closed' => $countClosed,
                 'progress' => $countProgress,
