@@ -146,7 +146,7 @@ const initChartDark = () => {
     Highcharts.chart(chartContainer.value, {
         chart: {
             type: "bar",
-            backgroundColor: "#111C44",
+            backgroundColor: "#334155",
         },
         title: {
             text: "",
@@ -374,7 +374,7 @@ const initChartAchievementDark = () => {
     Highcharts.chart(chartAchievement.value, {
         chart: {
             type: "bar",
-            backgroundColor: "#111C44",
+            backgroundColor: "#334155",
             events: {
                 load: function () {
                     const chart = this;
@@ -639,7 +639,7 @@ const initChartAduanAnalysDark = () => {
     Highcharts.chart(chartAduanAnalys.value, {
         chart: {
             type: "pie",
-            backgroundColor: "#111C44",
+            backgroundColor: "#334155",
             custom: {},
             events: {
                 render() {
