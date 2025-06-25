@@ -100,6 +100,21 @@ const clearFilters = () => {
     activeMonth.value = null;
     activeDept.value = null;
 };
+
+const exportPdf = () => {
+    // const params = new URLSearchParams();
+    // if (activeMonth.value) params.append("month", activeMonth.value);
+    // if (activeDept.value) params.append("dept", activeDept.value);
+
+    // window.open(
+    //     `/inspection-scheduler-computer-${site_link}/rekap/pdf?${params.toString()}`,
+    //     "_blank"
+    // );
+    window.open(
+        `/inspection-scheduler-computer-${site_link}/rekap/pdf`,
+        "_blank"
+    );
+};
 </script>
 
 <template>
@@ -221,6 +236,13 @@ const clearFilters = () => {
                                 ></div>
 
                                 <div class="w-full lg:w-1/2">
+                                    <button
+                                        @click="exportPdf"
+                                        class="flex items-center justify-center gap-2 w-32 h-10 text-xs font-semibold bg-gray-800 text-white rounded-md shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105 ml-auto mb-4"
+                                    >
+                                        <i class="fas fa-download"></i>
+                                        Rekap Jadwal
+                                    </button>
                                     <div
                                         class="overflow-x-auto bg-white shadow rounded"
                                     >
@@ -244,7 +266,7 @@ const clearFilters = () => {
                                                     <th
                                                         class="px-4 py-2 border"
                                                     >
-                                                        Inspection Date
+                                                        Schedule Inspection
                                                     </th>
                                                     <th
                                                         class="px-4 py-2 border text-center"

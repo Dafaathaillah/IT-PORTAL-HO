@@ -371,6 +371,12 @@ Route::middleware('auth')->group(function () {
             ->defaults('site', $site);
     }
 
+    Route::get("inspection-scheduler-computer-{site}/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+        ->name("inspection-scheduler-computer.rekap");
+
+    Route::get("inspection-scheduler-laptop-{site}/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+        ->name("inspection-scheduler-laptop.rekap");
+
     // Route::get('/inspection-scheduler-laptop', [InspectionScheduleController::class, 'index'])->name('inspection-schedule.index');
     // Route::put('/inspection-scheduler-laptop/{id}', [InspectionScheduleController::class, 'update'])->name('inspection-schedule.update');
 

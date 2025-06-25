@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class InspectionScheduleController extends Controller
 {
 
@@ -32,6 +34,8 @@ class InspectionScheduleController extends Controller
             }
         }
 
+        $year = Carbon::now()->year;
+
         $schedules = DB::table('schedule_laptop')
             ->join('inv_laptops', 'schedule_laptop.id_laptop', '=', 'inv_laptops.id')
             ->select(
@@ -45,6 +49,7 @@ class InspectionScheduleController extends Controller
                 'inv_laptops.site'
             )
             ->where('schedule_laptop.site', $site)
+            ->where('schedule_laptop.tahun', $year)
             ->orderBy('tanggal_inspection')
             ->get();
 
@@ -93,6 +98,61 @@ class InspectionScheduleController extends Controller
             ]);
 
         return redirect()->route("inspection-scheduler-laptop.$site_link.index")->with('success', 'Schedule updated successfully.');
+    }
+
+    public function exportPdf(Request $request, string $site)
+    {
+        // $month = $request->query('month');
+        // $dept = $request->query('dept');
+
+        $user = Auth::user();
+        $auth = $user->role;
+        $userSite = $user->site;
+
+        if ($auth != 'ict_developer' && $site != $userSite) {
+            abort(403, 'You dont have permission to access this page.');
+        }
+        $year = Carbon::now()->year;
+
+        // Build the base query
+        $query = DB::table('schedule_laptop')
+            ->join('inv_laptops', 'schedule_laptop.id_laptop', '=', 'inv_laptops.id')
+            ->select(
+                'schedule_laptop.id',
+                'schedule_laptop.id_laptop',
+                'schedule_laptop.tanggal_inspection',
+                'schedule_laptop.actual_inspection',
+                'schedule_laptop.bulan',
+                'schedule_laptop.tahun',
+                'inv_laptops.laptop_code',
+                'inv_laptops.dept',
+                'inv_laptops.site'
+            )
+            ->where('schedule_laptop.site', $site)
+            ->where('schedule_laptop.tahun', $year);
+
+        // Optional filters
+        // if ($month) {
+        //     $monthNumber = Carbon::parse("1 $month")->month;
+        //     $query->whereMonth('tanggal_inspection', $monthNumber);
+        // }
+
+        // if ($dept) {
+        //     $query->where('inv_laptops.dept', $dept);
+        // }
+
+        $schedules = $query->orderBy('tanggal_inspection')->get();
+
+
+        $pdf = Pdf::loadView('itportal.scheduleInspeksi.inspection-schedule-laptop', [
+            'schedules' => $schedules,
+            // 'month' => $month,
+            // 'dept' => $dept,
+            'site' => $site,
+            'periodeLabel' => $year,
+        ])->setPaper('A4', 'portrait');
+
+        return $pdf->stream("jadwal-inspeksi-laptop-$year-$site.pdf");
     }
 
     public function generate(Request $request)

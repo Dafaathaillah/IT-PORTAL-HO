@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class InspectionScheduleComputerController extends Controller
 {
 
@@ -32,12 +34,30 @@ class InspectionScheduleComputerController extends Controller
             }
         }
 
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
+
+        $triwulan = match (true) {
+            $month >= 1 && $month <= 3 => 'Triwulan 1',
+            $month >= 4 && $month <= 6 => 'Triwulan 2',
+            $month >= 7 && $month <= 9 => 'Triwulan 3',
+            $month >= 10 && $month <= 12 => 'Triwulan 4',
+        };
+
+        $Q = match (true) {
+            $month >= 1 && $month <= 3 => 'Q1',
+            $month >= 4 && $month <= 6 => 'Q2',
+            $month >= 7 && $month <= 9 => 'Q3',
+            $month >= 10 && $month <= 12 => 'Q4',
+        };
+
         $schedules = DB::table('schedule_computer')
             ->join('inv_computers', 'schedule_computer.id_computer', '=', 'inv_computers.id')
             ->select(
                 'schedule_computer.id',
                 'schedule_computer.id_computer',
                 'schedule_computer.tanggal_inspection',
+                'schedule_computer.actual_inspection',
                 'schedule_computer.bulan',
                 'schedule_computer.tahun',
                 'inv_computers.computer_code',
@@ -45,6 +65,8 @@ class InspectionScheduleComputerController extends Controller
                 'inv_computers.site'
             )
             ->where('schedule_computer.site', $site)
+            ->where('schedule_computer.quarter', $Q)
+            ->where('schedule_computer.tahun', $year)
             ->orderBy('tanggal_inspection')
             ->get();
 
@@ -56,14 +78,7 @@ class InspectionScheduleComputerController extends Controller
                 ];
             })->values();
 
-        $month = Carbon::now()->month;
 
-        $triwulan = match (true) {
-            $month >= 1 && $month <= 3 => 'Triwulan 1',
-            $month >= 4 && $month <= 6 => 'Triwulan 2',
-            $month >= 7 && $month <= 9 => 'Triwulan 3',
-            $month >= 10 && $month <= 12 => 'Triwulan 4',
-        };
 
         return Inertia::render('InspectionSchedule/IndexKomputer', [
             'schedules' => $schedules,
@@ -103,6 +118,89 @@ class InspectionScheduleComputerController extends Controller
             ]);
 
         return redirect()->route("inspection-scheduler-computer.$site_link.index")->with('success', 'Schedule updated successfully.');
+    }
+
+    public function exportPdf(Request $request, string $site)
+    {
+        // $month = $request->query('month');
+        // $dept = $request->query('dept');
+
+        $user = Auth::user();
+        $auth = $user->role;
+        $userSite = $user->site;
+
+        if ($auth != 'ict_developer' && $site != $userSite) {
+            abort(403, 'You dont have permission to access this page.');
+        }
+
+        $monthtw = Carbon::now()->month;
+        $year = Carbon::now()->year;
+
+        $triwulan = match (true) {
+            $monthtw >= 1 && $monthtw <= 3 => 'Triwulan 1',
+            $monthtw >= 4 && $monthtw <= 6 => 'Triwulan 2',
+            $monthtw >= 7 && $monthtw <= 9 => 'Triwulan 3',
+            $monthtw >= 10 && $monthtw <= 12 => 'Triwulan 4',
+        };
+
+        $periodeLabel = match (true) {
+            $monthtw >= 1 && $monthtw <= 3 => 'Januari - Februari - Maret',
+            $monthtw >= 4 && $monthtw <= 6 => 'April - Mei - Juni',
+            $monthtw >= 7 && $monthtw <= 9 => 'Juli - Agustus - September',
+            $monthtw >= 10 && $monthtw <= 12 => 'Oktober - November - Desember',
+        };
+
+        $Q = match (true) {
+            $monthtw >= 1 && $monthtw <= 3 => 'Q1',
+            $monthtw >= 4 && $monthtw <= 6 => 'Q2',
+            $monthtw >= 7 && $monthtw <= 9 => 'Q3',
+            $monthtw >= 10 && $monthtw <= 12 => 'Q4',
+        };
+
+        // Build the base query
+        $query = DB::table('schedule_computer')
+            ->join('inv_computers', 'schedule_computer.id_computer', '=', 'inv_computers.id')
+            ->select(
+                'schedule_computer.id',
+                'schedule_computer.id_computer',
+                'schedule_computer.tanggal_inspection',
+                'schedule_computer.actual_inspection',
+                'schedule_computer.bulan',
+                'schedule_computer.tahun',
+                'inv_computers.computer_code',
+                'inv_computers.dept',
+                'inv_computers.site'
+            )
+            ->where('schedule_computer.site', $site)
+            ->where('schedule_computer.quarter', $Q)
+            ->where('schedule_computer.tahun', $year);
+
+        // Optional filters
+        // if ($month) {
+        //     $monthNumber = Carbon::parse("1 $month")->month;
+        //     $query->whereMonth('tanggal_inspection', $monthNumber);
+        // }
+
+        // if ($dept) {
+        //     $query->where('inv_computers.dept', $dept);
+        // }
+
+        $schedules = $query->orderBy('tanggal_inspection')->get();
+
+
+
+
+
+        $pdf = Pdf::loadView('itportal.scheduleInspeksi.inspection-schedule-komputer', [
+            'schedules' => $schedules,
+            // 'month' => $month,
+            // 'dept' => $dept,
+            'site' => $site,
+            'periodeLabel' => $periodeLabel,
+            'triwulan' => $triwulan,
+        ])->setPaper('A4', 'portrait');
+
+        return $pdf->stream("jadwal-inspeksi-komputer-$triwulan-$site.pdf");
     }
 
     public function generate(Request $request)
