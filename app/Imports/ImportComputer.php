@@ -35,6 +35,7 @@ class ImportComputer implements ToModel, WithStartRow
         $inventoryNumber = $row[2] ?? '';
         $codeDept = $this->extractDept($inventoryNumber);
         $codeSite = $this->extractSite($inventoryNumber);
+        // dd($codeSite);
         $codeMaxId = $this->extractNumber($inventoryNumber);
 
 
@@ -62,42 +63,72 @@ class ImportComputer implements ToModel, WithStartRow
             $tanggal_deploy = $this->convertToDate($row[23]);
         }
 
+        $existingDataInv = InvComputer::where('computer_code', $row[2])->where('site', $codeSite)->first();
+
         // dd($existingDataSn);
         if ($aduan_get_data_user) {
-            if ($existingDataSn) {
-                $this->duplicateRecords[] = [
-                    'number_asset_ho' => $existingDataSn->number_asset_ho,
-                    'computer_code' => $existingDataSn->computer_code,
-                    'serial_number' => $existingDataSn->serial_number,
-                    'site' => $existingDataSn->site,
-                ];
-                return null;
+            if ($aduan_get_data_user) {
+                if ($existingDataInv) {
+                    InvComputer::updateOrCreate(
+                        ['computer_code' => $row[2]],
+                        [
+                            'max_id' => $codeMaxId,
+                            'computer_name' => $row[3],
+                            'computer_code' => $row[2],
+                            'number_asset_ho' => $row[1],
+                            'assets_category' => $row[4],
+                            'spesifikasi' => $row[5] . ', ' . $row[6] . ', ' . $row[7] . ', ' . $row[8] . ', ' . $row[9] . ', ' . $row[10] . ', ' . $row[11] . ', ' . $row[12],
+                            'serial_number' => $row[13],
+                            'aplikasi' => $row[14],
+                            'license' => $row[15],
+                            'ip_address' => $row[16],
+                            'location' => $row[17],
+                            'status' => $row[18],
+                            'condition' => $row[19],
+                            'note' => $row[21],
+                            'date_of_inventory' => $tanggal_inventory,
+                            'date_of_deploy' => $tanggal_deploy,
+                            'user_alls_id' => $aduan_get_data_user['id'],
+                            'site' => $codeSite,
+                            'dept' => $codeDept
+                        ]
+                    );
+                } else {
+                    if ($existingDataSn) {
+                        $this->duplicateRecords[] = [
+                            'number_asset_ho' => $existingDataSn->number_asset_ho,
+                            'laptop_code' => $existingDataSn->laptop_code,
+                            'serial_number' => $existingDataSn->serial_number,
+                            'site' => $existingDataSn->site,
+                        ];
+                        return null;
+                    }
+                    InvComputer::updateOrCreate(
+                        ['computer_code' => $row[2]],
+                        [
+                            'max_id' => $codeMaxId,
+                            'computer_name' => $row[3],
+                            'computer_code' => $row[2],
+                            'number_asset_ho' => $row[1],
+                            'assets_category' => $row[4],
+                            'spesifikasi' => $row[5] . ', ' . $row[6] . ', ' . $row[7] . ', ' . $row[8] . ', ' . $row[9] . ', ' . $row[10] . ', ' . $row[11] . ', ' . $row[12],
+                            'serial_number' => $row[13],
+                            'aplikasi' => $row[14],
+                            'license' => $row[15],
+                            'ip_address' => $row[16],
+                            'location' => $row[17],
+                            'status' => $row[18],
+                            'condition' => $row[19],
+                            'note' => $row[21],
+                            'date_of_inventory' => $tanggal_inventory,
+                            'date_of_deploy' => $tanggal_deploy,
+                            'user_alls_id' => $aduan_get_data_user['id'],
+                            'site' => $codeSite,
+                            'dept' => $codeDept
+                        ]
+                    );
+                }
             }
-
-            InvComputer::updateOrCreate(
-                ['computer_code' => $row[2]],
-                [
-                    'max_id' => $codeMaxId,
-                    'computer_name' => $row[3],
-                    'computer_code' => $row[2],
-                    'number_asset_ho' => $row[1],
-                    'assets_category' => $row[4],
-                    'spesifikasi' => $row[5] . ', ' . $row[6] . ', ' . $row[7] . ', ' . $row[8] . ', ' . $row[9] . ', ' . $row[10] . ', ' . $row[11] . ', ' . $row[12],
-                    'serial_number' => $row[13],
-                    'aplikasi' => $row[14],
-                    'license' => $row[15],
-                    'ip_address' => $row[16],
-                    'location' => $row[17],
-                    'status' => $row[18],
-                    'condition' => $row[19],
-                    'note' => $row[21],
-                    'date_of_inventory' => $tanggal_inventory,
-                    'date_of_deploy' => $tanggal_deploy,
-                    'user_alls_id' => $aduan_get_data_user['id'],
-                    'site' => $codeSite,
-                    'dept' => $codeDept
-                ]
-            );
         }
     }
 

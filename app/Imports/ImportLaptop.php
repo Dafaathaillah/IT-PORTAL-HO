@@ -62,7 +62,7 @@ class ImportLaptop implements ToModel, WithStartRow
 
         $existingDataInv = InvLaptop::where('laptop_code', $row[2])->first();
         if ($aduan_get_data_user) {
-            if ($existingDataInv) {
+            if ($existingDataInv->site === $codeSite) {
                 InvLaptop::updateOrCreate(
                     ['laptop_code' => $row[2]],
                     [

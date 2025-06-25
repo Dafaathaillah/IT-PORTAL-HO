@@ -5502,8 +5502,8 @@ const toggleLevel3ScannerSks = () => {
                     class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
                 >
                     <img
-                        src="/assets/img/logoppa.png"
-                        class="inline transition-all duration-200 ease-nav-brand max-h-8 mr-2"
+                        src="/assets/img/POLICE_LOGO2.png"
+                        class="inline transition-all duration-200 ease-nav-brand max-h-8 mb-1"
                         alt="main_logo"
                     />
                     <span
@@ -5640,7 +5640,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                 ></i>
                             </div>
                             <span
@@ -5666,7 +5666,7 @@ const toggleLevel3ScannerSks = () => {
                                     class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                 >
                                     <i
-                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                     ></i>
                                 </div>
                                 <span
@@ -5687,7 +5687,7 @@ const toggleLevel3ScannerSks = () => {
                                     class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                 >
                                     <i
-                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                     ></i>
                                 </div>
                                 <span
@@ -5708,7 +5708,7 @@ const toggleLevel3ScannerSks = () => {
                                     class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                 >
                                     <i
-                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                     ></i>
                                 </div>
                                 <span
@@ -5731,7 +5731,7 @@ const toggleLevel3ScannerSks = () => {
                                     class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                 >
                                     <i
-                                        class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-gear"
+                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-gear"
                                     ></i>
                                 </div>
                                 <span
@@ -5753,7 +5753,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-trash"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-trash"
                                 ></i>
                             </div>
                             <span
@@ -5786,7 +5786,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                         ></i>
                                     </div>
                                     <span
@@ -5804,7 +5804,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -5826,7 +5826,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -5855,7 +5855,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -5873,7 +5873,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -5893,7 +5893,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -5910,7 +5910,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -5939,7 +5939,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -5958,7 +5958,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -5987,7 +5987,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -6006,7 +6006,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -6035,7 +6035,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -6054,7 +6054,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -6083,7 +6083,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -6102,7 +6102,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -6131,7 +6131,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -6154,7 +6154,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -6183,7 +6183,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -6204,7 +6204,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -6226,7 +6226,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -6263,7 +6263,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -6293,7 +6293,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -6314,7 +6314,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -6343,7 +6343,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -6361,7 +6361,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -6381,7 +6381,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -6403,7 +6403,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -6430,7 +6430,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -6446,7 +6446,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -6464,7 +6464,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -6481,7 +6481,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -6508,7 +6508,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -6527,7 +6527,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -6554,7 +6554,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -6573,7 +6573,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -6600,7 +6600,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -6619,7 +6619,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -6646,7 +6646,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -6665,7 +6665,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -6692,7 +6692,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -6715,7 +6715,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -6744,7 +6744,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -6765,7 +6765,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -6786,7 +6786,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -6809,7 +6809,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -6840,7 +6840,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -6863,7 +6863,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -6884,7 +6884,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -6908,7 +6908,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -6946,7 +6946,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -6981,7 +6981,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -6999,7 +6999,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -7020,7 +7020,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -7051,7 +7051,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -7071,7 +7071,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -7093,7 +7093,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -7115,7 +7115,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -7144,7 +7144,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -7162,7 +7162,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -7182,7 +7182,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -7204,7 +7204,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -7233,7 +7233,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -7251,7 +7251,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -7269,7 +7269,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -7286,7 +7286,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -7313,7 +7313,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -7332,7 +7332,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -7361,7 +7361,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -7380,7 +7380,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -7409,7 +7409,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -7428,7 +7428,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -7457,7 +7457,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -7476,7 +7476,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -7503,7 +7503,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -7526,7 +7526,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -7559,7 +7559,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -7580,7 +7580,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -7605,7 +7605,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -7626,7 +7626,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -7647,7 +7647,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -7670,7 +7670,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -7701,7 +7701,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -7724,7 +7724,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -7747,7 +7747,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -7771,7 +7771,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -7810,7 +7810,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -7845,7 +7845,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -7863,7 +7863,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -7884,7 +7884,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -7915,7 +7915,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -7935,7 +7935,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -7957,7 +7957,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -7979,7 +7979,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -8008,7 +8008,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -8026,7 +8026,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -8046,7 +8046,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -8068,7 +8068,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -8097,7 +8097,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -8115,7 +8115,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -8135,7 +8135,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -8152,7 +8152,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -8181,7 +8181,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -8200,7 +8200,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -8229,7 +8229,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -8248,7 +8248,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -8277,7 +8277,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -8296,7 +8296,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -8325,7 +8325,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -8344,7 +8344,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -8371,7 +8371,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -8394,7 +8394,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -8427,7 +8427,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -8448,7 +8448,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -8473,7 +8473,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -8496,7 +8496,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -8517,7 +8517,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -8540,7 +8540,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -8571,7 +8571,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -8596,7 +8596,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -8619,7 +8619,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -8643,7 +8643,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -8683,7 +8683,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -8718,7 +8718,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -8736,7 +8736,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -8757,7 +8757,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -8788,7 +8788,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -8808,7 +8808,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -8830,7 +8830,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -8852,7 +8852,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -8881,7 +8881,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -8899,7 +8899,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -8919,7 +8919,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -8941,7 +8941,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -8970,7 +8970,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -8988,7 +8988,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -9006,7 +9006,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -9023,7 +9023,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -9052,7 +9052,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -9071,7 +9071,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -9100,7 +9100,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -9119,7 +9119,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -9148,7 +9148,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -9167,7 +9167,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -9196,7 +9196,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -9215,7 +9215,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -9242,7 +9242,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -9265,7 +9265,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -9298,7 +9298,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -9319,7 +9319,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -9344,7 +9344,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -9367,7 +9367,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -9388,7 +9388,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -9411,7 +9411,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -9442,7 +9442,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -9467,7 +9467,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -9490,7 +9490,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -9514,7 +9514,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -9554,7 +9554,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -9589,7 +9589,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -9607,7 +9607,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -9628,7 +9628,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -9659,7 +9659,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -9679,7 +9679,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -9701,7 +9701,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -9723,7 +9723,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -9752,7 +9752,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -9770,7 +9770,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -9790,7 +9790,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -9812,7 +9812,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -9841,7 +9841,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -9859,7 +9859,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -9879,7 +9879,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -9896,7 +9896,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -9925,7 +9925,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -9944,7 +9944,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -9973,7 +9973,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -9992,7 +9992,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -10021,7 +10021,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -10040,7 +10040,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -10069,7 +10069,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -10088,7 +10088,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -10115,7 +10115,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -10138,7 +10138,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -10171,7 +10171,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -10192,7 +10192,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -10217,7 +10217,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -10240,7 +10240,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -10261,7 +10261,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -10285,7 +10285,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -10325,7 +10325,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -10360,7 +10360,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -10378,7 +10378,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -10399,7 +10399,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -10430,7 +10430,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -10450,7 +10450,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -10472,7 +10472,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -10494,7 +10494,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -10523,7 +10523,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -10541,7 +10541,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -10561,7 +10561,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -10583,7 +10583,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -10612,7 +10612,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -10630,7 +10630,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -10648,7 +10648,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -10665,7 +10665,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -10694,7 +10694,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -10713,7 +10713,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -10742,7 +10742,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -10761,7 +10761,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -10790,7 +10790,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -10809,7 +10809,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -10838,7 +10838,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -10857,7 +10857,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -10884,7 +10884,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -10907,7 +10907,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -10940,7 +10940,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -10961,7 +10961,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -10986,7 +10986,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -11009,7 +11009,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -11030,7 +11030,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -11053,7 +11053,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -11084,7 +11084,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -11109,7 +11109,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -11132,7 +11132,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -11156,7 +11156,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -11196,7 +11196,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -11231,7 +11231,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -11249,7 +11249,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -11270,7 +11270,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -11301,7 +11301,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -11321,7 +11321,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -11343,7 +11343,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -11365,7 +11365,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -11394,7 +11394,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -11412,7 +11412,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -11432,7 +11432,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -11454,7 +11454,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -11483,7 +11483,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -11501,7 +11501,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -11519,7 +11519,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -11536,7 +11536,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -11565,7 +11565,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -11584,7 +11584,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -11613,7 +11613,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -11632,7 +11632,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -11661,7 +11661,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -11680,7 +11680,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -11709,7 +11709,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -11728,7 +11728,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -11755,7 +11755,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -11778,7 +11778,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -11811,7 +11811,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -11832,7 +11832,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -11857,7 +11857,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -11880,7 +11880,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -11901,7 +11901,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -11924,7 +11924,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -11955,7 +11955,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -11980,7 +11980,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -12003,7 +12003,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -12027,7 +12027,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -12067,7 +12067,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -12102,7 +12102,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -12120,7 +12120,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -12141,7 +12141,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -12172,7 +12172,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -12192,7 +12192,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -12214,7 +12214,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -12236,7 +12236,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -12265,7 +12265,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -12283,7 +12283,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -12303,7 +12303,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -12325,7 +12325,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -12354,7 +12354,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -12372,7 +12372,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -12390,7 +12390,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -12407,7 +12407,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -12436,7 +12436,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -12455,7 +12455,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -12484,7 +12484,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -12503,7 +12503,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -12532,7 +12532,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -12551,7 +12551,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -12580,7 +12580,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -12599,7 +12599,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -12626,7 +12626,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -12649,7 +12649,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -12682,7 +12682,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -12703,7 +12703,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -12728,7 +12728,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -12751,7 +12751,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -12772,7 +12772,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -12795,7 +12795,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -12826,7 +12826,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -12851,7 +12851,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -12874,7 +12874,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -12898,7 +12898,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -12938,7 +12938,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -12973,7 +12973,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -12991,7 +12991,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -13012,7 +13012,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -13043,7 +13043,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -13063,7 +13063,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -13085,7 +13085,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -13107,7 +13107,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -13136,7 +13136,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -13154,7 +13154,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -13174,7 +13174,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -13196,7 +13196,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -13225,7 +13225,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -13243,7 +13243,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -13261,7 +13261,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -13278,7 +13278,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -13307,7 +13307,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -13326,7 +13326,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -13355,7 +13355,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -13374,7 +13374,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -13403,7 +13403,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -13422,7 +13422,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -13451,7 +13451,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -13470,7 +13470,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -13497,7 +13497,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -13520,7 +13520,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -13553,7 +13553,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -13574,7 +13574,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -13599,7 +13599,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -13622,7 +13622,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -13643,7 +13643,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -13666,7 +13666,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -13697,7 +13697,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -13720,7 +13720,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -13741,7 +13741,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -13765,7 +13765,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -13805,7 +13805,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -13840,7 +13840,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -13858,7 +13858,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -13879,7 +13879,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -13910,7 +13910,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -13930,7 +13930,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -13952,7 +13952,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -13974,7 +13974,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -14003,7 +14003,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -14021,7 +14021,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -14041,7 +14041,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -14063,7 +14063,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -14092,7 +14092,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -14110,7 +14110,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -14128,7 +14128,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -14145,7 +14145,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -14174,7 +14174,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -14193,7 +14193,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -14222,7 +14222,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -14241,7 +14241,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -14270,7 +14270,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -14289,7 +14289,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -14318,7 +14318,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -14337,7 +14337,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -14364,7 +14364,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -14387,7 +14387,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -14420,7 +14420,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -14441,7 +14441,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -14466,7 +14466,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -14489,7 +14489,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -14510,7 +14510,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -14533,7 +14533,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -14564,7 +14564,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -14587,7 +14587,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -14608,7 +14608,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -14632,7 +14632,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -14672,7 +14672,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -14707,7 +14707,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -14725,7 +14725,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -14745,7 +14745,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -14776,7 +14776,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -14796,7 +14796,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -14818,7 +14818,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -14840,7 +14840,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -14869,7 +14869,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -14887,7 +14887,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -14907,7 +14907,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -14929,7 +14929,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -14958,7 +14958,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -14976,7 +14976,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -14994,7 +14994,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -15011,7 +15011,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -15040,7 +15040,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -15059,7 +15059,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -15088,7 +15088,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -15107,7 +15107,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -15136,7 +15136,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -15155,7 +15155,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -15184,7 +15184,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -15203,7 +15203,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -15230,7 +15230,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -15253,7 +15253,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -15286,7 +15286,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -15307,7 +15307,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -15332,7 +15332,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -15355,7 +15355,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -15376,7 +15376,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -15399,7 +15399,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -15430,7 +15430,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -15453,7 +15453,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -15474,7 +15474,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -15498,7 +15498,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -15538,7 +15538,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -15573,7 +15573,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -15591,7 +15591,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -15611,7 +15611,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -15642,7 +15642,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -15662,7 +15662,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -15684,7 +15684,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -15706,7 +15706,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -15735,7 +15735,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -15753,7 +15753,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -15773,7 +15773,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -15795,7 +15795,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -15824,7 +15824,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -15842,7 +15842,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -15860,7 +15860,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -15877,7 +15877,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -15906,7 +15906,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -15925,7 +15925,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -15954,7 +15954,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -15973,7 +15973,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -16002,7 +16002,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -16021,7 +16021,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -16050,7 +16050,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -16069,7 +16069,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -16096,7 +16096,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -16119,7 +16119,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -16152,7 +16152,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -16173,7 +16173,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -16198,7 +16198,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -16221,7 +16221,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -16242,7 +16242,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -16265,7 +16265,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -16296,7 +16296,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -16319,7 +16319,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -16340,7 +16340,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -16364,7 +16364,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -16404,7 +16404,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -16439,7 +16439,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -16457,7 +16457,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -16477,7 +16477,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -16508,7 +16508,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -16528,7 +16528,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -16550,7 +16550,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -16572,7 +16572,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -16601,7 +16601,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -16619,7 +16619,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -16639,7 +16639,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -16661,7 +16661,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -16690,7 +16690,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -16708,7 +16708,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -16728,7 +16728,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -16745,7 +16745,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -16774,7 +16774,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -16793,7 +16793,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -16822,7 +16822,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -16841,7 +16841,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -16870,7 +16870,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -16889,7 +16889,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -16918,7 +16918,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -16937,7 +16937,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -16964,7 +16964,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -16987,7 +16987,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -17020,7 +17020,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -17041,7 +17041,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -17066,7 +17066,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -17089,7 +17089,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -17110,7 +17110,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -17133,7 +17133,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -17164,7 +17164,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -17187,7 +17187,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -17208,7 +17208,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -17232,7 +17232,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -17272,7 +17272,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -17307,7 +17307,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -17325,7 +17325,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -17346,7 +17346,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -17377,7 +17377,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -17397,7 +17397,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -17419,7 +17419,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -17441,7 +17441,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -17470,7 +17470,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -17488,7 +17488,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -17508,7 +17508,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -17530,7 +17530,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -17559,7 +17559,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -17577,7 +17577,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -17595,7 +17595,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -17612,7 +17612,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -17641,7 +17641,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -17660,7 +17660,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -17689,7 +17689,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -17708,7 +17708,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -17737,7 +17737,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -17756,7 +17756,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -17785,7 +17785,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -17804,7 +17804,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -17831,7 +17831,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -17854,7 +17854,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -17887,7 +17887,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -17908,7 +17908,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -17933,7 +17933,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -17956,7 +17956,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -17977,7 +17977,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -18000,7 +18000,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -18031,7 +18031,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -18054,7 +18054,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -18075,7 +18075,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -18099,7 +18099,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span
@@ -18139,7 +18139,7 @@ const toggleLevel3ScannerSks = () => {
                                 class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                             >
                                 <i
-                                    class="relative top-0 text-sm leading-normal text-red-700 fas fa-gem"
+                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
                                 ></i>
                             </div>
                             <span
@@ -18174,7 +18174,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -18192,7 +18192,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                                         ></i>
                                     </div>
                                     <span
@@ -18213,7 +18213,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fa-solid fa-list-check"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
                                         ></i>
                                     </div>
                                     <span
@@ -18244,7 +18244,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-invoice"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
                                             ></i>
                                         </div>
                                         <span
@@ -18264,7 +18264,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-lines"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
                                             ></i>
                                         </div>
                                         <span
@@ -18286,7 +18286,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-solid fa-file-signature"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
                                             ></i>
                                         </div>
                                         <span
@@ -18308,7 +18308,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-chart-line"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
                                         ></i>
                                     </div>
                                     <span
@@ -18337,7 +18337,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-gauge-high"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
                                             ></i>
                                         </div>
                                         <span
@@ -18355,7 +18355,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-bar-chart"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
                                             ></i>
                                         </div>
                                         <span
@@ -18375,7 +18375,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -18397,7 +18397,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-dolly-flatbed"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
                                         ></i>
                                     </div>
                                     <span
@@ -18426,7 +18426,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-ethernet"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
                                             ></i>
                                         </div>
                                         <span
@@ -18444,7 +18444,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-project-diagram"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
                                             ></i>
                                         </div>
                                         <span
@@ -18462,7 +18462,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-wifi"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
                                             ></i>
                                         </div>
                                         <span
@@ -18479,7 +18479,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-laptop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
                                             ></i>
                                         </div>
                                         <span
@@ -18508,7 +18508,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-code"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
                                                 ></i>
                                             </div>
                                             <span
@@ -18527,7 +18527,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-tv"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
                                             ></i>
                                         </div>
                                         <span
@@ -18556,7 +18556,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                                 ></i>
                                             </div>
                                             <span
@@ -18575,7 +18575,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -18604,7 +18604,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -18623,7 +18623,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-print"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                             ></i>
                                         </div>
                                         <span
@@ -18652,7 +18652,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-print"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
                                                 ></i>
                                             </div>
                                             <span
@@ -18671,7 +18671,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-700 fas fa-camera-retro"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
                                             ></i>
                                         </div>
                                         <span
@@ -18698,7 +18698,7 @@ const toggleLevel3ScannerSks = () => {
                                                 class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                             >
                                                 <i
-                                                    class="relative top-0 text-sm leading-normal text-red-800 fas fa-video"
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
                                                 ></i>
                                             </div>
                                             <span
@@ -18721,7 +18721,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-clipboard-list"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
                                         ></i>
                                     </div>
                                     <span
@@ -18754,7 +18754,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 far fa-calendar-alt"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
                                             ></i>
                                         </div>
                                         <span
@@ -18775,7 +18775,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-laptop-medical"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
                                             ></i>
                                         </div>
                                         <span
@@ -18800,7 +18800,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-calendar-week"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
                                             ></i>
                                         </div>
                                         <span
@@ -18823,7 +18823,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-desktop"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
                                             ></i>
                                         </div>
                                         <span
@@ -18844,7 +18844,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fa-regular fa-images"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
                                             ></i>
                                         </div>
                                         <span
@@ -18867,7 +18867,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-700 fas fa-cogs"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
                                         ></i>
                                     </div>
                                     <span
@@ -18898,7 +18898,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-users"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
                                             ></i>
                                         </div>
                                         <span
@@ -18921,7 +18921,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-cog"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
                                             ></i>
                                         </div>
                                         <span
@@ -18942,7 +18942,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                         >
                                             <i
-                                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-user-tag"
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
                                             ></i>
                                         </div>
                                         <span
@@ -18966,7 +18966,7 @@ const toggleLevel3ScannerSks = () => {
                                         class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                                     >
                                         <i
-                                            class="relative top-0 text-sm leading-normal text-red-800 fa-brands fa-buffer"
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
                                         ></i>
                                     </div>
                                     <span

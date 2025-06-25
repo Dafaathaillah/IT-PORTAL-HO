@@ -14,7 +14,6 @@ import DashboardFooter from "@/Components/inventory/DashboardFooter.vue";
 import DashboardConfig from "@/Components/inventory/DashboardConfig.vue";
 import Swal from "sweetalert2";
 
-
 const showingNavigationDropdown = ref(false);
 
 //Mobile Sidebar
@@ -43,13 +42,11 @@ const notifAktif = ref(false); // State untuk mendeteksi notifikasi muncul
 let audio = null;
 
 // Simpan daftar notifikasi terbaru
-const notifikasiList = ref([]); 
+const notifikasiList = ref([]);
 
 const checkAduan = async () => {
     try {
-        const userSiteUpper = computed(() =>
-            page.props.auth.user.site
-        );
+        const userSiteUpper = computed(() => page.props.auth.user.site);
         const apiUrl = `/itportal/admin/check-aduan/${userSite.value}`; // Tambahkan site ke URL
         const response = await fetch(apiUrl);
 
@@ -115,7 +112,7 @@ const checkAduan = async () => {
 
 //                 if (!lastAduanMax_id || data.id != lastAduanMax_id) {
 //                     localStorage.setItem(`lastAduanMax_id_${userSite.value}`, data.id);
-                    
+
 //                     // Simpan ke dalam array notifikasi
 //                     notifikasiList.value.push({
 //                         id: data.id,
@@ -221,8 +218,8 @@ const mainMenu = defineModel("mainMenu", {
         style="
             background: linear-gradient(
                 180deg,
-                #ff2c2c 0%,
-                rgba(255, 80, 80, 1) 100%
+                oklch(20.8% 0.042 265.755) 0%,
+                oklch(35% 0.035 265.755) 100%
             );
         "
     ></div>
@@ -241,18 +238,18 @@ const mainMenu = defineModel("mainMenu", {
             autoplay
             preload="auto"
         ></audio>
-            <DashboardNavbar
-                @toggleMobileSidebar="handleMobileSidebar"
-                @toggleConfig="handleConfigurator"
-                v-model:isCollapseIconActive="isActive"
-                v-model:pages="pages"
-                v-model:subMenu="subMenu"
-                v-model:mainMenu="mainMenu"
-            />
-            <div class="w-full px-6 py-6 mx-auto">
-                <slot />
-            </div>
-            <DashboardFooter />
+        <DashboardNavbar
+            @toggleMobileSidebar="handleMobileSidebar"
+            @toggleConfig="handleConfigurator"
+            v-model:isCollapseIconActive="isActive"
+            v-model:pages="pages"
+            v-model:subMenu="subMenu"
+            v-model:mainMenu="mainMenu"
+        />
+        <div class="w-full px-6 py-6 mx-auto">
+            <slot />
+        </div>
+        <DashboardFooter />
     </main>
     <DashboardConfig
         ref="configurator"
