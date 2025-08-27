@@ -290,24 +290,40 @@ class InspeksiLaptopBaController extends Controller
 
     public function approval(Request $request)
     {
-        $dataCheckStatusInspeksi = InspeksiLaptop::where('id', $request->id)->value('inspection_status');
-        if ($dataCheckStatusInspeksi == 'sudah_inspeksi') {
-            if ($request->approvalType == 'accept') {
-                $dataApproval = [
-                    'approved_by' => Auth::user()->name,
-                    'status_approval' => 'approve',
-                ];
-            } else {
-                $dataApproval = [
-                    'approved_by' => Auth::user()->name,
-                    'status_approval' => 'reject',
-                ];
-            }
-            $data['udpateInspeksiApproval'] = InspeksiLaptop::where('id', $request->id)->update($dataApproval);
-            return response()->json($data);
-        } else {
-            return response()->json(['message' => 'data ini belum di inspeksi']);
+        $yearNow = Carbon::now()->format('Y');
+        $user = Auth::user();
+
+        // Cek apakah user memiliki role 'ict_group_leader'
+        if ($user->role !== 'ict_group_leader') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maaf, Anda tidak dapat melakukan approval dikarenakan role Anda bukan GROUP LEADER!',
+            ], 403);
         }
+
+        $site = 'BA'; // fallback jika site tidak tersedia
+
+        if (!$site) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Site user tidak ditemukan.',
+            ], 400);
+        }
+
+        $dataApproval = [
+            'approved_by' => $user->name,
+            'status_approval' => 'approved',
+        ];
+
+        $updateCount = InspeksiLaptop::where('site', $site)
+            ->where('year', $yearNow)
+            ->where('inspection_status', 'Y')
+            ->update($dataApproval);
+
+        return response()->json([
+            'success' => true,
+            'message' => "$updateCount data inspeksi Laptop untuk site $site telah di-approve.",
+        ]);
     }
 
     public function approvalAll(Request $request)

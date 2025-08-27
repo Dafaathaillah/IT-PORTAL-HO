@@ -56,11 +56,28 @@ watch(selectedOptionCompany, async (newVal) => {
             replace: true,
             onSuccess: (page) => {
                 console.log(page);
-                form.inventory_number = page.props.inventory_number;
+                const inventoryNumber = page.props.inventory_number;
+
+                if (!inventoryNumber) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Masalah',
+                        text: 'Terjadi masalah pada auto generate inventory number, sistem akan melakukan reload otomatis',
+                        timer: 5000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        willClose: () => {
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    form.inventory_number = inventoryNumber;
+                }
             },
         }
     );
 });
+
 
 const isDisabled = ref(true);
 

@@ -188,7 +188,7 @@ const onInput = (data, some) => {
 </script>
 
 <template>
-    <Head title="Tambah data Komputer" />
+    <Head title="Tambah data PC" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -205,11 +205,11 @@ const onInput = (data, some) => {
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Komputer
+                        PC
                     </Link>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Komputer Create Pages
+                    PC Create Pages
                 </h6>
             </nav>
         </template>
@@ -226,9 +226,9 @@ const onInput = (data, some) => {
                             class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0"
                         >
                             <div class="flex items-center">
-                                <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Create Komputer
-                                </p>
+                                <h4 class="mb-0 font-bold dark:text-white/80">
+                                   Form Input Data PC
+                                </h4>
                             </div>
                         </div>
                         <div class="flex-auto p-6">
@@ -264,7 +264,7 @@ const onInput = (data, some) => {
                                             <label
                                                 for="komputer-code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Komputer Code</label
+                                                >PC Code</label
                                             >
                                             <input
                                                 type="hidden"
@@ -284,7 +284,7 @@ const onInput = (data, some) => {
                                                 v-model="form.computer_code"
                                                 value="1"
                                                 class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Auto Generate Komputer Code"
+                                                placeholder="Auto Generate PC Code"
                                             />
                                         </div>
                                     </div>
@@ -295,7 +295,7 @@ const onInput = (data, some) => {
                                             <label
                                                 for="komputer-name"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Brand Komputer</label
+                                                >Brand PC</label
                                             >
                                             <input
                                                 required
@@ -478,7 +478,7 @@ const onInput = (data, some) => {
                                             <label
                                                 for="warna_komputer"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Warna Komputer</label
+                                                >Warna PC</label
                                             >
                                             <input
                                                 required
@@ -497,7 +497,7 @@ const onInput = (data, some) => {
                                             <label
                                                 for="os_komputer"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Os Komputer</label
+                                                >Os PC</label
                                             >
                                             <input
                                                 required

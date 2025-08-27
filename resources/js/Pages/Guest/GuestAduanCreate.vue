@@ -69,43 +69,51 @@ const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
-const formSubmitted = ref(false);
+const isSubmitting = ref(false);
 
 const save = () => {
-    const formData = new FormData();
+    if (isSubmitting.value) {
+        Swal.fire({
+            icon: "info",
+            title: "Harap tunggu...",
+            text: "Data sedang dikirim ke server.",
+            confirmButtonColor: "#3085d6",
+        });
+        return; // blokir klik kedua
+    }
+
+    isSubmitting.value = true; // aktifkan flag
+
     form.image = file.value;
     form.nrp = nrp.value;
     form.complaint_name = complaintName.value;
-    // console.log(form);
+
     form.post(route("guestAduan.store"), {
         onSuccess: () => {
-            // 🔥 Simpan aduan baru ke localStorage agar browser admin mendeteksi
             const newAduan = {
-                id: Date.now(), // ID unik (bisa pakai dari response backend)
+                id: Date.now(),
                 message: "Aduan Baru telah dikirim!",
             };
             localStorage.setItem("lastAduan", JSON.stringify(newAduan));
             console.log("✅ Data disimpan di localStorage:", newAduan);
-            
-            // Show SweetAlert2 success notification
+
             Swal.fire({
                 title: "Complaint has been submited!",
                 text: "Thank you for contacting the ICT centre, your complaint will be handled immediately by the team.",
                 icon: "success",
-                showCancelButton: false,
                 confirmButtonColor: "#3085d6",
                 confirmButtonText: "OK",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.get(route("guestAduan.page"));
-                }
+            }).then(() => {
+                isSubmitting.value = false; // reset setelah sukses
+                form.get(route("guestAduan.page"));
             });
         },
         onError: () => {
+            isSubmitting.value = false; // reset agar bisa submit ulang
             Swal.fire({
-                title: "error!",
+                title: "Error!",
                 text: "Data not created!",
-                icon: "waring",
+                icon: "error",
                 confirmButtonText: "OK",
                 confirmButtonColor: "#3085d6",
             });
@@ -444,12 +452,18 @@ const showAlertTrue = () => {
 
                                     <button
                                         type="submit"
-                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+                                        @click.prevent="save"
+                                        :disabled="isSubmitting"
+                                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         <span
                                             class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
                                         >
-                                            Save
+                                            {{
+                                                isSubmitting
+                                                    ? "Sending..."
+                                                    : "Save"
+                                            }}
                                         </span>
                                     </button>
                                 </div>

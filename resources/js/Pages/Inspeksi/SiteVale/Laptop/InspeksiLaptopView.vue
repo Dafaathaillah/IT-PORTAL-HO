@@ -153,9 +153,14 @@ const getEncryptedYear = () => {
         title: "Menyiapkan PDF...",
         text: "Harap tunggu sebentar.",
         allowOutsideClick: false,
-        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        showConfirmButton: false,
+        timer: 2000, // Timer 5 detik
+        timerProgressBar: true, // Tampilkan garis waktu
         didOpen: () => {
             Swal.showLoading();
+        },
+        willClose: () => {
+            console.log("Popup PDF selesai otomatis."); // Opsional
         },
     });
 
@@ -275,6 +280,62 @@ function formatData(text) {
     const maxLength = 20; // Set your limit here
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
+
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content");
+
+const approved = () => {
+    Swal.fire({
+        title: "Yakin ingin approve semua data?",
+        text: "Tindakan ini akan menyetujui semua data yang sudah di inspeksi!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#16a34a",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, approve semua!",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Sedang memproses...",
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            axios
+                .post(route("inspeksiLaptopVale.approval", {}, Ziggy), {
+                    headers: {
+                        "X-CSRF-TOKEN": csrfToken,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                })
+                .then((response) => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil!",
+                        confirmButtonColor: "#16a34a",
+                        text: response.data.message,
+                        timer: 3000,
+                        showConfirmButton: false,
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal!",
+                        confirmButtonColor: "#16a34a",
+                        text:
+                            error.response?.data?.message ||
+                            "Terjadi kesalahan.",
+                    });
+                });
+        }
+    });
+};
 </script>
 
 <template>
@@ -337,6 +398,13 @@ function formatData(text) {
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi
                                 </button>
+                                 <button
+                                @click="approved"
+                                class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-green-850 hover:scale-105"
+                            >
+                                <i class="fas fa-check"></i>
+                                Approval
+                            </button>
                             </div>
                             <div
                                 class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"

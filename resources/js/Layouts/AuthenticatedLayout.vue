@@ -100,75 +100,6 @@ const checkAduan = async () => {
     }
 };
 
-// const checkAduan = async () => {
-//     try {
-//         const apiUrl = `/itportal/admin/check-aduan/${userSite.value}`;
-//         const response = await fetch(apiUrl);
-//         const data = await response.json();
-
-//         if (data.site.toLowerCase() === userSite.value) {
-//             if (data && data.id) {
-//                 let lastAduanMax_id = localStorage.getItem(`lastAduanMax_id_${userSite.value}`);
-
-//                 if (!lastAduanMax_id || data.id != lastAduanMax_id) {
-//                     localStorage.setItem(`lastAduanMax_id_${userSite.value}`, data.id);
-
-//                     // Simpan ke dalam array notifikasi
-//                     notifikasiList.value.push({
-//                         id: data.id,
-//                         message: data.message,
-//                     });
-
-//                     // Urutkan dari ID terbesar ke terkecil agar notifikasi terbaru di atas
-//                     notifikasiList.value.sort((a, b) => b.id - a.id);
-
-//                     console.log("Aduan baru diterima:", notifikasiList.value);
-
-//                     // 🔥 Loop untuk menampilkan banyak notifikasi bertumpuk ke bawah
-//                     notifikasiList.value.forEach((aduan, index) => {
-//                         setTimeout(() => {
-//                             Swal.fire({
-//                                 title: "📢 Aduan Baru!",
-//                                 text: aduan.message,
-//                                 icon: "info",
-//                                 position: "top-end", // Tetap di atas, tapi bertumpuk ke bawah
-//                                 grow: "row", // Agar notifikasi muncul bertingkat ke bawah
-//                                 showConfirmButton: false,
-//                                 toast: true, // Notifikasi kecil (SweetAlert toast)
-//                                 showCloseButton: true,
-//                                 // timer: 8000,
-//                                 // timerProgressBar: true,
-//                                 customClass: {
-//                                     popup: `swal-custom-${index}`, // Tambahkan kelas unik untuk posisi bertingkat
-//                                 },
-//                                 didOpen: () => {
-//                                     const audio = document.getElementById("notifSound");
-//                                     if (audio) {
-//                                         audio.muted = false;
-//                                         audio.currentTime = 0;
-//                                         audio.play().then(() => {
-//                                             console.log("🔊 Audio berhasil diputar untuk:", aduan.message);
-//                                         }).catch((error) => {
-//                                             console.warn("⚠️ Gagal memutar audio:", error);
-//                                         });
-//                                     }
-//                                 },
-//                             });
-
-//                             // Tambahkan sedikit margin agar bertumpuk ke bawah
-//                             setTimeout(() => {
-//                                 document.querySelector(`.swal-custom-${index}`)?.style.setProperty("margin-top", `${index * 80}px`);
-//                             }, 100);
-//                         }, index * 1000); // Muncul setiap 1 detik
-//                     });
-//                 }
-//             }
-//         }
-//     } catch (error) {
-//         console.error("❌ Error fetching aduan:", error);
-//     }
-// };
-
 onMounted(() => {
     console.log("👀 Memeriksa localStorage di Admin...");
 
@@ -229,7 +160,8 @@ const mainMenu = defineModel("mainMenu", {
 
     <!-- Page Content -->
     <main
-        class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl"
+        class="relative flex-1 min-h-0 overflow-auto transition-[margin] duration-200 ease-in-out xl:ml-68 rounded-xl pt-1"
+        style="will-change: margin"
     >
         <audio
             id="notifSound"
@@ -246,6 +178,7 @@ const mainMenu = defineModel("mainMenu", {
             v-model:subMenu="subMenu"
             v-model:mainMenu="mainMenu"
         />
+
         <div class="w-full px-6 py-6 mx-auto">
             <slot />
         </div>

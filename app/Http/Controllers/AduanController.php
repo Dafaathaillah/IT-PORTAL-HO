@@ -25,7 +25,7 @@ class AduanController extends Controller
         if ($auth == 'soc_ho' || $auth == 'ict_developer') {
             # code...
             $aduan = Aduan::where('category_name', 'SOC')
-            ->whereNull('deleted_at')
+                ->whereNull('deleted_at')
                 ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -44,7 +44,7 @@ class AduanController extends Controller
             })->toArray();
         } else {
             $aduan = Aduan::where('site', auth()->user()->site)
-            ->whereNull('deleted_at')
+                ->whereNull('deleted_at')
                 ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -217,9 +217,46 @@ class AduanController extends Controller
         ]);
     }
 
+    public function accept(Request $request, $id)
+    {
+        try {
+            $aduan = Aduan::findOrFail($id);
+
+            $aduan->start_response = now();
+            $aduan->status = 'PROGRESS';
+
+            $awal  = Carbon::parse($aduan->date_of_complaint);
+            $akhir = Carbon::parse($aduan->start_response);
+
+            // total selisih dalam detik
+            $diffInSeconds = $awal->diffInSeconds($akhir);
+
+            // ubah ke format H:i:s (total jam bisa lebih dari 24)
+            $jam   = floor($diffInSeconds / 3600);
+            $menit = floor(($diffInSeconds % 3600) / 60);
+            $detik = $diffInSeconds % 60;
+
+            $responseTime = sprintf('%02d:%02d:%02d', $jam, $menit, $detik);
+
+            $aduan->response_time = $responseTime;
+            $aduan->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Aduan berhasil diterima dan status diubah menjadi PROGRESS',
+                'data' => $aduan,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menerima aduan',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     public function update_aduan_progress(Request $request)
     {
-        // dd($request->all());
         // start get response time
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
@@ -485,7 +522,7 @@ class AduanController extends Controller
         // 5. Cari data yang berstatus "Y" untuk mendapatkan PIC approval
         if ($site == 'HO') {
             $picApproved = 'EDI NUGROHO';
-        }else{
+        } else {
             if (auth()->user()->role == 'ict_group_leader') {
                 $picApproved = auth()->user()->name;
             } else {

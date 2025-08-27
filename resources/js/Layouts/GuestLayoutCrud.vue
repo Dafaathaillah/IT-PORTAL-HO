@@ -15,8 +15,17 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div class="absolute w-full dark:hidden min-h-75" style="background: linear-gradient(180deg, #ff2c2c 0%, rgba(255,80,80,1) 100%);"></div>
-    <div class="hidden absolute w-full bg-slate-900 dark:block min-h-75"></div>
+    <div
+        class="absolute w-full dark:hidden min-h-75"
+        style="
+            background: linear-gradient(
+                180deg,
+                oklch(20.8% 0.042 265.755) 0%,
+                oklch(35% 0.035 265.755) 100%
+            );
+        "
+    ></div>
+    <!-- <div class="hidden absolute w-full bg-slate-900 dark:block min-h-75"></div> -->
 
     <DashboardAside />
 

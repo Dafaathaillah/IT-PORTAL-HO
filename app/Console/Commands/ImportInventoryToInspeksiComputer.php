@@ -36,7 +36,7 @@ class ImportInventoryToInspeksiComputer extends Command
     public function handle()
     {
         // Retrieve data from inventory
-        $inventories_computer = InvComputer::where('site', '!=', 'ADW')->get();
+        $inventories_computer = InvComputer::get();
 
         foreach ($inventories_computer as $inventory_computer) {
 

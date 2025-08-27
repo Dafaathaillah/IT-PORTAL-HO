@@ -451,28 +451,42 @@ class InspeksiComputerController extends Controller
         return Inertia::render('Inspeksi/Komputer/InspeksiKomputerFormEdit', ['inspeksi' => $dataInspeksi, 'crew' => $crew, 'crew_select' => $crew_select]);
     }
 
-
-
-    public function approval(Request $request)
+    public function approval()
     {
-        $dataCheckStatusInspeksi = InspeksiComputer::where('id', $request->id)->value('inspection_status');
-        if ($dataCheckStatusInspeksi == 'Y') {
-            if ($request->approvalType == 'accept') {
-                $dataApproveal = [
-                    'approved_by' => Auth::user()->name,
-                    'status_approval' => 'approve',
-                ];
-            } else {
-                $dataApproveal = [
-                    'approved_by' => Auth::user()->name,
-                    'status_approval' => 'reject',
-                ];
-            }
-            $data['udpateInspeksiApproval'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataApproveal);
-            return response()->json($data);
-        } else {
-            return response()->json(['message' => 'data ini belum di inspeksi']);
+        $data['now'] = Carbon::now();
+        $data['quarterStart'] = $data['now']->copy()->firstOfQuarter()->format('Y-m-d');
+        $data['quarterEnd'] = $data['now']->copy()->lastOfQuarter()->format(('Y-m-d'));
+
+        $user = Auth::user();
+
+        // Cek apakah user memiliki role 'ict_group_leader'
+        if ($user->role !== 'ict_group_leader') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maaf, Anda tidak dapat melakukan approval dikarenakan role Anda bukan GROUP LEADER!',
+            ], 403);
         }
+        // Ambil site dari user login (asumsi user punya properti site)
+        $user = Auth::user();
+        $site = 'HO';
+
+        if (!$site) {
+            return back()->with('error', 'Site user tidak ditemukan.');
+        }
+
+        // Data yang akan diupdate
+        $dataApproval = [
+            'approved_by' => $user->name,
+            'status_approval' => 'approved',
+        ];
+
+        // Update semua data inspeksi sesuai site, tahun sekarang, dan status 'sudah_inspeksi'
+        $updateCount = InspeksiComputer::where('inspection_status', 'Y')->whereBetween('created_date', [$data['quarterStart'], $data['quarterEnd']])->update($dataApproval);
+        // dd($updateCount);
+         return response()->json([
+            'success' => true,
+            'message' => "$updateCount data inspeksi Komputer untuk site $site telah di-approve.",
+        ]);
     }
 
     public function approvalAll(Request $request)

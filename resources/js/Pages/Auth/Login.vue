@@ -6,7 +6,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import { ref, onMounted, defineProps } from "vue";
+import { ref, watchEffect, defineProps } from "vue";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -49,15 +49,75 @@ const submit = () => {
     });
 };
 
-onMounted(() => {
-    console.log(props.login);
+// Jika terlalu banyak percobaan
+watchEffect(() => {
     if (props.errorMessage) {
         Swal.fire({
-            position: "top-end",
             icon: "warning",
-            title: "Terlalu Banyak Melakukan Percobaan! Silahkan Refresh Halaman.",
-            showConfirmButton: false,
-            timer: 3600,
+            title: "Terlalu Banyak Percobaan",
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton:
+                    "bg-slate-600 hover:bg-slate-700 text-white font-semibold px-4 py-2 rounded",
+            },
+            buttonsStyling: false,
+        }).then(() => {
+            // window.location.reload();
+        });
+    }
+});
+
+// Jika kombinasi username & password salah
+watchEffect(() => {
+    if (props.errorLoginUnamePasswr) {
+        Swal.fire({
+            icon: "error",
+            title: "Login Gagal",
+            text: props.errorLoginUnamePasswr + ", Klik OK untuk mencoba lagi",
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton:
+                    "bg-slate-600 hover:bg-slate-700 text-white font-semibold px-4 py-2 rounded",
+            },
+            buttonsStyling: false,
+        });
+    }
+});
+
+// Jika user tidak ditemukan
+watchEffect(() => {
+    if (props.errorLoginUnamePassnf) {
+        Swal.fire({
+            icon: "error",
+            title: "User Tidak Ditemukan",
+            text: props.errorLoginUnamePassnf + ", Klik OK untuk reload page",
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton:
+                    "bg-slate-600 hover:bg-slate-700 text-white font-semibold px-4 py-2 rounded",
+            },
+            buttonsStyling: false, // WAJIB untuk pakai custom class
+        }).then(() => {
+            // window.location.reload();
+        });
+    }
+});
+
+// Jika terjadi error koneksi
+watchEffect(() => {
+    if (props.errorLoginKoneksi) {
+        Swal.fire({
+            icon: "error",
+            title: "Koneksi Gagal",
+            text: props.errorLoginKoneksi + ", Klik OK untuk reload page",
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton:
+                    "bg-slate-600 hover:bg-slate-700 text-white font-semibold px-4 py-2 rounded",
+            },
+            buttonsStyling: false, // WAJIB untuk pakai custom class
+        }).then(() => {
+            // window.location.reload();
         });
     }
 });
@@ -83,7 +143,7 @@ onMounted(() => {
                         id="nrp"
                         type="nrp"
                         class="mt-1 block w-full"
-                        style="color: black !important;"
+                        style="color: black !important"
                         v-model="form.nrp"
                         required
                         autofocus
@@ -98,7 +158,7 @@ onMounted(() => {
                         id="password"
                         type="password"
                         class="mt-1 block w-full"
-                        style="color: black !important;"
+                        style="color: black !important"
                         v-model="form.password"
                         required
                         autocomplete="current-password"
@@ -120,7 +180,7 @@ onMounted(() => {
                     <p v-if="errorMessage" class="text-red-500 mt-3">
                         {{ errorMessage }}
                     </p>
-                    <p v-if="errorLoginUnamePasswr" class="text-red-500 mt-3">
+                    <!-- <p v-if="errorLoginUnamePasswr" class="text-red-500 mt-3">
                         {{ errorLoginUnamePasswr }}
                     </p>
                     <p v-if="errorLoginUnamePassnf" class="text-red-500 mt-3">
@@ -128,7 +188,7 @@ onMounted(() => {
                     </p>
                     <p v-if="errorLoginKoneksi" class="text-red-500 mt-3">
                         {{ errorLoginKoneksi }}
-                    </p>
+                    </p> -->
                 </div>
                 <div class="min-h-6 mb-0.5 block pl-12 text-left">
                     <input

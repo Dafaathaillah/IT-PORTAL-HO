@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Checklist Inspeksi Computer Periode Triwulan {{ $thisTriwulan }} - {{ $thisYear }}</title>
+    <title>Form Laporan Inspeksi PC Periode Triwulan {{ $thisTriwulan }} - {{ $thisYear }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -104,7 +104,7 @@
             </tr>
         </table>
 
-        <div class="title">FORM CHECKLIST INSPEKSI COMPUTER</div>
+        <div class="title">FORM LAPORAN INSPEKSI PC</div>
         <table style="width: 100%; margin-bottom: 10px; border-collapse: collapse;">
             <tr>
                 <td style="text-align: left; font-size: 9px !important; font-weight: bold; border: none;">
@@ -129,7 +129,7 @@
                     <th colspan="8" style="border: 1px solid #000;">Software</th>
                     <th colspan="3" style="border: 1px solid #000;">Security</th>
                     <th rowspan="2" style="border: 1px solid #000;">Kondisi</th>
-                    <th rowspan="2" style="border: 1px solid #000;">Status Komputer</th>
+                    <th rowspan="2" style="border: 1px solid #000;">Status PC</th>
                     <th rowspan="2" style="border: 1px solid #000;">Remark</th>
                     <th rowspan="2" style="border: 1px solid #000;">Inspektor</th>
                 </tr>

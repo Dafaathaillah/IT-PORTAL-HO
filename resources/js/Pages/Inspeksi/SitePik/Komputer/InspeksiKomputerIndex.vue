@@ -196,9 +196,14 @@ const getEncryptedYear = () => {
         title: "Menyiapkan PDF...",
         text: "Harap tunggu sebentar.",
         allowOutsideClick: false,
-        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        showConfirmButton: false,
+        timer: 2000, // Timer 5 detik
+        timerProgressBar: true, // Tampilkan garis waktu
         didOpen: () => {
             Swal.showLoading();
+        },
+        willClose: () => {
+            console.log("Popup PDF selesai otomatis."); // Opsional
         },
     });
 
@@ -304,6 +309,62 @@ const getBadgeTextStatusInventory = (status) => {
         return "BREAKDOWN";
     }
 };
+
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content");
+
+const approved = () => {
+    Swal.fire({
+        title: "Yakin ingin approve semua data?",
+        text: "Tindakan ini akan menyetujui semua data yang sudah di inspeksi!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#16a34a",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, approve semua!",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Sedang memproses...",
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            axios
+                .post(route("inspeksiKomputerPik.approval", {}, Ziggy), {
+                    headers: {
+                        "X-CSRF-TOKEN": csrfToken,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                })
+                .then((response) => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil!",
+                        confirmButtonColor: "#16a34a",
+                        text: response.data.message,
+                        timer: 3000,
+                        showConfirmButton: false,
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal!",
+                        confirmButtonColor: "#16a34a",
+                        text:
+                            error.response?.data?.message ||
+                            "Terjadi kesalahan.",
+                    });
+                });
+        }
+    });
+};
 </script>
 
 <template>
@@ -387,6 +448,13 @@ const getBadgeTextStatusInventory = (status) => {
                                 >
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi
+                                </button>
+                                <button
+                                    @click="approved"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-green-850 hover:scale-105"
+                                >
+                                    <i class="fas fa-check"></i>
+                                    Approval
                                 </button>
                             </div>
                             <div
@@ -516,7 +584,13 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ computers.computer ? computers.computer.computer_code : '-' }}
+                                                                {{
+                                                                    computers.computer
+                                                                        ? computers
+                                                                              .computer
+                                                                              .computer_code
+                                                                        : "-"
+                                                                }}
                                                             </p>
                                                         </td>
 
@@ -526,7 +600,17 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                 {{ computers.computer && computers.computer.pengguna ? computers.computer.pengguna.username : '-' }}
+                                                                {{
+                                                                    computers.computer &&
+                                                                    computers
+                                                                        .computer
+                                                                        .pengguna
+                                                                        ? computers
+                                                                              .computer
+                                                                              .pengguna
+                                                                              .username
+                                                                        : "-"
+                                                                }}
                                                             </p>
                                                         </td>
                                                         <td
@@ -535,7 +619,17 @@ const getBadgeTextStatusInventory = (status) => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                 {{ computers.computer && computers.computer.pengguna ? computers.computer.pengguna.department : '-' }}
+                                                                {{
+                                                                    computers.computer &&
+                                                                    computers
+                                                                        .computer
+                                                                        .pengguna
+                                                                        ? computers
+                                                                              .computer
+                                                                              .pengguna
+                                                                              .department
+                                                                        : "-"
+                                                                }}
                                                             </p>
                                                         </td>
 

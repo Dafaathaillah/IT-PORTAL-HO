@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('../assets/img/POLICE_LOGO2.png') }}" />
     <link rel="icon" type="image/png" href="{{ asset('../assets/img/POLICE_LOGO2.png') }}" />
@@ -35,7 +36,7 @@
     <style>
         .dark {
 
-            body{
+            body {
                 background: #051139 !important;
             }
         }
@@ -44,8 +45,7 @@
 
 @auth
 
-    <body
-        class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-white text-slate-500">
+    <body class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-white text-slate-500">
         <!-- class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-white text-slate-500" style="background: url(http://127.0.0.1:8000/bg.jpg) ;
   background-size: cover;
   background-blend-mode: multiply;"> -->

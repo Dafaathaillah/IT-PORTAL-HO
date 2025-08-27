@@ -183,7 +183,7 @@
                                                 <select
                                                     v-model="job.problem"
                                                     class="w-full p-2 border border-gray-300 rounded-md"
-                                                    required
+                                                    :required="job.category !== 'OTHER'"
                                                 >
                                                     <option value="">
                                                         Select Root Cause

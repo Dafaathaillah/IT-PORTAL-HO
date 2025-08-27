@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 import { onMounted, ref } from "vue";
 
 const pages = ref("Pages");
-const subMenu = ref("Inspeksi Komputer Pages");
-const mainMenu = ref("Detail Inspeksi Komputer");
+const subMenu = ref("Inspeksi PC Pages");
+const mainMenu = ref("Form Detail Inspeksi PC");
 
 const props = defineProps(["inspeksi"]);
 const inspeksiId = props.inspeksi.id;
@@ -31,9 +31,14 @@ const getEncryptedQuarter = () => {
         title: "Menyiapkan PDF...",
         text: "Harap tunggu sebentar.",
         allowOutsideClick: false,
-        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        showConfirmButton: false,
+        timer: 2000, // Timer 5 detik
+        timerProgressBar: true, // Tampilkan garis waktu
         didOpen: () => {
             Swal.showLoading();
+        },
+        willClose: () => {
+            console.log("Popup PDF selesai otomatis."); // Opsional
         },
     });
 
@@ -93,9 +98,9 @@ const getEncryptedQuarter = () => {
                             <div
                                 class="flex flex-row p-6 px-4 pb-0 mb-0 border-b-0 rounded-t-2xl"
                             >
-                                <h6 class="mb-0 mr-3 dark:text-white">
-                                    Detail Inspeksi Komputer
-                                </h6>
+                                <h4 class="mb-0 mr-3 dark:text-white">
+                                    Form Detail Inspeksi PC
+                                </h4>
                                 <NavLinkCustom
                                     class="text-red-700"
                                     :href="route('inspeksiKomputerAmi.page')"
@@ -935,9 +940,9 @@ const getEncryptedQuarter = () => {
                                     <div
                                         class="max-w-full px-3 md:w-1/2 md:flex-none"
                                     >
-                                        <h6 class="mb-0 dark:text-white">
-                                            Data Aset Komputer
-                                        </h6>
+                                        <h4 class="mb-0 dark:text-white">
+                                            Data Aset PC
+                                        </h4>
                                     </div>
                                     <div
                                         class="flex items-center justify-end max-w-full px-3 dark:text-white/80 md:w-1/2 md:flex-none"

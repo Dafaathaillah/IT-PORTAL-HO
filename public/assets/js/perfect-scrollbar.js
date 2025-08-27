@@ -1,36 +1,28 @@
 (function () {
-  var isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
+  if (navigator.platform.indexOf("Win") > -1) {
+    window.scrollInstances = [];
 
-  if (isWindows) {
-    // if we are on windows OS we activate the perfectScrollbar function
-    if (document.querySelector("main")) {
-      var mainpanel = document.querySelector("main");
-      var ps = new PerfectScrollbar(mainpanel);
+    // Halaman yang dilewati PerfectScrollbar
+    const skipPages = ['/accesspoint', '/inspeksi-komputer'];
+
+    const currentPath = window.location.pathname.toLowerCase();
+    if (skipPages.some(p => currentPath.includes(p))) {
+      console.log('PerfectScrollbar disabled on this page:', currentPath);
+      return;
     }
 
-    if (document.querySelectorAll(".overflow-auto")[0]) {
-      var sidebar = document.querySelectorAll(".overflow-auto");
-      var i = 0;
-      var ps;
-      sidebar.forEach((element) => {
-        ps[i++] = new PerfectScrollbar(element);
+    const main = document.querySelector("main");
+    if (main && !main.classList.contains("ps-initialized")) {
+      const ps = new PerfectScrollbar(main, { 
+        wheelPropagation: false, // 🔹 Pastikan scroll event tidak tembus keluar
+        suppressScrollX: true     // 🔹 Nonaktifkan scroll horizontal
       });
+      window.scrollInstances.push(ps);
+      main.classList.add("ps-initialized");
     }
-    if (document.querySelectorAll(".overflow-y-auto")[0]) {
-      var sidebar = document.querySelectorAll(".overflow-y-auto");
-      var i = 0;
-      var ps;
-      sidebar.forEach((element) => {
-        ps[i++] = new PerfectScrollbar(element);
-      });
-    }
-    if (document.querySelectorAll(".overflow-x-auto")[0]) {
-      var sidebar = document.querySelectorAll(".overflow-x-auto");
-      var i = 0;
-      var ps;
-      sidebar.forEach((element) => {
-        ps[i++] = new PerfectScrollbar(element);
-      });
-    }
+
+    window.addEventListener("resize", () => {
+      window.scrollInstances.forEach(ps => ps.update());
+    });
   }
 })();

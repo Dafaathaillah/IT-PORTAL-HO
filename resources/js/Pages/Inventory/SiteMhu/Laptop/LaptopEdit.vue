@@ -22,7 +22,7 @@ const props = defineProps([
     "warna_laptop",
     "os_laptop",
     "pengguna_all",
-    "pengguna_selected"
+    "pengguna_selected",
 ]);
 
 const form = useForm({
@@ -85,7 +85,9 @@ const formSubmitted = ref(false);
 const options = props.pengguna_all;
 
 const selectedValues = ref(
-    props.pengguna_all.filter((option) => props.pengguna_selected.includes(option.nrp))
+    props.pengguna_all.filter((option) =>
+        props.pengguna_selected.includes(option.nrp)
+    )
 );
 
 const penggunaString = computed(() => {
@@ -95,23 +97,24 @@ const penggunaString = computed(() => {
 const update = () => {
     const formData = new FormData();
 
-    if (selectedValues.value ==  null) {
+    if (selectedValues.value == null) {
         formSubmitted.value = true;
-        return; 
-    }else{
-        if(props.pengguna_selected.includes('data tidak ada !')){
+        return;
+    } else {
+        if (props.pengguna_selected.includes("data tidak ada !")) {
             formData.append("user_alls_id", selectedValues.value.nrp);
-        }else{
-
-            if(props.pengguna_selected.includes(selectedValues.value.nrp) == false && selectedValues.value.nrp != undefined) {
+        } else {
+            if (
+                props.pengguna_selected.includes(selectedValues.value.nrp) ==
+                    false &&
+                selectedValues.value.nrp != undefined
+            ) {
                 formData.append("user_alls_id", selectedValues.value.nrp);
-            }else{
+            } else {
                 formData.append("user_alls_id", penggunaString.value);
             }
-
         }
     }
-
 
     const fixTanggalInv = customFormat(selectedDateInv.value);
     const fixTanggalDeploy = customFormat(selectedDateDeploy.value);
@@ -230,20 +233,19 @@ const update = () => {
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
-                                    <div class="mb-4">
+                                        <div class="mb-4">
                                             <label
                                                 for="laptop-code"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Laptop Code</label
                                             >
                                             <input
-                                                :disabled="isDisabled"
                                                 required
                                                 type="text"
                                                 name="laptop_code"
                                                 v-model="form.laptop_code"
                                                 value="1"
-                                                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="Auto Generate Laptop Code"
                                             />
                                         </div>
@@ -251,7 +253,7 @@ const update = () => {
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
-                                    <div class="mb-4">
+                                        <div class="mb-4">
                                             <label
                                                 for="device-name"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
@@ -267,7 +269,7 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
-                                    
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -284,7 +286,10 @@ const update = () => {
                                                 name="assets_category"
                                                 class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option selected value="standart">
+                                                <option
+                                                    selected
+                                                    value="standart"
+                                                >
                                                     standart
                                                 </option>
                                                 <option value="non_standart">
@@ -382,7 +387,6 @@ const update = () => {
                                                 >Ssd</label
                                             >
                                             <input
-                                                
                                                 type="text"
                                                 v-model="form.ssd"
                                                 name="ssd"
@@ -651,7 +655,7 @@ const update = () => {
                                             />
                                         </div>
                                     </div>
-                                    
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -743,8 +747,9 @@ const update = () => {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
-                                    
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
                                         :href="route('laptopMhu.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
@@ -766,8 +771,6 @@ const update = () => {
                                             Save
                                         </span>
                                     </button>
-
-
                                 </div>
                             </form>
                         </div>

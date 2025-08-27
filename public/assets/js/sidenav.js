@@ -1,14 +1,20 @@
 var collapse_triggers = document.querySelectorAll("[collapse_trigger]");
 
+// Update scrollbar sambil mempertahankan posisi
+function refreshPerfectScrollbars() {
+  if (window.scrollInstances?.length) {
+    window.scrollInstances.forEach(ps => ps.update());
+  }
+}
+
 collapse_triggers.forEach((trigger) => {
   var collapse = trigger.nextElementSibling;
 
   trigger.addEventListener("click", function () {
+    var collapse_height = collapse.scrollHeight;
     if (trigger.getAttribute("aria-expanded") == "true") {
-      var collapse_height = collapse.scrollHeight;
       close_collapse(trigger, collapse, collapse_height);
     } else {
-      var collapse_height = collapse.scrollHeight;
       open_collapse(trigger, collapse, collapse_height);
     }
   });
@@ -30,12 +36,15 @@ function open_collapse(trigger, collapse, height) {
   collapse.style.maxHeight = height + "px";
 
   if (trigger.getAttribute("collapse_trigger") == "secondary") {
-    collapse_parent = trigger.closest("div");
-    parent_height = collapse_parent.scrollHeight + height;
+    var collapse_parent = trigger.closest("div");
+    var parent_height = collapse_parent.scrollHeight + height;
     collapse_parent.style.maxHeight = parent_height + "px";
   }
 
   trigger.setAttribute("aria-expanded", "true");
+
+  // Update scrollbar setelah perubahan DOM selesai
+  setTimeout(() => refreshPerfectScrollbars(), 0);
 }
 
 function close_collapse(trigger, collapse, height) {
@@ -54,14 +63,18 @@ function close_collapse(trigger, collapse, height) {
   collapse.classList.add("max-h-0");
 
   if (trigger.getAttribute("collapse_trigger") == "secondary") {
-    collapse_parent = trigger.closest("div");
-    parent_height = collapse_parent.scrollHeight - height;
+    var collapse_parent = trigger.closest("div");
+    var parent_height = collapse_parent.scrollHeight - height;
     collapse_parent.style.maxHeight = parent_height + "px";
   }
 
   trigger.setAttribute("aria-expanded", "false");
+
+  // Update scrollbar setelah perubahan DOM selesai
+  setTimeout(() => refreshPerfectScrollbars(), 0);
 }
 
+// --- kode highlight active menu (biarkan seperti aslinya) ---
 var page = window.location.pathname.split("/").pop().split(".")[0];
 var aux = window.location.pathname.split("/");
 
@@ -71,48 +84,34 @@ var parent_page = page_name.pop();
 var root_page = page_name.pop();
 var root_folder = page_name.pop();
 
-
-
 if (root_folder == "pages") {
   var a_href = "../../../pages/" + root_page + "/" + parent_page + "/" + current_page;
-
   var active_page = document.querySelector('a[href="' + a_href + '"]');
   var active_secondary = active_page.closest("div").previousElementSibling;
-
   var active_primary = active_secondary.closest("div").previousElementSibling;
-  var active_primary_icon = active_primary.querySelector("div");
-  var active_primary_icon_fills = active_primary_icon.querySelectorAll(".fill-slate-800");
-
   active_primary.setAttribute("active_primary", "");
-
-  active_primary.nextElementSibling.style.maxHeight = active_primary.nextElementSibling.scrollHeight + active_secondary.nextElementSibling.scrollHeight + "px";
-  active_secondary.nextElementSibling.style.maxHeight = active_secondary.nextElementSibling.scrollHeight + "px";
-} else if(aux.includes("pages")) {
+  active_primary.nextElementSibling.style.maxHeight =
+    active_primary.nextElementSibling.scrollHeight +
+    active_secondary.nextElementSibling.scrollHeight + "px";
+  active_secondary.nextElementSibling.style.maxHeight =
+    active_secondary.nextElementSibling.scrollHeight + "px";
+} else if (aux.includes("pages")) {
   root_folder = root_page;
   root_page = parent_page;
   parent_page = current_page;
-
   var a_href = "../../pages/" + root_page + "/" + parent_page;
-
   var active_page = document.querySelector('a[href="' + a_href + '"]');
   active_page.setAttribute("active_page", "");
   active_page.setAttribute("active_secondary", "");
-
   var active_primary = active_page.closest("div").previousElementSibling;
-  var active_primary_icon = active_primary.querySelector("div");
-  var active_primary_icon_fills = active_primary_icon.querySelectorAll(".fill-slate-800");
-
-  active_primary.nextElementSibling.style.maxHeight = active_primary.nextElementSibling.scrollHeight + "px";
+  active_primary.nextElementSibling.style.maxHeight =
+    active_primary.nextElementSibling.scrollHeight + "px";
 } else {
   var a_href = "./pages/dashboards/default.html";
-
   var active_page = document.querySelector('a[href="' + a_href + '"]');
   active_page.setAttribute("active_page", "");
   active_page.setAttribute("active_secondary", "");
-
   var active_primary = active_page.closest("div").previousElementSibling;
-  var active_primary_icon = active_primary.querySelector("div");
-  var active_primary_icon_fills = active_primary_icon.querySelectorAll(".fill-slate-800");
-
-  active_primary.nextElementSibling.style.maxHeight = active_primary.nextElementSibling.scrollHeight + "px"; 
+  active_primary.nextElementSibling.style.maxHeight =
+    active_primary.nextElementSibling.scrollHeight + "px";
 }

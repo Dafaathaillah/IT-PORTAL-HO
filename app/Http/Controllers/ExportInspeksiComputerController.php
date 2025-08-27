@@ -17,11 +17,8 @@ class ExportInspeksiComputerController extends Controller
         $pic = $request->pic;
         $site = $request->site;
 
-        if ($site != 'ADW') {
-            $thisTriwulan = $request->triwulan ?? Carbon::now()->quarter;
-        } else {
-            $thisMonth = $request->month ?? Carbon::now()->month;
-        }
+        $thisTriwulan = $request->triwulan ?? Carbon::now()->quarter;
+
 
         $thisYearEncrypt = $request->query('year') ?? Carbon::now()->year;
         try {
@@ -34,36 +31,26 @@ class ExportInspeksiComputerController extends Controller
             return back()->with('error', 'Tahun tidak terdeteksi.');
         }
 
-        if ($site != 'ADW') {
-            $inspeksiComputerAll = InspeksiComputer::with('computer.pengguna')
-                ->where('site', $site)
-                ->where('triwulan', $thisTriwulan)
-                ->where('year', $thisYear)
-                ->get();
+        $inspeksiComputerAll = InspeksiComputer::with('computer.pengguna')
+            ->where('site', $site)
+            ->where('triwulan', $thisTriwulan)
+            ->where('year', $thisYear)
+            ->get();
 
-            $unitScrap = $inspeksiComputerAll->where('inventory_status', 'SCRAP')->count();
-            $unitUtilize = $inspeksiComputerAll->where('inventory_status', '!=', 'SCRAP')->count();
-        } else {
-            $inspeksiComputerAll = InspeksiComputer::with('computer.pengguna')
-                ->where('site', $site)
-                ->where('month', $thisMonth)
-                ->where('year', $thisYear)
-                ->get();
+        $unitScrap = $inspeksiComputerAll->where('inventory_status', 'SCRAP')->count();
+        $unitUtilize = $inspeksiComputerAll->where('inventory_status', '!=', 'SCRAP')->count();
 
-            $unitScrap = $inspeksiComputerAll->where('inventory_status', 'SCRAP')->count();
-            $unitUtilize = $inspeksiComputerAll->where('inventory_status', '!=', 'SCRAP')->count();
-        }
 
         // Ambil 1 data inspeksi yang statusnya Y
         $inspectionY = $inspeksiComputerAll->firstWhere('inspection_status', 'Y');
         if ($inspectionY) {
             $picApproved = $inspectionY->approved_by;
-        }else{
+        } else {
             $picApproved = '';
         }
         $qr_base64Approved = null;
         if ($inspectionY && $picApproved) {
-            $approvedUser = User::where('nInsame', $picApproved)->first();
+            $approvedUser = User::where('name', $picApproved)->first();
             if ($approvedUser) {
                 $qrString = "NRP: {$approvedUser->nrp}, Nama: {$approvedUser->name}, Jabatan: {$approvedUser->position}";
                 $barcode = new \Milon\Barcode\DNS2D();
@@ -83,37 +70,20 @@ class ExportInspeksiComputerController extends Controller
             $qr_base64Pic = 'data:image/png;base64,' . $pngData;
         }
         // Load view sesuai site
-        if ($site != 'ADW') {
-            $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAll', compact(
-                'inspeksiComputerAll',
-                'thisYear',
-                'thisTriwulan',
-                'unitScrap',
-                'unitUtilize',
-                'site',
-                'pic',
-                'picApproved',
-                'qr_base64Approved',
-                'qr_base64Pic'
-            ))->setPaper('A4', 'landscape');
+        $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAll', compact(
+            'inspeksiComputerAll',
+            'thisYear',
+            'thisTriwulan',
+            'unitScrap',
+            'unitUtilize',
+            'site',
+            'pic',
+            'picApproved',
+            'qr_base64Approved',
+            'qr_base64Pic'
+        ))->setPaper('A4', 'landscape');
 
-            return $pdf->stream('inspection-computer-report-periode-triwulan-' . $thisTriwulan . '-' . $thisYear . '.pdf');
-        } else {
-            $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputerAllMonth', compact(
-                'inspeksiComputerAll',
-                'thisYear',
-                'thisMonth',
-                'unitScrap',
-                'unitUtilize',
-                'site',
-                'pic',
-                'picApproved',
-                'qr_base64Approved',
-                'qr_base64Pic'
-            ))->setPaper('A4', 'landscape');
-
-            return $pdf->stream('inspection-computer-report-periode-bulan-' . $thisMonth . '-' . $thisYear . '.pdf');
-        }
+        return $pdf->download('inspection-computer-report-periode-triwulan-' . $thisTriwulan . '-' . $thisYear . '.pdf');
     }
 
     public function exportPdfSingle(Request $request)
@@ -176,7 +146,7 @@ class ExportInspeksiComputerController extends Controller
                 'thisMonth' => $thisMonth,
                 'site' => $site,
             ])->setPaper('A4', 'portrait');
-            return $pdf->stream('inspection-computer-report-periode-' . 'bulan-' . $thisMonth . 'tahun-' . $thisYear . '.pdf');
+            return $pdf->download('inspection-computer-report-periode-' . 'bulan-' . $thisMonth . 'tahun-' . $thisYear . '.pdf');
         } else {
             $thisTriwulan = $inspection->triwulan;
             $pdf = Pdf::loadView('itportal.rekapAllInspeksi.inspeksiComputer', [
@@ -185,7 +155,7 @@ class ExportInspeksiComputerController extends Controller
                 'thisTriwulan' => $thisTriwulan,
                 'site' => $site,
             ])->setPaper('A4', 'portrait');
-            return $pdf->stream('inspection-computer-report-periode-' . 'triwulan-' . $thisTriwulan . 'tahun-' . $thisYear . '.pdf');
+            return $pdf->download('inspection-computer-report-periode-' . 'triwulan-' . $thisTriwulan . 'tahun-' . $thisYear . '.pdf');
         }
     }
 }

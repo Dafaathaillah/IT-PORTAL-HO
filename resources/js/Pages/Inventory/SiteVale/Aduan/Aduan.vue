@@ -73,6 +73,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm, router } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
+import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
@@ -84,11 +85,6 @@ import axios from "axios";
 const pages = ref("Pages");
 const subMenu = ref("Aduan Pages");
 const mainMenu = ref("Aduan Data");
-
-// Fungsi untuk format tanggal
-function formattedDate(date) {
-    return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
-}
 
 const mount = onMounted(() => {
     // Inisialisasi DataTable tanpa AJAX
@@ -136,6 +132,16 @@ const props = defineProps({
         type: Object,
     },
 });
+
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+function convertToUserTime(date) {
+    if (!date) return ""; // jika null/undefined/kosong, langsung return string kosong
+    return dayjs
+        .tz(date, "Asia/Makassar")
+        .tz(timezone)
+        .format("YYYY-MM-DD HH:mm:ss");
+}
 
 const form = useForm({});
 
@@ -327,7 +333,7 @@ const exportPdf = () => {
         {
             startDate: customFormat(startDate.value),
             endDate: customFormat(endDate.value),
-            site: "VIB",
+            site: "MIP",
             pic: selectPic,
         },
         {
@@ -338,7 +344,7 @@ const exportPdf = () => {
                         route("export.aduan", {
                             startDate: customFormat(startDate.value),
                             endDate: customFormat(endDate.value),
-                            site: "VIB",
+                            site: "MIP",
                             pic: selectPic,
                         }),
                         "_blank"
@@ -583,8 +589,7 @@ const exportPdf = () => {
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
                                     New Data
                                 </Link>
-
-                                                                <div
+                                <div
                                     class="flex flex-wrap md:flex-nowrap gap-3 mt-4"
                                 >
                                     <div
@@ -631,7 +636,7 @@ const exportPdf = () => {
                                         class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
                                     >
                                         <i class="fas fa-download"></i>
-                                        Rekap Inspeksi
+                                        Rekap Aduan
                                     </button>
                                 </div>
                             </div>
@@ -913,7 +918,9 @@ const exportPdf = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
-                                                                aduans.date_of_complaint
+                                                                convertToUserTime(
+                                                                    aduans.date_of_complaint
+                                                                )
                                                             }}
                                                         </p>
                                                     </td>
@@ -924,7 +931,9 @@ const exportPdf = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
+                                                                convertToUserTime(
                                                                 aduans.start_response
+                                                                )
                                                             }}
                                                         </p>
                                                     </td>
@@ -946,7 +955,9 @@ const exportPdf = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
+                                                                convertToUserTime(
                                                                 aduans.start_progress
+                                                                )
                                                             }}
                                                         </span>
                                                     </td>
@@ -957,7 +968,9 @@ const exportPdf = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
+                                                                convertToUserTime(
                                                                 aduans.end_progress
+                                                                )
                                                             }}
                                                         </span>
                                                     </td>

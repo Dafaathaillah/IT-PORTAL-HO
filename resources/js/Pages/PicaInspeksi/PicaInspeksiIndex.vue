@@ -235,12 +235,7 @@ const initDataTable = () => {
         scrollY: "40vh",
         scrollCollapse: true,
         data: [],
-        buttons: [
-            { extend: "spacer", style: "bar", text: "Export files:" },
-            "csvHtml5",
-            "excelHtml5",
-            "spacer",
-        ],
+        buttons: [],
         initComplete: function () {
             const btns = $(".dt-button");
             btns.addClass(
@@ -364,7 +359,13 @@ const exportPdf = () => {
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("pica.export"),
-        { startDate: customFormat(startDate.value), endDate: customFormat(endDate.value), site: props.site, device: selectedOption.value.name, pic: selectPic },
+        {
+            startDate: customFormat(startDate.value),
+            endDate: customFormat(endDate.value),
+            site: props.site,
+            device: selectedOption.value.name,
+            pic: selectPic,
+        },
         {
             onSuccess: ({ props }) => {
                 if (encryptedYear) {
@@ -483,6 +484,7 @@ const exportPdf = () => {
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0">
                                     <div class="p-6 text-gray-900">
+                                        <h4>Form Pica Inspeksi PC/Laptop</h4>
                                         <table
                                             ref="tableRef"
                                             id="tableData"

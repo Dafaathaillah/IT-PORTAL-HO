@@ -4,6 +4,7 @@ import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import VueDatePicker from "@vuepic/vue-datepicker";
+import dayjs from "dayjs";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
 import Swal from "sweetalert2";
@@ -33,10 +34,31 @@ const form = useForm({
 const isDisabled = ref(true);
 const file = ref(null);
 
+const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+// Fungsi konversi dari WITA (Asia/Makassar) ke zona waktu lokal browser
+function toLocalTime(date) {
+    if (!date) return null;
+    return dayjs.tz(date, "Asia/Makassar").tz(userTimezone).toDate();
+}
+
+// Fungsi konversi balik ke WITA sebelum dikirim ke server
+function toServerTime(date) {
+    if (!date) return null;
+    return dayjs(date).tz("Asia/Makassar").format("YYYY-MM-DD HH:mm:ss");
+}
+const dateFormat = "yyyy-MM-dd HH:mm:ss";
+
+// const isDateRequired = computed(() => props.aduan.start_progress !== null);
+
 const dateOfComplaint = ref(props.aduan.date_of_complaint);
+const dateOfComplaintLocal = ref(null);
 const startResponse = ref(props.aduan.start_response);
+const startResponseLocal = ref(null);
 const startProgress = ref(props.aduan.start_progress);
+const startProgressLocal = ref(null);
 const endProgress = ref(props.aduan.end_progress);
+const endProgressLocal = ref(null);
 
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
@@ -55,10 +77,7 @@ const crewString = computed(() => {
 });
 
 const customFormat = (date) => {
-    if (!date) {
-        // Jika date null atau kosong, kembalikan null
-        return "";
-    }
+    if (!date) return null; // Return null langsung jika kosong
     const d = new Date(date);
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -80,8 +99,11 @@ const update = () => {
     }
 
     const formattedDateDateOfComplaint = customFormat(dateOfComplaint.value);
+
     const formattedDateStartResponse = customFormat(startResponse.value);
+
     const formattedDateStartProgress = customFormat(startProgress.value);
+
     const formattedDateEndProgress = customFormat(endProgress.value);
     formData.append("id", form.id);
     formData.append("complaint_name", form.complaint_name);
@@ -263,28 +285,25 @@ function handleCategoryChange(event) {
                                                 name="category_name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option
-                                                    selected
-                                                    value=""
-                                                >
+                                                <option selected value="">
                                                     SELECT CATEGORY
                                                 </option>
                                                 <option
                                                     v-for="category in categories"
                                                     :key="category.id"
-                                                    :value="category.category_root_cause"
+                                                    :value="
+                                                        category.category_root_cause
+                                                    "
                                                 >
-                                                    {{ category.category_root_cause }}
+                                                    {{
+                                                        category.category_root_cause
+                                                    }}
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div
-                                        v-if="
-                                            form.category_name == 'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
-                                        "
+                                        v-if="form.category_name == 'PC/NB'"
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -305,10 +324,7 @@ function handleCategoryChange(event) {
                                     </div>
                                     <div
                                         :class="
-                                            form.category_name ===
-                                                'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                            form.category_name === 'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                         "
@@ -438,8 +454,18 @@ function handleCategoryChange(event) {
                                             >
                                             <VueDatePicker
                                                 required
-                                                v-model="dateOfComplaint"
-                                                :format="customFormat"
+                                                v-model="dateOfComplaintLocal"
+                                                :model-value="
+                                                    toLocalTime(dateOfComplaint)
+                                                "
+                                                @update:model-value="
+                                                    (val) =>
+                                                        (dateOfComplaint =
+                                                            toServerTime(val))
+                                                "
+                                                :enable-time-picker="true"
+                                                :is-24="true"
+                                                :format="dateFormat"
                                                 placeholder="Select a date and time"
                                             />
                                         </div>
@@ -455,8 +481,18 @@ function handleCategoryChange(event) {
                                             >
                                             <VueDatePicker
                                                 required
-                                                v-model="startResponse"
-                                                :format="customFormat"
+                                                v-model="startResponseLocal"
+                                                :model-value="
+                                                    toLocalTime(startResponse)
+                                                "
+                                                @update:model-value="
+                                                    (val) =>
+                                                        (startResponse =
+                                                            toServerTime(val))
+                                                "
+                                                :enable-time-picker="true"
+                                                :is-24="true"
+                                                :format="dateFormat"
                                                 placeholder="Select Strat Response"
                                             />
                                         </div>
@@ -471,9 +507,19 @@ function handleCategoryChange(event) {
                                                 >Start Progress</label
                                             >
                                             <VueDatePicker
-                                                :required="isDateRequired"
-                                                v-model="startProgress"
-                                                :format="customFormat"
+                                                v-model="startProgressLocal"
+                                                :model-value="
+                                                    toLocalTime(startProgress)
+                                                "
+                                                @update:model-value="
+                                                    (val) =>
+                                                        (startProgress = val
+                                                            ? toServerTime(val)
+                                                            : null)
+                                                "
+                                                :enable-time-picker="true"
+                                                :is-24="true"
+                                                :format="dateFormat"
                                                 placeholder="Select Start Progress"
                                             />
                                         </div>
@@ -488,9 +534,19 @@ function handleCategoryChange(event) {
                                                 >End Progress</label
                                             >
                                             <VueDatePicker
-                                                :required="isDateRequired"
-                                                v-model="endProgress"
-                                                :format="customFormat"
+                                                v-model="endProgressLocal"
+                                                :model-value="
+                                                    toLocalTime(endProgress)
+                                                "
+                                                @update:model-value="
+                                                    (val) =>
+                                                        (endProgress = val
+                                                            ? toServerTime(val)
+                                                            : null)
+                                                "
+                                                :enable-time-picker="true"
+                                                :is-24="true"
+                                                :format="dateFormat"
                                                 placeholder="Select End Progress"
                                             />
                                         </div>
@@ -578,8 +634,9 @@ function handleCategoryChange(event) {
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
-                                    
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
                                         :href="route('aduanSbs.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"

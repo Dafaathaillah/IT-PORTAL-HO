@@ -103,14 +103,14 @@
             </tr>
         </table>
 
-        <div class="title">FORM CHECKLIST INSPEKSI LAPTOP</div>
+        <div class="title">FORM LAPORAN INSPEKSI LAPTOP</div>
         <table style="width: 100%; margin-bottom: 10px; font-size: 12px; border-collapse: collapse;">
             <tr>
                 <td style="text-align: left; font-weight: bold; border: none;">
                     Periode Inspeksi: <span style="font-weight: normal;">Tahun - {{ $thisYear }}</span>
                 </td>
                 <td style="text-align: right; font-weight: bold; border: none;">
-                    PPA-{{ $site }}-F-COE-02D
+                    {{-- PPA-{{ $site }}-F-COE-02D --}}
                 </td>
             </tr>
         </table>

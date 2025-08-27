@@ -96,7 +96,7 @@
             </tr>
         </table>
 
-        <div class="title">FORM CHECKLIST INSPEKSI COMPUTER</div>
+        <div class="title">FORM LAPORAN INSPEKSI COMPUTER</div>
         <table style="width: 100%; margin-bottom: 10px; font-size: 12px; border-collapse: collapse;">
             <tr>
                 <td style="text-align: left; font-weight: bold; border: none;">
