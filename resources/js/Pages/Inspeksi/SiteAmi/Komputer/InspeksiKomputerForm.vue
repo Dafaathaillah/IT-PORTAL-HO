@@ -152,7 +152,7 @@ const save = () => {
 </script>
 
 <template>
-    <Head title="Form Inspeksi Komputer" />
+    <Head title="Form Inspeksi dan Perawatan PC" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -168,11 +168,11 @@ const save = () => {
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Computer Inspection Pages
+                        PC Inspection Pages
                     </li>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Computer Inspection
+                    C Inspection
                 </h6>
             </nav>
         </template>
@@ -187,7 +187,7 @@ const save = () => {
                             class="flex flex-row p-6 px-4 pb-0 mb-0 border-b-0 rounded-t-2xl"
                         >
                             <h6 class="mb-0 mr-3 dark:text-white">
-                                Data Komputer
+                                Data PC
                             </h6>
                         </div>
                         <div class="flex-auto p-4 pt-6">
@@ -215,7 +215,7 @@ const save = () => {
                             </div>
                             <div class="grid grid-cols-2">
                                 <div>
-                                    <p class="text-base">Komputer Name</p>
+                                    <p class="text-base">PC Name</p>
                                 </div>
                                 <div>
                                     <p>
@@ -334,9 +334,9 @@ const save = () => {
                             class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0"
                         >
                             <div class="flex items-center">
-                                <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Inspeksi Komputer
-                                </p>
+                                <h4 class="mb-0 font-bold dark:text-white/80">
+                                    Form Inspeksi dan Perawatan PC
+                                </h4>
                             </div>
                         </div>
 

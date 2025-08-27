@@ -60,9 +60,9 @@ class ImportLaptop implements ToModel, WithStartRow
             $tanggal_deploy = $this->convertToDate(trim($row[23]));
         }
 
-        $existingDataInv = InvLaptop::where('laptop_code', $row[2])->first();
+        $existingDataInv = InvLaptop::where('laptop_code', $row[2])->where('site', $codeSite)->first();
         if ($aduan_get_data_user) {
-            if ($existingDataInv->site === $codeSite) {
+            if ($existingDataInv) {
                 InvLaptop::updateOrCreate(
                     ['laptop_code' => $row[2]],
                     [
@@ -73,6 +73,7 @@ class ImportLaptop implements ToModel, WithStartRow
                         'assets_category' => $row[4],
                         'spesifikasi' => $row[5] . ', ' . $row[6] . ', ' . $row[7] . ', ' . $row[8] . ', ' . $row[9] . ', ' . $row[10] . ', ' . $row[11] . ', ' . $row[12],
                         'aplikasi' => $row[14],
+                        'serial_number' => $serialNumber,
                         'license' => $row[15],
                         'ip_address' => $row[16],
                         'location' => $row[17],
@@ -105,7 +106,8 @@ class ImportLaptop implements ToModel, WithStartRow
                         'number_asset_ho' => $row[1],
                         'assets_category' => $row[4],
                         'spesifikasi' => $row[5] . ', ' . $row[6] . ', ' . $row[7] . ', ' . $row[8] . ', ' . $row[9] . ', ' . $row[10] . ', ' . $row[11] . ', ' . $row[12],
-                        'aplikasi' => $row[14],
+                        'aplikasi' => $row[14],                        
+                        'serial_number' => $serialNumber,
                         'license' => $row[15],
                         'ip_address' => $row[16],
                         'location' => $row[17],

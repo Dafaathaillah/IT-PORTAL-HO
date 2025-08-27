@@ -268,9 +268,19 @@ Route::middleware('auth')->group(function () {
     })->name('encrypt.yearComputer');
     Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
 
-    Route::post('/single-export', function (Request $request) {
-        return Inertia::location(route('laptop.singleExportPdf', ['inspeksiId' => $request->inspeksiId]));
+        Route::post('/single-export', function (Request $request) {
+        // Pastikan inspeksiId ada
+        if (!$request->inspeksiId) {
+            return back()->with('error', 'ID tidak ditemukan.');
+        }
+
+        // Simpan inspeksiId di session atau langsung kembalikan di response
+        return back()->with([
+            'success' => true,
+            'inspeksiId' => $request->inspeksiId
+        ]);
     })->name('laptop.singleExport');
+    
     Route::get('/export-pdf-single-laptop', [ExportInspeksiLaptopController::class, 'exportPdfSingle'])->name('laptop.singleExportPdf');
 
     Route::post('/single-export-computer', function (Request $request) {
@@ -687,6 +697,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/pica-inspeksi/{id}/edit', [PicaInspeksiController::class, 'edit'])->name('picaInspeksi.edit');
         Route::post('/pica-inspeksi/update', [PicaInspeksiController::class, 'update'])->name('picaInspeksi.update');
         Route::get('/pica-inspeksi/{id}/detail', [PicaInspeksiController::class, 'detail'])->name('picaInspeksi.detail');
+
+        Route::get('/pengalihan-asset-site/{site}', [PengalihanAssetController::class, 'index'])->name('pengalihanAsset.page');
+        Route::get('/pengalihan-asset-by-device', [PengalihanAssetController::class, 'getDataPengalihanByDevice']);
+        Route::get('/pengalihan-asset-by-device-range', [PengalihanAssetController::class, 'getDataPengalihanByDeviceRange']);
+        Route::get('/pengalihan-asset/create/{site}', [PengalihanAssetController::class, 'create'])->name('pengalihanAsset.create');
+        Route::get('/pengalihan-asset-data-inv-by-dept-prev', [PengalihanAssetController::class, 'getInventoryByDeviceAndDept'])->name('pengalihanAsset.getDataPrev');
+        Route::get('/pengalihan-asset-data-inv-by-inv-number-prev', [PengalihanAssetController::class, 'getInventoryByInvNumber'])->name('pengalihanAsset.getDataInvPrev');
+        Route::get('/pengalihan-asset-data-user-by-nrp', [PengalihanAssetController::class, 'getUserByNrp'])->name('pengalihanAsset.getDataUser');
+        Route::get('/pengalihan-asset-generate-inventory-number', [PengalihanAssetController::class, 'generateCode'])->name('pengalihanAsset.generateInvNumber');
+        Route::post('/pengalihan-asset/create', [PengalihanAssetController::class, 'store'])->name('pengalihanAsset.store');
+        Route::get('/pengalihan-asset/{id}/edit', [PengalihanAssetController::class, 'edit'])->name('pengalihanAsset.edit');
 
         Route::get('/aduan-ho', [AduanHoController::class, 'index'])->name('aduan-ho.page');
         Route::get('/aduan-ho/create', [AduanHoController::class, 'create'])->name('aduan-ho.create');
@@ -2324,6 +2345,7 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer/{id}/update', [InspeksiComputerController::class, 'update'])->name('inspeksiKomputer.update');
                 Route::get('/inspeksi-komputer/{id}/detail', [InspeksiComputerController::class, 'detail'])->name('inspeksiKomputer.detail');
                 Route::delete('inspeksi-komputer/{id}/delete', [InspeksiComputerController::class, 'destroy'])->name('inspeksiKomputer.delete');
+                Route::post('/inspeksi-komputer/approval', [InspeksiComputerController::class, 'approval'])->name('inspeksiKomputer.approval');
 
                 Route::get('inspeksi-laptop', [InspeksiLaptopController::class, 'index'])->name('inspeksiLaptop.page');
                 Route::get('inspeksi-laptop/{id}/process', [InspeksiLaptopController::class, 'process'])->name('inspeksiLaptop.process');
@@ -2332,12 +2354,14 @@ Route::middleware('auth')->group(function () {
                 Route::post('inspeksi-laptop/update', [InspeksiLaptopController::class, 'update'])->name('inspeksiLaptop.update');
                 Route::get('/inspeksi-laptop/{id}/detail', [InspeksiLaptopController::class, 'detail'])->name('inspeksiLaptop.detail');
                 Route::delete('inspeksi-laptop/{id}/delete', [InspeksiLaptopController::class, 'destroy'])->name('inspeksiLaptop.delete');
+                Route::post('/inspeksi-laptop/approval', [InspeksiLaptopController::class, 'approval'])->name('inspeksiLaptop.approval');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-ba', [InspeksiLaptopBaController::class, 'index'])->name('inspeksiLaptopBa.page');
                 Route::get('inspeksi-laptop-ba/{id}/process', [InspeksiLaptopBaController::class, 'process'])->name('inspeksiLaptopBa.process');
                 Route::post('inspeksi-laptop-ba/process', [InspeksiLaptopBaController::class, 'store'])->name('inspeksiLaptopBa.store');
+                Route::post('inspeksi-laptop-ba/approval', [InspeksiLaptopBaController::class, 'approval'])->name('inspeksiLaptopBa.approval');
                 Route::get('inspeksi-laptop-ba/{id}/edit', [InspeksiLaptopBaController::class, 'edit'])->name('inspeksiLaptopBa.edit');
                 Route::post('inspeksi-laptop-ba/update', [InspeksiLaptopBaController::class, 'update'])->name('inspeksiLaptopBa.update');
                 Route::get('/inspeksi-laptop-ba/{id}/detail', [InspeksiLaptopBaController::class, 'detail'])->name('inspeksiLaptopBa.detail');
@@ -2350,6 +2374,7 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-ba/{id}/update', [InspeksiComputerBaController::class, 'update'])->name('inspeksiKomputerBa.update');
                 Route::get('/inspeksi-komputer-ba/{id}/detail', [InspeksiComputerBaController::class, 'detail'])->name('inspeksiKomputerBa.detail');
                 Route::delete('inspeksi-komputer-ba/{id}/delete', [InspeksiComputerBaController::class, 'destroy'])->name('inspeksiKomputerBa.delete');
+                Route::post('/inspeksi-komputer-ba/approval', [InspeksiComputerBaController::class, 'approval'])->name('inspeksiKomputerBa.approval');
 
                 Route::get('/pengguna-ba', [UserAllBaController::class, 'index'])->name('penggunaBa.page');
                 Route::get('/pengguna-ba/create', [UserAllBaController::class, 'create'])->name('penggunaBa.create');
@@ -2376,6 +2401,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-mifa', [InspeksiLaptopMifaController::class, 'index'])->name('inspeksiLaptopMifa.page');
                 Route::get('inspeksi-laptop-mifa/{id}/process', [InspeksiLaptopMifaController::class, 'process'])->name('inspeksiLaptopMifa.process');
                 Route::post('inspeksi-laptop-mifa/process', [InspeksiLaptopMifaController::class, 'store'])->name('inspeksiLaptopMifa.store');
+                Route::post('inspeksi-laptop-mifa/approval', [InspeksiLaptopMifaController::class, 'approval'])->name('inspeksiLaptopMifa.approval');
                 Route::get('inspeksi-laptop-mifa/{id}/edit', [InspeksiLaptopMifaController::class, 'edit'])->name('inspeksiLaptopMifa.edit');
                 Route::post('inspeksi-laptop-mifa/update', [InspeksiLaptopMifaController::class, 'update'])->name('inspeksiLaptopMifa.update');
                 Route::get('/inspeksi-laptop-mifa/{id}/detail', [InspeksiLaptopMifaController::class, 'detail'])->name('inspeksiLaptopMifa.detail');
@@ -2384,6 +2410,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-mifa', [InspeksiComputerMifaController::class, 'index'])->name('inspeksiKomputerMifa.page');
                 Route::get('inspeksi-komputer-mifa/{id}/inspection', [InspeksiComputerMifaController::class, 'doInspection'])->name('inspeksiKomputerMifa.inspection');
                 Route::post('inspeksi-komputer-mifa/inspection', [InspeksiComputerMifaController::class, 'store'])->name('inspeksiKomputerMifa.store');
+                Route::post('inspeksi-komputer-mifa/approval', [InspeksiComputerMifaController::class, 'approval'])->name('inspeksiKomputerMifa.approval');
                 Route::get('inspeksi-komputer-mifa/{id}/edit', [InspeksiComputerMifaController::class, 'edit'])->name('inspeksiKomputerMifa.edit');
                 Route::put('inspeksi-komputer-mifa/{id}/update', [InspeksiComputerMifaController::class, 'update'])->name('inspeksiKomputerMifa.update');
                 Route::get('/inspeksi-komputer-mifa/{id}/detail', [InspeksiComputerMifaController::class, 'detail'])->name('inspeksiKomputerMifa.detail');
@@ -2414,6 +2441,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-mhu', [InspeksiLaptopMhuController::class, 'index'])->name('inspeksiLaptopMhu.page');
                 Route::get('inspeksi-laptop-mhu/{id}/process', [InspeksiLaptopMhuController::class, 'process'])->name('inspeksiLaptopMhu.process');
                 Route::post('inspeksi-laptop-mhu/process', [InspeksiLaptopMhuController::class, 'store'])->name('inspeksiLaptopMhu.store');
+                Route::post('inspeksi-laptop-mhu/aproval', [InspeksiLaptopMhuController::class, 'aproval'])->name('inspeksiLaptopMhu.aproval');
                 Route::get('inspeksi-laptop-mhu/{id}/edit', [InspeksiLaptopMhuController::class, 'edit'])->name('inspeksiLaptopMhu.edit');
                 Route::post('inspeksi-laptop-mhu/update', [InspeksiLaptopMhuController::class, 'update'])->name('inspeksiLaptopMhu.update');
                 Route::get('/inspeksi-laptop-mhu/{id}/detail', [InspeksiLaptopMhuController::class, 'detail'])->name('inspeksiLaptopMhu.detail');
@@ -2422,6 +2450,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-mhu', [InspeksiComputerMhuController::class, 'index'])->name('inspeksiKomputerMhu.page');
                 Route::get('inspeksi-komputer-mhu/{id}/inspection', [InspeksiComputerMhuController::class, 'doInspection'])->name('inspeksiKomputerMhu.inspection');
                 Route::post('inspeksi-komputer-mhu/inspection', [InspeksiComputerMhuController::class, 'store'])->name('inspeksiKomputerMhu.store');
+                Route::post('inspeksi-komputer-mhu/approval', [InspeksiComputerMhuController::class, 'approval'])->name('inspeksiKomputerMhu.approval');
                 Route::get('inspeksi-komputer-mhu/{id}/edit', [InspeksiComputerMhuController::class, 'edit'])->name('inspeksiKomputerMhu.edit');
                 Route::put('inspeksi-komputer-mhu/{id}/update', [InspeksiComputerMhuController::class, 'update'])->name('inspeksiKomputerMhu.update');
                 Route::get('/inspeksi-komputer-mhu/{id}/detail', [InspeksiComputerMhuController::class, 'detail'])->name('inspeksiKomputerMhu.detail');
@@ -2434,18 +2463,6 @@ Route::middleware('auth')->group(function () {
                 Route::put('/pengguna-mhu/{id}/update', [UserAllMhuController::class, 'update'])->name('penggunaMhu.update');
                 Route::delete('/pengguna-mhu/{id}/delete', [UserAllMhuController::class, 'destroy'])->name('penggunaMhu.delete');
                 Route::post('/uploadCsvPenggunaBa', [UserAllMhuController::class, 'uploadCsv'])->name('penggunaMhu.import');
-
-                // Route::get('department-mhu', [DepartmentMifaController::class, 'index'])->name('departmentMifa.page');
-                // Route::get('department-mhu/create', [DepartmentMifaController::class, 'create'])->name('departmentMifa.create');
-                // Route::post('department-mhu/create', [DepartmentMifaController::class, 'store'])->name('departmentMifa.store');
-                // Route::get('department-mhu/{id}/edit', [DepartmentMifaController::class, 'edit'])->name('departmentMifa.edit');
-                // Route::put('department-mhu/{id}/update', [DepartmentMifaController::class, 'update'])->name('departmentMifa.update');
-                // Route::delete('department-mhu/{id}/delete', [DepartmentMifaController::class, 'destroy'])->name('departmentMifa.delete');
-
-                // Route::get('akses-mhu', [AdminPengajuanRoleMifaController::class, 'index'])->name('aksesMifa.page');
-                // Route::get('akses-mhu/{id}/edit', [AdminPengajuanRoleMifaController::class, 'edit'])->name('aksesMifa.edit');
-                // Route::post('akses-mhu/update', [AdminPengajuanRoleMifaController::class, 'update'])->name('aksesMifa.update');
-                // Route::delete('akses-mhu/{id}/delete', [AdminPengajuanRoleMifaController::class, 'destroy'])->name('aksesMifa.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_group_leader:ADW,ict_admin:ADW,ict_ho:HO'], function () {
@@ -2456,6 +2473,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('inspeksi-laptop-Wara/update', [InspeksiLaptopWARAController::class, 'update'])->name('inspeksiLaptopWARA.update');
                 Route::get('/inspeksi-laptop-Wara/{id}/detail', [InspeksiLaptopWARAController::class, 'detail'])->name('inspeksiLaptopWARA.detail');
                 Route::delete('inspeksi-laptop-Wara/{id}/delete', [InspeksiLaptopWARAController::class, 'destroy'])->name('inspeksiLaptopWARA.delete');
+                Route::post('/inspeksi-laptop-wara/approval', [InspeksiLaptopWaraController::class, 'approval'])->name('inspeksiLaptopWARA.approval');
 
                 Route::get('inspeksi-komputer-Wara', [InspeksiComputerWARAController::class, 'index'])->name('inspeksiKomputerWARA.page');
                 Route::get('inspeksi-komputer-Wara/{id}/inspection', [InspeksiComputerWARAController::class, 'doInspection'])->name('inspeksiKomputerWARA.inspection');
@@ -2464,12 +2482,14 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-Wara/{id}/update', [InspeksiComputerWARAController::class, 'update'])->name('inspeksiKomputerWARA.update');
                 Route::get('/inspeksi-komputer-Wara/{id}/detail', [InspeksiComputerWARAController::class, 'detail'])->name('inspeksiKomputerWARA.detail');
                 Route::delete('inspeksi-komputer-Wara/{id}/delete', [InspeksiComputerWARAController::class, 'destroy'])->name('inspeksiKomputerWARA.delete');
+                Route::post('/inspeksi-komputer-wara/approval', [InspeksiComputerWARAController::class, 'approval'])->name('inspeksiKomputerWARA.approval');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-ami', [InspeksiLaptopAmiController::class, 'index'])->name('inspeksiLaptopAmi.page');
                 Route::get('inspeksi-laptop-ami/{id}/process', [InspeksiLaptopAmiController::class, 'process'])->name('inspeksiLaptopAmi.process');
                 Route::post('inspeksi-laptop-ami/process', [InspeksiLaptopAmiController::class, 'store'])->name('inspeksiLaptopAmi.store');
+                Route::post('inspeksi-laptop-ami/approval', [InspeksiLaptopAmiController::class, 'approval'])->name('inspeksiLaptopAmi.approval');
                 Route::get('inspeksi-laptop-ami/{id}/edit', [InspeksiLaptopAmiController::class, 'edit'])->name('inspeksiLaptopAmi.edit');
                 Route::post('inspeksi-laptop-ami/update', [InspeksiLaptopAmiController::class, 'update'])->name('inspeksiLaptopAmi.update');
                 Route::get('/inspeksi-laptop-ami/{id}/detail', [InspeksiLaptopAmiController::class, 'detail'])->name('inspeksiLaptopAmi.detail');
@@ -2478,6 +2498,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-ami', [InspeksiComputerAmiController::class, 'index'])->name('inspeksiKomputerAmi.page');
                 Route::get('inspeksi-komputer-ami/{id}/inspection', [InspeksiComputerAmiController::class, 'doInspection'])->name('inspeksiKomputerAmi.inspection');
                 Route::post('inspeksi-komputer-ami/inspection', [InspeksiComputerAmiController::class, 'store'])->name('inspeksiKomputerAmi.store');
+                Route::post('inspeksi-komputer-ami/approval', [InspeksiComputerAmiController::class, 'approval'])->name('inspeksiKomputerAmi.approval');
                 Route::get('inspeksi-komputer-ami/{id}/edit', [InspeksiComputerAmiController::class, 'edit'])->name('inspeksiKomputerAmi.edit');
                 Route::put('inspeksi-komputer-ami/{id}/update', [InspeksiComputerAmiController::class, 'update'])->name('inspeksiKomputerAmi.update');
                 Route::get('/inspeksi-komputer-ami/{id}/detail', [InspeksiComputerAmiController::class, 'detail'])->name('inspeksiKomputerAmi.detail');
@@ -2488,6 +2509,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-pik', [InspeksiLaptopPikController::class, 'index'])->name('inspeksiLaptopPik.page');
                 Route::get('inspeksi-laptop-pik/{id}/process', [InspeksiLaptopPikController::class, 'process'])->name('inspeksiLaptopPik.process');
                 Route::post('inspeksi-laptop-pik/process', [InspeksiLaptopPikController::class, 'store'])->name('inspeksiLaptopPik.store');
+                Route::post('inspeksi-laptop-pik/approval', [InspeksiLaptopPikController::class, 'approval'])->name('inspeksiLaptopPik.approval');
                 Route::get('inspeksi-laptop-pik/{id}/edit', [InspeksiLaptopPikController::class, 'edit'])->name('inspeksiLaptopPik.edit');
                 Route::post('inspeksi-laptop-pik/update', [InspeksiLaptopPikController::class, 'update'])->name('inspeksiLaptopPik.update');
                 Route::get('/inspeksi-laptop-pik/{id}/detail', [InspeksiLaptopPikController::class, 'detail'])->name('inspeksiLaptopPik.detail');
@@ -2496,6 +2518,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-pik', [InspeksiComputerPikController::class, 'index'])->name('inspeksiKomputerPik.page');
                 Route::get('inspeksi-komputer-pik/{id}/inspection', [InspeksiComputerPikController::class, 'doInspection'])->name('inspeksiKomputerPik.inspection');
                 Route::post('inspeksi-komputer-pik/inspection', [InspeksiComputerPikController::class, 'store'])->name('inspeksiKomputerPik.store');
+                Route::post('inspeksi-komputer-pik/approval', [InspeksiComputerPikController::class, 'approval'])->name('inspeksiKomputerPik.approval');
                 Route::get('inspeksi-komputer-pik/{id}/edit', [InspeksiComputerPikController::class, 'edit'])->name('inspeksiKomputerPik.edit');
                 Route::put('inspeksi-komputer-pik/{id}/update', [InspeksiComputerPikController::class, 'update'])->name('inspeksiKomputerPik.update');
                 Route::get('/inspeksi-komputer-pik/{id}/detail', [InspeksiComputerPikController::class, 'detail'])->name('inspeksiKomputerPik.detail');
@@ -2506,6 +2529,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-Bge', [InspeksiLaptopBgeController::class, 'index'])->name('inspeksiLaptopBge.page');
                 Route::get('inspeksi-laptop-Bge/{id}/process', [InspeksiLaptopBgeController::class, 'process'])->name('inspeksiLaptopBge.process');
                 Route::post('inspeksi-laptop-Bge/process', [InspeksiLaptopBgeController::class, 'store'])->name('inspeksiLaptopBge.store');
+                Route::post('inspeksi-laptop-Bge/approval', [InspeksiLaptopBgeController::class, 'approval'])->name('inspeksiLaptopBge.approval');
                 Route::get('inspeksi-laptop-Bge/{id}/edit', [InspeksiLaptopBgeController::class, 'edit'])->name('inspeksiLaptopBge.edit');
                 Route::post('inspeksi-laptop-Bge/update', [InspeksiLaptopBgeController::class, 'update'])->name('inspeksiLaptopBge.update');
                 Route::get('/inspeksi-laptop-Bge/{id}/detail', [InspeksiLaptopBgeController::class, 'detail'])->name('inspeksiLaptopBge.detail');
@@ -2514,6 +2538,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-Bge', [InspeksiComputerBgeController::class, 'index'])->name('inspeksiKomputerBge.page');
                 Route::get('inspeksi-komputer-Bge/{id}/inspection', [InspeksiComputerBgeController::class, 'doInspection'])->name('inspeksiKomputerBge.inspection');
                 Route::post('inspeksi-komputer-Bge/inspection', [InspeksiComputerBgeController::class, 'store'])->name('inspeksiKomputerBge.store');
+                Route::post('inspeksi-komputer-Bge/approval', [InspeksiComputerBgeController::class, 'approval'])->name('inspeksiKomputerBge.approval');
                 Route::get('inspeksi-komputer-Bge/{id}/edit', [InspeksiComputerBgeController::class, 'edit'])->name('inspeksiKomputerBge.edit');
                 Route::put('inspeksi-komputer-Bge/{id}/update', [InspeksiComputerBgeController::class, 'update'])->name('inspeksiKomputerBge.update');
                 Route::get('/inspeksi-komputer-Bge/{id}/detail', [InspeksiComputerBgeController::class, 'detail'])->name('inspeksiKomputerBge.detail');
@@ -2524,6 +2549,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-bib', [InspeksiLaptopBibController::class, 'index'])->name('inspeksiLaptopBib.page');
                 Route::get('inspeksi-laptop-bib/{id}/process', [InspeksiLaptopBibController::class, 'process'])->name('inspeksiLaptopBib.process');
                 Route::post('inspeksi-laptop-bib/process', [InspeksiLaptopBibController::class, 'store'])->name('inspeksiLaptopBib.store');
+                Route::post('inspeksi-laptop-bib/approval', [InspeksiLaptopBibController::class, 'approval'])->name('inspeksiLaptopBib.approval');
                 Route::get('inspeksi-laptop-bib/{id}/edit', [InspeksiLaptopBibController::class, 'edit'])->name('inspeksiLaptopBib.edit');
                 Route::post('inspeksi-laptop-bib/update', [InspeksiLaptopBibController::class, 'update'])->name('inspeksiLaptopBib.update');
                 Route::get('/inspeksi-laptop-bib/{id}/detail', [InspeksiLaptopBibController::class, 'detail'])->name('inspeksiLaptopBib.detail');
@@ -2532,6 +2558,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-bib', [InspeksiComputerBibController::class, 'index'])->name('inspeksiKomputerBib.page');
                 Route::get('inspeksi-komputer-bib/{id}/inspection', [InspeksiComputerBibController::class, 'doInspection'])->name('inspeksiKomputerBib.inspection');
                 Route::post('inspeksi-komputer-bib/inspection', [InspeksiComputerBibController::class, 'store'])->name('inspeksiKomputerBib.store');
+                Route::post('inspeksi-komputer-bib/approval', [InspeksiComputerBibController::class, 'approval'])->name('inspeksiKomputerBib.approval');
                 Route::get('inspeksi-komputer-bib/{id}/edit', [InspeksiComputerBibController::class, 'edit'])->name('inspeksiKomputerBib.edit');
                 Route::put('inspeksi-komputer-bib/{id}/update', [InspeksiComputerBibController::class, 'update'])->name('inspeksiKomputerBib.update');
                 Route::get('/inspeksi-komputer-bib/{id}/detail', [InspeksiComputerBibController::class, 'detail'])->name('inspeksiKomputerBib.detail');
@@ -2542,6 +2569,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-ipt', [InspeksiLaptopIptController::class, 'index'])->name('inspeksiLaptopIpt.page');
                 Route::get('inspeksi-laptop-ipt/{id}/process', [InspeksiLaptopIptController::class, 'process'])->name('inspeksiLaptopIpt.process');
                 Route::post('inspeksi-laptop-ipt/process', [InspeksiLaptopIptController::class, 'store'])->name('inspeksiLaptopIpt.store');
+                Route::post('inspeksi-laptop-ipt/approval', [InspeksiLaptopIptController::class, 'approval'])->name('inspeksiLaptopIpt.approval');
                 Route::get('inspeksi-laptop-ipt/{id}/edit', [InspeksiLaptopIptController::class, 'edit'])->name('inspeksiLaptopIpt.edit');
                 Route::post('inspeksi-laptop-ipt/update', [InspeksiLaptopIptController::class, 'update'])->name('inspeksiLaptopIpt.update');
                 Route::get('/inspeksi-laptop-ipt/{id}/detail', [InspeksiLaptopIptController::class, 'detail'])->name('inspeksiLaptopIpt.detail');
@@ -2550,6 +2578,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-ipt', [InspeksiComputerIptController::class, 'index'])->name('inspeksiKomputerIpt.page');
                 Route::get('inspeksi-komputer-ipt/{id}/inspection', [InspeksiComputerIptController::class, 'doInspection'])->name('inspeksiKomputerIpt.inspection');
                 Route::post('inspeksi-komputer-ipt/inspection', [InspeksiComputerIptController::class, 'store'])->name('inspeksiKomputerIpt.store');
+                Route::post('inspeksi-komputer-ipt/approval', [InspeksiComputerIptController::class, 'approval'])->name('inspeksiKomputerIpt.approval');
                 Route::get('inspeksi-komputer-ipt/{id}/edit', [InspeksiComputerIptController::class, 'edit'])->name('inspeksiKomputerIpt.edit');
                 Route::put('inspeksi-komputer-ipt/{id}/update', [InspeksiComputerIptController::class, 'update'])->name('inspeksiKomputerIpt.update');
                 Route::get('/inspeksi-komputer-ipt/{id}/detail', [InspeksiComputerIptController::class, 'detail'])->name('inspeksiKomputerIpt.detail');
@@ -2560,6 +2589,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-mlp', [InspeksiLaptopMlpController::class, 'index'])->name('inspeksiLaptopMlp.page');
                 Route::get('inspeksi-laptop-mlp/{id}/process', [InspeksiLaptopMlpController::class, 'process'])->name('inspeksiLaptopMlp.process');
                 Route::post('inspeksi-laptop-mlp/process', [InspeksiLaptopMlpController::class, 'store'])->name('inspeksiLaptopMlp.store');
+                Route::post('inspeksi-laptop-mlp/approval', [InspeksiLaptopMlpController::class, 'approval'])->name('inspeksiLaptopMlp.approval');
                 Route::get('inspeksi-laptop-mlp/{id}/edit', [InspeksiLaptopMlpController::class, 'edit'])->name('inspeksiLaptopMlp.edit');
                 Route::post('inspeksi-laptop-mlp/update', [InspeksiLaptopMlpController::class, 'update'])->name('inspeksiLaptopMlp.update');
                 Route::get('/inspeksi-laptop-mlp/{id}/detail', [InspeksiLaptopMlpController::class, 'detail'])->name('inspeksiLaptopMlp.detail');
@@ -2568,6 +2598,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-mlp', [InspeksiComputerMlpController::class, 'index'])->name('inspeksiKomputerMlp.page');
                 Route::get('inspeksi-komputer-mlp/{id}/inspection', [InspeksiComputerMlpController::class, 'doInspection'])->name('inspeksiKomputerMlp.inspection');
                 Route::post('inspeksi-komputer-mlp/inspection', [InspeksiComputerMlpController::class, 'store'])->name('inspeksiKomputerMlp.store');
+                Route::post('inspeksi-komputer-mlp/approval', [InspeksiComputerMlpController::class, 'approval'])->name('inspeksiKomputerMlp.approval');
                 Route::get('inspeksi-komputer-mlp/{id}/edit', [InspeksiComputerMlpController::class, 'edit'])->name('inspeksiKomputerMlp.edit');
                 Route::put('inspeksi-komputer-mlp/{id}/update', [InspeksiComputerMlpController::class, 'update'])->name('inspeksiKomputerMlp.update');
                 Route::get('/inspeksi-komputer-mlp/{id}/detail', [InspeksiComputerMlpController::class, 'detail'])->name('inspeksiKomputerMlp.detail');
@@ -2578,6 +2609,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-mip', [InspeksiLaptopMipController::class, 'index'])->name('inspeksiLaptopMip.page');
                 Route::get('inspeksi-laptop-mip/{id}/process', [InspeksiLaptopMipController::class, 'process'])->name('inspeksiLaptopMip.process');
                 Route::post('inspeksi-laptop-mip/process', [InspeksiLaptopMipController::class, 'store'])->name('inspeksiLaptopMip.store');
+                Route::post('inspeksi-laptop-mip/approval', [InspeksiLaptopMipController::class, 'approval'])->name('inspeksiLaptopMip.approval');
                 Route::get('inspeksi-laptop-mip/{id}/edit', [InspeksiLaptopMipController::class, 'edit'])->name('inspeksiLaptopMip.edit');
                 Route::post('inspeksi-laptop-mip/update', [InspeksiLaptopMipController::class, 'update'])->name('inspeksiLaptopMip.update');
                 Route::get('/inspeksi-laptop-mip/{id}/detail', [InspeksiLaptopMipController::class, 'detail'])->name('inspeksiLaptopMip.detail');
@@ -2586,6 +2618,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-mip', [InspeksiComputerMipController::class, 'index'])->name('inspeksiKomputerMip.page');
                 Route::get('inspeksi-komputer-mip/{id}/inspection', [InspeksiComputerMipController::class, 'doInspection'])->name('inspeksiKomputerMip.inspection');
                 Route::post('inspeksi-komputer-mip/inspection', [InspeksiComputerMipController::class, 'store'])->name('inspeksiKomputerMip.store');
+                Route::post('inspeksi-komputer-mip/approval', [InspeksiComputerMipController::class, 'approval'])->name('inspeksiKomputerMip.approval');
                 Route::get('inspeksi-komputer-mip/{id}/edit', [InspeksiComputerMipController::class, 'edit'])->name('inspeksiKomputerMip.edit');
                 Route::put('inspeksi-komputer-mip/{id}/update', [InspeksiComputerMipController::class, 'update'])->name('inspeksiKomputerMip.update');
                 Route::get('/inspeksi-komputer-mip/{id}/detail', [InspeksiComputerMipController::class, 'detail'])->name('inspeksiKomputerMip.detail');
@@ -2596,6 +2629,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-vale', [InspeksiLaptopValeController::class, 'index'])->name('inspeksiLaptopVale.page');
                 Route::get('inspeksi-laptop-vale/{id}/process', [InspeksiLaptopValeController::class, 'process'])->name('inspeksiLaptopVale.process');
                 Route::post('inspeksi-laptop-vale/process', [InspeksiLaptopValeController::class, 'store'])->name('inspeksiLaptopVale.store');
+                Route::post('inspeksi-laptop-vale/approval', [InspeksiLaptopValeController::class, 'approval'])->name('inspeksiLaptopVale.approval');
                 Route::get('inspeksi-laptop-vale/{id}/edit', [InspeksiLaptopValeController::class, 'edit'])->name('inspeksiLaptopVale.edit');
                 Route::post('inspeksi-laptop-vale/update', [InspeksiLaptopValeController::class, 'update'])->name('inspeksiLaptopVale.update');
                 Route::get('/inspeksi-laptop-vale/{id}/detail', [InspeksiLaptopValeController::class, 'detail'])->name('inspeksiLaptopVale.detail');
@@ -2604,6 +2638,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-vale', [InspeksiComputerValeController::class, 'index'])->name('inspeksiKomputerVale.page');
                 Route::get('inspeksi-komputer-vale/{id}/inspection', [InspeksiComputerValeController::class, 'doInspection'])->name('inspeksiKomputerVale.inspection');
                 Route::post('inspeksi-komputer-vale/inspection', [InspeksiComputerValeController::class, 'store'])->name('inspeksiKomputerVale.store');
+                Route::post('inspeksi-komputer-vale/approval', [InspeksiComputerValeController::class, 'approval'])->name('inspeksiKomputerVale.approval');
                 Route::get('inspeksi-komputer-vale/{id}/edit', [InspeksiComputerValeController::class, 'edit'])->name('inspeksiKomputerVale.edit');
                 Route::put('inspeksi-komputer-vale/{id}/update', [InspeksiComputerValeController::class, 'update'])->name('inspeksiKomputerVale.update');
                 Route::get('/inspeksi-komputer-vale/{id}/detail', [InspeksiComputerValeController::class, 'detail'])->name('inspeksiKomputerVale.detail');
@@ -2614,6 +2649,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-sbs', [InspeksiLaptopSbsController::class, 'index'])->name('inspeksiLaptopSbs.page');
                 Route::get('inspeksi-laptop-sbs/{id}/process', [InspeksiLaptopSbsController::class, 'process'])->name('inspeksiLaptopSbs.process');
                 Route::post('inspeksi-laptop-sbs/process', [InspeksiLaptopSbsController::class, 'store'])->name('inspeksiLaptopSbs.store');
+                Route::post('inspeksi-laptop-sbs/apprval', [InspeksiLaptopSbsController::class, 'approval'])->name('inspeksiLaptopSbs.approval');
                 Route::get('inspeksi-laptop-sbs/{id}/edit', [InspeksiLaptopSbsController::class, 'edit'])->name('inspeksiLaptopSbs.edit');
                 Route::post('inspeksi-laptop-sbs/update', [InspeksiLaptopSbsController::class, 'update'])->name('inspeksiLaptopSbs.update');
                 Route::get('/inspeksi-laptop-sbs/{id}/detail', [InspeksiLaptopSbsController::class, 'detail'])->name('inspeksiLaptopSbs.detail');
@@ -2622,6 +2658,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-sbs', [InspeksiComputerSbsController::class, 'index'])->name('inspeksiKomputerSbs.page');
                 Route::get('inspeksi-komputer-sbs/{id}/inspection', [InspeksiComputerSbsController::class, 'doInspection'])->name('inspeksiKomputerSbs.inspection');
                 Route::post('inspeksi-komputer-sbs/inspection', [InspeksiComputerSbsController::class, 'store'])->name('inspeksiKomputerSbs.store');
+                Route::post('inspeksi-komputer-sbs/approval', [InspeksiComputerSbsController::class, 'approval'])->name('inspeksiKomputerSbs.approval');
                 Route::get('inspeksi-komputer-sbs/{id}/edit', [InspeksiComputerSbsController::class, 'edit'])->name('inspeksiKomputerSbs.edit');
                 Route::put('inspeksi-komputer-sbs/{id}/update', [InspeksiComputerSbsController::class, 'update'])->name('inspeksiKomputerSbs.update');
                 Route::get('/inspeksi-komputer-sbs/{id}/detail', [InspeksiComputerSbsController::class, 'detail'])->name('inspeksiKomputerSbs.detail');
@@ -2632,6 +2669,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-laptop-sks', [InspeksiLaptopSksController::class, 'index'])->name('inspeksiLaptopSks.page');
                 Route::get('inspeksi-laptop-sks/{id}/process', [InspeksiLaptopSksController::class, 'process'])->name('inspeksiLaptopSks.process');
                 Route::post('inspeksi-laptop-sks/process', [InspeksiLaptopSksController::class, 'store'])->name('inspeksiLaptopSks.store');
+                Route::post('inspeksi-laptop-sks/approval', [InspeksiLaptopSksController::class, 'approval'])->name('inspeksiLaptopSks.approval');
                 Route::get('inspeksi-laptop-sks/{id}/edit', [InspeksiLaptopSksController::class, 'edit'])->name('inspeksiLaptopSks.edit');
                 Route::post('inspeksi-laptop-sks/update', [InspeksiLaptopSksController::class, 'update'])->name('inspeksiLaptopSks.update');
                 Route::get('/inspeksi-laptop-sks/{id}/detail', [InspeksiLaptopSksController::class, 'detail'])->name('inspeksiLaptopSks.detail');
@@ -2640,6 +2678,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-sks', [InspeksiComputerSksController::class, 'index'])->name('inspeksiKomputerSks.page');
                 Route::get('inspeksi-komputer-sks/{id}/inspection', [InspeksiComputerSksController::class, 'doInspection'])->name('inspeksiKomputerSks.inspection');
                 Route::post('inspeksi-komputer-sks/inspection', [InspeksiComputerSksController::class, 'store'])->name('inspeksiKomputerSks.store');
+                Route::post('inspeksi-komputer-sks/approval', [InspeksiComputerSksController::class, 'approval'])->name('inspeksiKomputerSks.approval');
                 Route::get('inspeksi-komputer-sks/{id}/edit', [InspeksiComputerSksController::class, 'edit'])->name('inspeksiKomputerSks.edit');
                 Route::put('inspeksi-komputer-sks/{id}/update', [InspeksiComputerSksController::class, 'update'])->name('inspeksiKomputerSks.update');
                 Route::get('/inspeksi-komputer-sks/{id}/detail', [InspeksiComputerSksController::class, 'detail'])->name('inspeksiKomputerSks.detail');
@@ -2657,6 +2696,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/aduan/updateProgress', [AduanController::class, 'update_aduan_progress'])->name('aduan.updateProgress');
             Route::get('/aduan/{id}/edit', [AduanController::class, 'edit'])->name('aduan.edit');
             Route::get('/aduan/{id}/progress', [AduanController::class, 'progress'])->name('aduan.progress');
+            Route::post('/aduan/{id}/accept', [AduanController::class, 'accept'])->name('aduan.accept');
             Route::delete('/aduan/{id}/delete', [AduanController::class, 'destroy'])->name('aduan.delete');
             Route::post('/aduan/update', [AduanController::class, 'update_aduan'])->name('aduan.update');
             Route::get('/aduan/{id}/detail', [AduanController::class, 'detail'])->name('aduan.detail');
@@ -2671,6 +2711,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanBa/{id}/edit', [AduanBaController::class, 'edit'])->name('aduanBa.edit');
             Route::post('/aduanBa/updateProgress', [AduanBaController::class, 'update_aduan_progress'])->name('aduanBa.updateProgress');
             Route::get('/aduanBa/{id}/progress', [AduanBaController::class, 'progress'])->name('aduanBa.progress');
+            Route::post('/aduanBa/{id}/accept', [AduanBaController::class, 'accept'])->name('aduanBa.accept');
             Route::delete('/aduanBa/{id}/delete', [AduanBaController::class, 'destroy'])->name('aduanBa.delete');
             Route::post('/aduanBa/update', [AduanBaController::class, 'update_aduan'])->name('aduanBa.update');
             Route::get('/aduanBa/{id}/detail', [AduanBaController::class, 'detail'])->name('aduanBa.detail');

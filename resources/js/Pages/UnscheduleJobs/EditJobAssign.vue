@@ -139,7 +139,7 @@
                                 <select
                                     v-model="form.root_cause"
                                     class="w-full p-2 border border-gray-300 rounded-md"
-                                    required
+                                    :required="job.category !== 'OTHER'"
                                 >
                                     <option disabled value=""></option>
                                     <option

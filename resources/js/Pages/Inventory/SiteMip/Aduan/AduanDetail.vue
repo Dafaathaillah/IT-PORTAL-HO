@@ -2,6 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import { Head, Link } from "@inertiajs/vue3";
+import dayjs from "dayjs";
 import moment from "moment";
 import { onMounted, ref } from "vue";
 
@@ -11,9 +12,14 @@ const mainMenu = ref("Detail Aduan");
 
 const props = defineProps(["aduan"]);
 
-// Fungsi untuk format tanggal
-function formattedDate(date) {
-    return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+function convertToUserTime(date) {
+    if (!date) return ""; // jika null/undefined/kosong, langsung return string kosong
+    return dayjs
+        .tz(date, "Asia/Makassar")
+        .tz(timezone)
+        .format("YYYY-MM-DD HH:mm:ss");
 }
 
 const mount = onMounted(() => {
@@ -110,8 +116,10 @@ const mount = onMounted(() => {
                                             <p>
                                                 :
                                                 {{
+                                                    convertToUserTime(
                                                     props.aduan
                                                         .date_of_complaint
+                                                    )
                                                 }}
                                             </p>
                                         </div>
@@ -214,7 +222,11 @@ const mount = onMounted(() => {
                                     </div>
                                     <div>
                                         <p>
-                                            : {{ props.aduan.start_response }}
+                                            : {{ 
+                                                convertToUserTime(    
+                                                    props.aduan.start_response 
+                                                    )
+                                                    }}
                                         </p>
                                     </div>
                                 </div>
@@ -225,7 +237,11 @@ const mount = onMounted(() => {
                                     </div>
                                     <div>
                                         <p>
-                                            : {{ props.aduan.start_progress }}
+                                            : {{ 
+                                                convertToUserTime(    
+                                                    props.aduan.start_progress 
+                                                    )
+                                                    }}
                                         </p>
                                     </div>
                                 </div>
@@ -235,7 +251,11 @@ const mount = onMounted(() => {
                                         <p class="text-base">End Progress</p>
                                     </div>
                                     <div>
-                                        <p>: {{ props.aduan.end_progress }}</p>
+                                        <p>: {{ 
+                                            convertToUserTime(    
+                                                    props.aduan.end_progress 
+                                                    )
+                                                    }}</p>
                                     </div>
                                 </div>
 

@@ -70,15 +70,15 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm, router } from "@inertiajs/vue3";
+import { Head, Link, useForm, router, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import { createPopper } from "@popperjs/core";
 import axios from "axios";
 
 const pages = ref("Pages");
@@ -89,6 +89,10 @@ const mainMenu = ref("Aduan Data");
 function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
 }
+
+const form = useForm({
+    note: "",
+});
 
 const customFormat = (date) => {
     if (!date) return null;
@@ -146,8 +150,6 @@ const props = defineProps({
     },
 });
 
-const form = useForm({});
-
 const deleteData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
@@ -194,6 +196,84 @@ const editData = (id) => {
 
 const progressAduan = (id) => {
     form.get(route("aduan.progress", { id: id }));
+};
+
+const acceptAduan = (id) => {
+    Swal.fire({
+        title: "Accept Aduan?",
+        html: `
+        Proses ini akan otomatis mengisi <b>Start Response</b> dengan jam sekarang,
+        dan mengubah status menjadi <b>Progress</b>
+      `,
+        showCancelButton: true,
+        confirmButtonText: "Accept",
+        cancelButtonText: "Cancel",
+        focusConfirm: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        backdrop: `
+            rgba(0,0,0,0.5)
+            left top
+            no-repeat
+        `,
+        customClass: {
+            confirmButton:
+                "bg-slate-700 hover:bg-slate-900 text-white font-semibold px-4 py-2 rounded",
+            cancelButton:
+                "bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded ml-2",
+        },
+        buttonsStyling: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .post(route("aduan.accept", { id: id }))
+                .then((response) => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil!",
+                        text: response.data.message,
+                        timer: 2000,
+                        showConfirmButton: false,
+                        showConfirmButton: false,
+                        willClose: () => {
+                            // refresh page setelah Swal tertutup
+                            location.reload();
+                        },
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal!",
+                        text:
+                            error.response?.data?.message ??
+                            "Terjadi kesalahan.",
+                    });
+                });
+        }
+    });
+};
+
+const page = usePage();
+
+const showGuide = ref(false);
+
+onMounted(() => {
+    const page = usePage();
+
+    // ✅ hanya muncul di halaman Aduan/Index
+    if (
+        page.component === "Aduan/Aduan" &&
+        !sessionStorage.getItem("aduanGuideShown")
+    ) {
+        showGuide.value = true;
+    }
+});
+
+const closeGuide = () => {
+    showGuide.value = false;
+    sessionStorage.setItem("aduanGuideShown", "true");
 };
 
 const detailData = (id) => {
@@ -315,9 +395,14 @@ const exportPdf = () => {
         title: "Menyiapkan PDF...",
         text: "Harap tunggu sebentar.",
         allowOutsideClick: false,
-        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        showConfirmButton: false,
+        timer: 3000, // Timer 5 detik
+        timerProgressBar: true, // Tampilkan garis waktu
         didOpen: () => {
             Swal.showLoading();
+        },
+        willClose: () => {
+            console.log("Popup PDF selesai otomatis."); // Opsional
         },
     });
 
@@ -327,7 +412,7 @@ const exportPdf = () => {
         {
             startDate: customFormat(startDate.value),
             endDate: customFormat(endDate.value),
-            site: 'HO',
+            site: "HO",
             pic: selectPic,
         },
         {
@@ -338,7 +423,7 @@ const exportPdf = () => {
                         route("export.aduan", {
                             startDate: customFormat(startDate.value),
                             endDate: customFormat(endDate.value),
-                            site: 'HO',
+                            site: "HO",
                             pic: selectPic,
                         }),
                         "_blank"
@@ -362,6 +447,32 @@ const exportPdf = () => {
         }
     );
 };
+
+onMounted(() => {
+    // cek apakah sudah pernah ditampilkan di sessionStorage
+    if (!sessionStorage.getItem("guideShown")) {
+        Swal.fire({
+            title: "Panduan",
+            html: `
+        Jika ada aduan masuk dan ingin memberikan response cepat,
+        klik tombol <b>Accept</b> pada kolom progress.
+      `,
+            icon: "info",
+            confirmButtonText: "Oke",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            backdrop: `rgba(0,0,0,0.6)`,
+            customClass: {
+                confirmButton:
+                    "bg-slate-700 hover:bg-slate-900 text-white font-semibold px-4 py-2 rounded",
+            },
+            buttonsStyling: false,
+        }).then(() => {
+            // simpan flag agar tidak tampil lagi selama sesi
+            sessionStorage.setItem("guideShown", "true");
+        });
+    }
+});
 </script>
 
 <template>
@@ -411,7 +522,7 @@ const exportPdf = () => {
                                     </div>
                                     <div class="px-3 text-right basis-1/3">
                                         <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500"
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-slate-700 to-slate-900"
                                         >
                                             <i
                                                 class="fas fa-envelope-open text-lg relative top-2.5 text-white"
@@ -459,7 +570,7 @@ const exportPdf = () => {
                                     </div>
                                     <div class="px-3 text-right basis-1/3">
                                         <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-yellow-500 to-yellow-400"
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-slate-700 to-slate-900"
                                         >
                                             <i
                                                 class="fas fa-clock text-lg relative top-2.5 text-white"
@@ -508,7 +619,7 @@ const exportPdf = () => {
                                     </div>
                                     <div class="px-3 text-right basis-1/3">
                                         <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-green-600 to-green-600"
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-slate-700 to-slate-900"
                                         >
                                             <i
                                                 class="fas fa-check-square text-lg relative top-2.5 text-white"
@@ -556,7 +667,7 @@ const exportPdf = () => {
                                     </div>
                                     <div class="px-3 text-right basis-1/3">
                                         <div
-                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-500 to-red-500"
+                                            class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-slate-700 to-slate-900"
                                         >
                                             <i
                                                 class="fas fa-ban text-lg relative top-2.5 text-white"
@@ -574,9 +685,9 @@ const exportPdf = () => {
                         <div
                             class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                         >
-                               <div
-                                    class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
-                                >
+                            <div
+                                class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
+                            >
                                 <Link
                                     :href="route('aduan.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
@@ -584,55 +695,57 @@ const exportPdf = () => {
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
                                     New Data
                                 </Link>
-                            <div class="flex flex-wrap md:flex-nowrap gap-3 mt-4">
                                 <div
-                                    class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
+                                    class="flex flex-wrap md:flex-nowrap gap-3 mt-4"
                                 >
-                                    <VueDatePicker
-                                        required
-                                        v-model="startDate"
-                                        :format="customFormat"
-                                        placeholder="Start Date"
-                                        :enable-time-picker="false"
-                                    />
+                                    <div
+                                        class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
+                                    >
+                                        <VueDatePicker
+                                            required
+                                            v-model="startDate"
+                                            :format="customFormat"
+                                            placeholder="Start Date"
+                                            :enable-time-picker="false"
+                                        />
+                                    </div>
+                                    <div
+                                        class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
+                                    >
+                                        <VueDatePicker
+                                            required
+                                            v-model="endDate"
+                                            :format="customFormat"
+                                            placeholder="End Date"
+                                            :enable-time-picker="false"
+                                        />
+                                    </div>
+                                    <div
+                                        class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
+                                    >
+                                        <VueMultiselect
+                                            ref="picSelect"
+                                            v-model="selectedValues"
+                                            :options="options"
+                                            :multiple="false"
+                                            :close-on-select="true"
+                                            placeholder="Pilih PIC"
+                                            track-by="name"
+                                            label="name"
+                                            :class="{
+                                                'shake-border': showValidation,
+                                            }"
+                                        />
+                                    </div>
+                                    <button
+                                        @click="exportPdf"
+                                        class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
+                                    >
+                                        <i class="fas fa-download"></i>
+                                        Rekap Aduan
+                                    </button>
                                 </div>
-                                <div
-                                    class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
-                                >
-                                    <VueDatePicker
-                                        required
-                                        v-model="endDate"
-                                        :format="customFormat"
-                                        placeholder="End Date"
-                                        :enable-time-picker="false"
-                                    />
-                                </div>
-                                <div
-                                    class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease"
-                                >
-                                    <VueMultiselect
-                                        ref="picSelect"
-                                        v-model="selectedValues"
-                                        :options="options"
-                                        :multiple="false"
-                                        :close-on-select="true"
-                                        placeholder="Pilih PIC"
-                                        track-by="name"
-                                        label="name"
-                                        :class="{
-                                            'shake-border': showValidation,
-                                        }"
-                                    />
-                                </div>
-                                <button
-                                    @click="exportPdf"
-                                    class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
-                                >
-                                    <i class="fas fa-download"></i>
-                                    Rekap Inspeksi
-                                </button>
                             </div>
-                                </div>
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0">
                                     <div class="p-6 text-gray-900">
@@ -765,9 +878,23 @@ const exportPdf = () => {
                                                                     aduans.id
                                                                 )
                                                             "
-                                                            class="mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                            class="mr-1 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
-                                                            Progress Aduan
+                                                            Progress
+                                                        </NavLinkCustom>
+                                                        <NavLinkCustom
+                                                            v-if="
+                                                                aduans.status ===
+                                                                'OPEN'
+                                                            "
+                                                            @click="
+                                                                acceptAduan(
+                                                                    aduans.id
+                                                                )
+                                                            "
+                                                            class="accept-btn mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Accept
                                                         </NavLinkCustom>
                                                     </td>
                                                     <td

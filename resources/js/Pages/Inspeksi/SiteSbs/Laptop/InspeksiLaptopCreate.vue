@@ -407,9 +407,9 @@ const options = props.pengguna;
                             class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0"
                         >
                             <div class="flex items-center">
-                                <p class="mb-0 font-black dark:text-white/80">
-                                    Form Inspeksi Laptop
-                                </p>
+                                <h4 class="mb-0 font-black dark:text-white/80">
+                                    Form Inspeksi dan Perawatan Laptop
+                                </h4>
                             </div>
                         </div>
                         <div class="flex-auto p-6">

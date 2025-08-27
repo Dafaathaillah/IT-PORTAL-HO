@@ -174,25 +174,25 @@ const toggleLevel3PrinterHo = () => {
         aria-expanded="false"
         :class="classes"
     >
-        <div class="h-19">
-            <i
-                class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
-                @click="handleSidebarClose"
-            ></i>
-            <div
-                class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
-            >
-                <img
-                    src="/assets/img/logoppa.png"
-                    class="inline transition-all duration-200 dark:hidden ease-nav-brand max-h-8 mr-2"
-                    alt="main_logo"
-                />
-                <span
-                    class="ml-1 font-semibold transition-all duration-200 ease-nav-brand"
-                    >ICT - PPA INVENTORY</span
+          <div class="h-19">
+                <i
+                    class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
+                    @click="handleSidebarClose"
+                ></i>
+                <div
+                    class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
                 >
+                    <img
+                        src="/assets/img/POLICE_LOGO2.png"
+                        class="inline transition-all duration-200 ease-nav-brand max-h-8 mb-1"
+                        alt="main_logo"
+                    />
+                    <span
+                        class="ml-1 font-semibold transition-all duration-200 ease-nav-brand"
+                        >ICT - PPA INVENTORY</span
+                    >
+                </div>
             </div>
-        </div>
 
         <hr
             class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
@@ -214,7 +214,7 @@ const toggleLevel3PrinterHo = () => {
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
                             <i
-                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-home"
+                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-home"
                             ></i>
                         </div>
                         <span
@@ -237,7 +237,7 @@ const toggleLevel3PrinterHo = () => {
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
                             <i
-                                class="relative top-0 text-sm leading-normal text-red-800 fas fa-comments"
+                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
                             ></i>
                         </div>
                         <span

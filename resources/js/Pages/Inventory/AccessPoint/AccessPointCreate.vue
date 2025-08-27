@@ -45,6 +45,26 @@ const page = usePage();
 const optionsCompany = [{ name: "PPA" }, { name: "AMM" }];
 const selectedOptionCompany = ref(null);
 
+// watch(selectedOptionCompany, async (newVal) => {
+//     if (!newVal) return;
+
+//     await nextTick(); // Menunggu Vue memperbarui DOM
+
+//     router.post(
+//         route("accessPoint.generate"),
+//         { company: newVal },
+//         {
+//             preserveState: true,
+//             replace: true,
+//             onSuccess: (page) => {
+//                 console.log(page);
+//                 form.inventory_number = page.props.inventory_number;
+//             },
+//         }
+//     );
+// });
+
+
 watch(selectedOptionCompany, async (newVal) => {
     if (!newVal) return;
 
@@ -58,7 +78,23 @@ watch(selectedOptionCompany, async (newVal) => {
             replace: true,
             onSuccess: (page) => {
                 console.log(page);
-                form.inventory_number = page.props.inventory_number;
+                const inventoryNumber = page.props.inventory_number;
+
+                if (!inventoryNumber) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Masalah',
+                        text: 'Terjadi masalah pada auto generate inventory number, sistem akan melakukan reload otomatis',
+                        timer: 5000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        willClose: () => {
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    form.inventory_number = inventoryNumber;
+                }
             },
         }
     );

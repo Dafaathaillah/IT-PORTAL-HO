@@ -152,7 +152,7 @@ const save = () => {
 </script>
 
 <template>
-    <Head title="Form Inspeksi Komputer" />
+    <Head title="Form Inspeksi dan Perawatan PC" />
 
     <AuthenticatedLayoutForm>
         <template #header>
@@ -168,11 +168,11 @@ const save = () => {
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
-                        Computer Inspection Pages
+                        PC Inspection Pages
                     </li>
                 </ol>
                 <h6 class="mb-0 font-bold text-white capitalize">
-                    Computer Inspection
+                    PC Inspection
                 </h6>
             </nav>
         </template>
@@ -186,9 +186,7 @@ const save = () => {
                         <div
                             class="flex flex-row p-6 px-4 pb-0 mb-0 border-b-0 rounded-t-2xl"
                         >
-                            <h6 class="mb-0 mr-3 dark:text-white">
-                                Data Komputer
-                            </h6>
+                            <h6 class="mb-0 mr-3 dark:text-white">Data PC</h6>
                         </div>
                         <div class="flex-auto p-4 pt-6">
                             <div class="grid grid-cols-2">
@@ -215,7 +213,7 @@ const save = () => {
                             </div>
                             <div class="grid grid-cols-2">
                                 <div>
-                                    <p class="text-base">Komputer Name</p>
+                                    <p class="text-base">PC Name</p>
                                 </div>
                                 <div>
                                     <p>
@@ -334,13 +332,13 @@ const save = () => {
                             class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0"
                         >
                             <div class="flex items-center">
-                                <p class="mb-0 font-bold dark:text-white/80">
-                                    Form Inspeksi Komputer
-                                </p>
+                                <h4 class="mb-0 font-bold dark:text-white/80">
+                                    Form Inspeksi dan Perawatan PC
+                                </h4>
                             </div>
                         </div>
 
-                        <div class="flex-auto p-6">
+                        <div class="flex-auto min-h-0 p-6 overflow-auto">
                             <form @submit.prevent="save">
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
@@ -374,9 +372,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -416,9 +412,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -458,9 +452,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -503,22 +495,24 @@ const save = () => {
                                             >
                                                 <input
                                                     required
-                                                    v-model="form.softwareStandaritation"
+                                                    v-model="
+                                                        form.softwareStandaritation
+                                                    "
                                                     type="radio"
                                                     name="softwareStandaritation"
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
                                             >
                                                 <input
                                                     required
-                                                    v-model="form.softwareStandaritation"
+                                                    v-model="
+                                                        form.softwareStandaritation
+                                                    "
                                                     type="radio"
                                                     name="softwareStandaritation"
                                                     value="N"
@@ -544,22 +538,24 @@ const save = () => {
                                             >
                                                 <input
                                                     required
-                                                    v-model="form.deviceNameStandaritation"
+                                                    v-model="
+                                                        form.deviceNameStandaritation
+                                                    "
                                                     type="radio"
                                                     name="deviceNameStandaritation"
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
                                             >
                                                 <input
                                                     required
-                                                    v-model="form.deviceNameStandaritation"
+                                                    v-model="
+                                                        form.deviceNameStandaritation
+                                                    "
                                                     type="radio"
                                                     name="deviceNameStandaritation"
                                                     value="N"
@@ -591,9 +587,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -633,9 +627,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -677,9 +669,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -713,34 +703,26 @@ const save = () => {
                                             >
                                                 <input
                                                     required
-                                                    v-model="
-                                                        form.winUpdate
-                                                    "
+                                                    v-model="form.winUpdate"
                                                     type="radio"
                                                     name="winUpdate"
                                                     value="ON"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >On</span
-                                                >
+                                                <span class="text-sm">On</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
                                             >
                                                 <input
                                                     required
-                                                    v-model="
-                                                        form.winUpdate
-                                                    "
+                                                    v-model="form.winUpdate"
                                                     type="radio"
                                                     name="winUpdate"
                                                     value="OFF"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Off</span
-                                                >
+                                                <span class="text-sm">Off</span>
                                             </label>
                                         </div>
                                     </div>
@@ -765,9 +747,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -787,7 +767,7 @@ const save = () => {
                                         </div>
                                     </div>
 
-                                     <div
+                                    <div
                                         class="w-full max-w-full shrink-0 md:w-2/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -805,11 +785,9 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
-                                      <div
+                                    <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-1/12 md:flex-0"
-                                    >
-                                        
-                                    </div>
+                                    ></div>
                                 </div>
 
                                 <div class="max-w-8xl mx-auto p-1">
@@ -842,9 +820,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -886,9 +862,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -912,7 +886,8 @@ const save = () => {
                                         class="w-full max-w-full shrink-0 md:w-4/12 md:flex-0"
                                     >
                                         <h3 class="text-sm font-semibold">
-                                            Setting Input Password After Lock Screen
+                                            Setting Input Password After Lock
+                                            Screen
                                         </h3>
                                         <div
                                             class="mb-4 flex items-center space-x-4"
@@ -930,9 +905,7 @@ const save = () => {
                                                     value="Y"
                                                     class="text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span class="text-sm"
-                                                    >Ya</span
-                                                >
+                                                <span class="text-sm">Ya</span>
                                             </label>
                                             <label
                                                 class="flex items-center space-x-2"
@@ -1283,7 +1256,9 @@ const save = () => {
                                     class="flex flex-nowrap mt-6 justify-between"
                                 >
                                     <Link
-                                        :href="route('inspeksiKomputerBib.page')"
+                                        :href="
+                                            route('inspeksiKomputerBib.page')
+                                        "
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

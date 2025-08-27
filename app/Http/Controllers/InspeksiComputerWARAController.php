@@ -14,26 +14,39 @@ use Inertia\Inertia;
 
 class InspeksiComputerWARAController extends Controller
 {
-    public function index()
-    {
-        $month = Carbon::now()->month;
+public function index(Request $request)
+{
+    $quarter = $request->get('quarter', Carbon::now()->quarter); // default ke quarter saat ini
+    $year = $request->get('year', Carbon::now()->year); // default ke tahun saat ini
 
-        $inspeksi_laptop = InspeksiComputer::with('computer.pengguna')->where('site', 'ADW')->where('month', $month)->get();
+    $inspeksi_computer = InspeksiComputer::with('computer.pengguna')
+        ->where('site', 'ADW')
+        ->where('triwulan', $quarter)
+        ->whereYear('created_at', $year) // opsional, kalau kamu butuh filter per tahun juga
+        ->get();
 
-        $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'ADW')->pluck('name')->map(function ($name) {
-            return ['name' => $name];
-        })->toArray();
+    $site = 'ADW';
 
-        $site = 'ADW';
+    $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])
+        ->where('site', 'ADW')
+        ->pluck('name')
+        ->map(fn($name) => ['name' => $name])
+        ->toArray();
 
-        $role = auth()->user()->role;
+    $role = auth()->user()->role;
 
-        // return dd($inspeksiKomputer);
-        return Inertia::render(
-            'Inspeksi/SiteWARA/Komputer/InspeksiKomputerIndex',
-            ['computer' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
-        );
-    }
+    return Inertia::render(
+        'Inspeksi/SiteWARA/Komputer/InspeksiKomputerIndex',
+        [
+            'computer' => $inspeksi_computer,
+            'site' => $site,
+            'role' => $role,
+            'crew' => $crew,
+            'selectedQuarter' => $quarter,
+            'selectedYear' => $year,
+        ]
+    );
+}
 
     public function doInspection($id)
     {
@@ -438,27 +451,42 @@ class InspeksiComputerWARAController extends Controller
     }
 
 
-
-    public function approval(Request $request)
+    public function approval()
     {
-        $dataCheckStatusInspeksi = InspeksiComputer::where('id', $request->id)->value('inspection_status');
-        if ($dataCheckStatusInspeksi == 'Y') {
-            if ($request->approvalType == 'accept') {
-                $dataApproveal = [
-                    'approved_by' => Auth::user()->name,
-                    'status_approval' => 'approve',
-                ];
-            } else {
-                $dataApproveal = [
-                    'approved_by' => Auth::user()->name,
-                    'status_approval' => 'reject',
-                ];
-            }
-            $data['udpateInspeksiApproval'] = InspeksiComputer::firstWhere('id', $request->id)->update($dataApproveal);
-            return response()->json($data);
-        } else {
-            return response()->json(['message' => 'data ini belum di inspeksi']);
+        $data['now'] = Carbon::now();
+        $data['quarterStart'] = $data['now']->copy()->firstOfQuarter()->format('Y-m-d');
+        $data['quarterEnd'] = $data['now']->copy()->lastOfQuarter()->format(('Y-m-d'));
+
+        $user = Auth::user();
+
+        // Cek apakah user memiliki role 'ict_group_leader'
+        if ($user->role !== 'ict_group_leader') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maaf, Anda tidak dapat melakukan approval dikarenakan role Anda bukan GROUP LEADER!',
+            ], 403);
         }
+        // Ambil site dari user login (asumsi user punya properti site)
+        $user = Auth::user();
+        $site = 'ADW';
+
+        if (!$site) {
+            return back()->with('error', 'Site user tidak ditemukan.');
+        }
+
+        // Data yang akan diupdate
+        $dataApproval = [
+            'approved_by' => $user->name,
+            'status_approval' => 'approved',
+        ];
+
+        // Update semua data inspeksi sesuai site, tahun sekarang, dan status 'sudah_inspeksi'
+        $updateCount = InspeksiComputer::where('inspection_status', 'Y')->whereBetween('created_date', [$data['quarterStart'], $data['quarterEnd']])->update($dataApproval);
+        // dd($updateCount);
+         return response()->json([
+            'success' => true,
+            'message' => "$updateCount data inspeksi Komputer untuk site $site telah di-approve.",
+        ]);
     }
 
     public function approvalAll(Request $request)
@@ -472,12 +500,12 @@ class InspeksiComputerWARAController extends Controller
         if ($request->approvalType == 'accept') {
             $dataApproveal = [
                 'approved_by' => Auth::user()->name,
-                'status_approval' => 'approve',
+                'status_approval' => 'approved',
             ];
         } else {
             $dataApproveal = [
                 'approved_by' => Auth::user()->name,
-                'status_approval' => 'reject',
+                'status_approval' => 'rejected',
             ];
         }
         $data['inventories'] = InspeksiComputer::where('inspection_status', 'Y')->whereBetween('created_date', [$data['quarterStart'], $data['quarterEnd']])->update($dataApproveal);

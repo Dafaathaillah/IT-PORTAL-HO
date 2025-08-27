@@ -132,7 +132,7 @@ const validateYear = (event) => {
 };
 
 const getEncryptedYear = () => {
-      if (!selectedValues.value || !selectedValues.value.name) {
+    if (!selectedValues.value || !selectedValues.value.name) {
         showValidation.value = true;
 
         // Hilangkan efek setelah beberapa saat
@@ -160,13 +160,16 @@ const getEncryptedYear = () => {
         ? parseInt(year.value)
         : new Date().getFullYear();
 
-    const selectedQuarter =
-        triwulan.value !== "" && triwulan.value !== null
-            ? parseInt(triwulan.value)
-            : new Date().getMonth() + 1;
-
-    console.log(selectedYear);
-    console.log(selectedQuarter);
+    // Ambil triwulan (quarter) yang diinput user atau auto-deteksi dari bulan sekarang
+    const selectedQuarter = triwulan.value
+        ? parseInt(triwulan.value)
+        : (() => {
+              const month = new Date().getMonth() + 1;
+              if (month >= 1 && month <= 3) return 1;
+              if (month >= 4 && month <= 6) return 2;
+              if (month >= 7 && month <= 9) return 3;
+              return 4;
+          })();
 
     // Validasi tahun (tidak boleh lebih dari 2500)
     if (selectedYear > 2500) {
@@ -177,21 +180,42 @@ const getEncryptedYear = () => {
         });
         return; // Stop eksekusi jika tahun tidak valid
     }
+
+    // Validasi quarter juga (optional, kalau mau)
+    if (selectedQuarter < 1 || selectedQuarter > 4) {
+        Swal.fire({
+            icon: "error",
+            title: "Triwulan Tidak Valid!",
+            text: "Triwulan harus antara 1 sampai 4.",
+        });
+        return;
+    }
+
     // Tampilkan loading popup
     Swal.fire({
         title: "Menyiapkan PDF...",
         text: "Harap tunggu sebentar.",
         allowOutsideClick: false,
-        showConfirmButton: false, // Hapus tombol "Close" agar tidak bisa ditutup manual
+        showConfirmButton: false,
+        timer: 2000, // Timer 5 detik
+        timerProgressBar: true, // Tampilkan garis waktu
         didOpen: () => {
             Swal.showLoading();
+        },
+        willClose: () => {
+            console.log("Popup PDF selesai otomatis."); // Opsional
         },
     });
 
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.yearComputer"),
-        { year: selectedYear, month: selectedQuarter, site: "ADW",  pic: selectPic, },
+        {
+            year: selectedYear,
+            quarter: selectedQuarter,
+            site: "ADW",
+            pic: selectPic,
+        },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -200,9 +224,9 @@ const getEncryptedYear = () => {
                     window.open(
                         route("export.inspectionComputerAll", {
                             year: encryptedYear,
-                            month: selectedQuarter,
+                            quarter: selectedQuarter,
                             site: "ADW",
-                             pic: selectPic,
+                            pic: selectPic,
                         }),
                         "_blank"
                     );
@@ -285,6 +309,60 @@ const getBadgeTextStatusInventory = (status) => {
         return "BREAKDOWN";
     }
 };
+
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+
+const approved = () => {
+    Swal.fire({
+        title: "Yakin ingin approve semua data?",
+        text: "Tindakan ini akan menyetujui semua data yang sudah di inspeksi!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#16a34a",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, approve semua!",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Sedang memproses...",
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            axios
+                .post(route('inspeksiKomputerWARA.approval', {}, Ziggy), {
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                })
+                .then((response) => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil!",
+                        confirmButtonColor: "#16a34a",
+                        text: response.data.message,
+                        timer: 3000,
+                        showConfirmButton: false,
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal!",
+                        confirmButtonColor: "#16a34a",
+                        text:
+                            error.response?.data?.message ||
+                            "Terjadi kesalahan.",
+                    });
+                });
+        }
+    });
+};
 </script>
 
 <template>
@@ -312,14 +390,15 @@ const getBadgeTextStatusInventory = (status) => {
                                             aria-hidden="true"
                                         ></i>
                                     </span>
-                                    <input
+                                        <input
                                         v-model="triwulan"
                                         type="number"
                                         min="1"
-                                        max="12"
+                                        max="4"
                                         step="1"
                                         class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
-                                        placeholder="Masukkan Bulan"
+                                        placeholder="Masukkan Triwulan"
+                                        @input="validateYear"
                                     />
                                 </div>
                                 <div
@@ -367,6 +446,13 @@ const getBadgeTextStatusInventory = (status) => {
                                 >
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi
+                                </button>
+                                <button
+                                    @click="approved"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-green-850 hover:scale-105"
+                                >
+                                    <i class="fas fa-check"></i>
+                                    Approval
                                 </button>
                             </div>
                             <div

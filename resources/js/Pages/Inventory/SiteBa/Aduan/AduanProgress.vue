@@ -4,6 +4,7 @@ import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueMultiselect from "vue-multiselect";
@@ -24,7 +25,7 @@ const form = useForm({
     location_detail: props.aduan.detail_location,
     status: props.aduan.status,
     complaint_note: props.aduan.complaint_note,
-    actionRepair: props.aduan.actionRepair,
+    actionRepair: props.aduan.action_repair,
     repair_note: props.aduan.repair_note,
 });
 
@@ -36,10 +37,29 @@ const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
+const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+// Fungsi konversi dari WITA (Asia/Makassar) ke zona waktu lokal browser
+function toLocalTime(date) {
+    if (!date) return null;
+    return dayjs.tz(date, "Asia/Makassar").tz(userTimezone).toDate();
+}
+
+// Fungsi konversi balik ke WITA sebelum dikirim ke server
+function toServerTime(date) {
+    if (!date) return null;
+    return dayjs(date).tz("Asia/Makassar").format("YYYY-MM-DD HH:mm:ss");
+}
+const dateFormat = "yyyy-MM-dd HH:mm:ss";
+
 const dateOfComplaint = ref(props.aduan.date_of_complaint);
+const dateOfComplaintLocal = ref(null);
 const startResponse = ref(props.aduan.start_response);
+const startResponseLocal = ref(null);
 const startProgress = ref(null);
+const startProgressLocal = ref(null);
 const endProgress = ref(null);
+const endProgressLocal = ref(null);
 
 const isDateRequired = computed(() => props.aduan.start_response !== null);
 
@@ -73,7 +93,7 @@ const updateProgress = () => {
     formData.append("id", form.id);
     formData.append("crew", crewString.value);
     formData.append("image", file.value);
-    formData.append("actionRepair", form.action_repair);
+    formData.append("actionRepair", form.actionRepair);
     formData.append("dateOfComplaint", formattedDateDateOfComplaint);
     formData.append("startResponse", formattedDateStartResponse);
     formData.append("startProgress", formattedDateStartProgress);
@@ -302,8 +322,18 @@ const options = props.crew;
                                             >
                                             <VueDatePicker
                                                 required
-                                                v-model="dateOfComplaint"
-                                                :format="customFormat"
+                                                v-model="dateOfComplaintLocal"
+                                                :model-value="
+                                                    toLocalTime(dateOfComplaint)
+                                                "
+                                                @update:model-value="
+                                                    (val) =>
+                                                        (dateOfComplaint =
+                                                            toServerTime(val))
+                                                "
+                                                :enable-time-picker="true"
+                                                :is-24="true"
+                                                :format="dateFormat"
                                                 placeholder="Select a date and time"
                                             />
                                         </div>
@@ -344,7 +374,7 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -354,14 +384,24 @@ const options = props.crew;
                                             >
                                             <VueDatePicker
                                                 required
-                                                v-model="startResponse"
-                                                :format="customFormat"
+                                                v-model="startResponseLocal"
+                                                :model-value="
+                                                    toLocalTime(startResponse)
+                                                "
+                                                @update:model-value="
+                                                    (val) =>
+                                                        (startResponse =
+                                                            toServerTime(val))
+                                                "
+                                                :enable-time-picker="true"
+                                                :is-24="true"
+                                                :format="dateFormat"
                                                 placeholder="Select Strat Response"
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -371,14 +411,24 @@ const options = props.crew;
                                             >
                                             <VueDatePicker
                                                 :required="isDateRequired"
-                                                v-model="startProgress"
-                                                :format="customFormat"
+                                                v-model="startProgressLocal"
+                                                :model-value="
+                                                    toLocalTime(startProgress)
+                                                "
+                                                @update:model-value="
+                                                    (val) =>
+                                                        (startProgress =
+                                                            toServerTime(val))
+                                                "
+                                                :enable-time-picker="true"
+                                                :is-24="true"
+                                                :format="dateFormat"
                                                 placeholder="Select Start Progress"
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -388,8 +438,18 @@ const options = props.crew;
                                             >
                                             <VueDatePicker
                                                 :required="isDateRequired"
-                                                v-model="endProgress"
-                                                :format="customFormat"
+                                                v-model="endProgressLocal"
+                                                :model-value="
+                                                    toLocalTime(endProgress)
+                                                "
+                                                @update:model-value="
+                                                    (val) =>
+                                                        (endProgress =
+                                                            toServerTime(val))
+                                                "
+                                                :enable-time-picker="true"
+                                                :is-24="true"
+                                                :format="dateFormat"
                                                 placeholder="Select End Progress"
                                             />
                                         </div>

@@ -354,9 +354,7 @@ const isImage = (url) => {
                                     </div>
                                     <div
                                         v-if="
-                                            form.category_name == 'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                            form.category_name == 'PC/NB'
                                         "
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
@@ -379,9 +377,7 @@ const isImage = (url) => {
                                     <div
                                         :class="
                                             form.category_name ===
-                                                'PC/LAPTOP' ||
-                                            form.category_name == 'NETWORK' ||
-                                            form.category_name == 'CCTV'
+                                                'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                         "

@@ -58,13 +58,17 @@ class ExportInspeksiLaptopController extends Controller
 
 
         $inspectionY = $inspeksiLaptopAll->firstWhere('inspection_status', 'Y');
-        if ($inspectionY) {
-            $picApproved = $inspectionY->approved_by;
-        } else {
-            $picApproved = '';
-        }
+        // if ($inspectionY) {
+            // if ($user->site == 'HO') {
+                $picApproved = 'EDI NUGROHO';
+        //     }else{
+        //         $picApproved = $inspectionY->approved_by;
+        //     }
+        // } else {
+        //     $picApproved = '';
+        // }
         $qr_base64Approved = null;
-        if ($inspectionY && $picApproved) {
+        // if ($inspectionY && $picApproved) {
             $approvedUser = User::where('name', $picApproved)->first();
             if ($approvedUser) {
                 $qrString = "NRP: {$approvedUser->nrp}, Nama: {$approvedUser->name}, Jabatan: {$approvedUser->position}";
@@ -73,7 +77,7 @@ class ExportInspeksiLaptopController extends Controller
                 $pngData = $barcode->getBarcodePNG($qrString, 'QRCODE');
                 $qr_base64Approved = 'data:image/png;base64,' . $pngData;
             }
-        }
+        // }
 
         $qr_base64Pic = null;
         $picInspeksi = User::where('name', $pic)->first();
@@ -89,7 +93,7 @@ class ExportInspeksiLaptopController extends Controller
             ->setPaper('A4', 'landscape');
 
 
-        return $pdf->stream('inspection-laptop-report-periode-' . '.pdf');
+        return $pdf->download('inspection-laptop-report-periode-' . '.pdf');
     }
 
     public function exportPdfSingle(Request $request)
@@ -161,6 +165,6 @@ class ExportInspeksiLaptopController extends Controller
             'site' => $site,
         ])->setPaper('A4', 'portrait');
 
-        return $pdf->stream('inspection-laptop-report-periode-' . $thisYear . '.pdf');
+        return $pdf->download('inspection-laptop-report-periode-' . $thisYear . '.pdf');
     }
 }

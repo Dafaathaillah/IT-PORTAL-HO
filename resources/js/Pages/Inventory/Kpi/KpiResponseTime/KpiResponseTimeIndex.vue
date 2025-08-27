@@ -373,7 +373,7 @@ watch(chartData, (newData) => {
                                             class="bg-white rounded-xl shadow p-4"
                                         >
                                             <p
-                                                class="bg-red-500 text-white text-center py-2 font-bold rounded"
+                                                class="bg-slate-700 text-white text-center py-2 font-bold rounded"
                                             >
                                                 KPI RESPONSE TIME ICT
                                             </p>
@@ -411,7 +411,7 @@ watch(chartData, (newData) => {
                                             class="bg-white rounded-xl shadow p-4"
                                         >
                                             <p
-                                                class="bg-red-500 text-white text-center py-2 font-bold rounded"
+                                                class="bg-slate-700 text-white text-center py-2 font-bold rounded"
                                             >
                                                 RESPONSE TIME PER KATEGORI ICT
                                             </p>

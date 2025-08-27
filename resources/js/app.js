@@ -26,6 +26,15 @@ import '../css/app.css';
 import 'select2/dist/css/select2.min.css';
 import 'select2';
 
+
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 import DataTable from 'datatables.net-vue3';
 import DataTablesLib from 'datatables.net';
 import 'datatables.net-buttons';

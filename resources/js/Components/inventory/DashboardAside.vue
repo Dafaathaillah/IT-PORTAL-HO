@@ -5488,7 +5488,7 @@ const toggleLevel3ScannerSks = () => {
 <template>
     <!-- sidenav  -->
     <aside
-        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-8 antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 mt-3 antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
         aria-expanded="false"
         :class="classes"
     >
@@ -5551,81 +5551,6 @@ const toggleLevel3ScannerSks = () => {
                             >
                         </NavLink>
                     </li>
-                    <!-- <li
-                        v-if="$page.props.auth.user.role === 'ict_group_leader'"
-                        class="mt-0.5 w-full"
-                    >
-                        <NavLink
-                            :href="route('groupLeaderDashboard')"
-                            :active="route().current('groupLeaderDashboard')"
-                        >
-                            <div
-                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                            >
-                                <i
-                                    class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
-                                ></i>
-                            </div>
-                            <span
-                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                >Dashboard</span
-                            >
-                        </NavLink>
-                    </li>
-                    <li
-                        v-if="$page.props.auth.user.role === 'ict_section'"
-                        class="mt-0.5 w-full"
-                    >
-                        <NavLink :href="route('sectionDashboard')">
-                            <div
-                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                            >
-                                <i
-                                    class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
-                                ></i>
-                            </div>
-                            <span
-                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                >Dashboard</span
-                            >
-                        </NavLink>
-                    </li>
-                    <li
-                        v-if="$page.props.auth.user.role === 'ict_technician'"
-                        class="mt-0.5 w-full"
-                    >
-                        <NavLink :href="route('technicianDashboard')">
-                            <div
-                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                            >
-                                <i
-                                    class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
-                                ></i>
-                            </div>
-                            <span
-                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                >Dashboard</span
-                            >
-                        </NavLink>
-                    </li>
-                    <li
-                        v-if="$page.props.auth.user.role === 'ict_admin'"
-                        class="mt-0.5 w-full"
-                    >
-                        <NavLink :href="route('adminDashboard')">
-                            <div
-                                class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                            >
-                                <i
-                                    class="relative top-0 text-sm leading-normal text-gray-600 ni ni-tv-2"
-                                ></i>
-                            </div>
-                            <span
-                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                >Dashboard</span
-                            >
-                        </NavLink>
-                    </li> -->
 
                     <li class="mt-0.5 w-full">
                         <div
@@ -13029,6 +12954,26 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OperationBib">
+                                 <NavLink
+                                        :href="route('pengalihanAsset.page', { site: 'BIB' })"
+                                        :active="
+                                            route().current(
+                                                'pengalihanAsset.page', { site: 'BIB' }
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-arrow-right-arrow-left"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pengalihan Asset</span
+                                        >
+                                    </NavLink>
                                     <NavLink
                                         :href="
                                             route('monitoring-jobs.bib.index')

@@ -204,7 +204,7 @@
                     <div class="header-content">
                         <img src="images/logoppa.png" class="logo-ppa left-logo">
                         <div class="title">
-                            FORM INSPEKSI & MAINTENANCE LAPTOP <br>
+                            FORM DETAIL INSPEKSI LAPTOP <br>
                             <span class="sub-header">PREVENTIVE MAINTENANCE - LAPTOP</span><br>
                             <span class="company-name">PT. PUTRA PERKASA ABADI</span>
                         </div>
@@ -214,36 +214,36 @@
                 <table>
                     <tr>
                         <th>No Inventory</th>
-                        <td>{{ $inspection->inventory->laptop_code }}</td>
+                        <td>{{ $inspection->inventory->laptop_code ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>No Asset HO</th>
-                        <td>{{ $inspection->inventory->number_asset_ho }}</td>
+                        <td>{{ $inspection->inventory->number_asset_ho ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Nik</th>
-                        <td>{{ $inspection->inventory->pengguna->nrp }}</td>
+                        <td>{{ $inspection->inventory->pengguna->nrp ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Nama</th>
-                        <td>{{ $inspection->inventory->pengguna->username }}</td>
+                        <td>{{ $inspection->inventory->pengguna->username ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Departemen</th>
-                        <td>{{ $inspection->inventory->pengguna->department }}</td>
+                        <td>{{ $inspection->inventory->pengguna->department ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Lokasi</th>
-                        <td>{{ $inspection->inventory->location }}</td>
+                        <td>{{ $inspection->inventory->location ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Tanggal Inspeksi</th>
-                        <td>{{ $inspection->inspection_at }}</td>
+                        <td>{{ $inspection->inspection_at ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Merk - Type</th>
-                        <td>{{ $inspection->inventory->laptop_name }} -
-                            {{ explode(',', $inspection->inventory->spesifikasi)[0] }}</td>
+                        <td>{{ $inspection->inventory->laptop_name ?? '-'  }} -
+                            {{ explode(',', $inspection->inventory->spesifikasi ?? '-' )[0] }}</td>
                     </tr>
                 </table>
 
@@ -326,11 +326,11 @@
                     </tr>
                     <tr>
                         <th>Kondisi</th>
-                        <td><b>{{ $inspection->condition }}</b></td>
+                        <td><b>-</b></td>
                     </tr>
                     <tr>
                         <th>PIC</th>
-                        <td>{{ $inspection->inspector }}</td>
+                        <td>-</td>
                     </tr>
                     <tr>
                         <th>Due Date</th>

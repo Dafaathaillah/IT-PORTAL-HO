@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Export Pica Inspeksi Periode
+    <title>Export Rekap Aduan Periode
         @if (!empty($year))
             Tahun - {{ $year }}
         @else
@@ -109,7 +109,7 @@
             </tr>
         </table>
 
-        <div class="title">FORM DATA ADUAN SITE {{ $site }}</div>
+        <div class="title">FORM REKAP ADUAN SITE {{ $site }}</div>
         <table style="width: 100%; margin-bottom: 10px; font-size: 12px; border-collapse: collapse;">
             <tr>
                 <td style="text-align: left; font-weight: bold; border: none;">

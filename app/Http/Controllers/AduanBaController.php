@@ -20,7 +20,7 @@ class AduanBaController extends Controller
     {
 
         $aduan = Aduan::where('site', 'BA')
-        ->whereNull('deleted_at')
+            ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -180,8 +180,65 @@ class AduanBaController extends Controller
         ]);
     }
 
+    public function accept(Request $request, $id)
+    {
+        try {
+            $aduan = Aduan::findOrFail($id);
+
+            $aduan->start_response = now();
+            $aduan->status = 'PROGRESS';
+
+            $awal  = Carbon::parse($aduan->date_of_complaint);
+            $akhir = Carbon::parse($aduan->start_response);
+
+            // total selisih dalam detik
+            $diffInSeconds = $awal->diffInSeconds($akhir);
+
+            // ubah ke format H:i:s (total jam bisa lebih dari 24)
+            $jam   = floor($diffInSeconds / 3600);
+            $menit = floor(($diffInSeconds % 3600) / 60);
+            $detik = $diffInSeconds % 60;
+
+            $responseTime = sprintf('%02d:%02d:%02d', $jam, $menit, $detik);
+
+            $aduan->response_time = $responseTime;
+            $aduan->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Aduan berhasil diterima dan status diubah menjadi PROGRESS',
+                'data' => $aduan,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menerima aduan',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     public function update_aduan_progress(Request $request)
     {
+
+        if ($request->startProgress == 'null' || $request->startProgress == null) {
+            $startProgress = null;
+        } else {
+            $startProgress = $request->startProgress;
+        }
+
+        if ($request->endProgress == 'null' || $request->endProgress == null) {
+            $endProgress = null;
+        } else {
+            $endProgress = $request->endProgress;
+        }
+
+        if ($request->startResponse == 'null' || $request->startResponse == null) {
+            $startResponse = null;
+        } else {
+            $startResponse = $request->startResponse;
+        }
+
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
@@ -201,9 +258,9 @@ class AduanBaController extends Controller
             'complaint_note' => $request->complaint_note,
             'action_repair' => $request->actionRepair,
             'date_of_complaint' => $request->dateOfComplaint,
-            'start_response' => $request->startResponse,
-            'start_progress' => $request->startProgress,
-            'end_progress' => $request->endProgress,
+            'start_response' => $startResponse,
+            'start_progress' => $startProgress,
+            'end_progress' => $endProgress,
         ];
         if ($request->crew != null || $request->crew != '') {
             $data['crew'] = $request->crew;
@@ -222,6 +279,7 @@ class AduanBaController extends Controller
         $data['response_time'] = $response_time;
 
         $closing_aduan = Aduan::firstWhere('id', $request->id)->update($data);
+
         return redirect()->route('aduanBa.page');
     }
 
@@ -266,6 +324,25 @@ class AduanBaController extends Controller
 
     public function update_aduan(Request $request)
     {
+
+        if ($request->startProgress == 'null' || $request->startProgress == null) {
+            $startProgress = null;
+        } else {
+            $startProgress = $request->startProgress;
+        }
+
+        if ($request->endProgress == 'null' || $request->endProgress == null) {
+            $endProgress = null;
+        } else {
+            $endProgress = $request->endProgress;
+        }
+
+        if ($request->startResponse == 'null' || $request->startResponse == null) {
+            $startResponse = null;
+        } else {
+            $startResponse = $request->startResponse;
+        }
+
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
@@ -289,9 +366,9 @@ class AduanBaController extends Controller
             'complaint_note' => $request->complaint_note,
             'action_repair' => $request->action_repair,
             'date_of_complaint' => $request->dateOfComplaint,
-            'start_response' => $request->startResponse,
-            'start_progress' => $request->startProgress,
-            'end_progress' => $request->endProgress,
+            'start_response' => $startResponse,
+            'start_progress' => $startProgress,
+            'end_progress' => $endProgress,
         ];
         if ($request->crew != null || $request->crew != '') {
             $data['crew'] = $request->crew;

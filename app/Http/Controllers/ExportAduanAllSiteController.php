@@ -63,7 +63,7 @@ class ExportAduanAllSiteController extends Controller
                 'startDateConv',
                 'endDateConv',
             ))->setPaper('A4', 'landscape');
-            return $pdf->stream('Data-aduan-' . '-report-periode' . $startDate . '-' . $endDate . 'pdf');
+            return $pdf->download('Data-aduan-' . '-report-periode' . $startDate . '-' . $endDate . '.pdf');
         } else {
             $year = Carbon::now()->year;
             $pdf = Pdf::loadView('itportal.rekapAllInspeksi.rekapAduan', compact(
@@ -75,7 +75,7 @@ class ExportAduanAllSiteController extends Controller
                 'qr_base64Pic',
                 'year',
             ))->setPaper('A4', 'landscape');
-            return $pdf->stream('Data-aduan-' . '-report-periode' . $year . 'pdf');
+            return $pdf->download('Data-aduan-' . '-report-periode' . $year . '.pdf');
         }
     }
 

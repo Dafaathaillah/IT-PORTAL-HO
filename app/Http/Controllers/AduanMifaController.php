@@ -181,6 +181,25 @@ class AduanMifaController extends Controller
 
     public function update_aduan_progress(Request $request)
     {
+
+        if ($request->startProgress == 'null' || $request->startProgress == null) {
+            $startProgress = null;
+        } else {
+            $startProgress = $request->startProgress;
+        }
+
+        if ($request->endProgress == 'null' || $request->endProgress == null) {
+            $endProgress = null;
+        } else {
+            $endProgress = $request->endProgress;
+        }
+
+        if ($request->startResponse == 'null' || $request->startResponse == null) {
+            $startResponse = null;
+        } else {
+            $startResponse = $request->startResponse;
+        }
+
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
@@ -200,9 +219,9 @@ class AduanMifaController extends Controller
             'complaint_note' => $request->complaint_note,
             'action_repair' => $request->actionRepair,
             'date_of_complaint' => $request->dateOfComplaint,
-            'start_response' => $request->startResponse,
-            'start_progress' => $request->startProgress,
-            'end_progress' => $request->endProgress,
+            'start_response' => $startResponse,
+            'start_progress' => $startProgress,
+            'end_progress' => $endProgress,
         ];
         if ($request->crew != null || $request->crew != '') {
             $data['crew'] = $request->crew;
@@ -221,6 +240,7 @@ class AduanMifaController extends Controller
         $data['response_time'] = $response_time;
 
         $closing_aduan = Aduan::firstWhere('id', $request->id)->update($data);
+
         return redirect()->route('aduanMifa.page');
     }
 
@@ -265,6 +285,25 @@ class AduanMifaController extends Controller
 
     public function update_aduan(Request $request)
     {
+
+        if ($request->startProgress == 'null' || $request->startProgress == null) {
+            $startProgress = null;
+        } else {
+            $startProgress = $request->startProgress;
+        }
+
+        if ($request->endProgress == 'null' || $request->endProgress == null) {
+            $endProgress = null;
+        } else {
+            $endProgress = $request->endProgress;
+        }
+
+        if ($request->startResponse == 'null' || $request->startResponse == null) {
+            $startResponse = null;
+        } else {
+            $startResponse = $request->startResponse;
+        }
+
         $task = Aduan::find($request->id);
         $awal  = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
@@ -288,9 +327,9 @@ class AduanMifaController extends Controller
             'complaint_note' => $request->complaint_note,
             'action_repair' => $request->action_repair,
             'date_of_complaint' => $request->dateOfComplaint,
-            'start_response' => $request->startResponse,
-            'start_progress' => $request->startProgress,
-            'end_progress' => $request->endProgress,
+            'start_response' => $startResponse,
+            'start_progress' => $startProgress,
+            'end_progress' => $endProgress,
         ];
         if ($request->crew != null || $request->crew != '') {
             $data['crew'] = $request->crew;

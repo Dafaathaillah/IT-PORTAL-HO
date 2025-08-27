@@ -65,7 +65,7 @@ class AuthenticatedSessionController extends Controller
             if ($dataUser && Hash::check($request->password, $dataUser->password)) {
                 $request->authenticate();
                 $request->session()->regenerate();
-                return redirect()->intended(route('home', absolute: false));
+              return redirect(route('home', absolute: false));
             } else if (empty($dataUser)) {
                 $request->session()->flash('errorLoginUnamePasswr', 'NRP anda tidak terdaftar di local! lakukan login dengan SS6');
                 return redirect('/login-bge');
@@ -106,7 +106,7 @@ class AuthenticatedSessionController extends Controller
 
                         $request->session()->regenerate();
 
-                        return redirect()->intended(route('home', absolute: false));
+                       return redirect(route('home', absolute: false));
                     } else {
                         $dataUser = User::where('nrp', $dataToArray['nrp'])->first();
                         $dataUserAll = UserAll::where('nrp', $dataToArray['nrp'])->first();
@@ -144,7 +144,7 @@ class AuthenticatedSessionController extends Controller
 
                             $request->session()->regenerate();
 
-                            return redirect()->intended(route('home', absolute: false));
+                           return redirect(route('home', absolute: false));
                         } else {
                             $dataCreate = [
                                 'name' => $dataToArray['nama'],
@@ -184,7 +184,7 @@ class AuthenticatedSessionController extends Controller
 
                             $request->session()->regenerate();
 
-                            return redirect()->intended(route('home', absolute: false));
+                            return redirect(route('home', absolute: false));
                         }
                     }
                 }
@@ -205,6 +205,7 @@ class AuthenticatedSessionController extends Controller
             $request->session()->flash('errorLoginKoneksi', 'Internet anda tidak stabil untuk mengakses halaman ini!');
             return redirect('/login');
         }
+            return redirect('/login');
     }
 
     /**

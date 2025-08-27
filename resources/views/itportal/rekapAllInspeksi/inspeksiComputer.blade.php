@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inspection Computer Report Periode Inspection Computer Report Periode
+    <title>Inspection PC Report Periode
         @if (isset($thisTriwulan))
             Triwulan {{ $thisTriwulan }} Tahun {{ $thisYear }}
         @elseif(isset($thisMonth))
@@ -210,8 +210,8 @@
                     <div class="header-content">
                         <img src="images/logoppa.png" class="logo-ppa left-logo">
                         <div class="title">
-                            FORM INSPEKSI & MAINTENANCE COMPUTER <br>
-                            <span class="sub-header">PREVENTIVE MAINTENANCE - COMPUTER</span><br>
+                            FORM DETAIL INSPEKSI PC <br>
+                            <span class="sub-header">PREVENTIVE MAINTENANCE - PC</span><br>
                             <span class="company-name">PT. PUTRA PERKASA ABADI</span>
                         </div>
                         <img src="images/POLICE_LOGO2.png" class="logo-police right-logo">
@@ -220,36 +220,36 @@
                 <table>
                     <tr>
                         <th>No Inventory</th>
-                        <td>{{ $inspection->computer->computer_code }}</td>
+                        <td>{{ $inspection->computer->computer_code ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>No Asset HO</th>
-                        <td>{{ $inspection->computer->number_asset_ho }}</td>
+                        <td>{{ $inspection->computer->number_asset_ho ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Nik</th>
-                        <td>{{ $inspection->computer->pengguna->nrp }}</td>
+                        <td>{{ $inspection->computer->pengguna->nrp ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Nama</th>
-                        <td>{{ $inspection->computer->pengguna->username }}</td>
+                        <td>{{ $inspection->computer->pengguna->username ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Departemen</th>
-                        <td>{{ $inspection->computer->pengguna->department }}</td>
+                        <td>{{ $inspection->computer->pengguna->department ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Lokasi</th>
-                        <td>{{ $inspection->computer->location }}</td>
+                        <td>{{ $inspection->computer->location ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Tanggal Inspeksi</th>
-                        <td>{{ $inspection->inspection_at }}</td>
+                        <td>{{ $inspection->inspection_at ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Merk - Type</th>
-                        <td>{{ $inspection->computer->computer_name }} -
-                            {{ explode(',', $inspection->computer->spesifikasi)[0] }}</td>
+                        <td>{{ $inspection->computer->computer_name ?? '-' }} -
+                            {{ explode(',', $inspection->computer->spesifikasi ?? '-')[0] }}</td>
                     </tr>
                 </table>
 

@@ -3,6 +3,7 @@
 import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
+import dayjs from "dayjs";
 import VueMultiselect from "vue-multiselect";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
@@ -70,7 +71,12 @@ const save = () => {
         return; // Stop execution if validation fails
     }
     const formData = new FormData();
-    const formattedDate = customFormat(selectedDate.value);
+
+    const formattedDate = selectedDate.value
+        ? dayjs(selectedDate.value)
+              .tz("Asia/Makassar")
+              .format("YYYY-MM-DD HH:mm:ss")
+        : null;
     formData.append("image", file.value);
     formData.append("complaint_name", form.complaint_name);
     formData.append("complaint_code", form.complaint_code);
@@ -83,7 +89,7 @@ const save = () => {
     formData.append("location", form.location);
     formData.append("complaint_note", form.complaint_note);
     formData.append("location_detail", form.location_detail);
-    Inertia.post(route("aduanMifa.store"), formData, {
+    Inertia.post(route("aduanMip.store"), formData, {
         forceFormData: true,
         onSuccess: () => {
             // Show SweetAlert2 success notification
@@ -122,10 +128,10 @@ const getPlaceholder = computed(() => {
 
 const showAlertTrue = () => {
     Swal.fire({
-        title: 'Tabel Role Akses User!',
+        title: "Tabel Role Akses User!",
         html: '<img src="/step_no_inv.jpg" class="inline transition-all duration-200 ease-nav-brand max-h-60 mr-2" alt="main_logo" />',
     });
-}
+};
 </script>
 
 <template>
@@ -142,7 +148,7 @@ const showAlertTrue = () => {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('aduanMifa.page')"
+                        :href="route('aduanMip.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
@@ -276,26 +282,25 @@ const showAlertTrue = () => {
                                                 name="category_name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             >
-                                                <option
-                                                    selected
-                                                    value=""
-                                                >
+                                                <option selected value="">
                                                     SELECT CATEGORY
                                                 </option>
                                                 <option
                                                     v-for="category in categories"
                                                     :key="category.id"
-                                                    :value="category.category_root_cause"
+                                                    :value="
+                                                        category.category_root_cause
+                                                    "
                                                 >
-                                                    {{ category.category_root_cause }}
+                                                    {{
+                                                        category.category_root_cause
+                                                    }}
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div
-                                        v-if="
-                                            form.category_name == 'PC/NB'
-                                        "
+                                        v-if="form.category_name == 'PC/NB'"
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
@@ -304,8 +309,14 @@ const showAlertTrue = () => {
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                                 >Inventory Number</label
                                             >
-                                            <a style="cursor: pointer;" class="icon-button" @click="showAlertTrue">
-                                                <i class="ms-3 mt-1 text-red-700 fas fa-question-circle"></i>
+                                            <a
+                                                style="cursor: pointer"
+                                                class="icon-button"
+                                                @click="showAlertTrue"
+                                            >
+                                                <i
+                                                    class="ms-3 mt-1 text-red-700 fas fa-question-circle"
+                                                ></i>
                                             </a>
                                             <input
                                                 required
@@ -319,8 +330,7 @@ const showAlertTrue = () => {
                                     </div>
                                     <div
                                         :class="
-                                            form.category_name ===
-                                                'PC/NB'
+                                            form.category_name === 'PC/NB'
                                                 ? 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
                                                 : 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
                                         "
@@ -451,7 +461,7 @@ const showAlertTrue = () => {
                                     class="flex flex-nowrap mt-6 justify-between"
                                 >
                                     <Link
-                                        :href="route('aduanMifa.page')"
+                                        :href="route('aduanMip.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

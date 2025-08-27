@@ -631,7 +631,7 @@ const exportPdf = () => {
                                         class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-gray-800 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-slate-850 hover:scale-105"
                                     >
                                         <i class="fas fa-download"></i>
-                                        Rekap Inspeksi
+                                        Rekap Aduan
                                     </button>
                                 </div>
                             </div>
