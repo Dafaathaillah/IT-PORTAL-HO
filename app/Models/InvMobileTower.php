@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class InvMobileTower extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'inventory_number',
         'mt_code',
@@ -21,5 +22,23 @@ class InvMobileTower extends Model
         'status',
         'note',
         'padlock_code',
+        'site',
+        'inspection_remark'
     ];
+
+    // UUID settings
+    protected $keyType = 'string';
+    public $incrementing = false;
+
+    // Auto-generate UUID on create
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+    }
 }

@@ -7,20 +7,20 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class InvMobileTowerController extends Controller
+class InvMobileTowerAdwController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::where('site', 'MIFA')->get();
+        $dataInventory = InvMobileTower::where('site', 'ADW')->get();
         // dd($dataInventory);
-        $site = 'MIFA';
+        $site = 'ADW';
         $role = auth()->user()->role;
 
-        return Inertia::render('Inventory/MobileTower/MobileTower', ['mobileTower' => $dataInventory, 'site' => $site, 'role' => $role]);
+        return Inertia::render('Inventory/MobileTower/adw/MobileTower', ['mobileTower' => $dataInventory, 'site' => $site, 'role' => $role]);
     }
     public function create()
     {
-        return Inertia::render('Inventory/MobileTower/MobileTowerCreate', ['inventory_number' => session('inventory_number') ?? null]);
+        return Inertia::render('Inventory/MobileTower/adw/MobileTowerCreate', ['inventory_number' => session('inventory_number') ?? null]);
     }
 
     public function store(Request $request)
@@ -39,11 +39,11 @@ class InvMobileTowerController extends Controller
             'condition' => $params['kondisi'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvMobileTower::create($data);
-        return redirect()->route('mobileTower.page');
+        return redirect()->route('mobileTowerAdw.page');
     }
 
     public function edit($id)
@@ -53,7 +53,7 @@ class InvMobileTowerController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/MobileTower/MobileTowerEdit', [
+        return Inertia::render('Inventory/MobileTower/adw/MobileTowerEdit', [
             'mtData' => $mtData,
             'inventory_number' => session('inventory_number') ?? null,
         ]);
@@ -75,11 +75,11 @@ class InvMobileTowerController extends Controller
             'condition' => $params['kondisi'],
             'status' => $params['status'],
             'note' => $params['note'],
-            'site' => 'MIFA'
+            'site' => 'ADW'
         ];
         // DB::table('inv_aps')->insert($data);
         InvMobileTower::firstWhere('id', $request->id)->update($data);
-        return redirect()->route('mobileTower.page');
+        return redirect()->route('mobileTowerAdw.page');
     }
 
     public function detail($id)
@@ -89,7 +89,7 @@ class InvMobileTowerController extends Controller
             abort(404, 'Data not found');
         }
 
-        return Inertia::render('Inventory/MobileTower/MobileTowerDetail', [
+        return Inertia::render('Inventory/MobileTower/adw/MobileTowerDetail', [
             'mobileTowers' => $mobileTower,
         ]);
     }
