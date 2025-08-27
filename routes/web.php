@@ -145,6 +145,21 @@ use App\Http\Controllers\InvLaptopReUtilizeController;
 use App\Http\Controllers\InvLaptopSbsController;
 use App\Http\Controllers\InvLaptopSksController;
 use App\Http\Controllers\InvLaptopValeController;
+use App\Http\Controllers\InvMobileTowerAdwController;
+use App\Http\Controllers\InvMobileTowerAmiController;
+use App\Http\Controllers\InvMobileTowerBaController;
+use App\Http\Controllers\InvMobileTowerBgeController;
+use App\Http\Controllers\InvMobileTowerBibController;
+use App\Http\Controllers\InvMobileTowerController;
+use App\Http\Controllers\InvMobileTowerIptController;
+use App\Http\Controllers\InvMobileTowerMhuController;
+use App\Http\Controllers\InvMobileTowerMifaController;
+use App\Http\Controllers\InvMobileTowerMipController;
+use App\Http\Controllers\InvMobileTowerMlpController;
+use App\Http\Controllers\InvMobileTowerPikController;
+use App\Http\Controllers\InvMobileTowerSbsController;
+use App\Http\Controllers\InvMobileTowerSksController;
+use App\Http\Controllers\InvMobileTowerVibController;
 use App\Http\Controllers\InvPrinterAmiController;
 use App\Http\Controllers\InvPrinterBaController;
 use App\Http\Controllers\InvPrinterBgeController;
@@ -230,6 +245,7 @@ use App\Models\InvAp;
 use App\Models\InvCctv;
 use App\Models\InvComputer;
 use App\Models\InvLaptop;
+use App\Models\InvMobileTower;
 use App\Models\InvPrinter;
 use App\Models\InvSwitch;
 use App\Models\InvWirelless;
@@ -268,7 +284,7 @@ Route::middleware('auth')->group(function () {
     })->name('encrypt.yearComputer');
     Route::get('/export-pdf-all', [ExportInspeksiComputerController::class, 'exportPdfAll'])->name('export.inspectionComputerAll');
 
-        Route::post('/single-export', function (Request $request) {
+    Route::post('/single-export', function (Request $request) {
         // Pastikan inspeksiId ada
         if (!$request->inspeksiId) {
             return back()->with('error', 'ID tidak ditemukan.');
@@ -280,7 +296,7 @@ Route::middleware('auth')->group(function () {
             'inspeksiId' => $request->inspeksiId
         ]);
     })->name('laptop.singleExport');
-    
+
     Route::get('/export-pdf-single-laptop', [ExportInspeksiLaptopController::class, 'exportPdfSingle'])->name('laptop.singleExportPdf');
 
     Route::post('/single-export-computer', function (Request $request) {
@@ -812,6 +828,17 @@ Route::middleware('auth')->group(function () {
     Route::prefix('inventory')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO'], function () {
+
+            Route::get('/mobile-tower', [InvMobileTowerController::class, 'index'])->name('mobileTower.page');
+            Route::get('/mobile-tower/create', [InvMobileTowerController::class, 'create'])->name('mobileTower.create');
+            Route::post('/mobile-tower/create', [InvMobileTowerController::class, 'store'])->name('mobileTower.store');
+            Route::post('/mobile-tower/generate', [InvMobileTowerController::class, 'generateCode'])->name('mobileTower.generate');
+            Route::post('/mobile-tower/generate/edit', [InvMobileTowerController::class, 'generateCodeEdit'])->name('mobileTower.generateEdit');
+            Route::get('/mobile-tower/{id}/edit', [InvMobileTowerController::class, 'edit'])->name('mobileTower.edit');
+            Route::put('/mobile-tower/{id}/update', [InvMobileTowerController::class, 'update'])->name('mobileTower.update');
+            Route::delete('/mobile-tower/{id}/delete', [InvMobileTowerController::class, 'destroy'])->name('mobileTower.delete');
+            Route::get('/mobile-tower/{id}/detail', [InvMobileTowerController::class, 'detail'])->name('mobileTower.detail');
+
             Route::get('/kpi-inspeksi-ho', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiHo');
             Route::post('/kpi-inspeksi-ho-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowHo');
 
@@ -922,6 +949,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-ba-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBa');
             Route::post('/kpi-aduan-analysis-ba-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBaDetail');
 
+            Route::get('/mobile-tower-ba', [InvMobileTowerBaController::class, 'index'])->name('mobileTowerBa.page');
+            Route::get('/mobile-tower-ba/create', [InvMobileTowerBaController::class, 'create'])->name('mobileTowerBa.create');
+            Route::post('/mobile-tower-ba/create', [InvMobileTowerBaController::class, 'store'])->name('mobileTowerBa.store');
+            Route::post('/mobile-tower-ba/generate', [InvMobileTowerBaController::class, 'generateCode'])->name('mobileTowerBa.generate');
+            Route::post('/mobile-tower-ba/generate/edit', [InvMobileTowerBaController::class, 'generateCodeEdit'])->name('mobileTowerBa.generateEdit');
+            Route::get('/mobile-tower-ba/{id}/edit', [InvMobileTowerBaController::class, 'edit'])->name('mobileTowerBa.edit');
+            Route::put('/mobile-tower-ba/{id}/update', [InvMobileTowerBaController::class, 'update'])->name('mobileTowerBa.update');
+            Route::delete('/mobile-tower-ba/{id}/delete', [InvMobileTowerBaController::class, 'destroy'])->name('mobileTowerBa.delete');
+            Route::get('/mobile-tower-ba/{id}/detail', [InvMobileTowerBaController::class, 'detail'])->name('mobileTowerBa.detail');
+
             Route::get('/accessPointSiteBa', [InvApBaController::class, 'index'])->name('accessPointBa.page');
             Route::post('/accessPointSiteBa/generate', [InvApBaController::class, 'generateCode'])->name('accessPointBa.generate');
             Route::post('/accessPointSiteBa/generate/edit', [InvApBaController::class, 'generateCodeEdit'])->name('accessPointBa.generateEdit');
@@ -1021,6 +1058,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-mifa', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMifa');
             Route::post('/kpi-aduan-analysis-mifa-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMifa');
             Route::post('/kpi-aduan-analysis-mifa-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMifaDetail');
+
+            Route::get('/mobile-tower-mifa', [InvMobileTowerMifaController::class, 'index'])->name('mobileTowerMifa.page');
+            Route::get('/mobile-tower-mifa/create', [InvMobileTowerMifaController::class, 'create'])->name('mobileTowerMifa.create');
+            Route::post('/mobile-tower-mifa/create', [InvMobileTowerMifaController::class, 'store'])->name('mobileTowerMifa.store');
+            Route::post('/mobile-tower-mifa/generate', [InvMobileTowerMifaController::class, 'generateCode'])->name('mobileTowerMifa.generate');
+            Route::post('/mobile-tower-mifa/generate/edit', [InvMobileTowerMifaController::class, 'generateCodeEdit'])->name('mobileTowerMifa.generateEdit');
+            Route::get('/mobile-tower-mifa/{id}/edit', [InvMobileTowerMifaController::class, 'edit'])->name('mobileTowerMifa.edit');
+            Route::put('/mobile-tower-mifa/{id}/update', [InvMobileTowerMifaController::class, 'update'])->name('mobileTowerMifa.update');
+            Route::delete('/mobile-tower-mifa/{id}/delete', [InvMobileTowerMifaController::class, 'destroy'])->name('mobileTowerMifa.delete');
+            Route::get('/mobile-tower-mifa/{id}/detail', [InvMobileTowerMifaController::class, 'detail'])->name('mobileTowerMifa.detail');
 
             Route::get('/accessPointSiteMifa', [InvApMifaController::class, 'index'])->name('accessPointMifa.page');
             Route::get('/accessPointSiteMifa/create', [InvApMifaController::class, 'create'])->name('accessPointMifa.create');
@@ -1122,6 +1169,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-mhu-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMhu');
             Route::post('/kpi-aduan-analysis-mhu-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMhuDetail');
 
+            Route::get('/mobile-tower-mhu', [InvMobileTowerMhuController::class, 'index'])->name('mobileTowerMhu.page');
+            Route::get('/mobile-tower-mhu/create', [InvMobileTowerMhuController::class, 'create'])->name('mobileTowerMhu.create');
+            Route::post('/mobile-tower-mhu/create', [InvMobileTowerMhuController::class, 'store'])->name('mobileTowerMhu.store');
+            Route::post('/mobile-tower-mhu/generate', [InvMobileTowerMhuController::class, 'generateCode'])->name('mobileTowerMhu.generate');
+            Route::post('/mobile-tower-mhu/generate/edit', [InvMobileTowerMhuController::class, 'generateCodeEdit'])->name('mobileTowerMhu.generateEdit');
+            Route::get('/mobile-tower-mhu/{id}/edit', [InvMobileTowerMhuController::class, 'edit'])->name('mobileTowerMhu.edit');
+            Route::put('/mobile-tower-mhu/{id}/update', [InvMobileTowerMhuController::class, 'update'])->name('mobileTowerMhu.update');
+            Route::delete('/mobile-tower-mhu/{id}/delete', [InvMobileTowerMhuController::class, 'destroy'])->name('mobileTowerMhu.delete');
+            Route::get('/mobile-tower-mhu/{id}/detail', [InvMobileTowerMhuController::class, 'detail'])->name('mobileTowerMhu.detail');
+
             Route::get('/accessPointSiteMHU', [InvApMhuController::class, 'index'])->name('accessPointMhu.page');
             Route::get('/accessPointSiteMHU/create', [InvApMhuController::class, 'create'])->name('accessPointMhu.create');
             Route::post('/accessPointSiteMhu/generate', [InvApMhuController::class, 'generateCode'])->name('accessPointMhu.generate');
@@ -1221,6 +1278,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-ami', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisAmi');
             Route::post('/kpi-aduan-analysis-ami-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowAmi');
             Route::post('/kpi-aduan-analysis-ami-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisAmiDetail');
+
+            Route::get('/mobile-tower-ami', [InvMobileTowerAmiController::class, 'index'])->name('mobileTowerAmi.page');
+            Route::get('/mobile-tower-ami/create', [InvMobileTowerAmiController::class, 'create'])->name('mobileTowerAmi.create');
+            Route::post('/mobile-tower-ami/create', [InvMobileTowerAmiController::class, 'store'])->name('mobileTowerAmi.store');
+            Route::post('/mobile-tower-ami/generate', [InvMobileTowerAmiController::class, 'generateCode'])->name('mobileTowerAmi.generate');
+            Route::post('/mobile-tower-ami/generate/edit', [InvMobileTowerAmiController::class, 'generateCodeEdit'])->name('mobileTowerAmi.generateEdit');
+            Route::get('/mobile-tower-ami/{id}/edit', [InvMobileTowerAmiController::class, 'edit'])->name('mobileTowerAmi.edit');
+            Route::put('/mobile-tower-ami/{id}/update', [InvMobileTowerAmiController::class, 'update'])->name('mobileTowerAmi.update');
+            Route::delete('/mobile-tower-ami/{id}/delete', [InvMobileTowerAmiController::class, 'destroy'])->name('mobileTowerAmi.delete');
+            Route::get('/mobile-tower-ami/{id}/detail', [InvMobileTowerAmiController::class, 'detail'])->name('mobileTowerAmi.detail');
 
             Route::get('/accessPointSiteAmi', [InvApAmiController::class, 'index'])->name('accessPointAmi.page');
             Route::post('/accessPointSiteAmi/generate', [InvApAmiController::class, 'generateCode'])->name('accessPointAmi.generate');
@@ -1322,6 +1389,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-pik-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowPik');
             Route::post('/kpi-aduan-analysis-pik-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisPikDetail');
 
+            Route::get('/mobile-tower-pik', [InvMobileTowerPikController::class, 'index'])->name('mobileTowerPik.page');
+            Route::get('/mobile-tower-pik/create', [InvMobileTowerPikController::class, 'create'])->name('mobileTowerPik.create');
+            Route::post('/mobile-tower-pik/create', [InvMobileTowerPikController::class, 'store'])->name('mobileTowerPik.store');
+            Route::post('/mobile-tower-pik/generate', [InvMobileTowerPikController::class, 'generateCode'])->name('mobileTowerPik.generate');
+            Route::post('/mobile-tower-pik/generate/edit', [InvMobileTowerPikController::class, 'generateCodeEdit'])->name('mobileTowerPik.generateEdit');
+            Route::get('/mobile-tower-pik/{id}/edit', [InvMobileTowerPikController::class, 'edit'])->name('mobileTowerPik.edit');
+            Route::put('/mobile-tower-pik/{id}/update', [InvMobileTowerPikController::class, 'update'])->name('mobileTowerPik.update');
+            Route::delete('/mobile-tower-pik/{id}/delete', [InvMobileTowerPikController::class, 'destroy'])->name('mobileTowerPik.delete');
+            Route::get('/mobile-tower-pik/{id}/detail', [InvMobileTowerPikController::class, 'detail'])->name('mobileTowerPik.detail');
+
             Route::get('/accessPointSitePik', [InvApPikController::class, 'index'])->name('accessPointPik.page');
             Route::get('/accessPointSitePik/create', [InvApPikController::class, 'create'])->name('accessPointPik.create');
             Route::post('/accessPointSitePik/create', [InvApPikController::class, 'store'])->name('accessPointPik.store');
@@ -1421,6 +1498,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-bge', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisBge');
             Route::post('/kpi-aduan-analysis-bge-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBge');
             Route::post('/kpi-aduan-analysis-bge-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBgeDetail');
+
+            Route::get('/mobile-tower-bge', [InvMobileTowerBgeController::class, 'index'])->name('mobileTowerBge.page');
+            Route::get('/mobile-tower-bge/create', [InvMobileTowerBgeController::class, 'create'])->name('mobileTowerBge.create');
+            Route::post('/mobile-tower-bge/create', [InvMobileTowerBgeController::class, 'store'])->name('mobileTowerBge.store');
+            Route::post('/mobile-tower-bge/generate', [InvMobileTowerBgeController::class, 'generateCode'])->name('mobileTowerBge.generate');
+            Route::post('/mobile-tower-bge/generate/edit', [InvMobileTowerBgeController::class, 'generateCodeEdit'])->name('mobileTowerBge.generateEdit');
+            Route::get('/mobile-tower-bge/{id}/edit', [InvMobileTowerBgeController::class, 'edit'])->name('mobileTowerBge.edit');
+            Route::put('/mobile-tower-bge/{id}/update', [InvMobileTowerBgeController::class, 'update'])->name('mobileTowerBge.update');
+            Route::delete('/mobile-tower-bge/{id}/delete', [InvMobileTowerBgeController::class, 'destroy'])->name('mobileTowerBge.delete');
+            Route::get('/mobile-tower-bge/{id}/detail', [InvMobileTowerBgeController::class, 'detail'])->name('mobileTowerBge.detail');
 
             Route::get('/accessPointSiteBge', [InvApBgeController::class, 'index'])->name('accessPointBge.page');
             Route::get('/accessPointSiteBge/create', [InvApBgeController::class, 'create'])->name('accessPointBge.create');
@@ -1522,6 +1609,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-bib-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBib');
             Route::post('/kpi-aduan-analysis-bib-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBibDetail');
 
+            Route::get('/mobile-tower-bib', [InvMobileTowerBibController::class, 'index'])->name('mobileTowerBib.page');
+            Route::get('/mobile-tower-bib/create', [InvMobileTowerBibController::class, 'create'])->name('mobileTowerBib.create');
+            Route::post('/mobile-tower-bib/create', [InvMobileTowerBibController::class, 'store'])->name('mobileTowerBib.store');
+            Route::post('/mobile-tower-bib/generate', [InvMobileTowerBibController::class, 'generateCode'])->name('mobileTowerBib.generate');
+            Route::post('/mobile-tower-bib/generate/edit', [InvMobileTowerBibController::class, 'generateCodeEdit'])->name('mobileTowerBib.generateEdit');
+            Route::get('/mobile-tower-bib/{id}/edit', [InvMobileTowerBibController::class, 'edit'])->name('mobileTowerBib.edit');
+            Route::put('/mobile-tower-bib/{id}/update', [InvMobileTowerBibController::class, 'update'])->name('mobileTowerBib.update');
+            Route::delete('/mobile-tower-bib/{id}/delete', [InvMobileTowerBibController::class, 'destroy'])->name('mobileTowerBib.delete');
+            Route::get('/mobile-tower-bib/{id}/detail', [InvMobileTowerBibController::class, 'detail'])->name('mobileTowerBib.detail');
+
             Route::get('/accessPointSiteBib', [InvApBibController::class, 'index'])->name('accessPointBib.page');
             Route::get('/accessPointSiteBib/create', [InvApBibController::class, 'create'])->name('accessPointBib.create');
             Route::post('/accessPointSiteBib/generate', [InvApBibController::class, 'generateCode'])->name('accessPointBib.generate');
@@ -1621,6 +1718,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-ipt', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisIpt');
             Route::post('/kpi-aduan-analysis-ipt-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowIpt');
             Route::post('/kpi-aduan-analysis-ipt-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisIptDetail');
+
+            Route::get('/mobile-tower-ipt', [InvMobileTowerIptController::class, 'index'])->name('mobileTowerIpt.page');
+            Route::get('/mobile-tower-ipt/create', [InvMobileTowerIptController::class, 'create'])->name('mobileTowerIpt.create');
+            Route::post('/mobile-tower-ipt/create', [InvMobileTowerIptController::class, 'store'])->name('mobileTowerIpt.store');
+            Route::post('/mobile-tower-ipt/generate', [InvMobileTowerIptController::class, 'generateCode'])->name('mobileTowerIpt.generate');
+            Route::post('/mobile-tower-ipt/generate/edit', [InvMobileTowerIptController::class, 'generateCodeEdit'])->name('mobileTowerIpt.generateEdit');
+            Route::get('/mobile-tower-ipt/{id}/edit', [InvMobileTowerIptController::class, 'edit'])->name('mobileTowerIpt.edit');
+            Route::put('/mobile-tower-ipt/{id}/update', [InvMobileTowerIptController::class, 'update'])->name('mobileTowerIpt.update');
+            Route::delete('/mobile-tower-ipt/{id}/delete', [InvMobileTowerIptController::class, 'destroy'])->name('mobileTowerIpt.delete');
+            Route::get('/mobile-tower-ipt/{id}/detail', [InvMobileTowerIptController::class, 'detail'])->name('mobileTowerIpt.detail');
 
             Route::get('/accessPointSiteIpt', [InvApIptController::class, 'index'])->name('accessPointIpt.page');
             Route::get('/accessPointSiteIpt/create', [InvApIptController::class, 'create'])->name('accessPointIpt.create');
@@ -1722,6 +1829,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-mlp-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMlp');
             Route::post('/kpi-aduan-analysis-mlp-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMlpDetail');
 
+            Route::get('/mobile-tower-mlp', [InvMobileTowerMlpController::class, 'index'])->name('mobileTowerMlp.page');
+            Route::get('/mobile-tower-mlp/create', [InvMobileTowerMlpController::class, 'create'])->name('mobileTowerMlp.create');
+            Route::post('/mobile-tower-mlp/create', [InvMobileTowerMlpController::class, 'store'])->name('mobileTowerMlp.store');
+            Route::post('/mobile-tower-mlp/generate', [InvMobileTowerMlpController::class, 'generateCode'])->name('mobileTowerMlp.generate');
+            Route::post('/mobile-tower-mlp/generate/edit', [InvMobileTowerMlpController::class, 'generateCodeEdit'])->name('mobileTowerMlp.generateEdit');
+            Route::get('/mobile-tower-mlp/{id}/edit', [InvMobileTowerMlpController::class, 'edit'])->name('mobileTowerMlp.edit');
+            Route::put('/mobile-tower-mlp/{id}/update', [InvMobileTowerMlpController::class, 'update'])->name('mobileTowerMlp.update');
+            Route::delete('/mobile-tower-mlp/{id}/delete', [InvMobileTowerMlpController::class, 'destroy'])->name('mobileTowerMlp.delete');
+            Route::get('/mobile-tower-mlp/{id}/detail', [InvMobileTowerMlpController::class, 'detail'])->name('mobileTowerMlp.detail');
+
             Route::get('/accessPointSiteMlp', [InvApMlpController::class, 'index'])->name('accessPointMlp.page');
             Route::get('/accessPointSiteMlp/create', [InvApMlpController::class, 'create'])->name('accessPointMlp.create');
             Route::post('/accessPointSiteMlp/create', [InvApMlpController::class, 'store'])->name('accessPointMlp.store');
@@ -1821,6 +1938,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-mip', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMip');
             Route::post('/kpi-aduan-analysis-mip-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMip');
             Route::post('/kpi-aduan-analysis-mip-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMipDetail');
+
+            Route::get('/mobile-tower-mip', [InvMobileTowerMipController::class, 'index'])->name('mobileTowerMip.page');
+            Route::get('/mobile-tower-mip/create', [InvMobileTowerMipController::class, 'create'])->name('mobileTowerMip.create');
+            Route::post('/mobile-tower-mip/create', [InvMobileTowerMipController::class, 'store'])->name('mobileTowerMip.store');
+            Route::post('/mobile-tower-mip/generate', [InvMobileTowerMipController::class, 'generateCode'])->name('mobileTowerMip.generate');
+            Route::post('/mobile-tower-mip/generate/edit', [InvMobileTowerMipController::class, 'generateCodeEdit'])->name('mobileTowerMip.generateEdit');
+            Route::get('/mobile-tower-mip/{id}/edit', [InvMobileTowerMipController::class, 'edit'])->name('mobileTowerMip.edit');
+            Route::put('/mobile-tower-mip/{id}/update', [InvMobileTowerMipController::class, 'update'])->name('mobileTowerMip.update');
+            Route::delete('/mobile-tower-mip/{id}/delete', [InvMobileTowerMipController::class, 'destroy'])->name('mobileTowerMip.delete');
+            Route::get('/mobile-tower-mip/{id}/detail', [InvMobileTowerMipController::class, 'detail'])->name('mobileTowerMip.detail');
 
             Route::get('/accessPointSiteMip', [InvApMipController::class, 'index'])->name('accessPointMip.page');
             Route::get('/accessPointSiteMip/create', [InvApMipController::class, 'create'])->name('accessPointMip.create');
@@ -1922,6 +2049,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-vib-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowVib');
             Route::post('/kpi-aduan-analysis-vib-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisVibDetail');
 
+            Route::get('/mobile-tower-vib', [InvMobileTowerVibController::class, 'index'])->name('mobileTowerVib.page');
+            Route::get('/mobile-tower-vib/create', [InvMobileTowerVibController::class, 'create'])->name('mobileTowerVib.create');
+            Route::post('/mobile-tower-vib/create', [InvMobileTowerVibController::class, 'store'])->name('mobileTowerVib.store');
+            Route::post('/mobile-tower-vib/generate', [InvMobileTowerVibController::class, 'generateCode'])->name('mobileTowerVib.generate');
+            Route::post('/mobile-tower-vib/generate/edit', [InvMobileTowerVibController::class, 'generateCodeEdit'])->name('mobileTowerVib.generateEdit');
+            Route::get('/mobile-tower-vib/{id}/edit', [InvMobileTowerVibController::class, 'edit'])->name('mobileTowerVib.edit');
+            Route::put('/mobile-tower-vib/{id}/update', [InvMobileTowerVibController::class, 'update'])->name('mobileTowerVib.update');
+            Route::delete('/mobile-tower-vib/{id}/delete', [InvMobileTowerVibController::class, 'destroy'])->name('mobileTowerVib.delete');
+            Route::get('/mobile-tower-vib/{id}/detail', [InvMobileTowerVibController::class, 'detail'])->name('mobileTowerVib.detail');
+
             Route::get('/accessPointSiteVale', [InvApValeController::class, 'index'])->name('accessPointVale.page');
             Route::get('/accessPointSiteVale/create', [InvApValeController::class, 'create'])->name('accessPointVale.create');
             Route::post('/accessPointSiteVale/create', [InvApValeController::class, 'store'])->name('accessPointVale.store');
@@ -2021,6 +2158,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-sbs', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisSbs');
             Route::post('/kpi-aduan-analysis-sbs-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowSbs');
             Route::post('/kpi-aduan-analysis-sbs-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisSbsDetail');
+
+            Route::get('/mobile-tower-sbs', [InvMobileTowerSbsController::class, 'index'])->name('mobileTowerSbs.page');
+            Route::get('/mobile-tower-sbs/create', [InvMobileTowerSbsController::class, 'create'])->name('mobileTowerSbs.create');
+            Route::post('/mobile-tower-sbs/create', [InvMobileTowerSbsController::class, 'store'])->name('mobileTowerSbs.store');
+            Route::post('/mobile-tower-sbs/generate', [InvMobileTowerSbsController::class, 'generateCode'])->name('mobileTowerSbs.generate');
+            Route::post('/mobile-tower-sbs/generate/edit', [InvMobileTowerSbsController::class, 'generateCodeEdit'])->name('mobileTowerSbs.generateEdit');
+            Route::get('/mobile-tower-sbs/{id}/edit', [InvMobileTowerSbsController::class, 'edit'])->name('mobileTowerSbs.edit');
+            Route::put('/mobile-tower-sbs/{id}/update', [InvMobileTowerSbsController::class, 'update'])->name('mobileTowerSbs.update');
+            Route::delete('/mobile-tower-sbs/{id}/delete', [InvMobileTowerSbsController::class, 'destroy'])->name('mobileTowerSbs.delete');
+            Route::get('/mobile-tower-sbs/{id}/detail', [InvMobileTowerSbsController::class, 'detail'])->name('mobileTowerSbs.detail');
 
             Route::get('/accessPointSiteSbs', [InvApSbsController::class, 'index'])->name('accessPointSbs.page');
             Route::get('/accessPointSiteSbs/create', [InvApSbsController::class, 'create'])->name('accessPointSbs.create');
@@ -2122,6 +2269,16 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-sks-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowSks');
             Route::post('/kpi-aduan-analysis-sks-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisSksDetail');
 
+            Route::get('/mobile-tower-sks', [InvMobileTowerSksController::class, 'index'])->name('mobileTowerSks.page');
+            Route::get('/mobile-tower-sks/create', [InvMobileTowerSksController::class, 'create'])->name('mobileTowerSks.create');
+            Route::post('/mobile-tower-sks/create', [InvMobileTowerSksController::class, 'store'])->name('mobileTowerSks.store');
+            Route::post('/mobile-tower-sks/generate', [InvMobileTowerSksController::class, 'generateCode'])->name('mobileTowerSks.generate');
+            Route::post('/mobile-tower-sks/generate/edit', [InvMobileTowerSksController::class, 'generateCodeEdit'])->name('mobileTowerSks.generateEdit');
+            Route::get('/mobile-tower-sks/{id}/edit', [InvMobileTowerSksController::class, 'edit'])->name('mobileTowerSks.edit');
+            Route::put('/mobile-tower-sks/{id}/update', [InvMobileTowerSksController::class, 'update'])->name('mobileTowerSks.update');
+            Route::delete('/mobile-tower-sks/{id}/delete', [InvMobileTowerSksController::class, 'destroy'])->name('mobileTowerSks.delete');
+            Route::get('/mobile-tower-sks/{id}/detail', [InvMobileTowerSksController::class, 'detail'])->name('mobileTowerSks.detail');
+
             Route::get('/accessPointSiteSks', [InvApSksController::class, 'index'])->name('accessPointSks.page');
             Route::get('/accessPointSiteSks/create', [InvApSksController::class, 'create'])->name('accessPointSks.create');
             Route::post('/accessPointSiteSks/create', [InvApSksController::class, 'store'])->name('accessPointSks.store');
@@ -2221,6 +2378,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-adw', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisAdw');
             Route::post('/kpi-aduan-analysis-adw-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowAdw');
             Route::post('/kpi-aduan-analysis-adw-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisAdwDetail');
+
+            Route::get('/mobile-tower-adw', [InvMobileTowerAdwController::class, 'index'])->name('mobileTowerAdw.page');
+            Route::get('/mobile-tower-adw/create', [InvMobileTowerAdwController::class, 'create'])->name('mobileTowerAdw.create');
+            Route::post('/mobile-tower-adw/create', [InvMobileTowerAdwController::class, 'store'])->name('mobileTowerAdw.store');
+            Route::post('/mobile-tower-adw/generate', [InvMobileTowerAdwController::class, 'generateCode'])->name('mobileTowerAdw.generate');
+            Route::post('/mobile-tower-adw/generate/edit', [InvMobileTowerAdwController::class, 'generateCodeEdit'])->name('mobileTowerAdw.generateEdit');
+            Route::get('/mobile-tower-adw/{id}/edit', [InvMobileTowerAdwController::class, 'edit'])->name('mobileTowerAdw.edit');
+            Route::put('/mobile-tower-adw/{id}/update', [InvMobileTowerAdwController::class, 'update'])->name('mobileTowerAdw.update');
+            Route::delete('/mobile-tower-adw/{id}/delete', [InvMobileTowerAdwController::class, 'destroy'])->name('mobileTowerAdw.delete');
+            Route::get('/mobile-tower-adw/{id}/detail', [InvMobileTowerAdwController::class, 'detail'])->name('mobileTowerAdw.detail');
 
             Route::get('/accessPointSiteWara', [InvApWARAController::class, 'index'])->name('accessPointWARA.page');
             Route::get('/accessPointSiteWara/create', [InvApWARAController::class, 'create'])->name('accessPointWARA.create');

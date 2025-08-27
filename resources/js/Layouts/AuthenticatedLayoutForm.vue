@@ -14,7 +14,7 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div class="absolute w-full bg-red-700 dark:hidden min-h-75"></div>  <div
+    <div
         class="absolute w-full dark:hidden min-h-75"
         style="
             background: linear-gradient(
@@ -24,6 +24,7 @@ const showingNavigationDropdown = ref(false);
             );
         "
     ></div>
+    <div class="hidden absolute w-full bg-slate-900 dark:block min-h-75"></div>
     <!-- <DashboardAside /> -->
 
     <!-- Page Content -->
@@ -50,12 +51,14 @@ const showingNavigationDropdown = ref(false);
                     class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto"
                 >
                     <div class="flex items-center md:ml-auto md:pr-4">
-                        <div  class="block text-sm font-semibold text-white transition-all ease-nav-brand">
-                        <span>
-                         Hello! {{ $page.props.auth.user.name }}
-                        </span>
+                        <div
+                            class="block text-sm font-semibold text-white transition-all ease-nav-brand"
+                        >
+                            <span>
+                                Hello! {{ $page.props.auth.user.name }}
+                            </span>
                         </div>
-                    </div>  
+                    </div>
                     <ul
                         class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full"
                     >
