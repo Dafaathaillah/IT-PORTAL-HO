@@ -28,36 +28,26 @@ class PrinterImport implements ToModel, WithStartRow
 
     public function model(array $row)
     {
+
         $row = array_slice($row, 0, 15);
 
-        $emptyCheck = array_filter(array_slice($row, 1, 3));
+        $emptyCheck = array_filter(array_slice($row, 1, 3)); 
         if (count($emptyCheck) === 0) {
-            return null;
+            return null; // Abaikan jika semua kolom utama kosong
         }
 
-        $userSite = strtoupper(auth()->user()->site); // contoh: BIB, MHU, MIFA
-        $assetCode = strtoupper(trim($row[2]));
+        $inventoryNumber = trim($row[3]); // Hilangkan spasi di awal dan akhir
 
-        // Regex: hanya terima AMM<SITE>PRT atau PPA<SITE>PRT diikuti angka opsional
-        $pattern = '/^(AMM|PPA)' . $userSite . 'PRT\d*$/';
-
-        if (!preg_match($pattern, $assetCode)) {
-            return null; // format salah → skip
-        }
-
-        $inventoryNumber = trim($row[3]);
-
+        // Cek apakah SN kosong, hanya tanda hubung, atau hanya spasi
         if ($inventoryNumber === '' || $inventoryNumber === '-' || $inventoryNumber === null) {
-            $existingDataInvNumber = null;
+            $existingDataInvNumber = null; // Biarkan lanjut tanpa mendeteksi duplikasi
         } else {
-            $existingDataInvNumber = InvPrinter::where('printer_code', $inventoryNumber)
-                ->where('site', auth()->user()->site)
-                ->first();
+            $existingDataInvNumber = InvPrinter::where('printer_code', $inventoryNumber)->where('site', auth()->user()->site)->first();
         }
 
         $tanggal = $row[14];
         if ($tanggal === '' || $tanggal === '-' || $tanggal === null) {
-            $tanggal = null;
+            $tanggal = null; // Biarkan lanjut tanpa mendeteksi duplikasi
         } else {
             $tanggal = $this->convertToDate($row[14]);
         }
@@ -68,6 +58,7 @@ class PrinterImport implements ToModel, WithStartRow
         } else {
             $maxId = $maxId + 1;
         }
+
 
         if ($existingDataInvNumber) {
             $this->duplicateRecords[] = [
@@ -107,14 +98,14 @@ class PrinterImport implements ToModel, WithStartRow
     {
         try {
             $value = trim($value);
-
+    
             // Jika format serial Excel (numeric)
             if (is_numeric($value)) {
                 return \Carbon\Carbon::instance(
                     \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value)
                 );
             }
-
+    
             // Jika format tanggal string 'd/m/Y'
             return \Carbon\Carbon::createFromFormat('d/m/Y', $value);
         } catch (\Exception $e) {
