@@ -20,7 +20,7 @@ class AduanIptController extends Controller
     {
 
         $aduan = Aduan::where('site', 'IPT')
-        ->whereNull('deleted_at')
+            ->whereNull('deleted_at')
             ->orderByRaw("
         CASE 
             WHEN urgency = 'URGENT' AND status IN ('OPEN', 'PROGRESS', 'CLOSED') THEN 0
@@ -176,6 +176,44 @@ class AduanIptController extends Controller
             'aduan' => $aduan,
             'crew' => $crew,
         ]);
+    }
+
+    public function accept(Request $request, $id)
+    {
+        try {
+            $aduan = Aduan::findOrFail($id);
+
+            $aduan->start_response = now();
+            $aduan->status = 'PROGRESS';
+
+            $awal  = Carbon::parse($aduan->date_of_complaint);
+            $akhir = Carbon::parse($aduan->start_response);
+
+            // total selisih dalam detik
+            $diffInSeconds = $awal->diffInSeconds($akhir);
+
+            // ubah ke format H:i:s (total jam bisa lebih dari 24)
+            $jam   = floor($diffInSeconds / 3600);
+            $menit = floor(($diffInSeconds % 3600) / 60);
+            $detik = $diffInSeconds % 60;
+
+            $responseTime = sprintf('%02d:%02d:%02d', $jam, $menit, $detik);
+
+            $aduan->response_time = $responseTime;
+            $aduan->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Aduan berhasil diterima dan status diubah menjadi PROGRESS',
+                'data' => $aduan,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menerima aduan',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function update_aduan_progress(Request $request)

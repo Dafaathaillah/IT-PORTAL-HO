@@ -2893,6 +2893,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMifa/{id}/edit', [AduanMifaController::class, 'edit'])->name('aduanMifa.edit');
             Route::post('/aduanMifa/updateProgress', [AduanMifaController::class, 'update_aduan_progress'])->name('aduanMifa.updateProgress');
             Route::get('/aduanMifa/{id}/progress', [AduanMifaController::class, 'progress'])->name('aduanMifa.progress');
+            Route::post('/aduanMifa/{id}/accept', [AduanMifaController::class, 'accept'])->name('aduanMifa.accept');
             Route::delete('/aduanMifa/{id}/delete', [AduanMifaController::class, 'destroy'])->name('aduanMifa.delete');
             Route::post('/aduanMifa/update', [AduanMifaController::class, 'update_aduan'])->name('aduanMifa.update');
             Route::get('/aduanMifa/{id}/detail', [AduanMifaController::class, 'detail'])->name('aduanMifa.detail');
@@ -2907,6 +2908,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMhu/{id}/edit', [AduanMhuController::class, 'edit'])->name('aduanMhu.edit');
             Route::post('/aduanMhu/updateProgress', [AduanMhuController::class, 'update_aduan_progress'])->name('aduanMhu.updateProgress');
             Route::get('/aduanMhu/{id}/progress', [AduanMhuController::class, 'progress'])->name('aduanMhu.progress');
+            Route::post('/aduanMhu/{id}/accept', [AduanMhuController::class, 'accept'])->name('aduanMhu.accept');
             Route::delete('/aduanMhu/{id}/delete', [AduanMhuController::class, 'destroy'])->name('aduanMhu.delete');
             Route::post('/aduanMhu/update', [AduanMhuController::class, 'update_aduan'])->name('aduanMhu.update');
             Route::get('/aduanMhu/{id}/detail', [AduanMhuController::class, 'detail'])->name('aduanMhu.detail');
@@ -2921,6 +2923,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanWara/{id}/edit', [AduanWARAController::class, 'edit'])->name('aduanWARA.edit');
             Route::post('/aduanWara/updateProgress', [AduanWARAController::class, 'update_aduan_progress'])->name('aduanWARA.updateProgress');
             Route::get('/aduanWara/{id}/progress', [AduanWARAController::class, 'progress'])->name('aduanWARA.progress');
+            Route::post('/aduanWara/{id}/accept', [AduanWaraController::class, 'accept'])->name('aduanWARA.accept');
             Route::delete('/aduanWara/{id}/delete', [AduanWARAController::class, 'destroy'])->name('aduanWARA.delete');
             Route::post('/aduanWara/update', [AduanWARAController::class, 'update_aduan'])->name('aduanWARA.update');
             Route::get('/aduanWara/{id}/detail', [AduanWARAController::class, 'detail'])->name('aduanWARA.detail');
@@ -2934,6 +2937,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/aduanAmi/create', [AduanAmiController::class, 'store'])->name('aduanAmi.store');
             Route::get('/aduanAmi/{id}/edit', [AduanAmiController::class, 'edit'])->name('aduanAmi.edit');
             Route::post('/aduanAmi/updateProgress', [AduanAmiController::class, 'update_aduan_progress'])->name('aduanAmi.updateProgress');
+            Route::post('/aduanAmi/{id}/accept', [AduanAmiController::class, 'accept'])->name('aduanAmi.accept');
             Route::get('/aduanAmi/{id}/progress', [AduanAmiController::class, 'progress'])->name('aduanAmi.progress');
             Route::delete('/aduanAmi/{id}/delete', [AduanAmiController::class, 'destroy'])->name('aduanAmi.delete');
             Route::post('/aduanAmi/update', [AduanAmiController::class, 'update_aduan'])->name('aduanAmi.update');
@@ -2950,6 +2954,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanBib/{id}/edit', [AduanBibController::class, 'edit'])->name('aduanBib.edit');
             Route::post('/aduanBib/updateProgress', [AduanBibController::class, 'update_aduan_progress'])->name('aduanBib.updateProgress');
             Route::get('/aduanBib/{id}/progress', [AduanBibController::class, 'progress'])->name('aduanBib.progress');
+            Route::post('/aduanBib/{id}/accept', [AduanBibController::class, 'accept'])->name('aduanBib.accept');
             Route::delete('/aduanBib/{id}/delete', [AduanBibController::class, 'destroy'])->name('aduanBib.delete');
             Route::post('/aduanBib/update', [AduanBibController::class, 'update_aduan'])->name('aduanBib.update');
             Route::get('/aduanBib/{id}/detail', [AduanBibController::class, 'detail'])->name('aduanBib.detail');
@@ -2964,6 +2969,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanIpt/{id}/edit', [AduanIptController::class, 'edit'])->name('aduanIpt.edit');
             Route::post('/aduanIpt/updateProgress', [AduanIptController::class, 'update_aduan_progress'])->name('aduanIpt.updateProgress');
             Route::get('/aduanIpt/{id}/progress', [AduanIptController::class, 'progress'])->name('aduanIpt.progress');
+            Route::post('/aduanIpt/{id}/accept', [AduanIptController::class, 'accept'])->name('aduanIpt.accept');
             Route::delete('/aduanIpt/{id}/delete', [AduanIptController::class, 'destroy'])->name('aduanIpt.delete');
             Route::post('/aduanIpt/update', [AduanIptController::class, 'update_aduan'])->name('aduanIpt.update');
             Route::get('/aduanIpt/{id}/detail', [AduanIptController::class, 'detail'])->name('aduanIpt.detail');
@@ -2978,6 +2984,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMlp/{id}/edit', [AduanMlpController::class, 'edit'])->name('aduanMlp.edit');
             Route::post('/aduanMlp/updateProgress', [AduanMlpController::class, 'update_aduan_progress'])->name('aduanMlp.updateProgress');
             Route::get('/aduanMlp/{id}/progress', [AduanMlpController::class, 'progress'])->name('aduanMlp.progress');
+            Route::post('/aduanMlp/{id}/accept', [AduanMlpController::class, 'accept'])->name('aduanMlp.accept');
             Route::delete('/aduanMlp/{id}/delete', [AduanMlpController::class, 'destroy'])->name('aduanMlp.delete');
             Route::post('/aduanMlp/update', [AduanMlpController::class, 'update_aduan'])->name('aduanMlp.update');
             Route::get('/aduanMlp/{id}/detail', [AduanMlpController::class, 'detail'])->name('aduanMlp.detail');
@@ -2992,6 +2999,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMip/{id}/edit', [AduanMipController::class, 'edit'])->name('aduanMip.edit');
             Route::post('/aduanMip/updateProgress', [AduanMipController::class, 'update_aduan_progress'])->name('aduanMip.updateProgress');
             Route::get('/aduanMip/{id}/progress', [AduanMipController::class, 'progress'])->name('aduanMip.progress');
+            Route::post('/aduanMip/{id}/accept', [AduanMipController::class, 'accept'])->name('aduanMip.accept');
             Route::delete('/aduanMip/{id}/delete', [AduanMipController::class, 'destroy'])->name('aduanMip.delete');
             Route::post('/aduanMip/update', [AduanMipController::class, 'update_aduan'])->name('aduanMip.update');
             Route::get('/aduanMip/{id}/detail', [AduanMipController::class, 'detail'])->name('aduanMip.detail');
@@ -3006,6 +3014,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanVale/{id}/edit', [AduanValeController::class, 'edit'])->name('aduanVale.edit');
             Route::post('/aduanVale/updateProgress', [AduanValeController::class, 'update_aduan_progress'])->name('aduanVale.updateProgress');
             Route::get('/aduanVale/{id}/progress', [AduanValeController::class, 'progress'])->name('aduanVale.progress');
+            Route::post('/aduanVale/{id}/accept', [AduanValeController::class, 'accept'])->name('aduanVale.accept');
             Route::delete('/aduanVale/{id}/delete', [AduanValeController::class, 'destroy'])->name('aduanVale.delete');
             Route::post('/aduanVale/update', [AduanValeController::class, 'update_aduan'])->name('aduanVale.update');
             Route::get('/aduanVale/{id}/detail', [AduanValeController::class, 'detail'])->name('aduanVale.detail');
@@ -3020,6 +3029,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanSbs/{id}/edit', [AduanSbsController::class, 'edit'])->name('aduanSbs.edit');
             Route::post('/aduanSbs/updateProgress', [AduanSbsController::class, 'update_aduan_progress'])->name('aduanSbs.updateProgress');
             Route::get('/aduanSbs/{id}/progress', [AduanSbsController::class, 'progress'])->name('aduanSbs.progress');
+            Route::post('/aduanSbs/{id}/accept', [AduanSbsController::class, 'accept'])->name('aduanSbs.accept');
             Route::delete('/aduanSbs/{id}/delete', [AduanSbsController::class, 'destroy'])->name('aduanSbs.delete');
             Route::post('/aduanSbs/update', [AduanSbsController::class, 'update_aduan'])->name('aduanSbs.update');
             Route::get('/aduanSbs/{id}/detail', [AduanSbsController::class, 'detail'])->name('aduanSbs.detail');
@@ -3034,6 +3044,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanSks/{id}/edit', [AduanSksController::class, 'edit'])->name('aduanSks.edit');
             Route::post('/aduanSks/updateProgress', [AduanSksController::class, 'update_aduan_progress'])->name('aduanSks.updateProgress');
             Route::get('/aduanSks/{id}/progress', [AduanSksController::class, 'progress'])->name('aduanSks.progress');
+            Route::post('/aduanSks/{id}/accept', [AduanSksController::class, 'accept'])->name('aduanSks.accept');
             Route::delete('/aduanSks/{id}/delete', [AduanSksController::class, 'destroy'])->name('aduanSks.delete');
             Route::post('/aduanSks/update', [AduanSksController::class, 'update_aduan'])->name('aduanSks.update');
             Route::get('/aduanSks/{id}/detail', [AduanSksController::class, 'detail'])->name('aduanSks.detail');
@@ -3048,6 +3059,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanPik/{id}/edit', [AduanPikController::class, 'edit'])->name('aduanPik.edit');
             Route::post('/aduanPik/updateProgress', [AduanPikController::class, 'update_aduan_progress'])->name('aduanPik.updateProgress');
             Route::get('/aduanPik/{id}/progress', [AduanPikController::class, 'progress'])->name('aduanPik.progress');
+            Route::post('/aduanPik/{id}/accept', [AduanPikController::class, 'accept'])->name('aduanPik.accept');
             Route::delete('/aduanPik/{id}/delete', [AduanPikController::class, 'destroy'])->name('aduanPik.delete');
             Route::post('/aduanPik/update', [AduanPikController::class, 'update_aduan'])->name('aduanPik.update');
             Route::get('/aduanPik/{id}/detail', [AduanPikController::class, 'detail'])->name('aduanPik.detail');
@@ -3061,6 +3073,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/aduanBge/create', [AduanBgeController::class, 'store'])->name('aduanBge.store');
             Route::get('/aduanBge/{id}/edit', [AduanBgeController::class, 'edit'])->name('aduanBge.edit');
             Route::post('/aduanBge/updateProgress', [AduanBgeController::class, 'update_aduan_progress'])->name('aduanBge.updateProgress');
+            Route::post('/aduanBge/{id}/accept', [AduanBgeController::class, 'accept'])->name('aduanBge.accept');
             Route::get('/aduanBge/{id}/progress', [AduanBgeController::class, 'progress'])->name('aduanBge.progress');
             Route::delete('/aduanBge/{id}/delete', [AduanBgeController::class, 'destroy'])->name('aduanBge.delete');
             Route::post('/aduanBge/update', [AduanBgeController::class, 'update_aduan'])->name('aduanBge.update');

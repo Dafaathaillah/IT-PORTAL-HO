@@ -5490,12 +5490,12 @@ const toggleLevel3ScannerSks = () => {
 <template>
     <!-- sidenav  -->
     <aside
-        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 mt-3 antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+        class="fixed inset-y-0 mt-3 antialiased transition-transform duration-200 bg-white shadow-xl dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0"
         aria-expanded="false"
         :class="[
-            'fixed inset-y-0 mt-3 p-3 bg-white shadow-xl dark:bg-slate-850 transition-all duration-200 rounded-2xl ease-nav-brand z-990',
             classes,
             isCollapseSidebar ? 'w-20' : 'w-64', // ✅ collapse di desktop
+            isOpen ? '!translate-x-0' : '-translate-x-full', // ✅ toggle di mobile
         ]"
     >
         <button
