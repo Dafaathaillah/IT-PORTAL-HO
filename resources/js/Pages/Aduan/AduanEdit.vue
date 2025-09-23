@@ -31,6 +31,7 @@ const form = useForm({
     detail_location: props.aduan.detail_location,
 });
 
+const isDisabledByStatus = computed(() => form.status === 'CLOSED')
 const isDisabled = ref(true);
 const file = ref(null);
 
@@ -328,6 +329,7 @@ const isImage = (url) => {
                                                 Category Aduan</label
                                             >
                                             <select
+                                            :disabled="isDisabledByStatus"
                                                 @change="handleCategoryChange"
                                                 required
                                                 id="category_name"
@@ -365,6 +367,7 @@ const isImage = (url) => {
                                                 >Inventory Number</label
                                             >
                                             <input
+                                            :disabled="isDisabledByStatus"
                                                 required
                                                 type="text"
                                                 name="inventory_number"
@@ -496,6 +499,7 @@ const isImage = (url) => {
                                                 Status</label
                                             >
                                             <select
+                                            :disabled="isDisabledByStatus"
                                                 required
                                                 id="status"
                                                 v-model="form.status"
@@ -530,6 +534,7 @@ const isImage = (url) => {
                                                 >Date & Time Complaint</label
                                             >
                                             <VueDatePicker
+                                            :disabled="isDisabledByStatus"
                                                 required
                                                 v-model="dateOfComplaint"
                                                 :format="customFormat"
@@ -547,6 +552,7 @@ const isImage = (url) => {
                                                 >Start Response</label
                                             >
                                             <VueDatePicker
+                                            :disabled="isDisabledByStatus"
                                                 required
                                                 v-model="startResponse"
                                                 :format="customFormat"
@@ -564,6 +570,7 @@ const isImage = (url) => {
                                                 >Start Progress</label
                                             >
                                             <VueDatePicker
+                                            :disabled="isDisabledByStatus"
                                                 :required="isDateRequired"
                                                 v-model="startProgress"
                                                 :format="customFormat"
@@ -581,6 +588,7 @@ const isImage = (url) => {
                                                 >End Progress</label
                                             >
                                             <VueDatePicker
+                                            :disabled="isDisabledByStatus"
                                                 :required="isDateRequired"
                                                 v-model="endProgress"
                                                 :format="customFormat"
