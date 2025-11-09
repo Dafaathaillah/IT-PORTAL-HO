@@ -8,448 +8,371 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class KpiVhmsController extends Controller
 {
     public function index()
     {
-        // $data['all'] = kpiVhms::all();
-        
-        $data['total_unit'] = DispatchVhms::count();
-        // chart bulan januari
-        $data['total_bd_week_1_january'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 1)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_january'])) {
-            $data['percent_week_1_january_bd'] = ($data['total_bd_week_1_january'] / $data['total_unit']) * 100;
-            $data['percent_week_1_january_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_january']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_january_bd'] = 0;
-            $data['percent_week_1_january_terdownload'] = 100;
+        $site = 'BIB';
+        $auth = auth()->user();
+
+        // 1st of this month -> today
+        $today = Carbon::today();
+        $start = $today->copy()->startOfMonth();
+        $end = $today->copy()->endOfDay();
+
+        // model groups
+        $groups = [
+            'HD' => ['HD785-7'],
+            'PC1250' => ['PC1250-8R', 'PC1250-11'],
+            'PC2000' => ['PC2000-8', 'PC2000-11R'],
+        ];
+
+        // flatten all relevant models for the query
+        $allModels = array_merge(...array_values($groups));
+
+        // query grouped counts by date, model, status
+        $rows = DB::table('historical_vhms_downloads')
+            ->selectRaw('DATE(`date`) as day, model, status, COUNT(*) as cnt')
+            ->whereBetween('date', [$start->toDateString(), $today->toDateString()])
+            ->whereIn('model', $allModels)
+            ->where('site', $site)
+            ->where(function ($q) {
+                $q->whereNull('feedback');
+            })
+            ->groupBy('day', 'model', 'status')
+            ->orderBy('day', 'asc')
+            ->get();
+
+        // prepare date categories from start -> today (ascending)
+        $period = [];
+        $cursor = $start->copy();
+        while ($cursor->lte($today)) {
+            $period[] = $cursor->toDateString();
+            $cursor->addDay();
         }
 
-        $data['total_bd_week_2_january'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 1)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_january'])) {
-            $data['percent_week_2_january_bd'] = ($data['total_bd_week_2_january'] / $data['total_unit']) * 100;
-            $data['percent_week_2_january_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_january']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_january_bd'] = 0;
-            $data['percent_week_2_january_terdownload'] = 100;
+        // map counts into [day][group][status] => cnt
+        $counts = [];
+        foreach ($rows as $r) {
+            // find which group this model belongs to
+            $groupName = null;
+            foreach ($groups as $gName => $models) {
+                if (in_array($r->model, $models, true)) {
+                    $groupName = $gName;
+                    break;
+                }
+            }
+            if (!$groupName)
+                continue;
+
+            $day = $r->day;
+            $status = $r->status;
+            $counts[$day][$groupName][$status] = (int) $r->cnt;
         }
 
-        $data['total_bd_week_3_january'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 1)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_january'])) {
-            $data['percent_week_3_january_bd'] = ($data['total_bd_week_3_january'] / $data['total_unit']) * 100;
-            $data['percent_week_3_january_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_january']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_january_bd'] = 0;
-            $data['percent_week_3_january_terdownload'] = 100;
+        // build arrays per group and status (ordered by period)
+        $payload = [
+            'HD' => [
+                'update' => [],
+                'waiting' => [],
+                'not_update' => [],
+                'kosong' => [],
+            ],
+            'PC1250' => [
+                'update' => [],
+                'waiting' => [],
+                'not_update' => [],
+                'kosong' => [],
+            ],
+            'PC2000' => [
+                'update' => [],
+                'waiting' => [],
+                'not_update' => [],
+                'kosong' => [],
+            ],
+            'categories' => [],
+        ];
+
+        foreach ($period as $isoDate) {
+            // categories - format "day-month-year" like your example e.g., "1-10-2025"
+            $d = Carbon::parse($isoDate);
+            $label = $d->day . '-' . $d->month . '-' . $d->year;
+            $payload['categories'][] = $label;
+
+            foreach (array_keys($groups) as $groupName) {
+                $payload[$groupName]['update'][] = $counts[$isoDate][$groupName]['update'] ?? 0;
+                $payload[$groupName]['waiting'][] = $counts[$isoDate][$groupName]['waiting'] ?? 0;
+                $payload[$groupName]['not_update'][] = $counts[$isoDate][$groupName]['not_update'] ?? 0;
+
+                // kosong = always 0 per your spec
+                $payload[$groupName]['kosong'][] = 0;
+            }
         }
 
-        $data['total_bd_week_4_january'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 1)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_january'])) {
-            $data['percent_week_4_january_bd'] = ($data['total_bd_week_4_january'] / $data['total_unit']) * 100;
-            $data['percent_week_4_january_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_january']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_january_bd'] = 0;
-            $data['percent_week_4_january_terdownload'] = 100;
-        }
+        $vhmsNotDownload = DB::table('historical_vhms_downloads')
+            ->select(
+                'id',
+                'sn',
+                'cn',
+                'model',
+                'status',
+                'feedback',
+                'last_download',
+                'last_operation',
+                'pld_last_record',
+                'trend_last_record',
+                'fault_last_record',
+                'his_last_record',
+                'date'
+            )
+            ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+            ->where('site', $site)
+            ->where('status', 'not_update')
+            ->orderBy('date', 'desc')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'sn' => $item->sn,
+                    'cn' => $item->cn,
+                    'model' => $item->model,
+                    'status' => $item->status,
+                    'feedback' => $item->feedback ?: '',
+                    'last_dnld' => $item->last_download ?: '-',
+                    'last_operation' => $item->last_operation ?: '-',
+                    'last_payload' => $item->pld_last_record ?: '-',
+                    'last_trend' => $item->trend_last_record ?: '-',
+                    'last_fault' => $item->fault_last_record ?: '-',
+                    'last_his' => $item->his_last_record ?: '-',
+                    'date' => $item->date,
+                ];
+            });
 
-        $data['total_bd_week_1_february'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 2)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_february'])) {
-            $data['percent_week_1_february_bd'] = ($data['total_bd_week_1_february'] / $data['total_unit']) * 100;
-            $data['percent_week_1_february_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_february']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_february_bd'] = 0;
-            $data['percent_week_1_february_terdownload'] = 100;
-        }
 
-        $data['total_bd_week_2_february'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 2)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_february'])) {
-            $data['percent_week_2_february_bd'] = ($data['total_bd_week_2_february'] / $data['total_unit']) * 100;
-            $data['percent_week_2_february_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_february']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_february_bd'] = 0;
-            $data['percent_week_2_february_terdownload'] = 100;
-        }
+        $payload['vhmsNotDownload'] = $vhmsNotDownload;
 
-        $data['total_bd_week_3_february'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 2)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_february'])) {
-            $data['percent_week_3_february_bd'] = ($data['total_bd_week_3_february'] / $data['total_unit']) * 100;
-            $data['percent_week_3_february_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_february']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_february_bd'] = 0;
-            $data['percent_week_3_february_terdownload'] = 100;
-        }
+        // dd($payload);
 
-        $data['total_bd_week_4_february'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 2)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_february'])) {
-            $data['percent_week_4_february_bd'] = ($data['total_bd_week_4_february'] / $data['total_unit']) * 100;
-            $data['percent_week_4_february_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_february']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_february_bd'] = 0;
-            $data['percent_week_4_february_terdownload'] = 100;
-        }
+        // dd($payload);
 
-        $data['total_bd_week_1_march'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 3)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_march'])) {
-            $data['percent_week_1_march_bd'] = ($data['total_bd_week_1_march'] / $data['total_unit']) * 100;
-            $data['percent_week_1_march_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_march']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_march_bd'] = 0;
-            $data['percent_week_1_march_terdownload'] = 100;
-        }
+        // return via Inertia to the Vue page
+        return Inertia::render('Inventory/Kpi/KpiVhms/KpiVhmsIndex', [
+            'data' => $payload,
+            'start_date' => $start->toDateString(),
+            'end_date' => $end->toDateString(),
+            'site' => $site,
+        ]);
 
-        $data['total_bd_week_2_march'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 3)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_march'])) {
-            $data['percent_week_2_march_bd'] = ($data['total_bd_week_2_march'] / $data['total_unit']) * 100;
-            $data['percent_week_2_march_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_march']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_march_bd'] = 0;
-            $data['percent_week_2_march_terdownload'] = 100;
-        }
 
-        $data['total_bd_week_3_march'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 3)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_march'])) {
-            $data['percent_week_3_march_bd'] = ($data['total_bd_week_3_march'] / $data['total_unit']) * 100;
-            $data['percent_week_3_march_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_march']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_march_bd'] = 0;
-            $data['percent_week_3_march_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_march'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 3)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_march'])) {
-            $data['percent_week_4_march_bd'] = ($data['total_bd_week_4_march'] / $data['total_unit']) * 100;
-            $data['percent_week_4_march_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_march']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_march_bd'] = 0;
-            $data['percent_week_4_march_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_1_april'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 4)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_april'])) {
-            $data['percent_week_1_april_bd'] = ($data['total_bd_week_1_april'] / $data['total_unit']) * 100;
-            $data['percent_week_1_april_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_april']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_april_bd'] = 0;
-            $data['percent_week_1_april_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_april'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 4)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_april'])) {
-            $data['percent_week_2_april_bd'] = ($data['total_bd_week_2_april'] / $data['total_unit']) * 100;
-            $data['percent_week_2_april_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_april']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_april_bd'] = 0;
-            $data['percent_week_2_april_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_april'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 4)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_april'])) {
-            $data['percent_week_3_april_bd'] = ($data['total_bd_week_3_april'] / $data['total_unit']) * 100;
-            $data['percent_week_3_april_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_april']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_april_bd'] = 0;
-            $data['percent_week_3_april_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_april'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 4)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_april'])) {
-            $data['percent_week_4_april_bd'] = ($data['total_bd_week_4_april'] / $data['total_unit']) * 100;
-            $data['percent_week_4_april_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_april']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_april_bd'] = 0;
-            $data['percent_week_4_april_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_1_may'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 5)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_may'])) {
-            $data['percent_week_1_may_bd'] = ($data['total_bd_week_1_may'] / $data['total_unit']) * 100;
-            $data['percent_week_1_may_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_may']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_may_bd'] = 0;
-            $data['percent_week_1_may_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_may'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 5)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_may'])) {
-            $data['percent_week_2_may_bd'] = ($data['total_bd_week_2_may'] / $data['total_unit']) * 100;
-            $data['percent_week_2_may_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_may']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_may_bd'] = 0;
-            $data['percent_week_2_may_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_may'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 5)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_may'])) {
-            $data['percent_week_3_may_bd'] = ($data['total_bd_week_3_may'] / $data['total_unit']) * 100;
-            $data['percent_week_3_may_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_may']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_may_bd'] = 0;
-            $data['percent_week_3_may_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_may'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 5)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_may'])) {
-            $data['percent_week_4_may_bd'] = ($data['total_bd_week_4_may'] / $data['total_unit']) * 100;
-            $data['percent_week_4_may_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_may']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_may_bd'] = 0;
-            $data['percent_week_4_may_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_1_june'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 6)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_june'])) {
-            $data['percent_week_1_june_bd'] = ($data['total_bd_week_1_june'] / $data['total_unit']) * 100;
-            $data['percent_week_1_june_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_june']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_june_bd'] = 0;
-            $data['percent_week_1_june_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_june'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 6)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_june'])) {
-            $data['percent_week_2_june_bd'] = ($data['total_bd_week_2_june'] / $data['total_unit']) * 100;
-            $data['percent_week_2_june_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_june']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_june_bd'] = 0;
-            $data['percent_week_2_june_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_june'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 6)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_june'])) {
-            $data['percent_week_3_june_bd'] = ($data['total_bd_week_3_june'] / $data['total_unit']) * 100;
-            $data['percent_week_3_june_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_june']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_june_bd'] = 0;
-            $data['percent_week_3_june_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_june'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 6)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_june'])) {
-            $data['percent_week_4_june_bd'] = ($data['total_bd_week_4_june'] / $data['total_unit']) * 100;
-            $data['percent_week_4_june_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_june']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_june_bd'] = 0;
-            $data['percent_week_4_june_terdownload'] = 100;
-        }
-        
-        $data['total_bd_week_1_july'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 7)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_july'])) {
-            $data['percent_week_1_july_bd'] = ($data['total_bd_week_1_july'] / $data['total_unit']) * 100;
-            $data['percent_week_1_july_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_july']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_july_bd'] = 0;
-            $data['percent_week_1_july_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_july'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 7)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_july'])) {
-            $data['percent_week_2_july_bd'] = ($data['total_bd_week_2_july'] / $data['total_unit']) * 100;
-            $data['percent_week_2_july_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_july']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_july_bd'] = 0;
-            $data['percent_week_2_july_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_july'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 7)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_july'])) {
-            $data['percent_week_3_july_bd'] = ($data['total_bd_week_3_july'] / $data['total_unit']) * 100;
-            $data['percent_week_3_july_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_july']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_july_bd'] = 0;
-            $data['percent_week_3_july_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_july'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 7)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_july'])) {
-            $data['percent_week_4_july_bd'] = ($data['total_bd_week_4_july'] / $data['total_unit']) * 100;
-            $data['percent_week_4_july_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_july']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_july_bd'] = 0;
-            $data['percent_week_4_july_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_1_august'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 8)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_august'])) {
-            $data['percent_week_1_august_bd'] = ($data['total_bd_week_1_august'] / $data['total_unit']) * 100;
-            $data['percent_week_1_august_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_august']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_august_bd'] = 0;
-            $data['percent_week_1_august_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_august'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 8)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_august'])) {
-            $data['percent_week_2_august_bd'] = ($data['total_bd_week_2_august'] / $data['total_unit']) * 100;
-            $data['percent_week_2_august_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_august']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_august_bd'] = 0;
-            $data['percent_week_2_august_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_august'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 8)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_august'])) {
-            $data['percent_week_3_august_bd'] = ($data['total_bd_week_3_august'] / $data['total_unit']) * 100;
-            $data['percent_week_3_august_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_august']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_august_bd'] = 0;
-            $data['percent_week_3_august_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_august'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 8)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_august'])) {
-            $data['percent_week_4_august_bd'] = ($data['total_bd_week_4_august'] / $data['total_unit']) * 100;
-            $data['percent_week_4_august_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_august']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_august_bd'] = 0;
-            $data['percent_week_4_august_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_1_september'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 9)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_september'])) {
-            $data['percent_week_1_september_bd'] = ($data['total_bd_week_1_september'] / $data['total_unit']) * 100;
-            $data['percent_week_1_september_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_september']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_september_bd'] = 0;
-            $data['percent_week_1_september_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_september'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 9)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_september'])) {
-            $data['percent_week_2_september_bd'] = ($data['total_bd_week_2_september'] / $data['total_unit']) * 100;
-            $data['percent_week_2_september_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_september']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_september_bd'] = 0;
-            $data['percent_week_2_september_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_september'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 9)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_september'])) {
-            $data['percent_week_3_september_bd'] = ($data['total_bd_week_3_september'] / $data['total_unit']) * 100;
-            $data['percent_week_3_september_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_september']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_september_bd'] = 0;
-            $data['percent_week_3_september_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_september'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 9)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_september'])) {
-            $data['percent_week_4_september_bd'] = ($data['total_bd_week_4_september'] / $data['total_unit']) * 100;
-            $data['percent_week_4_september_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_september']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_september_bd'] = 0;
-            $data['percent_week_4_september_terdownload'] = 100;
-        }
-        
-        $data['total_bd_week_1_october'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 10)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_october'])) {
-            $data['percent_week_1_october_bd'] = ($data['total_bd_week_1_october'] / $data['total_unit']) * 100;
-            $data['percent_week_1_october_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_october']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_october_bd'] = 0;
-            $data['percent_week_1_october_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_october'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 10)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_october'])) {
-            $data['percent_week_2_october_bd'] = ($data['total_bd_week_2_october'] / $data['total_unit']) * 100;
-            $data['percent_week_2_october_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_october']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_october_bd'] = 0;
-            $data['percent_week_2_october_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_october'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 10)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_october'])) {
-            $data['percent_week_3_october_bd'] = ($data['total_bd_week_3_october'] / $data['total_unit']) * 100;
-            $data['percent_week_3_october_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_october']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_october_bd'] = 0;
-            $data['percent_week_3_october_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_october'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 10)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_october'])) {
-            $data['percent_week_4_october_bd'] = ($data['total_bd_week_4_october'] / $data['total_unit']) * 100;
-            $data['percent_week_4_october_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_october']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_october_bd'] = 0;
-            $data['percent_week_4_october_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_1_november'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 11)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_november'])) {
-            $data['percent_week_1_november_bd'] = ($data['total_bd_week_1_november'] / $data['total_unit']) * 100;
-            $data['percent_week_1_november_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_november']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_november_bd'] = 0;
-            $data['percent_week_1_november_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_november'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 11)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_november'])) {
-            $data['percent_week_2_november_bd'] = ($data['total_bd_week_2_november'] / $data['total_unit']) * 100;
-            $data['percent_week_2_november_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_november']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_november_bd'] = 0;
-            $data['percent_week_2_november_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_november'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 11)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_november'])) {
-            $data['percent_week_3_november_bd'] = ($data['total_bd_week_3_november'] / $data['total_unit']) * 100;
-            $data['percent_week_3_november_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_november']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_november_bd'] = 0;
-            $data['percent_week_3_november_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_november'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 11)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_november'])) {
-            $data['percent_week_4_november_bd'] = ($data['total_bd_week_4_november'] / $data['total_unit']) * 100;
-            $data['percent_week_4_november_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_november']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_november_bd'] = 0;
-            $data['percent_week_4_november_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_1_desember'] = KpiVhms::where('week_data', 'WEEK_1')->where('month', 12)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_1_desember'])) {
-            $data['percent_week_1_desember_bd'] = ($data['total_bd_week_1_desember'] / $data['total_unit']) * 100;
-            $data['percent_week_1_desember_terdownload'] = (($data['total_unit'] - $data['total_bd_week_1_desember']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_1_desember_bd'] = 0;
-            $data['percent_week_1_desember_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_2_desember'] = KpiVhms::where('week_data', 'WEEK_2')->where('month', 12)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_2_desember'])) {
-            $data['percent_week_2_desember_bd'] = ($data['total_bd_week_2_desember'] / $data['total_unit']) * 100;
-            $data['percent_week_2_desember_terdownload'] = (($data['total_unit'] - $data['total_bd_week_2_desember']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_2_desember_bd'] = 0;
-            $data['percent_week_2_desember_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_3_desember'] = KpiVhms::where('week_data', 'WEEK_3')->where('month', 12)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_3_desember'])) {
-            $data['percent_week_3_desember_bd'] = ($data['total_bd_week_3_desember'] / $data['total_unit']) * 100;
-            $data['percent_week_3_desember_terdownload'] = (($data['total_unit'] - $data['total_bd_week_3_desember']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_3_desember_bd'] = 0;
-            $data['percent_week_3_desember_terdownload'] = 100;
-        }
-
-        $data['total_bd_week_4_desember'] = KpiVhms::where('week_data', 'WEEK_4')->where('month', 12)->where('year', Carbon::now()->format('Y'))->count(); 
-        if (!empty($data['total_bd_week_4_desember'])) {
-            $data['percent_week_4_desember_bd'] = ($data['total_bd_week_4_desember'] / $data['total_unit']) * 100;
-            $data['percent_week_4_desember_terdownload'] = (($data['total_unit'] - $data['total_bd_week_4_desember']) / $data['total_unit']) * 100;
-        }else{
-            $data['percent_week_4_desember_bd'] = 0;
-            $data['percent_week_4_desember_terdownload'] = 100;
-        }
-        return response()->json($data);
+        // return Inertia::render(
+        //     'Inventory/Kpi/KpiVhms/KpiVhmsIndex',
+        //     [
+        //         'chartData' => [
+        //             'labels' => [],
+        //             'sudah_inspeksi' => [],
+        //             'belum_inspeksi' => [],
+        //         ],
+        //         'site' => 'BIB',
+        //     ]
+        // );
     }
+
+    public function getDataFilter(Request $request)
+    {
+        $site = 'BIB';
+        $type = $request->input('type');   // 'Month' or 'Year'
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $today = Carbon::today();
+
+        // Determine time range
+        if ($type === 'Month' && $month && $year) {
+            $start = Carbon::create($year, $month, 1)->startOfDay();
+            $end = Carbon::create($year, $month, 1)->endOfMonth();
+        } elseif ($type === 'Year' && $year) {
+            $start = Carbon::create($year, 1, 1)->startOfDay();
+            $end = Carbon::create($year, 12, 31)->endOfDay();
+        } else {
+            $start = $today->copy()->startOfMonth();
+            $end = $today->copy()->endOfDay();
+        }
+
+        // Model groups
+        $groups = [
+            'HD' => ['HD785-7'],
+            'PC1250' => ['PC1250-8R', 'PC1250-11'],
+            'PC2000' => ['PC2000-8', 'PC2000-11R'],
+        ];
+
+        $allModels = array_merge(...array_values($groups));
+
+        // Base query
+        $rows = DB::table('historical_vhms_downloads')
+            ->selectRaw('DATE(`date`) as day, model, status, COUNT(*) as cnt')
+            ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+            ->whereIn('model', $allModels)
+            ->where('site', $site)
+            ->where(function ($q) {
+                $q->whereNull('feedback');
+            })
+            ->groupBy('day', 'model', 'status')
+            ->orderBy('day', 'asc')
+            ->get();
+
+        // Period categories
+        $period = [];
+        $cursor = $start->copy();
+
+        if ($type === 'Month') {
+            while ($cursor->lte($end)) {
+                $period[] = $cursor->toDateString();
+                $cursor->addDay();
+            }
+        } else {
+            while ($cursor->lte($end)) {
+                $period[] = $cursor->format('Y-m');
+                $cursor->addMonth();
+            }
+        }
+
+        // Grouped counts
+        $counts = [];
+
+        foreach ($rows as $r) {
+            $groupName = null;
+            foreach ($groups as $gName => $models) {
+                if (in_array($r->model, $models, true)) {
+                    $groupName = $gName;
+                    break;
+                }
+            }
+            if (!$groupName)
+                continue;
+
+            $key = $type === 'Year'
+                ? Carbon::parse($r->day)->format('Y-m')
+                : $r->day;
+
+            $counts[$key][$groupName][$r->status][] = (int) $r->cnt;
+        }
+
+        // Build payload skeleton
+        $payload = [
+            'HD' => ['update' => [], 'waiting' => [], 'not_update' => [], 'kosong' => []],
+            'PC1250' => ['update' => [], 'waiting' => [], 'not_update' => [], 'kosong' => []],
+            'PC2000' => ['update' => [], 'waiting' => [], 'not_update' => [], 'kosong' => []],
+            'categories' => [],
+        ];
+
+        $indonesianMonths = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+
+        foreach ($period as $key) {
+            if ($type === 'Month') {
+                $d = Carbon::parse($key);
+                $label = "{$d->day}-{$d->month}-{$d->year}";
+            } else {
+                [$y, $m] = explode('-', $key);
+                $label = $indonesianMonths[(int) $m];
+            }
+
+            $payload['categories'][] = $label;
+
+            foreach (array_keys($groups) as $groupName) {
+                foreach (['update', 'waiting', 'not_update'] as $status) {
+                    if ($type === 'Year') {
+                        // Compute average per record/status across that month
+                        $values = $counts[$key][$groupName][$status] ?? [];
+                        $avg = count($values) > 0 ? array_sum($values) / count($values) : 0;
+                        $payload[$groupName][$status][] = round($avg, 0); // ⬅️ round to 0 decimals
+                    } else {
+                        $payload[$groupName][$status][] = $counts[$key][$groupName][$status][0] ?? 0;
+                    }
+                }
+                $payload[$groupName]['kosong'][] = 0;
+            }
+
+        }
+
+        // Get not_update detail list
+        $vhmsNotDownload = DB::table('historical_vhms_downloads')
+            ->select(
+                'id',
+                'sn',
+                'cn',
+                'model',
+                'status',
+                'feedback',
+                'last_download',
+                'last_operation',
+                'pld_last_record',
+                'trend_last_record',
+                'fault_last_record',
+                'his_last_record',
+                'date'
+            )
+            ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+            ->where('site', $site)
+            ->where('status', 'not_update')
+            ->orderBy('date', 'desc')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'sn' => $item->sn,
+                    'cn' => $item->cn,
+                    'model' => $item->model,
+                    'status' => $item->status,
+                    'feedback' => $item->feedback ?: '',
+                    'last_dnld' => $item->last_download ?: '-',
+                    'last_operation' => $item->last_operation ?: '-',
+                    'last_payload' => $item->pld_last_record ?: '-',
+                    'last_trend' => $item->trend_last_record ?: '-',
+                    'last_fault' => $item->fault_last_record ?: '-',
+                    'last_his' => $item->his_last_record ?: '-',
+                    'date' => $item->date,
+                ];
+            });
+
+        $payload['vhmsNotDownload'] = $vhmsNotDownload;
+
+        return response()->json($payload);
+    }
+
+
+    public function updateFeedback(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'feedback' => 'nullable|string',
+        ]);
+
+        $feedback = $request->feedback === 'DELETE_FEEDBACK' ? null : $request->feedback;
+
+        DB::table('historical_vhms_downloads')
+            ->where('id', $request->id)
+            ->update(['feedback' => $feedback]);
+
+        return response()->json(['success' => true]);
+    }
+
+
+
 
     public function store(Request $request)
     {
@@ -500,7 +423,7 @@ class KpiVhmsController extends Controller
 
     public function showDataSortingUnitBreakdown(Request $request)
     {
-        $data =  kpiVhms::where('week_data', $request->week_data)->where('month', $request->month)->where('year', $request->year)->get();
+        $data = kpiVhms::where('week_data', $request->week_data)->where('month', $request->month)->where('year', $request->year)->get();
         return response()->json($data);
     }
 
@@ -509,8 +432,8 @@ class KpiVhmsController extends Controller
         $kpi['evidenceImage'] = '';
         $arrayDataKpiVhmsTableBreakdownList = [];
         $kpi['total_unit'] = DispatchVhms::count();
-        $kpi['total_breakdown'] =  kpiVhms::where('week_data', $request->week_data)->where('month', $request->month)->where('year', $request->year)->count();
-        $kpi['total_ter_download'] =  $kpi['total_unit'] - $kpi['total_breakdown'];
+        $kpi['total_breakdown'] = kpiVhms::where('week_data', $request->week_data)->where('month', $request->month)->where('year', $request->year)->count();
+        $kpi['total_ter_download'] = $kpi['total_unit'] - $kpi['total_breakdown'];
 
         $evidenceImage = DB::table('kpi_vhms_evidence')->where('week_data', $request->week_data)->where('month', $request->month)->where('year', $request->year)->first();
         $dataBreakdown = KpiVhms::where('week_data', $request->week_data)->where('month', $request->month)->where('year', $request->year)->get();
@@ -561,8 +484,8 @@ class KpiVhmsController extends Controller
 
 
         $returnDataKpi = [
-            'periode' =>  $request->week_data . ' ' . $bulan . ' ' . $request->year,
-            'total_unit' =>  $kpi['total_unit'],
+            'periode' => $request->week_data . ' ' . $bulan . ' ' . $request->year,
+            'total_unit' => $kpi['total_unit'],
             'vhms_unit_terdownload' => $kpi['total_ter_download'],
             'vhms_unit_breakdown' => $kpi['total_breakdown'],
             'percentageVhmsTerDownload' => $kpi['percentageChartPieReady'],

@@ -25,3 +25,10 @@ Schedule::command('inspeksiPrinter:cron')->monthly(); // * * * * * php /path/to/
 Schedule::command('inspeksiAp:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
 Schedule::command('inspeksiWirelless:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
 Schedule::command('inspeksiSwitch:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
+
+
+// ===== 🆕 Add VHMS History Schedule =====
+Schedule::command('vhms:insert-history')
+    ->monthlyOn(1, '00:00'); // Run at midnight every 1st day of the month
+
+// Schedule::command('vhms:insert-history')->everyMinute();
