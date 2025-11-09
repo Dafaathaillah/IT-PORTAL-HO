@@ -4,345 +4,477 @@ namespace App\Http\Controllers;
 
 use App\Models\InspeksiMobileTower;
 use App\Models\InvMobileTower;
+use App\Models\KategoriInspeksi;
+use App\Models\PicaInspeksi;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class InspeksiMobileTowerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $inspeksiMobileTower = InspeksiMobileTower::all();
-        return response()->json($inspeksiMobileTower);
+        $site = 'BIB';
+        $bulanNow = $request->input('month', now()->month);
+        $yearNow = $request->input('year', now()->year);
+
+        $inspeksi_mobile_tower = InspeksiMobileTower::with('inventory')->where('site', $site)->where('month', $bulanNow)
+            ->where('year', $yearNow)->get();
+        // dd($inspeksiMobileTower);
+
+        $role = auth()->user()->role;
+
+        return Inertia::render(
+            'Inspeksi/MobileTower/InspeksiMobileTowerView',
+            [
+                'inspeksiMobileTowerx' => $inspeksi_mobile_tower,
+                'site' => $site,
+                'role' => $role,
+                'monthNow' => (int) $bulanNow,
+                'yearNow' => (int) $yearNow,
+            ]
+        );
+    }
+
+    public function process($id)
+    {
+        $dataInspeksix = InspeksiMobileTower::find($id);
+        if (empty($dataInspeksix)) {
+            abort(404, 'Data not found');
+        }
+        $site = $dataInspeksix->site;
+
+        $mobileTowerx = InvMobileTower::where('id', $dataInspeksix->inv_mt_id)->first();
+        if (empty($mobileTowerx)) {
+            abort(404, 'Data not found');
+        }
+
+        $penggunax = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', $site)->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        $dataKategori = KategoriInspeksi::where('kategori_inspeksi', 'MT')->where('parent', 0)->orderBy('urutan', 'ASC')->get();
+        $subDataKategori = KategoriInspeksi::where('kategori_inspeksi', 'MT')->where('parent', '!=', 0)->orderBy('urutan', 'ASC')->get();
+
+        $totalItems = $subDataKategori->count();
+
+
+
+        return Inertia::render('Inspeksi/MobileTower/InspeksiMobileTowerCreate', ['dataInspeksi' => $dataInspeksix, 'pengguna' => $penggunax, 'mobileTower' => $mobileTowerx, 'dataKategori' => $dataKategori, 'subDataKategori' => $subDataKategori, 'totalItems' => $totalItems,]);
     }
 
     public function store(Request $request)
     {
-        // Gabungkan inputan menjadi satu string
-        $crew = implode(', ', $request->crew);
+        // find existing record
+        $inspeksi = InspeksiMobileTower::findOrFail($request->input('id'));
+        $id_mt = $inspeksi->inv_mt_id;
+        $site = $inspeksi->site;
 
-        $physic_condition_mobile_tower = implode(', ', [
-            $request['kondisi_skidding_dalam_keadaan_baik'],
-            $request['kondisi_engsel_solpan_dalam_keadaan_baik'],
-            $request['kondisi_engsel_pintu_dalam_keadaan_baik'],
-            $request['kondisi_waarna_mt_dalam_keadaan_baik'],
-            $request['terdapat_tali_untuk_moving_mt'],
-            $request['kondisi_keberihan_sekitar_mt'],
-            $request['stiker_kip'],
-            $request['kondisi_tiang'],
-            $request['kondisi_gembok_panel'],
-        ]);
+        // checklist + remarks
+        $checklistResults = $request->input('checklist_results_list', []);
+        $remarksInput = $request->input('list_results_remark', []);
 
-        $physic_condition_mobile_tower_text = implode(', ', [
-            $request['kondisi_skidding_dalam_keadaan_baik_text'],
-            $request['kondisi_engsel_solpan_dalam_keadaan_baik_text'],
-            $request['kondisi_engsel_pintu_dalam_keadaan_baik_text'],
-            $request['kondisi_waarna_mt_dalam_keadaan_baik_text'],
-            $request['terdapat_tali_untuk_moving_mt_text'],
-            $request['kondisi_keberihan_sekitar_mt_text'],
-            $request['stiker_kip_text'],
-            $request['kondisi_tiang_text'],
-            $request['kondisi_gembok_panel_text'],
-        ]);
+        $finalRemarks = [];
+        foreach ($checklistResults as $key => $value) {
+            $finalRemarks[$key] = $remarksInput[$key] ?? "-";
+        }
 
-        $battery_circuit = implode(', ', [
-            $request['voltase_baterai'],
-            $request['kabel_rangkaian_baterai'],
-            $request['konektor_baterai'],
-            $request['rangkaian_baterai'],
-            $request['kondisi_kebersihan_box_baterai'],
-            $request['box_baterai_dalam_keadaan_kering'],
-        ]);
+        // handle lampiran foto inspeksi
+        $lampiranPath = null;
+        if ($request->hasFile('lampiran')) {
 
-        $battery_circuit_text = implode(', ', [
-            $request['voltase_baterai_text'],
-            $request['kabel_rangkaian_baterai_text'],
-            $request['konektor_baterai_text'],
-            $request['rangkaian_baterai_text'],
-            $request['kondisi_kebersihan_box_baterai_text'],
-            $request['box_baterai_dalam_keadaan_kering_text'],
-        ]);
+            $lampiran = $request->file('lampiran');
+            $destinationPath = 'images/';
+            $path_document_image = $lampiran->store('images', 'public');
+            $new_path_document_image = $path_document_image;
+            $lampiran->move($destinationPath, $new_path_document_image);
 
-        $solar_panel = implode(', ', [
-            $request['voltase_yang_masuk_ke_mppt'],
-            $request['kabel_rangkaian_solpan'],
-            $request['sambungan_antar_solpan'],
-            $request['kondisi_kebersihan_solpan'],
-        ]);
+            $lampiranPath = url($new_path_document_image);
+        }
 
-        $solar_panel_text = implode(', ', [
-            $request['voltase_yang_masuk_ke_mppt_text'],
-            $request['kabel_rangkaian_solpan_text'],
-            $request['sambungan_antar_solpan_text'],
-            $request['kondisi_kebersihan_solpan_text'],
-        ]);
+        // handle temuan (findings)
+        $temuanList = $request->input('temuan', []);
+        // dd($temuanList);
+        $findings = [];
+        $findingsStatus = [];
+        $findingsAction = [];
+        $findingsImage = [];
+        $actionImage = [];
 
-        $device_circuit = implode(', ', [
-            $request['kondisi_box_rangkaian'],
-            $request['voltase_stepup'],
-            $request['terdapat_mcb_yang_sesuai'],
-            $request['kondisi_sambungan_kabel'],
-        ]);
+        foreach ($temuanList as $index => $temuan) {
 
-        $device_circuit_text = implode(', ', [
-            $request['kondisi_box_rangkaian_text'],
-            $request['voltase_stepup_text'],
-            $request['terdapat_mcb_yang_sesuai_text'],
-            $request['kondisi_sambungan_kabel_text'],
-        ]);
+            $isTemuanEmpty = empty($temuan['temuan']);
+            $isTindakEmpty = empty($temuan['tindak_lanjut']);
 
-        // start generate code
+            if ($isTemuanEmpty && $isTindakEmpty) {
+                continue;
+            }
+
+            $findings[] = $temuan['temuan'] ?? null;
+            $findingsStatus[] = $temuan['status'] ?? null;
+            $findingsAction[] = $temuan['tindak_lanjut'] ?? null;
+
+            // Finding Image
+            if ($request->hasFile("temuan.$index.temuan_image")) {
+
+                $file = $request->file("temuan.$index.temuan_image");
+                $destinationPath = 'images/';
+                $path_document_image = $file->store('images', 'public');
+                $new_path_document_image = $path_document_image;
+                $file->move($destinationPath, $new_path_document_image);
+
+                $findingsImage[] = url($new_path_document_image);
+            } else {
+                $findingsImage[] = null;
+            }
+
+            // Action Image
+            if ($request->hasFile("temuan.$index.tindak_image")) {
+
+                $file = $request->file("temuan.$index.tindak_image");
+                $destinationPath = 'images/';
+                $path_document_image = $file->store('images', 'public');
+                $new_path_document_image = $path_document_image;
+                $file->move($destinationPath, $new_path_document_image);
+
+                $actionImage[] = url($new_path_document_image);
+            } else {
+                $actionImage[] = null;
+            }
+        }
+
+        // prepare update data
+        $updateData = [
+            'condition' => $request->input('condition'),
+            'worthiness' => $request->input('kelayakan'),
+            'device_status' => $request->input('inventory_status'),
+            'remarks' => $request->input('remark'),
+            'pic' => $request->input('pic'),
+            'crew' => json_encode($request->input('crew', [])),
+            'lokasi' => $request->input('lokasi'),
+            'detail_lokasi' => $request->input('detail_lokasi'),
+            'due_date' => $request->input('due_date') ? Carbon::parse($request->input('due_date'))->toDateString() : null,
+            'checklist_results_list' => json_encode($checklistResults),
+            'list_results_remark' => json_encode($finalRemarks),
+            'inspection_status' => 'Y',
+            'inspector' => Auth::user()->name,
+            'site' => $site,
+            'created_date' => Carbon::today(),
+            'inspection_at' => Carbon::now(),
+            'findings' => !empty($findings) ? json_encode($findings, JSON_UNESCAPED_SLASHES) : null,
+            'findings_image' => !empty($findingsImage) ? json_encode($findingsImage, JSON_UNESCAPED_SLASHES) : null,
+            'findings_status' => !empty($findingsStatus) ? json_encode($findingsStatus, JSON_UNESCAPED_SLASHES) : null,
+            'findings_action' => !empty($findingsAction) ? json_encode($findingsAction, JSON_UNESCAPED_SLASHES) : null,
+            'action_image' => !empty($actionImage) ? json_encode($actionImage, JSON_UNESCAPED_SLASHES) : null,
+        ];
+
+        if ($lampiranPath) {
+            $updateData['inspection_image'] = $lampiranPath;
+        }
+
+        // dd($updateData);
+
+        $inspeksi->update($updateData);
+
+
+        $updateDataInvMt = [
+            'location' => $request->input('lokasi'),
+            'detail_location' => $request->input('detail_lokasi'),
+            'status' => $request->input('inventory_status'),
+            'inspection_remark' => $request->input('remark'),
+        ];
+
+        $mt = InvMobileTower::findOrFail($id_mt);
+        $mt->update($updateDataInvMt);
+
+        // =======================================================
+        // ADD PICA ENTRY WHEN FINDING STATUS != 'CLOSED'
+        // =======================================================
         $currentDate = Carbon::now();
         $year = $currentDate->format('Y');
-        $month = $currentDate->month;
-        $day = $currentDate->day;
 
-        $maxId = InspeksiMobileTower::max('id');
+        $maxId = InspeksiMobileTower::where('site', $site)->where('year', $year)->max('pica_number');
 
         if (is_null($maxId)) {
             $maxId = 0;
         }
+        $no_pica = $maxId + 1;
 
-        $uniqueString = 'PICA/MT/' . $year . '/' . str_pad(($maxId % 10000) + 1, 2, '0', STR_PAD_LEFT);
-        // end generate code
+        foreach ($temuanList as $i => $temuan) {
+            if (!empty($temuan['temuan']) && strtoupper($temuan['status']) != 'CLOSED') {
 
-        if (!empty($request->file('findings_image'))) {
-            if (!empty($request->file('action_image'))) {
-                //temuan string array
-                $findingArray = [];
-                foreach ($request->findings as $finds) {
-                    $findingArray[] = $finds;
-                }
-                $findingArrayString = implode(', ', $findingArray);
-
-                //temuan action string array
-                $findingActionArray = [];
-                foreach ($request->findings_action as $action) {
-                    $findingActionArray[] = $action;
-                }
-                $findingActionArrayString = implode(', ', $findingActionArray);
-
-                //upload image
-                $imageFindingPaths = [];
-                foreach ($request->file('findings_image') as $findings_image) {
-                    $path_findings_image = $findings_image->store('images', 'public');
-                    $new_path_findings = 'storage/' . $path_findings_image;
-                    $imageFindingPaths[] = url($new_path_findings);
-                }
-                $imagePathsFindingString = implode(', ', $imageFindingPaths);
-
-                $imageActionPaths = [];
-                foreach ($request->file('action_image') as $action_image) {
-                    $path_action_image = $action_image->store('images', 'public');
-                    $new_path_action = 'storage/' . $path_action_image;
-                    $imageActionPaths[] = $new_path_action;
-                }
-                $imagePathsActionString = implode(', ', $imageActionPaths);
-
-                $dataInspection = [
-                    'inspection_status' => 'sudah_inspeksi',
-                    'inspector' => 'user login',
-                    'condition' => $request->condition,
-                    'physic_condition_mobile_tower' => $physic_condition_mobile_tower,
-                    'physic_condition_mobile_tower_text' => $physic_condition_mobile_tower_text,
-                    'battery_circuit' => $battery_circuit,
-                    'battery_circuit_text' => $battery_circuit_text,
-                    'solar_panel' => $solar_panel,
-                    'solar_panel_text' => $solar_panel_text,
-                    'device_circuit_output' => $device_circuit,
-                    'device_circuit_output_text' => $device_circuit_text,
-                    'findings' => $findingArrayString,
-                    'findings_action' => $findingActionArrayString,
-                    'findings_status' => $request->findings_status,
-                    'findings_image' => $imagePathsFindingString,
-                    'action_image' => $imagePathsActionString,
-                    'remarks' => $request->remarks,
-                    'due_date' => $request->due_date,
-                    'crew' => $crew,
-                    'list_of_needs' => $request->list_of_needs,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
+                $dataPica = [
+                    'pica_number' => $no_pica,
+                    'inspeksi_id' => $inspeksi->id,
+                    'temuan' => $temuan['temuan'],
+                    'tindakan' => $temuan['tindak_lanjut'] ?? '',
+                    'due_date' => $request->input('due_date') ? Carbon::parse($request->input('due_date'))->toDateString() : null,
+                    'remark' => $request->input('remark'),
+                    'status_pica' => $temuan['status'],
+                    'site' => $site,
+                    'close_by' => auth()->user()->name,
+                    'foto_temuan' => $findingsImage[$i] ?? null,
+                    'foto_tindakan' => $actionImage[$i] ?? null,
                 ];
-                // return response()->json($dataInspection);
-                $data['udpateInspeksi'] = InspeksiMobileTower::firstWhere('id', $request->id)->update($dataInspection);
-            } else {
 
-                //temuan string array
-                $findingArray = [];
-                foreach ($request->findings as $finds) {
-                    $findingArray[] = $finds;
-                }
-                $findingArrayString = implode(', ', $findingArray);
+                PicaInspeksi::create($dataPica);
 
-
-                $imageFindingPaths = [];
-                foreach ($request->file('findings_image') as $findings_image) {
-                    $path_findings_image = $findings_image->store('images', 'public');
-                    $new_path_findings = 'storage/' . $path_findings_image;
-                    $imageFindingPaths[] = url($new_path_findings);
-                }
-                $imagePathsFindingString = implode(', ', $imageFindingPaths);
-
-                $dataInspection = [
-                    'inspection_status' => 'sudah_inspeksi',
-                    'inspector' => 'user login',
-                    'condition' => $request->condition,
-                    'physic_condition_mobile_tower' => $physic_condition_mobile_tower,
-                    'physic_condition_mobile_tower_text' => $physic_condition_mobile_tower_text,
-                    'battery_circuit' => $battery_circuit,
-                    'battery_circuit_text' => $battery_circuit_text,
-                    'solar_panel' => $solar_panel,
-                    'solar_panel_text' => $solar_panel_text,
-                    'device_circuit_output' => $device_circuit,
-                    'device_circuit_output_text' => $device_circuit_text,
-                    'findings' => $findingArrayString,
-                    'findings_status' => $request->findings_status,
-                    'findings_image' => $imagePathsFindingString,
-                    'remarks' => $request->remarks,
-                    'due_date' => $request->due_date,
-                    'crew' => $crew,
-                    'list_of_needs' => $request->list_of_needs,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
+                $no_pica++;
             }
-            // return response()->json($dataInspection);
-            $data['udpateInspeksi'] = InspeksiMobileTower::firstWhere('id', $request->id)->update($dataInspection);
-        } else {
-            if (!empty($request->file('action_image'))) {
-                //temuan action string array
-                $findingActionArray = [];
-                foreach ($request->findings_action as $action) {
-                    $findingActionArray[] = $action;
-                }
-                $findingActionArrayString = implode(', ', $findingActionArray);
-
-                //upload image
-                $imageActionPaths = [];
-                foreach ($request->file('action_image') as $action_image) {
-                    $path_action_image = $action_image->store('images', 'public');
-                    $new_path_action = 'storage/' . $path_action_image;
-                    $imageActionPaths[] = $new_path_action;
-                }
-                $imagePathsActionString = implode(', ', $imageActionPaths);
-
-                $dataInspection = [
-                    'inspection_status' => 'sudah_inspeksi',
-                    'inspector' => 'user login',
-                    'condition' => $request->condition,
-                    'physic_condition_mobile_tower' => $physic_condition_mobile_tower,
-                    'physic_condition_mobile_tower_text' => $physic_condition_mobile_tower_text,
-                    'battery_circuit' => $battery_circuit,
-                    'battery_circuit_text' => $battery_circuit_text,
-                    'solar_panel' => $solar_panel,
-                    'solar_panel_text' => $solar_panel_text,
-                    'device_circuit_output' => $device_circuit,
-                    'device_circuit_output_text' => $device_circuit_text,
-                    'findings_action' => $findingActionArrayString,
-                    'findings_status' => $request->findings_status,
-                    'action_image' => $imagePathsActionString,
-                    'remarks' => $request->remarks,
-                    'due_date' => $request->due_date,
-                    'crew' => $crew,
-                    'list_of_needs' => $request->list_of_needs,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
-            // return response()->json($dataInspection);
-            $data['udpateInspeksi'] = InspeksiMobileTower::firstWhere('id', $request->id)->update($dataInspection);
-            } else {
-                $dataInspection = [
-                    'inspection_status' => 'sudah_inspeksi',
-                    'inspector' => 'user login',
-                    'condition' => $request->condition,
-                    'physic_condition_mobile_tower' => $physic_condition_mobile_tower,
-                    'physic_condition_mobile_tower_text' => $physic_condition_mobile_tower_text,
-                    'battery_circuit' => $battery_circuit,
-                    'battery_circuit_text' => $battery_circuit_text,
-                    'solar_panel' => $solar_panel,
-                    'solar_panel_text' => $solar_panel_text,
-                    'device_circuit_output' => $device_circuit,
-                    'device_circuit_output_text' => $device_circuit_text,
-                    'remarks' => $request->remarks,
-                    'list_of_needs' => $request->list_of_needs,
-                    'pica_number' => $uniqueString,
-                    'created_date' => Carbon::now()->format('Y-m-d'),
-                ];
-            }
-            // return response()->json($dataInspection);
-            $data['udpateInspeksi'] = InspeksiMobileTower::firstWhere('id', $request->id)->update($dataInspection);
         }
+        // =======================================================
 
-        if (!empty($request->inventory_status)) {
-            $getDataInspeksi = InspeksiMobileTower::where('id', $request->id)->first();
-            $getDataInventory = InvMobileTower::where('id', $getDataInspeksi->inv_mt_id)->first();
-            $dataInventory = [
-                'status' => $request->inventory_status,
-            ];
-            $data['udpateInspeksi'] = InvMobileTower::firstWhere('id', $getDataInventory->id)->update($dataInventory);
-        }
-        return response()->json($data, 201);
+        return redirect()->route('inspeksiMobileTower.page');
     }
 
     public function approval(Request $request)
     {
-        $dataCheckStatusInspeksi = InspeksiMobileTower::where('id', $request->id)->value('inspection_status');
-        if ($dataCheckStatusInspeksi == 'sudah_inspeksi') {
-            if ($request->approvalType == 'accept') {
-                $dataApproval = [
-                    'approved_by' => Auth::user()->name,
-                    'status_approval' => 'approve',
-                ];
-            } else {
-                $dataApproval = [
-                    'approved_by' => Auth::user()->name,
-                    'status_approval' => 'reject',
-                ];
+        $bulanNow = $request->input('month', now()->month);
+        $yearNow = $request->input('year', now()->year);
+        $user = Auth::user();
+
+        // Cek apakah user memiliki role 'ict_group_leader'
+        if ($user->role !== 'ict_group_leader') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maaf, Anda tidak dapat melakukan approval dikarenakan role Anda bukan GROUP LEADER!',
+            ], 403);
+        }
+
+        $site = 'BIB';
+        if (!$site) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Site user tidak ditemukan.',
+            ], 400);
+        }
+
+        $dataApproval = [
+            'approved_by' => $user->name,
+            'status_approval' => 'approved',
+        ];
+
+        $updateCount = InspeksiMobileTower::where('site', $site)
+            ->where('month', $bulanNow)
+            ->where('year', $yearNow)
+            ->where('inspection_status', 'Y')
+            ->update($dataApproval);
+
+        return response()->json([
+            'success' => true,
+            'message' => "$updateCount data inspeksi MT untuk site $site telah di-approve.",
+        ]);
+    }
+
+
+    public function detail($id)
+    {
+        $inspeksi_mt = InspeksiMobileTower::with('inventory')->where('inspeksi_mobile_towers.id', $id)->first();
+
+        if (empty($inspeksi_mt)) {
+            abort(404, 'Data not found');
+        }
+
+        $dataKategori = KategoriInspeksi::where('kategori_inspeksi', 'MT')->where('parent', 0)->orderBy('urutan', 'ASC')->get();
+        $subDataKategori = KategoriInspeksi::where('kategori_inspeksi', 'MT')->where('parent', '!=', 0)->orderBy('urutan', 'ASC')->get();
+
+        return Inertia::render('Inspeksi/MobileTower/InspeksiMobileTowerDetail', [
+            'inspeksi' => $inspeksi_mt,
+            'dataKategori' => $dataKategori,
+            'subDataKategori' => $subDataKategori,
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $dataInspeksix = InspeksiMobileTower::find($id);
+        if (empty($dataInspeksix)) {
+            abort(404, 'Data not found');
+        }
+        $site = $dataInspeksix->site;
+
+        $mobileTowerx = InvMobileTower::where('id', $dataInspeksix->inv_mt_id)->first();
+        if (empty($mobileTowerx)) {
+            abort(404, 'Data not found');
+        }
+
+        $penggunax = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', $site)->pluck('name')->map(function ($name) {
+            return ['name' => $name];
+        })->toArray();
+
+        $dataKategori = KategoriInspeksi::where('kategori_inspeksi', 'MT')->where('parent', 0)->orderBy('urutan', 'ASC')->get();
+        $subDataKategori = KategoriInspeksi::where('kategori_inspeksi', 'MT')->where('parent', '!=', 0)->orderBy('urutan', 'ASC')->get();
+
+        $totalItems = $subDataKategori->count();
+
+
+        return Inertia::render('Inspeksi/MobileTower/InspeksiMobileTowerEdit', ['dataInspeksi' => $dataInspeksix, 'pengguna' => $penggunax, 'mobileTower' => $mobileTowerx, 'dataKategori' => $dataKategori, 'subDataKategori' => $subDataKategori, 'totalItems' => $totalItems,]);
+    }
+
+    public function update(Request $request)
+    {
+        // dd($request->all(), $request->file());
+        $inspeksi = InspeksiMobileTower::findOrFail($request->input('id'));
+        $id_mt = $inspeksi->inv_mt_id;
+        $site = $inspeksi->site;
+
+        // checklist + remarks
+        $checklistResults = $request->input('checklist_results_list', []);
+        $remarksInput = $request->input('list_results_remark', []);
+        $finalRemarks = [];
+        foreach ($checklistResults as $key => $value) {
+            $finalRemarks[$key] = $remarksInput[$key] ?? "-";
+        }
+
+        $lampiranPath = null;
+        $lampiranFiles = $request->file('lampiran', []);
+
+        if ($request->hasFile('lampiran')) {
+            $destinationPath = 'images/';
+            $path_document_image = $lampiranFiles->store('images', 'public');
+            $new_path_document_image = $path_document_image;
+            $lampiranFiles->move($destinationPath, $new_path_document_image);
+            $lampiranPath = url($new_path_document_image);
+        }
+
+        $temuanList = $request->input('temuan', []);
+        $temuanFiles = $request->file('temuan', []);
+
+        // dd($temuanList);
+
+        $findings = [];
+        $findingsStatus = [];
+        $findingsAction = [];
+        $findingsImage = [];
+        $actionImage = [];
+
+        foreach ($temuanList as $index => $temuan) {
+
+            $isTemuanEmpty = empty($temuan['temuan']);
+            $isTindakEmpty = empty($temuan['tindak_lanjut']);
+
+            if ($isTemuanEmpty && $isTindakEmpty) {
+                continue;
             }
-            $data['udpateInspeksiApproval'] = InspeksiMobileTower::where('id', $request->id)->update($dataApproval);
-            return response()->json($data);
-        } else {
-            return response()->json(['message' => 'data ini belum di inspeksi']);
+
+            $findings[] = $temuan['temuan'] ?? null;
+            $findingsStatus[] = $temuan['status'] ?? null;
+            $findingsAction[] = $temuan['tindak_lanjut'] ?? null;
+
+            $temuanFile = $temuanFiles[$index]['temuan_image'] ?? null;
+            $tindakFile = $temuanFiles[$index]['tindak_image'] ?? null;
+
+            // Finding Image
+            if ($request->hasFile("temuan.$index.temuan_image")) {
+
+                $destinationPath = 'images/';
+                $path_document_image = $temuanFile->store('images', 'public');
+                $new_path_document_image = $path_document_image;
+                $temuanFile->move($destinationPath, $new_path_document_image);
+
+                $findingsImage[] = url($new_path_document_image);
+            } else {
+                $findingsImage[] = $temuan['temuan_image']['preview'] ?? null;
+            }
+
+            // Action Image
+            if ($request->hasFile("temuan.$index.tindak_image")) {
+
+                $destinationPath = 'images/';
+                $path_document_image = $tindakFile->store('images', 'public');
+                $new_path_document_image = $path_document_image;
+                $tindakFile->move($destinationPath, $new_path_document_image);
+
+                $actionImage[] = url($new_path_document_image);
+            } else {
+                $actionImage[] = $temuan['tindak_image']['preview'] ?? null;
+            }
         }
-    }
 
-    public function approvalAll(Request $request)
-    {
-        $yearNow = Carbon::now()->format('Y');
+        // ======================================================
+        // 🔹 Prepare Update Data
+        // ======================================================
+        $updateData = [
+            'condition' => $request->input('condition'),
+            'worthiness' => $request->input('kelayakan'),
+            'device_status' => $request->input('inventory_status'),
+            'remarks' => $request->input('remark'),
+            'pic' => $request->input('pic'),
+            'crew' => json_encode($request->input('crew', [])),
+            'lokasi' => $request->input('lokasi'),
+            'detail_lokasi' => $request->input('detail_lokasi'),
+            'due_date' => $request->input('due_date') ? Carbon::parse($request->input('due_date'))->toDateString() : null,
+            'checklist_results_list' => json_encode($checklistResults),
+            'list_results_remark' => json_encode($finalRemarks),
+            'inspection_status' => 'Y',
+            'inspector' => Auth::user()->name,
+            'site' => $site,
+            'created_date' => Carbon::today(),
+            'inspection_at' => Carbon::now(),
+            'findings' => !empty($findings) ? json_encode($findings, JSON_UNESCAPED_SLASHES) : null,
+            'findings_image' => !empty($findingsImage) ? json_encode($findingsImage, JSON_UNESCAPED_SLASHES) : null,
+            'findings_status' => !empty($findingsStatus) ? json_encode($findingsStatus, JSON_UNESCAPED_SLASHES) : null,
+            'findings_action' => !empty($findingsAction) ? json_encode($findingsAction, JSON_UNESCAPED_SLASHES) : null,
+            'action_image' => !empty($actionImage) ? json_encode($actionImage, JSON_UNESCAPED_SLASHES) : null,
+        ];
 
-        if ($request->approvalType == 'accept') {
-            $dataApproval = [
-                'approved_by' => Auth::user()->name,
-                'status_approval' => 'approve',
-            ];
-        } else {
-            $dataApproval = [
-                'approved_by' => Auth::user()->name,
-                'status_approval' => 'reject',
-            ];
+        if ($lampiranPath !== null) {
+            $updateData['inspection_image'] = $lampiranPath;
         }
-        $data['udpateInspeksiApprovalAll'] = InspeksiMobileTower::where('year', $yearNow)->where('inspection_status', 'sudah_inspeksi')->update($dataApproval);
-        return response()->json(['message' => 'Approve all updated successfully']);
+
+        // dd($updateData);
+
+        $inspeksi->update($updateData);
+
+        // update InvMobileTower
+        $updateDataInvMt = [
+            'location' => $request->input('lokasi'),
+            'detail_location' => $request->input('detail_lokasi'),
+            'status' => $request->input('inventory_status'),
+            'inspection_remark' => $request->input('remark'),
+        ];
+
+        $mt = InvMobileTower::findOrFail($id_mt);
+        $mt->update($updateDataInvMt);
+
+        // ======================================================
+        // Add PICA Entry When Finding Status != 'CLOSED'
+        // ======================================================
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('Y');
+        $maxId = InspeksiMobileTower::where('site', $site)
+            ->where('year', $year)
+            ->max('pica_number');
+        $no_pica = ($maxId ?? 0) + 1;
+
+        foreach ($temuanList as $i => $temuan) {
+            if (!empty($temuan['temuan']) && strtoupper($temuan['status']) != 'CLOSED') {
+                $dataPica = [
+                    'pica_number' => $no_pica,
+                    'inspeksi_id' => $inspeksi->id,
+                    'temuan' => $temuan['temuan'],
+                    'tindakan' => $temuan['tindak_lanjut'] ?? '',
+                    'due_date' => $request->input('due_date')
+                        ? Carbon::parse($request->input('due_date'))->toDateString()
+                        : null,
+                    'remark' => $request->input('remark'),
+                    'status_pica' => $temuan['status'],
+                    'site' => $site,
+                    'close_by' => auth()->user()->name,
+                    'foto_temuan' => $findingsImage[$i] ?? null,
+                    'foto_tindakan' => $actionImage[$i] ?? null,
+                ];
+
+                PicaInspeksi::create($dataPica);
+                $no_pica++;
+            }
+        }
+
+        return redirect()->route('inspeksiMobileTower.page');
     }
 
-    public function showData()
-    {
-        // $findingArray = [];
-        // foreach ($request->findings as $finds) {
-        //     $findingArray[] = $finds;
-        // }
-        // $findingArrayString = implode(', ', $findingArray);
-
-        // //explode get temuan
-        // $explodeArrayFinding = explode(', ', $findingArrayString);
-        // $i=0;
-        // foreach ($explodeArrayFinding as $key => $explodeDataFinding) {
-        //     $data['temuan'.$i] = $explodeArrayFinding[$i];
-        //     $i++;
-        // }
-        // return response()->json($data);
-
-    }
 
     public function show($id)
     {
@@ -353,13 +485,4 @@ class InspeksiMobileTowerController extends Controller
         return response()->json($inspeksiMobileTower);
     }
 
-    public function destroy($id)
-    {
-        $inspeksiMobileTower = InspeksiMobileTower::find($id);
-        if (is_null($inspeksiMobileTower)) {
-            return response()->json(['message' => 'Data not found'], 404);
-        }
-        $inspeksiMobileTower->delete();
-        return response()->json(['message' => 'Data has deleted'], 204);
-    }
 }
