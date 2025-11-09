@@ -46,6 +46,7 @@ use App\Http\Controllers\DepartmentMifaController;
 use App\Http\Controllers\ExportAduanAllSiteController;
 use App\Http\Controllers\ExportInspeksiComputerController;
 use App\Http\Controllers\ExportInspeksiLaptopController;
+use App\Http\Controllers\ExportInspeksiMTController;
 use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspectionScheduleComputerController;
@@ -80,6 +81,7 @@ use App\Http\Controllers\InspeksiLaptopPikController;
 use App\Http\Controllers\InspeksiLaptopSbsController;
 use App\Http\Controllers\InspeksiLaptopSksController;
 use App\Http\Controllers\InspeksiLaptopValeController;
+use App\Http\Controllers\InspeksiMobileTowerController;
 use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApBgeController;
@@ -227,6 +229,7 @@ use App\Http\Controllers\InvWirellessValeController;
 use App\Http\Controllers\KpiAduanAnalysisController;
 use App\Http\Controllers\KpiInspeksiController;
 use App\Http\Controllers\KpiResponseTimeController;
+use App\Http\Controllers\KpiVhmsController;
 use App\Http\Controllers\PicaInspeksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RootCauseProblemController;
@@ -270,6 +273,40 @@ Route::middleware('auth')->group(function () {
         Route::get('/cekNrp', [DataCheckerController::class, 'checkMissingNRP']);
     });
     // Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO,soc_ho:HO,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA'], function () {
+
+    Route::post('/pdf-mt', function (Request $request) {
+        $month = $request->month ?? Carbon::now()->month;
+        $year = $request->year ?? Carbon::now()->year;
+
+        $encryptedSite = Crypt::encryptString($request->site ?? 'BA');
+
+        return response()->json([
+            'url' => route('export.inspectionMTAll', [
+                'year' => $year,
+                'month' => $month,
+                'site' => $encryptedSite,
+            ]),
+        ]);
+    })->name('pdf.mt');
+
+    Route::get('/export-all-pdf-mt', [ExportInspeksiMTController::class, 'exportPdfAll'])
+        ->name('export.inspectionMTAll');
+
+    Route::post('/pdf-mt-single', function (Request $request) {
+        // Pastikan inspeksiId ada
+        if (!$request->inspeksiId) {
+            return back()->with('error', 'ID tidak ditemukan.');
+        }
+
+        // Simpan inspeksiId di session atau langsung kembalikan di response
+        return back()->with([
+            'success' => true,
+            'inspeksiId' => $request->inspeksiId
+        ]);
+    })->name('mt.singleExport');
+
+    Route::get('/action-pdf-single-mt', [ExportInspeksiMTController::class, 'exportPdfSingle'])->name('export.inspectionMTSingle');
+
     Route::post('/encrypt-year', function (Request $request) {
         $year = $request->year ?? Carbon::now()->year;
         $encryptedYear = Crypt::encryptString($year);
@@ -714,16 +751,16 @@ Route::middleware('auth')->group(function () {
         Route::post('/pica-inspeksi/update', [PicaInspeksiController::class, 'update'])->name('picaInspeksi.update');
         Route::get('/pica-inspeksi/{id}/detail', [PicaInspeksiController::class, 'detail'])->name('picaInspeksi.detail');
 
-        Route::get('/pengalihan-asset-site/{site}', [PengalihanAssetController::class, 'index'])->name('pengalihanAsset.page');
-        Route::get('/pengalihan-asset-by-device', [PengalihanAssetController::class, 'getDataPengalihanByDevice']);
-        Route::get('/pengalihan-asset-by-device-range', [PengalihanAssetController::class, 'getDataPengalihanByDeviceRange']);
-        Route::get('/pengalihan-asset/create/{site}', [PengalihanAssetController::class, 'create'])->name('pengalihanAsset.create');
-        Route::get('/pengalihan-asset-data-inv-by-dept-prev', [PengalihanAssetController::class, 'getInventoryByDeviceAndDept'])->name('pengalihanAsset.getDataPrev');
-        Route::get('/pengalihan-asset-data-inv-by-inv-number-prev', [PengalihanAssetController::class, 'getInventoryByInvNumber'])->name('pengalihanAsset.getDataInvPrev');
-        Route::get('/pengalihan-asset-data-user-by-nrp', [PengalihanAssetController::class, 'getUserByNrp'])->name('pengalihanAsset.getDataUser');
-        Route::get('/pengalihan-asset-generate-inventory-number', [PengalihanAssetController::class, 'generateCode'])->name('pengalihanAsset.generateInvNumber');
-        Route::post('/pengalihan-asset/create', [PengalihanAssetController::class, 'store'])->name('pengalihanAsset.store');
-        Route::get('/pengalihan-asset/{id}/edit', [PengalihanAssetController::class, 'edit'])->name('pengalihanAsset.edit');
+        // Route::get('/pengalihan-asset-site/{site}', [PengalihanAssetController::class, 'index'])->name('pengalihanAsset.page');
+        // Route::get('/pengalihan-asset-by-device', [PengalihanAssetController::class, 'getDataPengalihanByDevice']);
+        // Route::get('/pengalihan-asset-by-device-range', [PengalihanAssetController::class, 'getDataPengalihanByDeviceRange']);
+        // Route::get('/pengalihan-asset/create/{site}', [PengalihanAssetController::class, 'create'])->name('pengalihanAsset.create');
+        // Route::get('/pengalihan-asset-data-inv-by-dept-prev', [PengalihanAssetController::class, 'getInventoryByDeviceAndDept'])->name('pengalihanAsset.getDataPrev');
+        // Route::get('/pengalihan-asset-data-inv-by-inv-number-prev', [PengalihanAssetController::class, 'getInventoryByInvNumber'])->name('pengalihanAsset.getDataInvPrev');
+        // Route::get('/pengalihan-asset-data-user-by-nrp', [PengalihanAssetController::class, 'getUserByNrp'])->name('pengalihanAsset.getDataUser');
+        // Route::get('/pengalihan-asset-generate-inventory-number', [PengalihanAssetController::class, 'generateCode'])->name('pengalihanAsset.generateInvNumber');
+        // Route::post('/pengalihan-asset/create', [PengalihanAssetController::class, 'store'])->name('pengalihanAsset.store');
+        // Route::get('/pengalihan-asset/{id}/edit', [PengalihanAssetController::class, 'edit'])->name('pengalihanAsset.edit');
 
         Route::get('/aduan-ho', [AduanHoController::class, 'index'])->name('aduan-ho.page');
         Route::get('/aduan-ho/create', [AduanHoController::class, 'create'])->name('aduan-ho.create');
@@ -828,6 +865,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('inventory')->group(function () {
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO'], function () {
+
+            Route::get('/kpi-vhms', action: [KpiVhmsController::class, 'index'])->name('kpi.vhms');
+            Route::post('/kpi-vhms-show', [KpiVhmsController::class, 'countKpi'])->name('kpi.vhmsShow');
+            Route::get('/kpi-vhms/data-filter', [KpiVhmsController::class, 'getDataFilter'])->name('kpi-vhms.data.filter');
+            Route::post('/kpi-vhms/feedback', [KpiVhmsController::class, 'updateFeedback'])->name('kpi-vhms.feedback');
 
             Route::get('/mobile-tower', [InvMobileTowerController::class, 'index'])->name('mobileTower.page');
             Route::get('/mobile-tower/create', [InvMobileTowerController::class, 'create'])->name('mobileTower.create');
@@ -2522,6 +2564,15 @@ Route::middleware('auth')->group(function () {
                 Route::get('/inspeksi-laptop/{id}/detail', [InspeksiLaptopController::class, 'detail'])->name('inspeksiLaptop.detail');
                 Route::delete('inspeksi-laptop/{id}/delete', [InspeksiLaptopController::class, 'destroy'])->name('inspeksiLaptop.delete');
                 Route::post('/inspeksi-laptop/approval', [InspeksiLaptopController::class, 'approval'])->name('inspeksiLaptop.approval');
+
+                Route::get('inspeksi-mobile-tower', [InspeksiMobileTowerController::class, 'index'])->name('inspeksiMobileTower.page');
+                Route::get('inspeksi-mobile-tower/{id}/process', [InspeksiMobileTowerController::class, 'process'])->name('inspeksiMobileTower.process');
+                Route::post('inspeksi-mobile-tower/process', [InspeksiMobileTowerController::class, 'store'])->name('inspeksiMobileTower.store');
+                Route::post('inspeksi-mobile-tower/approval', [InspeksiMobileTowerController::class, 'approval'])->name('inspeksiMobileTower.approval');
+                Route::get('inspeksi-mobile-tower/{id}/edit', [InspeksiMobileTowerController::class, 'edit'])->name('inspeksiMobileTower.edit');
+                Route::post('inspeksi-mobile-tower/update', [InspeksiMobileTowerController::class, 'update'])->name('inspeksiMobileTower.update');
+                Route::get('/inspeksi-mobile-tower/{id}/detail', [InspeksiMobileTowerController::class, 'detail'])->name('inspeksiMobileTower.detail');
+                Route::delete('inspeksi-mobile-tower/{id}/delete', [InspeksiMobileTowerController::class, 'destroy'])->name('inspeksiMobileTower.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {

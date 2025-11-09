@@ -13107,6 +13107,24 @@ const toggleLevel3ScannerSks = () => {
                                             >KPI Inspeksi</span
                                         >
                                     </NavLink>
+                                    <NavLink
+                                        :href="route('kpi.vhms')"
+                                        :active="
+                                            route().current('kpi.vhms')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-hdd"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Vhms</span
+                                        >
+                                    </NavLink>
                                     <!-- <NavLink
                                         :href="route('wirellessWARA.page')"
                                         :active="
@@ -13451,6 +13469,24 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+                                    <NavLink
+                                        :href="route('mobileTowerBib.page')"
+                                        :active="
+                                            route().current('mobileTowerBib.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -13575,6 +13611,30 @@ const toggleLevel3ScannerSks = () => {
                                             >Inspeksi Komputer</span
                                         >
                                     </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTower.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTower.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+                                    
 
                                     <NavLink
                                         :href="route('picaInspeksi.page', { site: 'BIB' })"
