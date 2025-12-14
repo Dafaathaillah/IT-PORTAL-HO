@@ -26,6 +26,9 @@ class InspeksiMobileTowerController extends Controller
 
         $role = auth()->user()->role;
 
+        $bulan_sekarang = now()->month;
+        $tahun_sekarang = now()->year;
+
         return Inertia::render(
             'Inspeksi/MobileTower/InspeksiMobileTowerView',
             [
@@ -34,6 +37,8 @@ class InspeksiMobileTowerController extends Controller
                 'role' => $role,
                 'monthNow' => (int) $bulanNow,
                 'yearNow' => (int) $yearNow,
+                'bulan_sekarang' => (int) $bulan_sekarang,
+                'tahun_sekarang' => (int) $tahun_sekarang,
             ]
         );
     }

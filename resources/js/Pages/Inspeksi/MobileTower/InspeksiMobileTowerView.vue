@@ -90,6 +90,8 @@ const props = defineProps({
     },
     monthNow: Number,
     yearNow: Number,
+    bulan_sekarang: Number,
+    tahun_sekarang: Number,
     site: String,
 });
 
@@ -521,7 +523,11 @@ const approved = () => {
                                                             "
                                                             v-if="
                                                                 inspeksiMobileTowers.inspection_status ===
-                                                                'N'
+                                                                    'N' &&
+                                                                inspeksiMobileTowers.month ===
+                                                                    props.bulan_sekarang &&
+                                                                inspeksiMobileTowers.year ===
+                                                                    props.tahun_sekarang
                                                             "
                                                             class="!px-4 !py-2 !rounded-md !border !border-cyan-600 !text-cyan-600 !font-semibold hover:!bg-cyan-50 dark:!border-cyan-600 dark:!text-cyan-600 dark:!hover:bg-sky-950"
                                                         >
