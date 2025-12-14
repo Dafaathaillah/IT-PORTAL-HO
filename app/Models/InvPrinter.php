@@ -29,4 +29,10 @@ class InvPrinter extends Model
         'note',
         'site'
     ];
+
+    public function inspeksiPrinters()
+    {
+        return $this->hasMany(InspeksiPrinter::class, 'inv_printer_id', 'id');
+    }
+
 }
