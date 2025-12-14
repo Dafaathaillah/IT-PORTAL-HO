@@ -47,6 +47,7 @@ use App\Http\Controllers\ExportAduanAllSiteController;
 use App\Http\Controllers\ExportInspeksiComputerController;
 use App\Http\Controllers\ExportInspeksiLaptopController;
 use App\Http\Controllers\ExportInspeksiMTController;
+use App\Http\Controllers\ExportInspeksiPrinterController;
 use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspectionScheduleComputerController;
@@ -82,6 +83,7 @@ use App\Http\Controllers\InspeksiLaptopSbsController;
 use App\Http\Controllers\InspeksiLaptopSksController;
 use App\Http\Controllers\InspeksiLaptopValeController;
 use App\Http\Controllers\InspeksiMobileTowerController;
+use App\Http\Controllers\InspeksiPrinterController;
 use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApBgeController;
@@ -306,6 +308,42 @@ Route::middleware('auth')->group(function () {
     })->name('mt.singleExport');
 
     Route::get('/action-pdf-single-mt', [ExportInspeksiMTController::class, 'exportPdfSingle'])->name('export.inspectionMTSingle');
+
+
+    Route::post('/pdf-printer', function (Request $request) {
+        $month = $request->month ?? Carbon::now()->month;
+        $year = $request->year ?? Carbon::now()->year;
+        $pic = $request->pic ?? '';
+
+        $encryptedSite = Crypt::encryptString($request->site ?? 'BA');
+
+        return response()->json([
+            'url' => route('export.inspectionPrinterAll', [
+                'year' => $year,
+                'month' => $month,
+                'site' => $encryptedSite,
+                'pic' => $pic,
+            ]),
+        ]);
+    })->name('pdf.printer');
+
+    Route::get('/export-all-pdf-printer', [ExportInspeksiPrinterController::class, 'exportPdfAll'])
+        ->name('export.inspectionPrinterAll');
+
+    Route::post('/pdf-printer-single', function (Request $request) {
+        // Pastikan inspeksiId ada
+        if (!$request->inspeksiId) {
+            return back()->with('error', 'ID tidak ditemukan.');
+        }
+
+        // Simpan inspeksiId di session atau langsung kembalikan di response
+        return back()->with([
+            'success' => true,
+            'inspeksiId' => $request->inspeksiId
+        ]);
+    })->name('printer.singleExport');
+
+    Route::get('/action-pdf-single-printer', [ExportInspeksiPrinterController::class, 'exportPdfSingle'])->name('export.inspectionPrinterSingle');
 
     Route::post('/encrypt-year', function (Request $request) {
         $year = $request->year ?? Carbon::now()->year;
@@ -2573,6 +2611,15 @@ Route::middleware('auth')->group(function () {
                 Route::post('inspeksi-mobile-tower/update', [InspeksiMobileTowerController::class, 'update'])->name('inspeksiMobileTower.update');
                 Route::get('/inspeksi-mobile-tower/{id}/detail', [InspeksiMobileTowerController::class, 'detail'])->name('inspeksiMobileTower.detail');
                 Route::delete('inspeksi-mobile-tower/{id}/delete', [InspeksiMobileTowerController::class, 'destroy'])->name('inspeksiMobileTower.delete');
+
+                Route::get('inspeksi-printer', [InspeksiPrinterController::class, 'index'])->name('inspeksiPrinter.page');
+                Route::get('inspeksi-printer/{id}/process', [InspeksiPrinterController::class, 'process'])->name('inspeksiPrinter.process');
+                Route::post('inspeksi-printer/process', [InspeksiPrinterController::class, 'store'])->name('inspeksiPrinter.store');
+                Route::post('inspeksi-printer/approval', [InspeksiPrinterController::class, 'approval'])->name('inspeksiPrinter.approval');
+                Route::get('inspeksi-printer/{id}/edit', [InspeksiPrinterController::class, 'edit'])->name('inspeksiPrinter.edit');
+                Route::post('inspeksi-printer/update', [InspeksiPrinterController::class, 'update'])->name('inspeksiPrinter.update');
+                Route::get('/inspeksi-printer/{id}/detail', [InspeksiPrinterController::class, 'detail'])->name('inspeksiPrinter.detail');
+                Route::delete('inspeksi-printer/{id}/delete', [InspeksiPrinterController::class, 'destroy'])->name('inspeksiPrinter.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {

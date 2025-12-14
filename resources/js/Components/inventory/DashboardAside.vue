@@ -6700,10 +6700,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'HO' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'HO',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'HO' }
+                                                'picaInspeksi.page',
+                                                { site: 'HO' }
                                             )
                                         "
                                     >
@@ -7561,10 +7566,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'BA' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'BA',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'BA' }
+                                                'picaInspeksi.page',
+                                                { site: 'BA' }
                                             )
                                         "
                                     >
@@ -8431,10 +8441,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'MIFA' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'MIFA',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'MIFA' }
+                                                'picaInspeksi.page',
+                                                { site: 'MIFA' }
                                             )
                                         "
                                     >
@@ -9302,10 +9317,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'MHU' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'MHU',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'MHU' }
+                                                'picaInspeksi.page',
+                                                { site: 'MHU' }
                                             )
                                         "
                                     >
@@ -10175,10 +10195,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'ADW' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'ADW',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'ADW' }
+                                                'picaInspeksi.page',
+                                                { site: 'ADW' }
                                             )
                                         "
                                     >
@@ -10944,10 +10969,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'AMI' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'AMI',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'AMI' }
+                                                'picaInspeksi.page',
+                                                { site: 'AMI' }
                                             )
                                         "
                                     >
@@ -11815,10 +11845,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'PIK' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'PIK',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'PIK' }
+                                                'picaInspeksi.page',
+                                                { site: 'PIK' }
                                             )
                                         "
                                     >
@@ -12686,10 +12721,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'BGE' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'BGE',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'BGE' }
+                                                'picaInspeksi.page',
+                                                { site: 'BGE' }
                                             )
                                         "
                                     >
@@ -12954,11 +12994,16 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OperationBib">
-                                 <NavLink
-                                        :href="route('pengalihanAsset.page', { site: 'BIB' })"
+                                    <NavLink
+                                        :href="
+                                            route('pengalihanAsset.page', {
+                                                site: 'BIB',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'pengalihanAsset.page', { site: 'BIB' }
+                                                'pengalihanAsset.page',
+                                                { site: 'BIB' }
                                             )
                                         "
                                     >
@@ -13109,9 +13154,7 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
                                     <NavLink
                                         :href="route('kpi.vhms')"
-                                        :active="
-                                            route().current('kpi.vhms')
-                                        "
+                                        :active="route().current('kpi.vhms')"
                                     >
                                         <div
                                             class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
@@ -13472,7 +13515,9 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="route('mobileTowerBib.page')"
                                         :active="
-                                            route().current('mobileTowerBib.page')
+                                            route().current(
+                                                'mobileTowerBib.page'
+                                            )
                                         "
                                     >
                                         <div
@@ -13634,13 +13679,38 @@ const toggleLevel3ScannerSks = () => {
                                             >Inspeksi Mobile Tower</span
                                         >
                                     </NavLink>
-                                    
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'BIB' })"
+                                        :href="route('inspeksiPrinter.page')"
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'BIB' }
+                                                'inspeksiPrinter.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'BIB',
+                                            })
+                                        "
+                                        :active="
+                                            route().current(
+                                                'picaInspeksi.page',
+                                                { site: 'BIB' }
                                             )
                                         "
                                     >
@@ -14504,10 +14574,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'IPT' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'IPT',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'IPT' }
+                                                'picaInspeksi.page',
+                                                { site: 'IPT' }
                                             )
                                         "
                                     >
@@ -15370,10 +15445,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'MLP' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'MLP',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'MLP' }
+                                                'picaInspeksi.page',
+                                                { site: 'MLP' }
                                             )
                                         "
                                     >
@@ -16236,10 +16316,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'MIP' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'MIP',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'MIP' }
+                                                'picaInspeksi.page',
+                                                { site: 'MIP' }
                                             )
                                         "
                                     >
@@ -17104,10 +17189,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'VIB' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'VIB',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'VIB' }
+                                                'picaInspeksi.page',
+                                                { site: 'VIB' }
                                             )
                                         "
                                     >
@@ -17971,10 +18061,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'SBS' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'SBS',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'SBS' }
+                                                'picaInspeksi.page',
+                                                { site: 'SBS' }
                                             )
                                         "
                                     >
@@ -18838,10 +18933,15 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('picaInspeksi.page', { site: 'SKS' })"
+                                        :href="
+                                            route('picaInspeksi.page', {
+                                                site: 'SKS',
+                                            })
+                                        "
                                         :active="
                                             route().current(
-                                                'picaInspeksi.page', { site: 'SKS' }
+                                                'picaInspeksi.page',
+                                                { site: 'SKS' }
                                             )
                                         "
                                     >
