@@ -28,6 +28,20 @@ Schedule::command('inspeksiWirelless:cron')->monthly(); // * * * * * php /path/t
 Schedule::command('inspeksiSwitch:cron')->monthly(); // * * * * * php /path/to/your/project/artisan schedule:run >> /dev/null 2>&1 //
 
 
+// ===== add schedule inspection ===========
+// Schedule::command('schedulePrinter:cron')->everyMinute();
+Schedule::command('schedulePrinter:cron')->monthly();
+
+// Schedule::command('scheduleMT:cron')->everyMinute();
+Schedule::command('scheduleMT:cron')->monthly();
+
+// Schedule::command('scheduleLaptop:cron')->everyMinute();
+Schedule::command('scheduleLaptop:cron')->yearly();
+
+// Schedule::command('scheduleComputer:cron')->everyMinute();
+Schedule::command('scheduleComputer:cron')->quarterly();
+
+
 // ===== 🆕 Add VHMS History Schedule =====
 Schedule::command('vhms:insert-history')
     ->monthlyOn(1, '00:00'); // Run at midnight every 1st day of the month

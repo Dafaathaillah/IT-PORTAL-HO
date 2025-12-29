@@ -8,18 +8,16 @@ import Highcharts from "highcharts";
 // Props from Inertia
 const props = defineProps({
     schedules: Array,
-    summary: Array,
-    triwulan: String,
     sudahSesuai: Array,
     belumSesuai: Array,
-    labelPeriode: Object,
+    thisMonthTeks: Object,
 });
 
 const site_link = usePage().props.site_link;
 
 const pages = ref("Inspeksi");
 const subMenu = ref("Schedule");
-const mainMenu = ref("Inspeksi Komputer");
+const mainMenu = ref("Inspeksi Mobile Tower");
 
 // Editing state
 const editingRows = ref({});
@@ -69,7 +67,7 @@ const cancelEditing = (id) => {
 
 const saveDate = (id, newDate) => {
     router.put(
-        `/inspection-scheduler-computer-${site_link}/${id}`,
+        `/inspection-scheduler-mobileTower-${site_link}/${id}`,
         {
             tanggal_inspection: newDate,
         },
@@ -89,22 +87,6 @@ const saveDate = (id, newDate) => {
     );
 };
 
-const filteredDepartments = computed(() => {
-    if (!activeMonth.value) {
-        return [...new Set(props.summary.flatMap((item) => item.departments))];
-    }
-
-    const monthData = props.summary.find(
-        (item) => item.month === activeMonth.value
-    );
-    return monthData ? monthData.departments : [];
-});
-
-const clearFilters = () => {
-    activeMonth.value = null;
-    activeDept.value = null;
-};
-
 const exportPdf = () => {
     // const params = new URLSearchParams();
     // if (activeMonth.value) params.append("month", activeMonth.value);
@@ -115,7 +97,7 @@ const exportPdf = () => {
     //     "_blank"
     // );
     window.open(
-        `/inspection-scheduler-computer-${site_link}/rekap/pdf`,
+        `/inspection-scheduler-mobileTower-${site_link}/rekap/pdf`,
         "_blank"
     );
 };
@@ -133,7 +115,7 @@ onMounted(() => {
             margin: 30,
         },
         xAxis: {
-            categories: [props.labelPeriode],
+            categories: [props.thisMonthTeks],
         },
         yAxis: {
             min: 0,
@@ -192,7 +174,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title="Schedule inspection computers" />
+    <Head title="Schedule inspection mobile towers" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -207,103 +189,12 @@ onMounted(() => {
                     >
                         <div class="p-12">
                             <h1 class="text-2xl font-bold mb-6">
-                                Computer Inspection Schedule - {{ triwulan }}
+                                Mobile Tower Inspection Schedule
                             </h1>
 
+                            <!-- 🧩 Flex container  + Table -->
                             <div class="flex flex-col lg:flex-row gap-8">
                                 <div class="w-full lg:w-1/2">
-                                    <div
-                                        class="flex flex-col lg:flex-row gap-6 mb-4"
-                                    >
-                                        <!-- Months -->
-                                        <div class="w-full lg:w-1/2">
-                                            <h2
-                                                class="text-lg font-semibold mb-3"
-                                            >
-                                                📅 Months
-                                            </h2>
-                                            <div
-                                                class="space-y-3 overflow-y-auto pr-2 pb-3 h-48 lg:h-auto"
-                                            >
-                                                <div
-                                                    v-for="month in summary"
-                                                    :key="month.month"
-                                                    @click="
-                                                        activeMonth =
-                                                            month.month
-                                                    "
-                                                    class="cursor-pointer p-4 bg-white border-l-4 rounded shadow-sm transition hover:bg-gray-50"
-                                                    :class="{
-                                                        'border-blue-500':
-                                                            activeMonth ===
-                                                            month.month,
-                                                        'border-gray-200':
-                                                            activeMonth !==
-                                                            month.month,
-                                                    }"
-                                                >
-                                                    <div
-                                                        class="font-semibold text-gray-800"
-                                                    >
-                                                        {{ month.month }}
-                                                    </div>
-                                                    <div
-                                                        class="text-sm text-gray-500"
-                                                    >
-                                                        {{
-                                                            month.departments
-                                                                .length
-                                                        }}
-                                                        departments
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Departments -->
-                                        <div class="w-full lg:w-1/2">
-                                            <h2
-                                                class="text-lg font-semibold mb-3"
-                                            >
-                                                🏢 Departments
-                                            </h2>
-                                            <div
-                                                class="space-y-3 overflow-y-auto pr-2 pb-3 h-48 lg:h-auto"
-                                            >
-                                                <div
-                                                    v-for="dept in filteredDepartments"
-                                                    :key="dept"
-                                                    @click="activeDept = dept"
-                                                    class="cursor-pointer p-4 bg-white border-l-4 rounded shadow-sm transition hover:bg-gray-50"
-                                                    :class="{
-                                                        'border-green-500':
-                                                            activeDept === dept,
-                                                        'border-gray-200':
-                                                            activeDept !== dept,
-                                                    }"
-                                                >
-                                                    <div
-                                                        class="font-semibold text-gray-800"
-                                                    >
-                                                        {{ dept }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        v-if="activeMonth || activeDept"
-                                        class="mb-4"
-                                    >
-                                        <button
-                                            @click="clearFilters"
-                                            class="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 rounded"
-                                        >
-                                            Clear Filters
-                                        </button>
-                                    </div>
-
                                     <hr
                                         class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                     />
@@ -319,6 +210,7 @@ onMounted(() => {
                                     class="hidden lg:block w-px h-auto bg-gradient-to-b from-transparent via-black/40 to-transparent dark:via-white"
                                 ></div>
 
+                                <!-- 📋 Table (Right Column) -->
                                 <div class="w-full lg:w-1/2">
                                     <button
                                         @click="exportPdf"
@@ -338,22 +230,17 @@ onMounted(() => {
                                             >
                                                 <tr>
                                                     <th
-                                                        class="px-4 py-2 border"
+                                                        class="px-4 py-2 border text-center"
                                                     >
-                                                        Department
+                                                        MT Code
                                                     </th>
                                                     <th
-                                                        class="px-4 py-2 border"
-                                                    >
-                                                        Computer Code
-                                                    </th>
-                                                    <th
-                                                        class="px-4 py-2 border"
+                                                        class="px-4 py-2 border text-center"
                                                     >
                                                         Schedule Inspection
                                                     </th>
                                                     <th
-                                                        class="px-4 py-2 border"
+                                                        class="px-4 py-2 border text-center"
                                                     >
                                                         Actual Inspection
                                                     </th>
@@ -376,19 +263,12 @@ onMounted(() => {
                                                         class="hover:bg-gray-50"
                                                     >
                                                         <td
-                                                            class="px-4 py-2 border"
+                                                            class="px-4 py-2 border text-center"
                                                         >
-                                                            {{ item.dept }}
+                                                            {{ item.mt_code }}
                                                         </td>
                                                         <td
-                                                            class="px-4 py-2 border"
-                                                        >
-                                                            {{
-                                                                item.computer_code
-                                                            }}
-                                                        </td>
-                                                        <td
-                                                            class="px-4 py-2 border"
+                                                            class="px-4 py-2 border text-center"
                                                         >
                                                             <template
                                                                 v-if="
@@ -406,7 +286,7 @@ onMounted(() => {
                                                                         ]
                                                                             .newDate
                                                                     "
-                                                                    class="border border-gray-300 rounded px-2 py-1"
+                                                                    class="border text-center border-gray-300 rounded px-2 py-1"
                                                                 />
                                                             </template>
                                                             <template v-else>
@@ -417,7 +297,6 @@ onMounted(() => {
                                                                 }}
                                                             </template>
                                                         </td>
-
                                                         <td
                                                             class="px-4 py-2 border text-center"
                                                         >

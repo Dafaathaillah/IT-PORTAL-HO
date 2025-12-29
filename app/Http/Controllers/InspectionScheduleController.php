@@ -21,8 +21,14 @@ class InspectionScheduleController extends Controller
 
     public function index(Request $request)
     {
-        $site_link = $this->getSiteFromRequest($request);
-        $site = strtoupper($this->getSiteFromRequest($request));
+        $prefix = $request->route()->getPrefix();
+
+        $site_link = str_replace('inspection-scheduler-all-', '', $prefix);
+        $site = strtoupper(str_replace('inspection-scheduler-all-', '', $prefix));
+
+        // dd($site);
+
+        $device = $request->get('device', 'laptop');
 
         $user = Auth::user();
         $auth = $user->role;
@@ -35,44 +41,214 @@ class InspectionScheduleController extends Controller
         }
 
         $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
 
-        $schedules = DB::table('schedule_laptop')
-            ->join('inv_laptops', 'schedule_laptop.id_laptop', '=', 'inv_laptops.id')
-            ->select(
-                'schedule_laptop.id',
-                'schedule_laptop.id_laptop',
-                'schedule_laptop.tanggal_inspection',
-                'schedule_laptop.bulan',
-                'schedule_laptop.tahun',
-                'inv_laptops.laptop_code',
-                'inv_laptops.dept',
-                'inv_laptops.site'
-            )
-            ->where('schedule_laptop.site', $site)
-            ->where('schedule_laptop.tahun', $year)
-            ->orderBy('tanggal_inspection')
-            ->get();
+        switch ($device) {
 
-        $summary = collect($schedules)->groupBy(fn($item) => Carbon::parse($item->tanggal_inspection)->format('F'))
-            ->map(function ($group) {
-                return [
-                    'month' => Carbon::parse($group->first()->tanggal_inspection)->format('F'),
-                    'departments' => $group->pluck('dept')->unique()->values(),
-                ];
-            })->values();
+            case 'computer':
+                $Q = match (true) {
+                    $month <= 3 => 'Q1',
+                    $month <= 6 => 'Q2',
+                    $month <= 9 => 'Q3',
+                    default => 'Q4',
+                };
+
+                $schedules = DB::table('schedule_computer')
+                    ->join('inv_computers', 'schedule_computer.id_computer', '=', 'inv_computers.id')
+                    ->select(
+                        'schedule_computer.id',
+                        'schedule_computer.tanggal_inspection',
+                        'schedule_computer.actual_inspection',
+                        'inv_computers.computer_code AS device_code',
+                        'inv_computers.dept',
+                        'inv_computers.site'
+                    )
+                    ->where('schedule_computer.site', $site)
+                    ->where('schedule_computer.quarter', $Q)
+                    ->where('schedule_computer.tahun', $year)
+                    ->get();
+
+
+                $summary = collect($schedules)->groupBy(fn($item) => Carbon::parse($item->tanggal_inspection)->format('F'))
+                    ->map(function ($group) {
+                        return [
+                            'month' => Carbon::parse($group->first()->tanggal_inspection)->format('F'),
+                            'departments' => $group->pluck('dept')->unique()->values(),
+                        ];
+                    })->values();
+
+                $inspectionStats = DB::table('schedule_computer')
+                    ->where('site', $site)
+                    ->where('quarter', $Q)
+                    ->where('tahun', $year)
+                    ->whereNotNull('actual_inspection')
+                    ->selectRaw("
+                        SUM(CASE 
+                            WHEN DATE(actual_inspection) = DATE(tanggal_inspection) 
+                            THEN 1 ELSE 0 END) AS sudahSesuai,
+                        SUM(CASE 
+                            WHEN DATE(actual_inspection) != DATE(tanggal_inspection) 
+                            THEN 1 ELSE 0 END) AS belumSesuai,
+                        COUNT(*) AS total
+                    ")
+                    ->first();
+
+                $kategori = 'Computer';
+                break;
+
+            case 'printer':
+
+                $schedules = DB::table('schedule_printer')
+                    ->join('inv_printers', 'schedule_printer.id_printer', '=', 'inv_printers.id')
+                    ->select(
+                        'schedule_printer.id',
+                        'schedule_printer.tanggal_inspection',
+                        'schedule_printer.actual_inspection',
+                        'inv_printers.printer_code AS device_code',
+                        'inv_printers.department AS dept',
+                        'inv_printers.site'
+                    )
+                    ->where('schedule_printer.site', $site)
+                    ->where('schedule_printer.bulan', $month)
+                    ->where('schedule_printer.tahun', $year)
+                    ->get();
+
+
+                $summary = collect($schedules)->groupBy(fn($item) => Carbon::parse($item->tanggal_inspection)->format('F'))
+                    ->map(function ($group) {
+                        return [
+                            'month' => Carbon::parse($group->first()->tanggal_inspection)->format('F'),
+                            'departments' => $group->pluck('dept')->unique()->values(),
+                        ];
+                    })->values();
+
+
+                $inspectionStats = DB::table('schedule_printer')
+                    ->where('site', $site)
+                    ->where('tahun', $year)
+                    ->where('bulan', $month)
+                    ->whereNotNull('actual_inspection')
+                    ->selectRaw("
+                        SUM(CASE 
+                            WHEN DATE(actual_inspection) = DATE(tanggal_inspection) 
+                            THEN 1 ELSE 0 END) AS sudahSesuai,
+                        SUM(CASE 
+                            WHEN DATE(actual_inspection) != DATE(tanggal_inspection) 
+                            THEN 1 ELSE 0 END) AS belumSesuai,
+                        COUNT(*) AS total
+                    ")
+                    ->first();
+
+                $kategori = 'Printer';
+                break;
+
+            case 'mobile_tower':
+
+                $schedules = DB::table('schedule_mobile_tower')
+                    ->join('inv_mobile_towers', 'schedule_mobile_tower.id_mobile_tower', '=', 'inv_mobile_towers.id')
+                    ->select(
+                        'schedule_mobile_tower.id',
+                        'schedule_mobile_tower.tanggal_inspection',
+                        'schedule_mobile_tower.actual_inspection',
+                        'inv_mobile_towers.mt_code AS device_code',
+                        'inv_mobile_towers.site'
+                    )
+                    ->where('schedule_mobile_tower.site', $site)
+                    ->where('schedule_mobile_tower.bulan', $month)
+                    ->where('schedule_mobile_tower.tahun', $year)
+                    ->get();
+
+
+                $inspectionStats = DB::table('schedule_mobile_tower')
+                    ->where('site', $site)
+                    ->where('tahun', $year)
+                    ->where('bulan', $month)
+                    ->whereNotNull('actual_inspection')
+                    ->selectRaw("
+                        SUM(CASE 
+                            WHEN DATE(actual_inspection) = DATE(tanggal_inspection) 
+                            THEN 1 ELSE 0 END) AS sudahSesuai,
+                        SUM(CASE 
+                            WHEN DATE(actual_inspection) != DATE(tanggal_inspection) 
+                            THEN 1 ELSE 0 END) AS belumSesuai,
+                        COUNT(*) AS total
+                    ")
+                    ->first();
+
+                $summary = [];
+
+                $kategori = 'Mobile Tower';
+                break;
+
+            default: // laptop
+                $schedules = DB::table('schedule_laptop')
+                    ->join('inv_laptops', 'schedule_laptop.id_laptop', '=', 'inv_laptops.id')
+                    ->select(
+                        'schedule_laptop.id',
+                        'schedule_laptop.tanggal_inspection',
+                        'schedule_laptop.actual_inspection',
+                        'inv_laptops.laptop_code AS device_code',
+                        'inv_laptops.dept',
+                        'inv_laptops.site'
+                    )
+                    ->where('schedule_laptop.site', $site)
+                    ->where('schedule_laptop.tahun', $year)
+                    ->get();
+
+                $summary = collect($schedules)->groupBy(fn($item) => Carbon::parse($item->tanggal_inspection)->format('F'))
+                    ->map(function ($group) {
+                        return [
+                            'month' => Carbon::parse($group->first()->tanggal_inspection)->format('F'),
+                            'departments' => $group->pluck('dept')->unique()->values(),
+                        ];
+                    })->values();
+
+                $inspectionStats = DB::table('schedule_laptop')
+                    ->where('site', $site)
+                    ->where('tahun', $year)
+                    ->whereNotNull('actual_inspection')
+                    ->selectRaw("
+                        SUM(CASE 
+                            WHEN DATE(actual_inspection) = DATE(tanggal_inspection) 
+                            THEN 1 ELSE 0 END) AS sudahSesuai,
+                        SUM(CASE 
+                            WHEN DATE(actual_inspection) != DATE(tanggal_inspection) 
+                            THEN 1 ELSE 0 END) AS belumSesuai,
+                        COUNT(*) AS total
+                    ")
+                    ->first();
+
+                $kategori = 'Laptop';
+        }
+
+        $total = $inspectionStats->total ?: 1; // prevent division by zero
+
+        $sudahSesuai = (int) $inspectionStats->sudahSesuai;
+        $belumSesuai = (int) $inspectionStats->belumSesuai;
+
+        $sudahSesuaiPercentage = round(($sudahSesuai / $total) * 100, 2);
+        $belumSesuaiPercentage = round(($belumSesuai / $total) * 100, 2);
+
+        // dd($device);
 
         return Inertia::render('InspectionSchedule/IndexLaptop', [
             'schedules' => $schedules,
             'summary' => $summary,
             'site_link' => $site_link,
+            'labelPeriode' => $year,
+            'kategori' => $device,
+            'sudahSesuai' => [$sudahSesuaiPercentage],
+            'belumSesuai' => [$belumSesuaiPercentage],
         ]);
     }
 
     public function update(Request $request, $id)
     {
 
-        $site_link = $this->getSiteFromRequest($request);
-        $site = strtoupper($this->getSiteFromRequest($request));
+        $prefix = $request->route()->getPrefix();
+
+        $site_link = str_replace('inspection-scheduler-all-', '', $prefix);
+        $site = strtoupper(str_replace('inspection-scheduler-all-', '', $prefix));
 
         $user = Auth::user();
         $auth = $user->role;
@@ -88,22 +264,66 @@ class InspectionScheduleController extends Controller
 
         $date = Carbon::parse($request->tanggal_inspection);
 
-        DB::table('schedule_laptop')
-            ->where('id', $id)
-            ->update([
-                'tanggal_inspection' => $date->toDateString(),
-                'bulan' => $date->format('m'),
-                'tahun' => $date->format('Y'),
-                'updated_at' => now(),
-            ]);
+        $kategori = $request->kategori;
 
-        return redirect()->route("inspection-scheduler-laptop.$site_link.index")->with('success', 'Schedule updated successfully.');
+        if ($kategori === 'laptop') {
+
+            DB::table('schedule_laptop')
+                ->where('id', $id)
+                ->update([
+                    'tanggal_inspection' => $date->toDateString(),
+                    'bulan' => $date->format('m'),
+                    'tahun' => $date->format('Y'),
+                    'updated_at' => now(),
+                ]);
+
+        } else if ($kategori === 'computer') {
+
+            DB::table('schedule_computer')
+                ->where('id', $id)
+                ->update([
+                    'tanggal_inspection' => $date->toDateString(),
+                    'bulan' => $date->format('m'),
+                    'tahun' => $date->format('Y'),
+                    'updated_at' => now(),
+                ]);
+
+        } else if ($kategori === 'printer') {
+
+            DB::table('schedule_printer')
+                ->where('id', $id)
+                ->update([
+                    'tanggal_inspection' => $date->toDateString(),
+                    'bulan' => $date->format('m'),
+                    'tahun' => $date->format('Y'),
+                    'updated_at' => now(),
+                ]);
+
+        } else if ($kategori === 'mobile_tower') {
+            DB::table('schedule_mobile_tower')
+                ->where('id', $id)
+                ->update([
+                    'tanggal_inspection' => $date->toDateString(),
+                    'bulan' => $date->format('m'),
+                    'tahun' => $date->format('Y'),
+                    'updated_at' => now(),
+                ]);
+        }
+
+        return redirect()
+            ->route("inspection-scheduler-all.$site_link.index", [
+                'device' => $kategori,
+            ])
+            ->with('success', 'Schedule updated successfully.');
+
     }
 
     public function exportPdf(Request $request, string $site)
     {
         // $month = $request->query('month');
         // $dept = $request->query('dept');
+
+        $kategori = $request->query('device');
 
         $user = Auth::user();
         $auth = $user->role;
@@ -113,23 +333,112 @@ class InspectionScheduleController extends Controller
             abort(403, 'You dont have permission to access this page.');
         }
         $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
 
-        // Build the base query
-        $query = DB::table('schedule_laptop')
-            ->join('inv_laptops', 'schedule_laptop.id_laptop', '=', 'inv_laptops.id')
-            ->select(
-                'schedule_laptop.id',
-                'schedule_laptop.id_laptop',
-                'schedule_laptop.tanggal_inspection',
-                'schedule_laptop.actual_inspection',
-                'schedule_laptop.bulan',
-                'schedule_laptop.tahun',
-                'inv_laptops.laptop_code',
-                'inv_laptops.dept',
-                'inv_laptops.site'
-            )
-            ->where('schedule_laptop.site', $site)
-            ->where('schedule_laptop.tahun', $year);
+        $thisMonthTeks = Carbon::create()->month((int) $month)->translatedFormat('F');
+
+        // $kategori = $request->kategori;
+
+        $triwulan = match (true) {
+            $month >= 1 && $month <= 3 => 'Triwulan 1',
+            $month >= 4 && $month <= 6 => 'Triwulan 2',
+            $month >= 7 && $month <= 9 => 'Triwulan 3',
+            $month >= 10 && $month <= 12 => 'Triwulan 4',
+        };
+
+        $periodeLabel = match (true) {
+            $month >= 1 && $month <= 3 => 'Januari - Februari - Maret',
+            $month >= 4 && $month <= 6 => 'April - Mei - Juni',
+            $month >= 7 && $month <= 9 => 'Juli - Agustus - September',
+            $month >= 10 && $month <= 12 => 'Oktober - November - Desember',
+        };
+
+        $Q = match (true) {
+            $month >= 1 && $month <= 3 => 'Q1',
+            $month >= 4 && $month <= 6 => 'Q2',
+            $month >= 7 && $month <= 9 => 'Q3',
+            $month >= 10 && $month <= 12 => 'Q4',
+        };
+
+        // dd($kategori);
+
+        if ($kategori === 'laptop') {
+
+            // Build the base query
+            $query = DB::table('schedule_laptop')
+                ->join('inv_laptops', 'schedule_laptop.id_laptop', '=', 'inv_laptops.id')
+                ->select(
+                    'schedule_laptop.id',
+                    'schedule_laptop.id_laptop',
+                    'schedule_laptop.tanggal_inspection',
+                    'schedule_laptop.actual_inspection',
+                    'schedule_laptop.bulan',
+                    'schedule_laptop.tahun',
+                    'inv_laptops.laptop_code',
+                    'inv_laptops.dept',
+                    'inv_laptops.site'
+                )
+                ->where('schedule_laptop.site', $site)
+                ->where('schedule_laptop.tahun', $year);
+
+        } else if ($kategori === 'computer') {
+
+            $query = DB::table('schedule_computer')
+                ->join('inv_computers', 'schedule_computer.id_computer', '=', 'inv_computers.id')
+                ->select(
+                    'schedule_computer.id',
+                    'schedule_computer.id_computer',
+                    'schedule_computer.tanggal_inspection',
+                    'schedule_computer.actual_inspection',
+                    'schedule_computer.bulan',
+                    'schedule_computer.tahun',
+                    'inv_computers.computer_code',
+                    'inv_computers.dept',
+                    'inv_computers.site'
+                )
+                ->where('schedule_computer.site', $site)
+                ->where('schedule_computer.quarter', $Q)
+                ->where('schedule_computer.tahun', $year);
+
+        } else if ($kategori === 'printer') {
+
+            $query = DB::table('schedule_printer')
+                ->join('inv_printers', 'schedule_printer.id_printer', '=', 'inv_printers.id')
+                ->select(
+                    'schedule_printer.id',
+                    'schedule_printer.id_printer',
+                    'schedule_printer.tanggal_inspection',
+                    'schedule_printer.actual_inspection',
+                    'schedule_printer.bulan',
+                    'schedule_printer.tahun',
+                    'inv_printers.printer_code',
+                    'inv_printers.department',
+                    'inv_printers.site'
+                )
+                ->where('schedule_printer.site', $site)
+                ->where('schedule_printer.bulan', $month)
+                ->where('schedule_printer.tahun', $year);
+
+        } else if ($kategori === 'mobile_tower') {
+
+            $query = DB::table('schedule_mobile_tower')
+                ->join('inv_mobile_towers', 'schedule_mobile_tower.id_mobile_tower', '=', 'inv_mobile_towers.id')
+                ->select(
+                    'schedule_mobile_tower.id',
+                    'schedule_mobile_tower.id_mobile_tower',
+                    'schedule_mobile_tower.tanggal_inspection',
+                    'schedule_mobile_tower.actual_inspection',
+                    'schedule_mobile_tower.bulan',
+                    'schedule_mobile_tower.tahun',
+                    'inv_mobile_towers.mt_code',
+                    'inv_mobile_towers.site'
+                )
+                ->where('schedule_mobile_tower.site', $site)
+                ->where('schedule_mobile_tower.bulan', $month)
+                ->where('schedule_mobile_tower.tahun', $year);
+        }
+
+
 
         // Optional filters
         // if ($month) {
@@ -143,16 +452,56 @@ class InspectionScheduleController extends Controller
 
         $schedules = $query->orderBy('tanggal_inspection')->get();
 
+        if ($kategori === 'laptop') {
 
-        $pdf = Pdf::loadView('itportal.scheduleInspeksi.inspection-schedule-laptop', [
-            'schedules' => $schedules,
-            // 'month' => $month,
-            // 'dept' => $dept,
-            'site' => $site,
-            'periodeLabel' => $year,
-        ])->setPaper('A4', 'portrait');
+            $pdf = Pdf::loadView('itportal.scheduleInspeksi.inspection-schedule-laptop', [
+                'schedules' => $schedules,
+                // 'month' => $month,
+                // 'dept' => $dept,
+                'site' => $site,
+                'periodeLabel' => $year,
+            ])->setPaper('A4', 'portrait');
 
-        return $pdf->stream("jadwal-inspeksi-laptop-$year-$site.pdf");
+            return $pdf->stream("jadwal-inspeksi-laptop-$year-$site.pdf");
+
+        } else if ($kategori === 'computer') {
+
+            $pdf = Pdf::loadView('itportal.scheduleInspeksi.inspection-schedule-komputer', [
+                'schedules' => $schedules,
+                // 'month' => $month,
+                // 'dept' => $dept,
+                'site' => $site,
+                'periodeLabel' => $periodeLabel,
+                'triwulan' => $triwulan,
+            ])->setPaper('A4', 'portrait');
+
+            return $pdf->stream("jadwal-inspeksi-komputer-$triwulan-$site.pdf");
+
+        } else if ($kategori === 'printer') {
+
+            $pdf = Pdf::loadView('itportal.scheduleInspeksi.inspection-schedule-printer', [
+                'schedules' => $schedules,
+                // 'thisMonthTeks' => $thisMonthTeks,
+                // 'dept' => $dept,
+                'site' => $site,
+                'periodeLabel' => $thisMonthTeks . ' ' . $year,
+            ])->setPaper('A4', 'portrait');
+
+            return $pdf->stream("jadwal-inspeksi-printer-$month-$year-$site.pdf");
+
+        } else if ($kategori === 'mobile_tower') {
+
+            $pdf = Pdf::loadView('itportal.scheduleInspeksi.inspection-schedule-mobileTower', [
+                'schedules' => $schedules,
+                // 'month' => $month,
+                // 'dept' => $dept,
+                'site' => $site,
+                'periodeLabel' => $thisMonthTeks . ' ' . $year,
+            ])->setPaper('A4', 'portrait');
+
+            return $pdf->stream("jadwal-inspeksi-mobile_tower-$month-$year-$site.pdf");
+        }
+
     }
 
     public function generate(Request $request)

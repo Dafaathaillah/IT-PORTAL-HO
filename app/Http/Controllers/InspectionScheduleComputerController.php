@@ -78,13 +78,40 @@ class InspectionScheduleComputerController extends Controller
                 ];
             })->values();
 
+        $inspectionStats = DB::table('schedule_computer')
+            ->where('site', $site)
+            ->where('quarter', $Q)
+            ->where('tahun', $year)
+            ->whereNotNull('actual_inspection')
+            ->selectRaw("
+                SUM(CASE 
+                    WHEN DATE(actual_inspection) = DATE(tanggal_inspection) 
+                    THEN 1 ELSE 0 END) AS sudahSesuai,
+                SUM(CASE 
+                    WHEN DATE(actual_inspection) != DATE(tanggal_inspection) 
+                    THEN 1 ELSE 0 END) AS belumSesuai,
+                COUNT(*) AS total
+            ")
+            ->first();
+
+        $total = $inspectionStats->total ?: 1; // prevent division by zero
+
+        $sudahSesuai = (int) $inspectionStats->sudahSesuai;
+        $belumSesuai = (int) $inspectionStats->belumSesuai;
+
+        $sudahSesuaiPercentage = round(($sudahSesuai / $total) * 100, 2);
+        $belumSesuaiPercentage = round(($belumSesuai / $total) * 100, 2);
+
 
 
         return Inertia::render('InspectionSchedule/IndexKomputer', [
             'schedules' => $schedules,
             'summary' => $summary,
             'site_link' => $site_link,
+            'labelPeriode' => $Q . ' ' . $year,
             'triwulan' => $triwulan,
+            'sudahSesuai' => [$sudahSesuaiPercentage],
+            'belumSesuai' => [$belumSesuaiPercentage],
         ]);
     }
 

@@ -1,20 +1,52 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { Head, router, usePage } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
+import Highcharts from "highcharts";
 
 // Props from Inertia
 const props = defineProps({
     schedules: Array,
     summary: Array,
+    sudahSesuai: Array,
+    belumSesuai: Array,
+    labelPeriode: Object,
+    kategori: String,
+});
+
+const deviceOptions = [
+    { name: "Laptop", value: "laptop" },
+    { name: "Komputer", value: "computer" },
+    { name: "Printer", value: "printer" },
+    { name: "Mobile Tower", value: "mobile_tower" },
+];
+
+const selectedOptionDept = ref(
+    deviceOptions.find((opt) => opt.value === props.kategori) ??
+        deviceOptions[0] // fallback
+);
+
+const isMobileTower = computed(() => {
+    return selectedOptionDept.value?.value === "mobile_tower";
 });
 
 const site_link = usePage().props.site_link;
 
 const pages = ref("Inspeksi");
 const subMenu = ref("Schedule");
-const mainMenu = ref("Inspeksi Laptop");
+const mainMenu = computed(() => {
+    return selectedOptionDept.value
+        ? `Schedule Inspeksi ${selectedOptionDept.value.name}`
+        : "Schedule Inspeksi Device";
+});
+
+// dynamic table header
+const deviceCodeLabel = computed(() => {
+    return selectedOptionDept.value
+        ? `${selectedOptionDept.value.name} Code`
+        : "Device Code";
+});
 
 // Editing state
 const editingRows = ref({});
@@ -62,11 +94,24 @@ const cancelEditing = (id) => {
     delete editingRows.value[id];
 };
 
+watch(selectedOptionDept, (device) => {
+    router.get(
+        route(`inspection-scheduler-all.${site_link}.index`),
+        { device: device.value },
+        {
+            preserveState: true,
+            preserveScroll: true,
+            replace: true,
+        }
+    );
+});
+
 const saveDate = (id, newDate) => {
     router.put(
-        `/inspection-scheduler-laptop-${site_link}/${id}`,
+        `/inspection-scheduler-all-${site_link}/${id}`,
         {
             tanggal_inspection: newDate,
+            kategori: props.kategori,
         },
         {
             onSuccess: () => {
@@ -101,23 +146,111 @@ const clearFilters = () => {
 };
 
 const exportPdf = () => {
-    // const params = new URLSearchParams();
-    // if (activeMonth.value) params.append("month", activeMonth.value);
-    // if (activeDept.value) params.append("dept", activeDept.value);
+    // window.open(`/inspection-scheduler-all-${site_link}/rekap/pdf`, "_blank");
 
-    // window.open(
-    //     `/inspection-scheduler-computer-${site_link}/rekap/pdf?${params.toString()}`,
-    //     "_blank"
-    // );
     window.open(
-        `/inspection-scheduler-laptop-${site_link}/rekap/pdf`,
+        `/inspection-scheduler-all-${site_link}/rekap/pdf?device=${props.kategori}`,
         "_blank"
     );
 };
+
+const chartInspeksi = ref(null);
+let chartInstance = null;
+
+const renderChart = () => {
+    if (!chartInspeksi.value) return;
+
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+
+    chartInstance = Highcharts.chart(chartInspeksi.value, {
+        chart: {
+            type: "column",
+            marginTop: 80,
+        },
+        title: {
+            text: "Achievement kesesuaian Plan & Aktual Inspeksi",
+            margin: 30,
+        },
+        xAxis: {
+            categories: [props.labelPeriode],
+        },
+        yAxis: {
+            min: 0,
+            max: 100,
+            title: {
+                text: "Persentase (%)",
+            },
+        },
+        plotOptions: {
+            column: {
+                dataLabels: {
+                    enabled: true,
+                    format: "{y}%",
+                    style: {
+                        fontSize: "12px",
+                        color: "#000000",
+                    },
+                },
+            },
+        },
+        series: [
+            {
+                name: "Sesuai",
+                data: props.sudahSesuai,
+                color: "#28a745",
+            },
+            {
+                name: "Tidak Sesuai",
+                data: props.belumSesuai,
+                color: "#dc3545",
+            },
+        ],
+        tooltip: {
+            useHTML: true,
+            pointFormat:
+                '<span style="color:{series.color}">●</span> ' +
+                "<b>{series.name}</b>: {point.y}%",
+        },
+        credits: {
+            enabled: true,
+            text: "ICT PPA-AMM Development System",
+            href: null,
+            position: {
+                align: "right",
+                x: -10,
+                verticalAlign: "bottom",
+                y: -5,
+            },
+            style: {
+                fontSize: "10px",
+                color: "#666666",
+            },
+        },
+    });
+};
+
+onMounted(() => {
+    renderChart();
+});
+
+watch(
+    () => [
+        props.kategori,
+        props.sudahSesuai,
+        props.belumSesuai,
+        props.labelPeriode,
+    ],
+    () => {
+        renderChart();
+    },
+    { deep: true }
+);
 </script>
 
 <template>
-    <Head title="Schedule inspection laptops" />
+    <Head :title="mainMenu" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
@@ -128,11 +261,24 @@ const exportPdf = () => {
             <div class="flex flex-wrap -mx-3">
                 <div class="flex-none w-full max-w-full px-3">
                     <div
+                        class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
+                    >
+                        <VueMultiselect
+                            v-model="selectedOptionDept"
+                            :options="deviceOptions"
+                            :multiple="false"
+                            :close-on-select="true"
+                            placeholder="Select Device"
+                            track-by="name"
+                            label="name"
+                        />
+                    </div>
+                    <div
                         class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
                     >
                         <div class="p-12">
                             <h1 class="text-2xl font-bold mb-6">
-                                Laptop Inspection Schedule
+                                {{ mainMenu }}
                             </h1>
 
                             <!-- 🧩 Flex container for Summary + Table -->
@@ -140,6 +286,7 @@ const exportPdf = () => {
                                 <!-- 🔷 Summary Filter (Left Column) -->
                                 <div class="w-full lg:w-1/2">
                                     <div
+                                        v-if="!isMobileTower"
                                         class="flex flex-col lg:flex-row gap-6 mb-4"
                                     >
                                         <!-- Months -->
@@ -222,7 +369,7 @@ const exportPdf = () => {
                                     <!-- 🔄 Clear Filters Button -->
                                     <div
                                         v-if="activeMonth || activeDept"
-                                        class="mb-4"
+                                        class="mb-8"
                                     >
                                         <button
                                             @click="clearFilters"
@@ -230,6 +377,16 @@ const exportPdf = () => {
                                         >
                                             Clear Filters
                                         </button>
+                                    </div>
+
+                                    <hr
+                                        class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                                    />
+                                    <div class="overflow-x-auto">
+                                        <div
+                                            ref="chartInspeksi"
+                                            style="width: 100%; height: 400px"
+                                        ></div>
                                     </div>
                                 </div>
 
@@ -257,19 +414,25 @@ const exportPdf = () => {
                                             >
                                                 <tr>
                                                     <th
-                                                        class="px-4 py-2 border"
+                                                        v-if="!isMobileTower"
+                                                        class="px-4 py-2 border text-center"
                                                     >
                                                         Department
                                                     </th>
                                                     <th
-                                                        class="px-4 py-2 border"
+                                                        class="px-4 py-2 border text-center"
                                                     >
-                                                        Laptop Code
+                                                        {{ deviceCodeLabel }}
                                                     </th>
                                                     <th
-                                                        class="px-4 py-2 border"
+                                                        class="px-4 py-2 border text-center"
                                                     >
                                                         Schedule Inspection
+                                                    </th>
+                                                    <th
+                                                        class="px-4 py-2 border text-center"
+                                                    >
+                                                        Actual Inspection
                                                     </th>
                                                     <th
                                                         class="px-4 py-2 border text-center"
@@ -290,19 +453,22 @@ const exportPdf = () => {
                                                         class="hover:bg-gray-50"
                                                     >
                                                         <td
-                                                            class="px-4 py-2 border"
+                                                            v-if="
+                                                                !isMobileTower
+                                                            "
+                                                            class="px-4 py-2 border text-center"
                                                         >
                                                             {{ item.dept }}
                                                         </td>
                                                         <td
-                                                            class="px-4 py-2 border"
+                                                            class="px-4 py-2 border text-center"
                                                         >
                                                             {{
-                                                                item.laptop_code
+                                                                item.device_code
                                                             }}
                                                         </td>
                                                         <td
-                                                            class="px-4 py-2 border"
+                                                            class="px-4 py-2 border text-center"
                                                         >
                                                             <template
                                                                 v-if="
@@ -329,6 +495,28 @@ const exportPdf = () => {
                                                                         item.tanggal_inspection
                                                                     )
                                                                 }}
+                                                            </template>
+                                                        </td>
+                                                        <td
+                                                            class="px-4 py-2 border text-center"
+                                                        >
+                                                            <template
+                                                                v-if="
+                                                                    item.actual_inspection !=
+                                                                    null
+                                                                "
+                                                            >
+                                                                {{
+                                                                    formatDate(
+                                                                        item.actual_inspection
+                                                                    )
+                                                                }}
+                                                            </template>
+                                                            <template v-else>
+                                                                <span
+                                                                    class="text-center block"
+                                                                    >-</span
+                                                                >
                                                             </template>
                                                         </td>
 
