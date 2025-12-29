@@ -12994,7 +12994,7 @@ const toggleLevel3ScannerSks = () => {
                                     ></i>
                                 </div>
                                 <ul v-if="level2OperationBib">
-                                    <NavLink
+                                    <!-- <NavLink
                                         :href="
                                             route('pengalihanAsset.page', {
                                                 site: 'BIB',
@@ -13018,7 +13018,7 @@ const toggleLevel3ScannerSks = () => {
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Pengalihan Asset</span
                                         >
-                                    </NavLink>
+                                    </NavLink> -->
                                     <NavLink
                                         :href="
                                             route('monitoring-jobs.bib.index')
@@ -13566,12 +13566,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.bib.index'
+                                                'inspection-scheduler-all.bib.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.bib.index'
+                                                'inspection-scheduler-all.bib.index'
                                             )
                                         "
                                     >
@@ -13584,7 +13584,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chart.inspeksi')"
+                                        :active="
+                                            route().current('chart.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -13606,31 +13625,6 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Laptop</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
-                                            route(
-                                                'inspection-scheduler-computer.bib.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.bib.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
                                         >
                                     </NavLink>
 

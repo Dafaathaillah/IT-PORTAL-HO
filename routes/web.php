@@ -23,6 +23,7 @@ use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChartInspeksiController;
 use App\Http\Controllers\DailyJobController;
 use App\Http\Controllers\DailyJobMonitorController;
 use App\Http\Controllers\DashboardAmiController;
@@ -52,6 +53,8 @@ use App\Http\Controllers\GuestAllController;
 use App\Http\Controllers\GuestReportController;
 use App\Http\Controllers\InspectionScheduleComputerController;
 use App\Http\Controllers\InspectionScheduleController;
+use App\Http\Controllers\InspectionScheduleMobileTowerController;
+use App\Http\Controllers\InspectionSchedulePrinterController;
 use App\Http\Controllers\InspeksiComputerAmiController;
 use App\Http\Controllers\InspeksiComputerBaController;
 use App\Http\Controllers\InspeksiComputerBgeController;
@@ -443,6 +446,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/root-cause-problems', [RootCauseProblemController::class, 'getRootCauseProblems']);
 
     foreach ($sites as $site) {
+        //  ONE FOR ALL
+
+        Route::group([
+            'prefix' => "inspection-scheduler-all-$site",
+            'as' => "inspection-scheduler-all.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [InspectionScheduleController::class, 'index'])->name('index');
+            Route::put('/{id}', [InspectionScheduleController::class, 'update'])->name('update');
+        });
+
         // Laptop
         Route::group([
             'prefix' => "inspection-scheduler-laptop-$site",
@@ -452,10 +466,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [InspectionScheduleController::class, 'index'])->name('index');
             Route::put('/{id}', [InspectionScheduleController::class, 'update'])->name('update');
         });
-
-        Route::get("generate-inspection-scheduler-laptop-$site", [InspectionScheduleController::class, 'generate'])
-            ->name("inspection-scheduler-laptop.$site.generate")
-            ->defaults('site', $site);
 
         // Computer
         Route::group([
@@ -467,16 +477,42 @@ Route::middleware('auth')->group(function () {
             Route::put('/{id}', [InspectionScheduleComputerController::class, 'update'])->name('update');
         });
 
-        Route::get("generate-inspection-scheduler-computer-$site", [InspectionScheduleComputerController::class, 'generate'])
-            ->name("inspection-scheduler-computer.$site.generate")
-            ->defaults('site', $site);
+        // Printer
+        Route::group([
+            'prefix' => "inspection-scheduler-printer-$site",
+            'as' => "inspection-scheduler-printer.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [InspectionSchedulePrinterController::class, 'index'])->name('index');
+            Route::put('/{id}', [InspectionSchedulePrinterController::class, 'update'])->name('update');
+        });
+
+
+        // Mobile Tower
+        Route::group([
+            'prefix' => "inspection-scheduler-mobileTower-$site",
+            'as' => "inspection-scheduler-mobileTower.$site.",
+            'defaults' => ['site' => $site],
+        ], function () {
+            Route::get('/', [InspectionScheduleMobileTowerController::class, 'index'])->name('index');
+            Route::put('/{id}', [InspectionScheduleMobileTowerController::class, 'update'])->name('update');
+        });
     }
+
+    Route::get("inspection-scheduler-all-{site}/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+        ->name("inspection-scheduler-all.rekap");
 
     Route::get("inspection-scheduler-computer-{site}/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
         ->name("inspection-scheduler-computer.rekap");
 
     Route::get("inspection-scheduler-laptop-{site}/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
         ->name("inspection-scheduler-laptop.rekap");
+
+    Route::get("inspection-scheduler-printer-{site}/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+        ->name("inspection-scheduler-printer.rekap");
+
+    Route::get("inspection-scheduler-mobileTower-{site}/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+        ->name("inspection-scheduler-mobileTower.rekap");
 
     // Route::get('/inspection-scheduler-laptop', [InspectionScheduleController::class, 'index'])->name('inspection-schedule.index');
     // Route::put('/inspection-scheduler-laptop/{id}', [InspectionScheduleController::class, 'update'])->name('inspection-schedule.update');
@@ -908,6 +944,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-vhms-show', [KpiVhmsController::class, 'countKpi'])->name('kpi.vhmsShow');
             Route::get('/kpi-vhms/data-filter', [KpiVhmsController::class, 'getDataFilter'])->name('kpi-vhms.data.filter');
             Route::post('/kpi-vhms/feedback', [KpiVhmsController::class, 'updateFeedback'])->name('kpi-vhms.feedback');
+
+            Route::get('/chart-inspeksi', action: [ChartInspeksiController::class, 'index'])->name('chart.inspeksi');
+            Route::post('/chart-inspeksi-show', [ChartInspeksiController::class, 'countKpi'])->name('chart.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter', [ChartInspeksiController::class, 'getDataFilter'])->name('chart.inspeksi.data.filter');
 
             Route::get('/mobile-tower', [InvMobileTowerController::class, 'index'])->name('mobileTower.page');
             Route::get('/mobile-tower/create', [InvMobileTowerController::class, 'create'])->name('mobileTower.create');
