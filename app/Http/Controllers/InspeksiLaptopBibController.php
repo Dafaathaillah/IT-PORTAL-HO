@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InspeksiLaptop;
 use App\Models\InvLaptop;
 use App\Models\PicaInspeksi;
+use App\Models\ScheduleLaptop;
 use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
@@ -125,8 +126,8 @@ class InspeksiLaptopBibController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['findings_image'] =  url($new_path_document_image);
-            $dataPica['foto_temuan'] =  url($new_path_document_image);
+            $data['findings_image'] = url($new_path_document_image);
+            $dataPica['foto_temuan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -136,8 +137,8 @@ class InspeksiLaptopBibController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['action_image'] =  url($new_path_document_image);
-            $dataPica['foto_tindakan'] =  url($new_path_document_image);
+            $data['action_image'] = url($new_path_document_image);
+            $dataPica['foto_tindakan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -147,13 +148,24 @@ class InspeksiLaptopBibController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['inspection_image'] =  url($new_path_document_image);
+            $data['inspection_image'] = url($new_path_document_image);
         }
         // dd($dataPica);
         if ($params['temuan']) {
             PicaInspeksi::create($dataPica);
         }
+
         InspeksiLaptop::firstWhere('id', $request->id)->update($data);
+
+        $dataSchedule = ['actual_inspection' => Carbon::now()->format('Y-m-d H:i:s')];
+
+        $dataInspeksix = InspeksiLaptop::find($request->id);
+
+        if (empty($dataInspeksix)) {
+        } else {
+            ScheduleLaptop::firstWhere('id_laptop', $dataInspeksix->inv_laptop_id)->update($dataSchedule);
+        }
+
         return redirect()->route('inspeksiLaptopBib.page');
     }
 
@@ -256,8 +268,8 @@ class InspeksiLaptopBibController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['findings_image'] =  url($new_path_document_image);
-            $dataPica['foto_temuan'] =  url($new_path_document_image);
+            $data['findings_image'] = url($new_path_document_image);
+            $dataPica['foto_temuan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -267,8 +279,8 @@ class InspeksiLaptopBibController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['action_image'] =  url($new_path_document_image);
-            $dataPica['foto_tindakan'] =  url($new_path_document_image);
+            $data['action_image'] = url($new_path_document_image);
+            $dataPica['foto_tindakan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -278,7 +290,7 @@ class InspeksiLaptopBibController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['inspection_image'] =  url($new_path_document_image);
+            $data['inspection_image'] = url($new_path_document_image);
         }
 
         if ($params['temuan']) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InspeksiPrinter;
 use App\Models\InvPrinter;
 use App\Models\PicaInspeksi;
+use App\Models\SchedulePrinter;
 use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
@@ -178,6 +179,16 @@ class InspeksiPrinterController extends Controller
             PicaInspeksi::create($dataPica);
         }
         InspeksiPrinter::firstWhere('id', $request->id)->update($data);
+
+        $dataSchedule = ['actual_inspection' => Carbon::now()->format('Y-m-d H:i:s')];
+
+        $dataInspeksix = InspeksiPrinter::find($request->id);
+
+        if (empty($dataInspeksix)) {
+        } else {
+            SchedulePrinter::where('id_printer', $dataInspeksix->inv_printer_id)->where('tahun', $year)->where('bulan', $month)->first()->update($dataSchedule);
+        }
+
         return redirect()->route('inspeksiPrinter.page');
     }
     public function edit($id)

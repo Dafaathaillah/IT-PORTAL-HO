@@ -29,15 +29,32 @@ class importInventoryToTinspeksiMobileTower extends Command
     public function handle()
     {
         // Retrieve data from inventory
-        $inventoriesMobileTower = InvMobileTower::get();
-
+        $inventories_mt = InvMobileTower::get();
+        $currentDate = Carbon::now();
+        // dd($inventories_mt);
         // Insert data into inspeksi
-        foreach ($inventoriesMobileTower as $inventoryMobileTower) {
-            InspeksiMobileTower::create([
-                'inv_mt_id' => $inventoryMobileTower->id,
-                'month' => Carbon::now()->format('m'),
-                'year' => Carbon::now()->format('Y'),
-            ]);
+        foreach ($inventories_mt as $inventory_mt) {
+            $cek = InspeksiMobileTower::where('inv_mt_id', $inventory_mt->id)
+                ->where('year', $currentDate->format('Y'))
+                ->where('month', $currentDate->format('m'))
+                ->first();
+
+            if (!$cek) {
+                InspeksiMobileTower::create([
+                    'inv_mt_id' => $inventory_mt->id,
+                    'created_date' => $currentDate->format('Y-m-d H:i:s'),
+                    'month' => $currentDate->format('m'),
+                    'year' => $currentDate->format('Y'),
+                    'inspection_status' => 'N',
+                    'created_at' => $currentDate->format('Y-m-d H:i:s'),
+                    'site' => $inventory_mt->site
+                ]);
+            } elseif ($cek->inspection_status === 'N') {
+                // Jika sudah ada dan statusnya N → update dari inventory
+                $cek->update([
+                    'site' => $inventory_mt->site,
+                ]);
+            }
         }
 
         $this->info('Data successfully imported from inventory to inspeksi.');

@@ -543,8 +543,7 @@ const approved = () => {
                                                         >
                                                             {{
                                                                 inspeksiMobileTowers
-                                                                    .inventory
-                                                                    .mt_code
+                                                                    .mt.mt_code
                                                             }}
                                                         </p>
                                                     </td>
@@ -629,7 +628,7 @@ const approved = () => {
                                                             :class="
                                                                 getBadgeClassStatusInventory(
                                                                     inspeksiMobileTowers
-                                                                        .inventory
+                                                                        .mt
                                                                         .status
                                                                 )
                                                             "
@@ -637,7 +636,7 @@ const approved = () => {
                                                             {{
                                                                 getBadgeTextStatusInventory(
                                                                     inspeksiMobileTowers
-                                                                        .inventory
+                                                                        .mt
                                                                         .status
                                                                 )
                                                             }}

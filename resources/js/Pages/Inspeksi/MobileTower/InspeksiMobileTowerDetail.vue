@@ -422,81 +422,75 @@ const exportHasilInspeksi = () => {
                             <div class="flex-auto p-4 pt-6 space-y-2">
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Site</p>
-                                    <p>: {{ inspeksi.inventory.site }}</p>
+                                    <p>: {{ inspeksi.mt.site }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Inventory Number</p>
                                     <p>
                                         :
-                                        {{
-                                            inspeksi.inventory.inventory_number
-                                        }}
+                                        {{ inspeksi.mt.inventory_number }}
                                     </p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">MT Code</p>
-                                    <p>: {{ inspeksi.inventory.mt_code }}</p>
+                                    <p>: {{ inspeksi.mt.mt_code }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Type MT</p>
-                                    <p>: {{ inspeksi.inventory.type_mt }}</p>
+                                    <p>: {{ inspeksi.mt.type_mt }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Location</p>
-                                    <p>: {{ inspeksi.inventory.location }}</p>
+                                    <p>: {{ inspeksi.mt.location }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Detail Location</p>
                                     <p>
                                         :
-                                        {{ inspeksi.inventory.detail_location }}
+                                        {{ inspeksi.mt.detail_location }}
                                     </p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">GPS</p>
-                                    <p>: {{ inspeksi.inventory.gps }}</p>
+                                    <p>: {{ inspeksi.mt.gps }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">LED Lamp</p>
-                                    <p>: {{ inspeksi.inventory.led_lamp }}</p>
+                                    <p>: {{ inspeksi.mt.led_lamp }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Padlock Code</p>
-                                    <p>
-                                        : {{ inspeksi.inventory.padlock_code }}
-                                    </p>
+                                    <p>: {{ inspeksi.mt.padlock_code }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Status</p>
-                                    <p>: {{ inspeksi.inventory.status }}</p>
+                                    <p>: {{ inspeksi.mt.status }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Condition</p>
-                                    <p>: {{ inspeksi.inventory.condition }}</p>
+                                    <p>: {{ inspeksi.mt.condition }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Note</p>
-                                    <p>: {{ inspeksi.inventory.note }}</p>
+                                    <p>: {{ inspeksi.mt.note }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2">
                                     <p class="text-base">Inspection Remark</p>
                                     <p>
                                         :
-                                        {{
-                                            inspeksi.inventory.inspection_remark
-                                        }}
+                                        {{ inspeksi.mt.inspection_remark }}
                                     </p>
                                 </div>
 
@@ -506,7 +500,7 @@ const exportHasilInspeksi = () => {
                                         :
                                         {{
                                             formattedDate(
-                                                inspeksi.inventory.updated_at
+                                                inspeksi.mt.updated_at
                                             )
                                         }}
                                     </p>

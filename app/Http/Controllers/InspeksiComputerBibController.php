@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InspeksiComputer;
 use App\Models\InvComputer;
 use App\Models\PicaInspeksi;
+use App\Models\ScheduleComputer;
 use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ class InspeksiComputerBibController extends Controller
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])
             ->where('site', 'BIB')
             ->pluck('name')
-            ->map(fn ($name) => ['name' => $name])
+            ->map(fn($name) => ['name' => $name])
             ->toArray();
 
         $role = auth()->user()->role;
@@ -433,6 +434,19 @@ class InspeksiComputerBibController extends Controller
             ];
             $data['udpateInspeksi'] = InvComputer::firstWhere('id', $getDataInventory->id)->update($dataInventory);
         }
+
+        $dataSchedule = ['actual_inspection' => Carbon::now()->format('Y-m-d H:i:s')];
+
+        $dataInspeksix = InspeksiComputer::find($request->id);
+
+        $triwulan = 'Q' . Carbon::now()->quarter;
+
+        if (empty($dataInspeksix)) {
+        } else {
+            ScheduleComputer::where('id_computer', $dataInspeksix->inv_computer_id)->where('tahun', $year)->where('quarter', $triwulan)->first()->update($dataSchedule);
+        }
+        // dd($dataInspeksix->inv_computer_id);
+
         return redirect()->route('inspeksiKomputerBib.page');
     }
 

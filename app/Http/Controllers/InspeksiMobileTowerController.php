@@ -6,6 +6,7 @@ use App\Models\InspeksiMobileTower;
 use App\Models\InvMobileTower;
 use App\Models\KategoriInspeksi;
 use App\Models\PicaInspeksi;
+use App\Models\ScheduleMobileTower;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class InspeksiMobileTowerController extends Controller
         $bulanNow = $request->input('month', now()->month);
         $yearNow = $request->input('year', now()->year);
 
-        $inspeksi_mobile_tower = InspeksiMobileTower::with('inventory')->where('site', $site)->where('month', $bulanNow)
+        $inspeksi_mobile_tower = InspeksiMobileTower::with('mt')->where('site', $site)->where('month', $bulanNow)
             ->where('year', $yearNow)->get();
         // dd($inspeksiMobileTower);
 
@@ -231,6 +232,19 @@ class InspeksiMobileTowerController extends Controller
         }
         // =======================================================
 
+        $currentDate = Carbon::now();
+        $year = $currentDate->format('Y');
+        $month = $currentDate->format('m');
+
+        $dataSchedule = ['actual_inspection' => Carbon::now()->format('Y-m-d H:i:s')];
+
+        $dataInspeksix = InspeksiMobileTower::find($request->id);
+
+        if (empty($dataInspeksix)) {
+        } else {
+            ScheduleMobileTower::where('id_mobile_tower', $dataInspeksix->inv_mt_id)->where('tahun', $year)->where('bulan', $month)->first()->update($dataSchedule);
+        }
+
         return redirect()->route('inspeksiMobileTower.page');
     }
 
@@ -276,7 +290,7 @@ class InspeksiMobileTowerController extends Controller
 
     public function detail($id)
     {
-        $inspeksi_mt = InspeksiMobileTower::with('inventory')->where('inspeksi_mobile_towers.id', $id)->first();
+        $inspeksi_mt = InspeksiMobileTower::with('mt')->where('inspeksi_mobile_towers.id', $id)->first();
 
         if (empty($inspeksi_mt)) {
             abort(404, 'Data not found');
