@@ -315,7 +315,7 @@ const initChartAchievementLight = () => {
             align: "left",
         },
         xAxis: {
-            categories: ["Laptop", "Komputer"],
+            categories: ["Laptop", "Komputer", "Mob. Tower", "Printer"],
             labels: {
                 style: {
                     // color: "#fff",
@@ -394,7 +394,7 @@ const initChartAchievementDark = () => {
             align: "left",
         },
         xAxis: {
-            categories: ["Laptop", "Komputer"],
+            categories: ["Laptop", "Komputer", "Mob. Tower", "Printer"],
             labels: {
                 style: {
                     color: "#fff",
@@ -1020,7 +1020,8 @@ const initChartAduanAnalysDark = () => {
                         <div class="p-4 pb-0 mb-0 rounded-t-4">
                             <div class="flex justify-between">
                                 <h6 class="mb-2 dark:text-white">
-                                    Table Monitoring Achievement Inspeksi/Periode
+                                    Table Monitoring Achievement
+                                    Inspeksi/Periode
                                 </h6>
                             </div>
                         </div>
