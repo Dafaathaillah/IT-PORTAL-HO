@@ -265,7 +265,7 @@ const getSubKategori = (idKategori) => {
 const tabOrder = ["deskripsi", "temuan", "foto"];
 
 function validateDeskripsi(totalItems) {
-    return { ok: true };
+    // return { ok: true };
 
     const keys = Object.keys(selectedList.value);
 

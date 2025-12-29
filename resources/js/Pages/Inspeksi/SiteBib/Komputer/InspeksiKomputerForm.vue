@@ -7,7 +7,7 @@ import VueMultiselect from "vue-multiselect";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Swal from "sweetalert2";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 const props = defineProps(["inspeksi", "crew"]);
 
@@ -44,6 +44,11 @@ const form = useForm({
     location: props.inspeksi.computer.location,
 });
 
+const temuanEnabled = ref(false);
+
+const file_inputan1 = ref(null);
+const file_inputan2 = ref(null);
+
 const isDisabled = ref(true);
 const selectedValues = ref(null); // Awalnya array kosong
 const selectedOptionCondition = ref("");
@@ -60,6 +65,31 @@ const findingStatusIsRequired = ref(false);
 const findingDuedateIsRequired = ref(false);
 const action = ref("");
 const actionImageIsRequired = ref(false);
+
+watch(temuanEnabled, (enabled) => {
+    if (!enabled) {
+        // Reset all Temuan-related fields when switch is OFF
+        form.findings_image = "";
+        form.action_image = "";
+        form.due_date = "";
+        form.findings_status = "";
+        form.image_temuan = "";
+        form.image_tindakan = "";
+
+        findings.value = "";
+        action.value = "";
+        selectedOptionStatus.value = "";
+
+        // Reset the VueDatePicker
+        selectedDate.value = null;
+
+        if (fileFindings.value) fileFindings.value = "";
+        if (fileAction.value) fileAction.value = "";
+        // Reset file input DOM values
+        if (file_inputan1.value) file_inputan1.value.value = "";
+        if (file_inputan2.value) file_inputan2.value.value = "";
+    }
+});
 
 const checkRequiredImageFinding = () => {
     findingImageIsRequired.value = findings.value.trim() !== "";
@@ -937,213 +967,6 @@ const save = () => {
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="serial-number"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Findings</label
-                                            >
-                                            <input
-                                                type="text"
-                                                name="serial_number"
-                                                v-model="findings"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Temuan Inspeksi"
-                                                @input="
-                                                    checkRequiredImageFinding
-                                                "
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="link_documentation_asset_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Findings Image</label
-                                            >
-                                            <input
-                                                :required="
-                                                    findingImageIsRequired
-                                                "
-                                                type="file"
-                                                ref="fileInput"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="2.4 / 5.8 Ghz"
-                                                @change="
-                                                    handleFileUploadFindings
-                                                "
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="serial-number"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Action Findings</label
-                                            >
-                                            <input
-                                                type="text"
-                                                v-model="action"
-                                                name="serial_number"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Action Temuan Inspeksi"
-                                                @input="
-                                                    checkRequiredImageAction
-                                                "
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="link_documentation_asset_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Action Image</label
-                                            >
-                                            <input
-                                                :required="
-                                                    actionImageIsRequired
-                                                "
-                                                type="file"
-                                                ref="fileInput"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="2.4 / 5.8 Ghz"
-                                                @change="handleFileUploadAction"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="status"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                            >
-                                                Finding Status</label
-                                            >
-                                            <select
-                                                :required="
-                                                    findingStatusIsRequired
-                                                "
-                                                v-model="selectedOptionStatus"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            >
-                                                <option value="" disabled>
-                                                    Select Condition
-                                                </option>
-                                                <option value="OPEN">
-                                                    OPEN
-                                                </option>
-                                                <option value="CLOSED">
-                                                    CLOSED
-                                                </option>
-                                                <option value="SCRAP">
-                                                    SCRAP
-                                                </option>
-                                                <option value="MUTASI">
-                                                    MUTASI
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="link_documentation_asset_image"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Inspection Image</label
-                                            >
-                                            <input
-                                                required
-                                                type="file"
-                                                ref="fileInput"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="2.4 / 5.8 Ghz"
-                                                @change="
-                                                    handleFileUploadInspection
-                                                "
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="dept"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Crew</label
-                                            >
-                                            <VueMultiselect
-                                                v-model="selectedValues"
-                                                :options="options"
-                                                :multiple="true"
-                                                :close-on-select="true"
-                                                placeholder="Select Crew"
-                                                track-by="name"
-                                                label="name"
-                                            />
-                                        </div>
-                                        <span
-                                            v-if="
-                                                !selectedOption &&
-                                                formSubmittedCrew
-                                            "
-                                            class="text-red-500"
-                                            >Crew Tidak boleh kosong!</span
-                                        >
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="remark"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Remark Inspection</label
-                                            >
-                                            <input
-                                                type="text"
-                                                v-model="form.remark"
-                                                name="remark"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Remark Inspection"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
-                                                for="date-of-complaint"
-                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Due Date</label
-                                            >
-                                            <VueDatePicker
-                                                :required="
-                                                    findingDuedateIsRequired
-                                                "
-                                                v-model="selectedDate"
-                                                :format="customFormat"
-                                                placeholder="Select a date and time"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
-                                    >
-                                        <div class="mb-4">
-                                            <label
                                                 for="kondisi"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                             >
@@ -1176,7 +999,7 @@ const save = () => {
                                     </div>
 
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1210,8 +1033,9 @@ const save = () => {
                                             </select>
                                         </div>
                                     </div>
+
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1229,8 +1053,9 @@ const save = () => {
                                             />
                                         </div>
                                     </div>
+
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -1245,6 +1070,239 @@ const save = () => {
                                                 name="location"
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="Main Office"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                    >
+                                        <div class="text-center mb-4">
+                                            <p
+                                                class="mb-0 dark:text-white/80 font-semibold"
+                                            >
+                                                Temuan
+                                            </p>
+                                            <!-- Switch toggle -->
+                                            <label
+                                                class="inline-flex items-center cursor-pointer mt-2"
+                                            >
+                                                <span
+                                                    class="mr-2 text-sm text-slate-700 dark:text-white/80"
+                                                    >Aktifkan Kolom Temuan (jika
+                                                    terdapat temuan)</span
+                                                >
+                                                <input
+                                                    type="checkbox"
+                                                    v-model="temuanEnabled"
+                                                    class="sr-only peer"
+                                                />
+                                                <div
+                                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                                ></div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="temuan"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Deskripsi Temuan</label
+                                            >
+                                            <input
+                                                type="text"
+                                                name="temuan"
+                                                v-model="findings"
+                                                :disabled="!temuanEnabled"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
+                                                placeholder=""
+                                                @input="
+                                                    checkRequiredImageFinding
+                                                "
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="findings_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Lampiran Foto Temuan</label
+                                            >
+                                            <input
+                                                :required="
+                                                    findingImageIsRequired
+                                                "
+                                                type="file"
+                                                ref="file_inputan1"
+                                                :disabled="!temuanEnabled"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
+                                                @change="
+                                                    handleFileUploadFindings
+                                                "
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="tindakan"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Tindak Lanjut</label
+                                            >
+                                            <input
+                                                type="text"
+                                                v-model="action"
+                                                name="tindakan"
+                                                :disabled="!temuanEnabled"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
+                                                placeholder=""
+                                                @input="
+                                                    checkRequiredImageAction
+                                                "
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="action_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Lampiran Foto Tindakan</label
+                                            >
+                                            <input
+                                                :required="
+                                                    actionImageIsRequired
+                                                "
+                                                type="file"
+                                                ref="file_inputan2"
+                                                :disabled="!temuanEnabled"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
+                                                @change="handleFileUploadAction"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="date-of-complaint"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Due Date</label
+                                            >
+                                            <VueDatePicker
+                                                :required="
+                                                    findingDuedateIsRequired
+                                                "
+                                                v-model="selectedDate"
+                                                :format="customFormat"
+                                                :disabled="!temuanEnabled"
+                                                placeholder="Select a date and time"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="findings_status"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                Status Temuan</label
+                                            >
+                                            <select
+                                                :required="
+                                                    findingStatusIsRequired
+                                                "
+                                                v-model="selectedOptionStatus"
+                                                :disabled="!temuanEnabled"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
+                                            >
+                                                <option value="OPEN">
+                                                    OPEN
+                                                </option>
+                                                <option value="CLOSE">
+                                                    CLOSE
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="remark"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Remark</label
+                                            >
+                                            <textarea
+                                                v-model="form.remark"
+                                                name="remark"
+                                                rows="4"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="Leave a note..."
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="dept"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Crew</label
+                                            >
+                                            <VueMultiselect
+                                                v-model="selectedValues"
+                                                :options="options"
+                                                :multiple="true"
+                                                :close-on-select="true"
+                                                placeholder="Select Crew"
+                                                track-by="name"
+                                                label="name"
+                                            />
+                                        </div>
+                                        <span
+                                            v-if="
+                                                !selectedOption &&
+                                                formSubmittedCrew
+                                            "
+                                            class="text-red-500"
+                                            >Crew Tidak boleh kosong!</span
+                                        >
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Inspection Image</label
+                                            >
+                                            <input
+                                                required
+                                                type="file"
+                                                ref="fileInput"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                                @change="
+                                                    handleFileUploadInspection
+                                                "
                                             />
                                         </div>
                                     </div>
