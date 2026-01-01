@@ -914,9 +914,7 @@ const getEncryptedYear = () => {
                                     <div>
                                         <p>
                                             :
-                                            {{
-                                                inspeksi.inventory.printer_code
-                                            }}
+                                            {{ inspeksi.printer.printer_code }}
                                         </p>
                                     </div>
                                 </div>
@@ -929,8 +927,7 @@ const getEncryptedYear = () => {
                                         <p>
                                             :
                                             {{
-                                                inspeksi.inventory
-                                                    .asset_ho_number
+                                                inspeksi.printer.asset_ho_number
                                             }}
                                         </p>
                                     </div>
@@ -943,9 +940,7 @@ const getEncryptedYear = () => {
                                     <div>
                                         <p>
                                             :
-                                            {{
-                                                inspeksi.inventory.serial_number
-                                            }}
+                                            {{ inspeksi.printer.serial_number }}
                                         </p>
                                     </div>
                                 </div>
@@ -957,7 +952,7 @@ const getEncryptedYear = () => {
                                     <div>
                                         <p>
                                             :
-                                            {{ inspeksi.inventory.ip_address }}
+                                            {{ inspeksi.printer.ip_address }}
                                         </p>
                                     </div>
                                 </div>
@@ -969,7 +964,7 @@ const getEncryptedYear = () => {
                                     <div>
                                         <p>
                                             :
-                                            {{ inspeksi.inventory.mac_address }}
+                                            {{ inspeksi.printer.mac_address }}
                                         </p>
                                     </div>
                                 </div>
@@ -981,9 +976,7 @@ const getEncryptedYear = () => {
                                     <div>
                                         <p>
                                             :
-                                            {{
-                                                inspeksi.inventory.printer_brand
-                                            }}
+                                            {{ inspeksi.printer.printer_brand }}
                                         </p>
                                     </div>
                                 </div>
@@ -995,9 +988,7 @@ const getEncryptedYear = () => {
                                     <div>
                                         <p>
                                             :
-                                            {{
-                                                inspeksi.inventory.printer_type
-                                            }}
+                                            {{ inspeksi.printer.printer_type }}
                                         </p>
                                     </div>
                                 </div>
@@ -1007,9 +998,7 @@ const getEncryptedYear = () => {
                                         <p class="text-base">Division</p>
                                     </div>
                                     <div>
-                                        <p>
-                                            : {{ inspeksi.inventory.division }}
-                                        </p>
+                                        <p>: {{ inspeksi.printer.division }}</p>
                                     </div>
                                 </div>
 
@@ -1020,7 +1009,7 @@ const getEncryptedYear = () => {
                                     <div>
                                         <p>
                                             :
-                                            {{ inspeksi.inventory.department }}
+                                            {{ inspeksi.printer.department }}
                                         </p>
                                     </div>
                                 </div>
@@ -1030,9 +1019,7 @@ const getEncryptedYear = () => {
                                         <p class="text-base">Location</p>
                                     </div>
                                     <div>
-                                        <p>
-                                            : {{ inspeksi.inventory.location }}
-                                        </p>
+                                        <p>: {{ inspeksi.printer.location }}</p>
                                     </div>
                                 </div>
 
@@ -1045,14 +1032,14 @@ const getEncryptedYear = () => {
                                     <div>
                                         <p
                                             v-if="
-                                                inspeksi.inventory
+                                                inspeksi.printer
                                                     .date_of_inventory
                                             "
                                         >
                                             :
                                             {{
                                                 formattedDate(
-                                                    inspeksi.inventory
+                                                    inspeksi.printer
                                                         .date_of_inventory
                                                 )
                                             }}
@@ -1068,7 +1055,7 @@ const getEncryptedYear = () => {
                                         <p class="text-base">Status</p>
                                     </div>
                                     <div>
-                                        <p>: {{ inspeksi.inventory.status }}</p>
+                                        <p>: {{ inspeksi.printer.status }}</p>
                                     </div>
                                 </div>
 
@@ -1085,7 +1072,7 @@ const getEncryptedYear = () => {
                                         <p class="text-base">Note</p>
                                     </div>
                                     <div>
-                                        <p>: {{ inspeksi.inventory.note }}</p>
+                                        <p>: {{ inspeksi.printer.note }}</p>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2">
@@ -1097,8 +1084,7 @@ const getEncryptedYear = () => {
                                             :
                                             {{
                                                 formattedDate(
-                                                    inspeksi.inventory
-                                                        .updated_at
+                                                    inspeksi.printer.updated_at
                                                 )
                                             }}
                                         </p>

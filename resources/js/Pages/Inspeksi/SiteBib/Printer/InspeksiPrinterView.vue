@@ -572,7 +572,7 @@ const approved = () => {
                                                         >
                                                             {{
                                                                 inspeksiPrinters
-                                                                    .inventory
+                                                                    .printer
                                                                     .printer_code
                                                             }}
                                                         </p>
@@ -636,7 +636,7 @@ const approved = () => {
                                                             :class="
                                                                 getBadgeClassStatusInventory(
                                                                     inspeksiPrinters
-                                                                        .inventory
+                                                                        .printer
                                                                         .status
                                                                 )
                                                             "
@@ -644,7 +644,7 @@ const approved = () => {
                                                             {{
                                                                 getBadgeTextStatusInventory(
                                                                     inspeksiPrinters
-                                                                        .inventory
+                                                                        .printer
                                                                         .status
                                                                 )
                                                             }}

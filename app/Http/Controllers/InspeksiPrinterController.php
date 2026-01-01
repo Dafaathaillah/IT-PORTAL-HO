@@ -22,7 +22,7 @@ class InspeksiPrinterController extends Controller
         $bulanNow = $request->input('month', now()->month);
         $yearNow = $request->input('year', now()->year);
 
-        $inspeksi_printer = InspeksiPrinter::with('inventory')->where('site', $site)->where('month', $bulanNow)
+        $inspeksi_printer = InspeksiPrinter::with('printer')->where('site', $site)->where('month', $bulanNow)
             ->where('year', $yearNow)->get();
         // dd($inspeksiPrinter);
 
@@ -342,7 +342,7 @@ class InspeksiPrinterController extends Controller
 
     public function detail($id)
     {
-        $inspeksi_printer = InspeksiPrinter::with('inventory')->where('inspeksi_printers.id', $id)->first();
+        $inspeksi_printer = InspeksiPrinter::with('printer')->where('inspeksi_printers.id', $id)->first();
 
         if (empty($inspeksi_printer)) {
             abort(404, 'Data not found');
