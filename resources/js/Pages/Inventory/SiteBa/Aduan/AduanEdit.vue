@@ -29,7 +29,7 @@ const form = useForm({
     repair_note: props.aduan.repair_note,
     complaint_note: props.aduan.complaint_note,
     detail_location: props.aduan.detail_location,
-});
+}); 
 
 const isDisabledByStatus = computed(() => form.status === 'CLOSED')
 

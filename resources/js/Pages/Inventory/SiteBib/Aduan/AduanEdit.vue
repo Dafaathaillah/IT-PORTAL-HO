@@ -21,6 +21,7 @@ const form = useForm({
     inventory_number: props.aduan.inventory_number,
     category_name: props.aduan.category_name,
     complaint_image: props.aduan.complaint_image,
+    repair_image: props.aduan.repair_image,
     crew: props.selectCrew,
     status: props.aduan.status,
     location: props.aduan.location,
@@ -34,6 +35,7 @@ const isDisabledByStatus = computed(() => form.status === 'CLOSED')
 
 const isDisabled = ref(true);
 const file = ref(null);
+const file_repair = ref(null);
 
 const dateOfComplaint = ref(props.aduan.date_of_complaint);
 const startResponse = ref(props.aduan.start_response);
@@ -43,6 +45,11 @@ const endProgress = ref(props.aduan.end_progress);
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
+
+const handleFileUploadRepair = (event) => {
+    file_repair.value = event.target.files[0];
+};
+
 
 const options = props.crew;
 
@@ -93,6 +100,7 @@ const update = () => {
     formData.append("inventory_number", form.inventory_number);
     formData.append("crew", crewString.value);
     formData.append("image", file.value);
+    formData.append("image_repair", file_repair.value);
     formData.append("location", form.location);
     formData.append("detail_location", form.detail_location);
     formData.append("dateOfComplaint", formattedDateDateOfComplaint);
@@ -373,8 +381,45 @@ function handleCategoryChange(event) {
                                             />
                                         </div>
                                     </div>
+
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="complaint_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Repair Image</label
+                                            >
+                                            <input
+                                                type="file"
+                                                ref="fileInput"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                placeholder="2.4 / 5.8 Ghz"
+                                                @change="handleFileUploadRepair"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="link_documentation_asset_image"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >Previous Repair Image</label
+                                            >
+                                            <img
+                                                :src="form.repair_image"
+                                                alt="documentation image"
+                                                class="w-60 h-30 shadow-2xl rounded-xl"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -393,7 +438,7 @@ function handleCategoryChange(event) {
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

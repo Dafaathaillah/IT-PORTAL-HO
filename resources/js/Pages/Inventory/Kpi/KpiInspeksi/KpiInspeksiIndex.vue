@@ -44,6 +44,14 @@ const isComputer = computed(() => {
     return selectedOptionDept.value?.name === "Computer";
 });
 
+const isPrinter = computed(() => {
+    return selectedOptionDept.value?.name === "Printer";
+});
+
+const isMt = computed(() => {
+    return selectedOptionDept.value?.name === "Mobile Tower";
+});
+
 const pages = ref("Pages");
 const subMenu = ref("KPI Inspeksi");
 const mainMenu = ref("Chart KPI Inspeksi");
@@ -79,10 +87,12 @@ const searchData = async () => {
 
     if (isComputer.value && isADW.value) {
         params.month = bulan.value;
-    } else {
+    } else if (isComputer.value != isADW.value) {
         params.quarter = triwulan.value;
+    } else {
+        params.month = bulan.value;
     }
-    // console.log(/params);
+    console.log(params);
     try {
         const site =
             props.site.charAt(0).toUpperCase() +
@@ -112,14 +122,17 @@ watch(
             if (isComputer.value) {
                 if (isADW.value) {
                     // Komputer dan site ADW -> bulan + tahun
-                    periode = `MONTH ${bulan.value} ${year.value}`;
+                    periode = `COMPUTER BULAN ${bulan.value} ${year.value}`;
                 } else {
                     // Komputer dan site bukan ADW -> hanya tahun
-                    periode = `QUARTER ${triwulan.value} ${year.value}`;
+                    periode = `COMPUTER QUARTER ${triwulan.value} ${year.value}`;
                 }
+            } else if (isPrinter.value) {
+                periode = `PRINTER BULAN ${bulan.value} ${year.value}`;
+            } else if (isMt.value) {
+                periode = `MOBILE TOWER BULAN ${bulan.value} ${year.value}`;
             } else {
-                // Selain komputer -> triwulan + tahun
-                periode = `PERIODE ${year.value}`;
+                periode = `LAPTOP PERIODE ${year.value}`;
             }
 
             Highcharts.chart(chartInspeksi.value, {
@@ -213,6 +226,8 @@ onMounted(() => {
                                         :options="[
                                             { name: 'Computer' },
                                             { name: 'Laptop' },
+                                            { name: 'Printer' },
+                                            { name: 'Mobile Tower' },
                                         ]"
                                         :multiple="false"
                                         :close-on-select="true"
@@ -241,6 +256,54 @@ onMounted(() => {
                                         step="1"
                                         class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
                                         placeholder="Masukkan Quarter"
+                                        @input="validateYear"
+                                    />
+                                </div>
+
+                                <div
+                                    v-show="isPrinter"
+                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
+                                >
+                                    <span
+                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
+                                    >
+                                        <i
+                                            class="fas fa-search"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </span>
+                                    <input
+                                        v-model="bulan"
+                                        type="number"
+                                        min="1"
+                                        max="12"
+                                        step="1"
+                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        placeholder="Masukkan Bulan"
+                                        @input="validateYear"
+                                    />
+                                </div>
+
+                                <div
+                                    v-show="isMt"
+                                    class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
+                                >
+                                    <span
+                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
+                                    >
+                                        <i
+                                            class="fas fa-search"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </span>
+                                    <input
+                                        v-model="bulan"
+                                        type="number"
+                                        min="1"
+                                        max="12"
+                                        step="1"
+                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        placeholder="Masukkan Bulan"
                                         @input="validateYear"
                                     />
                                 </div>

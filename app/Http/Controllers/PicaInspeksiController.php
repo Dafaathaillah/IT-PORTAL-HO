@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\InspeksiComputer;
 use App\Models\InspeksiLaptop;
+use App\Models\InspeksiMobileTower;
+use App\Models\InspeksiPrinter;
 use App\Models\PicaInspeksi;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -34,90 +36,162 @@ class PicaInspeksiController extends Controller
     public function getDataPicaByDevice(Request $request)
     {
         $deviceType = $request->input('device_type');
-        $site = (string) $request->input('site');
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
+        $site       = (string) $request->input('site');
+        // $deviceType = 'Printer';
+        // $site       = 'BIB';
+        $statusPica = $request->input('status_pica'); // OPTIONAL
+        $startDate  = $request->input('startDate');   // OPTIONAL
+        $endDate    = $request->input('endDate');     // OPTIONAL
 
         if (!$deviceType || !$site) {
-            return response()->json(['message' => 'device_type dan site harus dikirim'], 400);
+            return response()->json([
+                'message' => 'device_type dan site wajib dikirim'
+            ], 400);
         }
 
-        if ($deviceType === 'Laptop') {
-            $query = InspeksiLaptop::where('site', $site)
-                ->whereNotNull('findings_image')
-                ->whereHas('inventory')
-                ->whereHas('inventory.pengguna')
-                ->with('inventory.pengguna');
+        switch ($deviceType) {
 
-            if ($startDate && $endDate != null) {
-                $query->whereBetween('created_date', [$startDate, $endDate]);
-            }
+            case 'Laptop':
+                $query = InspeksiLaptop::where('site', $site)
+                    ->whereNotNull('findings_image')
+                    ->whereHas('inventory')
+                    ->whereHas('inventory.pengguna')
+                    ->with('inventory.pengguna');
+                break;
 
-            $data = $query->get();
-        } elseif ($deviceType === 'Computer') {
-            $query = InspeksiComputer::where('site', $site)
-                ->whereNotNull('findings_image')
-                ->whereHas('computer')
-                ->whereHas('computer.pengguna')
-                ->with('computer.pengguna');
+            case 'Computer':
+                $query = InspeksiComputer::where('site', $site)
+                    ->whereNotNull('findings_image')
+                    ->whereHas('computer')
+                    ->whereHas('computer.pengguna')
+                    ->with('computer.pengguna');
+                break;
 
-            if ($startDate && $endDate != null) {
-                $query->whereBetween('created_date', [$startDate, $endDate]);
-            }
+            case 'Mobile Tower':
+                $query = PicaInspeksi::where('site', $site)
+                    ->whereHas('inspeksiMt')
+                    ->whereHas('inspeksiMt.mt')
+                    ->with([
+                        'inspeksiMt',
+                        'inspeksiMt.mt'
+                    ]);
+                break;
 
-            $data = $query->get();
-        } else {
-            return response()->json(['message' => 'Invalid device type'], 400);
+            case 'Printer':
+                $query = InspeksiPrinter::where('site', $site)
+                    ->whereNotNull('findings_image')
+                    ->whereHas('printer')
+                    ->with('printer');
+                break;
+
+            default:
+                return response()->json([
+                    'message' => 'Invalid device type'
+                ], 400);
         }
 
-        return response()->json($data);
+        if ($startDate && $endDate) {
+            $start = Carbon::parse($startDate)->startOfDay();
+            $end   = Carbon::parse($endDate)->endOfDay();
+
+            if ($deviceType === 'Mobile Tower') {
+                $query->whereBetween('created_at', [$start, $end]);
+            } else {
+                $query->whereBetween('created_date', [$startDate, $endDate]);
+            }
+        }
+
+        if ($statusPica) {
+            if ($deviceType === 'Mobile Tower') {
+                $query->where('status_pica', $statusPica);
+            } else {
+                $query->where('findings_status', $statusPica);
+            }
+        }
+
+        return response()->json($query->get());
     }
+
 
     public function edit($id)
     {
-        $dataInspeksiLaptop = InspeksiLaptop::find($id);
-        $dataInspeksiComputer = InspeksiComputer::find($id);
+        if ($data = InspeksiLaptop::with('inventory.pengguna')->find($id)) {
 
-        if ($dataInspeksiLaptop) {
-            $data = InspeksiLaptop::whereHas('inventory')
-                ->whereHas('inventory.pengguna')
-                ->with('inventory.pengguna')
-                ->where('id', $id)->first();
+            $inv = $data->inventory;
 
-            $data->device_code = $data->inventory->laptop_code ?? '-';
-            $data->device_name = $data->inventory->laptop_name ?? '-';
-            $data->device_sn = $data->inventory->serial_number ?? '-';
-            $data->device_condition = $data->inventory->condition ?? '-';
-            $data->device_asset_ho = $data->inventory->number_asset_ho ?? '-';
-            $data->device_spesifikasi = $data->inventory->spesifikasi ?? '-';
-            $data->device_condition = $data->inventory->condition ?? '-';
-            $data->device_status_inventory = $data->inventory->status ?? '-';
-            $data->device_note = $data->inventory->note ?? '-';
-            $data->device_pengguna = $data->inventory->pengguna->username ?? '-';
-            $data->device_dept = $data->inventory->pengguna->department ?? '-';
-            $data->device_ip_address = $data->inventory->ip_address ?? '-';
-            $data->device_location = $data->inventory->location ?? '-';
+            $data->device_code = $inv->laptop_code ?? '-';
+            $data->device_name = strtoupper($inv->laptop_name) ?? '-';
+            $data->device_sn = $inv->serial_number ?? '-';
+            $data->device_condition = $inv->condition ?? '-';
+            $data->device_asset_ho = $inv->number_asset_ho ?? '-';
+            $data->device_spesifikasi = $inv->spesifikasi ?? '-';
+            $data->device_status_inventory = $inv->status ?? '-';
+            $data->device_note = $inv->note ?? '-';
+            $data->device_pengguna = $inv->pengguna->username ?? '-';
+            $data->device_dept = $inv->pengguna->department ?? '-';
+            $data->device_ip_address = $inv->ip_address ?? '-';
+            $data->device_location = $inv->location ?? '-';
             $data->device_type = 'Laptop';
-        } else {
-            $data = InspeksiComputer::whereHas('computer')
-                ->whereHas('computer.pengguna')
-                ->with('computer.pengguna')
-                ->where('id', $id)->first();
+        } elseif ($data = InspeksiPrinter::with('printer')->find($id)) {
+            $prt = $data->printer;
 
-            $data->device_code = $data->computer->computer_code ?? '-';
-            $data->device_name = $data->computer->computer_name ?? '-';
-            $data->device_sn = $data->computer->serial_number ?? '-';
-            $data->device_condition = $data->computer->condition ?? '-';
-            $data->device_asset_ho = $data->computer->number_asset_ho ?? '-';
-            $data->device_spesifikasi = $data->computer->spesifikasi ?? '-';
-            $data->device_condition = $data->computer->condition ?? '-';
-            $data->device_status_inventory = $data->computer->status ?? '-';
-            $data->device_note = $data->computer->note ?? '-';
-            $data->device_pengguna = $data->computer->pengguna->username ?? '-';
-            $data->device_dept = $data->computer->pengguna->department ?? '-';
-            $data->device_ip_address = $data->computer->ip_address ?? '-';
-            $data->device_location = $data->computer->location ?? '-';
+            $data->device_code = $prt->printer_code ?? '-';
+            $data->device_name = strtoupper($prt->item_name) ?? '-';
+            $data->device_sn = $prt->serial_number ?? '-';
+            $data->device_condition = $data->condition ?? '-';
+            $data->device_asset_ho = $prt->asset_ho_number ?? '-';
+            $data->device_spesifikasi = '-';
+            $data->device_status_inventory = $prt->status ?? '-';
+            $data->device_note = $prt->note ?? '-';
+            $data->device_pengguna = $prt->division ?? '-';
+            $data->device_dept = $prt->pengguna->department ?? '-';
+            $data->device_ip_address = $prt->ip_address ?? '-';
+            $data->device_location = $prt->location ?? '-';
+            $data->device_type = 'Printer';
+        } elseif ($data = PicaInspeksi::with('inspeksiMt.mt')->find($id)) {
+            // dd($data);
+            $mt = $data->inspeksiMt;
+
+            $data->device_code = $mt->mt->inventory_number ?? '-';
+            $data->device_name = strtoupper($mt->mt->mt_code) ?? '-';
+            $data->device_sn = '-';
+            $data->device_condition = $mt->condition ?? '-';
+            $data->device_asset_ho = '-';
+            $data->device_spesifikasi = '-';
+            $data->device_status_inventory = $mt->mt->status ?? '-';
+            $data->device_note = $mt->mt->note ?? '-';
+            $data->device_pengguna = '-';
+            $data->device_dept = '-';
+            $data->device_ip_address = '-';
+            $data->device_location = $mt->mt->location ?? '-';
+            $data->device_type = 'Mobile Tower';
+            $data->findings = $data->temuan;
+            $data->findings_image = $data->foto_temuan;
+            $data->findings_action = $data->tindakan;
+            $data->action_image = $data->foto_tindakan;
+            $data->findings_status = $data->status_pica;
+            $data->remarks = $data->remark;
+            $data->inspector = $mt->pic;
+            $data->inspection_image = $mt->inspection_image;
+        } elseif ($data = InspeksiComputer::with('computer.pengguna')->find($id)) {
+
+            $cmp = $data->computer;
+
+            $data->device_code = $cmp->computer_code ?? '-';
+            $data->device_name = strtoupper($cmp->computer_name) ?? '-';
+            $data->device_sn = $cmp->serial_number ?? '-';
+            $data->device_condition = $cmp->condition ?? '-';
+            $data->device_asset_ho = $cmp->number_asset_ho ?? '-';
+            $data->device_spesifikasi = $cmp->spesifikasi ?? '-';
+            $data->device_status_inventory = $cmp->status ?? '-';
+            $data->device_note = $cmp->note ?? '-';
+            $data->device_pengguna = $cmp->pengguna->username ?? '-';
+            $data->device_dept = $cmp->pengguna->department ?? '-';
+            $data->device_ip_address = $cmp->ip_address ?? '-';
+            $data->device_location = $cmp->location ?? '-';
             $data->device_type = 'Computer';
+        } else {
+            abort(404, 'Data inspeksi tidak ditemukan');
         }
 
         if (!empty($data->inspector)) {
@@ -146,7 +220,6 @@ class PicaInspeksiController extends Controller
     public function update(Request $request)
     {
         $params = $request->all();
-        // dd($params);
         $currentDate = Carbon::now();
         $year = $currentDate->format('Y');
 
@@ -161,14 +234,14 @@ class PicaInspeksiController extends Controller
         ];
 
         $dataPica = [
-            'inspeksi_id' => $request->id,
+            // 'inspeksi_id' => $request->id,
             'temuan' => $params['temuan'],
             'tindakan' => $params['tindakan'],
             'due_date' => $params['due_date'],
             'remark' => $params['remark'],
             'status_pica' => $params['findings_status'],
             'close_by' => auth()->user()->name,
-            'site' => 'BA',
+            'site' => auth()->user()->site,
 
         ];
 
@@ -205,17 +278,31 @@ class PicaInspeksiController extends Controller
         }
 
 
-        // Update atau create PicaInspeksi
-        PicaInspeksi::updateOrCreate(
-            ['inspeksi_id' => $request->id],
-            $dataPica
-        );
+        if ($request->device_type === 'Mobile Tower') {
+            PicaInspeksi::updateOrCreate(
+                ['id' => $request->id], // 🔥 MT pakai ID langsung
+                $dataPica
+            );
+        } else {
+            PicaInspeksi::updateOrCreate(
+                ['inspeksi_id' => $request->id], // Laptop / PC / Printer
+                $dataPica
+            );
+        }
 
         // Coba update InspeksiLaptop
         $laptop = InspeksiLaptop::find($request->id);
+        $printer = InspeksiPrinter::find($request->id);
+        $mt = PicaInspeksi::with('inspeksiMt.mt')->find($request->id);
 
         if ($laptop) {
             $laptop->update($data);
+        } elseif ($printer) {
+            $printer->update($data);
+        } elseif ($mt && $mt->inspeksiMt && $mt->inspeksiMt->mt) {
+            $mt->inspeksiMt->mt->update([
+                'inspection_remark'   => $params['remark'],
+            ]);
         } else {
             // Jika tidak ada di Laptop, coba update InspeksiComputer
             $computer = InspeksiComputer::find($request->id);
@@ -230,60 +317,173 @@ class PicaInspeksiController extends Controller
         return redirect()->route('picaInspeksi.page', ['site' => $dataPica['site']]);
     }
 
+    // public function detail($id)
+    // {
+    //     $dataInspeksiLaptop = InspeksiLaptop::find($id);
+    //     $dataInspeksiPrinter = InspeksiPrinter::find($id);
+    //     $dataInspeksiComputer = InspeksiComputer::find($id);
+
+    //     if ($dataInspeksiLaptop) {
+    //         $data = InspeksiLaptop::whereHas('inventory')
+    //             ->whereHas('inventory.pengguna')
+    //             ->with('inventory.pengguna')
+    //             ->where('id', $id)->first();
+
+    //         $data->device_code = $data->inventory->laptop_code ?? '-';
+    //         $data->device_name = $data->inventory->laptop_name ?? '-';
+    //         $data->device_sn = $data->inventory->serial_number ?? '-';
+    //         $data->device_condition = $data->inventory->condition ?? '-';
+    //         $data->device_asset_ho = $data->inventory->number_asset_ho ?? '-';
+    //         $data->device_spesifikasi = $data->inventory->spesifikasi ?? '-';
+    //         $data->device_condition = $data->inventory->condition ?? '-';
+    //         $data->device_status_inventory = $data->inventory->status ?? '-';
+    //         $data->device_note = $data->inventory->note ?? '-';
+    //         $data->device_pengguna = $data->inventory->pengguna->username ?? '-';
+    //         $data->device_dept = $data->inventory->pengguna->department ?? '-';
+    //         $data->device_ip_address = $data->inventory->ip_address ?? '-';
+    //         $data->device_location = $data->inventory->location ?? '-';
+    //         $data->device_type = 'Laptop';
+    //     } elseif ($dataInspeksiPrinter) {
+    //         dd('Masuk printer');
+    //         $data = InspeksiComputer::whereHas('computer')
+    //             ->whereHas('computer.pengguna')
+    //             ->with('computer.pengguna')
+    //             ->where('id', $id)->first();
+
+    //         $data->device_code = $data->computer->computer_code ?? '-';
+    //         $data->device_name = $data->computer->computer_name ?? '-';
+    //         $data->device_sn = $data->computer->serial_number ?? '-';
+    //         $data->device_condition = $data->computer->condition ?? '-';
+    //         $data->device_asset_ho = $data->computer->number_asset_ho ?? '-';
+    //         $data->device_spesifikasi = $data->computer->spesifikasi ?? '-';
+    //         $data->device_condition = $data->computer->condition ?? '-';
+    //         $data->device_status_inventory = $data->computer->status ?? '-';
+    //         $data->device_note = $data->computer->note ?? '-';
+    //         $data->device_pengguna = $data->computer->pengguna->username ?? '-';
+    //         $data->device_dept = $data->computer->pengguna->department ?? '-';
+    //         $data->device_ip_address = $data->computer->ip_address ?? '-';
+    //         $data->device_location = $data->computer->location ?? '-';
+    //         $data->device_type = 'Computer';
+    //     } else {
+    //         dd('Masuk Computer');
+
+    //         $data = InspeksiComputer::whereHas('computer')
+    //             ->whereHas('computer.pengguna')
+    //             ->with('computer.pengguna')
+    //             ->where('id', $id)->first();
+
+    //         $data->device_code = $data->computer->computer_code ?? '-';
+    //         $data->device_name = $data->computer->computer_name ?? '-';
+    //         $data->device_sn = $data->computer->serial_number ?? '-';
+    //         $data->device_condition = $data->computer->condition ?? '-';
+    //         $data->device_asset_ho = $data->computer->number_asset_ho ?? '-';
+    //         $data->device_spesifikasi = $data->computer->spesifikasi ?? '-';
+    //         $data->device_condition = $data->computer->condition ?? '-';
+    //         $data->device_status_inventory = $data->computer->status ?? '-';
+    //         $data->device_note = $data->computer->note ?? '-';
+    //         $data->device_pengguna = $data->computer->pengguna->username ?? '-';
+    //         $data->device_dept = $data->computer->pengguna->department ?? '-';
+    //         $data->device_ip_address = $data->computer->ip_address ?? '-';
+    //         $data->device_location = $data->computer->location ?? '-';
+    //         $data->device_type = 'Computer';
+    //     }
+
+    //     if (!empty($data->inspector)) {
+
+    //         $inspector = array($data->inspector);
+    //     } else {
+    //         $inspector = array('data tidak ada !');
+    //     }
+    //     // dd($data);
+    //     return Inertia::render('PicaInspeksi/PicaInspeksiDetail', [
+    //         'dataInspeksi' => $data,
+    //     ]);
+    // }
+
     public function detail($id)
     {
-        $dataInspeksiLaptop = InspeksiLaptop::find($id);
-        $dataInspeksiComputer = InspeksiComputer::find($id);
-
-        if ($dataInspeksiLaptop) {
-            $data = InspeksiLaptop::whereHas('inventory')
-                ->whereHas('inventory.pengguna')
-                ->with('inventory.pengguna')
-                ->where('id', $id)->first();
-
-            $data->device_code = $data->inventory->laptop_code ?? '-';
-            $data->device_name = $data->inventory->laptop_name ?? '-';
-            $data->device_sn = $data->inventory->serial_number ?? '-';
-            $data->device_condition = $data->inventory->condition ?? '-';
-            $data->device_asset_ho = $data->inventory->number_asset_ho ?? '-';
-            $data->device_spesifikasi = $data->inventory->spesifikasi ?? '-';
-            $data->device_condition = $data->inventory->condition ?? '-';
-            $data->device_status_inventory = $data->inventory->status ?? '-';
-            $data->device_note = $data->inventory->note ?? '-';
-            $data->device_pengguna = $data->inventory->pengguna->username ?? '-';
-            $data->device_dept = $data->inventory->pengguna->department ?? '-';
-            $data->device_ip_address = $data->inventory->ip_address ?? '-';
-            $data->device_location = $data->inventory->location ?? '-';
-            $data->device_type = 'Laptop';
-        } else {
-            $data = InspeksiComputer::whereHas('computer')
-                ->whereHas('computer.pengguna')
-                ->with('computer.pengguna')
-                ->where('id', $id)->first();
-
-            $data->device_code = $data->computer->computer_code ?? '-';
-            $data->device_name = $data->computer->computer_name ?? '-';
-            $data->device_sn = $data->computer->serial_number ?? '-';
-            $data->device_condition = $data->computer->condition ?? '-';
-            $data->device_asset_ho = $data->computer->number_asset_ho ?? '-';
-            $data->device_spesifikasi = $data->computer->spesifikasi ?? '-';
-            $data->device_condition = $data->computer->condition ?? '-';
-            $data->device_status_inventory = $data->computer->status ?? '-';
-            $data->device_note = $data->computer->note ?? '-';
-            $data->device_pengguna = $data->computer->pengguna->username ?? '-';
-            $data->device_dept = $data->computer->pengguna->department ?? '-';
-            $data->device_ip_address = $data->computer->ip_address ?? '-';
-            $data->device_location = $data->computer->location ?? '-';
-            $data->device_type = 'Computer';
-        }
-
-        if (!empty($data->inspector)) {
-
-            $inspector = array($data->inspector);
-        } else {
-            $inspector = array('data tidak ada !');
-        }
+        // $id = '0022c2c0-2b69-4cf7-aece-d4b0c6475f97';
+        // $data = InspeksiPrinter::with('printer')->find($id);
         // dd($data);
+        if ($data = InspeksiLaptop::with('inventory.pengguna')->find($id)) {
+
+            $inv = $data->inventory;
+
+            $data->device_code = $inv->laptop_code ?? '-';
+            $data->device_name = strtoupper($inv->laptop_name) ?? '-';
+            $data->device_sn = $inv->serial_number ?? '-';
+            $data->device_condition = $inv->condition ?? '-';
+            $data->device_asset_ho = $inv->number_asset_ho ?? '-';
+            $data->device_spesifikasi = $inv->spesifikasi ?? '-';
+            $data->device_status_inventory = $inv->status ?? '-';
+            $data->device_note = $inv->note ?? '-';
+            $data->device_pengguna = $inv->pengguna->username ?? '-';
+            $data->device_dept = $inv->pengguna->department ?? '-';
+            $data->device_ip_address = $inv->ip_address ?? '-';
+            $data->device_location = $inv->location ?? '-';
+            $data->device_type = 'Laptop';
+        } elseif ($data = InspeksiPrinter::with('printer')->find($id)) {
+            $prt = $data->printer;
+
+            $data->device_code = $prt->printer_code ?? '-';
+            $data->device_name = strtoupper($prt->item_name) ?? '-';
+            $data->device_sn = $prt->serial_number ?? '-';
+            $data->device_condition = $data->condition ?? '-';
+            $data->device_asset_ho = $prt->asset_ho_number ?? '-';
+            $data->device_spesifikasi = '-';
+            $data->device_status_inventory = $prt->status ?? '-';
+            $data->device_note = $prt->note ?? '-';
+            $data->device_pengguna = $prt->division ?? '-';
+            $data->device_dept = $prt->pengguna->department ?? '-';
+            $data->device_ip_address = $prt->ip_address ?? '-';
+            $data->device_location = $prt->location ?? '-';
+            $data->device_type = 'Printer';
+        } elseif ($data = PicaInspeksi::with('inspeksiMt.mt')->find($id)) {
+            // dd($data);
+            $mt = $data->inspeksiMt;
+
+            $data->device_code = $mt->mt->inventory_number ?? '-';
+            $data->device_name = strtoupper($mt->mt->mt_code) ?? '-';
+            $data->device_sn = '-';
+            $data->device_condition = $mt->condition ?? '-';
+            $data->device_asset_ho = '-';
+            $data->device_spesifikasi = '-';
+            $data->device_status_inventory = $mt->mt->status ?? '-';
+            $data->device_note = $mt->mt->note ?? '-';
+            $data->device_pengguna = '-';
+            $data->device_dept = '-';
+            $data->device_ip_address = '-';
+            $data->device_location = $mt->mt->location ?? '-';
+            $data->device_type = 'Mobile Tower';
+            $data->findings = $data->temuan;
+            $data->findings_image = $data->foto_temuan;
+            $data->findings_action = $data->tindakan;
+            $data->action_image = $data->foto_tindakan;
+            $data->findings_status = $data->status_pica;
+            $data->remarks = $data->remark;
+            $data->inspector = $mt->pic;
+            $data->inspection_image = $mt->inspection_image;
+        } elseif ($data = InspeksiComputer::with('computer.pengguna')->find($id)) {
+
+            $cmp = $data->computer;
+
+            $data->device_code = $cmp->computer_code ?? '-';
+            $data->device_name = strtoupper($cmp->computer_name) ?? '-';
+            $data->device_sn = $cmp->serial_number ?? '-';
+            $data->device_condition = $cmp->condition ?? '-';
+            $data->device_asset_ho = $cmp->number_asset_ho ?? '-';
+            $data->device_spesifikasi = $cmp->spesifikasi ?? '-';
+            $data->device_status_inventory = $cmp->status ?? '-';
+            $data->device_note = $cmp->note ?? '-';
+            $data->device_pengguna = $cmp->pengguna->username ?? '-';
+            $data->device_dept = $cmp->pengguna->department ?? '-';
+            $data->device_ip_address = $cmp->ip_address ?? '-';
+            $data->device_location = $cmp->location ?? '-';
+            $data->device_type = 'Computer';
+        } else {
+            abort(404, 'Data inspeksi tidak ditemukan');
+        }
+
         return Inertia::render('PicaInspeksi/PicaInspeksiDetail', [
             'dataInspeksi' => $data,
         ]);
@@ -301,9 +501,9 @@ class PicaInspeksiController extends Controller
             'pic' => 'nullable|string',
         ]);
         if ($request->device == 'Computer') {
-            $devicePage = 'COMPUTER'; 
-        }else{
-            $devicePage = 'LAPTOP'; 
+            $devicePage = 'COMPUTER';
+        } else {
+            $devicePage = 'LAPTOP';
         }
         // 2. Ambil data dari request
         $site = $validated['site'];
@@ -390,8 +590,8 @@ class PicaInspeksiController extends Controller
         return $query->get()->map(function ($item) {
             $spesifikasi = $item->computer->spesifikasi ?? '';
             $item->spesifikasi_singkat = $spesifikasi !== '' ? Str::before($spesifikasi, ',') : '-';
-             $item->no_inv = $item->computer->computer_code ?? '-';
-             $item->loc = $item->computer->location ?? '-';
+            $item->no_inv = $item->computer->computer_code ?? '-';
+            $item->loc = $item->computer->location ?? '-';
             return $item;
         });
     }
@@ -411,8 +611,8 @@ class PicaInspeksiController extends Controller
         return $query->get()->map(function ($item) {
             $spesifikasi = $item->inventory->spesifikasi ?? '';
             $item->spesifikasi_singkat = $spesifikasi !== '' ? Str::before($spesifikasi, ',') : '-';
-             $item->no_inv = $item->inventory->laptop_code ?? '-';
-             $item->loc = $item->inventory->location ?? '-';
+            $item->no_inv = $item->inventory->laptop_code ?? '-';
+            $item->loc = $item->inventory->location ?? '-';
             return $item;
         });
     }

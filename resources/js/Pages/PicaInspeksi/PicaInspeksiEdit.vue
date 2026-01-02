@@ -37,6 +37,7 @@ const form = useForm({
     remark: props.dataInspeksi.remarks,
     inspector: props.dataInspeksi.inspector,
     inspection_status: props.dataInspeksi.inspection_status,
+    device_type: props.dataInspeksi.device_type,
     image_temuan: "",
     image_tindakan: "",
     image_inspeksi: "",
@@ -212,7 +213,7 @@ const update = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="grid grid-cols-2">
+                                        <div v-if="dataInspeksi.device_type !== 'Mobile Tower'" class="grid grid-cols-2">
                                             <div>
                                                 <p class="text-base">
                                                     Asset Ho Number
@@ -227,7 +228,7 @@ const update = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="grid grid-cols-2">
+                                        <div v-if="dataInspeksi.device_type !== 'Mobile Tower'" class="grid grid-cols-2">
                                             <div>
                                                 <p class="text-base">
                                                     Pengguna
@@ -242,7 +243,7 @@ const update = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="grid grid-cols-2">
+                                        <div v-if="dataInspeksi.device_type !== 'Mobile Tower'" class="grid grid-cols-2">
                                             <div>
                                                 <p class="text-base">Dept</p>
                                             </div>
@@ -270,7 +271,7 @@ const update = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="grid grid-cols-2">
+                                        <div v-if="dataInspeksi.device_type !== 'Mobile Tower'" class="grid grid-cols-2">
                                             <div>
                                                 <p class="text-base">
                                                     Spesifikasi
@@ -285,7 +286,7 @@ const update = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="grid grid-cols-2">
+                                        <div v-if="dataInspeksi.device_type !== 'Mobile Tower'" class="grid grid-cols-2">
                                             <div>
                                                 <p class="text-base">
                                                     Serial Number
@@ -298,7 +299,7 @@ const update = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="grid grid-cols-2">
+                                        <div v-if="dataInspeksi.device_type !== 'Mobile Tower'" class="grid grid-cols-2">
                                             <div>
                                                 <p class="text-base">
                                                     Ip Address
@@ -555,6 +556,9 @@ const update = () => {
                                                 <option value="OPEN">
                                                     OPEN
                                                 </option>
+                                                <option value="PROGRESS">
+                                                    PROGRESS
+                                                </option>
                                                 <option value="CLOSED">
                                                     CLOSED
                                                 </option>
@@ -662,7 +666,7 @@ const update = () => {
                                     class="flex flex-nowrap mt-6 justify-between"
                                 >
                                     <Link
-                                        :href="route('picaInspeksi.page', { site: 'BA' })"
+                                        :href="route('picaInspeksi.page', { site: props.site })"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

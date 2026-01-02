@@ -110,9 +110,12 @@ const form = useForm({});
 const options = props.crew;
 const startDate = ref(null);
 const endDate = ref(null);
+const statusPica = ref(null);
 const selectedValues = ref(null); // Awalnya array kosong
 const showValidation = ref(false);
 const selectedOption = ref({ name: "Computer" });
+const selectedOptionByStatus = ref({ name: "Date" });
+const selectedOptionStatusPica = ref(null);
 const data = ref([]);
 const tableRef = ref(null);
 const renderTable = ref(true);
@@ -126,6 +129,8 @@ const customFormat = (date) => {
         "0"
     )}-${String(d.getDate()).padStart(2, "0")}`;
 };
+
+const today = () => moment().format("YYYY-MM-DD");
 
 const isActive = (href) => {
     return window.location.pathname === href;
@@ -152,14 +157,38 @@ window.showImagePopup = function (src) {
     });
 };
 
+const normalizeItem = (item) => {
+    return {
+        inspector: item.inspeksi_mt?.inspector ?? item.inspector ?? "-",
+
+        deviceCode:
+            item.inventory?.laptop_code ??
+            item.computer?.computer_code ??
+            item.printer?.printer_code ??
+            item.inspeksi_mt?.mt?.inventory_number ??
+            "-",
+
+        findings: item.findings ?? item.temuan ?? "-",
+
+        findings_status: item.findings_status ?? item.status_pica ?? "-",
+
+        findingsImage: item.findings_image ?? item.foto_temuan ?? "-",
+
+        action: item.findings_action ?? item.tindakan ?? "-",
+
+        actionImage: item.action_image ?? item.foto_tindakan ?? "-",
+
+        dueDate: item.inspeksi_mt?.due_date ?? item.due_date ?? "-",
+
+        remark: item.remark ?? item.remarks ?? "-",
+    };
+};
+
 const populateDataTable = (rows) => {
     if (!dataTableInstance) return;
 
     const formattedRows = rows.map((item, index) => {
-        const deviceCode =
-            selectedOption.value.name === "Laptop"
-                ? item.inventory?.laptop_code || "-"
-                : item.computer?.computer_code || "-";
+        const row = normalizeItem(item);
 
         const detailHref = `/pica-inspeksi/${item.id}`;
         const editHref = `/pica-inspeksi/${item.id}/edit`;
@@ -183,15 +212,15 @@ const populateDataTable = (rows) => {
 
         return [
             styledSpan(index + 1),
-            styledSpan(item.due_date),
-            styledSpan(item.inspector),
-            styledSpan(deviceCode),
-            styledSpan(item.findings_status),
-            styledSpan(item.findings),
-            renderImage(item.findings_image),
-            styledSpan(item.findings_action),
-            renderImage(item.action_image),
-            styledSpan(item.remark),
+            styledSpan(row.dueDate),
+            styledSpan(row.inspector),
+            styledSpan(row.deviceCode),
+            styledSpan(row.findings_status),
+            styledSpan(row.findings),
+            renderImage(row.findingsImage),
+            styledSpan(row.action),
+            renderImage(row.actionImage),
+            styledSpan(row.remark),
             `
         <a href="#" class="${navLinkClass(detailHref)} detail-link" data-id="${
                 item.id
@@ -246,21 +275,74 @@ const initDataTable = () => {
     });
 };
 
+// const fetchData = async () => {
+//     const device = selectedOption.value?.name;
+//     if (!device) return;
+
+//     const start = startDate.value ? customFormat(startDate.value) : null;
+//     const end = endDate.value ? customFormat(endDate.value) : null;
+
+//     const params = {
+//         device_type: device,
+//         site: props.site,
+//     };
+
+//     if (start && end) {
+//         params.startDate = start;
+//         params.endDate = end;
+//     }
+
+//     try {
+//         const response = await axios.get("/pica-inspeksi-by-device", {
+//             params,
+//         });
+
+//         data.value = response.data;
+//         renderTable.value = false;
+//         await nextTick();
+//         renderTable.value = true;
+//         await nextTick();
+//         initDataTable();
+//         populateDataTable(data.value);
+//     } catch (error) {
+//         console.error("Gagal mengambil data:", error);
+//         data.value = [];
+//         renderTable.value = false;
+//     }
+// };
+
 const fetchData = async () => {
     const device = selectedOption.value?.name;
     if (!device) return;
-
-    const start = startDate.value ? customFormat(startDate.value) : null;
-    const end = endDate.value ? customFormat(endDate.value) : null;
 
     const params = {
         device_type: device,
         site: props.site,
     };
 
-    if (start && end) {
-        params.startDate = start;
-        params.endDate = end;
+    /* =========================
+       FILTER STATUS (OPTIONAL)
+    ========================== */
+    if (
+        selectedOptionByStatus.value?.name === "Status Pica" &&
+        selectedOptionStatusPica.value?.name
+    ) {
+        params.status_pica = selectedOptionStatusPica.value.name;
+    }
+
+    /* =========================
+       FILTER DATE (OPTIONAL)
+    ========================== */
+    if (
+        selectedOptionByStatus.value?.name === "Date" &&
+        startDate.value
+    ) {
+        params.startDate = customFormat(startDate.value);
+
+        // endDate opsional → default hari ini
+        params.endDate = endDate.value
+            ? customFormat(endDate.value)
+            : moment().format("YYYY-MM-DD");
     }
 
     try {
@@ -268,19 +350,17 @@ const fetchData = async () => {
             params,
         });
 
-        data.value = response.data;
-        renderTable.value = false;
-        await nextTick();
-        renderTable.value = true;
+        data.value = response.data ?? [];
+
         await nextTick();
         initDataTable();
         populateDataTable(data.value);
     } catch (error) {
-        console.error("Gagal mengambil data:", error);
+        console.error("Fetch error:", error);
         data.value = [];
-        renderTable.value = false;
     }
 };
+
 
 onMounted(async () => {
     await nextTick();
@@ -288,9 +368,33 @@ onMounted(async () => {
     fetchData(); // Panggil walau startDate dan endDate belum diisi
 });
 
-watch([selectedOption, startDate, endDate], ([newOption, newStart, newEnd]) => {
-    if (newOption?.name) {
+/* ===============================
+   AUTO FETCH JIKA FILTER BERUBAH
+================================ */
+watch(
+    [
+        selectedOption, // device
+        selectedOptionByStatus, // Date / Status
+        selectedOptionStatusPica, // OPEN / PROGRESS / CLOSE
+        startDate,
+        endDate,
+    ],
+    () => {
         fetchData();
+    }
+);
+
+/* ===============================
+   RESET FILTER SAAT MODE BERUBAH
+================================ */
+watch(selectedOptionByStatus, (val) => {
+    if (val?.name === "Date") {
+        selectedOptionStatusPica.value = null;
+    }
+
+    if (val?.name === "Status Pica") {
+        startDate.value = null;
+        endDate.value = null;
     }
 });
 
@@ -418,10 +522,29 @@ const exportPdf = () => {
                                 class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease mb-4"
                             >
                                 <VueMultiselect
+                                    v-model="selectedOptionByStatus"
+                                    :options="[
+                                        { name: 'Date' },
+                                        { name: 'Status Pica' },
+                                    ]"
+                                    :multiple="false"
+                                    :close-on-select="true"
+                                    placeholder="Select One"
+                                    track-by="name"
+                                    label="name"
+                                    class="w-full"
+                                />
+                            </div>
+                            <div
+                                class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease mb-4"
+                            >
+                                <VueMultiselect
                                     v-model="selectedOption"
                                     :options="[
                                         { name: 'Laptop' },
                                         { name: 'Computer' },
+                                        { name: 'Mobile Tower' },
+                                        { name: 'Printer' },
                                     ]"
                                     :multiple="false"
                                     :close-on-select="true"
@@ -432,6 +555,29 @@ const exportPdf = () => {
                                 />
                             </div>
                             <div
+                                v-if="
+                                    selectedOptionByStatus?.name ===
+                                    'Status Pica'
+                                "
+                                class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease mb-4"
+                            >
+                                <VueMultiselect
+                                    v-model="selectedOptionStatusPica"
+                                    :options="[
+                                        { name: 'OPEN' },
+                                        { name: 'PROGRESS' },
+                                        { name: 'CLOSE' },
+                                    ]"
+                                    :multiple="false"
+                                    :close-on-select="true"
+                                    placeholder="Select Status"
+                                    track-by="name"
+                                    label="name"
+                                    class="w-full"
+                                />
+                            </div>
+                            <div
+                                v-if="selectedOptionByStatus?.name === 'Date'"
                                 class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease mb-4"
                             >
                                 <VueDatePicker
@@ -443,6 +589,7 @@ const exportPdf = () => {
                                 />
                             </div>
                             <div
+                                v-if="selectedOptionByStatus?.name === 'Date'"
                                 class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease mb-4"
                             >
                                 <VueDatePicker
@@ -484,7 +631,7 @@ const exportPdf = () => {
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0">
                                     <div class="p-6 text-gray-900">
-                                        <h4>Form Pica Inspeksi PC/Laptop</h4>
+                                        <h4>Form Pica Inspeksi {{ selectedOption.name }}</h4>
                                         <table
                                             ref="tableRef"
                                             id="tableData"

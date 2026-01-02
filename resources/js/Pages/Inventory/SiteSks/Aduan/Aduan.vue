@@ -666,7 +666,7 @@ const exportPdf = () => {
                                     New Data
                                 </Link>
 
-                                                                <div
+                                <div
                                     class="flex flex-wrap md:flex-nowrap gap-3 mt-4"
                                 >
                                     <div
@@ -760,6 +760,11 @@ const exportPdf = () => {
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
                                                         Category
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
+                                                        Root Cause
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
@@ -941,6 +946,20 @@ const exportPdf = () => {
                                                         >
                                                             {{
                                                                 aduans.category_name
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                aduans
+                                                                    .root_cause
+                                                                    ?.root_cause_problem ??
+                                                                "-"
                                                             }}
                                                         </span>
                                                     </td>

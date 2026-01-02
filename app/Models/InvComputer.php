@@ -40,4 +40,10 @@ class InvComputer extends Model
     {
         return $this->belongsTo(UserAll::class,foreignKey: 'user_alls_id');
     }
+
+    
+    public function inspeksi()
+    {
+        return $this->hasMany(InspeksiComputer::class, 'inv_computer_id', 'id');
+    }
 }

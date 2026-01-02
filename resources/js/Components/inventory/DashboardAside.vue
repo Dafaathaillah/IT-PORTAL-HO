@@ -6923,7 +6923,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -7815,7 +7817,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -8728,7 +8732,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -9632,7 +9638,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -10442,7 +10450,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -11346,7 +11356,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -12250,7 +12262,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -13154,7 +13168,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -14079,7 +14095,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -14979,7 +14997,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -15878,7 +15898,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -16777,7 +16799,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -17684,7 +17708,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -18584,7 +18610,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="
@@ -19484,7 +19512,9 @@ const toggleLevel3ScannerSks = () => {
                                             $page.props.auth.user.role ===
                                                 'ict_group_leader' ||
                                             $page.props.auth.user.role ===
-                                                'ict_developer'
+                                                'ict_developer' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_technician'
                                         "
                                         :href="route('aduan-ho.page')"
                                         :active="

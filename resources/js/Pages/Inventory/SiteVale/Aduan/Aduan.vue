@@ -769,6 +769,11 @@ const exportPdf = () => {
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
+                                                        Root Cause
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
                                                         Action Repair
                                                     </th>
                                                     <th
@@ -858,7 +863,7 @@ const exportPdf = () => {
                                                         >
                                                             Progress Aduan
                                                         </NavLinkCustom>
-                                                              <NavLinkCustom
+                                                        <NavLinkCustom
                                                             v-if="
                                                                 aduans.status ===
                                                                 'OPEN'
@@ -956,6 +961,20 @@ const exportPdf = () => {
                                                             class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                         >
                                                             {{
+                                                                aduans
+                                                                    .root_cause
+                                                                    ?.root_cause_problem ??
+                                                                "-"
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
                                                                 aduans.action_repair
                                                             }}
                                                         </span>
@@ -1028,7 +1047,7 @@ const exportPdf = () => {
                                                         >
                                                             {{
                                                                 convertToUserTime(
-                                                                aduans.start_response
+                                                                    aduans.start_response
                                                                 )
                                                             }}
                                                         </p>
@@ -1052,7 +1071,7 @@ const exportPdf = () => {
                                                         >
                                                             {{
                                                                 convertToUserTime(
-                                                                aduans.start_progress
+                                                                    aduans.start_progress
                                                                 )
                                                             }}
                                                         </span>
@@ -1065,7 +1084,7 @@ const exportPdf = () => {
                                                         >
                                                             {{
                                                                 convertToUserTime(
-                                                                aduans.end_progress
+                                                                    aduans.end_progress
                                                                 )
                                                             }}
                                                         </span>
