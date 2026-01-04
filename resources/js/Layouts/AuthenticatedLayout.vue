@@ -57,6 +57,14 @@ const notifikasiList = ref([]);
 
 const checkAduan = async () => {
     try {
+
+        const user = page.props.auth?.user;
+
+        if (!user || !user.site) {
+            console.warn("User or site not available yet");
+            return;
+        }
+
         const userSiteUpper = computed(() => page.props.auth.user.site);
         const apiUrl = `/itportal/admin/check-aduan/${userSite.value}`; // Tambahkan site ke URL
         const response = await fetch(apiUrl);
