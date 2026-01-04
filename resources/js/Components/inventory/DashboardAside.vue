@@ -7442,6 +7442,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerBa.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerBa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -7476,12 +7497,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.ba.index'
+                                                'inspection-scheduler-all.ba.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.ba.index'
+                                                'inspection-scheduler-all.ba.index'
                                             )
                                         "
                                     >
@@ -7494,7 +7515,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartBa.inspeksi')"
+                                        :active="
+                                            route().current('chartBa.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -7520,31 +7560,6 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="
-                                            route(
-                                                'inspection-scheduler-computer.ba.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.ba.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
                                         :href="route('inspeksiKomputerBa.page')"
                                         :active="
                                             route().current(
@@ -7562,6 +7577,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerBa.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerBa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterBa.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterBa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -8315,6 +8374,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerMifa.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -8349,12 +8429,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.mifa.index'
+                                                'inspection-scheduler-all.mifa.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.mifa.index'
+                                                'inspection-scheduler-all.mifa.index'
                                             )
                                         "
                                     >
@@ -8367,7 +8447,28 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartMifa.inspeksi')"
+                                        :active="
+                                            route().current(
+                                                'chartMifa.inspeksi'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -8394,31 +8495,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.mifa.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.mifa.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerMifa.page')
                                         "
                                         :active="
@@ -8437,6 +8513,54 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspeksiMobileTowerMifa.page'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiPrinterMifa.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterMifa.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -9191,6 +9315,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerMhu.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerMhu.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -9225,12 +9370,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.mhu.index'
+                                                'inspection-scheduler-all.mhu.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.mhu.index'
+                                                'inspection-scheduler-all.mhu.index'
                                             )
                                         "
                                     >
@@ -9243,7 +9388,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartMhu.inspeksi')"
+                                        :active="
+                                            route().current('chartMhu.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -9270,31 +9434,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.mhu.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.mhu.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerMhu.page')
                                         "
                                         :active="
@@ -9313,6 +9452,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerMhu.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerMhu.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterMhu.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterMhu.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -10069,6 +10252,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerAdw.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerAdw.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -10103,12 +10307,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.adw.index'
+                                                'inspection-scheduler-all.adw.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.adw.index'
+                                                'inspection-scheduler-all.adw.index'
                                             )
                                         "
                                     >
@@ -10121,7 +10325,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartAdw.inspeksi')"
+                                        :active="
+                                            route().current('chartAdw.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -10148,31 +10371,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.adw.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.adw.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerWARA.page')
                                         "
                                         :active="
@@ -10191,6 +10389,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerAdw.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerAdw.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterAdw.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterAdw.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -10843,6 +11085,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerAmi.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerAmi.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -10877,12 +11140,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.ami.index'
+                                                'inspection-scheduler-all.ami.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.ami.index'
+                                                'inspection-scheduler-all.ami.index'
                                             )
                                         "
                                     >
@@ -10895,7 +11158,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartAmi.inspeksi')"
+                                        :active="
+                                            route().current('chartAmi.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -10922,31 +11204,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.ami.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.ami.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerAmi.page')
                                         "
                                         :active="
@@ -10965,6 +11222,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerAmi.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerAmi.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterAmi.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterAmi.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -11719,6 +12020,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerPik.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerPik.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -11753,12 +12075,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.pik.index'
+                                                'inspection-scheduler-all.pik.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.pik.index'
+                                                'inspection-scheduler-all.pik.index'
                                             )
                                         "
                                     >
@@ -11771,7 +12093,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartPik.inspeksi')"
+                                        :active="
+                                            route().current('chartPik.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -11798,31 +12139,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.pik.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.pik.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerPik.page')
                                         "
                                         :active="
@@ -11841,6 +12157,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerPik.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerPik.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterPik.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterPik.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -12595,6 +12955,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerBge.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerBge.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -12629,12 +13010,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.bge.index'
+                                                'inspection-scheduler-all.bge.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.bge.index'
+                                                'inspection-scheduler-all.bge.index'
                                             )
                                         "
                                     >
@@ -12647,7 +13028,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartBge.inspeksi')"
+                                        :active="
+                                            route().current('chartBge.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -12674,31 +13074,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.bge.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.bge.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerBge.page')
                                         "
                                         :active="
@@ -12717,6 +13092,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerBge.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerBge.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterBge.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterBge.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -13589,9 +14008,9 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('chart.inspeksi')"
+                                        :href="route('chartBib.inspeksi')"
                                         :active="
-                                            route().current('chart.inspeksi')
+                                            route().current('chartBib.inspeksi')
                                         "
                                     >
                                         <div
@@ -13653,11 +14072,11 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route('inspeksiMobileTower.page')
+                                            route('inspeksiMobileTowerBib.page')
                                         "
                                         :active="
                                             route().current(
-                                                'inspeksiMobileTower.page'
+                                                'inspeksiMobileTowerBib.page'
                                             )
                                         "
                                     >
@@ -13675,10 +14094,10 @@ const toggleLevel3ScannerSks = () => {
                                     </NavLink>
 
                                     <NavLink
-                                        :href="route('inspeksiPrinter.page')"
+                                        :href="route('inspeksiPrinterBib.page')"
                                         :active="
                                             route().current(
-                                                'inspeksiPrinter.page'
+                                                'inspeksiPrinterBib.page'
                                             )
                                         "
                                     >
@@ -14442,6 +14861,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerIpt.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerIpt.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -14476,12 +14916,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.ipt.index'
+                                                'inspection-scheduler-all.ipt.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.ipt.index'
+                                                'inspection-scheduler-all.ipt.index'
                                             )
                                         "
                                     >
@@ -14494,7 +14934,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartIpt.inspeksi')"
+                                        :active="
+                                            route().current('chartIpt.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -14521,31 +14980,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.ipt.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.ipt.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerIpt.page')
                                         "
                                         :active="
@@ -14564,6 +14998,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerIpt.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerIpt.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterIpt.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterIpt.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -15313,6 +15791,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerMlp.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerMlp.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -15347,12 +15846,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.mlp.index'
+                                                'inspection-scheduler-all.mlp.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.mlp.index'
+                                                'inspection-scheduler-all.mlp.index'
                                             )
                                         "
                                     >
@@ -15365,7 +15864,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartMlp.inspeksi')"
+                                        :active="
+                                            route().current('chartMlp.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -15392,31 +15910,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.mlp.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.mlp.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerMlp.page')
                                         "
                                         :active="
@@ -15435,6 +15928,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerMlp.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerMlp.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterMlp.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterMlp.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -16184,6 +16721,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerMip.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerMip.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -16218,12 +16776,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.mip.index'
+                                                'inspection-scheduler-all.mip.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.mip.index'
+                                                'inspection-scheduler-all.mip.index'
                                             )
                                         "
                                     >
@@ -16236,7 +16794,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartMip.inspeksi')"
+                                        :active="
+                                            route().current('chartMip.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -16263,31 +16840,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.mip.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.mip.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerMip.page')
                                         "
                                         :active="
@@ -16306,6 +16858,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerMip.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerMip.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterMip.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterMip.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -17057,6 +17653,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerVib.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerVib.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -17091,12 +17708,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.vib.index'
+                                                'inspection-scheduler-all.vib.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.vib.index'
+                                                'inspection-scheduler-all.vib.index'
                                             )
                                         "
                                     >
@@ -17109,7 +17726,28 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartVale.inspeksi')"
+                                        :active="
+                                            route().current(
+                                                'chartVale.inspeksi'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -17136,31 +17774,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.vib.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.vib.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerVale.page')
                                         "
                                         :active="
@@ -17179,6 +17792,54 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route(
+                                                'inspeksiMobileTowerVale.page'
+                                            )
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerVale.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiPrinterVale.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterVale.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -17929,6 +18590,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerSbs.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerSbs.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -17963,12 +18645,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.sbs.index'
+                                                'inspection-scheduler-all.sbs.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.sbs.index'
+                                                'inspection-scheduler-all.sbs.index'
                                             )
                                         "
                                     >
@@ -17981,7 +18663,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartSbs.inspeksi')"
+                                        :active="
+                                            route().current('chartSbs.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -18008,31 +18709,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.sbs.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.sbs.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerSbs.page')
                                         "
                                         :active="
@@ -18051,6 +18727,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerSbs.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerSbs.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterSbs.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterSbs.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 
@@ -18801,6 +19521,27 @@ const toggleLevel3ScannerSks = () => {
                                             >
                                         </NavLink>
                                     </li>
+
+                                    <NavLink
+                                        :href="route('mobileTowerSks.page')"
+                                        :active="
+                                            route().current(
+                                                'mobileTowerSks.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Mobile Tower</span
+                                        >
+                                    </NavLink>
                                 </ul>
 
                                 <div
@@ -18835,12 +19576,12 @@ const toggleLevel3ScannerSks = () => {
                                     <NavLink
                                         :href="
                                             route(
-                                                'inspection-scheduler-laptop.sks.index'
+                                                'inspection-scheduler-all.sks.index'
                                             )
                                         "
                                         :active="
                                             route().current(
-                                                'inspection-scheduler-laptop.sks.index'
+                                                'inspection-scheduler-all.sks.index'
                                             )
                                         "
                                     >
@@ -18853,7 +19594,26 @@ const toggleLevel3ScannerSks = () => {
                                         </div>
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Laptop</span
+                                            >Jadwal Inspeksi</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('chartSks.inspeksi')"
+                                        :active="
+                                            route().current('chartSks.inspeksi')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Chart Inspeksi</span
                                         >
                                     </NavLink>
 
@@ -18880,31 +19640,6 @@ const toggleLevel3ScannerSks = () => {
 
                                     <NavLink
                                         :href="
-                                            route(
-                                                'inspection-scheduler-computer.sks.index'
-                                            )
-                                        "
-                                        :active="
-                                            route().current(
-                                                'inspection-scheduler-computer.sks.index'
-                                            )
-                                        "
-                                    >
-                                        <div
-                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
-                                        >
-                                            <i
-                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-calendar-week"
-                                            ></i>
-                                        </div>
-                                        <span
-                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
-                                            >Jadwal Komputer</span
-                                        >
-                                    </NavLink>
-
-                                    <NavLink
-                                        :href="
                                             route('inspeksiKomputerSks.page')
                                         "
                                         :active="
@@ -18923,6 +19658,50 @@ const toggleLevel3ScannerSks = () => {
                                         <span
                                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
                                             >Inspeksi Komputer</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="
+                                            route('inspeksiMobileTowerSks.page')
+                                        "
+                                        :active="
+                                            route().current(
+                                                'inspeksiMobileTowerSks.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Mobile Tower</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        :href="route('inspeksiPrinterSks.page')"
+                                        :active="
+                                            route().current(
+                                                'inspeksiPrinterSks.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi Printer</span
                                         >
                                     </NavLink>
 

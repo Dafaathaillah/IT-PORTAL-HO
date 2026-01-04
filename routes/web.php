@@ -23,7 +23,21 @@ use App\Http\Controllers\AduanWARAController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChartInspeksiAdwController;
+use App\Http\Controllers\ChartInspeksiAmiController;
+use App\Http\Controllers\ChartInspeksiBaController;
+use App\Http\Controllers\ChartInspeksiBgeController;
+use App\Http\Controllers\ChartInspeksiBibController;
 use App\Http\Controllers\ChartInspeksiController;
+use App\Http\Controllers\ChartInspeksiIptController;
+use App\Http\Controllers\ChartInspeksiMhuController;
+use App\Http\Controllers\ChartInspeksiMifaController;
+use App\Http\Controllers\ChartInspeksiMipController;
+use App\Http\Controllers\ChartInspeksiMlpController;
+use App\Http\Controllers\ChartInspeksiPikController;
+use App\Http\Controllers\ChartInspeksiSbsController;
+use App\Http\Controllers\ChartInspeksiSksController;
+use App\Http\Controllers\ChartInspeksiValeController;
 use App\Http\Controllers\DailyJobController;
 use App\Http\Controllers\DailyJobMonitorController;
 use App\Http\Controllers\DashboardAmiController;
@@ -85,8 +99,36 @@ use App\Http\Controllers\InspeksiLaptopPikController;
 use App\Http\Controllers\InspeksiLaptopSbsController;
 use App\Http\Controllers\InspeksiLaptopSksController;
 use App\Http\Controllers\InspeksiLaptopValeController;
+use App\Http\Controllers\InspeksiMobileTowerAdwController;
+use App\Http\Controllers\InspeksiMobileTowerAmiController;
+use App\Http\Controllers\InspeksiMobileTowerBaController;
+use App\Http\Controllers\InspeksiMobileTowerBgeController;
+use App\Http\Controllers\InspeksiMobileTowerBibController;
 use App\Http\Controllers\InspeksiMobileTowerController;
+use App\Http\Controllers\InspeksiMobileTowerIptController;
+use App\Http\Controllers\InspeksiMobileTowerMhuController;
+use App\Http\Controllers\InspeksiMobileTowerMifaController;
+use App\Http\Controllers\InspeksiMobileTowerMipController;
+use App\Http\Controllers\InspeksiMobileTowerMlpController;
+use App\Http\Controllers\InspeksiMobileTowerPikController;
+use App\Http\Controllers\InspeksiMobileTowerSbsController;
+use App\Http\Controllers\InspeksiMobileTowerSksController;
+use App\Http\Controllers\InspeksiMobileTowerValeController;
+use App\Http\Controllers\InspeksiPrinterAdwController;
+use App\Http\Controllers\InspeksiPrinterAmiController;
+use App\Http\Controllers\InspeksiPrinterBaController;
+use App\Http\Controllers\InspeksiPrinterBgeController;
+use App\Http\Controllers\InspeksiPrinterBibController;
 use App\Http\Controllers\InspeksiPrinterController;
+use App\Http\Controllers\InspeksiPrinterIptController;
+use App\Http\Controllers\InspeksiPrinterMhuController;
+use App\Http\Controllers\InspeksiPrinterMifaController;
+use App\Http\Controllers\InspeksiPrinterMipController;
+use App\Http\Controllers\InspeksiPrinterMlpController;
+use App\Http\Controllers\InspeksiPrinterPikController;
+use App\Http\Controllers\InspeksiPrinterSbsController;
+use App\Http\Controllers\InspeksiPrinterSksController;
+use App\Http\Controllers\InspeksiPrinterValeController;
 use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApBgeController;
@@ -1069,6 +1111,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-ba-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBa');
             Route::post('/kpi-aduan-analysis-ba-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBaDetail');
 
+            Route::get('/chart-inspeksi-ba', action: [ChartInspeksiBaController::class, 'index'])->name('chartBa.inspeksi');
+            Route::post('/chart-inspeksi-show-ba', [ChartInspeksiBaController::class, 'countKpi'])->name('chartBa.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-ba', [ChartInspeksiBaController::class, 'getDataFilter'])->name('chartBa.inspeksi.data.filter');
+
             Route::get('/mobile-tower-ba', [InvMobileTowerBaController::class, 'index'])->name('mobileTowerBa.page');
             Route::get('/mobile-tower-ba/create', [InvMobileTowerBaController::class, 'create'])->name('mobileTowerBa.create');
             Route::post('/mobile-tower-ba/create', [InvMobileTowerBaController::class, 'store'])->name('mobileTowerBa.store');
@@ -1178,6 +1224,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-mifa', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMifa');
             Route::post('/kpi-aduan-analysis-mifa-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMifa');
             Route::post('/kpi-aduan-analysis-mifa-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMifaDetail');
+
+            Route::get('/chart-inspeksi-mifa', action: [ChartInspeksiMifaController::class, 'index'])->name('chartMifa.inspeksi');
+            Route::post('/chart-inspeksi-show-mifa', [ChartInspeksiMifaController::class, 'countKpi'])->name('chartMifa.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-mifa', [ChartInspeksiMifaController::class, 'getDataFilter'])->name('chartMifa.inspeksi.data.filter');
 
             Route::get('/mobile-tower-mifa', [InvMobileTowerMifaController::class, 'index'])->name('mobileTowerMifa.page');
             Route::get('/mobile-tower-mifa/create', [InvMobileTowerMifaController::class, 'create'])->name('mobileTowerMifa.create');
@@ -1289,6 +1339,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-mhu-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMhu');
             Route::post('/kpi-aduan-analysis-mhu-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMhuDetail');
 
+            Route::get('/chart-inspeksi-mhu', action: [ChartInspeksiMhuController::class, 'index'])->name('chartMhu.inspeksi');
+            Route::post('/chart-inspeksi-show-mhu', [ChartInspeksiMhuController::class, 'countKpi'])->name('chartMhu.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-mhu', [ChartInspeksiMhuController::class, 'getDataFilter'])->name('chartMhu.inspeksi.data.filter');
+
             Route::get('/mobile-tower-mhu', [InvMobileTowerMhuController::class, 'index'])->name('mobileTowerMhu.page');
             Route::get('/mobile-tower-mhu/create', [InvMobileTowerMhuController::class, 'create'])->name('mobileTowerMhu.create');
             Route::post('/mobile-tower-mhu/create', [InvMobileTowerMhuController::class, 'store'])->name('mobileTowerMhu.store');
@@ -1398,6 +1452,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-ami', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisAmi');
             Route::post('/kpi-aduan-analysis-ami-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowAmi');
             Route::post('/kpi-aduan-analysis-ami-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisAmiDetail');
+
+            Route::get('/chart-inspeksi-ami', action: [ChartInspeksiAmiController::class, 'index'])->name('chartAmi.inspeksi');
+            Route::post('/chart-inspeksi-show-ami', [ChartInspeksiAmiController::class, 'countKpi'])->name('chartAmi.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-ami', [ChartInspeksiAmiController::class, 'getDataFilter'])->name('chartAmi.inspeksi.data.filter');
 
             Route::get('/mobile-tower-ami', [InvMobileTowerAmiController::class, 'index'])->name('mobileTowerAmi.page');
             Route::get('/mobile-tower-ami/create', [InvMobileTowerAmiController::class, 'create'])->name('mobileTowerAmi.create');
@@ -1509,6 +1567,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-pik-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowPik');
             Route::post('/kpi-aduan-analysis-pik-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisPikDetail');
 
+            Route::get('/chart-inspeksi-pik', action: [ChartInspeksiPikController::class, 'index'])->name('chartPik.inspeksi');
+            Route::post('/chart-inspeksi-show-pik', [ChartInspeksiPikController::class, 'countKpi'])->name('chartPik.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-pik', [ChartInspeksiPikController::class, 'getDataFilter'])->name('chartPik.inspeksi.data.filter');
+
             Route::get('/mobile-tower-pik', [InvMobileTowerPikController::class, 'index'])->name('mobileTowerPik.page');
             Route::get('/mobile-tower-pik/create', [InvMobileTowerPikController::class, 'create'])->name('mobileTowerPik.create');
             Route::post('/mobile-tower-pik/create', [InvMobileTowerPikController::class, 'store'])->name('mobileTowerPik.store');
@@ -1618,6 +1680,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-bge', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisBge');
             Route::post('/kpi-aduan-analysis-bge-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBge');
             Route::post('/kpi-aduan-analysis-bge-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBgeDetail');
+
+            Route::get('/chart-inspeksi-bge', action: [ChartInspeksiBgeController::class, 'index'])->name('chartBge.inspeksi');
+            Route::post('/chart-inspeksi-show-bge', [ChartInspeksiBgeController::class, 'countKpi'])->name('chartBge.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-bge', [ChartInspeksiBgeController::class, 'getDataFilter'])->name('chartBge.inspeksi.data.filter');
 
             Route::get('/mobile-tower-bge', [InvMobileTowerBgeController::class, 'index'])->name('mobileTowerBge.page');
             Route::get('/mobile-tower-bge/create', [InvMobileTowerBgeController::class, 'create'])->name('mobileTowerBge.create');
@@ -1729,6 +1795,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-bib-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowBib');
             Route::post('/kpi-aduan-analysis-bib-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisBibDetail');
 
+            Route::get('/chart-inspeksi-bib', action: [ChartInspeksiBibController::class, 'index'])->name('chartBib.inspeksi');
+            Route::post('/chart-inspeksi-show-bib', [ChartInspeksiBibController::class, 'countKpi'])->name('chartBib.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-bib', [ChartInspeksiBibController::class, 'getDataFilter'])->name('chartBib.inspeksi.data.filter');
+
             Route::get('/mobile-tower-bib', [InvMobileTowerBibController::class, 'index'])->name('mobileTowerBib.page');
             Route::get('/mobile-tower-bib/create', [InvMobileTowerBibController::class, 'create'])->name('mobileTowerBib.create');
             Route::post('/mobile-tower-bib/create', [InvMobileTowerBibController::class, 'store'])->name('mobileTowerBib.store');
@@ -1838,6 +1908,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-ipt', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisIpt');
             Route::post('/kpi-aduan-analysis-ipt-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowIpt');
             Route::post('/kpi-aduan-analysis-ipt-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisIptDetail');
+
+            Route::get('/chart-inspeksi-ipt', action: [ChartInspeksiIptController::class, 'index'])->name('chartIpt.inspeksi');
+            Route::post('/chart-inspeksi-show-ipt', [ChartInspeksiIptController::class, 'countKpi'])->name('chartIpt.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-ipt', [ChartInspeksiIptController::class, 'getDataFilter'])->name('chartIpt.inspeksi.data.filter');
 
             Route::get('/mobile-tower-ipt', [InvMobileTowerIptController::class, 'index'])->name('mobileTowerIpt.page');
             Route::get('/mobile-tower-ipt/create', [InvMobileTowerIptController::class, 'create'])->name('mobileTowerIpt.create');
@@ -1949,6 +2023,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-mlp-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMlp');
             Route::post('/kpi-aduan-analysis-mlp-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMlpDetail');
 
+            Route::get('/chart-inspeksi-mlp', action: [ChartInspeksiMlpController::class, 'index'])->name('chartMlp.inspeksi');
+            Route::post('/chart-inspeksi-show-mlp', [ChartInspeksiMlpController::class, 'countKpi'])->name('chartMlp.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-mlp', [ChartInspeksiMlpController::class, 'getDataFilter'])->name('chartMlp.inspeksi.data.filter');
+
             Route::get('/mobile-tower-mlp', [InvMobileTowerMlpController::class, 'index'])->name('mobileTowerMlp.page');
             Route::get('/mobile-tower-mlp/create', [InvMobileTowerMlpController::class, 'create'])->name('mobileTowerMlp.create');
             Route::post('/mobile-tower-mlp/create', [InvMobileTowerMlpController::class, 'store'])->name('mobileTowerMlp.store');
@@ -2058,6 +2136,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-mip', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMip');
             Route::post('/kpi-aduan-analysis-mip-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMip');
             Route::post('/kpi-aduan-analysis-mip-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMipDetail');
+
+            Route::get('/chart-inspeksi-mip', action: [ChartInspeksiMipController::class, 'index'])->name('chartMip.inspeksi');
+            Route::post('/chart-inspeksi-show-mip', [ChartInspeksiMipController::class, 'countKpi'])->name('chartMip.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-mip', [ChartInspeksiMipController::class, 'getDataFilter'])->name('chartMip.inspeksi.data.filter');
 
             Route::get('/mobile-tower-mip', [InvMobileTowerMipController::class, 'index'])->name('mobileTowerMip.page');
             Route::get('/mobile-tower-mip/create', [InvMobileTowerMipController::class, 'create'])->name('mobileTowerMip.create');
@@ -2169,6 +2251,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-vib-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowVib');
             Route::post('/kpi-aduan-analysis-vib-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisVibDetail');
 
+            Route::get('/chart-inspeksi-vale', action: [ChartInspeksiValeController::class, 'index'])->name('chartVale.inspeksi');
+            Route::post('/chart-inspeksi-show-vale', [ChartInspeksiValeController::class, 'countKpi'])->name('chartVale.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-vale', [ChartInspeksiValeController::class, 'getDataFilter'])->name('chartVale.inspeksi.data.filter');
+
             Route::get('/mobile-tower-vib', [InvMobileTowerVibController::class, 'index'])->name('mobileTowerVib.page');
             Route::get('/mobile-tower-vib/create', [InvMobileTowerVibController::class, 'create'])->name('mobileTowerVib.create');
             Route::post('/mobile-tower-vib/create', [InvMobileTowerVibController::class, 'store'])->name('mobileTowerVib.store');
@@ -2278,6 +2364,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-sbs', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisSbs');
             Route::post('/kpi-aduan-analysis-sbs-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowSbs');
             Route::post('/kpi-aduan-analysis-sbs-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisSbsDetail');
+
+            Route::get('/chart-inspeksi-sbs', action: [ChartInspeksiSbsController::class, 'index'])->name('chartSbs.inspeksi');
+            Route::post('/chart-inspeksi-show-sbs', [ChartInspeksiSbsController::class, 'countKpi'])->name('chartSbs.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-sbs', [ChartInspeksiSbsController::class, 'getDataFilter'])->name('chartSbs.inspeksi.data.filter');
 
             Route::get('/mobile-tower-sbs', [InvMobileTowerSbsController::class, 'index'])->name('mobileTowerSbs.page');
             Route::get('/mobile-tower-sbs/create', [InvMobileTowerSbsController::class, 'create'])->name('mobileTowerSbs.create');
@@ -2389,6 +2479,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/kpi-aduan-analysis-sks-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowSks');
             Route::post('/kpi-aduan-analysis-sks-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisSksDetail');
 
+            Route::get('/chart-inspeksi-sks', action: [ChartInspeksiSksController::class, 'index'])->name('chartSks.inspeksi');
+            Route::post('/chart-inspeksi-show-sks', [ChartInspeksiSksController::class, 'countKpi'])->name('chartSks.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-sks', [ChartInspeksiSksController::class, 'getDataFilter'])->name('chartSks.inspeksi.data.filter');
+
             Route::get('/mobile-tower-sks', [InvMobileTowerSksController::class, 'index'])->name('mobileTowerSks.page');
             Route::get('/mobile-tower-sks/create', [InvMobileTowerSksController::class, 'create'])->name('mobileTowerSks.create');
             Route::post('/mobile-tower-sks/create', [InvMobileTowerSksController::class, 'store'])->name('mobileTowerSks.store');
@@ -2498,6 +2592,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-adw', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisAdw');
             Route::post('/kpi-aduan-analysis-adw-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowAdw');
             Route::post('/kpi-aduan-analysis-adw-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisAdwDetail');
+
+            Route::get('/chart-inspeksi-adw', action: [ChartInspeksiAdwController::class, 'index'])->name('chartAdw.inspeksi');
+            Route::post('/chart-inspeksi-show-adw', [ChartInspeksiAdwController::class, 'countKpi'])->name('chartAdw.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-adw', [ChartInspeksiAdwController::class, 'getDataFilter'])->name('chartAdw.inspeksi.data.filter');
 
             Route::get('/mobile-tower-adw', [InvMobileTowerAdwController::class, 'index'])->name('mobileTowerAdw.page');
             Route::get('/mobile-tower-adw/create', [InvMobileTowerAdwController::class, 'create'])->name('mobileTowerAdw.create');
@@ -2681,6 +2779,24 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-ba/{id}/delete', [InspeksiComputerBaController::class, 'destroy'])->name('inspeksiKomputerBa.delete');
                 Route::post('/inspeksi-komputer-ba/approval', [InspeksiComputerBaController::class, 'approval'])->name('inspeksiKomputerBa.approval');
 
+                Route::get('inspeksi-mobile-tower-ba', [InspeksiMobileTowerBaController::class, 'index'])->name('inspeksiMobileTowerBa.page');
+                Route::get('inspeksi-mobile-tower-ba/{id}/process', [InspeksiMobileTowerBaController::class, 'process'])->name('inspeksiMobileTowerBa.process');
+                Route::post('inspeksi-mobile-tower-ba/process', [InspeksiMobileTowerBaController::class, 'store'])->name('inspeksiMobileTowerBa.store');
+                Route::post('inspeksi-mobile-tower-ba/approval', [InspeksiMobileTowerBaController::class, 'approval'])->name('inspeksiMobileTowerBa.approval');
+                Route::get('inspeksi-mobile-tower-ba/{id}/edit', [InspeksiMobileTowerBaController::class, 'edit'])->name('inspeksiMobileTowerBa.edit');
+                Route::post('inspeksi-mobile-tower-ba/update', [InspeksiMobileTowerBaController::class, 'update'])->name('inspeksiMobileTowerBa.update');
+                Route::get('/inspeksi-mobile-tower-ba/{id}/detail', [InspeksiMobileTowerBaController::class, 'detail'])->name('inspeksiMobileTowerBa.detail');
+                Route::delete('inspeksi-mobile-tower-ba/{id}/delete', [InspeksiMobileTowerBaController::class, 'destroy'])->name('inspeksiMobileTowerBa.delete');
+
+                Route::get('inspeksi-printer-ba', [InspeksiPrinterBaController::class, 'index'])->name('inspeksiPrinterBa.page');
+                Route::get('inspeksi-printer-ba/{id}/process', [InspeksiPrinterBaController::class, 'process'])->name('inspeksiPrinterBa.process');
+                Route::post('inspeksi-printer-ba/process', [InspeksiPrinterBaController::class, 'store'])->name('inspeksiPrinterBa.store');
+                Route::post('inspeksi-printer-ba/approval', [InspeksiPrinterBaController::class, 'approval'])->name('inspeksiPrinterBa.approval');
+                Route::get('inspeksi-printer-ba/{id}/edit', [InspeksiPrinterBaController::class, 'edit'])->name('inspeksiPrinterBa.edit');
+                Route::post('inspeksi-printer-ba/update', [InspeksiPrinterBaController::class, 'update'])->name('inspeksiPrinterBa.update');
+                Route::get('/inspeksi-printer-ba/{id}/detail', [InspeksiPrinterBaController::class, 'detail'])->name('inspeksiPrinterBa.detail');
+                Route::delete('inspeksi-printer-ba/{id}/delete', [InspeksiPrinterBaController::class, 'destroy'])->name('inspeksiPrinterBa.delete');
+
                 Route::get('/pengguna-ba', [UserAllBaController::class, 'index'])->name('penggunaBa.page');
                 Route::get('/pengguna-ba/create', [UserAllBaController::class, 'create'])->name('penggunaBa.create');
                 Route::post('/pengguna-ba/create', [UserAllBaController::class, 'store'])->name('penggunaBa.store');
@@ -2720,6 +2836,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-mifa/{id}/update', [InspeksiComputerMifaController::class, 'update'])->name('inspeksiKomputerMifa.update');
                 Route::get('/inspeksi-komputer-mifa/{id}/detail', [InspeksiComputerMifaController::class, 'detail'])->name('inspeksiKomputerMifa.detail');
                 Route::delete('inspeksi-komputer-mifa/{id}/delete', [InspeksiComputerMifaController::class, 'destroy'])->name('inspeksiKomputerMifa.delete');
+
+                Route::get('inspeksi-mobile-tower-mifa', [InspeksiMobileTowerMifaController::class, 'index'])->name('inspeksiMobileTowerMifa.page');
+                Route::get('inspeksi-mobile-tower-mifa/{id}/process', [InspeksiMobileTowerMifaController::class, 'process'])->name('inspeksiMobileTowerMifa.process');
+                Route::post('inspeksi-mobile-tower-mifa/process', [InspeksiMobileTowerMifaController::class, 'store'])->name('inspeksiMobileTowerMifa.store');
+                Route::post('inspeksi-mobile-tower-mifa/approval', [InspeksiMobileTowerMifaController::class, 'approval'])->name('inspeksiMobileTowerMifa.approval');
+                Route::get('inspeksi-mobile-tower-mifa/{id}/edit', [InspeksiMobileTowerMifaController::class, 'edit'])->name('inspeksiMobileTowerMifa.edit');
+                Route::post('inspeksi-mobile-tower-mifa/update', [InspeksiMobileTowerMifaController::class, 'update'])->name('inspeksiMobileTowerMifa.update');
+                Route::get('/inspeksi-mobile-tower-mifa/{id}/detail', [InspeksiMobileTowerMifaController::class, 'detail'])->name('inspeksiMobileTowerMifa.detail');
+                Route::delete('inspeksi-mobile-tower-mifa/{id}/delete', [InspeksiMobileTowerMifaController::class, 'destroy'])->name('inspeksiMobileTowerMifa.delete');
+
+                Route::get('inspeksi-printer-mifa', [InspeksiPrinterMifaController::class, 'index'])->name('inspeksiPrinterMifa.page');
+                Route::get('inspeksi-printer-mifa/{id}/process', [InspeksiPrinterMifaController::class, 'process'])->name('inspeksiPrinterMifa.process');
+                Route::post('inspeksi-printer-mifa/process', [InspeksiPrinterMifaController::class, 'store'])->name('inspeksiPrinterMifa.store');
+                Route::post('inspeksi-printer-mifa/approval', [InspeksiPrinterMifaController::class, 'approval'])->name('inspeksiPrinterMifa.approval');
+                Route::get('inspeksi-printer-mifa/{id}/edit', [InspeksiPrinterMifaController::class, 'edit'])->name('inspeksiPrinterMifa.edit');
+                Route::post('inspeksi-printer-mifa/update', [InspeksiPrinterMifaController::class, 'update'])->name('inspeksiPrinterMifa.update');
+                Route::get('/inspeksi-printer-mifa/{id}/detail', [InspeksiPrinterMifaController::class, 'detail'])->name('inspeksiPrinterMifa.detail');
+                Route::delete('inspeksi-printer-mifa/{id}/delete', [InspeksiPrinterMifaController::class, 'destroy'])->name('inspeksiPrinterMifa.delete');
 
                 Route::get('/pengguna-mifa', [UserAllMifaController::class, 'index'])->name('penggunaMifa.page');
                 Route::get('/pengguna-mifa/create', [UserAllMifaController::class, 'create'])->name('penggunaMifa.create');
@@ -2761,6 +2895,24 @@ Route::middleware('auth')->group(function () {
                 Route::get('/inspeksi-komputer-mhu/{id}/detail', [InspeksiComputerMhuController::class, 'detail'])->name('inspeksiKomputerMhu.detail');
                 Route::delete('inspeksi-komputer-mhu/{id}/delete', [InspeksiComputerMhuController::class, 'destroy'])->name('inspeksiKomputerMhu.delete');
 
+                Route::get('inspeksi-mobile-tower-mhu', [InspeksiMobileTowerMhuController::class, 'index'])->name('inspeksiMobileTowerMhu.page');
+                Route::get('inspeksi-mobile-tower-mhu/{id}/process', [InspeksiMobileTowerMhuController::class, 'process'])->name('inspeksiMobileTowerMhu.process');
+                Route::post('inspeksi-mobile-tower-mhu/process', [InspeksiMobileTowerMhuController::class, 'store'])->name('inspeksiMobileTowerMhu.store');
+                Route::post('inspeksi-mobile-tower-mhu/approval', [InspeksiMobileTowerMhuController::class, 'approval'])->name('inspeksiMobileTowerMhu.approval');
+                Route::get('inspeksi-mobile-tower-mhu/{id}/edit', [InspeksiMobileTowerMhuController::class, 'edit'])->name('inspeksiMobileTowerMhu.edit');
+                Route::post('inspeksi-mobile-tower-mhu/update', [InspeksiMobileTowerMhuController::class, 'update'])->name('inspeksiMobileTowerMhu.update');
+                Route::get('/inspeksi-mobile-tower-mhu/{id}/detail', [InspeksiMobileTowerMhuController::class, 'detail'])->name('inspeksiMobileTowerMhu.detail');
+                Route::delete('inspeksi-mobile-tower-mhu/{id}/delete', [InspeksiMobileTowerMhuController::class, 'destroy'])->name('inspeksiMobileTowerMhu.delete');
+
+                Route::get('inspeksi-printer-mhu', [InspeksiPrinterMhuController::class, 'index'])->name('inspeksiPrinterMhu.page');
+                Route::get('inspeksi-printer-mhu/{id}/process', [InspeksiPrinterMhuController::class, 'process'])->name('inspeksiPrinterMhu.process');
+                Route::post('inspeksi-printer-mhu/process', [InspeksiPrinterMhuController::class, 'store'])->name('inspeksiPrinterMhu.store');
+                Route::post('inspeksi-printer-mhu/approval', [InspeksiPrinterMhuController::class, 'approval'])->name('inspeksiPrinterMhu.approval');
+                Route::get('inspeksi-printer-mhu/{id}/edit', [InspeksiPrinterMhuController::class, 'edit'])->name('inspeksiPrinterMhu.edit');
+                Route::post('inspeksi-printer-mhu/update', [InspeksiPrinterMhuController::class, 'update'])->name('inspeksiPrinterMhu.update');
+                Route::get('/inspeksi-printer-mhu/{id}/detail', [InspeksiPrinterMhuController::class, 'detail'])->name('inspeksiPrinterMhu.detail');
+                Route::delete('inspeksi-printer-mhu/{id}/delete', [InspeksiPrinterMhuController::class, 'destroy'])->name('inspeksiPrinterMhu.delete');
+
                 Route::get('/pengguna-mhu', [UserAllMhuController::class, 'index'])->name('penggunaMhu.page');
                 Route::get('/pengguna-mhu/create', [UserAllMhuController::class, 'create'])->name('penggunaMhu.create');
                 Route::post('/pengguna-mhu/create', [UserAllMhuController::class, 'store'])->name('penggunaMhu.store');
@@ -2788,6 +2940,24 @@ Route::middleware('auth')->group(function () {
                 Route::get('/inspeksi-komputer-Wara/{id}/detail', [InspeksiComputerWARAController::class, 'detail'])->name('inspeksiKomputerWARA.detail');
                 Route::delete('inspeksi-komputer-Wara/{id}/delete', [InspeksiComputerWARAController::class, 'destroy'])->name('inspeksiKomputerWARA.delete');
                 Route::post('/inspeksi-komputer-wara/approval', [InspeksiComputerWARAController::class, 'approval'])->name('inspeksiKomputerWARA.approval');
+
+                Route::get('inspeksi-mobile-tower-adw', [InspeksiMobileTowerAdwController::class, 'index'])->name('inspeksiMobileTowerAdw.page');
+                Route::get('inspeksi-mobile-tower-adw/{id}/process', [InspeksiMobileTowerAdwController::class, 'process'])->name('inspeksiMobileTowerAdw.process');
+                Route::post('inspeksi-mobile-tower-adw/process', [InspeksiMobileTowerAdwController::class, 'store'])->name('inspeksiMobileTowerAdw.store');
+                Route::post('inspeksi-mobile-tower-adw/approval', [InspeksiMobileTowerAdwController::class, 'approval'])->name('inspeksiMobileTowerAdw.approval');
+                Route::get('inspeksi-mobile-tower-adw/{id}/edit', [InspeksiMobileTowerAdwController::class, 'edit'])->name('inspeksiMobileTowerAdw.edit');
+                Route::post('inspeksi-mobile-tower-adw/update', [InspeksiMobileTowerAdwController::class, 'update'])->name('inspeksiMobileTowerAdw.update');
+                Route::get('/inspeksi-mobile-tower-adw/{id}/detail', [InspeksiMobileTowerAdwController::class, 'detail'])->name('inspeksiMobileTowerAdw.detail');
+                Route::delete('inspeksi-mobile-tower-adw/{id}/delete', [InspeksiMobileTowerAdwController::class, 'destroy'])->name('inspeksiMobileTowerAdw.delete');
+
+                Route::get('inspeksi-printer-adw', [InspeksiPrinterAdwController::class, 'index'])->name('inspeksiPrinterAdw.page');
+                Route::get('inspeksi-printer-adw/{id}/process', [InspeksiPrinterAdwController::class, 'process'])->name('inspeksiPrinterAdw.process');
+                Route::post('inspeksi-printer-adw/process', [InspeksiPrinterAdwController::class, 'store'])->name('inspeksiPrinterAdw.store');
+                Route::post('inspeksi-printer-adw/approval', [InspeksiPrinterAdwController::class, 'approval'])->name('inspeksiPrinterAdw.approval');
+                Route::get('inspeksi-printer-adw/{id}/edit', [InspeksiPrinterAdwController::class, 'edit'])->name('inspeksiPrinterAdw.edit');
+                Route::post('inspeksi-printer-adw/update', [InspeksiPrinterAdwController::class, 'update'])->name('inspeksiPrinterAdw.update');
+                Route::get('/inspeksi-printer-adw/{id}/detail', [InspeksiPrinterAdwController::class, 'detail'])->name('inspeksiPrinterAdw.detail');
+                Route::delete('inspeksi-printer-adw/{id}/delete', [InspeksiPrinterAdwController::class, 'destroy'])->name('inspeksiPrinterAdw.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
@@ -2808,6 +2978,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-ami/{id}/update', [InspeksiComputerAmiController::class, 'update'])->name('inspeksiKomputerAmi.update');
                 Route::get('/inspeksi-komputer-ami/{id}/detail', [InspeksiComputerAmiController::class, 'detail'])->name('inspeksiKomputerAmi.detail');
                 Route::delete('inspeksi-komputer-ami/{id}/delete', [InspeksiComputerAmiController::class, 'destroy'])->name('inspeksiKomputerAmi.delete');
+
+                Route::get('inspeksi-mobile-tower-ami', [InspeksiMobileTowerAmiController::class, 'index'])->name('inspeksiMobileTowerAmi.page');
+                Route::get('inspeksi-mobile-tower-ami/{id}/process', [InspeksiMobileTowerAmiController::class, 'process'])->name('inspeksiMobileTowerAmi.process');
+                Route::post('inspeksi-mobile-tower-ami/process', [InspeksiMobileTowerAmiController::class, 'store'])->name('inspeksiMobileTowerAmi.store');
+                Route::post('inspeksi-mobile-tower-ami/approval', [InspeksiMobileTowerAmiController::class, 'approval'])->name('inspeksiMobileTowerAmi.approval');
+                Route::get('inspeksi-mobile-tower-ami/{id}/edit', [InspeksiMobileTowerAmiController::class, 'edit'])->name('inspeksiMobileTowerAmi.edit');
+                Route::post('inspeksi-mobile-tower-ami/update', [InspeksiMobileTowerAmiController::class, 'update'])->name('inspeksiMobileTowerAmi.update');
+                Route::get('/inspeksi-mobile-tower-ami/{id}/detail', [InspeksiMobileTowerAmiController::class, 'detail'])->name('inspeksiMobileTowerAmi.detail');
+                Route::delete('inspeksi-mobile-tower-ami/{id}/delete', [InspeksiMobileTowerAmiController::class, 'destroy'])->name('inspeksiMobileTowerAmi.delete');
+
+                Route::get('inspeksi-printer-ami', [InspeksiPrinterAmiController::class, 'index'])->name('inspeksiPrinterAmi.page');
+                Route::get('inspeksi-printer-ami/{id}/process', [InspeksiPrinterAmiController::class, 'process'])->name('inspeksiPrinterAmi.process');
+                Route::post('inspeksi-printer-ami/process', [InspeksiPrinterAmiController::class, 'store'])->name('inspeksiPrinterAmi.store');
+                Route::post('inspeksi-printer-ami/approval', [InspeksiPrinterAmiController::class, 'approval'])->name('inspeksiPrinterAmi.approval');
+                Route::get('inspeksi-printer-ami/{id}/edit', [InspeksiPrinterAmiController::class, 'edit'])->name('inspeksiPrinterAmi.edit');
+                Route::post('inspeksi-printer-ami/update', [InspeksiPrinterAmiController::class, 'update'])->name('inspeksiPrinterAmi.update');
+                Route::get('/inspeksi-printer-ami/{id}/detail', [InspeksiPrinterAmiController::class, 'detail'])->name('inspeksiPrinterAmi.detail');
+                Route::delete('inspeksi-printer-ami/{id}/delete', [InspeksiPrinterAmiController::class, 'destroy'])->name('inspeksiPrinterAmi.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_group_leader:PIK,ict_admin:PIK,ict_ho:HO'], function () {
@@ -2828,6 +3016,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-pik/{id}/update', [InspeksiComputerPikController::class, 'update'])->name('inspeksiKomputerPik.update');
                 Route::get('/inspeksi-komputer-pik/{id}/detail', [InspeksiComputerPikController::class, 'detail'])->name('inspeksiKomputerPik.detail');
                 Route::delete('inspeksi-komputer-pik/{id}/delete', [InspeksiComputerPikController::class, 'destroy'])->name('inspeksiKomputerPik.delete');
+
+                Route::get('inspeksi-mobile-tower-pik', [InspeksiMobileTowerPikController::class, 'index'])->name('inspeksiMobileTowerPik.page');
+                Route::get('inspeksi-mobile-tower-pik/{id}/process', [InspeksiMobileTowerPikController::class, 'process'])->name('inspeksiMobileTowerPik.process');
+                Route::post('inspeksi-mobile-tower-pik/process', [InspeksiMobileTowerPikController::class, 'store'])->name('inspeksiMobileTowerPik.store');
+                Route::post('inspeksi-mobile-tower-pik/approval', [InspeksiMobileTowerPikController::class, 'approval'])->name('inspeksiMobileTowerPik.approval');
+                Route::get('inspeksi-mobile-tower-pik/{id}/edit', [InspeksiMobileTowerPikController::class, 'edit'])->name('inspeksiMobileTowerPik.edit');
+                Route::post('inspeksi-mobile-tower-pik/update', [InspeksiMobileTowerPikController::class, 'update'])->name('inspeksiMobileTowerPik.update');
+                Route::get('/inspeksi-mobile-tower-pik/{id}/detail', [InspeksiMobileTowerPikController::class, 'detail'])->name('inspeksiMobileTowerPik.detail');
+                Route::delete('inspeksi-mobile-tower-pik/{id}/delete', [InspeksiMobileTowerPikController::class, 'destroy'])->name('inspeksiMobileTowerPik.delete');
+
+                Route::get('inspeksi-printer-pik', [InspeksiPrinterPikController::class, 'index'])->name('inspeksiPrinterPik.page');
+                Route::get('inspeksi-printer-pik/{id}/process', [InspeksiPrinterPikController::class, 'process'])->name('inspeksiPrinterPik.process');
+                Route::post('inspeksi-printer-pik/process', [InspeksiPrinterPikController::class, 'store'])->name('inspeksiPrinterPik.store');
+                Route::post('inspeksi-printer-pik/approval', [InspeksiPrinterPikController::class, 'approval'])->name('inspeksiPrinterPik.approval');
+                Route::get('inspeksi-printer-pik/{id}/edit', [InspeksiPrinterPikController::class, 'edit'])->name('inspeksiPrinterPik.edit');
+                Route::post('inspeksi-printer-pik/update', [InspeksiPrinterPikController::class, 'update'])->name('inspeksiPrinterPik.update');
+                Route::get('/inspeksi-printer-pik/{id}/detail', [InspeksiPrinterPikController::class, 'detail'])->name('inspeksiPrinterPik.detail');
+                Route::delete('inspeksi-printer-pik/{id}/delete', [InspeksiPrinterPikController::class, 'destroy'])->name('inspeksiPrinterPik.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BGE,ict_ho:HO'], function () {
@@ -2848,6 +3054,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-Bge/{id}/update', [InspeksiComputerBgeController::class, 'update'])->name('inspeksiKomputerBge.update');
                 Route::get('/inspeksi-komputer-Bge/{id}/detail', [InspeksiComputerBgeController::class, 'detail'])->name('inspeksiKomputerBge.detail');
                 Route::delete('inspeksi-komputer-Bge/{id}/delete', [InspeksiComputerBgeController::class, 'destroy'])->name('inspeksiKomputerBge.delete');
+
+                Route::get('inspeksi-mobile-tower-bge', [InspeksiMobileTowerBgeController::class, 'index'])->name('inspeksiMobileTowerBge.page');
+                Route::get('inspeksi-mobile-tower-bge/{id}/process', [InspeksiMobileTowerBgeController::class, 'process'])->name('inspeksiMobileTowerBge.process');
+                Route::post('inspeksi-mobile-tower-bge/process', [InspeksiMobileTowerBgeController::class, 'store'])->name('inspeksiMobileTowerBge.store');
+                Route::post('inspeksi-mobile-tower-bge/approval', [InspeksiMobileTowerBgeController::class, 'approval'])->name('inspeksiMobileTowerBge.approval');
+                Route::get('inspeksi-mobile-tower-bge/{id}/edit', [InspeksiMobileTowerBgeController::class, 'edit'])->name('inspeksiMobileTowerBge.edit');
+                Route::post('inspeksi-mobile-tower-bge/update', [InspeksiMobileTowerBgeController::class, 'update'])->name('inspeksiMobileTowerBge.update');
+                Route::get('/inspeksi-mobile-tower-bge/{id}/detail', [InspeksiMobileTowerBgeController::class, 'detail'])->name('inspeksiMobileTowerBge.detail');
+                Route::delete('inspeksi-mobile-tower-bge/{id}/delete', [InspeksiMobileTowerBgeController::class, 'destroy'])->name('inspeksiMobileTowerBge.delete');
+
+                Route::get('inspeksi-printer-bge', [InspeksiPrinterBgeController::class, 'index'])->name('inspeksiPrinterBge.page');
+                Route::get('inspeksi-printer-bge/{id}/process', [InspeksiPrinterBgeController::class, 'process'])->name('inspeksiPrinterBge.process');
+                Route::post('inspeksi-printer-bge/process', [InspeksiPrinterBgeController::class, 'store'])->name('inspeksiPrinterBge.store');
+                Route::post('inspeksi-printer-bge/approval', [InspeksiPrinterBgeController::class, 'approval'])->name('inspeksiPrinterBge.approval');
+                Route::get('inspeksi-printer-bge/{id}/edit', [InspeksiPrinterBgeController::class, 'edit'])->name('inspeksiPrinterBge.edit');
+                Route::post('inspeksi-printer-bge/update', [InspeksiPrinterBgeController::class, 'update'])->name('inspeksiPrinterBge.update');
+                Route::get('/inspeksi-printer-bge/{id}/detail', [InspeksiPrinterBgeController::class, 'detail'])->name('inspeksiPrinterBge.detail');
+                Route::delete('inspeksi-printer-bge/{id}/delete', [InspeksiPrinterBgeController::class, 'destroy'])->name('inspeksiPrinterBge.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
@@ -2868,6 +3092,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-bib/{id}/update', [InspeksiComputerBibController::class, 'update'])->name('inspeksiKomputerBib.update');
                 Route::get('/inspeksi-komputer-bib/{id}/detail', [InspeksiComputerBibController::class, 'detail'])->name('inspeksiKomputerBib.detail');
                 Route::delete('inspeksi-komputer-bib/{id}/delete', [InspeksiComputerBibController::class, 'destroy'])->name('inspeksiKomputerBib.delete');
+
+                Route::get('inspeksi-mobile-tower-bib', [InspeksiMobileTowerBibController::class, 'index'])->name('inspeksiMobileTowerBib.page');
+                Route::get('inspeksi-mobile-tower-bib/{id}/process', [InspeksiMobileTowerBibController::class, 'process'])->name('inspeksiMobileTowerBib.process');
+                Route::post('inspeksi-mobile-tower-bib/process', [InspeksiMobileTowerBibController::class, 'store'])->name('inspeksiMobileTowerBib.store');
+                Route::post('inspeksi-mobile-tower-bib/approval', [InspeksiMobileTowerBibController::class, 'approval'])->name('inspeksiMobileTowerBib.approval');
+                Route::get('inspeksi-mobile-tower-bib/{id}/edit', [InspeksiMobileTowerBibController::class, 'edit'])->name('inspeksiMobileTowerBib.edit');
+                Route::post('inspeksi-mobile-tower-bib/update', [InspeksiMobileTowerBibController::class, 'update'])->name('inspeksiMobileTowerBib.update');
+                Route::get('/inspeksi-mobile-tower-bib/{id}/detail', [InspeksiMobileTowerBibController::class, 'detail'])->name('inspeksiMobileTowerBib.detail');
+                Route::delete('inspeksi-mobile-tower-bib/{id}/delete', [InspeksiMobileTowerBibController::class, 'destroy'])->name('inspeksiMobileTowerBib.delete');
+
+                Route::get('inspeksi-printer-bib', [InspeksiPrinterBibController::class, 'index'])->name('inspeksiPrinterBib.page');
+                Route::get('inspeksi-printer-bib/{id}/process', [InspeksiPrinterBibController::class, 'process'])->name('inspeksiPrinterBib.process');
+                Route::post('inspeksi-printer-bib/process', [InspeksiPrinterBibController::class, 'store'])->name('inspeksiPrinterBib.store');
+                Route::post('inspeksi-printer-bib/approval', [InspeksiPrinterBibController::class, 'approval'])->name('inspeksiPrinterBib.approval');
+                Route::get('inspeksi-printer-bib/{id}/edit', [InspeksiPrinterBibController::class, 'edit'])->name('inspeksiPrinterBib.edit');
+                Route::post('inspeksi-printer-bib/update', [InspeksiPrinterBibController::class, 'update'])->name('inspeksiPrinterBib.update');
+                Route::get('/inspeksi-printer-bib/{id}/detail', [InspeksiPrinterBibController::class, 'detail'])->name('inspeksiPrinterBib.detail');
+                Route::delete('inspeksi-printer-bib/{id}/delete', [InspeksiPrinterBibController::class, 'destroy'])->name('inspeksiPrinterBib.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:IPT,ict_group_leader:IPT,ict_admin:IPT,ict_ho:HO'], function () {
@@ -2888,6 +3130,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-ipt/{id}/update', [InspeksiComputerIptController::class, 'update'])->name('inspeksiKomputerIpt.update');
                 Route::get('/inspeksi-komputer-ipt/{id}/detail', [InspeksiComputerIptController::class, 'detail'])->name('inspeksiKomputerIpt.detail');
                 Route::delete('inspeksi-komputer-ipt/{id}/delete', [InspeksiComputerIptController::class, 'destroy'])->name('inspeksiKomputerIpt.delete');
+
+                Route::get('inspeksi-mobile-tower-ipt', [InspeksiMobileTowerIptController::class, 'index'])->name('inspeksiMobileTowerIpt.page');
+                Route::get('inspeksi-mobile-tower-ipt/{id}/process', [InspeksiMobileTowerIptController::class, 'process'])->name('inspeksiMobileTowerIpt.process');
+                Route::post('inspeksi-mobile-tower-ipt/process', [InspeksiMobileTowerIptController::class, 'store'])->name('inspeksiMobileTowerIpt.store');
+                Route::post('inspeksi-mobile-tower-ipt/approval', [InspeksiMobileTowerIptController::class, 'approval'])->name('inspeksiMobileTowerIpt.approval');
+                Route::get('inspeksi-mobile-tower-ipt/{id}/edit', [InspeksiMobileTowerIptController::class, 'edit'])->name('inspeksiMobileTowerIpt.edit');
+                Route::post('inspeksi-mobile-tower-ipt/update', [InspeksiMobileTowerIptController::class, 'update'])->name('inspeksiMobileTowerIpt.update');
+                Route::get('/inspeksi-mobile-tower-ipt/{id}/detail', [InspeksiMobileTowerIptController::class, 'detail'])->name('inspeksiMobileTowerIpt.detail');
+                Route::delete('inspeksi-mobile-tower-ipt/{id}/delete', [InspeksiMobileTowerIptController::class, 'destroy'])->name('inspeksiMobileTowerIpt.delete');
+
+                Route::get('inspeksi-printer-ipt', [InspeksiPrinterIptController::class, 'index'])->name('inspeksiPrinterIpt.page');
+                Route::get('inspeksi-printer-ipt/{id}/process', [InspeksiPrinterIptController::class, 'process'])->name('inspeksiPrinterIpt.process');
+                Route::post('inspeksi-printer-ipt/process', [InspeksiPrinterIptController::class, 'store'])->name('inspeksiPrinterIpt.store');
+                Route::post('inspeksi-printer-ipt/approval', [InspeksiPrinterIptController::class, 'approval'])->name('inspeksiPrinterIpt.approval');
+                Route::get('inspeksi-printer-ipt/{id}/edit', [InspeksiPrinterIptController::class, 'edit'])->name('inspeksiPrinterIpt.edit');
+                Route::post('inspeksi-printer-ipt/update', [InspeksiPrinterIptController::class, 'update'])->name('inspeksiPrinterIpt.update');
+                Route::get('/inspeksi-printer-ipt/{id}/detail', [InspeksiPrinterIptController::class, 'detail'])->name('inspeksiPrinterIpt.detail');
+                Route::delete('inspeksi-printer-ipt/{id}/delete', [InspeksiPrinterIptController::class, 'destroy'])->name('inspeksiPrinterIpt.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
@@ -2907,7 +3167,25 @@ Route::middleware('auth')->group(function () {
                 Route::get('inspeksi-komputer-mlp/{id}/edit', [InspeksiComputerMlpController::class, 'edit'])->name('inspeksiKomputerMlp.edit');
                 Route::put('inspeksi-komputer-mlp/{id}/update', [InspeksiComputerMlpController::class, 'update'])->name('inspeksiKomputerMlp.update');
                 Route::get('/inspeksi-komputer-mlp/{id}/detail', [InspeksiComputerMlpController::class, 'detail'])->name('inspeksiKomputerMlp.detail');
-                Route::delete('inspeksi-komputer-mlp/{id}/delete', [InspeksiComputerMlpController::class, 'destroy'])->name('inspeksiKomputerMlp.delete');
+                Route::delete('inspeksi-komputer-mlp/{id}/delete', action: [InspeksiComputerMlpController::class, 'destroy'])->name('inspeksiKomputerMlp.delete');
+
+                Route::get('inspeksi-mobile-tower-mlp', [InspeksiMobileTowerMlpController::class, 'index'])->name('inspeksiMobileTowerMlp.page');
+                Route::get('inspeksi-mobile-tower-mlp/{id}/process', [InspeksiMobileTowerMlpController::class, 'process'])->name('inspeksiMobileTowerMlp.process');
+                Route::post('inspeksi-mobile-tower-mlp/process', [InspeksiMobileTowerMlpController::class, 'store'])->name('inspeksiMobileTowerMlp.store');
+                Route::post('inspeksi-mobile-tower-mlp/approval', [InspeksiMobileTowerMlpController::class, 'approval'])->name('inspeksiMobileTowerMlp.approval');
+                Route::get('inspeksi-mobile-tower-mlp/{id}/edit', [InspeksiMobileTowerMlpController::class, 'edit'])->name('inspeksiMobileTowerMlp.edit');
+                Route::post('inspeksi-mobile-tower-mlp/update', [InspeksiMobileTowerMlpController::class, 'update'])->name('inspeksiMobileTowerMlp.update');
+                Route::get('/inspeksi-mobile-tower-mlp/{id}/detail', [InspeksiMobileTowerMlpController::class, 'detail'])->name('inspeksiMobileTowerMlp.detail');
+                Route::delete('inspeksi-mobile-tower-mlp/{id}/delete', [InspeksiMobileTowerMlpController::class, 'destroy'])->name('inspeksiMobileTowerMlp.delete');
+
+                Route::get('inspeksi-printer-mlp', [InspeksiPrinterMlpController::class, 'index'])->name('inspeksiPrinterMlp.page');
+                Route::get('inspeksi-printer-mlp/{id}/process', [InspeksiPrinterMlpController::class, 'process'])->name('inspeksiPrinterMlp.process');
+                Route::post('inspeksi-printer-mlp/process', [InspeksiPrinterMlpController::class, 'store'])->name('inspeksiPrinterMlp.store');
+                Route::post('inspeksi-printer-mlp/approval', [InspeksiPrinterMlpController::class, 'approval'])->name('inspeksiPrinterMlp.approval');
+                Route::get('inspeksi-printer-mlp/{id}/edit', [InspeksiPrinterMlpController::class, 'edit'])->name('inspeksiPrinterMlp.edit');
+                Route::post('inspeksi-printer-mlp/update', [InspeksiPrinterMlpController::class, 'update'])->name('inspeksiPrinterMlp.update');
+                Route::get('/inspeksi-printer-mlp/{id}/detail', [InspeksiPrinterMlpController::class, 'detail'])->name('inspeksiPrinterMlp.detail');
+                Route::delete('inspeksi-printer-mlp/{id}/delete', [InspeksiPrinterMlpController::class, 'destroy'])->name('inspeksiPrinterMlp.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIP,ict_group_leader:MIP,ict_admin:MIP,ict_ho:HO'], function () {
@@ -2928,6 +3206,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-mip/{id}/update', [InspeksiComputerMipController::class, 'update'])->name('inspeksiKomputerMip.update');
                 Route::get('/inspeksi-komputer-mip/{id}/detail', [InspeksiComputerMipController::class, 'detail'])->name('inspeksiKomputerMip.detail');
                 Route::delete('inspeksi-komputer-mip/{id}/delete', [InspeksiComputerMipController::class, 'destroy'])->name('inspeksiKomputerMip.delete');
+
+                Route::get('inspeksi-mobile-tower-mip', [InspeksiMobileTowerMipController::class, 'index'])->name('inspeksiMobileTowerMip.page');
+                Route::get('inspeksi-mobile-tower-mip/{id}/process', [InspeksiMobileTowerMipController::class, 'process'])->name('inspeksiMobileTowerMip.process');
+                Route::post('inspeksi-mobile-tower-mip/process', [InspeksiMobileTowerMipController::class, 'store'])->name('inspeksiMobileTowerMip.store');
+                Route::post('inspeksi-mobile-tower-mip/approval', [InspeksiMobileTowerMipController::class, 'approval'])->name('inspeksiMobileTowerMip.approval');
+                Route::get('inspeksi-mobile-tower-mip/{id}/edit', [InspeksiMobileTowerMipController::class, 'edit'])->name('inspeksiMobileTowerMip.edit');
+                Route::post('inspeksi-mobile-tower-mip/update', [InspeksiMobileTowerMipController::class, 'update'])->name('inspeksiMobileTowerMip.update');
+                Route::get('/inspeksi-mobile-tower-mip/{id}/detail', [InspeksiMobileTowerMipController::class, 'detail'])->name('inspeksiMobileTowerMip.detail');
+                Route::delete('inspeksi-mobile-tower-mip/{id}/delete', [InspeksiMobileTowerMipController::class, 'destroy'])->name('inspeksiMobileTowerMip.delete');
+
+                Route::get('inspeksi-printer-mip', [InspeksiPrinterMipController::class, 'index'])->name('inspeksiPrinterMip.page');
+                Route::get('inspeksi-printer-mip/{id}/process', [InspeksiPrinterMipController::class, 'process'])->name('inspeksiPrinterMip.process');
+                Route::post('inspeksi-printer-mip/process', [InspeksiPrinterMipController::class, 'store'])->name('inspeksiPrinterMip.store');
+                Route::post('inspeksi-printer-mip/approval', [InspeksiPrinterMipController::class, 'approval'])->name('inspeksiPrinterMip.approval');
+                Route::get('inspeksi-printer-mip/{id}/edit', [InspeksiPrinterMipController::class, 'edit'])->name('inspeksiPrinterMip.edit');
+                Route::post('inspeksi-printer-mip/update', [InspeksiPrinterMipController::class, 'update'])->name('inspeksiPrinterMip.update');
+                Route::get('/inspeksi-printer-mip/{id}/detail', [InspeksiPrinterMipController::class, 'detail'])->name('inspeksiPrinterMip.detail');
+                Route::delete('inspeksi-printer-mip/{id}/delete', [InspeksiPrinterMipController::class, 'destroy'])->name('inspeksiPrinterMip.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
@@ -2948,6 +3244,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-vale/{id}/update', [InspeksiComputerValeController::class, 'update'])->name('inspeksiKomputerVale.update');
                 Route::get('/inspeksi-komputer-vale/{id}/detail', [InspeksiComputerValeController::class, 'detail'])->name('inspeksiKomputerVale.detail');
                 Route::delete('inspeksi-komputer-vale/{id}/delete', [InspeksiComputerValeController::class, 'destroy'])->name('inspeksiKomputerVale.delete');
+
+                Route::get('inspeksi-mobile-tower-vale', [InspeksiMobileTowerValeController::class, 'index'])->name('inspeksiMobileTowerVale.page');
+                Route::get('inspeksi-mobile-tower-vale/{id}/process', [InspeksiMobileTowerValeController::class, 'process'])->name('inspeksiMobileTowerVale.process');
+                Route::post('inspeksi-mobile-tower-vale/process', [InspeksiMobileTowerValeController::class, 'store'])->name('inspeksiMobileTowerVale.store');
+                Route::post('inspeksi-mobile-tower-vale/approval', [InspeksiMobileTowerValeController::class, 'approval'])->name('inspeksiMobileTowerVale.approval');
+                Route::get('inspeksi-mobile-tower-vale/{id}/edit', [InspeksiMobileTowerValeController::class, 'edit'])->name('inspeksiMobileTowerVale.edit');
+                Route::post('inspeksi-mobile-tower-vale/update', [InspeksiMobileTowerValeController::class, 'update'])->name('inspeksiMobileTowerVale.update');
+                Route::get('/inspeksi-mobile-tower-vale/{id}/detail', [InspeksiMobileTowerValeController::class, 'detail'])->name('inspeksiMobileTowerVale.detail');
+                Route::delete('inspeksi-mobile-tower-vale/{id}/delete', [InspeksiMobileTowerValeController::class, 'destroy'])->name('inspeksiMobileTowerVale.delete');
+
+                Route::get('inspeksi-printer-vale', [InspeksiPrinterValeController::class, 'index'])->name('inspeksiPrinterVale.page');
+                Route::get('inspeksi-printer-vale/{id}/process', [InspeksiPrinterValeController::class, 'process'])->name('inspeksiPrinterVale.process');
+                Route::post('inspeksi-printer-vale/process', [InspeksiPrinterValeController::class, 'store'])->name('inspeksiPrinterVale.store');
+                Route::post('inspeksi-printer-vale/approval', [InspeksiPrinterValeController::class, 'approval'])->name('inspeksiPrinterVale.approval');
+                Route::get('inspeksi-printer-vale/{id}/edit', [InspeksiPrinterValeController::class, 'edit'])->name('inspeksiPrinterVale.edit');
+                Route::post('inspeksi-printer-vale/update', [InspeksiPrinterValeController::class, 'update'])->name('inspeksiPrinterVale.update');
+                Route::get('/inspeksi-printer-vale/{id}/detail', [InspeksiPrinterValeController::class, 'detail'])->name('inspeksiPrinterVale.detail');
+                Route::delete('inspeksi-printer-vale/{id}/delete', [InspeksiPrinterValeController::class, 'destroy'])->name('inspeksiPrinterVale.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SBS,ict_group_leader:SBS,ict_admin:SBS,ict_ho:HO'], function () {
@@ -2968,6 +3282,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-sbs/{id}/update', [InspeksiComputerSbsController::class, 'update'])->name('inspeksiKomputerSbs.update');
                 Route::get('/inspeksi-komputer-sbs/{id}/detail', [InspeksiComputerSbsController::class, 'detail'])->name('inspeksiKomputerSbs.detail');
                 Route::delete('inspeksi-komputer-sbs/{id}/delete', [InspeksiComputerSbsController::class, 'destroy'])->name('inspeksiKomputerSbs.delete');
+
+                Route::get('inspeksi-mobile-tower-sbs', [InspeksiMobileTowerSbsController::class, 'index'])->name('inspeksiMobileTowerSbs.page');
+                Route::get('inspeksi-mobile-tower-sbs/{id}/process', [InspeksiMobileTowerSbsController::class, 'process'])->name('inspeksiMobileTowerSbs.process');
+                Route::post('inspeksi-mobile-tower-sbs/process', [InspeksiMobileTowerSbsController::class, 'store'])->name('inspeksiMobileTowerSbs.store');
+                Route::post('inspeksi-mobile-tower-sbs/approval', [InspeksiMobileTowerSbsController::class, 'approval'])->name('inspeksiMobileTowerSbs.approval');
+                Route::get('inspeksi-mobile-tower-sbs/{id}/edit', [InspeksiMobileTowerSbsController::class, 'edit'])->name('inspeksiMobileTowerSbs.edit');
+                Route::post('inspeksi-mobile-tower-sbs/update', [InspeksiMobileTowerSbsController::class, 'update'])->name('inspeksiMobileTowerSbs.update');
+                Route::get('/inspeksi-mobile-tower-sbs/{id}/detail', [InspeksiMobileTowerSbsController::class, 'detail'])->name('inspeksiMobileTowerSbs.detail');
+                Route::delete('inspeksi-mobile-tower-sbs/{id}/delete', [InspeksiMobileTowerSbsController::class, 'destroy'])->name('inspeksiMobileTowerSbs.delete');
+
+                Route::get('inspeksi-printer-sbs', [InspeksiPrinterSbsController::class, 'index'])->name('inspeksiPrinterSbs.page');
+                Route::get('inspeksi-printer-sbs/{id}/process', [InspeksiPrinterSbsController::class, 'process'])->name('inspeksiPrinterSbs.process');
+                Route::post('inspeksi-printer-sbs/process', [InspeksiPrinterSbsController::class, 'store'])->name('inspeksiPrinterSbs.store');
+                Route::post('inspeksi-printer-sbs/approval', [InspeksiPrinterSbsController::class, 'approval'])->name('inspeksiPrinterSbs.approval');
+                Route::get('inspeksi-printer-sbs/{id}/edit', [InspeksiPrinterSbsController::class, 'edit'])->name('inspeksiPrinterSbs.edit');
+                Route::post('inspeksi-printer-sbs/update', [InspeksiPrinterSbsController::class, 'update'])->name('inspeksiPrinterSbs.update');
+                Route::get('/inspeksi-printer-sbs/{id}/detail', [InspeksiPrinterSbsController::class, 'detail'])->name('inspeksiPrinterSbs.detail');
+                Route::delete('inspeksi-printer-sbs/{id}/delete', [InspeksiPrinterSbsController::class, 'destroy'])->name('inspeksiPrinterSbs.delete');
             });
 
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
@@ -2988,6 +3320,24 @@ Route::middleware('auth')->group(function () {
                 Route::put('inspeksi-komputer-sks/{id}/update', [InspeksiComputerSksController::class, 'update'])->name('inspeksiKomputerSks.update');
                 Route::get('/inspeksi-komputer-sks/{id}/detail', [InspeksiComputerSksController::class, 'detail'])->name('inspeksiKomputerSks.detail');
                 Route::delete('inspeksi-komputer-sks/{id}/delete', [InspeksiComputerSksController::class, 'destroy'])->name('inspeksiKomputerSks.delete');
+
+                Route::get('inspeksi-mobile-tower-sks', [InspeksiMobileTowerSksController::class, 'index'])->name('inspeksiMobileTowerSks.page');
+                Route::get('inspeksi-mobile-tower-sks/{id}/process', [InspeksiMobileTowerSksController::class, 'process'])->name('inspeksiMobileTowerSks.process');
+                Route::post('inspeksi-mobile-tower-sks/process', [InspeksiMobileTowerSksController::class, 'store'])->name('inspeksiMobileTowerSks.store');
+                Route::post('inspeksi-mobile-tower-sks/approval', [InspeksiMobileTowerSksController::class, 'approval'])->name('inspeksiMobileTowerSks.approval');
+                Route::get('inspeksi-mobile-tower-sks/{id}/edit', [InspeksiMobileTowerSksController::class, 'edit'])->name('inspeksiMobileTowerSks.edit');
+                Route::post('inspeksi-mobile-tower-sks/update', [InspeksiMobileTowerSksController::class, 'update'])->name('inspeksiMobileTowerSks.update');
+                Route::get('/inspeksi-mobile-tower-sks/{id}/detail', [InspeksiMobileTowerSksController::class, 'detail'])->name('inspeksiMobileTowerSks.detail');
+                Route::delete('inspeksi-mobile-tower-sks/{id}/delete', [InspeksiMobileTowerSksController::class, 'destroy'])->name('inspeksiMobileTowerSks.delete');
+
+                Route::get('inspeksi-printer-sks', [InspeksiPrinterSksController::class, 'index'])->name('inspeksiPrinterSks.page');
+                Route::get('inspeksi-printer-sks/{id}/process', [InspeksiPrinterSksController::class, 'process'])->name('inspeksiPrinterSks.process');
+                Route::post('inspeksi-printer-sks/process', [InspeksiPrinterSksController::class, 'store'])->name('inspeksiPrinterSks.store');
+                Route::post('inspeksi-printer-sks/approval', [InspeksiPrinterSksController::class, 'approval'])->name('inspeksiPrinterSks.approval');
+                Route::get('inspeksi-printer-sks/{id}/edit', [InspeksiPrinterSksController::class, 'edit'])->name('inspeksiPrinterSks.edit');
+                Route::post('inspeksi-printer-sks/update', [InspeksiPrinterSksController::class, 'update'])->name('inspeksiPrinterSks.update');
+                Route::get('/inspeksi-printer-sks/{id}/detail', [InspeksiPrinterSksController::class, 'detail'])->name('inspeksiPrinterSks.detail');
+                Route::delete('inspeksi-printer-sks/{id}/delete', [InspeksiPrinterSksController::class, 'destroy'])->name('inspeksiPrinterSks.delete');
             });
         });
     });
