@@ -62,7 +62,7 @@ class InspeksiPrinter extends Model
         });
     }
 
-    public function printer()
+    public function inventory()
     {
         return $this->belongsTo(InvPrinter::class, 'inv_printer_id', 'id');
     }
