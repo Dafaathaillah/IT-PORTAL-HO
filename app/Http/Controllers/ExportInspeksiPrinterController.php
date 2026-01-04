@@ -40,7 +40,7 @@ class ExportInspeksiPrinterController extends Controller
             return back()->with('error', 'Tahun tidak terdeteksi.');
         }
         // dd($request->site);
-        $inspeksiPrinterAll = InspeksiPrinter::with('inventory')
+        $inspeksiPrinterAll = InspeksiPrinter::with('printer')
             ->where('site', $site)
             ->where('year', $thisYear)
             ->where('month', $thisMonth)
@@ -50,7 +50,7 @@ class ExportInspeksiPrinterController extends Controller
             )
             ->get();
 
-        $unitScrap = InspeksiPrinter::with('inventory')
+        $unitScrap = InspeksiPrinter::with('printer')
             ->where('site', $site)
             ->where('year', $thisYear)
             ->where('month', $thisMonth)
@@ -61,7 +61,7 @@ class ExportInspeksiPrinterController extends Controller
             )
             ->count();
 
-        $unitUtilize = InspeksiPrinter::with('inventory')
+        $unitUtilize = InspeksiPrinter::with('printer')
             ->where('site', $site)
             ->where('year', $thisYear)
             ->where('month', $thisMonth)
@@ -130,13 +130,13 @@ class ExportInspeksiPrinterController extends Controller
         }
 
         // Ambil hanya satu data inspeksi yang sesuai dan sudah disetujui
-        $inspection = InspeksiPrinter::with('inventory')->where('id', $request->inspeksiId)->first();
+        $inspection = InspeksiPrinter::with('printer')->where('id', $request->inspeksiId)->first();
 
         if (!$inspection) {
             return back()->with('error', 'Data inspeksi tidak ditemukan atau belum disetujui.');
         }
 
-        $nomor_printer = $inspection->inventory->printer_code;
+        $nomor_printer = $inspection->printer->printer_code;
 
         // Ambil data user yang menyetujui
         if ($inspection->inspection_status == 'Y') {

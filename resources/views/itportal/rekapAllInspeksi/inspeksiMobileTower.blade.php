@@ -223,23 +223,23 @@
                 <table>
                     <tr>
                         <th>No Inventory</th>
-                        <td>{{ $inspection->inventory->inventory_number ?? '-' }}</td>
+                        <td>{{ $inspection->mt->inventory_number ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>No MT</th>
-                        <td>{{ $inspection->inventory->mt_code ?? '-' }}</td>
+                        <td>{{ $inspection->mt->mt_code ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Type</th>
-                        <td>{{ $inspection->inventory->type_mt ?? '-'  }}</td>
+                        <td>{{ $inspection->mt->type_mt ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Lokasi</th>
-                        <td>{{ $inspection->inventory->location ?? '-'  }}</td>
+                        <td>{{ $inspection->mt->location ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Detail Lokasi</th>
-                        <td>{{ $inspection->inventory->detail_location ?? '-'  }}</td>
+                        <td>{{ $inspection->mt->detail_location ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Periode Inspeksi</th>

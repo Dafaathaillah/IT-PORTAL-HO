@@ -223,29 +223,29 @@
                 <table>
                     <tr>
                         <th>No Inventory</th>
-                        <td>{{ $inspection->inventory->printer_code ?? '-' }}</td>
+                        <td>{{ $inspection->printer->printer_code ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>No Asset HO</th>
-                        <td>{{ $inspection->inventory->asset_ho_number ?? '-' }}</td>
+                        <td>{{ $inspection->printer->asset_ho_number ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Merk - Type</th>
-                        <td>{{ $inspection->inventory->printer_brand ?? '-'  }} -
-                            {{ $inspection->inventory->printer_type ?? '-' }}
+                        <td>{{ $inspection->printer->printer_brand ?? '-'  }} -
+                            {{ $inspection->printer->printer_type ?? '-' }}
                         </td>
                     </tr>
                     <tr>
                         <th>Departemen</th>
-                        <td>{{ $inspection->inventory->department ?? '-'  }}</td>
+                        <td>{{ $inspection->printer->department ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Divisi</th>
-                        <td>{{ $inspection->inventory->division ?? '-'  }}</td>
+                        <td>{{ $inspection->printer->division ?? '-'  }}</td>
                     </tr>
                     <tr>
                         <th>Lokasi</th>
-                        <td>{{ $inspection->inventory->location ?? '-'  }}</td>
+                        <td>{{ $inspection->printer->location ?? '-'  }}</td>
                     </tr>
 
                     <tr>

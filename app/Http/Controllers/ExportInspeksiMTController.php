@@ -35,7 +35,7 @@ class ExportInspeksiMTController extends Controller
             return back()->with('error', 'Tahun tidak terdeteksi.');
         }
 
-        $inspections = InspeksiMobileTower::with('inventory')
+        $inspections = InspeksiMobileTower::with('mt')
             ->where('month', $thisMonth)
             ->where('year', $thisYear)
             ->where('site', $site)
@@ -136,7 +136,7 @@ class ExportInspeksiMTController extends Controller
             return back()->with('error', 'Tahun tidak terdeteksi.');
         }
 
-        $inspection = InspeksiMobileTower::with('inventory')
+        $inspection = InspeksiMobileTower::with('mt')
             ->where('id', $request->inspeksiId)
             // ->where('inspection_status', 'Y')
             ->first();
@@ -147,7 +147,7 @@ class ExportInspeksiMTController extends Controller
             return back()->with('error', 'Data inspeksi tidak ditemukan atau belum disetujui.');
         }
 
-        $nomor_mt = $inspection->inventory->inventory_number;
+        $nomor_mt = $inspection->mt->inventory_number;
 
         // Ambil data user yang menyetujui
         if ($inspection->inspection_status == 'Y') {

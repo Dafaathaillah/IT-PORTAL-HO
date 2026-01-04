@@ -156,15 +156,15 @@
                 @foreach ($inspeksiPrinterAll as $item)
                     <tr class="dataContent">
                         <td>{{ $loop->iteration }}</td>
-                        <td style="font-size: 5px">{{ $item->inventory->printer_code ?? '-' }}</td>
-                        <td style="font-size: 5px">{{ $item->inventory->asset_ho_number ?? '-'}}</td>
+                        <td style="font-size: 5px">{{ $item->printer->printer_code ?? '-' }}</td>
+                        <td style="font-size: 5px">{{ $item->printer->asset_ho_number ?? '-'}}</td>
                         <td style="font-size: 5px">
                             {{ $item->inspection_at ? \Carbon\Carbon::parse($item->inspection_at)->translatedFormat('d F Y H:i') : '-' }}
                         </td>
-                        <td style="font-size: 5px">{{ $item->inventory->printer_brand ?? '-' }}
-                            {{ $item->inventory->printer_type ?? '-' }}
+                        <td style="font-size: 5px">{{ $item->printer->printer_brand ?? '-' }}
+                            {{ $item->printer->printer_type ?? '-' }}
                         </td>
-                        <td style="font-size: 5px">{{ $item->inventory->department ?? '-' }}</td>
+                        <td style="font-size: 5px">{{ $item->printer->department ?? '-' }}</td>
 
                         <td style="font-family: 'DejaVu Sans', sans-serif;">
                             {{ $item->tinta_cyan == 'Y' ? '✔' : '✖' }}

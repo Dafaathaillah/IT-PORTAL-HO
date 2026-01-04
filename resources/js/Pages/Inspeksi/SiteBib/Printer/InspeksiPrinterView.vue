@@ -131,7 +131,7 @@ const validateYear = (event) => {
 watch([selectedMonth, year], ([newMonth, newYear]) => {
     if (newMonth && newYear) {
         router.get(
-            route("inspeksiPrinter.page"),
+            route("inspeksiPrinterBib.page"),
             {
                 month: newMonth.value,
                 year: newYear,
@@ -215,7 +215,7 @@ window.addEventListener("pageshow", () => {
 });
 
 const editData = (id) => {
-    form.get(route("inspeksiPrinter.edit", { id: id }));
+    form.get(route("inspeksiPrinterBib.edit", { id: id }));
     // Call SweetAlert for confirmation
 };
 
@@ -292,11 +292,11 @@ const parseFindings = (temuan) => {
 };
 
 const detailData = (id) => {
-    form.get(route("inspeksiPrinter.detail", { id: id }));
+    form.get(route("inspeksiPrinterBib.detail", { id: id }));
 };
 
 const processData = (id) => {
-    form.get(route("inspeksiPrinter.process", { id: id }));
+    form.get(route("inspeksiPrinterBib.process", { id: id }));
 };
 
 function formatData(text) {
@@ -332,7 +332,7 @@ const approved = () => {
             axios
                 .post(
                     route(
-                        "inspeksiPrinter.approval",
+                        "inspeksiPrinterBib.approval",
                         {
                             month: selectedMonth.value.value,
                             year: year.value,
