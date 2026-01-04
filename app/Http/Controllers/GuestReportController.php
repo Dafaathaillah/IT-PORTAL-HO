@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aduan;
+use App\Models\InvCctv;
+use App\Models\InvComputer;
+use App\Models\InvLaptop;
+use App\Models\InvPrinter;
+use App\Models\PerangkatBreakdown;
 use App\Models\RootCauseProblem;
+use App\Models\User;
 use App\Models\UserAll;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -158,7 +164,64 @@ class GuestReportController extends Controller
             $aduan = Aduan::create($data);
         }
         // return dd($data);
-        // return redirect()->route('guestAduan.page');
+        // // --- Jika inventory_number ada, insert juga ke perangkat_breakdown ---
+        // if (!empty($request->inventory_number)) {
+        //     $deviceName = 'Unknown Device';
+        //     $categoryInput = strtolower($request->category_name);
+        //     $invNumber = strtoupper($request->inventory_number); // biar aman case insensitive
+
+        //     if ($categoryInput === 'pc/nb') {
+        //         // Cek dari inventory_number
+        //         if (str_contains($invNumber, '-NB-')) {
+        //             $inv = InvLaptop::where('laptop_code', $request->inventory_number)->first();
+        //             $deviceName = $inv ? $inv->laptop_name : $deviceName;
+        //         } elseif (str_contains($invNumber, '-PC-')) {
+        //             $inv = InvComputer::where('computer_code', $request->inventory_number)->first();
+        //             $deviceName = $inv ? $inv->computer_name : $deviceName;
+        //         }
+        //     } elseif ($categoryInput === 'printer') {
+        //         $inv = InvPrinter::where('printer_code', $request->inventory_number)->first();
+        //         $deviceName = $inv ? $inv->printer_brand : $deviceName;
+        //     } elseif ($categoryInput === 'cctv') {
+        //         $inv = InvCctv::where('cctv_code', $request->inventory_number)->first();
+        //         $deviceName = $inv ? $inv->cctv_brand : $deviceName;
+        //     }
+
+        //     // Waktu sekarang
+        //     $now = Carbon::now();
+
+        //     // dd([
+        //     //     'inventory_number' => $request->inventory_number,
+        //     //     'id_report'        => $request->complaint_code,
+        //     //     'device_category'  => $request->category_name,
+        //     //     'device_name'      => $deviceName,
+        //     //     'pic'              => $request->crew,
+        //     //     'start_time'       => $request->date_of_complaint,
+        //     //     'created_date'     => $now->toDateString(),
+        //     //     'month'            => $now->month,
+        //     //     'year'             => $now->year,
+        //     //     'location'         => $request->location,
+        //     //     'status'           => 'OPEN',
+        //     //     'site'             => 'BA',
+        //     // ]);
+
+        //     PerangkatBreakdown::create([
+        //         'inventory_number' => $request->inventory_number,
+        //         'id_report'        => $request->complaint_code,
+        //         'device_category'  => $request->category_name,
+        //         'device_name'      => $deviceName,
+        //         'pic'              => $request->crew,
+        //         'start_time'       => $now,                  // datetime sekarang
+        //         'created_date'     => $now->toDateString(),  // hanya tanggal
+        //         'month'            => $now->month,           // angka 1-12
+        //         'year'             => $now->year,            // angka tahun
+        //         'location'         => $request->location,
+        //         'status'           => 'OPEN',
+        //         'site'             => Auth::user()->site,
+        //     ]);
+        // }
+
+        return redirect()->route('guestAduan.page');
     }
 
     public function storeRating(Request $request)

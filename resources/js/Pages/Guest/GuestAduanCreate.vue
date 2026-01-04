@@ -72,6 +72,17 @@ const handleFileUpload = (event) => {
 const isSubmitting = ref(false);
 
 const save = () => {
+    if (!file.value) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Wajib Melampirkan Evidence Aduan!",
+            confirmButtonColor: "#1e293b", // slate-800 (Tailwind hex)
+            confirmButtonText: "OK",
+        });
+        return;
+    }
+
     if (isSubmitting.value) {
         Swal.fire({
             icon: "info",
@@ -367,6 +378,7 @@ const showAlertTrue = () => {
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="2.4 / 5.8 Ghz"
                                                 @change="handleFileUpload"
+                                                required
                                             />
                                         </div>
                                     </div>

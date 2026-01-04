@@ -17,19 +17,34 @@ class InspeksiComputerMhuController extends Controller
 {
     public function index(Request $request)
     {
-        $quarter = $request->get('quarter', Carbon::now()->quarter); // default ke quarter saat ini
-        $year = $request->get('year', Carbon::now()->year); // default ke tahun saat ini
+        $quarter = $request->get('quarter', Carbon::now()->quarter);
+        $year = $request->get('year', Carbon::now()->year);
+
+        // tentukan quarter sebelumnya
+        $previousQuarter = $quarter > 1 ? $quarter - 1 : null;
 
         $inspeksi_computer = InspeksiComputer::with('computer.pengguna')
             ->where('site', 'MHU')
-            ->where('triwulan', $quarter)
-            ->whereYear('created_at', $year) // opsional, kalau kamu butuh filter per tahun juga
+            ->whereYear('created_at', $year)
+            ->where(function ($q) use ($quarter, $previousQuarter, $year) {
+                // selalu ambil data quarter saat ini
+                $q->where('triwulan', $quarter);
+
+                // tambahkan quarter sebelumnya jika ada & belum inspeksi
+                if ($previousQuarter) {
+                    $q->orWhere(function ($sub) use ($previousQuarter, $year) {
+                        $sub->where('triwulan', $previousQuarter)
+                            ->whereYear('created_at', $year)
+                            ->where('inspection_status', '!=', 'Y'); // Y = sudah inspeksi
+                    });
+                }
+            })
             ->get();
 
         $site = 'MHU';
 
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])
-            ->where('site', 'MHU')
+            ->where('site', $site)
             ->pluck('name')
             ->map(fn ($name) => ['name' => $name])
             ->toArray();
@@ -48,6 +63,7 @@ class InspeksiComputerMhuController extends Controller
             ]
         );
     }
+
 
     public function doInspection($id)
     {
@@ -483,7 +499,7 @@ class InspeksiComputerMhuController extends Controller
         // Update semua data inspeksi sesuai site, tahun sekarang, dan status 'sudah_inspeksi'
         $updateCount = InspeksiComputer::where('inspection_status', 'Y')->whereBetween('created_date', [$data['quarterStart'], $data['quarterEnd']])->update($dataApproval);
         // dd($updateCount);
-         return response()->json([
+        return response()->json([
             'success' => true,
             'message' => "$updateCount data inspeksi Komputer untuk site $site telah di-approve.",
         ]);

@@ -17,6 +17,9 @@ const props = defineProps({
     aduan: {
         type: Array,
     },
+    rootCause: {
+        type: Array,
+    },
 });
 const form = useForm({
     id: props.aduan.id,
@@ -26,6 +29,8 @@ const form = useForm({
     complaint_note: props.aduan.complaint_note,
     actionRepair: props.aduan.action_repair,
     repair_note: props.aduan.repair_note,
+    root_cause_id: "", // awalnya kosong
+    category: props.aduan.category_name,
 });
 
 const isDisabled = ref(true);
@@ -83,6 +88,8 @@ const updateProgress = () => {
     formData.append("detail_location", form.location_detail);
     formData.append("repair_note", form.repair_note);
     formData.append("complaint_note", form.complaint_note);
+    formData.append("rootCause", form.root_cause_id);
+    formData.append("category", form.category);
     Inertia.post(route("aduanBge.updateProgress"), formData, {
         forceFormData: true,
         onSuccess: () => {
@@ -343,8 +350,45 @@ const options = props.crew;
                                             </select>
                                         </div>
                                     </div>
+                                    <!-- ROOT CAUSE -->
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        v-if="form.status === 'CLOSED'"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                for="root_cause_id"
+                                                class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                Root Cause
+                                            </label>
+                                            <select
+                                                :required="
+                                                    form.status === 'CLOSED' &&
+                                                    props.aduan
+                                                        .category_name !==
+                                                        'OTHER'
+                                                "
+                                                id="root_cause_id"
+                                                v-model="form.root_cause_id"
+                                                name="root_cause_id"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            >
+                                                <option disabled value="">
+                                                    Select Root Cause Problem
+                                                </option>
+                                                <option
+                                                    v-for="rc in props.rootCause"
+                                                    :key="rc.id"
+                                                    :value="rc.id"
+                                                >
+                                                    {{ rc.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -361,7 +405,7 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -378,7 +422,7 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -443,7 +487,7 @@ const options = props.crew;
                                                 >Issue/Complaint Note</label
                                             >
                                             <textarea
-                                            readonly
+                                                readonly
                                                 required
                                                 id="message"
                                                 name="complaint_note"
@@ -464,7 +508,7 @@ const options = props.crew;
                                                 >Detail Location</label
                                             >
                                             <textarea
-                                            readonly
+                                                readonly
                                                 id="message"
                                                 name="location_detail"
                                                 v-model="form.location_detail"
@@ -496,7 +540,9 @@ const options = props.crew;
                                 <hr
                                     class="h-px mx-0 my-4 bg-transparent border-0 opacity-25 bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
                                 />
-                                <div class="flex flex-nowrap mt-6 justify-between">
+                                <div
+                                    class="flex flex-nowrap mt-6 justify-between"
+                                >
                                     <Link
                                         :href="route('aduanBge.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
@@ -518,7 +564,6 @@ const options = props.crew;
                                             Save
                                         </span>
                                     </button>
-                                    
                                 </div>
                             </form>
                         </div>

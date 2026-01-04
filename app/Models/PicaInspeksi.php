@@ -25,4 +25,13 @@ class PicaInspeksi extends Model
         'remark',
         'site',
     ];
+
+    public function inspeksiMt()
+    {
+        return $this->belongsTo(
+            InspeksiMobileTower::class,
+            'inspeksi_id',
+            'id'
+        );
+    }
 }

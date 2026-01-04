@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Aduan extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
-    
+
     protected $fillable = [
         'complaint_code',
         'complaint_image',
@@ -34,11 +34,16 @@ class Aduan extends Model
         'repair_note',
         'repair_image',
         'status',
-        'root_cause',
+        'root_cause_id',
         'action_repair',
         'crew',
         'site',
         'site_pelapor',
         'user_rating'
     ];
+
+    public function rootCause()
+    {
+        return $this->belongsTo(RootCauseProblem::class, 'root_cause_id', 'id_cause');
+    }
 }

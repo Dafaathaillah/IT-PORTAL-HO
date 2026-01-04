@@ -30,9 +30,8 @@ class InvPrinter extends Model
         'site'
     ];
 
-    public function inspeksiPrinters()
+        public function inspeksi()
     {
         return $this->hasMany(InspeksiPrinter::class, 'inv_printer_id', 'id');
     }
-
 }

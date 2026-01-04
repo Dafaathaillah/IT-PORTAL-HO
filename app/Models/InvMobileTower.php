@@ -41,4 +41,9 @@ class InvMobileTower extends Model
             }
         });
     }
+
+        public function inspeksi()
+    {
+        return $this->hasMany(InspeksiMobileTower::class, 'inv_mt_id', 'id');
+    }
 }

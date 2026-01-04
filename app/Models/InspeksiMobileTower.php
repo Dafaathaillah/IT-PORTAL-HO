@@ -60,8 +60,17 @@ class InspeksiMobileTower extends Model
     /**
      * Relation: An inspection belongs to a mobile tower
      */
-    public function inventory()
+    public function mt()
     {
         return $this->belongsTo(InvMobileTower::class, 'inv_mt_id', 'id');
+    }
+
+    public function picas()
+    {
+        return $this->hasMany(
+            PicaInspeksi::class,
+            'inspeksi_id',
+            'id'
+        );
     }
 }

@@ -10,10 +10,12 @@ class PerangkatBreakdown extends Model
     use HasFactory;
     protected $fillable = [
         'device_category',
+        'id_report',
         'inventory_number',
+        'id_perangkat',
         'device_name',
-        'start_progress',
-        'end_progress',
+        'start_time',
+        'end_time',
         'created_date',
         'month',
         'year',
@@ -23,5 +25,6 @@ class PerangkatBreakdown extends Model
         'garansion_laptop_code',
         'status',
         'pic',
+        'site',
     ];
 }

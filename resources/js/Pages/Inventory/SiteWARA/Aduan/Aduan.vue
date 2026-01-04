@@ -187,6 +187,88 @@ const progressAduan = (id) => {
     form.get(route("aduanWARA.progress", { id: id }));
 };
 
+const acceptAduan = (id) => {
+    Swal.fire({
+        title: "Accept Aduan?",
+        html: `
+        Proses ini akan otomatis mengisi <b>Start Response</b> dengan jam sekarang,
+        dan mengubah status menjadi <b>Progress</b>
+      `,
+        showCancelButton: true,
+        confirmButtonText: "Accept",
+        cancelButtonText: "Cancel",
+        focusConfirm: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        backdrop: `
+            rgba(0,0,0,0.5)
+            left top
+            no-repeat
+        `,
+        customClass: {
+            confirmButton:
+                "bg-slate-700 hover:bg-slate-900 text-white font-semibold px-4 py-2 rounded",
+            cancelButton:
+                "bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded ml-2",
+        },
+        buttonsStyling: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .post(route("aduanWARA.accept", { id: id }))
+                .then((response) => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil!",
+                        text: response.data.message,
+                        timer: 2000,
+                        showConfirmButton: false,
+                        willClose: () => {
+                            // refresh page setelah Swal tertutup
+                            location.reload();
+                        },
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal!",
+                        text:
+                            error.response?.data?.message ??
+                            "Terjadi kesalahan.",
+                    });
+                });
+        }
+    });
+};
+
+onMounted(() => {
+    // cek apakah sudah pernah ditampilkan di sessionStorage
+    if (!sessionStorage.getItem("guideShownWara")) {
+        Swal.fire({
+            title: "Panduan",
+            html: `
+        Jika ada aduan masuk dan ingin memberikan response cepat,
+        klik tombol <b>Accept</b> pada kolom progress.
+      `,
+            icon: "info",
+            confirmButtonText: "Oke",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            backdrop: `rgba(0,0,0,0.6)`,
+            customClass: {
+                confirmButton:
+                    "bg-slate-700 hover:bg-slate-900 text-white font-semibold px-4 py-2 rounded",
+            },
+            buttonsStyling: false,
+        }).then(() => {
+            // simpan flag agar tidak tampil lagi selama sesi
+            sessionStorage.setItem("guideShownWara", "true");
+        });
+    }
+});
+
 const detailData = (id) => {
     form.get(route("aduanWARA.detail", { id: id }));
 };
@@ -583,7 +665,7 @@ const exportPdf = () => {
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add
                                     New Data
                                 </Link>
-                                                                <div
+                                <div
                                     class="flex flex-wrap md:flex-nowrap gap-3 mt-4"
                                 >
                                     <div
@@ -681,6 +763,11 @@ const exportPdf = () => {
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
+                                                        Root Cause
+                                                    </th>
+                                                    <th
+                                                        class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
+                                                    >
                                                         Action Repair
                                                     </th>
                                                     <th
@@ -770,6 +857,20 @@ const exportPdf = () => {
                                                         >
                                                             Progress Aduan
                                                         </NavLinkCustom>
+                                                        <NavLinkCustom
+                                                            v-if="
+                                                                aduans.status ===
+                                                                'OPEN'
+                                                            "
+                                                            @click="
+                                                                acceptAduan(
+                                                                    aduans.id
+                                                                )
+                                                            "
+                                                            class="accept-btn mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Accept
+                                                        </NavLinkCustom>
                                                     </td>
                                                     <td
                                                         class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
@@ -844,6 +945,20 @@ const exportPdf = () => {
                                                         >
                                                             {{
                                                                 aduans.category_name
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
+                                                    >
+                                                        <span
+                                                            class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            {{
+                                                                aduans
+                                                                    .root_cause
+                                                                    ?.root_cause_problem ??
+                                                                "-"
                                                             }}
                                                         </span>
                                                     </td>
