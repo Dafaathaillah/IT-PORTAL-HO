@@ -227,6 +227,7 @@ use App\Http\Controllers\InvWirellessValeController;
 use App\Http\Controllers\KpiAduanAnalysisController;
 use App\Http\Controllers\KpiInspeksiController;
 use App\Http\Controllers\KpiResponseTimeController;
+use App\Http\Controllers\PerangkatBreakdownController;
 use App\Http\Controllers\PicaInspeksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RootCauseProblemController;
@@ -265,11 +266,11 @@ use Illuminate\Http\Request;
 // Route::get('/checklist', [ChecklistCpuController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
-    Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
         Route::get('/cekSn', [DataCheckerController::class, 'checkDuplicateSN']);
         Route::get('/cekNrp', [DataCheckerController::class, 'checkMissingNRP']);
     });
-    // Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO,soc_ho:HO,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA'], function () {
+    // Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_bo:HO,ict_ho:HO,soc_ho:HO,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA'], function () {
     Route::post('/encrypt-year', function (Request $request) {
         $year = $request->year ?? Carbon::now()->year;
         $encryptedYear = Crypt::encryptString($year);
@@ -413,7 +414,7 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('/generate-inspection-scheduler-computer', [InspectionScheduleComputerController::class, 'generate']);
 
-    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
         Route::get('/dashboard', function () {
 
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
@@ -627,7 +628,7 @@ Route::middleware('auth')->group(function () {
         })->name('developerDashboard');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE'], function () {
         Route::get('/groupLeaderDashboard', function () {
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
             $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
@@ -707,7 +708,7 @@ Route::middleware('auth')->group(function () {
         })->name('groupLeaderDashboard');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE,ict_technician:BIB,ict_technician:ADW,ict_technician:BA,ict_technician:MIFA,ict_technician:MHU,ict_technician:AMI,ict_technician:PIK,ict_technician:IPT,ict_technician:MLP,ict_technician:MIP,ict_technician:VIB,ict_technician:SBS,ict_technician:BGE'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE,ict_technician:BIB,ict_technician:ADW,ict_technician:BA,ict_technician:MIFA,ict_technician:MHU,ict_technician:AMI,ict_technician:PIK,ict_technician:IPT,ict_technician:MLP,ict_technician:MIP,ict_technician:VIB,ict_technician:SBS,ict_technician:BGE'], function () {
         Route::get('/pica-inspeksi/{site}', [PicaInspeksiController::class, 'index'])->name('picaInspeksi.page');
         Route::get('/pica-inspeksi-by-device', [PicaInspeksiController::class, 'getDataPicaByDevice']);
         Route::get('/pica-inspeksi/{id}/edit', [PicaInspeksiController::class, 'edit'])->name('picaInspeksi.edit');
@@ -731,12 +732,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/aduan-ho/{id}/detail', [AduanHoController::class, 'detail'])->name('aduan-ho.detail');
     });
 
-    Route::group(['middleware' => 'checkRole:guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB'], function () {
+    Route::group(['middleware' => 'checkRole:guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB,ict_developer:PIK'], function () {
         Route::get('/asetDashboard', [GuestAllController::class, 'index'])->name('asetDashboard');
         Route::get('/asetDashboard/pengajuanAkses', [GuestAllController::class, 'pengajuanAkses'])->name('pengajuanAkses');
     });
 
-    Route::group(['middleware' => 'checkRole:guest:HO,guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB'], function () {
+    Route::group(['middleware' => 'checkRole:guest:HO,guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB,ict_developer:PIK'], function () {
         Route::get('/complaint/dashboard', [GuestReportController::class, 'index'])->name('guestAduan.page');
         Route::get('/user-unrated-closed-complaints', [GuestReportController::class, 'unratedClosed'])->name('guestAduan.unratedClosed');
         Route::post('/complaints/rating', [GuestReportController::class, 'storeRating'])->name('guestAduan.storeRating');
@@ -745,7 +746,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/complaint/{id}/delete', [GuestReportController::class, 'destroy'])->name('guestAduan.delete');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_technician:BIB,ict_developer:BIB'], function () {
+    Route::group(['middleware' => 'checkRole:ict_technician:BIB,ict_developer:BIB,ict_developer:PIK'], function () {
         Route::get('/technicianDashboard', function () {
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
             $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
@@ -827,7 +828,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('inventory')->group(function () {
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_bo:HO,ict_ho:HO'], function () {
 
             Route::get('/mobile-tower', [InvMobileTowerController::class, 'index'])->name('mobileTower.page');
             Route::get('/mobile-tower/create', [InvMobileTowerController::class, 'create'])->name('mobileTower.create');
@@ -848,6 +849,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/kpi-aduan-analysis-ho', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisHo');
             Route::post('/kpi-aduan-analysis-ho-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowHo');
             Route::post('/kpi-aduan-analysis-ho-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisHoDetail');
+
+            Route::get('/kpi-perangkat-breakdowns-bib-data', [PerangkatBreakdownController::class, 'calculatePerformance'])->name('kpi.perangkatBibData');
+            Route::get('/kpi-perangkat-breakdowns-bib', [PerangkatBreakdownController::class, 'index'])->name('kpi.perangkatBib');
+
 
             Route::get('/accessPoint', [InvApController::class, 'index'])->name('accessPoint.page');
             Route::post('/accessPoint/generate', [InvApController::class, 'generateCode'])->name('accessPoint.generate');
@@ -936,7 +941,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTV', [InvCctvController::class, 'uploadCsv'])->name('cctv.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {
             Route::get('/dashboardSiteBa', [DashboardBaController::class, 'index'])->name('dashboardBa.page');
 
             Route::get('/kpi-inspeksi-ba', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBa');
@@ -1046,7 +1051,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVBa', [InvCctvBaController::class, 'uploadCsv'])->name('cctvBa.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_group_leader:MIFA,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMifa', [DashboardMifaController::class, 'index'])->name('dashboardMifa.page');
 
             Route::get('/kpi-inspeksi-mifa', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMifa');
@@ -1156,7 +1161,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVMifa', [InvCctvMifaController::class, 'uploadCsv'])->name('cctvMifa.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_group_leader:MHU,ict_admin:MHU,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MHU,ict_group_leader:MHU,ict_admin:MHU,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMhu', [DashboardMhuController::class, 'index'])->name('dashboardMhu.page');
 
             Route::get('/kpi-inspeksi-mhu', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMhu');
@@ -1266,7 +1271,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVMhu', [InvCctvMhuController::class, 'uploadCsv'])->name('cctvMhu.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
             Route::get('/dashboardSiteAmi', [DashboardAmiController::class, 'index'])->name('dashboardAmi.page');
 
             Route::get('/kpi-inspeksi-ami', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiAmi');
@@ -1376,7 +1381,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVAmi', [InvCctvAmiController::class, 'uploadCsv'])->name('cctvAmi.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_group_leader:PIK,ict_admin:PIK,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:PIK,ict_group_leader:PIK,ict_admin:PIK,ict_ho:HO'], function () {
             Route::get('/dashboardSitePik', [DashboardPikController::class, 'index'])->name('dashboardPik.page');
 
             Route::get('/kpi-inspeksi-pik', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiPik');
@@ -1486,7 +1491,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVPik', [InvCctvPikController::class, 'uploadCsv'])->name('cctvPik.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BGE,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_group_leader:BGE,ict_ho:HO'], function () {
             Route::get('/dashboardSiteBge', [DashboardBgeController::class, 'index'])->name('dashboardBge.page');
 
             Route::get('/kpi-inspeksi-bge', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBge');
@@ -1596,7 +1601,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVBge', [InvCctvBgeController::class, 'uploadCsv'])->name('cctvBge.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
             Route::get('/dashboardSiteBib', [DashboardBibController::class, 'index'])->name('dashboardBib.page');
 
             Route::get('/kpi-inspeksi-bib', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBib');
@@ -1706,7 +1711,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVBib', [InvCctvBibController::class, 'uploadCsv'])->name('cctvBib.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:IPT,ict_group_leader:IPT,ict_admin:IPT,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:IPT,ict_group_leader:IPT,ict_admin:IPT,ict_ho:HO'], function () {
             Route::get('/dashboardSiteIpt', [DashboardIptController::class, 'index'])->name('dashboardIpt.page');
 
             Route::get('/kpi-inspeksi-ipt', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiIpt');
@@ -1816,7 +1821,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVIpt', [InvCctvIptController::class, 'uploadCsv'])->name('cctvIpt.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMlp', [DashboardMlpController::class, 'index'])->name('dashboardMlp.page');
 
             Route::get('/kpi-inspeksi-mlp', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMlp');
@@ -1926,7 +1931,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVMlp', [InvCctvMlpController::class, 'uploadCsv'])->name('cctvMlp.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIP,ict_group_leader:MIP,ict_admin:MIP,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIP,ict_group_leader:MIP,ict_admin:MIP,ict_ho:HO'], function () {
             Route::get('/dashboardSiteMip', [DashboardMipController::class, 'index'])->name('dashboardMip.page');
 
             Route::get('/kpi-inspeksi-mip', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMip');
@@ -2036,7 +2041,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVMip', [InvCctvMipController::class, 'uploadCsv'])->name('cctvMip.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
             Route::get('/dashboardSiteVale', [DashboardValeController::class, 'index'])->name('dashboardVale.page');
 
             Route::get('/kpi-inspeksi-vib', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiVib');
@@ -2146,7 +2151,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVVale', [InvCctvValeController::class, 'uploadCsv'])->name('cctvVale.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SBS,ict_group_leader:SBS,ict_admin:SBS,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SBS,ict_group_leader:SBS,ict_admin:SBS,ict_ho:HO'], function () {
             Route::get('/dashboardSiteSbs', [DashboardSbsController::class, 'index'])->name('dashboardSbs.page');
 
             Route::get('/kpi-inspeksi-sbs', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiSbs');
@@ -2256,7 +2261,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVSbs', [InvCctvSbsController::class, 'uploadCsv'])->name('cctvSbs.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
             Route::get('/dashboardSiteSks', [DashboardSksController::class, 'index'])->name('dashboardSks.page');
 
             Route::get('/kpi-inspeksi-sks', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiSks');
@@ -2366,7 +2371,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVSks', [InvCctvSksController::class, 'uploadCsv'])->name('cctvSks.import');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
             Route::get('/dashboardSiteWara', [DashboardWaraController::class, 'index'])->name('dashboardWara.page');
 
             Route::get('/kpi-inspeksi-adw', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiAdw');
@@ -2477,14 +2482,14 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('itportal')->group(function () {
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/Management-User-Ict', [UserController::class, 'index'])->name('managementUserIct.page');
                 Route::get('/Management-User-Ict/{id}/edit', [UserController::class, 'edit'])->name('managementUserIct.edit');
                 Route::post('/Management-User-Ict/update', [UserController::class, 'update'])->name('managementUserIct.update');
                 Route::delete('/Management-User-Ict/{id}/delete', [UserController::class, 'destroy'])->name('managementUserIct.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_ho:HO,ict_bod:HO'], function () {
                 Route::get('/pengguna', [UserAllController::class, 'index'])->name('pengguna.page');
                 Route::get('/pengguna/create', [UserAllController::class, 'create'])->name('pengguna.create');
                 Route::post('/pengguna/create', [UserAllController::class, 'store'])->name('pengguna.store');
@@ -2524,7 +2529,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('/inspeksi-laptop/approval', [InspeksiLaptopController::class, 'approval'])->name('inspeksiLaptop.approval');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-ba', [InspeksiLaptopBaController::class, 'index'])->name('inspeksiLaptopBa.page');
                 Route::get('inspeksi-laptop-ba/{id}/process', [InspeksiLaptopBaController::class, 'process'])->name('inspeksiLaptopBa.process');
                 Route::post('inspeksi-laptop-ba/process', [InspeksiLaptopBaController::class, 'store'])->name('inspeksiLaptopBa.store');
@@ -2564,7 +2569,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('akses-ba/{id}/delete', [AdminPengajuanRoleBaController::class, 'destroy'])->name('aksesBa.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-mifa', [InspeksiLaptopMifaController::class, 'index'])->name('inspeksiLaptopMifa.page');
                 Route::get('inspeksi-laptop-mifa/{id}/process', [InspeksiLaptopMifaController::class, 'process'])->name('inspeksiLaptopMifa.process');
                 Route::post('inspeksi-laptop-mifa/process', [InspeksiLaptopMifaController::class, 'store'])->name('inspeksiLaptopMifa.store');
@@ -2604,7 +2609,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('akses-mifa/{id}/delete', [AdminPengajuanRoleMifaController::class, 'destroy'])->name('aksesMifa.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_group_leader:MHU,ict_admin:MHU,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MHU,ict_group_leader:MHU,ict_admin:MHU,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-mhu', [InspeksiLaptopMhuController::class, 'index'])->name('inspeksiLaptopMhu.page');
                 Route::get('inspeksi-laptop-mhu/{id}/process', [InspeksiLaptopMhuController::class, 'process'])->name('inspeksiLaptopMhu.process');
                 Route::post('inspeksi-laptop-mhu/process', [InspeksiLaptopMhuController::class, 'store'])->name('inspeksiLaptopMhu.store');
@@ -2632,7 +2637,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('/uploadCsvPenggunaBa', [UserAllMhuController::class, 'uploadCsv'])->name('penggunaMhu.import');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_group_leader:ADW,ict_admin:ADW,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:ADW,ict_group_leader:ADW,ict_admin:ADW,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-Wara', [InspeksiLaptopWARAController::class, 'index'])->name('inspeksiLaptopWARA.page');
                 Route::get('inspeksi-laptop-Wara/{id}/process', [InspeksiLaptopWARAController::class, 'process'])->name('inspeksiLaptopWARA.process');
                 Route::post('inspeksi-laptop-Wara/process', [InspeksiLaptopWARAController::class, 'store'])->name('inspeksiLaptopWARA.store');
@@ -2652,7 +2657,7 @@ Route::middleware('auth')->group(function () {
                 Route::post('/inspeksi-komputer-wara/approval', [InspeksiComputerWARAController::class, 'approval'])->name('inspeksiKomputerWARA.approval');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-ami', [InspeksiLaptopAmiController::class, 'index'])->name('inspeksiLaptopAmi.page');
                 Route::get('inspeksi-laptop-ami/{id}/process', [InspeksiLaptopAmiController::class, 'process'])->name('inspeksiLaptopAmi.process');
                 Route::post('inspeksi-laptop-ami/process', [InspeksiLaptopAmiController::class, 'store'])->name('inspeksiLaptopAmi.store');
@@ -2672,7 +2677,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-ami/{id}/delete', [InspeksiComputerAmiController::class, 'destroy'])->name('inspeksiKomputerAmi.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_group_leader:PIK,ict_admin:PIK,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:PIK,ict_group_leader:PIK,ict_admin:PIK,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-pik', [InspeksiLaptopPikController::class, 'index'])->name('inspeksiLaptopPik.page');
                 Route::get('inspeksi-laptop-pik/{id}/process', [InspeksiLaptopPikController::class, 'process'])->name('inspeksiLaptopPik.process');
                 Route::post('inspeksi-laptop-pik/process', [InspeksiLaptopPikController::class, 'store'])->name('inspeksiLaptopPik.store');
@@ -2692,7 +2697,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-pik/{id}/delete', [InspeksiComputerPikController::class, 'destroy'])->name('inspeksiKomputerPik.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_group_leader:BGE,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_group_leader:BGE,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-Bge', [InspeksiLaptopBgeController::class, 'index'])->name('inspeksiLaptopBge.page');
                 Route::get('inspeksi-laptop-Bge/{id}/process', [InspeksiLaptopBgeController::class, 'process'])->name('inspeksiLaptopBge.process');
                 Route::post('inspeksi-laptop-Bge/process', [InspeksiLaptopBgeController::class, 'store'])->name('inspeksiLaptopBge.store');
@@ -2712,7 +2717,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-Bge/{id}/delete', [InspeksiComputerBgeController::class, 'destroy'])->name('inspeksiKomputerBge.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-bib', [InspeksiLaptopBibController::class, 'index'])->name('inspeksiLaptopBib.page');
                 Route::get('inspeksi-laptop-bib/{id}/process', [InspeksiLaptopBibController::class, 'process'])->name('inspeksiLaptopBib.process');
                 Route::post('inspeksi-laptop-bib/process', [InspeksiLaptopBibController::class, 'store'])->name('inspeksiLaptopBib.store');
@@ -2732,7 +2737,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-bib/{id}/delete', [InspeksiComputerBibController::class, 'destroy'])->name('inspeksiKomputerBib.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:IPT,ict_group_leader:IPT,ict_admin:IPT,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:IPT,ict_group_leader:IPT,ict_admin:IPT,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-ipt', [InspeksiLaptopIptController::class, 'index'])->name('inspeksiLaptopIpt.page');
                 Route::get('inspeksi-laptop-ipt/{id}/process', [InspeksiLaptopIptController::class, 'process'])->name('inspeksiLaptopIpt.process');
                 Route::post('inspeksi-laptop-ipt/process', [InspeksiLaptopIptController::class, 'store'])->name('inspeksiLaptopIpt.store');
@@ -2752,7 +2757,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-ipt/{id}/delete', [InspeksiComputerIptController::class, 'destroy'])->name('inspeksiKomputerIpt.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-mlp', [InspeksiLaptopMlpController::class, 'index'])->name('inspeksiLaptopMlp.page');
                 Route::get('inspeksi-laptop-mlp/{id}/process', [InspeksiLaptopMlpController::class, 'process'])->name('inspeksiLaptopMlp.process');
                 Route::post('inspeksi-laptop-mlp/process', [InspeksiLaptopMlpController::class, 'store'])->name('inspeksiLaptopMlp.store');
@@ -2772,7 +2777,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-mlp/{id}/delete', [InspeksiComputerMlpController::class, 'destroy'])->name('inspeksiKomputerMlp.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIP,ict_group_leader:MIP,ict_admin:MIP,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIP,ict_group_leader:MIP,ict_admin:MIP,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-mip', [InspeksiLaptopMipController::class, 'index'])->name('inspeksiLaptopMip.page');
                 Route::get('inspeksi-laptop-mip/{id}/process', [InspeksiLaptopMipController::class, 'process'])->name('inspeksiLaptopMip.process');
                 Route::post('inspeksi-laptop-mip/process', [InspeksiLaptopMipController::class, 'store'])->name('inspeksiLaptopMip.store');
@@ -2792,7 +2797,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-mip/{id}/delete', [InspeksiComputerMipController::class, 'destroy'])->name('inspeksiKomputerMip.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-vale', [InspeksiLaptopValeController::class, 'index'])->name('inspeksiLaptopVale.page');
                 Route::get('inspeksi-laptop-vale/{id}/process', [InspeksiLaptopValeController::class, 'process'])->name('inspeksiLaptopVale.process');
                 Route::post('inspeksi-laptop-vale/process', [InspeksiLaptopValeController::class, 'store'])->name('inspeksiLaptopVale.store');
@@ -2812,7 +2817,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-vale/{id}/delete', [InspeksiComputerValeController::class, 'destroy'])->name('inspeksiKomputerVale.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SBS,ict_group_leader:SBS,ict_admin:SBS,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SBS,ict_group_leader:SBS,ict_admin:SBS,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-sbs', [InspeksiLaptopSbsController::class, 'index'])->name('inspeksiLaptopSbs.page');
                 Route::get('inspeksi-laptop-sbs/{id}/process', [InspeksiLaptopSbsController::class, 'process'])->name('inspeksiLaptopSbs.process');
                 Route::post('inspeksi-laptop-sbs/process', [InspeksiLaptopSbsController::class, 'store'])->name('inspeksiLaptopSbs.store');
@@ -2832,7 +2837,7 @@ Route::middleware('auth')->group(function () {
                 Route::delete('inspeksi-komputer-sbs/{id}/delete', [InspeksiComputerSbsController::class, 'destroy'])->name('inspeksiKomputerSbs.delete');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
                 Route::get('inspeksi-laptop-sks', [InspeksiLaptopSksController::class, 'index'])->name('inspeksiLaptopSks.page');
                 Route::get('inspeksi-laptop-sks/{id}/process', [InspeksiLaptopSksController::class, 'process'])->name('inspeksiLaptopSks.process');
                 Route::post('inspeksi-laptop-sks/process', [InspeksiLaptopSksController::class, 'store'])->name('inspeksiLaptopSks.store');
@@ -2855,7 +2860,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('itportal')->group(function () {
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_ho:HO,ict_bod:HO,soc_ho:HO'], function () {
             Route::get('/admin/check-aduan/ho', [AduanController::class, 'checkAduan'])->name('aduan.check-aduan');
             Route::get('/aduan', [AduanController::class, 'index'])->name('aduan.page');
             Route::get('/aduan/create', [AduanController::class, 'create'])->name('aduan.create');
@@ -2870,7 +2875,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/aduan/update-urgency', [AduanController::class, 'updateUrgency'])->name('aduan.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BA,ict_ho:HO,ict_group_leader:BA,ict_admin:BA'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BA,ict_ho:HO,ict_group_leader:BA,ict_admin:BA'], function () {
             Route::get('/admin/check-aduan/ba', [AduanBaController::class, 'checkAduan'])->name('aduanBa.check-aduan');
             Route::get('/aduanBa', [AduanBaController::class, 'index'])->name('aduanBa.page');
             Route::get('/aduanBa/create', [AduanBaController::class, 'create'])->name('aduanBa.create');
@@ -2885,7 +2890,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/aduanBa/update-urgency', [AduanBaController::class, 'updateUrgency'])->name('aduanBa.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIFA,ict_group_leader:MIFA,ict_ho:HO,ict_group_leader:MIFA,ict_admin:MIFA'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIFA,ict_group_leader:MIFA,ict_ho:HO,ict_group_leader:MIFA,ict_admin:MIFA'], function () {
             Route::get('/admin/check-aduan/mifa', [AduanMifaController::class, 'checkAduan'])->name('aduanMifa.check-aduan');
             Route::get('/aduanMifa', [AduanMifaController::class, 'index'])->name('aduanMifa.page');
             Route::get('/aduanMifa/create', [AduanMifaController::class, 'create'])->name('aduanMifa.create');
@@ -2893,13 +2898,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMifa/{id}/edit', [AduanMifaController::class, 'edit'])->name('aduanMifa.edit');
             Route::post('/aduanMifa/updateProgress', [AduanMifaController::class, 'update_aduan_progress'])->name('aduanMifa.updateProgress');
             Route::get('/aduanMifa/{id}/progress', [AduanMifaController::class, 'progress'])->name('aduanMifa.progress');
+            Route::post('/aduanMifa/{id}/accept', [AduanMifaController::class, 'accept'])->name('aduanMifa.accept');
             Route::delete('/aduanMifa/{id}/delete', [AduanMifaController::class, 'destroy'])->name('aduanMifa.delete');
             Route::post('/aduanMifa/update', [AduanMifaController::class, 'update_aduan'])->name('aduanMifa.update');
             Route::get('/aduanMifa/{id}/detail', [AduanMifaController::class, 'detail'])->name('aduanMifa.detail');
             Route::post('/aduanMifa/update-urgency', [AduanMifaController::class, 'updateUrgency'])->name('aduanMifa.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MHU,ict_ho:HO,ict_group_leader:MHU,ict_admin:MHU'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MHU,ict_ho:HO,ict_group_leader:MHU,ict_admin:MHU'], function () {
             Route::get('/admin/check-aduan/mhu', [AduanMhuController::class, 'checkAduan'])->name('aduanMhu.check-aduan');
             Route::get('/aduanMhu', [AduanMhuController::class, 'index'])->name('aduanMhu.page');
             Route::get('/aduanMhu/create', [AduanMhuController::class, 'create'])->name('aduanMhu.create');
@@ -2907,13 +2913,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMhu/{id}/edit', [AduanMhuController::class, 'edit'])->name('aduanMhu.edit');
             Route::post('/aduanMhu/updateProgress', [AduanMhuController::class, 'update_aduan_progress'])->name('aduanMhu.updateProgress');
             Route::get('/aduanMhu/{id}/progress', [AduanMhuController::class, 'progress'])->name('aduanMhu.progress');
+            Route::post('/aduanMhu/{id}/accept', [AduanMhuController::class, 'accept'])->name('aduanMhu.accept');
             Route::delete('/aduanMhu/{id}/delete', [AduanMhuController::class, 'destroy'])->name('aduanMhu.delete');
             Route::post('/aduanMhu/update', [AduanMhuController::class, 'update_aduan'])->name('aduanMhu.update');
             Route::get('/aduanMhu/{id}/detail', [AduanMhuController::class, 'detail'])->name('aduanMhu.detail');
             Route::post('/aduanMhu/update-urgency', [AduanMhuController::class, 'updateUrgency'])->name('aduanMhu.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:ADW,ict_ho:HO,ict_group_leader:ADW,ict_admin:ADW'], function () {
             Route::get('/admin/check-aduan/adw', [AduanWARAController::class, 'checkAduan'])->name('aduanWARA.check-aduan');
             Route::get('/aduanWara', [AduanWARAController::class, 'index'])->name('aduanWARA.page');
             Route::get('/aduanWara/create', [AduanWARAController::class, 'create'])->name('aduanWARA.create');
@@ -2921,19 +2928,21 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanWara/{id}/edit', [AduanWARAController::class, 'edit'])->name('aduanWARA.edit');
             Route::post('/aduanWara/updateProgress', [AduanWARAController::class, 'update_aduan_progress'])->name('aduanWARA.updateProgress');
             Route::get('/aduanWara/{id}/progress', [AduanWARAController::class, 'progress'])->name('aduanWARA.progress');
+            Route::post('/aduanWara/{id}/accept', [AduanWaraController::class, 'accept'])->name('aduanWARA.accept');
             Route::delete('/aduanWara/{id}/delete', [AduanWARAController::class, 'destroy'])->name('aduanWARA.delete');
             Route::post('/aduanWara/update', [AduanWARAController::class, 'update_aduan'])->name('aduanWARA.update');
             Route::get('/aduanWara/{id}/detail', [AduanWARAController::class, 'detail'])->name('aduanWARA.detail');
             Route::post('/aduanWara/update-urgency', [AduanWaraController::class, 'updateUrgency'])->name('aduanWARA.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:AMI,ict_ho:HO,ict_group_leader:AMI,ict_admin:AMI'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:AMI,ict_ho:HO,ict_group_leader:AMI,ict_admin:AMI'], function () {
             Route::get('/admin/check-aduan/ami', [AduanAmiController::class, 'checkAduan'])->name('aduanAmi.check-aduan');
             Route::get('/aduanAmi', [AduanAmiController::class, 'index'])->name('aduanAmi.page');
             Route::get('/aduanAmi/create', [AduanAmiController::class, 'create'])->name('aduanAmi.create');
             Route::post('/aduanAmi/create', [AduanAmiController::class, 'store'])->name('aduanAmi.store');
             Route::get('/aduanAmi/{id}/edit', [AduanAmiController::class, 'edit'])->name('aduanAmi.edit');
             Route::post('/aduanAmi/updateProgress', [AduanAmiController::class, 'update_aduan_progress'])->name('aduanAmi.updateProgress');
+            Route::post('/aduanAmi/{id}/accept', [AduanAmiController::class, 'accept'])->name('aduanAmi.accept');
             Route::get('/aduanAmi/{id}/progress', [AduanAmiController::class, 'progress'])->name('aduanAmi.progress');
             Route::delete('/aduanAmi/{id}/delete', [AduanAmiController::class, 'destroy'])->name('aduanAmi.delete');
             Route::post('/aduanAmi/update', [AduanAmiController::class, 'update_aduan'])->name('aduanAmi.update');
@@ -2941,7 +2950,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/aduanAmi/update-urgency', [AduanAmiController::class, 'updateUrgency'])->name('aduanAmi.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:BIB,ict_ho:HO,ict_group_leader:BIB,ict_admin:BIB'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BIB,ict_ho:HO,ict_group_leader:BIB,ict_admin:BIB'], function () {
             Route::get('/admin/check-aduan/bib', [AduanBibController::class, 'checkAduan'])->name('aduanBib.check-aduan');
             Route::get('/aduanBib', [AduanBibController::class, 'index'])->name('aduanBib.page');
             Route::get('/latest-aduan', [AduanBibController::class, 'getLatestAduan']);
@@ -2950,13 +2959,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanBib/{id}/edit', [AduanBibController::class, 'edit'])->name('aduanBib.edit');
             Route::post('/aduanBib/updateProgress', [AduanBibController::class, 'update_aduan_progress'])->name('aduanBib.updateProgress');
             Route::get('/aduanBib/{id}/progress', [AduanBibController::class, 'progress'])->name('aduanBib.progress');
+            Route::post('/aduanBib/{id}/accept', [AduanBibController::class, 'accept'])->name('aduanBib.accept');
             Route::delete('/aduanBib/{id}/delete', [AduanBibController::class, 'destroy'])->name('aduanBib.delete');
             Route::post('/aduanBib/update', [AduanBibController::class, 'update_aduan'])->name('aduanBib.update');
             Route::get('/aduanBib/{id}/detail', [AduanBibController::class, 'detail'])->name('aduanBib.detail');
             Route::post('/aduanBib/update-urgency', [AduanBibController::class, 'updateUrgency'])->name('aduanBib.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:IPT,ict_ho:HO,ict_group_leader:IPT,ict_admin:IPT'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:IPT,ict_ho:HO,ict_group_leader:IPT,ict_admin:IPT'], function () {
             Route::get('/admin/check-aduan/ipt', [AduanIptController::class, 'checkAduan'])->name('aduanIpt.check-aduan');
             Route::get('/aduanIpt', [AduanIptController::class, 'index'])->name('aduanIpt.page');
             Route::get('/aduanIpt/create', [AduanIptController::class, 'create'])->name('aduanIpt.create');
@@ -2964,13 +2974,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanIpt/{id}/edit', [AduanIptController::class, 'edit'])->name('aduanIpt.edit');
             Route::post('/aduanIpt/updateProgress', [AduanIptController::class, 'update_aduan_progress'])->name('aduanIpt.updateProgress');
             Route::get('/aduanIpt/{id}/progress', [AduanIptController::class, 'progress'])->name('aduanIpt.progress');
+            Route::post('/aduanIpt/{id}/accept', [AduanIptController::class, 'accept'])->name('aduanIpt.accept');
             Route::delete('/aduanIpt/{id}/delete', [AduanIptController::class, 'destroy'])->name('aduanIpt.delete');
             Route::post('/aduanIpt/update', [AduanIptController::class, 'update_aduan'])->name('aduanIpt.update');
             Route::get('/aduanIpt/{id}/detail', [AduanIptController::class, 'detail'])->name('aduanIpt.detail');
             Route::post('/aduanIpt/update-urgency', [AduanIptController::class, 'updateUrgency'])->name('aduanIpt.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MLP,ict_ho:HO,ict_group_leader:MLP,ict_admin:MLP'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MLP,ict_ho:HO,ict_group_leader:MLP,ict_admin:MLP'], function () {
             Route::get('/admin/check-aduan/mlp', [AduanMlpController::class, 'checkAduan'])->name('aduanMlp.check-aduan');
             Route::get('/aduanMlp', [AduanMlpController::class, 'index'])->name('aduanMlp.page');
             Route::get('/aduanMlp/create', [AduanMlpController::class, 'create'])->name('aduanMlp.create');
@@ -2978,13 +2989,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMlp/{id}/edit', [AduanMlpController::class, 'edit'])->name('aduanMlp.edit');
             Route::post('/aduanMlp/updateProgress', [AduanMlpController::class, 'update_aduan_progress'])->name('aduanMlp.updateProgress');
             Route::get('/aduanMlp/{id}/progress', [AduanMlpController::class, 'progress'])->name('aduanMlp.progress');
+            Route::post('/aduanMlp/{id}/accept', [AduanMlpController::class, 'accept'])->name('aduanMlp.accept');
             Route::delete('/aduanMlp/{id}/delete', [AduanMlpController::class, 'destroy'])->name('aduanMlp.delete');
             Route::post('/aduanMlp/update', [AduanMlpController::class, 'update_aduan'])->name('aduanMlp.update');
             Route::get('/aduanMlp/{id}/detail', [AduanMlpController::class, 'detail'])->name('aduanMlp.detail');
             Route::post('/aduanMlp/update-urgency', [AduanMlpController::class, 'updateUrgency'])->name('aduanMlp.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:MIP,ict_ho:HO,ict_group_leader:MIP,ict_admin:MIP'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIP,ict_ho:HO,ict_group_leader:MIP,ict_admin:MIP'], function () {
             Route::get('/admin/check-aduan/mip', [AduanMipController::class, 'checkAduan'])->name('aduanMip.check-aduan');
             Route::get('/aduanMip', [AduanMipController::class, 'index'])->name('aduanMip.page');
             Route::get('/aduanMip/create', [AduanMipController::class, 'create'])->name('aduanMip.create');
@@ -2992,13 +3004,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanMip/{id}/edit', [AduanMipController::class, 'edit'])->name('aduanMip.edit');
             Route::post('/aduanMip/updateProgress', [AduanMipController::class, 'update_aduan_progress'])->name('aduanMip.updateProgress');
             Route::get('/aduanMip/{id}/progress', [AduanMipController::class, 'progress'])->name('aduanMip.progress');
+            Route::post('/aduanMip/{id}/accept', [AduanMipController::class, 'accept'])->name('aduanMip.accept');
             Route::delete('/aduanMip/{id}/delete', [AduanMipController::class, 'destroy'])->name('aduanMip.delete');
             Route::post('/aduanMip/update', [AduanMipController::class, 'update_aduan'])->name('aduanMip.update');
             Route::get('/aduanMip/{id}/detail', [AduanMipController::class, 'detail'])->name('aduanMip.detail');
             Route::post('/aduanMip/update-urgency', [AduanMipController::class, 'updateUrgency'])->name('aduanMip.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:VIB,ict_ho:HO,ict_group_leader:VIB,ict_admin:VIB'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:VIB,ict_ho:HO,ict_group_leader:VIB,ict_admin:VIB'], function () {
             Route::get('/admin/check-aduan/vib', [AduanValeController::class, 'checkAduan'])->name('aduanVale.check-aduan');
             Route::get('/aduanVale', [AduanValeController::class, 'index'])->name('aduanVale.page');
             Route::get('/aduanVale/create', [AduanValeController::class, 'create'])->name('aduanVale.create');
@@ -3006,13 +3019,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanVale/{id}/edit', [AduanValeController::class, 'edit'])->name('aduanVale.edit');
             Route::post('/aduanVale/updateProgress', [AduanValeController::class, 'update_aduan_progress'])->name('aduanVale.updateProgress');
             Route::get('/aduanVale/{id}/progress', [AduanValeController::class, 'progress'])->name('aduanVale.progress');
+            Route::post('/aduanVale/{id}/accept', [AduanValeController::class, 'accept'])->name('aduanVale.accept');
             Route::delete('/aduanVale/{id}/delete', [AduanValeController::class, 'destroy'])->name('aduanVale.delete');
             Route::post('/aduanVale/update', [AduanValeController::class, 'update_aduan'])->name('aduanVale.update');
             Route::get('/aduanVale/{id}/detail', [AduanValeController::class, 'detail'])->name('aduanVale.detail');
             Route::post('/aduanVale/update-urgency', [AduanValeController::class, 'updateUrgency'])->name('aduanVale.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SBS,ict_ho:HO,ict_group_leader:SBS,ict_admin:SBS'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SBS,ict_ho:HO,ict_group_leader:SBS,ict_admin:SBS'], function () {
             Route::get('/admin/check-aduan/sbs', [AduanSbsController::class, 'checkAduan'])->name('aduanSbs.check-aduan');
             Route::get('/aduanSbs', [AduanSbsController::class, 'index'])->name('aduanSbs.page');
             Route::get('/aduanSbs/create', [AduanSbsController::class, 'create'])->name('aduanSbs.create');
@@ -3020,13 +3034,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanSbs/{id}/edit', [AduanSbsController::class, 'edit'])->name('aduanSbs.edit');
             Route::post('/aduanSbs/updateProgress', [AduanSbsController::class, 'update_aduan_progress'])->name('aduanSbs.updateProgress');
             Route::get('/aduanSbs/{id}/progress', [AduanSbsController::class, 'progress'])->name('aduanSbs.progress');
+            Route::post('/aduanSbs/{id}/accept', [AduanSbsController::class, 'accept'])->name('aduanSbs.accept');
             Route::delete('/aduanSbs/{id}/delete', [AduanSbsController::class, 'destroy'])->name('aduanSbs.delete');
             Route::post('/aduanSbs/update', [AduanSbsController::class, 'update_aduan'])->name('aduanSbs.update');
             Route::get('/aduanSbs/{id}/detail', [AduanSbsController::class, 'detail'])->name('aduanSbs.detail');
             Route::post('/aduanSbs/update-urgency', [AduanSbsController::class, 'updateUrgency'])->name('aduanSbs.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:SKS,ict_ho:HO,ict_group_leader:SKS,ict_admin:SKS'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SKS,ict_ho:HO,ict_group_leader:SKS,ict_admin:SKS'], function () {
             Route::get('/admin/check-aduan/sks', [AduanSksController::class, 'checkAduan'])->name('aduanSks.check-aduan');
             Route::get('/aduanSks', [AduanSksController::class, 'index'])->name('aduanSks.page');
             Route::get('/aduanSks/create', [AduanSksController::class, 'create'])->name('aduanSks.create');
@@ -3034,13 +3049,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanSks/{id}/edit', [AduanSksController::class, 'edit'])->name('aduanSks.edit');
             Route::post('/aduanSks/updateProgress', [AduanSksController::class, 'update_aduan_progress'])->name('aduanSks.updateProgress');
             Route::get('/aduanSks/{id}/progress', [AduanSksController::class, 'progress'])->name('aduanSks.progress');
+            Route::post('/aduanSks/{id}/accept', [AduanSksController::class, 'accept'])->name('aduanSks.accept');
             Route::delete('/aduanSks/{id}/delete', [AduanSksController::class, 'destroy'])->name('aduanSks.delete');
             Route::post('/aduanSks/update', [AduanSksController::class, 'update_aduan'])->name('aduanSks.update');
             Route::get('/aduanSks/{id}/detail', [AduanSksController::class, 'detail'])->name('aduanSks.detail');
             Route::post('/aduanSks/update-urgency', [AduanSksController::class, 'updateUrgency'])->name('aduanSks.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_technician:PIK,ict_ho:HO,ict_group_leader:PIK,ict_admin:PIK'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:PIK,ict_ho:HO,ict_group_leader:PIK,ict_admin:PIK'], function () {
             Route::get('/admin/check-aduan/pik', [AduanPikController::class, 'checkAduan'])->name('aduanPik.check-aduan');
             Route::get('/aduanPik', [AduanPikController::class, 'index'])->name('aduanPik.page');
             Route::get('/aduanPik/create', [AduanPikController::class, 'create'])->name('aduanPik.create');
@@ -3048,19 +3064,21 @@ Route::middleware('auth')->group(function () {
             Route::get('/aduanPik/{id}/edit', [AduanPikController::class, 'edit'])->name('aduanPik.edit');
             Route::post('/aduanPik/updateProgress', [AduanPikController::class, 'update_aduan_progress'])->name('aduanPik.updateProgress');
             Route::get('/aduanPik/{id}/progress', [AduanPikController::class, 'progress'])->name('aduanPik.progress');
+            Route::post('/aduanPik/{id}/accept', [AduanPikController::class, 'accept'])->name('aduanPik.accept');
             Route::delete('/aduanPik/{id}/delete', [AduanPikController::class, 'destroy'])->name('aduanPik.delete');
             Route::post('/aduanPik/update', [AduanPikController::class, 'update_aduan'])->name('aduanPik.update');
             Route::get('/aduanPik/{id}/detail', [AduanPikController::class, 'detail'])->name('aduanPik.detail');
             Route::post('/aduanPik/update-urgency', [AduanPikController::class, 'updateUrgency'])->name('aduanPik.updateUrgency');
         });
 
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_group_leader:BGE'], function () {
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_ho:HO,ict_group_leader:BGE'], function () {
             Route::get('/admin/check-aduan/bge', [AduanBgeController::class, 'checkAduan'])->name('aduanBge.check-aduan');
             Route::get('/aduanBge', [AduanBgeController::class, 'index'])->name('aduanBge.page');
             Route::get('/aduanBge/create', [AduanBgeController::class, 'create'])->name('aduanBge.create');
             Route::post('/aduanBge/create', [AduanBgeController::class, 'store'])->name('aduanBge.store');
             Route::get('/aduanBge/{id}/edit', [AduanBgeController::class, 'edit'])->name('aduanBge.edit');
             Route::post('/aduanBge/updateProgress', [AduanBgeController::class, 'update_aduan_progress'])->name('aduanBge.updateProgress');
+            Route::post('/aduanBge/{id}/accept', [AduanBgeController::class, 'accept'])->name('aduanBge.accept');
             Route::get('/aduanBge/{id}/progress', [AduanBgeController::class, 'progress'])->name('aduanBge.progress');
             Route::delete('/aduanBge/{id}/delete', [AduanBgeController::class, 'destroy'])->name('aduanBge.delete');
             Route::post('/aduanBge/update', [AduanBgeController::class, 'update_aduan'])->name('aduanBge.update');
@@ -3069,7 +3087,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('/recycleBin')->group(function () {
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/aduanRcBin', [AduanRcbinController::class, 'index'])->name('aduanRcBin.page');
                 Route::patch('/aduanRcBin/{id}/restore', [AduanRcbinController::class, 'restore'])->name('aduanRcBin.restore');
                 Route::delete('/aduanRcBin/{id}/delete', [AduanRcbinController::class, 'destroy'])->name('aduanRcBin.delete');
@@ -3077,7 +3095,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/aduanRcBin/{id}/detail', [AduanRcbinController::class, 'detail'])->name('aduanRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/invApRcBin', [InvApRcbinController::class, 'index'])->name('accessPointRcBin.page');
                 Route::patch('/invApRcBin/{id}/restore', [InvApRcbinController::class, 'restore'])->name('accessPointRcBin.restore');
                 Route::delete('/invApRcBin/{id}/delete', [InvApRcbinController::class, 'destroy'])->name('accessPointRcBin.delete');
@@ -3085,7 +3103,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/invApRcBin/{id}/detail', [InvApRcbinController::class, 'detail'])->name('accessPointRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/invSwitchRcBin', [InvSwitchRcbinController::class, 'index'])->name('switchRcBin.page');
                 Route::patch('/invSwitchRcBin/{id}/restore', [InvSwitchRcbinController::class, 'restore'])->name('switchRcBin.restore');
                 Route::delete('/invSwitchRcBin/{id}/delete', [InvSwitchRcbinController::class, 'destroy'])->name('switchRcBin.delete');
@@ -3093,7 +3111,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/invSwitchRcBin/{id}/detail', [InvSwitchRcbinController::class, 'detail'])->name('switchRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/invWirellessRcBin', [InvWirellessRcbinController::class, 'index'])->name('wirellessRcBin.page');
                 Route::patch('/invWirellessRcBin/{id}/restore', [InvWirellessRcbinController::class, 'restore'])->name('wirellessRcBin.restore');
                 Route::delete('/invWirellessRcBin/{id}/delete', [InvWirellessRcbinController::class, 'destroy'])->name('wirellessRcBin.delete');
@@ -3101,7 +3119,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/invWirellessRcBin/{id}/detail', [InvWirellessRcbinController::class, 'detail'])->name('wirellessRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/invLaptopRcBin', [InvLaptopRcBinController::class, 'index'])->name('laptopRcBin.page');
                 Route::patch('/invLaptopRcBin/{id}/restore', [InvLaptopRcBinController::class, 'restore'])->name('laptopRcBin.restore');
                 Route::delete('/invLaptopRcBin/{id}/delete', [InvLaptopRcBinController::class, 'destroy'])->name('laptopRcBin.delete');
@@ -3109,7 +3127,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/invLaptopRcBin/{id}/detail', [InvLaptopRcBinController::class, 'detail'])->name('laptopRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/invComputerRcBin', [InvComputerRcBinController::class, 'index'])->name('komputerRcBin.page');
                 Route::patch('/invComputerRcBin/{id}/restore', [InvComputerRcBinController::class, 'restore'])->name('komputerRcBin.restore');
                 Route::delete('/invComputerRcBin/{id}/delete', [InvComputerRcBinController::class, 'destroy'])->name('komputerRcBin.delete');
@@ -3117,7 +3135,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/invComputerRcBin/{id}/detail', [InvComputerRcBinController::class, 'detail'])->name('komputerRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/invPrinterRcBin', [InvPrinterRcBinController::class, 'index'])->name('printerRcBin.page');
                 Route::patch('/invPrinterRcBin/{id}/restore', [InvPrinterRcBinController::class, 'restore'])->name('printerRcBin.restore');
                 Route::delete('/invPrinterRcBin/{id}/delete', [InvPrinterRcBinController::class, 'destroy'])->name('printerRcBin.delete');
@@ -3125,7 +3143,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/invPrinterRcBin/{id}/detail', [InvPrinterRcBinController::class, 'detail'])->name('printerRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/invScannerRcBin', [InvScannerRcBinController::class, 'index'])->name('scannerRcBin.page');
                 Route::patch('/invScannerRcBin/{id}/restore', [InvScannerRcBinController::class, 'restore'])->name('scannerRcBin.restore');
                 Route::delete('/invScannerRcBin/{id}/delete', [InvScannerRcBinController::class, 'destroy'])->name('scannerRcBin.delete');
@@ -3133,7 +3151,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/invScannerRcBin/{id}/detail', [InvScannerRcBinController::class, 'detail'])->name('scannerRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/invCctvRcBin', [InvCctvRcBinController::class, 'index'])->name('cctvRcBin.page');
                 Route::patch('/invCctvRcBin/{id}/restore', [InvCctvRcBinController::class, 'restore'])->name('cctvRcBin.restore');
                 Route::delete('/invCctvRcBin/{id}/delete', [InvCctvRcBinController::class, 'destroy'])->name('cctvRcBin.delete');
@@ -3141,7 +3159,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/invCctvRcBin/{id}/detail', [InvCctvRcBinController::class, 'detail'])->name('cctvRcBin.detail');
             });
 
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/penggunaRcBin', [UserAllRcBinController::class, 'index'])->name('penggunaRcBin.page');
                 Route::patch('/penggunaRcBin/{id}/restore', [UserAllRcBinController::class, 'restore'])->name('penggunaRcBin.restore');
                 Route::delete('/penggunaRcBin/{id}/delete', [UserAllRcBinController::class, 'destroy'])->name('penggunaRcBin.delete');

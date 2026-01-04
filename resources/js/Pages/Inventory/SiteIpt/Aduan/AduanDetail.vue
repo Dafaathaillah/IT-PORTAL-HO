@@ -156,7 +156,7 @@ const mount = onMounted(() => {
                                                         props.aduan
                                                             .complaint_image
                                                     "
-                                                    alt="documentation image"
+                                                    alt="No Document"
                                                     class="ml-40 w-50 h-30 shadow-2xl rounded-xl"
                                                 />
                                             </p>
@@ -196,6 +196,21 @@ const mount = onMounted(() => {
                                     </div>
                                     <div>
                                         <p>: {{ props.aduan.status }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2">
+                                    <div>
+                                        <p class="text-base">Root Cause</p>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            :
+                                            {{
+                                                props.aduan.root_cause
+                                                    ?.root_cause_problem ?? "-"
+                                            }}
+                                        </p>
                                     </div>
                                 </div>
 
@@ -281,6 +296,25 @@ const mount = onMounted(() => {
                                         </p>
                                     </div>
                                 </div>
+
+                                 <div
+                                    v-if="props.aduan.status === 'CLOSED'"
+                                    class="grid grid-cols-2 items-start"
+                                >
+                                    <div>
+                                        <p class="text-base">Repair Image</p>
+                                    </div>
+
+                                    <div class="flex items-start gap-2">
+                                        <span>:</span>
+                                        <img
+                                            :src="props.aduan.repair_image"
+                                            alt="No Document"
+                                            class="w-50 h-30 shadow-2xl rounded-xl"
+                                        />
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

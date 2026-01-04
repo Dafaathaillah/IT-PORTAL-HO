@@ -65,7 +65,7 @@ class AuthenticatedSessionController extends Controller
             if ($dataUser && Hash::check($request->password, $dataUser->password)) {
                 $request->authenticate();
                 $request->session()->regenerate();
-              return redirect(route('home', absolute: false));
+                return redirect(route('home', absolute: false));
             } else if (empty($dataUser)) {
                 $request->session()->flash('errorLoginUnamePasswr', 'NRP anda tidak terdaftar di local! lakukan login dengan SS6');
                 return redirect('/login-bge');
@@ -106,7 +106,7 @@ class AuthenticatedSessionController extends Controller
 
                         $request->session()->regenerate();
 
-                       return redirect(route('home', absolute: false));
+                        return redirect(route('home', absolute: false));
                     } else {
                         $dataUser = User::where('nrp', $dataToArray['nrp'])->first();
                         $dataUserAll = UserAll::where('nrp', $dataToArray['nrp'])->first();
@@ -144,7 +144,7 @@ class AuthenticatedSessionController extends Controller
 
                             $request->session()->regenerate();
 
-                           return redirect(route('home', absolute: false));
+                            return redirect(route('home', absolute: false));
                         } else {
                             $dataCreate = [
                                 'name' => $dataToArray['nama'],
@@ -205,7 +205,7 @@ class AuthenticatedSessionController extends Controller
             $request->session()->flash('errorLoginKoneksi', 'Internet anda tidak stabil untuk mengakses halaman ini!');
             return redirect('/login');
         }
-            return redirect('/login');
+        return redirect('/login');
     }
 
     /**
@@ -214,38 +214,49 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         $auth = auth()->user()->site;
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'Access-Control-Allow-Origin' => '*',
-        ])->delete('https://ict-auth.ppa-ho.net/auth/logout');
 
-        if ($auth == 'BGE') {
-            Auth::guard('web')->logout();
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Access-Control-Allow-Origin' => '*',
+            ])->connectTimeout(10)->timeout(30)
+                ->delete('https://ict-auth.ppa-ho.net/auth/logout');
 
-            $request->session()->invalidate();
-
-            $request->session()->regenerateToken();
-
-            return redirect('/login-bge');
-        } else {
-            if ($response['statusCode'] == 401) {
+            if ($auth == 'BGE') {
                 Auth::guard('web')->logout();
 
                 $request->session()->invalidate();
 
                 $request->session()->regenerateToken();
 
-                return redirect('/login');
-            } elseif ($response['statusCode'] == 429) {
-                $request->session()->flash('errorMessage', 'Terlalu banyak melakukan percobaan!');
-                Auth::guard('web')->logout();
+                return redirect('/login-bge');
+            } else {
+                if ($response['statusCode'] == 401) {
+                    Auth::guard('web')->logout();
 
-                $request->session()->invalidate();
+                    $request->session()->invalidate();
 
-                $request->session()->regenerateToken();
+                    $request->session()->regenerateToken();
 
-                return redirect('/login');
+                    return redirect('/login');
+                } elseif ($response['statusCode'] == 429) {
+                    $request->session()->flash('errorMessage', 'Terlalu banyak melakukan percobaan!');
+                    Auth::guard('web')->logout();
+
+                    $request->session()->invalidate();
+
+                    $request->session()->regenerateToken();
+
+                    return redirect('/login');
+                }
             }
+        } catch (\Throwable $e) {
+
+            $request->session()->flash(
+                'errorLoginKoneksi',
+                'Internet anda tidak stabil untuk mengakses halaman ini!'
+            );
         }
+
     }
 }

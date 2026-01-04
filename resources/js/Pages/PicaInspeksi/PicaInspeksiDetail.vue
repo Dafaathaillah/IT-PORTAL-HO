@@ -145,8 +145,17 @@ function formattedDate(date) {
                                                 </div>
                                                 <div class="grid grid-cols-2">
                                                     <div>
-                                                        <p class="text-base">
+                                                        <p v-if="dataInspeksi.device_type === 'Laptop'" class="text-base">
                                                             Laptop Name
+                                                        </p>
+                                                        <p v-if="dataInspeksi.device_type === 'Computer'" class="text-base">
+                                                            Computer Name
+                                                        </p>
+                                                        <p v-if="dataInspeksi.device_type === 'Printer'" class="text-base">
+                                                            Printer Name
+                                                        </p>
+                                                        <p v-if="dataInspeksi.device_type === 'Mobile Tower'" class="text-base">
+                                                            Mobile Tower Name
                                                         </p>
                                                     </div>
                                                     <div>

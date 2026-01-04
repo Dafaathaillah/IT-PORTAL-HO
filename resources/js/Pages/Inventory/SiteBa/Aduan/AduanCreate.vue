@@ -354,11 +354,16 @@ const showAlertTrue = () => {
                                         </div>
                                         <span
                                             v-if="
-                                                !selectedOption && formSubmitted
+                                                formSubmitted &&
+                                                form.inventory_number &&
+                                                (!selectedValues ||
+                                                    selectedValues.length === 0)
                                             "
                                             class="text-red-500"
-                                            >Crew Has Required!</span
                                         >
+                                            Crew is required when Inventory
+                                            Number is filled!
+                                        </span>
                                     </div>
                                     <div
                                         class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"

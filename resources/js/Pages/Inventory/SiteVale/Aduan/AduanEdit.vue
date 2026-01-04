@@ -31,6 +31,7 @@ const form = useForm({
     detail_location: props.aduan.detail_location,
 });
 
+const isDisabledByStatus = computed(() => form.status === 'CLOSED')
 const isDisabled = ref(true);
 const file = ref(null);
 
@@ -278,6 +279,7 @@ function handleCategoryChange(event) {
                                                 Category Aduan</label
                                             >
                                             <select
+                                            :disabled="isDisabledByStatus"
                                                 @change="handleCategoryChange"
                                                 required
                                                 id="category_name"
@@ -313,6 +315,7 @@ function handleCategoryChange(event) {
                                                 >Inventory Number</label
                                             >
                                             <input
+                                            :disabled="isDisabledByStatus"
                                                 required
                                                 type="text"
                                                 name="inventory_number"
@@ -419,6 +422,7 @@ function handleCategoryChange(event) {
                                                 Status</label
                                             >
                                             <select
+                                            :disabled="isDisabledByStatus"
                                                 required
                                                 id="status"
                                                 v-model="form.status"
@@ -453,6 +457,7 @@ function handleCategoryChange(event) {
                                                 >Date & Time Complaint</label
                                             >
                                             <VueDatePicker
+                                            :disabled="isDisabledByStatus"
                                                 required
                                                 v-model="dateOfComplaintLocal"
                                                 :model-value="
@@ -480,6 +485,7 @@ function handleCategoryChange(event) {
                                                 >Start Response</label
                                             >
                                             <VueDatePicker
+                                            :disabled="isDisabledByStatus"
                                                 required
                                                 v-model="startResponseLocal"
                                                 :model-value="
@@ -507,6 +513,7 @@ function handleCategoryChange(event) {
                                                 >Start Progress</label
                                             >
                                             <VueDatePicker
+                                            :disabled="isDisabledByStatus"
                                                 v-model="startProgressLocal"
                                                 :model-value="
                                                     toLocalTime(startProgress)
@@ -534,6 +541,7 @@ function handleCategoryChange(event) {
                                                 >End Progress</label
                                             >
                                             <VueDatePicker
+                                            :disabled="isDisabledByStatus"
                                                 v-model="endProgressLocal"
                                                 :model-value="
                                                     toLocalTime(endProgress)

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\InspeksiComputer;
 use App\Models\InspeksiLaptop;
+use App\Models\InspeksiMobileTower;
+use App\Models\InspeksiPrinter;
 use App\Models\InvComputer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -169,7 +171,92 @@ class KpiInspeksiController extends Controller
                     }
                 }
             }
-        }
+        } elseif ($device === 'PRINTER') {
+
+            // Jika month & year ada → pakai request
+            // Jika kosong → pakai bulan & tahun sekarang
+            $month = $request->month
+                ? (int) $request->month
+                : Carbon::now()->month;
+
+            $year = $request->year
+                ? (int) $request->year
+                : Carbon::now()->year;
+
+            $countAll = InspeksiPrinter::where('site', $auth->site)
+                ->where('year', $year)
+                ->where('month', $month)
+                ->count();
+
+            $countY = InspeksiPrinter::where('site', $auth->site)
+                ->where('year', $year)
+                ->where('month', $month)
+                ->where('inspection_status', 'Y')
+                ->count();
+
+            $countN = InspeksiPrinter::where('site', $auth->site)
+                ->where('year', $year)
+                ->where('month', $month)
+                ->where('inspection_status', 'N')
+                ->count();
+
+            // Nama bulan (Indonesia)
+            $monthName = Carbon::create()
+                ->month($month)
+                ->translatedFormat('F');
+
+            $chartData['labels'][] = "{$monthName} {$year}";
+            $chartData['sudah_inspeksi'][] = $countAll
+                ? round(($countY / $countAll) * 100, 2)
+                : 0;
+
+            $chartData['belum_inspeksi'][] = $countAll
+                ? round(($countN / $countAll) * 100, 2)
+                : 0;
+        } elseif ($device === 'MOBILE TOWER') {
+
+            // Jika month & year ada → pakai request
+            // Jika kosong → pakai bulan & tahun sekarang
+            $month = $request->month
+                ? (int) $request->month
+                : Carbon::now()->month;
+
+            $year = $request->year
+                ? (int) $request->year
+                : Carbon::now()->year;
+
+            $countAll = InspeksiMobileTower::where('site', $auth->site)
+                ->where('year', $year)
+                ->where('month', $month)
+                ->count();
+
+            $countY = InspeksiMobileTower::where('site', $auth->site)
+                ->where('year', $year)
+                ->where('month', $month)
+                ->where('inspection_status', 'Y')
+                ->count();
+
+            $countN = InspeksiMobileTower::where('site', $auth->site)
+                ->where('year', $year)
+                ->where('month', $month)
+                ->where('inspection_status', 'N')
+                ->count();
+
+            // Nama bulan (Indonesia)
+            $monthName = Carbon::create()
+                ->month($month)
+                ->translatedFormat('F');
+
+            $chartData['labels'][] = "{$monthName} {$year}";
+            $chartData['sudah_inspeksi'][] = $countAll
+                ? round(($countY / $countAll) * 100, 2)
+                : 0;
+
+            $chartData['belum_inspeksi'][] = $countAll
+                ? round(($countN / $countAll) * 100, 2)
+                : 0;
+        } 
+
 
         // dd($chartData);
 

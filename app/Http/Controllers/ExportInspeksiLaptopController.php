@@ -58,17 +58,17 @@ class ExportInspeksiLaptopController extends Controller
 
 
         $inspectionY = $inspeksiLaptopAll->firstWhere('inspection_status', 'Y');
-        // if ($inspectionY) {
-            // if ($user->site == 'HO') {
+        if ($inspectionY) {
+            if ($user->site == 'HO') {
                 $picApproved = 'EDI NUGROHO';
-        //     }else{
-        //         $picApproved = $inspectionY->approved_by;
-        //     }
-        // } else {
-        //     $picApproved = '';
-        // }
+            }else{
+                $picApproved = $inspectionY->approved_by;
+            }
+        } else {
+            $picApproved = '';
+        }
         $qr_base64Approved = null;
-        // if ($inspectionY && $picApproved) {
+        if ($inspectionY && $picApproved) {
             $approvedUser = User::where('name', $picApproved)->first();
             if ($approvedUser) {
                 $qrString = "NRP: {$approvedUser->nrp}, Nama: {$approvedUser->name}, Jabatan: {$approvedUser->position}";
@@ -77,7 +77,7 @@ class ExportInspeksiLaptopController extends Controller
                 $pngData = $barcode->getBarcodePNG($qrString, 'QRCODE');
                 $qr_base64Approved = 'data:image/png;base64,' . $pngData;
             }
-        // }
+        }
 
         $qr_base64Pic = null;
         $picInspeksi = User::where('name', $pic)->first();

@@ -16,12 +16,23 @@ import Swal from "sweetalert2";
 
 const showingNavigationDropdown = ref(false);
 
-//Mobile Sidebar
+// 🔹 Mobile Sidebar (offcanvas)
 const isActive = ref(false);
 const handleMobileSidebar = () => {
-    // alert(isActive.value);
     isActive.value = !isActive.value;
 };
+
+// 🔹 Desktop Sidebar (collapse/expand)
+const isCollapseSidebar = ref(false);
+const handleCollapseSidebar = () => {
+    isCollapseSidebar.value = !isCollapseSidebar.value;
+
+    // Optional: simpan ke localStorage biar keinget
+    localStorage.setItem("sidebarCollapsed", isCollapseSidebar.value);
+};
+
+// 🔹 Saat pertama load, baca dari localStorage
+onMounted(() => {});
 
 //Argon Configurator
 const configurator = ref(null);
@@ -46,6 +57,14 @@ const notifikasiList = ref([]);
 
 const checkAduan = async () => {
     try {
+
+        const user = page.props.auth?.user;
+
+        if (!user || !user.site) {
+            console.warn("User or site not available yet");
+            return;
+        }
+
         const userSiteUpper = computed(() => page.props.auth.user.site);
         const apiUrl = `/itportal/admin/check-aduan/${userSite.value}`; // Tambahkan site ke URL
         const response = await fetch(apiUrl);
@@ -100,18 +119,48 @@ const checkAduan = async () => {
     }
 };
 
+// onMounted(() => {
+//     console.log("👀 Memeriksa localStorage di Admin...");
+
+//     const lastAduan = localStorage.getItem("lastAduan");
+
+//     if (lastAduan) {
+//         console.log("✅ Data ditemukan:", JSON.parse(lastAduan));
+//     } else {
+//         console.log("❌ Tidak ada data aduan di localStorage");
+//     }
+
+//     // Tambahkan event listener untuk mendeteksi perubahan localStorage
+//     window.addEventListener("storage", (event) => {
+//         if (event.key === "lastAduan") {
+//             console.log(
+//                 "🔔 Data aduan baru masuk:",
+//                 JSON.parse(event.newValue)
+//             );
+//         }
+//     });
+
+//     const audio = document.getElementById("notifSound");
+//     if (audio) {
+//         audio.muted = true; // Mulai dalam mode mute
+//     }
+
+//     // Jalankan polling untuk mengecek aduan baru
+//     intervalId = setInterval(checkAduan, 2000);
+// });
+
 onMounted(() => {
     console.log("👀 Memeriksa localStorage di Admin...");
 
+    // ✅ Cek aduan terakhir
     const lastAduan = localStorage.getItem("lastAduan");
-
     if (lastAduan) {
         console.log("✅ Data ditemukan:", JSON.parse(lastAduan));
     } else {
         console.log("❌ Tidak ada data aduan di localStorage");
     }
 
-    // Tambahkan event listener untuk mendeteksi perubahan localStorage
+    // ✅ Event listener untuk notifikasi aduan
     window.addEventListener("storage", (event) => {
         if (event.key === "lastAduan") {
             console.log(
@@ -121,13 +170,21 @@ onMounted(() => {
         }
     });
 
+    // ✅ Atur audio notif
     const audio = document.getElementById("notifSound");
     if (audio) {
-        audio.muted = true; // Mulai dalam mode mute
+        audio.muted = true; // mulai dalam mode mute
     }
 
-    // Jalankan polling untuk mengecek aduan baru
+    // ✅ Jalankan polling aduan
     intervalId = setInterval(checkAduan, 2000);
+
+    // ✅ Baca state collapse sidebar dari localStorage (desktop)
+    const savedSidebarState = localStorage.getItem("sidebarCollapsed");
+    if (savedSidebarState !== null) {
+        isCollapseSidebar.value = savedSidebarState === "true";
+        console.log("📂 Sidebar collapse state:", isCollapseSidebar.value);
+    }
 });
 
 const pages = defineModel("pages", {
@@ -156,11 +213,18 @@ const mainMenu = defineModel("mainMenu", {
     ></div>
     <div class="hidden absolute w-full bg-slate-900 dark:block min-h-75"></div>
 
-    <DashboardAside v-model:isMobileSidebar="isActive" />
+    <DashboardAside
+        v-model:isMobileSidebar="isActive"
+        v-model:isCollapseSidebar="isCollapseSidebar"
+        @toggleCollapse="handleCollapseSidebar"
+    />
 
     <!-- Page Content -->
     <main
-        class="relative flex-1 min-h-0 overflow-auto transition-[margin] duration-200 ease-in-out xl:ml-68 rounded-xl pt-1"
+        :class="[
+            'relative flex-1 min-h-0 overflow-auto transition-all duration-200 ease-in-out rounded-xl pt-1',
+            isCollapseSidebar ? 'xl:ml-25' : 'xl:ml-68',
+        ]"
         style="will-change: margin"
     >
         <audio
