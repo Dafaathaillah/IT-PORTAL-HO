@@ -981,8 +981,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('inventory')->group(function () {
-        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_bo:HO,ict_ho:HO'], function () {
-            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_bo:HO,ict_ho:HO'], function () {
+        // Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_ho:HO,ict_ho:HO'], function () {
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_ho:HO,ict_ho:HO'], function () {
 
                 Route::get('/kpi-vhms', action: [KpiVhmsController::class, 'index'])->name('kpi.vhms');
                 Route::post('/kpi-vhms-show', [KpiVhmsController::class, 'countKpi'])->name('kpi.vhmsShow');
@@ -3659,7 +3659,7 @@ Route::middleware('auth')->group(function () {
             });
         });
     });
-});
+// });
 Route::get('/redirectAuthenticatedUsers', [RedirectAuthenticatedUsersController::class, 'home'])->name('home');
 Route::get('login-bge', [AuthController::class, 'index'])->name('auth.bge');
 Route::post('login-handling', [TestingAuthApiController::class, 'index'])->name('auth.loginHandling');
