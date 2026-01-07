@@ -49,7 +49,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Laptop Pages");
@@ -93,6 +93,8 @@ const props = defineProps({
     crew: {
         type: Array,
     },
+    yearNow: Number,
+    tahun_sekarang: Number,
 });
 
 const options = props.crew;
@@ -101,7 +103,7 @@ const showValidation = ref(false);
 
 const form = useForm({});
 
-const year = ref(""); // State untuk input year
+const year = ref(props.yearNow);
 
 const validateYear = (event) => {
     const value = event.target.value;
@@ -109,6 +111,21 @@ const validateYear = (event) => {
         year.value = value.replace(/\D/g, ""); // Hapus karakter selain angka
     }
 };
+
+watch([year], ([newYear]) => {
+    if (newYear) {
+        router.get(
+            route("inspeksiLaptopVale.page"),
+            {
+                year: newYear,
+            },
+            {
+                preserveState: false,
+                replace: true,
+            }
+        );
+    }
+});
 
 const getEncryptedYear = () => {
     if (!selectedValues.value || !selectedValues.value.name) {
@@ -398,13 +415,13 @@ const approved = () => {
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi
                                 </button>
-                                 <button
-                                @click="approved"
-                                class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-green-850 hover:scale-105"
-                            >
-                                <i class="fas fa-check"></i>
-                                Approval
-                            </button>
+                                <button
+                                    @click="approved"
+                                    class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-green-850 hover:scale-105"
+                                >
+                                    <i class="fas fa-check"></i>
+                                    Approval
+                                </button>
                             </div>
                             <div
                                 class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border"
@@ -515,7 +532,9 @@ const approved = () => {
                                                                 "
                                                                 v-if="
                                                                     inspeksiLaptops.inspection_status ===
-                                                                    'N'
+                                                                        'N' &&
+                                                                    inspeksiLaptops.year ===
+                                                                        props.tahun_sekarang
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >

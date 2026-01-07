@@ -49,7 +49,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Komputer Pages");
@@ -93,6 +93,10 @@ const props = defineProps({
     crew: {
         type: Array,
     },
+    yearNow: Number,
+    quarterNow: Number,
+    tahun_sekarang: Number,
+    quarter_sekarang: Number,
 });
 const options = props.crew;
 const selectedValues = ref(null); // Awalnya array kosong
@@ -121,8 +125,8 @@ const editDataInspeksi = (id) => {
     });
 };
 
-const year = ref(""); // State untuk input year
-const triwulan = ref(""); // State untuk input year
+const year = ref(props.yearNow);
+const triwulan = ref(props.quarterNow);
 
 const validateYear = (event) => {
     const value = event.target.value;
@@ -130,6 +134,22 @@ const validateYear = (event) => {
         year.value = value.replace(/\D/g, ""); // Hapus karakter selain angka
     }
 };
+
+watch([triwulan, year], ([newQuarter, newYear]) => {
+    if (newQuarter && newYear) {
+        router.get(
+            route("inspeksiKomputerWARA.page"),
+            {
+                quarter: newQuarter,
+                year: newYear,
+            },
+            {
+                preserveState: false,
+                replace: true,
+            }
+        );
+    }
+});
 
 const getEncryptedYear = () => {
     if (!selectedValues.value || !selectedValues.value.name) {
@@ -310,7 +330,9 @@ const getBadgeTextStatusInventory = (status) => {
     }
 };
 
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content");
 
 const approved = () => {
     Swal.fire({
@@ -334,11 +356,11 @@ const approved = () => {
             });
 
             axios
-                .post(route('inspeksiKomputerWARA.approval', {}, Ziggy), {
+                .post(route("inspeksiKomputerWARA.approval", {}, Ziggy), {
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest',
-                    }
+                        "X-CSRF-TOKEN": csrfToken,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
                 })
                 .then((response) => {
                     Swal.fire({
@@ -390,7 +412,7 @@ const approved = () => {
                                             aria-hidden="true"
                                         ></i>
                                     </span>
-                                        <input
+                                    <input
                                         v-model="triwulan"
                                         type="number"
                                         min="1"
@@ -423,7 +445,7 @@ const approved = () => {
                                         @input="validateYear"
                                     />
                                 </div>
-                                      <div
+                                <div
                                     class="relative flex flex-wrap items-stretch w-50 transition-all rounded-lg ease mb-4"
                                 >
                                     <VueMultiselect
@@ -564,7 +586,11 @@ const approved = () => {
                                                             <NavLinkCustom
                                                                 v-if="
                                                                     computers.inspection_status ===
-                                                                    'N'
+                                                                        'N' &&
+                                                                    computers.triwulan ==
+                                                                        props.quarter_sekarang &&
+                                                                    computers.year ==
+                                                                        props.tahun_sekarang
                                                                 "
                                                                 @click="
                                                                     editData(

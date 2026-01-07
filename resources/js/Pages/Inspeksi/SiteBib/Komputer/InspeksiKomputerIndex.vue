@@ -49,7 +49,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Komputer Pages");
@@ -93,6 +93,10 @@ const props = defineProps({
     crew: {
         type: Array,
     },
+    yearNow: Number,
+    quarterNow: Number,
+    tahun_sekarang: Number,
+    quarter_sekarang: Number,
 });
 const options = props.crew;
 const selectedValues = ref(null); // Awalnya array kosong
@@ -121,8 +125,8 @@ const editDataInspeksi = (id) => {
     });
 };
 
-const year = ref(""); // State untuk input year
-const triwulan = ref(""); // State untuk input year
+const year = ref(props.yearNow);
+const triwulan = ref(props.quarterNow);
 
 const validateYear = (event) => {
     const value = event.target.value;
@@ -130,6 +134,22 @@ const validateYear = (event) => {
         year.value = value.replace(/\D/g, ""); // Hapus karakter selain angka
     }
 };
+
+watch([triwulan, year], ([newQuarter, newYear]) => {
+    if (newQuarter && newYear) {
+        router.get(
+            route("inspeksiKomputerBib.page"),
+            {
+                quarter: newQuarter,
+                year: newYear,
+            },
+            {
+                preserveState: false,
+                replace: true,
+            }
+        );
+    }
+});
 
 const getEncryptedYear = () => {
     if (!selectedValues.value || !selectedValues.value.name) {
@@ -310,7 +330,9 @@ const getBadgeTextStatusInventory = (status) => {
     }
 };
 
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content");
 
 const approved = () => {
     Swal.fire({
@@ -334,11 +356,11 @@ const approved = () => {
             });
 
             axios
-                .post(route('inspeksiKomputerBib.approval', {}, Ziggy), {
+                .post(route("inspeksiKomputerBib.approval", {}, Ziggy), {
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest',
-                    }
+                        "X-CSRF-TOKEN": csrfToken,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
                 })
                 .then((response) => {
                     Swal.fire({
@@ -447,7 +469,7 @@ const approved = () => {
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi
                                 </button>
-                                       <button
+                                <button
                                     @click="approved"
                                     class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-green-850 hover:scale-105"
                                 >
@@ -564,7 +586,11 @@ const approved = () => {
                                                             <NavLinkCustom
                                                                 v-if="
                                                                     computers.inspection_status ===
-                                                                    'N'
+                                                                        'N' &&
+                                                                    computers.triwulan ==
+                                                                        props.quarter_sekarang &&
+                                                                    computers.year ==
+                                                                        props.tahun_sekarang
                                                                 "
                                                                 @click="
                                                                     editData(
@@ -582,7 +608,13 @@ const approved = () => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                {{ computers.computer ? computers.computer.computer_code : '-' }}
+                                                                {{
+                                                                    computers.computer
+                                                                        ? computers
+                                                                              .computer
+                                                                              .computer_code
+                                                                        : "-"
+                                                                }}
                                                             </p>
                                                         </td>
 
@@ -592,7 +624,17 @@ const approved = () => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                 {{ computers.computer && computers.computer.pengguna ? computers.computer.pengguna.username : '-' }}
+                                                                {{
+                                                                    computers.computer &&
+                                                                    computers
+                                                                        .computer
+                                                                        .pengguna
+                                                                        ? computers
+                                                                              .computer
+                                                                              .pengguna
+                                                                              .username
+                                                                        : "-"
+                                                                }}
                                                             </p>
                                                         </td>
                                                         <td
@@ -601,7 +643,17 @@ const approved = () => {
                                                             <p
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
-                                                                 {{ computers.computer && computers.computer.pengguna ? computers.computer.pengguna.department : '-' }}
+                                                                {{
+                                                                    computers.computer &&
+                                                                    computers
+                                                                        .computer
+                                                                        .pengguna
+                                                                        ? computers
+                                                                              .computer
+                                                                              .pengguna
+                                                                              .department
+                                                                        : "-"
+                                                                }}
                                                             </p>
                                                         </td>
 
@@ -629,8 +681,8 @@ const approved = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.updated_at ==
-                                                                    null
+                                                                    computers.inspection_status ===
+                                                                    "N"
                                                                         ? "-"
                                                                         : formattedDate(
                                                                               computers.updated_at
@@ -712,7 +764,11 @@ const approved = () => {
                                                             <NavLinkCustom
                                                                 v-if="
                                                                     computers.inspection_status ===
-                                                                    'N'
+                                                                        'N' &&
+                                                                    computers.triwulan ==
+                                                                        props.quarter_sekarang &&
+                                                                    computers.year ==
+                                                                        props.tahun_sekarang
                                                                 "
                                                                 @click="
                                                                     editData(

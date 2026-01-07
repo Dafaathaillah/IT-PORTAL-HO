@@ -49,7 +49,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Komputer Pages");
@@ -93,6 +93,10 @@ const props = defineProps({
     crew: {
         type: Array,
     },
+    yearNow: Number,
+    quarterNow: Number,
+    tahun_sekarang: Number,
+    quarter_sekarang: Number,
 });
 const options = props.crew;
 const selectedValues = ref(null); // Awalnya array kosong
@@ -121,8 +125,8 @@ const editDataInspeksi = (id) => {
     });
 };
 
-const year = ref(""); // State untuk input year
-const triwulan = ref(""); // State untuk input year
+const year = ref(props.yearNow);
+const triwulan = ref(props.quarterNow);
 
 const validateYear = (event) => {
     const value = event.target.value;
@@ -130,6 +134,22 @@ const validateYear = (event) => {
         year.value = value.replace(/\D/g, ""); // Hapus karakter selain angka
     }
 };
+
+watch([triwulan, year], ([newQuarter, newYear]) => {
+    if (newQuarter && newYear) {
+        router.get(
+            route("inspeksiKomputerSbs.page"),
+            {
+                quarter: newQuarter,
+                year: newYear,
+            },
+            {
+                preserveState: false,
+                replace: true,
+            }
+        );
+    }
+});
 
 const getEncryptedYear = () => {
     if (!selectedValues.value || !selectedValues.value.name) {
@@ -564,7 +584,11 @@ const approved = () => {
                                                             <NavLinkCustom
                                                                 v-if="
                                                                     computers.inspection_status ===
-                                                                    'N'
+                                                                        'N' &&
+                                                                    computers.triwulan ==
+                                                                        props.quarter_sekarang &&
+                                                                    computers.year ==
+                                                                        props.tahun_sekarang
                                                                 "
                                                                 @click="
                                                                     editData(
@@ -712,7 +736,11 @@ const approved = () => {
                                                             <NavLinkCustom
                                                                 v-if="
                                                                     computers.inspection_status ===
-                                                                    'N'
+                                                                        'N' &&
+                                                                    computers.triwulan ==
+                                                                        props.quarter_sekarang &&
+                                                                    computers.year ==
+                                                                        props.tahun_sekarang
                                                                 "
                                                                 @click="
                                                                     editData(

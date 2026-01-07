@@ -49,7 +49,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Laptop Pages");
@@ -93,6 +93,8 @@ const props = defineProps({
     crew: {
         type: Array,
     },
+    yearNow: Number,
+    tahun_sekarang: Number,
 });
 
 const options = props.crew;
@@ -101,7 +103,7 @@ const showValidation = ref(false);
 
 const form = useForm({});
 
-const year = ref(""); // State untuk input year
+const year = ref(props.yearNow);
 
 const validateYear = (event) => {
     const value = event.target.value;
@@ -109,6 +111,21 @@ const validateYear = (event) => {
         year.value = value.replace(/\D/g, ""); // Hapus karakter selain angka
     }
 };
+
+watch([year], ([newYear]) => {
+    if (newYear) {
+        router.get(
+            route("inspeksiLaptopAmi.page"),
+            {
+                year: newYear,
+            },
+            {
+                preserveState: false,
+                replace: true,
+            }
+        );
+    }
+});
 
 const getEncryptedYear = () => {
     if (!selectedValues.value || !selectedValues.value.name) {
@@ -163,7 +180,7 @@ const getEncryptedYear = () => {
             console.log("Popup PDF selesai otomatis."); // Opsional
         },
     });
-    
+
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.year"),
@@ -515,7 +532,9 @@ const approved = () => {
                                                                 "
                                                                 v-if="
                                                                     inspeksiLaptops.inspection_status ===
-                                                                    'N'
+                                                                        'N' &&
+                                                                    inspeksiLaptops.year ===
+                                                                        props.tahun_sekarang
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >

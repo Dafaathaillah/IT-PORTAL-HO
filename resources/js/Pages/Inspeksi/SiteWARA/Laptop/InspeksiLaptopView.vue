@@ -50,7 +50,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Laptop Pages");
@@ -94,6 +94,8 @@ const props = defineProps({
     crew: {
         type: Array,
     },
+    yearNow: Number,
+    tahun_sekarang: Number,
 });
 
 const options = props.crew;
@@ -102,7 +104,7 @@ const showValidation = ref(false);
 
 const form = useForm({});
 
-const year = ref(""); // State untuk input year
+const year = ref(props.yearNow);
 
 const validateYear = (event) => {
     const value = event.target.value;
@@ -110,6 +112,21 @@ const validateYear = (event) => {
         year.value = value.replace(/\D/g, ""); // Hapus karakter selain angka
     }
 };
+
+watch([year], ([newYear]) => {
+    if (newYear) {
+        router.get(
+            route("inspeksiLaptopWARA.page"),
+            {
+                year: newYear,
+            },
+            {
+                preserveState: false,
+                replace: true,
+            }
+        );
+    }
+});
 
 const getEncryptedYear = () => {
     if (!selectedValues.value || !selectedValues.value.name) {
@@ -282,7 +299,9 @@ function formatData(text) {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
 
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content");
 
 const approved = () => {
     Swal.fire({
@@ -306,11 +325,11 @@ const approved = () => {
             });
 
             axios
-                .post(route('inspeksiLaptopWARA.approval', {}, Ziggy), {
+                .post(route("inspeksiLaptopWARA.approval", {}, Ziggy), {
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest',
-                    }
+                        "X-CSRF-TOKEN": csrfToken,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
                 })
                 .then((response) => {
                     Swal.fire({
@@ -514,7 +533,9 @@ const approved = () => {
                                                                 "
                                                                 v-if="
                                                                     inspeksiLaptops.inspection_status ===
-                                                                    'N'
+                                                                        'N' &&
+                                                                    inspeksiLaptops.year ===
+                                                                        props.tahun_sekarang
                                                                 "
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
