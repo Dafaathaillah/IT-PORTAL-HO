@@ -43,7 +43,6 @@ Schedule::command('scheduleComputer:cron')->quarterly();
 
 
 // ===== 🆕 Add VHMS History Schedule =====
-Schedule::command('vhms:insert-history')
-    ->monthlyOn(1, '00:00'); // Run at midnight every 1st day of the month
+Schedule::command('vhms:insert-history')->daily();
 
 // Schedule::command('vhms:insert-history')->everyMinute();
