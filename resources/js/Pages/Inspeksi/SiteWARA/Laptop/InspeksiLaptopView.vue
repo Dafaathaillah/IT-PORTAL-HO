@@ -43,18 +43,25 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm, router } from "@inertiajs/vue3";
+import { Head, Link, useForm, router, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted, watch } from "vue";
+import { onMounted, watch, computed } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Laptop Pages");
 const mainMenu = ref("Inspeksi Laptop");
+
+const page = usePage();
+
+const isIctGroupLeader = computed(() => {
+  console.log("tes");
+  return page.props.auth?.user?.role === "ict_group_leader";
+});
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -417,6 +424,7 @@ const approved = () => {
                                     Rekap Inspeksi
                                 </button>
                                 <button
+                                    v-if="isIctGroupLeader"
                                     @click="approved"
                                     class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-green-850 hover:scale-105"
                                 >

@@ -43,17 +43,24 @@
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, Link, useForm, router } from "@inertiajs/vue3";
+import { Head, Link, useForm, router, usePage } from "@inertiajs/vue3";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import { onMounted, watch } from "vue";
+import { onMounted, watch, computed } from "vue";
 
 const pages = ref("Pages");
 const subMenu = ref("Inspeksi Komputer Pages");
 const mainMenu = ref("Inspeksi Komputer Data");
+
+const page = usePage();
+
+const isIctGroupLeader = computed(() => {
+    console.log("tes");
+    return page.props.auth?.user?.role === "ict_group_leader";
+});
 
 // Fungsi untuk format tanggal
 function formattedDate(date) {
@@ -190,7 +197,6 @@ const getEncryptedYear = () => {
               if (month >= 7 && month <= 9) return 3;
               return 4;
           })();
-
 
     // Validasi tahun (tidak boleh lebih dari 2500)
     if (selectedYear > 2500) {
@@ -330,7 +336,9 @@ const getBadgeTextStatusInventory = (status) => {
     }
 };
 
-const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+const csrfToken = document
+    .querySelector('meta[name="csrf-token"]')
+    ?.getAttribute("content");
 
 const approved = () => {
     Swal.fire({
@@ -354,11 +362,11 @@ const approved = () => {
             });
 
             axios
-                .post(route('inspeksiKomputerBa.approval', {}, Ziggy), {
+                .post(route("inspeksiKomputerBa.approval", {}, Ziggy), {
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'X-Requested-With': 'XMLHttpRequest',
-                    }
+                        "X-CSRF-TOKEN": csrfToken,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
                 })
                 .then((response) => {
                     Swal.fire({
@@ -467,7 +475,8 @@ const approved = () => {
                                     <i class="fas fa-download"></i>
                                     Rekap Inspeksi
                                 </button>
-                                   <button
+                                <button
+                                    v-if="isIctGroupLeader"
                                     @click="approved"
                                     class="flex items-center text-sm justify-center gap-2 w-40 h-12 bg-green-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-green-850 hover:scale-105"
                                 >
@@ -667,8 +676,8 @@ const approved = () => {
                                                                 class="mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
                                                             >
                                                                 {{
-                                                                    computers.updated_at ==
-                                                                    null
+                                                                    computers.inspection_status ===
+                                                                    "N"
                                                                         ? "-"
                                                                         : formattedDate(
                                                                               computers.updated_at
