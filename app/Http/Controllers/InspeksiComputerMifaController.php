@@ -32,7 +32,7 @@ class InspeksiComputerMifaController extends Controller
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])
             ->where('site', 'MIFA')
             ->pluck('name')
-            ->map(fn ($name) => ['name' => $name])
+            ->map(fn($name) => ['name' => $name])
             ->toArray();
 
         $role = auth()->user()->role;
@@ -41,7 +41,7 @@ class InspeksiComputerMifaController extends Controller
         $quarter_sekarang = Carbon::now()->quarter;
 
         return Inertia::render(
-            'Inspeksi/SiteMica/Komputer/InspeksiKomputerIndex',
+            'Inspeksi/SiteMifa/Komputer/InspeksiKomputerIndex',
             [
                 'computer' => $inspeksi_computer,
                 'site' => $site,
@@ -491,7 +491,7 @@ class InspeksiComputerMifaController extends Controller
         // Update semua data inspeksi sesuai site, tahun sekarang, dan status 'sudah_inspeksi'
         $updateCount = InspeksiComputer::where('inspection_status', 'Y')->whereBetween('created_date', [$data['quarterStart'], $data['quarterEnd']])->update($dataApproval);
         // dd($updateCount);
-         return response()->json([
+        return response()->json([
             'success' => true,
             'message' => "$updateCount data inspeksi Komputer untuk site $site telah di-approve.",
         ]);
