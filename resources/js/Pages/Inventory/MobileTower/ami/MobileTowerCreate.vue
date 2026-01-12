@@ -17,7 +17,7 @@ const radioButton = reactive({
 const errors = reactive({});
 
 const form = useForm({
-    inventory_number: "",
+    inventory_number: props.inventoryNumber,
     kode_mt: "",
     tipe_mt: "",
     lokasi_mt: "",
@@ -124,15 +124,17 @@ const save = () => {
                                             <label
                                                 for="inventory_number"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
-                                                >Inventory Number</label
                                             >
+                                                Inventory Number
+                                            </label>
+
                                             <input
-                                                required
                                                 type="text"
                                                 name="inventory_number"
                                                 v-model="form.inventory_number"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="AMI-MT-COE-001"
+                                                readonly
+                                                class="mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400"
+                                                placeholder="Auto Generate Code"
                                             />
                                         </div>
                                     </div>
