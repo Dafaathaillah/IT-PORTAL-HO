@@ -165,18 +165,21 @@ onMounted(async () => {
         dataVhms.PC2000?.not_update ?? Array(categories.length).fill(0);
 
     const percentageHD = updateHD.map((val, i) => {
+        const nilai = updateHD[i] + waitingHD[i];
         const total = updateHD[i] + waitingHD[i] + notUpdateHD[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const percentagePC1250 = updatePC1250.map((val, i) => {
+        const nilai = updatePC1250[i] + waitingPC1250[i];
         const total = updatePC1250[i] + waitingPC1250[i] + notUpdatePC1250[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const percentagePC2000 = updatePC2000.map((val, i) => {
+        const nilai = updatePC2000[i] + waitingPC2000[i];
         const total = updatePC2000[i] + waitingPC2000[i] + notUpdatePC2000[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const allValues = [
@@ -681,18 +684,21 @@ function createChart() {
         dataVhms.PC2000?.not_update ?? Array(categories.length).fill(0);
 
     const percentageHD = updateHD.map((val, i) => {
+        const nilai = updateHD[i] + waitingHD[i];
         const total = updateHD[i] + waitingHD[i] + notUpdateHD[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const percentagePC1250 = updatePC1250.map((val, i) => {
+        const nilai = updatePC1250[i] + waitingPC1250[i];
         const total = updatePC1250[i] + waitingPC1250[i] + notUpdatePC1250[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const percentagePC2000 = updatePC2000.map((val, i) => {
+        const nilai = updatePC2000[i] + waitingPC2000[i];
         const total = updatePC2000[i] + waitingPC2000[i] + notUpdatePC2000[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const allValues = [
@@ -1667,8 +1673,9 @@ const getDataFilter = async () => {
             const kosong = data[stack].kosong;
 
             const percentages = update.map((val, i) => {
+                const nilai = update[i] + waiting[i];
                 const total = update[i] + waiting[i] + notUpdate[i];
-                return total > 0 ? (val / total) * 100 : 0;
+                return total > 0 ? (nilai / total) * 100 : 0;
             });
 
             return percentages.map((y, i) => ({
