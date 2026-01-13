@@ -525,6 +525,7 @@ const exportPdf = () => {
                                     ]"
                                     :multiple="false"
                                     :close-on-select="true"
+                                    :allow-empty="false"
                                     placeholder="Select One"
                                     track-by="name"
                                     label="name"
