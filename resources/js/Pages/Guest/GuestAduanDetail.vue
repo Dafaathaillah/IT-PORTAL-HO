@@ -1,13 +1,10 @@
-p<script setup>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+p
+<script setup>
+import GuestLayoutCrud from "@/Layouts/GuestLayoutDashboard.vue";
 import NavLinkCustom from "@/Components/NavLinkCustom.vue";
 import { Head, Link } from "@inertiajs/vue3";
 import moment from "moment";
 import { onMounted, ref } from "vue";
-
-const pages = ref("Pages");
-const subMenu = ref("Aduan Pages");
-const mainMenu = ref("Detail Aduan");
 
 const props = defineProps(["aduan"]);
 
@@ -49,13 +46,32 @@ const isImage = (url) => {
 </script>
 
 <template>
-    <Head title="Aduan" />
+    <Head title="Complaint User" />
 
-    <AuthenticatedLayout
-        v-model:pages="pages"
-        v-model:subMenu="subMenu"
-        v-model:mainMenu="mainMenu"
-    >
+    <GuestLayoutCrud>
+        <template #header>
+            <nav>
+                <!-- breadcrumb -->
+                <ol
+                    class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16"
+                >
+                    <li class="text-sm leading-normal">
+                        <a class="text-white opacity-50" href="javascript:;"
+                            >Pages</a
+                        >
+                    </li>
+                    <li
+                        class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
+                        aria-current="page"
+                    >
+                        Complaint Pages
+                    </li>
+                </ol>
+                <h6 class="mb-0 font-bold text-white capitalize">
+                    Detail Complaint
+                </h6>
+            </nav>
+        </template>
         <div class="py-12">
             <div class="min-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-wrap -mx-3">
@@ -73,7 +89,7 @@ const isImage = (url) => {
                                 </h6>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('aduan.page')"
+                                    :href="route('guestAduan.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>
@@ -84,7 +100,7 @@ const isImage = (url) => {
                                 >
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Ticket Code</p>
+                                            <p class="text-base">Nomor Tiket</p>
                                         </div>
                                         <div>
                                             <p>
@@ -104,7 +120,7 @@ const isImage = (url) => {
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">
-                                                Category Aduan
+                                                Kategori Aduan
                                             </p>
                                         </div>
                                         <div>
@@ -117,7 +133,7 @@ const isImage = (url) => {
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">
-                                                Complaint Name
+                                                Nama Pengirim Aduan
                                             </p>
                                         </div>
                                         <div>
@@ -130,7 +146,7 @@ const isImage = (url) => {
                                     <div class="grid grid-cols-2">
                                         <div>
                                             <p class="text-base">
-                                                Complaint Date
+                                                Tanggal Aduan
                                             </p>
                                         </div>
                                         <div>
@@ -147,9 +163,7 @@ const isImage = (url) => {
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">
-                                                WhatsApp Number
-                                            </p>
+                                            <p class="text-base">Nomor User</p>
                                         </div>
                                         <div>
                                             <p>
@@ -159,10 +173,13 @@ const isImage = (url) => {
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Crew</p>
+                                            <p class="text-base">Isu</p>
                                         </div>
                                         <div>
-                                            <p>: {{ props.aduan.crew }}</p>
+                                            <p>
+                                                :
+                                                {{ props.aduan.complaint_note }}
+                                            </p>
                                         </div>
                                     </div>
 
@@ -174,7 +191,7 @@ const isImage = (url) => {
                                     >
                                         <div>
                                             <p class="text-base">
-                                                Complaint Image
+                                                Gambar Aduan User
                                             </p>
                                         </div>
                                         <div>
@@ -191,7 +208,7 @@ const isImage = (url) => {
                                                             .complaint_image
                                                     "
                                                     alt="No Document"
-                                                    class="ml-40 w-50 h-30 shadow-2xl rounded-xl"
+                                                    class="ml-10 w-50 h-30 shadow-2xl rounded-xl"
                                                 />
                                             </p>
                                             <p
@@ -208,7 +225,7 @@ const isImage = (url) => {
                                     <div v-else class="grid grid-cols-4">
                                         <div>
                                             <p class="text-base">
-                                                Complaint Form
+                                                Gambar Aduan User
                                             </p>
                                         </div>
                                         <div>
@@ -247,14 +264,11 @@ const isImage = (url) => {
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">
-                                            Complaint Position
+                                            Teknisi / Petugas
                                         </p>
                                     </div>
                                     <div>
-                                        <p>
-                                            :
-                                            {{ props.aduan.complaint_position }}
-                                        </p>
+                                        <p>: {{ props.aduan.crew }}</p>
                                     </div>
                                 </div>
 
@@ -269,7 +283,7 @@ const isImage = (url) => {
 
                                 <div class="grid grid-cols-2">
                                     <div>
-                                        <p class="text-base">Response Time</p>
+                                        <p class="text-base">Waktu Tanggapan</p>
                                     </div>
                                     <div>
                                         <p>: {{ props.aduan.response_time }}</p>
@@ -278,7 +292,9 @@ const isImage = (url) => {
 
                                 <div class="grid grid-cols-2">
                                     <div>
-                                        <p class="text-base">Start Response</p>
+                                        <p class="text-base">
+                                            Waktu Awal Tanggapan
+                                        </p>
                                     </div>
                                     <div>
                                         <p>
@@ -294,7 +310,9 @@ const isImage = (url) => {
 
                                 <div class="grid grid-cols-2">
                                     <div>
-                                        <p class="text-base">Start Progress</p>
+                                        <p class="text-base">
+                                            Waktu Awal Pengerjaan
+                                        </p>
                                     </div>
                                     <div>
                                         <p>
@@ -310,7 +328,9 @@ const isImage = (url) => {
 
                                 <div class="grid grid-cols-2">
                                     <div>
-                                        <p class="text-base">End Progress</p>
+                                        <p class="text-base">
+                                            Waktu Selesai Pengerjaan
+                                        </p>
                                     </div>
                                     <div>
                                         <p>
@@ -327,7 +347,7 @@ const isImage = (url) => {
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">
-                                            Issue/Complaint Note
+                                            Isu / Catatan Permohonan
                                         </p>
                                     </div>
                                     <div>
@@ -338,7 +358,7 @@ const isImage = (url) => {
                                 </div>
 
                                 <div class="grid grid-cols-2">
-                                    <div>Action Repair</div>
+                                    <div>Tindakan Perbaikan</div>
                                     <div>
                                         <p>: {{ props.aduan.action_repair }}</p>
                                     </div>
@@ -346,7 +366,9 @@ const isImage = (url) => {
 
                                 <div class="grid grid-cols-2">
                                     <div>
-                                        <p class="text-base">Repair Note</p>
+                                        <p class="text-base">
+                                            Catatan Perbaikan
+                                        </p>
                                     </div>
                                     <div>
                                         <p>: {{ props.aduan.repair_note }}</p>
@@ -356,7 +378,7 @@ const isImage = (url) => {
                                 <div class="grid grid-cols-2">
                                     <div>
                                         <p class="text-base">
-                                            Location & Detail Location
+                                            Lokasi dan Detail lokasi
                                         </p>
                                     </div>
                                     <div>
@@ -372,24 +394,25 @@ const isImage = (url) => {
                                     class="grid grid-cols-2 items-start"
                                 >
                                     <div>
-                                        <p class="text-base">Repair Image</p>
+                                        <p class="text-base">
+                                            Gambar Setelah Perbaikan
+                                        </p>
                                     </div>
 
                                     <div class="flex items-start gap-2">
                                         <span>:</span>
                                         <img
                                             :src="props.aduan.repair_image"
-                                            alt="No Document"
+                                            alt="Gambar Tidak Tersedia"
                                             class="w-50 h-30 shadow-2xl rounded-xl"
                                         />
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </GuestLayoutCrud>
 </template>
