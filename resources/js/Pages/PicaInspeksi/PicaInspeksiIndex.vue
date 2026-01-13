@@ -333,10 +333,7 @@ const fetchData = async () => {
     /* =========================
        FILTER DATE (OPTIONAL)
     ========================== */
-    if (
-        selectedOptionByStatus.value?.name === "Date" &&
-        startDate.value
-    ) {
+    if (selectedOptionByStatus.value?.name === "Date" && startDate.value) {
         params.startDate = customFormat(startDate.value);
 
         // endDate opsional → default hari ini
@@ -360,7 +357,6 @@ const fetchData = async () => {
         data.value = [];
     }
 };
-
 
 onMounted(async () => {
     await nextTick();
@@ -548,6 +544,7 @@ const exportPdf = () => {
                                     ]"
                                     :multiple="false"
                                     :close-on-select="true"
+                                    :allow-empty="false"
                                     placeholder="Select Device"
                                     track-by="name"
                                     label="name"
@@ -631,7 +628,10 @@ const exportPdf = () => {
                             <div class="flex-auto px-0 pt-0 pb-2">
                                 <div class="p-0">
                                     <div class="p-6 text-gray-900">
-                                        <h4>Form Pica Inspeksi {{ selectedOption.name }}</h4>
+                                        <h4>
+                                            Form Pica Inspeksi
+                                            {{ selectedOption.name }}
+                                        </h4>
                                         <table
                                             ref="tableRef"
                                             id="tableData"
