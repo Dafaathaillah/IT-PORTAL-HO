@@ -18,7 +18,7 @@ class InvWirellessBgeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'BGE')->get();
+        $dataInventory = InvWirelless::where('site', 'BGE')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

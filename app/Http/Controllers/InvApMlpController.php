@@ -17,7 +17,7 @@ class InvApMlpController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'MLP')->get();
+        $dataInventory = InvAp::where('site', 'MLP')->orderBy('inventory_number', 'desc')->get();
         $site = 'MLP';
         $role = auth()->user()->role;
 

@@ -11,7 +11,7 @@ class InvMobileTowerMlpController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::orderBy('inventory_number', 'asc')->where('site', 'MLP')->get();
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'MLP')->get();
         // dd($dataInventory);
         $site = 'MLP';
         $role = auth()->user()->role;

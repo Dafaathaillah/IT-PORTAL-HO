@@ -22,7 +22,7 @@ class InvComputerMifaController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->orderBy('computer_code', 'asc')->where('site', 'MIFA')->get();
+        $dataInventory = InvComputer::with('pengguna')->orderBy('max_id', 'desc')->where('site', 'MIFA')->get();
 
         $site = 'MIFA';
 

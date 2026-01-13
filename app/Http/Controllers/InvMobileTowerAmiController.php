@@ -11,7 +11,7 @@ class InvMobileTowerAmiController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::orderBy('inventory_number', 'asc')->where('site', 'AMI')->get();
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'AMI')->get();
         // dd($dataInventory);
         $site = 'AMI';
         $role = auth()->user()->role;

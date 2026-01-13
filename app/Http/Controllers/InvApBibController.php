@@ -18,7 +18,7 @@ class InvApBibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'BIB')->get();
+        $dataInventory = InvAp::where('site', 'BIB')->orderBy('inventory_number', 'desc')->get();
         $site = 'BIB';
         $role = auth()->user()->role;
 

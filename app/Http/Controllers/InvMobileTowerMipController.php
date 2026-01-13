@@ -11,7 +11,7 @@ class InvMobileTowerMipController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::orderBy('inventory_number', 'asc')->where('site', 'MIP')->get();
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'MIP')->get();
         // dd($dataInventory);
         $site = 'MIP';
         $role = auth()->user()->role;

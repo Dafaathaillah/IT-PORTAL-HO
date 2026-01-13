@@ -18,7 +18,7 @@ class InvApMipController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'MIP')->get();
+        $dataInventory = InvAp::where('site', 'MIP')->orderBy('inventory_number', 'desc')->get();
         $site = 'MIP';
         $role = auth()->user()->role;
 

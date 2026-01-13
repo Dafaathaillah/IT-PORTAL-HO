@@ -19,7 +19,7 @@ class InvSwitchMhuController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'MHU')->get();
+        $dataInventory = InvSwitch::where('site', 'MHU')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

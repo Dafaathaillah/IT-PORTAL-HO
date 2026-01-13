@@ -18,7 +18,7 @@ class InvWirellessPikController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'PIK')->get();
+        $dataInventory = InvWirelless::where('site', 'PIK')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

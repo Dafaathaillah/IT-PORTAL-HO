@@ -19,7 +19,7 @@ class InvSwitchPikController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'PIK')->get();
+        $dataInventory = InvSwitch::where('site', 'PIK')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

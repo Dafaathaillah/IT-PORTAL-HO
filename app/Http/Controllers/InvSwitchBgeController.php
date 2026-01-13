@@ -19,7 +19,7 @@ class InvSwitchBgeController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'BGE')->get();
+        $dataInventory = InvSwitch::where('site', 'BGE')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

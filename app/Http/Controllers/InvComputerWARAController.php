@@ -22,7 +22,7 @@ class InvComputerWARAController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->orderBy('computer_code', 'asc')->where('site', 'ADW')->get();
+        $dataInventory = InvComputer::with('pengguna')->orderBy('max_id', 'desc')->where('site', 'ADW')->get();
 
         $site = 'ADW';
 

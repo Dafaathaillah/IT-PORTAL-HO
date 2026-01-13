@@ -11,7 +11,7 @@ class InvMobileTowerBgeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::orderBy('inventory_number', 'asc')->where('site', 'BGE')->get();
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'BGE')->get();
         // dd($dataInventory);
         $site = 'BGE';
         $role = auth()->user()->role;

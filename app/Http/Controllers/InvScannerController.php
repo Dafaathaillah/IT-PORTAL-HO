@@ -19,7 +19,7 @@ class InvScannerController extends Controller
     public function index()
     {
 
-        $dataInventory = InvScanner::where('site', null)->orWhere('site', 'HO')->get();
+        $dataInventory = InvScanner::where('site', null)->orWhere('site', 'HO')->orderBy('scanner_code', 'desc')->get();
 
         $site = '';
 

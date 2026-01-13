@@ -19,7 +19,7 @@ class InvSwitchWARAController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'ADW')->get();
+        $dataInventory = InvSwitch::where('site', 'ADW')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

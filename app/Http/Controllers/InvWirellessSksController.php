@@ -18,7 +18,7 @@ class InvWirellessSksController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'SKS')->get();
+        $dataInventory = InvWirelless::where('site', 'SKS')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

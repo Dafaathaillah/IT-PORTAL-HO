@@ -18,7 +18,7 @@ class InvApAmiController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'AMI')->get();
+        $dataInventory = InvAp::where('site', 'AMI')->orderBy('inventory_number', 'desc')->get();
         $site = 'AMI';
         $role = auth()->user()->role;
 

@@ -16,7 +16,7 @@ class InvPrinterMifaController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvPrinter::where('site', 'MIFA')->get();
+        $dataInventory = InvPrinter::where('site', 'MIFA')->orderBy('printer_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

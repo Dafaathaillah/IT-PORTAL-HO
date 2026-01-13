@@ -19,7 +19,7 @@ class InvApBaController extends Controller
     public function index()
     {
         if (auth()->user()->role == 'ict_developer' || auth()->user()->site == 'BA') {
-            $dataInventory = InvAp::where('site', 'BA')->get();
+            $dataInventory = InvAp::where('site', 'BA')->orderBy('inventory_number', 'desc')->get();
             $site = auth()->user()->site;
         } else {
             $dataInventory = '';
@@ -41,13 +41,13 @@ class InvApBaController extends Controller
         $dataCompany = $request->input('company')['name'];
         // Tentukan prefix berdasarkan perusahaan yang dipilih
         $prefix = $dataCompany === 'PPA' ? 'PPABAAP' : 'AMMBAAP';
-        
+
         // Ambil max_id hanya untuk perusahaan yang dipilih
         $maxId = InvAp::Where(function ($query) use ($dataCompany) {
             $query->where('site', 'BA')->where('inventory_number', 'like', $dataCompany . '%');
         })
-        ->orderBy('max_id', 'desc')
-        ->first();
+            ->orderBy('max_id', 'desc')
+            ->first();
         // dd($maxId);
 
         if (is_null($maxId)) {

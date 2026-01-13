@@ -22,7 +22,7 @@ class InvLaptopMlpController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'MLP')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('max_id', 'desc')->where('site', 'MLP')->get();
 
         $site = 'MLP';
 

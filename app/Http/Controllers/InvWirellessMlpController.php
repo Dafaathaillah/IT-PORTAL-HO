@@ -18,7 +18,7 @@ class InvWirellessMlpController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'MLP')->get();
+        $dataInventory = InvWirelless::where('site', 'MLP')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

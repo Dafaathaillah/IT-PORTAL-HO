@@ -19,7 +19,7 @@ class InvCctvPikController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::with('switch')->where('site', 'PIK')->get();
+        $dataInventory = InvCctv::with('switch')->where('site', 'PIK')->orderBy('cctv_code', 'desc')->get();
 
         $site = auth()->user()->site;
 

@@ -19,7 +19,7 @@ class InvCctvMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::with('switch')->where('site', 'MHU')->get();
+        $dataInventory = InvCctv::with('switch')->where('site', 'MHU')->orderBy('cctv_code', 'desc')->get();
 
         $site = auth()->user()->site;
 

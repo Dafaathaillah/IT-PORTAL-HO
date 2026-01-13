@@ -11,7 +11,7 @@ class InvMobileTowerVibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::orderBy('inventory_number', 'asc')->where('site', 'VIB')->get();
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'VIB')->get();
         // dd($dataInventory);
         $site = 'VIB';
         $role = auth()->user()->role;

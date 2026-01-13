@@ -25,7 +25,7 @@ class InvApController extends Controller
     public function index()
     {
 
-        $dataInventory = InvAp::where('site', null)->orWhere('site', 'HO')->get();
+        $dataInventory = InvAp::where('site', null)->orWhere('site', 'HO')->orderBy('inventory_number', 'desc')->get();
 
         $site = '';
 

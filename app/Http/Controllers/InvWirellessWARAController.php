@@ -18,7 +18,7 @@ class InvWirellessWARAController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'ADW')->get();
+        $dataInventory = InvWirelless::where('site', 'ADW')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

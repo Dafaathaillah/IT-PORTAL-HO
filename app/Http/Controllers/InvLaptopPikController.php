@@ -22,7 +22,7 @@ class InvLaptopPikController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'PIK')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('max_id', 'desc')->where('site', 'PIK')->get();
 
         $site = 'PIK';
 

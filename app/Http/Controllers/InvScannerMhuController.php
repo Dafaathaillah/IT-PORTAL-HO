@@ -18,7 +18,7 @@ class InvScannerMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'MHU')->get();
+        $dataInventory = InvScanner::where('site', 'MHU')->orderBy('scanner_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SiteMhu/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);

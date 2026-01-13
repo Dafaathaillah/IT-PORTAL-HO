@@ -16,7 +16,7 @@ class InvPrinterBibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvPrinter::where('site', 'BIB')->get();
+        $dataInventory = InvPrinter::where('site', 'BIB')->orderBy('printer_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

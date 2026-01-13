@@ -19,7 +19,7 @@ class InvSwitchMifaController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'MIFA')->get();
+        $dataInventory = InvSwitch::where('site', 'MIFA')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

@@ -11,7 +11,7 @@ class InvMobileTowerPikController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::orderBy('inventory_number', 'asc')->where('site', 'PIK')->get();
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'PIK')->get();
         // dd($dataInventory);
         $site = 'PIK';
         $role = auth()->user()->role;

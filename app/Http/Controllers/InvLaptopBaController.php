@@ -22,7 +22,7 @@ class InvLaptopBaController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'BA')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('max_id', 'desc')->where('site', 'BA')->get();
 
         $site = 'BA';
 

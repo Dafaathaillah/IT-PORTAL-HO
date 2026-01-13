@@ -22,7 +22,7 @@ class InvComputerMipController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->orderBy('computer_code', 'asc')->where('site', 'MIP')->get();
+        $dataInventory = InvComputer::with('pengguna')->orderBy('max_id', 'desc')->where('site', 'MIP')->get();
 
         $site = 'MIP';
 

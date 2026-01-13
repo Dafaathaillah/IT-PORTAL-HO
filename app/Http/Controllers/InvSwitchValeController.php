@@ -19,7 +19,7 @@ class InvSwitchValeController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'VIB')->get();
+        $dataInventory = InvSwitch::where('site', 'VIB')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
