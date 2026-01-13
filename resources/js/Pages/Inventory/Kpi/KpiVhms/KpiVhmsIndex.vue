@@ -65,8 +65,10 @@ const feedbackOptions = [
     "DELETE_FEEDBACK",
 ];
 
+const today = new Date().toISOString().slice(0, 10);
+
 const globalSearch = ref("");
-const selectedDate = ref("");
+const selectedDate = ref(today);
 
 const filteredItems = computed(() => {
     const text = globalSearch.value.trim().toLowerCase();
@@ -1747,7 +1749,7 @@ const getDataFilter = async () => {
             id: item.id,
         }));
 
-        selectedDate.value = "";
+        // selectedDate.value = "";
         globalSearch.value = "";
     } catch (error) {
         console.error("Failed to load VHMS data:", error);
