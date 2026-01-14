@@ -65,7 +65,9 @@ const feedbackOptions = [
     "DELETE_FEEDBACK",
 ];
 
-const today = new Date().toISOString().slice(0, 10);
+const today = new Date().toLocaleDateString("en-CA");
+
+console.log(today);
 
 const globalSearch = ref("");
 const selectedDate = ref(today);
@@ -408,7 +410,7 @@ onMounted(async () => {
                         waitingHD[i] +
                         updateHD[i] +
                         kosongHD[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "HD",
@@ -487,7 +489,7 @@ onMounted(async () => {
                         waitingPC1250[i] +
                         updatePC1250[i] +
                         kosongPC1250[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "PC1250",
@@ -566,7 +568,7 @@ onMounted(async () => {
                         waitingPC2000[i] +
                         updatePC2000[i] +
                         kosongPC2000[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "PC2000",
@@ -908,7 +910,7 @@ function createChart() {
                         waitingHD[i] +
                         updateHD[i] +
                         kosongHD[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "HD",
@@ -987,7 +989,7 @@ function createChart() {
                         waitingPC1250[i] +
                         updatePC1250[i] +
                         kosongPC1250[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "PC1250",
@@ -1066,7 +1068,7 @@ function createChart() {
                         waitingPC2000[i] +
                         updatePC2000[i] +
                         kosongPC2000[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "PC2000",
@@ -1442,7 +1444,7 @@ watch(selectedOptionUnit, (val) => {
             data: percentageTOTAL.map((y, i) => ({
                 x: i,
                 y: notUpdateTOTAL[i] + waitingTOTAL[i] + updateTOTAL[i],
-                label: `${y.toFixed(0)}%`,
+                label: `${y.toFixed(1)}%`,
             })),
             stack: "TOTAL",
             pointPlacement: -0.25,
@@ -1683,7 +1685,7 @@ const getDataFilter = async () => {
             return percentages.map((y, i) => ({
                 x: i,
                 y: notUpdate[i] + waiting[i] + update[i] + kosong[i],
-                label: `${y.toFixed(0)}%`,
+                label: `${y.toFixed(1)}%`,
             }));
         };
 
