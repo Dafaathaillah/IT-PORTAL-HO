@@ -20,7 +20,7 @@ import { ref, onMounted, computed, watch, nextTick } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
 
-const selectedOptionCategory = ref({ name: "PC/NB" });
+const selectedOptionCategory = ref({ name: "COMPUTER" });
 
 const pages = ref("Pages");
 const subMenu = ref("KPI Perangkat Breakdown");
@@ -31,7 +31,45 @@ const props = defineProps({
 
 const startDate = ref(null);
 const endDate = ref(null);
+const yearSort = ref(null);
 const year = ref(null);
+
+const selectedMonth = ref(null);
+const showValidation = ref(false);
+
+const monthOptions = [
+    { value: 1, label: "Januari" },
+    { value: 2, label: "Februari" },
+    { value: 3, label: "Maret" },
+    { value: 4, label: "April" },
+    { value: 5, label: "Mei" },
+    { value: 6, label: "Juni" },
+    { value: 7, label: "Juli" },
+    { value: 8, label: "Agustus" },
+    { value: 9, label: "September" },
+    { value: 10, label: "Oktober" },
+    { value: 11, label: "November" },
+    { value: 12, label: "Desember" },
+];
+
+// Default bulan berjalan
+onMounted(() => {
+    const currentMonth = new Date().getMonth() + 1;
+    selectedMonth.value = monthOptions.find((m) => m.value === currentMonth);
+
+    yearSort.value = new Date().getFullYear();
+});
+
+const validateMonth = (event) => {
+    const value = event.target.value;
+    if (!/^\d*$/.test(value)) {
+        monthSort.value = value.replace(/\D/g, ""); // Hapus karakter selain angka
+    }
+};
+
+const monthValue = computed(() => {
+    return selectedMonth.value?.value ?? null;
+});
 
 const formatToIndonesianDate = (date) => {
     const d = new Date(date);
@@ -70,17 +108,19 @@ const dataBreakdown = ref([]);
 const searchData = async () => {
     const params = {
         device_category: selectedOptionCategory.value.name,
-        start_date: customFormat(startDate.value),
-        end_date: customFormat(endDate.value),
+        // start_date: customFormat(startDate.value),
+        // end_date: customFormat(endDate.value),
+        month: monthValue.value,
+        year: yearSort.value,
     };
-
+    console.log(params);
     try {
         const response = await axios.get(route("kpi.perangkatBibData"), {
             params,
         });
 
         kpiData.value = response.data;
-        console.log(response.data.breakdown_details)
+        console.log(response.data.breakdown_details);
         dataBreakdown.value = response.data.breakdown_details.map(
             (item, index) => ({
                 ...item,
@@ -325,9 +365,9 @@ onMounted(() => {
                                     <VueMultiselect
                                         v-model="selectedOptionCategory"
                                         :options="[
-                                            { name: 'PC/NB' },
+                                            { name: 'COMPUTER' },
+                                            { name: 'LAPTOP' },
                                             { name: 'PRINTER' },
-                                            { name: 'SCANNER' },
                                         ]"
                                         :multiple="false"
                                         :close-on-select="true"
@@ -337,25 +377,41 @@ onMounted(() => {
                                     />
                                 </div>
                                 <div
-                                    class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease mb-4"
+                                    class="relative flex flex-wrap items-stretch w-48 mb-4"
                                 >
-                                    <VueDatePicker
-                                        required
-                                        v-model="startDate"
-                                        :format="customFormat"
-                                        placeholder="Start Date"
-                                        :enable-time-picker="false"
+                                    <VueMultiselect
+                                        v-model="selectedMonth"
+                                        :options="monthOptions"
+                                        :multiple="false"
+                                        :close-on-select="true"
+                                        placeholder="Pilih Bulan"
+                                        track-by="value"
+                                        label="label"
+                                        :class="{
+                                            'shake-border': showValidation,
+                                        }"
                                     />
                                 </div>
                                 <div
                                     class="relative flex flex-wrap items-stretch w-48 transition-all rounded-lg ease mb-4"
                                 >
-                                    <VueDatePicker
-                                        required
-                                        v-model="endDate"
-                                        :format="customFormat"
-                                        placeholder="End Date"
-                                        :enable-time-picker="false"
+                                    <span
+                                        class="text-sm ease leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all"
+                                    >
+                                        <i
+                                            class="fas fa-calendar"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </span>
+                                    <input
+                                        v-model="yearSort"
+                                        type="number"
+                                        min="2025"
+                                        max="2500"
+                                        step="1"
+                                        class="pl-9 text-sm focus:shadow-primary-outline ease w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:transition-shadow"
+                                        placeholder="Masukkan Tahun"
+                                        @input="validateYear"
                                     />
                                 </div>
                                 <button

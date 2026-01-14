@@ -144,13 +144,14 @@ class PerangkatBreakdownController extends Controller
    public function calculatePerformance(Request $request)
    {
       $site = auth()->user()->site;
-      $deviceCategory = strtoupper($request->get('device_category', 'PC/NB')); // default PC/NB
+      // $deviceCategory = strtoupper($request->get('device_category', 'COMPUTER')); // default PC/NB
+      $deviceCategory = strtoupper($request->get('device_category', 'COMPUTER'));
 
       // Tentukan tabel dan kolom kunci sesuai jenis perangkat
       $deviceTables = [
-         'PC/NB'     => ['table' => 'inv_laptops',   'code_field' => 'laptop_code'],
+         'LAPTOP'     => ['table' => 'inv_laptops',   'code_field' => 'laptop_code'],
+         'COMPUTER'     => ['table' => 'inv_computers',   'code_field' => 'computer_code'],
          'PRINTER'   => ['table' => 'inv_printers',  'code_field' => 'printer_code'],
-         'SCANNER'   => ['table' => 'inv_scanners',  'code_field' => 'scanner_code'],
          // bisa tambah jenis lain nanti
       ];
 
@@ -162,11 +163,11 @@ class PerangkatBreakdownController extends Controller
       $deviceTable = $deviceTables[$deviceCategory]['table'];
       $deviceCodeField = $deviceTables[$deviceCategory]['code_field'];
 
-      // $bulan = $request->get('bulan');
-      // $tahun = $request->get('tahun');
+      $bulan = $request->get('month');
+      $tahun = $request->get('year');
 
-      $bulan = 12;
-      $tahun = 2025;
+      // $bulan = 12;
+      // $tahun = 2025;
 
       $namaBulan = [
          1 => 'Januari',
@@ -198,9 +199,10 @@ class PerangkatBreakdownController extends Controller
 
       // daftar root cause untuk kategori PC/NB (bisa ditambah sesuai kategori lain)
       $rootCauseList = [
-         'PC/NB'   => ['RAM', 'MONITOR', 'KABEL', 'OS', 'DRIVER', 'HARDISK', 'SOFTWARE', 'LAIN-LAIN'],
+         'COMPUTER'   => ['RAM', 'MONITOR', 'KABEL', 'OS', 'DRIVER', 'HARDISK', 'SOFTWARE', 'LAIN-LAIN'],
+         'LAPTOP'   => ['RAM', 'MONITOR', 'KABEL', 'OS', 'DRIVER', 'HARDISK', 'SOFTWARE', 'LAIN-LAIN'],
          'PRINTER' => ['KABEL', 'CARTIDGE', 'DRIVER', 'PAPER JAM', 'LAIN-LAIN'],
-         'SCANNER' => ['KABEL', 'SENSOR', 'DRIVER', 'LAIN-LAIN'],
+         // 'SCANNER' => ['KABEL', 'SENSOR', 'DRIVER', 'LAIN-LAIN'],
       ][$deviceCategory];
 
       // Ambil unit berdasarkan site dan jenis perangkat
@@ -220,7 +222,7 @@ class PerangkatBreakdownController extends Controller
       // Ambil data breakdown untuk site dan jenis perangkat
       $breakdowns = DB::table('perangkat_breakdowns')
          ->where('site', $site)
-         ->where('device_category', $deviceCategory)
+         ->where('category_breakdown', $deviceCategory)
          ->whereBetween('created_date', [$startDate, $endDate])
          ->get();
 
@@ -247,7 +249,7 @@ class PerangkatBreakdownController extends Controller
       $rootCauseData = DB::table('perangkat_breakdowns')
          ->select('root_cause', DB::raw('COUNT(*) as total'))
          ->where('site', $site)
-         ->where('device_category', $deviceCategory)
+         ->where('category_breakdown', $deviceCategory)
          ->whereBetween('created_date', [$startDate, $endDate])
          ->whereIn('root_cause', $rootCauseList)
          ->groupBy('root_cause')
@@ -284,11 +286,12 @@ class PerangkatBreakdownController extends Controller
             DB::raw('pb.*, inv.*, u.id as user_id, u.nrp as user_nrp, u.username as user_name, u.department as user_department, u.position as user_position, u.email as user_email')
          )
          ->where('pb.site', $site)
-         ->where('pb.device_category', $deviceCategory)
+         ->where('pb.category_breakdown', $deviceCategory)
          ->whereBetween('pb.created_date', [$startDate, $endDate])
          ->orderByDesc('pb.start_time')
          ->get();
 
+         // dd($deviceCategory);
       // Enrich setiap record dengan durasi record, total per unit, target per unit, running time per unit, percentage
       $breakdownDetailsEnriched = $breakdownDetails->map(function ($row) use ($targetPerUnit, $breakdownTimePerUnit) {
 
