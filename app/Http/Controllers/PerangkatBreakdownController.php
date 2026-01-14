@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 
 class PerangkatBreakdownController extends Controller
@@ -149,9 +150,9 @@ class PerangkatBreakdownController extends Controller
 
       // Tentukan tabel dan kolom kunci sesuai jenis perangkat
       $deviceTables = [
-         'LAPTOP'     => ['table' => 'inv_laptops',   'code_field' => 'laptop_code'],
-         'COMPUTER'     => ['table' => 'inv_computers',   'code_field' => 'computer_code'],
-         'PRINTER'   => ['table' => 'inv_printers',  'code_field' => 'printer_code'],
+         'LAPTOP' => ['table' => 'inv_laptops', 'code_field' => 'laptop_code'],
+         'COMPUTER' => ['table' => 'inv_computers', 'code_field' => 'computer_code'],
+         'PRINTER' => ['table' => 'inv_printers', 'code_field' => 'printer_code'],
          // bisa tambah jenis lain nanti
       ];
 
@@ -190,19 +191,19 @@ class PerangkatBreakdownController extends Controller
          $tahun = (int) $tahun;
 
          $startDate = Carbon::create($tahun, $bulan, 1)->startOfDay();
-         $endDate   = Carbon::create($tahun, $bulan, 1)->endOfMonth()->endOfDay();
+         $endDate = Carbon::create($tahun, $bulan, 1)->endOfMonth()->endOfDay();
       } else {
          // fallback jika tidak ada input bulan dan tahun
          $startDate = Carbon::now()->startOfMonth();
-         $endDate   = Carbon::now()->endOfMonth();
+         $endDate = Carbon::now()->endOfMonth();
       }
 
       // daftar root cause untuk kategori PC/NB (bisa ditambah sesuai kategori lain)
       $rootCauseList = [
-         'COMPUTER'   => ['RAM', 'MONITOR', 'KABEL', 'OS', 'DRIVER', 'HARDISK', 'SOFTWARE', 'LAIN-LAIN'],
-         'LAPTOP'   => ['RAM', 'MONITOR', 'KABEL', 'OS', 'DRIVER', 'HARDISK', 'SOFTWARE', 'LAIN-LAIN'],
+         'COMPUTER' => ['RAM', 'MONITOR', 'KABEL', 'OS', 'DRIVER', 'HARDISK', 'SOFTWARE', 'LAIN-LAIN'],
+         'LAPTOP' => ['RAM', 'MONITOR', 'KABEL', 'OS', 'DRIVER', 'HARDISK', 'SOFTWARE', 'LAIN-LAIN'],
          'PRINTER' => ['KABEL', 'CARTIDGE', 'DRIVER', 'PAPER JAM', 'LAIN-LAIN'],
-         // 'SCANNER' => ['KABEL', 'SENSOR', 'DRIVER', 'LAIN-LAIN'],
+      // 'SCANNER' => ['KABEL', 'SENSOR', 'DRIVER', 'LAIN-LAIN'],
       ][$deviceCategory];
 
       // Ambil unit berdasarkan site dan jenis perangkat
@@ -262,7 +263,7 @@ class PerangkatBreakdownController extends Controller
          $rootCauseCount[$rc] = $rootCauseData[$rc] ?? 0;
       }
 
-      $fmt = fn ($num) => number_format($num, 2, ',', '.');
+      $fmt = fn($num) => number_format($num, 2, ',', '.');
 
 
       $breakdownTimePerUnit = [];
@@ -272,26 +273,64 @@ class PerangkatBreakdownController extends Controller
          $hours = $start ? abs($end->diffInMinutes($start) / 60) : 0;
 
          $inv = $bd->inventory_number;
-         if (!isset($breakdownTimePerUnit[$inv])) $breakdownTimePerUnit[$inv] = 0;
+         if (!isset($breakdownTimePerUnit[$inv]))
+            $breakdownTimePerUnit[$inv] = 0;
          $breakdownTimePerUnit[$inv] += $hours;
       }
 
       // Target per unit (jam) = 24 * daysRange (ubah jika target per unit berbeda)
       $targetPerUnit = 24 * $daysRange;
 
-      $breakdownDetails = DB::table('perangkat_breakdowns as pb')
+      $queryBreakdownDetail = DB::table('perangkat_breakdowns as pb')
          ->join($deviceTable . ' as inv', 'pb.id_perangkat', '=', 'inv.id')
-         ->leftJoin('user_alls as u', 'inv.user_alls_id', '=', 'u.id')
-         ->select(
-            DB::raw('pb.*, inv.*, u.id as user_id, u.nrp as user_nrp, u.username as user_name, u.department as user_department, u.position as user_position, u.email as user_email')
-         )
          ->where('pb.site', $site)
          ->where('pb.category_breakdown', $deviceCategory)
          ->whereBetween('pb.created_date', [$startDate, $endDate])
-         ->orderByDesc('pb.start_time')
+         ->orderByDesc('pb.start_time');
+
+      if (Schema::hasColumn($deviceTable, 'user_alls_id')) {
+         $queryBreakdownDetail->leftJoin('user_alls as u', 'inv.user_alls_id', '=', 'u.id');
+
+         $selectUser = [
+            'u.id as user_id',
+            'u.nrp as user_nrp',
+            'u.username as user_name',
+            'u.department as user_department',
+            'u.position as user_position',
+            'u.email as user_email',
+            'inv.' . $deviceCodeField . ' as nomor_inventory',
+         ];
+      } elseif (Schema::hasColumn($deviceTable, 'department')) {
+         $selectUser = [
+            DB::raw('NULL as user_id'),
+            DB::raw('NULL as user_nrp'),
+            DB::raw('NULL as user_name'),
+            'inv.department as user_department',
+            'inv.' . $deviceCodeField . ' as nomor_inventory',
+            DB::raw('NULL as user_position'),
+            DB::raw('NULL as user_email'),
+         ];
+      } else {
+         $selectUser = [
+            DB::raw('NULL as user_id'),
+            DB::raw('NULL as user_nrp'),
+            DB::raw('NULL as user_name'),
+            'inv.' . $deviceCodeField . ' as nomor_inventory',
+            DB::raw('NULL as user_department'),
+            DB::raw('NULL as user_position'),
+            DB::raw('NULL as user_email'),
+         ];
+      }
+
+
+      $breakdownDetails = $queryBreakdownDetail
+         ->select(array_merge(
+            ['pb.*', 'inv.*'],
+            $selectUser
+         ))
          ->get();
 
-         // dd($deviceCategory);
+
       // Enrich setiap record dengan durasi record, total per unit, target per unit, running time per unit, percentage
       $breakdownDetailsEnriched = $breakdownDetails->map(function ($row) use ($targetPerUnit, $breakdownTimePerUnit) {
 
@@ -307,7 +346,8 @@ class PerangkatBreakdownController extends Controller
 
          // Running time unit
          $running_time_unit = $targetPerUnit - $bd_time_unit_total;
-         if ($running_time_unit < 0) $running_time_unit = 0;
+         if ($running_time_unit < 0)
+            $running_time_unit = 0;
 
          // Percentage running
          $percentage_unit_running = $targetPerUnit > 0
@@ -315,7 +355,7 @@ class PerangkatBreakdownController extends Controller
             : 0;
 
          // format helper
-         $fmt2 = fn ($n) => number_format($n, 2, ',', '.');
+         $fmt2 = fn($n) => number_format($n, 2, ',', '.');
 
          return (object) array_merge((array) $row, [
             'bd_time_record_hours' => $bd_time_record,
@@ -343,7 +383,7 @@ class PerangkatBreakdownController extends Controller
             // 'start' => $startDate->toDateString(),
             // 'end' => $endDate->toDateString(),
             'start' => $startDate->format('d') . ' ' . $namaBulan[$bulan] . ' ' . $tahun,
-            'end'   => $endDate->format('d') . ' ' . $namaBulan[$bulan] . ' ' . $tahun,
+            'end' => $endDate->format('d') . ' ' . $namaBulan[$bulan] . ' ' . $tahun,
          ],
          'jumlah_perangkat' => $unitCount,
          'total_target_time_jam' => $fmt($totalTargetTime),

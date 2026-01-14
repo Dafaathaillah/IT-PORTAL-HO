@@ -230,14 +230,18 @@ const searchData = async () => {
         }
     } catch (error) {
         console.error(error);
-        Swal.fire("Gagal", "Tidak dapat mengambil data KPI", "error");
+        Swal.fire(
+            "Gagal",
+            "Data Kpi Perangkat Breakdown Tidak Tersedia",
+            "error"
+        );
     }
 };
 
 const headers = [
     { text: "No", value: "no" },
     { text: "Device Category", value: "device_category" },
-    { text: "Inventory Number", value: "laptop_code" },
+    { text: "Inventory Number", value: "nomor_inventory" },
     { text: "Username", value: "user_name" },
     { text: "Department", value: "user_department" },
     { text: "B/D Time", value: "bd_time_unit_total_hours_fmt", sortable: true },
@@ -246,6 +250,16 @@ const headers = [
     { text: "Lokasi", value: "location" },
     { text: "Percentage", value: "percentage_unit_running_fmt" },
 ];
+
+const fixTableHeaders = computed(() => {
+    const hasUsername = dataBreakdown.value.some(
+        (item) => item.user_name !== null && item.user_name !== ""
+    );
+
+    return hasUsername
+        ? headers
+        : headers.filter((h) => h.value !== "user_name");
+});
 
 const summaryItems = computed(() => [
     {
@@ -515,7 +529,7 @@ onMounted(() => {
                                     <div class="overflow-x-auto p-3">
                                         <EasyDataTable
                                             table-class-name="customize-table"
-                                            :headers="headers"
+                                            :headers="fixTableHeaders"
                                             :items="dataBreakdown"
                                             :rows-per-page="10"
                                             :search-field="true"
