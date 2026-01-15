@@ -556,20 +556,243 @@ Route::middleware('auth')->group(function () {
         });
     }
 
-    Route::get("inspection-scheduler-all-{site}/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
-        ->name("inspection-scheduler-all.rekap");
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BA,ict_group_leader:BA,ict_admin:BA,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-ba/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-ba.rekap");
 
-    Route::get("inspection-scheduler-computer-{site}/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
-        ->name("inspection-scheduler-computer.rekap");
+        Route::get("inspection-scheduler-computer-ba/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-ba.rekap");
 
-    Route::get("inspection-scheduler-laptop-{site}/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
-        ->name("inspection-scheduler-laptop.rekap");
+        Route::get("inspection-scheduler-laptop-ba/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-ba.rekap");
 
-    Route::get("inspection-scheduler-printer-{site}/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
-        ->name("inspection-scheduler-printer.rekap");
+        Route::get("inspection-scheduler-printer-ba/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-ba.rekap");
 
-    Route::get("inspection-scheduler-mobileTower-{site}/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
-        ->name("inspection-scheduler-mobileTower.rekap");
+        Route::get("inspection-scheduler-mobileTower-ba/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-ba.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-mifa/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-mifa.rekap");
+
+        Route::get("inspection-scheduler-computer-mifa/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-mifa.rekap");
+
+        Route::get("inspection-scheduler-laptop-mifa/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-mifa.rekap");
+
+        Route::get("inspection-scheduler-printer-mifa/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-mifa.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-mifa/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-mifa.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MHU,ict_group_leader:MHU,ict_admin:MHU,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-mhu/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-mhu.rekap");
+
+        Route::get("inspection-scheduler-computer-mhu/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-mhu.rekap");
+
+        Route::get("inspection-scheduler-laptop-mhu/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-mhu.rekap");
+
+        Route::get("inspection-scheduler-printer-mhu/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-mhu.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-mhu/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-mhu.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-ami/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-ami.rekap");
+
+        Route::get("inspection-scheduler-computer-ami/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-ami.rekap");
+
+        Route::get("inspection-scheduler-laptop-ami/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-ami.rekap");
+
+        Route::get("inspection-scheduler-printer-ami/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-ami.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-ami/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-ami.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:PIK,ict_group_leader:PIK,ict_admin:PIK,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-pik/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-pik.rekap");
+
+        Route::get("inspection-scheduler-computer-pik/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-pik.rekap");
+
+        Route::get("inspection-scheduler-laptop-pik/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-pik.rekap");
+
+        Route::get("inspection-scheduler-printer-pik/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-pik.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-pik/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-pik.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BGE,ict_group_leader:BGE,ict_admin:BGE,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-bge/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-bge.rekap");
+
+        Route::get("inspection-scheduler-computer-bge/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-bge.rekap");
+
+        Route::get("inspection-scheduler-laptop-bge/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-bge.rekap");
+
+        Route::get("inspection-scheduler-printer-bge/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-bge.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-bge/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-bge.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-bib/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-bib.rekap");
+
+        Route::get("inspection-scheduler-computer-bib/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-bib.rekap");
+
+        Route::get("inspection-scheduler-laptop-bib/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-bib.rekap");
+
+        Route::get("inspection-scheduler-printer-bib/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-bib.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-bib/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-bib.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:IPT,ict_group_leader:IPT,ict_admin:IPT,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-ipt/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-ipt.rekap");
+
+        Route::get("inspection-scheduler-computer-ipt/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-ipt.rekap");
+
+        Route::get("inspection-scheduler-laptop-ipt/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-ipt.rekap");
+
+        Route::get("inspection-scheduler-printer-ipt/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-ipt.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-ipt/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-ipt.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-mlp/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-mlp.rekap");
+
+        Route::get("inspection-scheduler-computer-mlp/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-mlp.rekap");
+
+        Route::get("inspection-scheduler-laptop-mlp/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-mlp.rekap");
+
+        Route::get("inspection-scheduler-printer-mlp/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-mlp.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-mlp/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-mlp.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIP,ict_group_leader:MIP,ict_admin:MIP,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-mip/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-mip.rekap");
+
+        Route::get("inspection-scheduler-computer-mip/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-mip.rekap");
+
+        Route::get("inspection-scheduler-laptop-mip/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-mip.rekap");
+
+        Route::get("inspection-scheduler-printer-mip/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-mip.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-mip/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-mip.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-vib/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-vib.rekap");
+
+        Route::get("inspection-scheduler-computer-vib/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-vib.rekap");
+
+        Route::get("inspection-scheduler-laptop-vib/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-vib.rekap");
+
+        Route::get("inspection-scheduler-printer-vib/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-vib.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-vib/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-vib.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SBS,ict_group_leader:SBS,ict_admin:SBS,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-sbs/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-sbs.rekap");
+
+        Route::get("inspection-scheduler-computer-sbs/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-sbs.rekap");
+
+        Route::get("inspection-scheduler-laptop-sbs/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-sbs.rekap");
+
+        Route::get("inspection-scheduler-printer-sbs/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-sbs.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-sbs/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-sbs.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-sks/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-sks.rekap");
+
+        Route::get("inspection-scheduler-computer-sks/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-sks.rekap");
+
+        Route::get("inspection-scheduler-laptop-sks/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-sks.rekap");
+
+        Route::get("inspection-scheduler-printer-sks/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-sks.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-sks/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-sks.rekap");
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:ADW,ict_group_leader:ADW,ict_admin:ADW,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-adw/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-adw.rekap");
+
+        Route::get("inspection-scheduler-computer-adw/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-adw.rekap");
+
+        Route::get("inspection-scheduler-laptop-adw/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-adw.rekap");
+
+        Route::get("inspection-scheduler-printer-adw/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-adw.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-adw/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-adw.rekap");
+    });
 
     // Route::get('/inspection-scheduler-laptop', [InspectionScheduleController::class, 'index'])->name('inspection-schedule.index');
     // Route::put('/inspection-scheduler-laptop/{id}', [InspectionScheduleController::class, 'update'])->name('inspection-schedule.update');
@@ -1802,6 +2025,12 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
+
+            Route::get('/kpi-vhms', action: [KpiVhmsController::class, 'index'])->name('kpi.vhms');
+            Route::post('/kpi-vhms-show', [KpiVhmsController::class, 'countKpi'])->name('kpi.vhmsShow');
+            Route::get('/kpi-vhms/data-filter', [KpiVhmsController::class, 'getDataFilter'])->name('kpi-vhms.data.filter');
+            Route::post('/kpi-vhms/feedback', [KpiVhmsController::class, 'updateFeedback'])->name('kpi-vhms.feedback');
+
             Route::get('/dashboardSiteBib', [DashboardBibController::class, 'index'])->name('dashboardBib.page');
 
             Route::get('/kpi-inspeksi-bib', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiBib');
