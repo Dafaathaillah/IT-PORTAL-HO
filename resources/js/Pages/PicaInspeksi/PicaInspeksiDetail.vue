@@ -10,7 +10,7 @@ const pages = ref("Pages");
 const subMenu = ref("Pica Inspeksi Pages");
 const mainMenu = ref("Detail Pica Inspeksi");
 
-const props = defineProps(["dataInspeksi"]);
+const props = defineProps(["dataInspeksi", "site"]);
 
 function formattedDate(date) {
     return moment(date).format("MMMM Do, YYYY"); // Sesuaikan format sesuai kebutuhan
@@ -44,7 +44,7 @@ function formattedDate(date) {
                                     class="text-red-700"
                                     :href="
                                         route('picaInspeksi.page', {
-                                            site: 'BA',
+                                            site: props.site,
                                         })
                                     "
                                 >
@@ -145,16 +145,40 @@ function formattedDate(date) {
                                                 </div>
                                                 <div class="grid grid-cols-2">
                                                     <div>
-                                                        <p v-if="dataInspeksi.device_type === 'Laptop'" class="text-base">
+                                                        <p
+                                                            v-if="
+                                                                dataInspeksi.device_type ===
+                                                                'Laptop'
+                                                            "
+                                                            class="text-base"
+                                                        >
                                                             Laptop Name
                                                         </p>
-                                                        <p v-if="dataInspeksi.device_type === 'Computer'" class="text-base">
+                                                        <p
+                                                            v-if="
+                                                                dataInspeksi.device_type ===
+                                                                'Computer'
+                                                            "
+                                                            class="text-base"
+                                                        >
                                                             Computer Name
                                                         </p>
-                                                        <p v-if="dataInspeksi.device_type === 'Printer'" class="text-base">
+                                                        <p
+                                                            v-if="
+                                                                dataInspeksi.device_type ===
+                                                                'Printer'
+                                                            "
+                                                            class="text-base"
+                                                        >
                                                             Printer Name
                                                         </p>
-                                                        <p v-if="dataInspeksi.device_type === 'Mobile Tower'" class="text-base">
+                                                        <p
+                                                            v-if="
+                                                                dataInspeksi.device_type ===
+                                                                'Mobile Tower'
+                                                            "
+                                                            class="text-base"
+                                                        >
                                                             Mobile Tower Name
                                                         </p>
                                                     </div>
@@ -290,11 +314,11 @@ function formattedDate(date) {
                                 <div
                                     class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-6 pb-0 w-full max-w-full px-3 shrink-0 md:w-12/12 md:flex-0"
                                 >
-                                 <div class="flex items-center">
+                                    <div class="flex items-center">
                                         <p
                                             class="mb-10 font-black dark:text-white/80"
                                         >
-                                            USER & ASSET DETAIL
+                                            DETAIL DATA INSPEKSI
                                         </p>
                                     </div>
                                 </div>
