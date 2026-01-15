@@ -18,7 +18,7 @@ class InvScannerBibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'BIB')->get();
+        $dataInventory = InvScanner::where('site', 'BIB')->orderBy('scanner_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SiteBib/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);

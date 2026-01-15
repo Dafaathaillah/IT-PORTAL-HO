@@ -18,7 +18,7 @@ class InvApWARAController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'ADW')->get();
+        $dataInventory = InvAp::where('site', 'ADW')->orderBy('inventory_number', 'desc')->get();
         $site = 'ADW';
         $role = auth()->user()->role;
 

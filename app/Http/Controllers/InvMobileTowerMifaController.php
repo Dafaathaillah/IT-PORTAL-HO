@@ -11,7 +11,7 @@ class InvMobileTowerMifaController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::where('site', 'MIFA')->get();
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'MIFA')->get();
         // dd($dataInventory);
         $site = 'MIFA';
         $role = auth()->user()->role;
@@ -20,7 +20,20 @@ class InvMobileTowerMifaController extends Controller
     }
     public function create()
     {
-        return Inertia::render('Inventory/MobileTower/mifa/MobileTowerCreate', ['inventory_number' => session('inventory_number') ?? null]);
+        $site = 'MIFA';
+        $lastTower = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', $site)->first();
+
+        // dd($lastTower);
+
+        if ($lastTower) {
+
+            $lastNumber = (int) substr($lastTower->inventory_number, -2);
+            $nextNumber = str_pad($lastNumber + 1, 2, '0', STR_PAD_LEFT);
+        } else {
+            $nextNumber = '01';
+        }
+
+        return Inertia::render('Inventory/MobileTower/mifa/MobileTowerCreate', ['inventoryNumber' => $site . '-MT-' . $nextNumber]);
     }
 
     public function store(Request $request)

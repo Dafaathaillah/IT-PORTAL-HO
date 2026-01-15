@@ -18,7 +18,7 @@ class InvScannerPikController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'PIK')->get();
+        $dataInventory = InvScanner::where('site', 'PIK')->orderBy('scanner_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SitePik/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);

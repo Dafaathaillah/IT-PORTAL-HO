@@ -18,7 +18,7 @@ class InvWirellessIptController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'IPT')->get();
+        $dataInventory = InvWirelless::where('site', 'IPT')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

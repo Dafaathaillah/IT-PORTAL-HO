@@ -22,7 +22,7 @@ class InvComputerBibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvComputer::with('pengguna')->orderBy('computer_code', 'asc')->where('site', 'BIB')->get();
+        $dataInventory = InvComputer::with('pengguna')->orderBy('max_id', 'desc')->where('site', 'BIB')->get();
 
         $site = 'BIB';
 

@@ -16,13 +16,15 @@ class InspeksiComputerAmiController extends Controller
 {
     public function index(Request $request)
     {
-        $quarter = $request->get('quarter', Carbon::now()->quarter); // default ke quarter saat ini
-        $year = $request->get('year', Carbon::now()->year); // default ke tahun saat ini
+        $yearNow = $request->input('year', Carbon::now()->year);
+        $quarterNow = $request->get('quarter', Carbon::now()->quarter);
+        // $quarter = $request->get('quarter', Carbon::now()->quarter); // default ke quarter saat ini
+        // $year = $request->get('year', Carbon::now()->year); // default ke tahun saat ini
 
         $inspeksi_computer = InspeksiComputer::with('computer.pengguna')
             ->where('site', 'AMI')
-            ->where('triwulan', $quarter)
-            ->whereYear('created_at', $year) // opsional, kalau kamu butuh filter per tahun juga
+            ->where('triwulan', $quarterNow)
+            ->whereYear('created_at', $yearNow)
             ->get();
 
         $site = 'AMI';
@@ -35,6 +37,9 @@ class InspeksiComputerAmiController extends Controller
 
         $role = auth()->user()->role;
 
+        $tahun_sekarang = Carbon::now()->year;
+        $quarter_sekarang = Carbon::now()->quarter;
+
         return Inertia::render(
             'Inspeksi/SiteAmi/Komputer/InspeksiKomputerIndex',
             [
@@ -42,8 +47,12 @@ class InspeksiComputerAmiController extends Controller
                 'site' => $site,
                 'role' => $role,
                 'crew' => $crew,
-                'selectedQuarter' => $quarter,
-                'selectedYear' => $year,
+                'selectedQuarter' => $quarterNow,
+                'selectedYear' => $yearNow,
+                'yearNow' => $yearNow,
+                'quarterNow' => $quarterNow,
+                'tahun_sekarang' => (int) $tahun_sekarang,
+                'quarter_sekarang' => (int) $quarter_sekarang
             ]
         );
     }

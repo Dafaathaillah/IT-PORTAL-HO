@@ -65,8 +65,12 @@ const feedbackOptions = [
     "DELETE_FEEDBACK",
 ];
 
+const today = new Date().toLocaleDateString("en-CA");
+
+console.log(today);
+
 const globalSearch = ref("");
-const selectedDate = ref("");
+const selectedDate = ref(today);
 
 const filteredItems = computed(() => {
     const text = globalSearch.value.trim().toLowerCase();
@@ -165,18 +169,21 @@ onMounted(async () => {
         dataVhms.PC2000?.not_update ?? Array(categories.length).fill(0);
 
     const percentageHD = updateHD.map((val, i) => {
+        const nilai = updateHD[i] + waitingHD[i];
         const total = updateHD[i] + waitingHD[i] + notUpdateHD[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const percentagePC1250 = updatePC1250.map((val, i) => {
+        const nilai = updatePC1250[i] + waitingPC1250[i];
         const total = updatePC1250[i] + waitingPC1250[i] + notUpdatePC1250[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const percentagePC2000 = updatePC2000.map((val, i) => {
+        const nilai = updatePC2000[i] + waitingPC2000[i];
         const total = updatePC2000[i] + waitingPC2000[i] + notUpdatePC2000[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const allValues = [
@@ -403,7 +410,7 @@ onMounted(async () => {
                         waitingHD[i] +
                         updateHD[i] +
                         kosongHD[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "HD",
@@ -482,7 +489,7 @@ onMounted(async () => {
                         waitingPC1250[i] +
                         updatePC1250[i] +
                         kosongPC1250[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "PC1250",
@@ -561,7 +568,7 @@ onMounted(async () => {
                         waitingPC2000[i] +
                         updatePC2000[i] +
                         kosongPC2000[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "PC2000",
@@ -681,18 +688,21 @@ function createChart() {
         dataVhms.PC2000?.not_update ?? Array(categories.length).fill(0);
 
     const percentageHD = updateHD.map((val, i) => {
+        const nilai = updateHD[i] + waitingHD[i];
         const total = updateHD[i] + waitingHD[i] + notUpdateHD[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const percentagePC1250 = updatePC1250.map((val, i) => {
+        const nilai = updatePC1250[i] + waitingPC1250[i];
         const total = updatePC1250[i] + waitingPC1250[i] + notUpdatePC1250[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const percentagePC2000 = updatePC2000.map((val, i) => {
+        const nilai = updatePC2000[i] + waitingPC2000[i];
         const total = updatePC2000[i] + waitingPC2000[i] + notUpdatePC2000[i];
-        return total > 0 ? (val / total) * 100 : 0; // percentage value
+        return total > 0 ? (nilai / total) * 100 : 0; // percentage value
     });
 
     const allValues = [
@@ -900,7 +910,7 @@ function createChart() {
                         waitingHD[i] +
                         updateHD[i] +
                         kosongHD[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "HD",
@@ -979,7 +989,7 @@ function createChart() {
                         waitingPC1250[i] +
                         updatePC1250[i] +
                         kosongPC1250[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "PC1250",
@@ -1058,7 +1068,7 @@ function createChart() {
                         waitingPC2000[i] +
                         updatePC2000[i] +
                         kosongPC2000[i],
-                    label: `${y.toFixed(0)}%`,
+                    label: `${y.toFixed(1)}%`,
                 })),
                 // color: "transparent",
                 stack: "PC2000",
@@ -1434,7 +1444,7 @@ watch(selectedOptionUnit, (val) => {
             data: percentageTOTAL.map((y, i) => ({
                 x: i,
                 y: notUpdateTOTAL[i] + waitingTOTAL[i] + updateTOTAL[i],
-                label: `${y.toFixed(0)}%`,
+                label: `${y.toFixed(1)}%`,
             })),
             stack: "TOTAL",
             pointPlacement: -0.25,
@@ -1667,14 +1677,15 @@ const getDataFilter = async () => {
             const kosong = data[stack].kosong;
 
             const percentages = update.map((val, i) => {
+                const nilai = update[i] + waiting[i];
                 const total = update[i] + waiting[i] + notUpdate[i];
-                return total > 0 ? (val / total) * 100 : 0;
+                return total > 0 ? (nilai / total) * 100 : 0;
             });
 
             return percentages.map((y, i) => ({
                 x: i,
                 y: notUpdate[i] + waiting[i] + update[i] + kosong[i],
-                label: `${y.toFixed(0)}%`,
+                label: `${y.toFixed(1)}%`,
             }));
         };
 
@@ -1740,7 +1751,7 @@ const getDataFilter = async () => {
             id: item.id,
         }));
 
-        selectedDate.value = "";
+        // selectedDate.value = "";
         globalSearch.value = "";
     } catch (error) {
         console.error("Failed to load VHMS data:", error);

@@ -18,7 +18,7 @@ class InvApBgeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'BGE')->get();
+        $dataInventory = InvAp::where('site', 'BGE')->orderBy('inventory_number', 'desc')->get();
         $site = 'BGE';
         $role = auth()->user()->role;
 

@@ -14,15 +14,17 @@ use Inertia\Inertia;
 
 class InspeksiComputerSbsController extends Controller
 {
-      public function index(Request $request)
+    public function index(Request $request)
     {
-        $quarter = $request->get('quarter', Carbon::now()->quarter); // default ke quarter saat ini
-        $year = $request->get('year', Carbon::now()->year); // default ke tahun saat ini
+        $yearNow = $request->input('year', Carbon::now()->year);
+        $quarterNow = $request->get('quarter', Carbon::now()->quarter);
+        // $quarter = $request->get('quarter', Carbon::now()->quarter); // default ke quarter saat ini
+        // $year = $request->get('year', Carbon::now()->year); // default ke tahun saat ini
 
         $inspeksi_computer = InspeksiComputer::with('computer.pengguna')
             ->where('site', 'SBS')
-            ->where('triwulan', $quarter)
-            ->whereYear('created_at', $year) // opsional, kalau kamu butuh filter per tahun juga
+            ->where('triwulan', $quarterNow)
+            ->whereYear('created_at', $yearNow)
             ->get();
 
         $site = 'SBS';
@@ -30,10 +32,13 @@ class InspeksiComputerSbsController extends Controller
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])
             ->where('site', 'SBS')
             ->pluck('name')
-            ->map(fn ($name) => ['name' => $name])
+            ->map(fn($name) => ['name' => $name])
             ->toArray();
 
         $role = auth()->user()->role;
+
+        $tahun_sekarang = Carbon::now()->year;
+        $quarter_sekarang = Carbon::now()->quarter;
 
         return Inertia::render(
             'Inspeksi/SiteSbs/Komputer/InspeksiKomputerIndex',
@@ -42,8 +47,12 @@ class InspeksiComputerSbsController extends Controller
                 'site' => $site,
                 'role' => $role,
                 'crew' => $crew,
-                'selectedQuarter' => $quarter,
-                'selectedYear' => $year,
+                'selectedQuarter' => $quarterNow,
+                'selectedYear' => $yearNow,
+                'yearNow' => $yearNow,
+                'quarterNow' => $quarterNow,
+                'tahun_sekarang' => (int) $tahun_sekarang,
+                'quarter_sekarang' => (int) $quarter_sekarang
             ]
         );
     }
@@ -452,7 +461,7 @@ class InspeksiComputerSbsController extends Controller
 
 
 
-        public function approval()
+    public function approval()
     {
         $data['now'] = Carbon::now();
         $data['quarterStart'] = $data['now']->copy()->firstOfQuarter()->format('Y-m-d');
@@ -484,7 +493,7 @@ class InspeksiComputerSbsController extends Controller
         // Update semua data inspeksi sesuai site, tahun sekarang, dan status 'sudah_inspeksi'
         $updateCount = InspeksiComputer::where('inspection_status', 'Y')->whereBetween('created_date', [$data['quarterStart'], $data['quarterEnd']])->update($dataApproval);
         // dd($updateCount);
-         return response()->json([
+        return response()->json([
             'success' => true,
             'message' => "$updateCount data inspeksi Komputer untuk site $site telah di-approve.",
         ]);

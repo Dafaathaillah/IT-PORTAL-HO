@@ -18,7 +18,7 @@ class InvScannerIptController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'IPT')->get();
+        $dataInventory = InvScanner::where('site', 'IPT')->orderBy('scanner_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SiteIpt/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);

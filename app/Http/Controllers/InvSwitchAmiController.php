@@ -19,7 +19,7 @@ class InvSwitchAmiController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'AMI')->get();
+        $dataInventory = InvSwitch::where('site', 'AMI')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

@@ -15,10 +15,14 @@ use Inertia\Inertia;
 
 class InspeksiLaptopWARAController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $inspeksi_laptop = InspeksiLaptop::where('site', 'ADW')->whereHas('inventory') // pastikan ada laptop
-            ->whereHas('inventory.pengguna') // pastikan ada user juga
+
+        $yearNow = $request->input('year', now()->year);
+
+        $inspeksi_laptop = InspeksiLaptop::where('site', 'ADW')->whereHas('inventory')
+            ->where('year', $yearNow)
+            ->whereHas('inventory.pengguna')
             ->with('inventory.pengguna')
             ->get();
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'ADW')->pluck('name')->map(function ($name) {
@@ -28,9 +32,11 @@ class InspeksiLaptopWARAController extends Controller
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
+        $tahun_sekarang = now()->year;
+
         return Inertia::render(
             'Inspeksi/SiteWARA/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'yearNow' => (int) $yearNow, 'site' => $site, 'role' => $role, 'crew' => $crew, 'tahun_sekarang' => (int) $tahun_sekarang,]
         );
     }
 
@@ -125,8 +131,8 @@ class InspeksiLaptopWARAController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['findings_image'] =  url($new_path_document_image);
-            $dataPica['foto_temuan'] =  url($new_path_document_image);
+            $data['findings_image'] = url($new_path_document_image);
+            $dataPica['foto_temuan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -136,8 +142,8 @@ class InspeksiLaptopWARAController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['action_image'] =  url($new_path_document_image);
-            $dataPica['foto_tindakan'] =  url($new_path_document_image);
+            $data['action_image'] = url($new_path_document_image);
+            $dataPica['foto_tindakan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -147,7 +153,7 @@ class InspeksiLaptopWARAController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['inspection_image'] =  url($new_path_document_image);
+            $data['inspection_image'] = url($new_path_document_image);
         }
         // dd($dataPica);
         if ($params['temuan']) {
@@ -256,8 +262,8 @@ class InspeksiLaptopWARAController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['findings_image'] =  url($new_path_document_image);
-            $dataPica['foto_temuan'] =  url($new_path_document_image);
+            $data['findings_image'] = url($new_path_document_image);
+            $dataPica['foto_temuan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -267,8 +273,8 @@ class InspeksiLaptopWARAController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['action_image'] =  url($new_path_document_image);
-            $dataPica['foto_tindakan'] =  url($new_path_document_image);
+            $data['action_image'] = url($new_path_document_image);
+            $dataPica['foto_tindakan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -278,7 +284,7 @@ class InspeksiLaptopWARAController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['inspection_image'] =  url($new_path_document_image);
+            $data['inspection_image'] = url($new_path_document_image);
         }
 
         if ($params['temuan']) {

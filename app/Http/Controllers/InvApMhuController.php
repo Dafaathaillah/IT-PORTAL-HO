@@ -18,7 +18,7 @@ class InvApMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'MHU')->get();
+        $dataInventory = InvAp::where('site', 'MHU')->orderBy('inventory_number', 'desc')->get();
         $site = 'MHU';
         $role = auth()->user()->role;
 

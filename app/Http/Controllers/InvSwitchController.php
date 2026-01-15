@@ -19,7 +19,7 @@ class InvSwitchController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', null)->orWhere('site', 'HO')->get();
+        $dataInventory = InvSwitch::where('site', null)->orWhere('site', 'HO')->orderBy('inventory_number', 'desc')->get();
 
         $site = '';
 

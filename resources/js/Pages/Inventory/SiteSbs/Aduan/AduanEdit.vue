@@ -31,7 +31,7 @@ const form = useForm({
     detail_location: props.aduan.detail_location,
 });
 
-const isDisabledByStatus = computed(() => form.status === 'CLOSED')
+const isDisabledByStatus = computed(() => props.aduan.status === "CLOSED");
 
 const isDisabled = ref(true);
 const file = ref(null);

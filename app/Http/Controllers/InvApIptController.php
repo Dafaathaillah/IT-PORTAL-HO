@@ -18,7 +18,7 @@ class InvApIptController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'IPT')->get();
+        $dataInventory = InvAp::where('site', 'IPT')->orderBy('inventory_number', 'desc')->get();
         $site = 'IPT';
         $role = auth()->user()->role;
 

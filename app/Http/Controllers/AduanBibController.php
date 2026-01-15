@@ -163,7 +163,7 @@ class AduanBibController extends Controller
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $data['complaint_image'] =  url($new_path_documentation_image);
+            $data['complaint_image'] = url($new_path_documentation_image);
         }
 
         $data['complaint_code'] = $request->complaint_code;
@@ -231,14 +231,14 @@ class AduanBibController extends Controller
             $aduan->start_response = now();
             $aduan->status = 'PROGRESS';
 
-            $awal  = Carbon::parse($aduan->date_of_complaint);
+            $awal = Carbon::parse($aduan->date_of_complaint);
             $akhir = Carbon::parse($aduan->start_response);
 
             // total selisih dalam detik
             $diffInSeconds = $awal->diffInSeconds($akhir);
 
             // ubah ke format H:i:s (total jam bisa lebih dari 24)
-            $jam   = floor($diffInSeconds / 3600);
+            $jam = floor($diffInSeconds / 3600);
             $menit = floor(($diffInSeconds % 3600) / 60);
             $detik = $diffInSeconds % 60;
 
@@ -264,9 +264,9 @@ class AduanBibController extends Controller
     public function update_aduan_progress(Request $request)
     {
         $task = Aduan::find($request->id);
-        $awal  = date_create($request->dateOfComplaint);
+        $awal = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
-        $diff  = date_diff($awal, $akhir);
+        $diff = date_diff($awal, $akhir);
         $hTotal = $diff->d * 24 + ($diff->h);
 
         $jaditotal = sprintf('%02s', $hTotal) . ':' . sprintf('%02s', $diff->i) . ':' . sprintf('%02s', $diff->s);
@@ -300,7 +300,7 @@ class AduanBibController extends Controller
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $data['repair_image'] =  url($new_path_documentation_image);
+            $data['repair_image'] = url($new_path_documentation_image);
         }
 
 
@@ -437,9 +437,9 @@ class AduanBibController extends Controller
     {
         // dd($request);
         $task = Aduan::find($request->id);
-        $awal  = date_create($request->dateOfComplaint);
+        $awal = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
-        $diff  = date_diff($awal, $akhir);
+        $diff = date_diff($awal, $akhir);
         $hTotal = $diff->d * 24 + ($diff->h);
 
         $jaditotal = sprintf('%02s', $hTotal) . ':' . sprintf('%02s', $diff->i) . ':' . sprintf('%02s', $diff->s);
@@ -473,7 +473,7 @@ class AduanBibController extends Controller
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $data['complaint_image'] =  url($new_path_documentation_image);
+            $data['complaint_image'] = url($new_path_documentation_image);
         }
 
         if ($request->file('image_repair') != null) {
@@ -483,7 +483,7 @@ class AduanBibController extends Controller
             $new_path_documentation_image_repair = $path_documentation_image_repair;
             $documentation_image_repair->move($destinationPath, $new_path_documentation_image_repair);
 
-            $data['repair_image'] =  url($new_path_documentation_image_repair);
+            $data['repair_image'] = url($new_path_documentation_image_repair);
         }
 
         if (!empty($request->inventory_number)) {

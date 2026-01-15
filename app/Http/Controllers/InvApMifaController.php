@@ -18,7 +18,7 @@ class InvApMifaController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'MIFA')->get();
+        $dataInventory = InvAp::where('site', 'MIFA')->orderBy('inventory_number', 'desc')->get();
         $site = 'MIFA';
         $role = auth()->user()->role;
 

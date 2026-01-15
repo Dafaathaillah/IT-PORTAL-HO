@@ -18,7 +18,7 @@ class InvWirellessBibController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'BIB')->get();
+        $dataInventory = InvWirelless::where('site', 'BIB')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

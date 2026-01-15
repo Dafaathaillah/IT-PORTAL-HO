@@ -18,7 +18,7 @@ class InvWirellessMipController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'MIP')->get();
+        $dataInventory = InvWirelless::where('site', 'MIP')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

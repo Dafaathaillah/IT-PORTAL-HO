@@ -19,7 +19,7 @@ class InvSwitchMlpController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'MLP')->get();
+        $dataInventory = InvSwitch::where('site', 'MLP')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

@@ -18,7 +18,7 @@ class InvApValeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'VIB')->get();
+        $dataInventory = InvAp::where('site', 'VIB')->orderBy('inventory_number', 'desc')->get();
         $site = 'VIB';
         $role = auth()->user()->role;
 

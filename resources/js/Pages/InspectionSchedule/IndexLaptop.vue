@@ -15,6 +15,45 @@ const props = defineProps({
     kategori: String,
 });
 
+const sortBy = ref(null);
+const sortDirection = ref("asc");
+
+function sort(column) {
+    if (sortBy.value === column) {
+        sortDirection.value = sortDirection.value === "asc" ? "desc" : "asc";
+    } else {
+        sortBy.value = column;
+        sortDirection.value = "asc";
+    }
+}
+
+function sortIcon(column) {
+    if (sortBy.value !== column) return "";
+    return sortDirection.value === "asc" ? "↑" : "↓";
+}
+
+const sortedSchedules = computed(() => {
+    if (!sortBy.value) return filteredSchedules.value;
+
+    return [...filteredSchedules.value].sort((a, b) => {
+        let valA = a[sortBy.value];
+        let valB = b[sortBy.value];
+
+        if (valA === null) return 1;
+        if (valB === null) return -1;
+
+        // date support
+        if (sortBy.value.includes("inspection")) {
+            valA = new Date(valA);
+            valB = new Date(valB);
+        }
+
+        if (valA < valB) return sortDirection.value === "asc" ? -1 : 1;
+        if (valA > valB) return sortDirection.value === "asc" ? 1 : -1;
+        return 0;
+    });
+});
+
 const deviceOptions = [
     { name: "Laptop", value: "laptop" },
     { name: "Komputer", value: "computer" },
@@ -415,25 +454,108 @@ watch(
                                                 <tr>
                                                     <th
                                                         v-if="!isMobileTower"
-                                                        class="px-4 py-2 border text-center"
+                                                        @click="sort('dept')"
+                                                        class="px-4 py-2 border text-center cursor-pointer"
                                                     >
-                                                        Department
+                                                        <span
+                                                            class="inline-flex items-center gap-1"
+                                                        >
+                                                            Department
+                                                            <span
+                                                                v-if="
+                                                                    sortBy ===
+                                                                    'dept'
+                                                                "
+                                                                >{{
+                                                                    sortIcon(
+                                                                        "dept"
+                                                                    )
+                                                                }}</span
+                                                            >
+                                                        </span>
                                                     </th>
+
                                                     <th
-                                                        class="px-4 py-2 border text-center"
+                                                        @click="
+                                                            sort('device_code')
+                                                        "
+                                                        class="px-4 py-2 border text-center cursor-pointer"
                                                     >
-                                                        {{ deviceCodeLabel }}
+                                                        <span
+                                                            class="inline-flex items-center gap-1"
+                                                        >
+                                                            {{
+                                                                deviceCodeLabel
+                                                            }}
+                                                            <span
+                                                                v-if="
+                                                                    sortBy ===
+                                                                    'device_code'
+                                                                "
+                                                            >
+                                                                {{
+                                                                    sortIcon(
+                                                                        "device_code"
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </span>
                                                     </th>
+
                                                     <th
-                                                        class="px-4 py-2 border text-center"
+                                                        @click="
+                                                            sort(
+                                                                'tanggal_inspection'
+                                                            )
+                                                        "
+                                                        class="px-4 py-2 border text-center cursor-pointer"
                                                     >
-                                                        Schedule Inspection
+                                                        <span
+                                                            class="inline-flex items-center gap-1"
+                                                        >
+                                                            Schedule Inspection
+                                                            <span
+                                                                v-if="
+                                                                    sortBy ===
+                                                                    'tanggal_inspection'
+                                                                "
+                                                            >
+                                                                {{
+                                                                    sortIcon(
+                                                                        "tanggal_inspection"
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </span>
                                                     </th>
+
                                                     <th
-                                                        class="px-4 py-2 border text-center"
+                                                        @click="
+                                                            sort(
+                                                                'actual_inspection'
+                                                            )
+                                                        "
+                                                        class="px-4 py-2 border text-center cursor-pointer"
                                                     >
-                                                        Actual Inspection
+                                                        <span
+                                                            class="inline-flex items-center gap-1"
+                                                        >
+                                                            Actual Inspection
+                                                            <span
+                                                                v-if="
+                                                                    sortBy ===
+                                                                    'actual_inspection'
+                                                                "
+                                                            >
+                                                                {{
+                                                                    sortIcon(
+                                                                        "actual_inspection"
+                                                                    )
+                                                                }}
+                                                            </span>
+                                                        </span>
                                                     </th>
+
                                                     <th
                                                         class="px-4 py-2 border text-center"
                                                     >
@@ -448,7 +570,7 @@ watch(
                                                     "
                                                 >
                                                     <tr
-                                                        v-for="item in filteredSchedules"
+                                                        v-for="item in sortedSchedules"
                                                         :key="item.id"
                                                         class="hover:bg-gray-50"
                                                     >

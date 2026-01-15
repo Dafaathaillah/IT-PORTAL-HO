@@ -17,28 +17,36 @@ class InspeksiComputerMhuController extends Controller
 {
     public function index(Request $request)
     {
-        $quarter = $request->get('quarter', Carbon::now()->quarter);
-        $year = $request->get('year', Carbon::now()->year);
+        $yearNow = $request->input('year', Carbon::now()->year);
+        $quarterNow = $request->get('quarter', Carbon::now()->quarter);
+        // $quarter = $request->get('quarter', Carbon::now()->quarter); // default ke quarter saat ini
+        // $year = $request->get('year', Carbon::now()->year); // default ke tahun saat ini
 
         // tentukan quarter sebelumnya
-        $previousQuarter = $quarter > 1 ? $quarter - 1 : null;
+        // $previousQuarter = $quarter > 1 ? $quarter - 1 : null;
+
+        // $inspeksi_computer = InspeksiComputer::with('computer.pengguna')
+        //     ->where('site', 'MHU')
+        //     ->whereYear('created_at', $year)
+        //     ->where(function ($q) use ($quarter, $previousQuarter, $year) {
+        //         // selalu ambil data quarter saat ini
+        //         $q->where('triwulan', $quarter);
+
+        //         // tambahkan quarter sebelumnya jika ada & belum inspeksi
+        //         if ($previousQuarter) {
+        //             $q->orWhere(function ($sub) use ($previousQuarter, $year) {
+        //                 $sub->where('triwulan', $previousQuarter)
+        //                     ->whereYear('created_at', $year)
+        //                     ->where('inspection_status', '!=', 'Y'); // Y = sudah inspeksi
+        //             });
+        //         }
+        //     })
+        //     ->get();
 
         $inspeksi_computer = InspeksiComputer::with('computer.pengguna')
             ->where('site', 'MHU')
-            ->whereYear('created_at', $year)
-            ->where(function ($q) use ($quarter, $previousQuarter, $year) {
-                // selalu ambil data quarter saat ini
-                $q->where('triwulan', $quarter);
-
-                // tambahkan quarter sebelumnya jika ada & belum inspeksi
-                if ($previousQuarter) {
-                    $q->orWhere(function ($sub) use ($previousQuarter, $year) {
-                        $sub->where('triwulan', $previousQuarter)
-                            ->whereYear('created_at', $year)
-                            ->where('inspection_status', '!=', 'Y'); // Y = sudah inspeksi
-                    });
-                }
-            })
+            ->where('triwulan', $quarterNow)
+            ->whereYear('created_at', $yearNow)
             ->get();
 
         $site = 'MHU';
@@ -46,10 +54,13 @@ class InspeksiComputerMhuController extends Controller
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])
             ->where('site', $site)
             ->pluck('name')
-            ->map(fn ($name) => ['name' => $name])
+            ->map(fn($name) => ['name' => $name])
             ->toArray();
 
         $role = auth()->user()->role;
+
+        $tahun_sekarang = Carbon::now()->year;
+        $quarter_sekarang = Carbon::now()->quarter;
 
         return Inertia::render(
             'Inspeksi/SiteMhu/Komputer/InspeksiKomputerIndex',
@@ -58,8 +69,12 @@ class InspeksiComputerMhuController extends Controller
                 'site' => $site,
                 'role' => $role,
                 'crew' => $crew,
-                'selectedQuarter' => $quarter,
-                'selectedYear' => $year,
+                'selectedQuarter' => $quarterNow,
+                'selectedYear' => $yearNow,
+                'yearNow' => $yearNow,
+                'quarterNow' => $quarterNow,
+                'tahun_sekarang' => (int) $tahun_sekarang,
+                'quarter_sekarang' => (int) $quarter_sekarang
             ]
         );
     }
