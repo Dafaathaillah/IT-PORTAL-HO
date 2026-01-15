@@ -36,12 +36,12 @@ class PicaInspeksiController extends Controller
     public function getDataPicaByDevice(Request $request)
     {
         $deviceType = $request->input('device_type');
-        $site       = (string) $request->input('site');
+        $site = (string) $request->input('site');
         // $deviceType = 'Printer';
         // $site       = 'BIB';
         $statusPica = $request->input('status_pica'); // OPTIONAL
-        $startDate  = $request->input('startDate');   // OPTIONAL
-        $endDate    = $request->input('endDate');     // OPTIONAL
+        $startDate = $request->input('startDate');   // OPTIONAL
+        $endDate = $request->input('endDate');     // OPTIONAL
 
         if (!$deviceType || !$site) {
             return response()->json([
@@ -71,10 +71,11 @@ class PicaInspeksiController extends Controller
                 $query = PicaInspeksi::where('site', $site)
                     ->whereHas('inspeksiMt')
                     ->whereHas('inspeksiMt.mt')
+                    ->orderBy('created_at', 'desc')
                     ->with([
-                        'inspeksiMt',
-                        'inspeksiMt.mt'
-                    ]);
+                            'inspeksiMt',
+                            'inspeksiMt.mt'
+                        ]);
                 break;
 
             case 'Printer':
@@ -92,7 +93,7 @@ class PicaInspeksiController extends Controller
 
         if ($startDate && $endDate) {
             $start = Carbon::parse($startDate)->startOfDay();
-            $end   = Carbon::parse($endDate)->endOfDay();
+            $end = Carbon::parse($endDate)->endOfDay();
 
             if ($deviceType === 'Mobile Tower') {
                 $query->whereBetween('created_at', [$start, $end]);
@@ -205,7 +206,7 @@ class PicaInspeksiController extends Controller
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])
             ->where('site', $data->site)
             ->pluck('name')
-            ->map(fn ($name) => ['name' => $name])
+            ->map(fn($name) => ['name' => $name])
             ->toArray();
 
         // dd($inspector);
@@ -252,8 +253,8 @@ class PicaInspeksiController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['findings_image'] =  url($new_path_document_image);
-            $dataPica['foto_temuan'] =  url($new_path_document_image);
+            $data['findings_image'] = url($new_path_document_image);
+            $dataPica['foto_temuan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -263,8 +264,8 @@ class PicaInspeksiController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['action_image'] =  url($new_path_document_image);
-            $dataPica['foto_tindakan'] =  url($new_path_document_image);
+            $data['action_image'] = url($new_path_document_image);
+            $dataPica['foto_tindakan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -274,15 +275,11 @@ class PicaInspeksiController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['inspection_image'] =  url($new_path_document_image);
+            $data['inspection_image'] = url($new_path_document_image);
         }
 
 
         if ($request->device_type === 'Mobile Tower') {
-            PicaInspeksi::updateOrCreate(
-                ['id' => $request->id], // 🔥 MT pakai ID langsung
-                $dataPica
-            );
         } else {
             PicaInspeksi::updateOrCreate(
                 ['inspeksi_id' => $request->id], // Laptop / PC / Printer
@@ -300,8 +297,60 @@ class PicaInspeksiController extends Controller
         } elseif ($printer) {
             $printer->update($data);
         } elseif ($mt && $mt->inspeksiMt && $mt->inspeksiMt->mt) {
+            $image_temuan = $mt->foto_temuan;
+
+            $findings = json_decode($mt->inspeksiMt->findings) ?? [];
+            $findingsImage = json_decode($mt->inspeksiMt->findings_image) ?? [];
+            $findingsAction = json_decode($mt->inspeksiMt->findings_action) ?? [];
+            $actionImage = json_decode($mt->inspeksiMt->action_image) ?? [];
+            $findingsStatus = json_decode($mt->inspeksiMt->findings_status) ?? [];
+
+            $index = array_search($image_temuan, $findingsImage);
+
+            // dd($index);
+
+            if ($index === false) {
+                return back()->withErrors('Data temuan tidak ditemukan');
+            } else {
+                $findings[$index] = $params['temuan'];
+                if ($request->file('image_temuan') != null) {
+                    $findingsImage[$index] = $data['findings_image'];
+                }
+
+                $findingsAction[$index] = $params['tindakan'];
+                if ($request->file('image_tindakan') != null) {
+                    $actionImage[$index] = $data['action_image'];
+                }
+
+                $findingsStatus[$index] = $params['findings_status'];
+
+                $data_new_mt = [
+                    'due_date' => $params['due_date'],
+                    'remarks' => $params['remark'],
+                    'inspector' => $params['inspector'],
+                    'findings' => !empty($findings) ? json_encode($findings, JSON_UNESCAPED_SLASHES) : null,
+                    'findings_image' => !empty($findingsImage) ? json_encode($findingsImage, JSON_UNESCAPED_SLASHES) : null,
+                    'findings_status' => !empty($findingsStatus) ? json_encode($findingsStatus, JSON_UNESCAPED_SLASHES) : null,
+                    'findings_action' => !empty($findingsAction) ? json_encode($findingsAction, JSON_UNESCAPED_SLASHES) : null,
+                    'action_image' => !empty($actionImage) ? json_encode($actionImage, JSON_UNESCAPED_SLASHES) : null,
+                ];
+
+                if ($request->file('image_inspeksi') != null) {
+                    $data_new_mt['inspection_image'] = $data['inspection_image'];
+                }
+
+                $mt->inspeksiMt->update($data_new_mt);
+                PicaInspeksi::updateOrCreate(
+                    ['id' => $request->id], // 🔥 MT pakai ID langsung
+                    $dataPica
+                );
+
+            }
+
+
+            // update data ke inventori
             $mt->inspeksiMt->mt->update([
-                'inspection_remark'   => $params['remark'],
+                'inspection_remark' => $params['remark'],
             ]);
         } else {
             // Jika tidak ada di Laptop, coba update InspeksiComputer
@@ -407,6 +456,8 @@ class PicaInspeksiController extends Controller
         // dd($data);
         if ($data = InspeksiLaptop::with('inventory.pengguna')->find($id)) {
 
+            $site = $data->site;
+
             $inv = $data->inventory;
 
             $data->device_code = $inv->laptop_code ?? '-';
@@ -423,6 +474,8 @@ class PicaInspeksiController extends Controller
             $data->device_location = $inv->location ?? '-';
             $data->device_type = 'Laptop';
         } elseif ($data = InspeksiPrinter::with('printer')->find($id)) {
+            $site = $data->site;
+
             $prt = $data->printer;
 
             $data->device_code = $prt->printer_code ?? '-';
@@ -439,6 +492,8 @@ class PicaInspeksiController extends Controller
             $data->device_location = $prt->location ?? '-';
             $data->device_type = 'Printer';
         } elseif ($data = PicaInspeksi::with('inspeksiMt.mt')->find($id)) {
+            $site = $data->site;
+
             // dd($data);
             $mt = $data->inspeksiMt;
 
@@ -464,6 +519,7 @@ class PicaInspeksiController extends Controller
             $data->inspector = $mt->pic;
             $data->inspection_image = $mt->inspection_image;
         } elseif ($data = InspeksiComputer::with('computer.pengguna')->find($id)) {
+            $site = $data->site;
 
             $cmp = $data->computer;
 
@@ -484,7 +540,10 @@ class PicaInspeksiController extends Controller
             abort(404, 'Data inspeksi tidak ditemukan');
         }
 
+        // dd($site);
+
         return Inertia::render('PicaInspeksi/PicaInspeksiDetail', [
+            'site' => $site,
             'dataInspeksi' => $data,
         ]);
     }
@@ -620,7 +679,8 @@ class PicaInspeksiController extends Controller
     private function generateQrFromUserName($name)
     {
         $user = User::where('name', $name)->first();
-        if (!$user) return null;
+        if (!$user)
+            return null;
 
         $qrString = "NRP: {$user->nrp}, Nama: {$user->name}, Jabatan: {$user->position}";
         $barcode = new \Milon\Barcode\DNS2D();
