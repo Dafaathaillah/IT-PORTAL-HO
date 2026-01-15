@@ -31,7 +31,7 @@ const form = useForm({
     complaint_code: props.ticket,
     complaint_name: "",
     phone_number: "",
-    inventory_number: "",
+    // inventory_number: "",
     category_name: "",
     location: "",
     complaint_note: "",
@@ -137,11 +137,11 @@ function handleCategoryChange(event) {
 }
 
 // Computed property untuk mendapatkan placeholder
-const getPlaceholder = computed(() => {
-    if (form.category_name === "PC/NB") {
-        return "Masukkan No Inventory PC/Note Bool";
-    }
-});
+// const getPlaceholder = computed(() => {
+//     if (form.category_name === "PC/NB") {
+//         return "Masukkan No Inventory PC/Note Bool";
+//     }
+// });
 
 const showAlertTrue = () => {
     Swal.fire({
@@ -330,7 +330,7 @@ const showAlertTrue = () => {
                                             </select>
                                         </div>
                                     </div>
-                                    <div
+                                    <!-- <div
                                         v-if="form.category_name == 'PC/NB'"
                                         class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
                                     >
@@ -358,13 +358,9 @@ const showAlertTrue = () => {
                                                 :placeholder="getPlaceholder"
                                             />
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div
-                                        :class="
-                                            form.category_name === 'PC/NB'
-                                                ? 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
-                                                : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
-                                        "
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -383,11 +379,7 @@ const showAlertTrue = () => {
                                         </div>
                                     </div>
                                     <div
-                                        :class="
-                                            form.category_name === 'PC/NB'
-                                                ? 'w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0'
-                                                : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
-                                        "
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label

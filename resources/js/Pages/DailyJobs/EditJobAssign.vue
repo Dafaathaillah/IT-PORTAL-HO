@@ -303,7 +303,76 @@
 
                             <!-- Crew -->
 
+                            <div>
+                                <label
+                                    class="inline-flex mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                >
+                                    <span
+                                        class="mr-2 text-sm text-slate-700 dark:text-white/80"
+                                        >Enable Category and Inventory
+                                        Number</span
+                                    >
+                                    <input
+                                        type="checkbox"
+                                        v-model="inventoryNumberEnabled"
+                                        class="sr-only peer"
+                                    />
+                                    <div
+                                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                    ></div>
+                                </label>
+                                <VueMultiselect
+                                    v-model="selectedValuesCategoryBreakdown"
+                                    :options="optionsCategory"
+                                    :multiple="false"
+                                    :close-on-select="true"
+                                    :disabled="!inventoryNumberEnabled"
+                                    :class="
+                                        !inventoryNumberEnabled
+                                            ? 'multiselect-disabled'
+                                            : ''
+                                    "
+                                    placeholder="Select Category"
+                                    track-by="id"
+                                    label="category_root_cause"
+                                />
+                            </div>
+
                             <!-- Sarana -->
+
+                            <div>
+                                <label
+                                    class="inline-flex mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                >
+                                    <span
+                                        class="mr-2 text-sm text-slate-700 dark:text-white/80"
+                                        >Inventory Number</span
+                                    >
+                                    <!-- <input
+                                                    type="checkbox"
+                                                    v-model="
+                                                        inventoryNumberEnabled
+                                                    "
+                                                    class="sr-only peer"
+                                                /> -->
+                                    <!-- <div
+                                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                                ></div> -->
+                                </label>
+                                <VueMultiselect
+                                    v-model="selectedInventory"
+                                    :options="optionsInventory"
+                                    :class="
+                                        !inventoryNumberEnabled
+                                            ? 'multiselect-disabled'
+                                            : ''
+                                    "
+                                    label="no_inv"
+                                    track-by="id"
+                                    placeholder="Select Inventory Number"
+                                    :disabled="!inventoryNumberEnabled"
+                                />
+                            </div>
 
                             <!-- Shift -->
                         </div>
@@ -335,7 +404,8 @@
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import VueMultiselect from "vue-multiselect";
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
+import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
 import Swal from "sweetalert2";
 
@@ -344,6 +414,7 @@ const props = defineProps({
     job: Object,
     users: Array,
     categories: Array,
+    categoriesBd: Array,
 });
 
 const site_link = usePage().props.site_link;
@@ -351,6 +422,34 @@ const site_link = usePage().props.site_link;
 const pages = ref("Operation");
 const subMenu = ref("Daily Jobs");
 const mainMenu = ref("Job Assignment");
+const inventoryNumberEnabled = ref(false);
+const optionsCategory = props.categoriesBd;
+const selectedValuesCategoryBreakdown = ref([]); // Awalnya array kosong
+const optionsInventory = ref([]);
+const selectedInventory = ref(null);
+
+watch(inventoryNumberEnabled, (enabled) => {
+    if (!enabled) {
+        form.inventory_number = "";
+    }
+});
+
+watch(selectedValuesCategoryBreakdown, async (val) => {
+    if (!val) {
+        optionsInventory.value = [];
+        selectedInventory.value = null;
+        return;
+    }
+
+    const response = await axios.get(route("inventory.by-categoryBreakdown"), {
+        params: {
+            category: val.category_root_cause, // contoh: Laptop
+        },
+    });
+
+    console.log(response.data);
+    optionsInventory.value = response.data;
+});
 
 function openPicker(event) {
     event.target.showPicker?.();
@@ -406,7 +505,7 @@ const form = useForm({
     category_job: props.job.category_job,
     crew: crewObjects,
     sarana: props.job.sarana,
-    shift: props.job.shift,
+    shift: props.job.shift,    
     start_progress: formatDateTimeLocal(props.job.start_progress),
     end_progress: formatDateTimeLocal(props.job.end_progress),
     category: props.job.category || "",
@@ -430,6 +529,9 @@ function submitJob() {
                 {
                     ...form.data(),
                     crew: form.crew.map((c) => c.id),
+                    inventory_number: selectedInventory.value.no_inv,
+                    category_breakdown: selectedValuesCategoryBreakdown.value.category_root_cause,
+                    assignment_code: props.job.code,
                 },
                 {
                     onSuccess: () =>

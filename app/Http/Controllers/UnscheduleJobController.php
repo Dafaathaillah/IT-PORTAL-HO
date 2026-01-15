@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\DailyJob;
+use App\Models\InvCctv;
+use App\Models\InvComputer;
+use App\Models\InvLaptop;
+use App\Models\InvPrinter;
+use App\Models\PerangkatBreakdown;
 use App\Models\RootCauseCategories;
 use App\Models\RootCauseProblem;
 use App\Models\User;
@@ -125,12 +130,18 @@ class UnscheduleJobController extends Controller
         $categories = RootCauseCategories::where('site_type', 'SITE')
             ->pluck('category_root_cause');
 
+        $categoriesBd = DB::table('root_cause_categories')
+            ->select('id', 'category_root_cause')
+            ->where('breakdown', 1)
+            ->get();
+
         // dd($categories);
 
         return Inertia::render('UnscheduleJobs/CreateJobAssign', [
             'users' => $users,
             'site_link' => $site_link,
             'categories' => $categories,
+            'categoriesBd' => $categoriesBd,
         ]);
     }
 
@@ -176,6 +187,60 @@ class UnscheduleJobController extends Controller
                 'root_cause' => $job['root_cause_problem'] ?? null, // Replace or set dynamically
                 'created_by' => $user->id,
             ]);
+            if ($job['inventory']) {
+                $now = Carbon::now();
+
+                $deviceName = 'Unknown Device';
+                $categoryInput = $job['category_breakdown'];
+
+                if ($categoryInput === 'LAPTOP') {
+                    // Cek dari inventory_number
+                    $inv = InvLaptop::where('laptop_code', $job['inventory'])->first();
+                    $categoryBreakdown = 'LAPTOP';
+                    $deviceName = $inv ? $inv->laptop_name : $deviceName;
+                    $deviceLocation = $inv ? $inv->location : '';
+                    $id_perangkat = $inv ? $inv->id : 'unknown ID';
+                } elseif ($categoryInput === 'COMPUTER') {
+                    $inv = InvComputer::where('computer_code', $job['inventory'])->first();
+                    $categoryBreakdown = 'COMPUTER';
+                    $id_perangkat = $inv ? $inv->id : 'unknown ID';
+                    $deviceLocation = $inv ? $inv->location : '';
+                    // dd($categoryBreakdown);
+                    $deviceName = $inv ? $inv->computer_name : $deviceName;
+                } elseif ($categoryInput === 'PRINTER') {
+                    $inv = InvPrinter::where('printer_code', $job['inventory'])->first();
+                    $id_perangkat = $inv ? $inv->id : 'unknown ID';
+                    $categoryBreakdown = 'PRINTER';
+                    $deviceName = $inv ? $inv->printer_brand : $deviceName;
+                    $deviceLocation = $inv ? $inv->location : '';
+                } elseif ($categoryInput === 'CCTV') {
+                    $inv = InvCctv::where('cctv_code', $job['inventory'])->first();
+                    $deviceName = $inv ? $inv->cctv_brand : $deviceName;
+                    $deviceLocation = $inv ? $inv->location : '';
+                }
+
+                $insertData = [
+                    'id_report'  => $job['code'],
+                    'id_perangkat'  => $id_perangkat,
+                    'inventory_number' => $job['inventory'],
+                    'device_name'      => $deviceName,
+                    'category_breakdown'      => $categoryBreakdown,
+                    'device_category'   => $job['category'] ?? null,
+                    'pic'       => Auth::user()->name,
+                    'start_time' => $job['start_progress'] ?? null,
+                    'end_time' => $job['end_progress'] ?? null,
+                    'created_date'     => $now->toDateString(),  // hanya tanggal
+                    'month'            => $now->month,           // angka 1-12
+                    'year'             => $now->year,            // angka tahun
+                    'root_cause'             => $job['root_cause_problem'],            // angka tahun
+                    'root_cause_category'             => $job['category'],            // angka tahun
+                    'location'         => $deviceLocation,
+                    'status'           => strtoupper($job['status']) ?? 'OPEN',
+                    'site'             => Auth::user()->site,
+                ];
+
+                PerangkatBreakdown::create($insertData);
+            }
         }
 
         return redirect()->route("unschedule-jobs.$site_link.index")
@@ -255,7 +320,7 @@ class UnscheduleJobController extends Controller
             ->with('success', 'Job updated successfully.');
     }
 
-    public function destroy($code, Request $request, )
+    public function destroy($code, Request $request,)
     {
 
         $site_link = $this->getSiteFromRequest($request);

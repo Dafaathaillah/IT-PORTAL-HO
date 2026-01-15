@@ -43,12 +43,12 @@ class DailyJobMonitorController extends Controller
 
         $scheduledJobs = DailyJob::with('creator')
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('updated_at', [$startDate, $endDate]);
+                $query->whereBetween('date', [$startDate, $endDate]);
             }, function ($query) use ($today) {
 
                 $query->where(function ($q) use ($today) {
-                    $q->whereDate('updated_at', $today)
-                        ->Where('status', '!=', 'zxc');
+                    $q->whereDate('date', $today)
+                        ->Where('status', '!=', 'closed');
                 });
             })
             ->when($shift, function ($query) use ($shift) {
@@ -61,19 +61,17 @@ class DailyJobMonitorController extends Controller
             ->when($site, function ($query) use ($site) {
                 $query->where('site', $site);
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('date', 'desc')
             ->get();
-
-        // dd($today);
 
         $unscheduledJobs = DailyJob::with('creator')
             ->where('category_job', 'unschedule')
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('updated_at', [$startDate, $endDate]);
+                $query->whereBetween('date', [$startDate, $endDate]);
             }, function ($query) use ($today) {
 
                 $query->where(function ($q) use ($today) {
-                    $q->whereDate('updated_at', $today);
+                    $q->whereDate('date', $today);
                 });
             })
             ->when($shift, function ($query) use ($shift) {
@@ -85,25 +83,22 @@ class DailyJobMonitorController extends Controller
             ->when($site, function ($query) use ($site) {
                 $query->where('site', $site);
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('date', 'desc')
             ->get();
 
-
-        // $scheduledJobs = DailyJob::with('creator')
-        //     ->where('category_job', '!=', 'unschedule') // scheduled jobs
-        //     ->where('site', $site)
-        //     ->whereDate('updated_at', $today)
-        //     ->latest()->get();
-
-        // $unscheduledJobs = DailyJob::with('creator')
-        //     ->where('category_job', 'unschedule')
-        //     ->where('site', $site)
-        //     ->whereDate('updated_at', $today)
-        //     ->latest()->get();
-
-        // dd($scheduledJobs);
-
         $users = User::select('id', 'name')->get();
+
+        $canApprove = in_array(auth()->user()->role, [
+            'ict_developer',
+            'ict_group_leader',
+        ]);
+        // dd($canApprove);
+
+
+        $allApprovedToday = DailyJob::whereDate('date', Carbon::today())
+            ->where('site', $site)
+            ->whereNull('approval_status')
+            ->doesntExist();
 
         $filters = request()->only(['start_date', 'end_date', 'shift', 'status', 'site']);
 
@@ -113,7 +108,34 @@ class DailyJobMonitorController extends Controller
             'users' => $users,
             'site_link' => $site_link,
             'filters' => $filters,
+            'canApprove' => $canApprove,
+            'allApprovedToday' => $allApprovedToday,
         ]);
+    }
+
+    public function approveAll(Request $request)
+    {
+        $user = Auth::user();
+        $site = strtoupper($this->getSiteFromRequest($request));
+
+        // 🔐 Role protection
+        if (!in_array($user->role, ['ict_group_leader', 'ict_developer'])) {
+            abort(403, 'You are not authorized to approve jobs');
+        }
+
+        $affected = DailyJob::whereDate('date', Carbon::today())
+            ->where('site', $site)
+            ->whereNull('approval_status') // hanya yang belum approved
+            ->update([
+                'approval_status' => 'approved',
+                'updated_by'      => $user->id,
+                'updated_at'      => now(),
+            ]);
+
+        return back()->with(
+            'success',
+            "Berhasil approve {$affected} job hari ini"
+        );
     }
 
 
@@ -130,12 +152,12 @@ class DailyJobMonitorController extends Controller
 
         $scheduledJobs = DailyJob::with('creator')
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('updated_at', [$startDate, $endDate]);
+                $query->whereBetween('date', [$startDate, $endDate]);
             }, function ($query) use ($today) {
 
                 $query->where(function ($q) use ($today) {
-                    $q->whereDate('updated_at', $today)
-                        ->Where('status', '!=', 'zxc');
+                    $q->whereDate('date', $today)
+                        ->Where('status', '!=', 'closed');
                 });
             })
             ->when($shift, function ($query) use ($shift) {
@@ -148,14 +170,14 @@ class DailyJobMonitorController extends Controller
             ->when($site, function ($query) use ($site) {
                 $query->where('site', $site);
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('date', 'desc')
             ->get();
 
         $users = User::all(['id', 'name'])->keyBy('id');
 
         foreach ($scheduledJobs as $job) {
             $crewIds = $job->crew ?? [];
-            $job->crew_names = collect($crewIds)->map(fn($id) => $users[$id]->name ?? 'Unknown')->toArray();
+            $job->crew_names = collect($crewIds)->map(fn ($id) => $users[$id]->name ?? 'Unknown')->toArray();
         }
 
         // dd($scheduledJobs);
@@ -163,11 +185,11 @@ class DailyJobMonitorController extends Controller
         $unscheduledJobs = DailyJob::with('creator')
             ->where('category_job', 'unschedule')
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('updated_at', [$startDate, $endDate]);
+                $query->whereBetween('date', [$startDate, $endDate]);
             }, function ($query) use ($today) {
 
                 $query->where(function ($q) use ($today) {
-                    $q->whereDate('updated_at', $today);
+                    $q->whereDate('date', $today);
                 });
             })
             ->when($shift, function ($query) use ($shift) {
@@ -179,13 +201,13 @@ class DailyJobMonitorController extends Controller
             ->when($site, function ($query) use ($site) {
                 $query->where('site', $site);
             })
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('date', 'desc')
             ->get();
 
 
         foreach ($unscheduledJobs as $job) {
             $crewIds = $job->crew ?? [];
-            $job->crew_names = collect($crewIds)->map(fn($id) => $users[$id]->name ?? 'Unknown')->toArray();
+            $job->crew_names = collect($crewIds)->map(fn ($id) => $users[$id]->name ?? 'Unknown')->toArray();
         }
 
         // dd($request->start_date);
@@ -214,5 +236,4 @@ class DailyJobMonitorController extends Controller
         $pdf = Pdf::loadView('dailyJobs.report-monitoring', $data)->setPaper('A4', 'portrait');
         return $pdf->download('daily-report-monitoring.pdf');
     }
-
 }

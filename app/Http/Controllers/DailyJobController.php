@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\DailyJob;
+use App\Models\InvCctv;
+use App\Models\InvComputer;
+use App\Models\InvLaptop;
+use App\Models\InvPrinter;
+use App\Models\PerangkatBreakdown;
 use App\Models\RootCauseCategories;
 use App\Models\User;
 use Carbon\Carbon;
@@ -32,11 +37,11 @@ class DailyJobController extends Controller
         $auth = $user->role;
         $userSite = $user->site;
 
-        if ($auth == 'ict_technician' || $auth == 'ict_group_leader' || $auth == 'ict_admin') {
-            if ($site != $userSite) {
-                abort(403, 'You dont have permission to access this page.');
-            }
-        }
+        // if ($auth == 'ict_technician' || $auth == 'ict_group_leader' || $auth == 'ict_admin') {
+        //     if ($site != $userSite) {
+        //         abort(403, 'You dont have permission to access this page.');
+        //     }
+        // }
 
         // Optional filters
         $startDate = $request->start_date;
@@ -199,12 +204,19 @@ class DailyJobController extends Controller
         $categories = RootCauseCategories::where('site_type', 'SITE')
             ->pluck('category_root_cause');
 
+        $categoriesBd = DB::table('root_cause_categories')
+            ->select('id', 'category_root_cause')
+            ->where('breakdown', 1)
+            ->get();
+
+
         return Inertia::render('DailyJobs/EditJobAssign', [
             'job' => $dailyJob,
             'users' => $users,
             'site_link' => $site_link,
             'canCreate' => $is_admin,
             'categories' => $categories,
+            'categoriesBd' => $categoriesBd,
         ]);
     }
 
@@ -226,6 +238,7 @@ class DailyJobController extends Controller
         $dailyJob = DailyJob::where('code', $code)->firstOrFail();
 
         $data = $request->validate([
+            'assignment_code' => 'nullable|string',
             'description' => 'required|string',
             'remark' => 'required|string',
             'due_date' => 'required|date',
@@ -238,16 +251,74 @@ class DailyJobController extends Controller
             'start_progress' => 'nullable|date',
             'end_progress' => 'nullable|date',
             'category' => 'nullable|string',
+            'inventory_number' => 'nullable|string',
+            'category_breakdown' => 'nullable|string',
             'root_cause' => 'nullable|string',
         ]);
 
+        if ($request->inventory_number) {
+            $now = Carbon::now();
+
+            $deviceName = 'Unknown Device';
+            $categoryInput = $request->category_breakdown;
+
+            if ($categoryInput === 'LAPTOP') {
+                // Cek dari inventory_number
+                $inv = InvLaptop::where('laptop_code', $request->inventory_number)->first();
+                $categoryBreakdown = 'LAPTOP';
+                $deviceName = $inv ? $inv->laptop_name : $deviceName;
+                $deviceLocation = $inv ? $inv->location : '';
+                $id_perangkat = $inv ? $inv->id : 'unknown ID';
+            } elseif ($categoryInput === 'COMPUTER') {
+                $inv = InvComputer::where('computer_code', $request->inventory_number)->first();
+                $categoryBreakdown = 'COMPUTER';
+                $id_perangkat = $inv ? $inv->id : 'unknown ID';
+                $deviceLocation = $inv ? $inv->location : '';
+                // dd($categoryBreakdown);
+                $deviceName = $inv ? $inv->computer_name : $deviceName;
+            } elseif ($categoryInput === 'PRINTER') {
+                $inv = InvPrinter::where('printer_code', $request->inventory_number)->first();
+                $id_perangkat = $inv ? $inv->id : 'unknown ID';
+                $categoryBreakdown = 'PRINTER';
+                $deviceName = $inv ? $inv->printer_brand : $deviceName;
+                $deviceLocation = $inv ? $inv->location : '';
+            } elseif ($categoryInput === 'CCTV') {
+                $inv = InvCctv::where('cctv_code', $request->inventory_number)->first();
+                $deviceName = $inv ? $inv->cctv_brand : $deviceName;
+                $deviceLocation = $inv ? $inv->location : '';
+            }
+
+            $insertData = [
+                'id_report'  => $request->assignment_code,
+                'id_perangkat'  => $id_perangkat,
+                'inventory_number' => $request->inventory_number,
+                'device_name'      => $deviceName,
+                'category_breakdown'      => $categoryBreakdown,
+                'device_category'   => $request->category ?? null,
+                'pic'       => Auth::user()->name,
+                'start_time' => $request->start_progress ?? null,
+                'end_time' => $request->end_progress ?? null,
+                'created_date'     => $now->toDateString(),  // hanya tanggal
+                'month'            => $now->month,           // angka 1-12
+                'year'             => $now->year,            // angka tahun
+                'root_cause'             => $request->root_cause,            // angka tahun
+                'root_cause_category'             => $request->category,            // angka tahun
+                'location'         => $deviceLocation,
+                'status'           => strtoupper($request->status) ?? 'OPEN',
+                'site'             => Auth::user()->site,
+            ];
+
+            PerangkatBreakdown::create($insertData);
+        }
+
         $dailyJob->update($data);
+
 
         return redirect()->route("daily-jobs.$site_link.index")
             ->with('success', 'Job updated successfully!');
     }
 
-    public function destroy($code, Request $request, )
+    public function destroy($code, Request $request,)
     {
 
         $site_link = $this->getSiteFromRequest($request);

@@ -65,7 +65,7 @@
                                             <!-- Job -->
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                     >Job</label
                                                 >
                                                 <textarea
@@ -79,7 +79,7 @@
                                             <!-- Job -->
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                     >Issue</label
                                                 >
                                                 <textarea
@@ -92,7 +92,7 @@
                                             <!-- Job -->
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                     >Action</label
                                                 >
                                                 <textarea
@@ -106,7 +106,7 @@
                                             <!-- Remark -->
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                     >Remark</label
                                                 >
                                                 <textarea
@@ -120,7 +120,7 @@
                                             <!-- Start Progress -->
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                 >
                                                     Start Progress
                                                 </label>
@@ -136,7 +136,7 @@
                                             <!-- End Progress -->
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                 >
                                                     End Progress
                                                 </label>
@@ -151,7 +151,7 @@
 
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                     >Kategori Job</label
                                                 >
                                                 <select
@@ -177,13 +177,15 @@
 
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                     >Root Cause
                                                 </label>
                                                 <select
                                                     v-model="job.problem"
                                                     class="w-full p-2 border border-gray-300 rounded-md"
-                                                    :required="job.category !== 'OTHER'"
+                                                    :required="
+                                                        job.category !== 'OTHER'
+                                                    "
                                                 >
                                                     <option value="">
                                                         Select Root Cause
@@ -201,7 +203,7 @@
                                             <!-- Status -->
                                             <div class="flex-1 min-w-[200px]">
                                                 <label
-                                                    class="block text-sm font-medium text-gray-700 mb-1"
+                                                    class="block text-sm font-medium text-gray-700 mb-3"
                                                     >Status</label
                                                 >
                                                 <select
@@ -219,6 +221,86 @@
                                                         Closed
                                                     </option>
                                                 </select>
+                                            </div>
+                                            <div class="flex-1 min-w-[400px]">
+                                                <label
+                                                    class="inline-flex mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >
+                                                    <span
+                                                        class="mr-2 text-sm text-slate-700 dark:text-white/80"
+                                                        >Enable Category and
+                                                        Inventory Number</span
+                                                    >
+                                                    <input
+                                                        type="checkbox"
+                                                        v-model="
+                                                            job.inventory_enabled
+                                                        "
+                                                        class="sr-only peer"
+                                                    />
+                                                    <div
+                                                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                                    ></div>
+                                                </label>
+                                                <VueMultiselect
+                                                    v-model="
+                                                        job.category_breakdown
+                                                    "
+                                                    :options="optionsCategory"
+                                                    :multiple="false"
+                                                    :close-on-select="true"
+                                                    :disabled="
+                                                        !job.inventory_enabled
+                                                    "
+                                                    :class="
+                                                        !job.inventory_enabled
+                                                            ? 'multiselect-disabled'
+                                                            : ''
+                                                    "
+                                                    placeholder="Select Category"
+                                                    track-by="id"
+                                                    label="category_root_cause"
+                                                    @update:modelValue="
+                                                        onCategoryChange(job)
+                                                    "
+                                                />
+                                            </div>
+                                            <div class="flex-1 min-w-[400px]">
+                                                <label
+                                                    class="inline-flex mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                                >
+                                                    <span
+                                                        class="mr-2 text-sm text-slate-700 dark:text-white/80"
+                                                        >Inventory Number</span
+                                                    >
+                                                    <!-- <input
+                                                    type="checkbox"
+                                                    v-model="
+                                                        inventoryNumberEnabled
+                                                    "
+                                                    class="sr-only peer"
+                                                /> -->
+                                                    <!-- <div
+                                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                                ></div> -->
+                                                </label>
+                                                <VueMultiselect
+                                                    v-model="job.inventory"
+                                                    :options="
+                                                        job.inventory_options
+                                                    "
+                                                    :class="
+                                                        !job.inventory_enabled
+                                                            ? 'multiselect-disabled'
+                                                            : ''
+                                                    "
+                                                    label="no_inv"
+                                                    track-by="id"
+                                                    placeholder="Select Inventory Number"
+                                                    :disabled="
+                                                        !job.inventory_enabled
+                                                    "
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -315,19 +397,32 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
-import { ref, computed } from "vue";
 import { router } from "@inertiajs/vue3";
 import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
+import { ref, computed, watch } from "vue";
 
 const props = defineProps({
     users: Array,
     categories: Array,
+    rootCause: {
+        type: Array,
+    },
+    categoriesBd: {
+        type: Array,
+    },
 });
 
 const site_link = usePage().props.site_link;
 
 const selectedValues = ref([]);
+const selectedValuesCategoryBreakdown = ref([]); // Awalnya array kosong
+const inventoryNumberEnabled = ref(false);
+const optionsInventory = ref([]);
+const selectedInventory = ref(null);
+
+const optionsCategory = props.categoriesBd;
+
 const options = props.users;
 
 const pages = ref("Operation");
@@ -348,6 +443,25 @@ async function fetchProblems(index) {
         console.error("Error fetching problems:", error);
     }
 }
+
+const onCategoryChange = async (job) => {
+    console.log(job.category_breakdown.category_root_cause);
+    if (!job.category_breakdown) {
+        job.inventory_options = [];
+        job.inventory = null;
+        return;
+    }
+
+    const response = await axios.get(route("inventory.by-categoryBreakdown"), {
+        params: {
+            category: job.category_breakdown.category_root_cause,
+        },
+    });
+
+    console.log(response.data);
+    job.inventory_options = response.data;
+    job.inventory = null; // reset pilihan lama
+};
 
 function openPicker(event) {
     event.target.showPicker?.();
@@ -395,6 +509,11 @@ const form = useForm({
             remark: "",
             start_progress: "",
             end_progress: "",
+
+            inventory_enabled: false,
+            category_breakdown: null,
+            inventory: null,
+            inventory_options: [],
         },
     ],
 });
@@ -412,9 +531,14 @@ function getTodayDate() {
 }
 
 function addJob() {
+    inventoryNumberEnabled.value = false;
+    selectedValuesCategoryBreakdown.value = null;
+    selectedInventory.value = null;
+    optionsInventory.value = [];
+
     form.jobs.push({
         code: generateJobCode(),
-        categoryJob: "", // <-- ensure this is added
+        categoryJob: "",
         job: "",
         issue: "",
         action_taken: "",
@@ -427,6 +551,11 @@ function addJob() {
         remark: "",
         start_progress: "",
         end_progress: "",
+
+        inventory_enabled: false,
+        category_breakdown: null,
+        inventory: null,
+        inventory_options: [],
     });
 }
 
@@ -444,6 +573,8 @@ function submitJobs() {
             sarana: sharedFields.value.sarana,
             shift: sharedFields.value.shift,
             root_cause_problem: job.problem,
+            category_breakdown: job.category_breakdown.category_root_cause,
+            inventory: job.inventory.no_inv,
         })),
         shared: {
             crew: sharedFields.value.crew.map((c) => c.id),
