@@ -90,6 +90,10 @@ const search = () => {
 
 const form = useForm({});
 
+const detailData = (id) => {
+    form.get(route("guestAduan.detail", { id: id }));
+};
+
 const deleteData = (id) => {
     // Call SweetAlert for confirmation
     Swal.fire({
@@ -512,6 +516,20 @@ const handleAddClick = async () => {
                                                         class="p-2 text-sm leading-normal align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <NavLinkCustom
+                                                            @click="
+                                                                detailData(
+                                                                    aduans.id
+                                                                )
+                                                            "
+                                                            class="ml-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"
+                                                        >
+                                                            Detail
+                                                        </NavLinkCustom>
+                                                        <NavLinkCustom
+                                                            v-if="
+                                                                aduans.status ==
+                                                                'OPEN'
+                                                            "
                                                             @click="
                                                                 deleteData(
                                                                     aduans.id

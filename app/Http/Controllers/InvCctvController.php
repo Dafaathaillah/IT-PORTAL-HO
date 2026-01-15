@@ -20,7 +20,7 @@ class InvCctvController extends Controller
     public function index()
     {
 
-        $dataInventory = InvCctv::with('switch')->where('site', null)->orWhere('site', 'HO')->get();
+        $dataInventory = InvCctv::with('switch')->where('site', null)->orWhere('site', 'HO')->orderBy('cctv_code', 'desc')->get();
 
         $site = '';
 

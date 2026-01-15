@@ -15,9 +15,12 @@ use Inertia\Inertia;
 
 class InspeksiLaptopIptController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'IPT')->get();
+
+        $yearNow = $request->input('year', now()->year);
+
+        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'IPT')->where('year', $yearNow)->get();
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'IPT')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
@@ -25,9 +28,11 @@ class InspeksiLaptopIptController extends Controller
         $site = 'IPT';
         $role = auth()->user()->role;
 
+        $tahun_sekarang = now()->year;
+
         return Inertia::render(
             'Inspeksi/SiteIpt/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'yearNow' => (int) $yearNow, 'site' => $site, 'role' => $role, 'crew' => $crew, 'tahun_sekarang' => (int) $tahun_sekarang,]
         );
     }
 
@@ -122,8 +127,8 @@ class InspeksiLaptopIptController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['findings_image'] =  url($new_path_document_image);
-            $dataPica['foto_temuan'] =  url($new_path_document_image);
+            $data['findings_image'] = url($new_path_document_image);
+            $dataPica['foto_temuan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -133,8 +138,8 @@ class InspeksiLaptopIptController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['action_image'] =  url($new_path_document_image);
-            $dataPica['foto_tindakan'] =  url($new_path_document_image);
+            $data['action_image'] = url($new_path_document_image);
+            $dataPica['foto_tindakan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -144,7 +149,7 @@ class InspeksiLaptopIptController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['inspection_image'] =  url($new_path_document_image);
+            $data['inspection_image'] = url($new_path_document_image);
         }
         // dd($dataPica);
         if ($params['temuan']) {
@@ -253,8 +258,8 @@ class InspeksiLaptopIptController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['findings_image'] =  url($new_path_document_image);
-            $dataPica['foto_temuan'] =  url($new_path_document_image);
+            $data['findings_image'] = url($new_path_document_image);
+            $dataPica['foto_temuan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_tindakan') != null) {
@@ -264,8 +269,8 @@ class InspeksiLaptopIptController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['action_image'] =  url($new_path_document_image);
-            $dataPica['foto_tindakan'] =  url($new_path_document_image);
+            $data['action_image'] = url($new_path_document_image);
+            $dataPica['foto_tindakan'] = url($new_path_document_image);
         }
 
         if ($request->file('image_inspeksi') != null) {
@@ -275,7 +280,7 @@ class InspeksiLaptopIptController extends Controller
             $new_path_document_image = $path_document_image;
             $document_image->move($destinationPath, $new_path_document_image);
 
-            $data['inspection_image'] =  url($new_path_document_image);
+            $data['inspection_image'] = url($new_path_document_image);
         }
 
         if ($params['temuan']) {
@@ -285,7 +290,7 @@ class InspeksiLaptopIptController extends Controller
         return redirect()->route('inspeksiLaptopIpt.page');
     }
 
-        public function approval(Request $request)
+    public function approval(Request $request)
     {
         $yearNow = Carbon::now()->format('Y');
         $user = Auth::user();

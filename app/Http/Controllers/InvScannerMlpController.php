@@ -18,7 +18,7 @@ class InvScannerMlpController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'MLP')->get();
+        $dataInventory = InvScanner::where('site', 'MLP')->orderBy('scanner_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SiteMlp/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);

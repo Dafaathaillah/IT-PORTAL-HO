@@ -55,6 +55,18 @@ class GuestReportController extends Controller
         );
     }
 
+    public function detail($id)
+    {
+        $aduan = Aduan::where('id', $id)->first();
+
+        if (empty($aduan)) {
+            abort(404, 'Data not found');
+        }
+        return Inertia::render('Guest/GuestAduanDetail', [
+            'aduan' => $aduan,
+        ]);
+    }
+
     public function create()
     {
         $site = Auth::user()->site;
@@ -134,7 +146,7 @@ class GuestReportController extends Controller
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $data['complaint_image'] =  url($new_path_documentation_image);
+            $data['complaint_image'] = url($new_path_documentation_image);
         }
 
         $data['complaint_code'] = $request->complaint_code;

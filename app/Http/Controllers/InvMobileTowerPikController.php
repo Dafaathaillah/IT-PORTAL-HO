@@ -11,7 +11,7 @@ class InvMobileTowerPikController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvMobileTower::where('site', 'PIK')->get();
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'PIK')->get();
         // dd($dataInventory);
         $site = 'PIK';
         $role = auth()->user()->role;
@@ -20,7 +20,20 @@ class InvMobileTowerPikController extends Controller
     }
     public function create()
     {
-        return Inertia::render('Inventory/MobileTower/pik/MobileTowerCreate', ['inventory_number' => session('inventory_number') ?? null]);
+        $site = 'PIK';
+        $lastTower = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', $site)->first();
+
+        // dd($lastTower);
+
+        if ($lastTower) {
+
+            $lastNumber = (int) substr($lastTower->inventory_number, -2);
+            $nextNumber = str_pad($lastNumber + 1, 2, '0', STR_PAD_LEFT);
+        } else {
+            $nextNumber = '01';
+        }
+
+        return Inertia::render('Inventory/MobileTower/pik/MobileTowerCreate', ['inventoryNumber' => $site . '-MT-' . $nextNumber]);
     }
 
     public function store(Request $request)

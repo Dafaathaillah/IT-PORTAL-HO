@@ -18,7 +18,7 @@ class InvWirellessMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'MHU')->get();
+        $dataInventory = InvWirelless::where('site', 'MHU')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

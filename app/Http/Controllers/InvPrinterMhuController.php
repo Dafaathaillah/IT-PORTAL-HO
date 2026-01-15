@@ -16,7 +16,7 @@ class InvPrinterMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvPrinter::where('site', 'MHU')->get();
+        $dataInventory = InvPrinter::where('site', 'MHU')->orderBy('printer_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

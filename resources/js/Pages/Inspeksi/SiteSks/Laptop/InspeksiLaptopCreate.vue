@@ -65,10 +65,37 @@ const form = useForm({
     image_inspeksi: "",
 });
 
+const temuanEnabled = ref(false);
+
 const isDisabled = ref(true);
+const file_inputan1 = ref(null);
+const file_inputan2 = ref(null);
 const file_temuan = ref(null);
 const file_tindakan = ref(null);
 const file_inspeksi = ref(null);
+
+watch(temuanEnabled, (enabled) => {
+    if (!enabled) {
+        // Reset all Temuan-related fields when switch is OFF
+        form.temuan = "";
+        form.findings_image = "";
+        form.tindakan = "";
+        form.action_image = "";
+        form.due_date = "";
+        form.findings_status = "";
+        form.image_temuan = "";
+        form.image_tindakan = "";
+
+        // Reset the VueDatePicker
+        selectedDateDueDate.value = null;
+
+        if (file_temuan.value) file_temuan.value = "";
+        if (file_tindakan.value) file_tindakan.value = "";
+        // Reset file input DOM values
+        if (file_inputan1.value) file_inputan1.value.value = "";
+        if (file_inputan2.value) file_inputan2.value.value = "";
+    }
+});
 
 const handleFileUploadTemuan = (event) => {
     file_temuan.value = event.target.files[0];
@@ -954,13 +981,11 @@ const options = props.pengguna;
                                         </div>
                                     </div>
 
-                                      <div
+                                    <div
                                         v-if="storageTipe != 'HDD'"
                                         class="w-full max-w-full px-3 shrink-0 md:w-2/12 md:flex-0"
                                     >
-                                        <div class="mb-4">
-                                   
-                                        </div>
+                                        <div class="mb-4"></div>
                                     </div>
 
                                     <div
@@ -1179,7 +1204,9 @@ const options = props.pengguna;
                                                         required
                                                         type="radio"
                                                         name="inputPassword"
-                                                        v-model="selectedInputPassword"
+                                                        v-model="
+                                                            selectedInputPassword
+                                                        "
                                                         value="Y"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -1195,7 +1222,9 @@ const options = props.pengguna;
                                                         required
                                                         type="radio"
                                                         name="inputPassword"
-                                                        v-model="selectedInputPassword"
+                                                        v-model="
+                                                            selectedInputPassword
+                                                        "
                                                         value="N"
                                                         class="form-radio text-blue-600 border-gray-300 focus:ring-blue-500"
                                                     />
@@ -1299,6 +1328,24 @@ const options = props.pengguna;
                                             >
                                                 Temuan
                                             </p>
+                                            <!-- Switch toggle -->
+                                            <label
+                                                class="inline-flex items-center cursor-pointer mt-2"
+                                            >
+                                                <span
+                                                    class="mr-2 text-sm text-slate-700 dark:text-white/80"
+                                                    >Aktifkan Kolom Temuan (jika
+                                                    terdapat temuan)</span
+                                                >
+                                                <input
+                                                    type="checkbox"
+                                                    v-model="temuanEnabled"
+                                                    class="sr-only peer"
+                                                />
+                                                <div
+                                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                                ></div>
+                                            </label>
                                         </div>
                                     </div>
 
@@ -1315,7 +1362,8 @@ const options = props.pengguna;
                                                 type="text"
                                                 v-model="form.temuan"
                                                 name="temuan"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                :disabled="!temuanEnabled"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
                                                 placeholder=""
                                             />
                                         </div>
@@ -1332,8 +1380,9 @@ const options = props.pengguna;
                                             >
                                             <input
                                                 type="file"
-                                                ref="fileInput"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                ref="file_inputan1"
+                                                :disabled="!temuanEnabled"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
                                                 @change="handleFileUploadTemuan"
                                             />
                                         </div>
@@ -1352,7 +1401,8 @@ const options = props.pengguna;
                                                 type="text"
                                                 v-model="form.tindakan"
                                                 name="tindakan"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                :disabled="!temuanEnabled"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
                                                 placeholder=""
                                             />
                                         </div>
@@ -1369,8 +1419,9 @@ const options = props.pengguna;
                                             >
                                             <input
                                                 type="file"
-                                                ref="fileInput"
-                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
+                                                ref="file_inputan2"
+                                                :disabled="!temuanEnabled"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
                                                 @change="
                                                     handleFileUploadTindakan
                                                 "
@@ -1391,6 +1442,7 @@ const options = props.pengguna;
                                                 v-model="selectedDateDueDate"
                                                 :format="customFormat"
                                                 name="date_of_inventory"
+                                                :disabled="!temuanEnabled"
                                                 placeholder="Select a date and time"
                                             />
                                         </div>
@@ -1410,7 +1462,8 @@ const options = props.pengguna;
                                                 id="findings_status"
                                                 v-model="form.findings_status"
                                                 name="findings_status"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                :disabled="!temuanEnabled"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 disabled:bg-gray-100 dark:disabled:bg-slate-800 dark:disabled:text-gray-400"
                                             >
                                                 <option value="OPEN">
                                                     OPEN
@@ -1436,7 +1489,7 @@ const options = props.pengguna;
                                                 name="remark"
                                                 v-model="form.remark"
                                                 rows="4"
-                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="Leave a note..."
                                             ></textarea>
                                         </div>

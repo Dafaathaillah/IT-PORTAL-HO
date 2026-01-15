@@ -18,7 +18,7 @@ class InvApSbsController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'SBS')->get();
+        $dataInventory = InvAp::where('site', 'SBS')->orderBy('inventory_number', 'desc')->get();
         $site = 'SBS';
         $role = auth()->user()->role;
 

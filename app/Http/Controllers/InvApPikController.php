@@ -18,7 +18,7 @@ class InvApPikController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvAp::where('site', 'PIK')->get();
+        $dataInventory = InvAp::where('site', 'PIK')->orderBy('inventory_number', 'desc')->get();
         $site = 'PIK';
         $role = auth()->user()->role;
 

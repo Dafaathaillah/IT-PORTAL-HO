@@ -254,8 +254,10 @@ class InspectionScheduleController extends Controller
         $auth = $user->role;
         $userSite = $user->site;
 
-        if ($auth != 'ict_developer' && $site != $userSite) {
-            abort(403, 'You dont have permission to access this page.');
+        if ($auth == 'ict_technician' || $auth == 'ict_group_leader' || $auth == 'ict_admin') {
+            if ($site != $userSite) {
+                abort(403, 'You dont have permission to access this page.');
+            }
         }
 
         $request->validate([
@@ -318,7 +320,7 @@ class InspectionScheduleController extends Controller
 
     }
 
-    public function exportPdf(Request $request, string $site)
+    public function exportPdf(Request $request)
     {
         // $month = $request->query('month');
         // $dept = $request->query('dept');
@@ -328,10 +330,14 @@ class InspectionScheduleController extends Controller
         $user = Auth::user();
         $auth = $user->role;
         $userSite = $user->site;
+        $site = $user->site;
 
-        if ($auth != 'ict_developer' && $site != $userSite) {
-            abort(403, 'You dont have permission to access this page.');
-        }
+        // if ($auth == 'ict_technician' || $auth == 'ict_group_leader' || $auth == 'ict_admin') {
+        //     if ($site != $userSite) {
+        //         abort(403, 'You dont have permission to access this page.');
+        //     }
+        // }
+
         $year = Carbon::now()->year;
         $month = Carbon::now()->month;
 

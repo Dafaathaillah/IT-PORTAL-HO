@@ -16,9 +16,13 @@ use Inertia\Inertia;
 
 class InspeksiLaptopBibController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'BIB')->get();
+
+        $yearNow = $request->input('year', now()->year);
+
+        $inspeksi_laptop = InspeksiLaptop::with('inventory.pengguna')->where('site', 'BIB')->where('year', $yearNow)->get();
+
         $crew = User::whereIn('role', ['ict_technician', 'ict_group_leader'])->where('site', 'BIB')->pluck('name')->map(function ($name) {
             return ['name' => $name];
         })->toArray();
@@ -29,9 +33,11 @@ class InspeksiLaptopBibController extends Controller
         // // dd($inspeksi_laptop->first()->inventory);
         // dd($inspeksi_laptop->first()->inventory);
 
+        $tahun_sekarang = now()->year;
+
         return Inertia::render(
             'Inspeksi/SiteBib/Laptop/InspeksiLaptopView',
-            ['inspeksiLaptopx' => $inspeksi_laptop, 'site' => $site, 'role' => $role, 'crew' => $crew]
+            ['inspeksiLaptopx' => $inspeksi_laptop, 'yearNow' => (int) $yearNow, 'site' => $site, 'role' => $role, 'crew' => $crew, 'tahun_sekarang' => (int) $tahun_sekarang,]
         );
     }
 

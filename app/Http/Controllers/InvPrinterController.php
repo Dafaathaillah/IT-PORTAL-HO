@@ -17,7 +17,7 @@ class InvPrinterController extends Controller
     public function index()
     {
 
-        $dataInventory = InvPrinter::where('site', null)->orWhere('site', 'HO')->get();
+        $dataInventory = InvPrinter::where('site', null)->orWhere('site', 'HO')->orderBy('printer_code', 'desc')->get();
 
         $site = '';
 

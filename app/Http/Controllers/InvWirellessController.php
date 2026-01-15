@@ -19,7 +19,7 @@ class InvWirellessController extends Controller
     public function index()
     {
 
-        $dataInventory = InvWirelless::where('site', null)->orWhere('site', 'HO')->get();
+        $dataInventory = InvWirelless::where('site', null)->orWhere('site', 'HO')->orderBy('inventory_number', 'desc')->get();
 
         $site = '';
 

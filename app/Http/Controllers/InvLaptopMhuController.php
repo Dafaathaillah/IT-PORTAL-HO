@@ -22,7 +22,7 @@ class InvLaptopMhuController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvLaptop::with('pengguna')->orderBy('laptop_code', 'asc')->where('site', 'MHU')->get();
+        $dataInventory = InvLaptop::with('pengguna')->orderBy('max_id', 'desc')->where('site', 'MHU')->get();
 
         $site = 'MHU';
 

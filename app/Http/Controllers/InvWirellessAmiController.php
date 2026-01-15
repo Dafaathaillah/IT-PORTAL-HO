@@ -18,7 +18,7 @@ class InvWirellessAmiController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvWirelless::where('site', 'AMI')->get();
+        $dataInventory = InvWirelless::where('site', 'AMI')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

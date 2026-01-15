@@ -18,7 +18,7 @@ class InvScannerSksController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'SKS')->get();
+        $dataInventory = InvScanner::where('site', 'SKS')->orderBy('scanner_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SiteSks/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);

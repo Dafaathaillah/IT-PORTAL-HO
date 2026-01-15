@@ -19,7 +19,7 @@ class InvCctvValeController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvCctv::with('switch')->where('site', 'VIB')->get();
+        $dataInventory = InvCctv::with('switch')->where('site', 'VIB')->orderBy('cctv_code', 'desc')->get();
 
         $site = auth()->user()->site;
 

@@ -18,7 +18,7 @@ class InvScannerMipController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvScanner::where('site', 'MIP')->get();
+        $dataInventory = InvScanner::where('site', 'MIP')->orderBy('scanner_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
         return Inertia::render('Inventory/SiteMip/Scanner/Scanner', ['scanner' => $dataInventory, 'site' => $site, 'role' => $role]);

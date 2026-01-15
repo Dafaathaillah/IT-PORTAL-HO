@@ -19,7 +19,7 @@ class InvSwitchBibController extends Controller
     public function index()
     {
 
-        $dataInventory = InvSwitch::where('site', 'BIB')->get();
+        $dataInventory = InvSwitch::where('site', 'BIB')->orderBy('inventory_number', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 

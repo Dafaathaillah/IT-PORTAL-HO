@@ -16,7 +16,7 @@ class InvPrinterIptController extends Controller
 {
     public function index()
     {
-        $dataInventory = InvPrinter::where('site', 'IPT')->get();
+        $dataInventory = InvPrinter::where('site', 'IPT')->orderBy('printer_code', 'desc')->get();
         $site = auth()->user()->site;
         $role = auth()->user()->role;
 
