@@ -434,7 +434,7 @@ const exportHasilInspeksi = () => {
                                 </div>
 
                                 <div class="grid grid-cols-2">
-                                    <p class="text-base">MT Code</p>
+                                    <p class="text-base">Nomor Asset</p>
                                     <p>: {{ inspeksi.mt.mt_code }}</p>
                                 </div>
 

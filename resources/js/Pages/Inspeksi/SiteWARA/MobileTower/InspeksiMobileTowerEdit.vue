@@ -584,7 +584,7 @@ watch(selectedPicValues, (newPic) => {
 
                                         <div class="grid grid-cols-2">
                                             <div>
-                                                <p class="text-base">MT CODE</p>
+                                                <p class="text-base">Nomor Asset</p>
                                             </div>
                                             <div>
                                                 <p>

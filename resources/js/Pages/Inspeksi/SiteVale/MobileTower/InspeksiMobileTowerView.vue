@@ -551,7 +551,7 @@ const approved = () => {
                                                         >
                                                             {{
                                                                 inspeksiMobileTowers
-                                                                    .mt.mt_code
+                                                                    .mt.inventory_number
                                                             }}
                                                         </p>
                                                     </td>
