@@ -72,7 +72,7 @@ function formattedDate(date) {
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div>
-                                            <p class="text-base">Kode MT</p>
+                                            <p class="text-base">Nomor Asset</p>
                                         </div>
                                         <div>
                                             <p>

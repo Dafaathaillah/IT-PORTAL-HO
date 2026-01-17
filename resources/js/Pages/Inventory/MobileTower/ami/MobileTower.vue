@@ -160,7 +160,7 @@ const detailData = (id) => {
                                                     <th
                                                         class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
                                                     >
-                                                        Kode MT
+                                                        Nomor Asset
                                                     </th>
                                                     <th
                                                         class="px-6 py-3 font-bold text-center uppercase align-middle mb-0 text-sm leading-tight dark:text-white dark:opacity-80"
