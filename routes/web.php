@@ -277,6 +277,20 @@ use App\Http\Controllers\InvWirellessValeController;
 use App\Http\Controllers\KpiAduanAnalysisController;
 use App\Http\Controllers\KpiInspeksiController;
 use App\Http\Controllers\KpiResponseTimeController;
+use App\Http\Controllers\KpiVhmsAmiController;
+use App\Http\Controllers\KpiVhmsBaController;
+use App\Http\Controllers\KpiVhmsBgeController;
+use App\Http\Controllers\KpiVhmsBibController;
+use App\Http\Controllers\KpiVhmsIptController;
+use App\Http\Controllers\KpiVhmsMhuController;
+use App\Http\Controllers\KpiVhmsMifaController;
+use App\Http\Controllers\KpiVhmsMipController;
+use App\Http\Controllers\KpiVhmsMlpController;
+use App\Http\Controllers\KpiVhmsPikController;
+use App\Http\Controllers\KpiVhmsSbsController;
+use App\Http\Controllers\KpiVhmsSksController;
+use App\Http\Controllers\KpiVhmsValeController;
+use App\Http\Controllers\KpiVhmsWARAController;
 use App\Http\Controllers\PerangkatBreakdownController;
 use App\Http\Controllers\KpiVhmsController;
 use App\Http\Controllers\PicaInspeksiController;
@@ -571,6 +585,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-ba/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-ba.rekap");
+
+        Route::get('/kpi-vhms-ba', action: [KpiVhmsBaController::class, 'index'])->name('kpi-ba.vhms');
+        Route::post('/kpi-vhms-ba-show', [KpiVhmsBaController::class, 'countKpi'])->name('kpi-ba.vhmsShow');
+        Route::get('/kpi-vhms-ba/data-filter', [KpiVhmsBaController::class, 'getDataFilter'])->name('kpi-vhms-ba.data.filter');
+        Route::post('/kpi-vhms-ba/feedback', [KpiVhmsBaController::class, 'updateFeedback'])->name('kpi-vhms-ba.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIFA,ict_group_leader:MIFA,ict_admin:MIFA,ict_ho:HO'], function () {
@@ -588,6 +607,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-mifa/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-mifa.rekap");
+
+        Route::get('/kpi-vhms-mifa', action: [KpiVhmsMifaController::class, 'index'])->name('kpi-mifa.vhms');
+        Route::post('/kpi-vhms-mifa-show', [KpiVhmsMifaController::class, 'countKpi'])->name('kpi-mifa.vhmsShow');
+        Route::get('/kpi-vhms-mifa/data-filter', [KpiVhmsMifaController::class, 'getDataFilter'])->name('kpi-vhms-mifa.data.filter');
+        Route::post('/kpi-vhms-mifa/feedback', [KpiVhmsMifaController::class, 'updateFeedback'])->name('kpi-vhms-mifa.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MHU,ict_group_leader:MHU,ict_admin:MHU,ict_ho:HO'], function () {
@@ -605,6 +629,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-mhu/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-mhu.rekap");
+
+        Route::get('/kpi-vhms-mhu', action: [KpiVhmsMhuController::class, 'index'])->name('kpi-mhu.vhms');
+        Route::post('/kpi-vhms-mhu-show', [KpiVhmsMhuController::class, 'countKpi'])->name('kpi-mhu.vhmsShow');
+        Route::get('/kpi-vhms-mhu/data-filter', [KpiVhmsMhuController::class, 'getDataFilter'])->name('kpi-vhms-mhu.data.filter');
+        Route::post('/kpi-vhms-mhu/feedback', [KpiVhmsMhuController::class, 'updateFeedback'])->name('kpi-vhms-mhu.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:AMI,ict_group_leader:AMI,ict_admin:AMI,ict_ho:HO'], function () {
@@ -622,6 +651,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-ami/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-ami.rekap");
+
+        Route::get('/kpi-vhms-ami', action: [KpiVhmsAmiController::class, 'index'])->name('kpi-ami.vhms');
+        Route::post('/kpi-vhms-ami-show', [KpiVhmsAmiController::class, 'countKpi'])->name('kpi-ami.vhmsShow');
+        Route::get('/kpi-vhms-ami/data-filter', [KpiVhmsAmiController::class, 'getDataFilter'])->name('kpi-vhms-ami.data.filter');
+        Route::post('/kpi-vhms-ami/feedback', [KpiVhmsAmiController::class, 'updateFeedback'])->name('kpi-vhms-ami.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:PIK,ict_group_leader:PIK,ict_admin:PIK,ict_ho:HO'], function () {
@@ -639,6 +673,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-pik/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-pik.rekap");
+
+        Route::get('/kpi-vhms-pik', action: [KpiVhmsPikController::class, 'index'])->name('kpi-pik.vhms');
+        Route::post('/kpi-vhms-pik-show', [KpiVhmsPikController::class, 'countKpi'])->name('kpi-pik.vhmsShow');
+        Route::get('/kpi-vhms-pik/data-filter', [KpiVhmsPikController::class, 'getDataFilter'])->name('kpi-vhms-pik.data.filter');
+        Route::post('/kpi-vhms-pik/feedback', [KpiVhmsPikController::class, 'updateFeedback'])->name('kpi-vhms-pik.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BGE,ict_group_leader:BGE,ict_admin:BGE,ict_ho:HO'], function () {
@@ -656,6 +695,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-bge/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-bge.rekap");
+
+        Route::get('/kpi-vhms-bge', action: [KpiVhmsBgeController::class, 'index'])->name('kpi-bge.vhms');
+        Route::post('/kpi-vhms-bge-show', [KpiVhmsBgeController::class, 'countKpi'])->name('kpi-bge.vhmsShow');
+        Route::get('/kpi-vhms-bge/data-filter', [KpiVhmsBgeController::class, 'getDataFilter'])->name('kpi-vhms-bge.data.filter');
+        Route::post('/kpi-vhms-bge/feedback', [KpiVhmsBgeController::class, 'updateFeedback'])->name('kpi-vhms-bge.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:BIB,ict_group_leader:BIB,ict_admin:BIB,ict_ho:HO'], function () {
@@ -673,6 +717,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-bib/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-bib.rekap");
+
+        Route::get('/kpi-vhms-bib', action: [KpiVhmsBibController::class, 'index'])->name('kpi-bib.vhms');
+        Route::post('/kpi-vhms-bib-show', [KpiVhmsBibController::class, 'countKpi'])->name('kpi-bib.vhmsShow');
+        Route::get('/kpi-vhms-bib/data-filter', [KpiVhmsBibController::class, 'getDataFilter'])->name('kpi-vhms-bib.data.filter');
+        Route::post('/kpi-vhms-bib/feedback', [KpiVhmsBibController::class, 'updateFeedback'])->name('kpi-vhms-bib.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:IPT,ict_group_leader:IPT,ict_admin:IPT,ict_ho:HO'], function () {
@@ -690,6 +739,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-ipt/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-ipt.rekap");
+
+        Route::get('/kpi-vhms-ipt', action: [KpiVhmsIptController::class, 'index'])->name('kpi-ipt.vhms');
+        Route::post('/kpi-vhms-ipt-show', [KpiVhmsIptController::class, 'countKpi'])->name('kpi-ipt.vhmsShow');
+        Route::get('/kpi-vhms-ipt/data-filter', [KpiVhmsIptController::class, 'getDataFilter'])->name('kpi-vhms-ipt.data.filter');
+        Route::post('/kpi-vhms-ipt/feedback', [KpiVhmsIptController::class, 'updateFeedback'])->name('kpi-vhms-ipt.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MLP,ict_group_leader:MLP,ict_admin:MLP,ict_ho:HO'], function () {
@@ -707,6 +761,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-mlp/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-mlp.rekap");
+
+        Route::get('/kpi-vhms-mlp', action: [KpiVhmsMlpController::class, 'index'])->name('kpi-mlp.vhms');
+        Route::post('/kpi-vhms-mlp-show', [KpiVhmsMlpController::class, 'countKpi'])->name('kpi-mlp.vhmsShow');
+        Route::get('/kpi-vhms-mlp/data-filter', [KpiVhmsMlpController::class, 'getDataFilter'])->name('kpi-vhms-mlp.data.filter');
+        Route::post('/kpi-vhms-mlp/feedback', [KpiVhmsMlpController::class, 'updateFeedback'])->name('kpi-vhms-mlp.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MIP,ict_group_leader:MIP,ict_admin:MIP,ict_ho:HO'], function () {
@@ -724,6 +783,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-mip/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-mip.rekap");
+
+        Route::get('/kpi-vhms-mip', action: [KpiVhmsMipController::class, 'index'])->name('kpi-mip.vhms');
+        Route::post('/kpi-vhms-mip-show', [KpiVhmsMipController::class, 'countKpi'])->name('kpi-mip.vhmsShow');
+        Route::get('/kpi-vhms-mip/data-filter', [KpiVhmsMipController::class, 'getDataFilter'])->name('kpi-vhms-mip.data.filter');
+        Route::post('/kpi-vhms-mip/feedback', [KpiVhmsMipController::class, 'updateFeedback'])->name('kpi-vhms-mip.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:VIB,ict_group_leader:VIB,ict_admin:VIB,ict_ho:HO'], function () {
@@ -741,6 +805,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-vib/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-vib.rekap");
+
+        Route::get('/kpi-vhms-vib', action: [KpiVhmsValeController::class, 'index'])->name('kpi-vib.vhms');
+        Route::post('/kpi-vhms-vib-show', [KpiVhmsValeController::class, 'countKpi'])->name('kpi-vib.vhmsShow');
+        Route::get('/kpi-vhms-vib/data-filter', [KpiVhmsValeController::class, 'getDataFilter'])->name('kpi-vhms-vib.data.filter');
+        Route::post('/kpi-vhms-vib/feedback', [KpiVhmsValeController::class, 'updateFeedback'])->name('kpi-vhms-vib.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SBS,ict_group_leader:SBS,ict_admin:SBS,ict_ho:HO'], function () {
@@ -758,6 +827,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-sbs/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-sbs.rekap");
+
+        Route::get('/kpi-vhms-sbs', action: [KpiVhmsSbsController::class, 'index'])->name('kpi-sbs.vhms');
+        Route::post('/kpi-vhms-sbs-show', [KpiVhmsSbsController::class, 'countKpi'])->name('kpi-sbs.vhmsShow');
+        Route::get('/kpi-vhms-sbs/data-filter', [KpiVhmsSbsController::class, 'getDataFilter'])->name('kpi-vhms-sbs.data.filter');
+        Route::post('/kpi-vhms-sbs/feedback', [KpiVhmsSbsController::class, 'updateFeedback'])->name('kpi-vhms-sbs.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:SKS,ict_group_leader:SKS,ict_admin:SKS,ict_ho:HO'], function () {
@@ -775,6 +849,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-sks/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-sks.rekap");
+
+        Route::get('/kpi-vhms-sks', action: [KpiVhmsSksController::class, 'index'])->name('kpi-sks.vhms');
+        Route::post('/kpi-vhms-sks-show', [KpiVhmsSksController::class, 'countKpi'])->name('kpi-sks.vhmsShow');
+        Route::get('/kpi-vhms-sks/data-filter', [KpiVhmsSksController::class, 'getDataFilter'])->name('kpi-vhms-sks.data.filter');
+        Route::post('/kpi-vhms-sks/feedback', [KpiVhmsSksController::class, 'updateFeedback'])->name('kpi-vhms-sks.feedback');
     });
 
     Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:ADW,ict_group_leader:ADW,ict_admin:ADW,ict_ho:HO'], function () {
@@ -792,6 +871,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get("inspection-scheduler-mobileTower-adw/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-adw.rekap");
+
+        Route::get('/kpi-vhms-adw', action: [KpiVhmsWARAController::class, 'index'])->name('kpi-adw.vhms');
+        Route::post('/kpi-vhms-adw-show', [KpiVhmsWARAController::class, 'countKpi'])->name('kpi-adw.vhmsShow');
+        Route::get('/kpi-vhms-adw/data-filter', [KpiVhmsWARAController::class, 'getDataFilter'])->name('kpi-vhms-adw.data.filter');
+        Route::post('/kpi-vhms-adw/feedback', [KpiVhmsWARAController::class, 'updateFeedback'])->name('kpi-vhms-adw.feedback');
     });
 
     // Route::get('/inspection-scheduler-laptop', [InspectionScheduleController::class, 'index'])->name('inspection-schedule.index');

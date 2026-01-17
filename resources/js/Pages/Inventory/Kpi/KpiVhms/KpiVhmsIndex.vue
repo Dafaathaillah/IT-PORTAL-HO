@@ -83,7 +83,7 @@ const filteredItems = computed(() => {
             ["sn", "cn", "model"].some((key) =>
                 String(item[key] ?? "")
                     .toLowerCase()
-                    .includes(text)
+                    .includes(text),
             );
 
         // Date match (exact date)
@@ -199,7 +199,7 @@ onMounted(async () => {
     ];
 
     const maxY = Math.max(...allValues);
-    const paddedMax = Math.ceil((maxY * 1.1) / 10) * 9 || 100;
+    const paddedMax = Math.ceil((maxY * 1.2) / 10) * 9 || 100;
 
     // Inisialisasi chart
     chartInstance.value = Highcharts.chart("kpi-chart", {
@@ -221,7 +221,7 @@ onMounted(async () => {
                         (s) =>
                             (s.name === "update" || s.name === "updateTOTAL") &&
                             s.visible &&
-                            s.type === "column"
+                            s.type === "column",
                     );
 
                     const linePoints = [];
@@ -284,7 +284,7 @@ onMounted(async () => {
 
                     line.animate(
                         { "stroke-dashoffset": 0 },
-                        { duration: 4000, easing: "easeOutCubic" }
+                        { duration: 4000, easing: "easeOutCubic" },
                     );
 
                     chart.customLine = line;
@@ -302,8 +302,8 @@ onMounted(async () => {
                             .add()
                             .animate(
                                 { opacity: 1 },
-                                { duration: 1500, delay: 400 }
-                            )
+                                { duration: 1500, delay: 400 },
+                            ),
                     );
                 },
             },
@@ -718,7 +718,7 @@ function createChart() {
     ];
 
     const maxY = Math.max(...allValues);
-    const paddedMax = Math.ceil((maxY * 1.1) / 10) * 9 || 100;
+    const paddedMax = Math.ceil((maxY * 1.2) / 10) * 9 || 100;
 
     // Inisialisasi chart
     chartInstance.value = Highcharts.chart("kpi-chart", {
@@ -738,7 +738,7 @@ function createChart() {
                         (s) =>
                             (s.name === "update" || s.name === "updateTOTAL") &&
                             s.visible &&
-                            s.type === "column"
+                            s.type === "column",
                     );
 
                     const linePoints = [];
@@ -801,7 +801,7 @@ function createChart() {
 
                     line.animate(
                         { "stroke-dashoffset": 0 },
-                        { duration: 4000, easing: "easeOutCubic" }
+                        { duration: 4000, easing: "easeOutCubic" },
                     );
 
                     chart.customLine = line;
@@ -819,8 +819,8 @@ function createChart() {
                             .add()
                             .animate(
                                 { opacity: 1 },
-                                { duration: 1500, delay: 400 }
-                            )
+                                { duration: 1500, delay: 400 },
+                            ),
                     );
                 },
             },
@@ -867,7 +867,7 @@ function createChart() {
                         (p) =>
                             !p.series.name.includes("percentage") &&
                             !p.series.name.includes("kosong") &&
-                            p.series.name !== "Update Line"
+                            p.series.name !== "Update Line",
                     )
                     .forEach((p) => {
                         const color = p.color || "#ccc";
@@ -1225,7 +1225,7 @@ watch(selectedOptionUnit, (val) => {
                     },
                 },
             },
-            false
+            false,
         );
         console.log("updatee 2000 " + selectedOption.value);
     }
@@ -1241,7 +1241,7 @@ watch(selectedOptionUnit, (val) => {
                 enableMouseTracking: s.userOptions.enableMouseTracking,
                 type: s.type,
                 data: s.options.data.map((d) =>
-                    typeof d === "object" ? { ...d } : d
+                    typeof d === "object" ? { ...d } : d,
                 ),
                 dataLabels: s.options.dataLabels
                     ? { ...s.options.dataLabels }
@@ -1312,14 +1312,14 @@ watch(selectedOptionUnit, (val) => {
                         },
                     },
                 },
-                false
+                false,
             );
         }
         chart.xAxis[0].setCategories(originalData.value.categories, false);
 
         chart.series.forEach((s) => {
             const original = originalData.value.series.find(
-                (o) => o.name === s.name && o.stack === s.userOptions.stack
+                (o) => o.name === s.name && o.stack === s.userOptions.stack,
             );
             if (original) s.setData(original.data, false);
         });
@@ -1340,7 +1340,7 @@ watch(selectedOptionUnit, (val) => {
             const stack = series.userOptions.stack || "default";
             if (!totalPerStackPerCategory[stack]) {
                 totalPerStackPerCategory[stack] = Array(categories.length).fill(
-                    0
+                    0,
                 );
             }
             series.yData.forEach((y, i) => {
@@ -1351,13 +1351,13 @@ watch(selectedOptionUnit, (val) => {
         const maxY = Math.max(
             ...Object.values(totalPerStackPerCategory)
                 .flat()
-                .filter((v) => typeof v === "number" && v > 0)
+                .filter((v) => typeof v === "number" && v > 0),
         );
         let paddedMax = 0;
         if (selectedOption.value.name === "Month") {
-            paddedMax = Math.ceil((maxY * 1.1) / 10) * 4 || 100;
+            paddedMax = Math.ceil((maxY * 1.2) / 10) * 5 || 100;
         } else {
-            paddedMax = Math.ceil((maxY * 1.1) / 10) * 5 || 100;
+            paddedMax = Math.ceil((maxY * 1.2) / 10) * 5 || 100;
         }
         chart.yAxis[0].update({ max: paddedMax });
     } else if (selectedName === "AKUMULASI") {
@@ -1366,7 +1366,7 @@ watch(selectedOptionUnit, (val) => {
 
         const getSeriesData = (stack, name) => {
             const s = originalData.value.series.find(
-                (item) => item.stack === stack && item.name === name
+                (item) => item.stack === stack && item.name === name,
             );
             return s ? s.data : Array(chart.xAxis[0].categories.length).fill(0);
         };
@@ -1385,17 +1385,17 @@ watch(selectedOptionUnit, (val) => {
 
         const updateTOTAL = updateHD.map(
             (val, i) =>
-                (val || 0) + (updatePC1250[i] || 0) + (updatePC2000[i] || 0)
+                (val || 0) + (updatePC1250[i] || 0) + (updatePC2000[i] || 0),
         );
         const waitingTOTAL = waitingHD.map(
             (val, i) =>
-                (val || 0) + (waitingPC1250[i] || 0) + (waitingPC2000[i] || 0)
+                (val || 0) + (waitingPC1250[i] || 0) + (waitingPC2000[i] || 0),
         );
         const notUpdateTOTAL = notUpdateHD.map(
             (val, i) =>
                 (val || 0) +
                 (notUpdatePC1250[i] || 0) +
-                (notUpdatePC2000[i] || 0)
+                (notUpdatePC2000[i] || 0),
         );
 
         const percentageTOTAL = updateTOTAL.map((val, i) => {
@@ -1408,7 +1408,7 @@ watch(selectedOptionUnit, (val) => {
 
         // ✅ Remove any previous TOTAL stacks before redrawing
         const totalSeries = chart.series.filter(
-            (s) => s.userOptions.stack === "TOTAL"
+            (s) => s.userOptions.stack === "TOTAL",
         );
         totalSeries.forEach((s) => s.remove(false));
 
@@ -1486,9 +1486,9 @@ watch(selectedOptionUnit, (val) => {
         ];
 
         const maxY = Math.max(
-            ...allValues.filter((v) => typeof v === "number" && v > 0)
+            ...allValues.filter((v) => typeof v === "number" && v > 0),
         );
-        const paddedMax = Math.ceil((maxY * 1.1) / 10) * 12 || 100;
+        const paddedMax = Math.ceil((maxY * 1.2) / 10) * 12 || 100;
         chart.yAxis[0].update({ max: paddedMax });
 
         // ✅ Redraw chart
@@ -1499,7 +1499,7 @@ watch(selectedOptionUnit, (val) => {
             chart.xAxis[0].setCategories(originalData.value.categories, false);
             chart.series.forEach((s) => {
                 const original = originalData.value.series.find(
-                    (o) => o.name === s.name && o.stack === s.userOptions.stack
+                    (o) => o.name === s.name && o.stack === s.userOptions.stack,
                 );
                 if (original) s.setData(original.data, false);
             });
@@ -1513,12 +1513,12 @@ watch(selectedOptionUnit, (val) => {
             .filter(
                 (s) =>
                     s.userOptions.stack !== val.name &&
-                    s.userOptions.stack !== "TOTAL"
+                    s.userOptions.stack !== "TOTAL",
             )
             .forEach((s) => s.setVisible(false, false));
 
         const totalSeries = chart.series.filter(
-            (s) => s.userOptions.stack === "TOTAL"
+            (s) => s.userOptions.stack === "TOTAL",
         );
         totalSeries.forEach((s) => s.remove(false));
 
@@ -1533,7 +1533,7 @@ watch(selectedOptionUnit, (val) => {
         });
 
         const maxY = Math.max(...totalPerCategory);
-        const paddedMax = Math.ceil((maxY * 1.1) / 10) * 5 || 100;
+        const paddedMax = Math.ceil((maxY * 1.2) / 10) * 5 || 100;
         chart.yAxis[0].update({ max: paddedMax });
     }
 
@@ -1606,7 +1606,7 @@ watch(selectedOption, (val) => {
                     },
                 },
             },
-            false
+            false,
         );
         selectedOptionUnit.value = { name: "ALL UNIT" };
         showChart.value = false;
@@ -1636,9 +1636,12 @@ const getDataFilter = async () => {
             year: year.value,
         };
 
-        const { data } = await axios.get(route("kpi-vhms.data.filter"), {
-            params,
-        });
+        const { data } = await axios.get(
+            route(`kpi-vhms-${props.site.toLowerCase()}.data.filter`),
+            {
+                params,
+            },
+        );
         isLoadingChart.value = false;
 
         const chart = chartInstance.value;
@@ -1661,7 +1664,7 @@ const getDataFilter = async () => {
                 const series = chart.series.find(
                     (s) =>
                         s.userOptions.stack === stack &&
-                        s.userOptions.name === name
+                        s.userOptions.name === name,
                 );
                 if (series) {
                     const backendKey = backendKeyMap[name];
@@ -1699,7 +1702,7 @@ const getDataFilter = async () => {
             const series = chart.series.find(
                 (s) =>
                     s.userOptions.name === `percentage${stack}` &&
-                    s.userOptions.stack === stack
+                    s.userOptions.stack === stack,
             );
             if (series) {
                 series.setData(percentageData[stack], false);
@@ -1719,7 +1722,7 @@ const getDataFilter = async () => {
         ];
 
         const maxY = Math.max(...allValues);
-        const paddedMax = Math.ceil((maxY * 1.1) / 10) * 9 || 100;
+        const paddedMax = Math.ceil((maxY * 1.2) / 10) * 9 || 100;
         chart.yAxis[0].update({ max: paddedMax }, false);
 
         // === 6️⃣ Redraw chart ===
@@ -1735,7 +1738,7 @@ const getDataFilter = async () => {
                 enableMouseTracking: s.userOptions.enableMouseTracking,
                 type: s.type,
                 data: s.options.data.map((d) =>
-                    typeof d === "object" ? { ...d } : d
+                    typeof d === "object" ? { ...d } : d,
                 ),
                 dataLabels: s.options.dataLabels
                     ? { ...s.options.dataLabels }
@@ -2016,7 +2019,7 @@ selectedMonth.value = monthOptions.find((m) => m.value === currentMonth);
                                                             updateFeedback(
                                                                 item.id,
                                                                 $event.target
-                                                                    .value
+                                                                    .value,
                                                             )
                                                         "
                                                         :class="[
