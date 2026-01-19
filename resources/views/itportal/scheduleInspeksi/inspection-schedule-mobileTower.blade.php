@@ -137,7 +137,7 @@
                 @forelse ($schedules as $row)
                     <tr class="dataContent">
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $row->mt_code }}</td>
+                        <td>{{ $row->inventory_number }}</td>
                         <td>{{ \Carbon\Carbon::parse($row->tanggal_inspection)->format('d M Y') }}</td>
                         <td>
                             {{ $row->actual_inspection ? \Carbon\Carbon::parse($row->actual_inspection)->format('d M Y') : '-' }}

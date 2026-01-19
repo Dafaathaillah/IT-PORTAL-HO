@@ -590,15 +590,18 @@ const approved = () => {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
+                                                            v-if="
+                                                                inspeksiPrinters.inspection_status != '-'
+                                                            "
                                                             :class="
                                                                 getBadgeClassStatusFindings(
-                                                                    inspeksiPrinters.findings
+                                                                    inspeksiPrinters.findings,
                                                                 )
                                                             "
                                                         >
                                                             {{
                                                                 getBadgeTextStatusFindings(
-                                                                    inspeksiPrinters.findings
+                                                                    inspeksiPrinters.findings,
                                                                 )
                                                             }}
                                                         </span>
@@ -624,15 +627,18 @@ const approved = () => {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
+                                                            v-if="
+                                                                inspeksiPrinters.inspection_status != '-'
+                                                            "
                                                             :class="
                                                                 getBadgeClassStatusInspeksi(
-                                                                    inspeksiPrinters.inspection_status
+                                                                    inspeksiPrinters.inspection_status,
                                                                 )
                                                             "
                                                         >
                                                             {{
                                                                 getBadgeTextStatusInspeksi(
-                                                                    inspeksiPrinters.inspection_status
+                                                                    inspeksiPrinters.inspection_status,
                                                                 )
                                                             }}
                                                         </span>

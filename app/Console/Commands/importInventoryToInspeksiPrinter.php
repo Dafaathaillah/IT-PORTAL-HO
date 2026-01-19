@@ -46,7 +46,7 @@ class importInventoryToInspeksiPrinter extends Command
                     'created_date' => $currentDate->format('Y-m-d H:i:s'),
                     'month' => $currentDate->format('m'),
                     'year' => $currentDate->format('Y'),
-                    'inspection_status' => 'N',
+                    'inspection_status' => $inventory_printer->status === 'SCRAP' ? '-' : 'N',
                     'inventory_status' => $inventory_printer->status,
                     'created_at' => $currentDate->format('Y-m-d H:i:s'),
                     'site' => $inventory_printer->site
@@ -54,7 +54,6 @@ class importInventoryToInspeksiPrinter extends Command
             } elseif ($cek->inspection_status === 'N') {
                 // Jika sudah ada dan statusnya N → update dari inventory
                 $cek->update([
-                    'inventory_status' => $inventory_printer->status,
                     'site' => $inventory_printer->site,
                 ]);
             }

@@ -74,26 +74,26 @@ class ExportInspeksiPrinterController extends Controller
 
 
         $inspectionY = $inspeksiPrinterAll->firstWhere('inspection_status', 'Y');
-        // if ($inspectionY) {
-        // if ($user->site == 'HO') {
-        $picApproved = 'EDI NUGROHO';
-        //     }else{
-        //         $picApproved = $inspectionY->approved_by;
-        //     }
-        // } else {
-        //     $picApproved = '';
-        // }
-        $qr_base64Approved = null;
-        // if ($inspectionY && $picApproved) {
-        $approvedUser = User::where('name', $picApproved)->first();
-        if ($approvedUser) {
-            $qrString = "NRP: {$approvedUser->nrp}, Nama: {$approvedUser->name}, Jabatan: {$approvedUser->position}";
-            $barcode = new \Milon\Barcode\DNS2D();
-            $barcode->setStorPath(storage_path('framework/barcodes/'));
-            $pngData = $barcode->getBarcodePNG($qrString, 'QRCODE');
-            $qr_base64Approved = 'data:image/png;base64,' . $pngData;
+        if ($inspectionY) {
+            if ($user->site == 'HO') {
+                $picApproved = 'EDI NUGROHO';
+            } else {
+                $picApproved = $inspectionY->approved_by;
+            }
+        } else {
+            $picApproved = '';
         }
-        // }
+        $qr_base64Approved = null;
+        if ($inspectionY && $picApproved) {
+            $approvedUser = User::where('name', $picApproved)->first();
+            if ($approvedUser) {
+                $qrString = "NRP: {$approvedUser->nrp}, Nama: {$approvedUser->name}, Jabatan: {$approvedUser->position}";
+                $barcode = new \Milon\Barcode\DNS2D();
+                $barcode->setStorPath(storage_path('framework/barcodes/'));
+                $pngData = $barcode->getBarcodePNG($qrString, 'QRCODE');
+                $qr_base64Approved = 'data:image/png;base64,' . $pngData;
+            }
+        }
 
         $qr_base64Pic = null;
         $picInspeksi = User::where('name', $pic)->first();

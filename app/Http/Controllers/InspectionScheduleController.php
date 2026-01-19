@@ -150,7 +150,7 @@ class InspectionScheduleController extends Controller
                         'schedule_mobile_tower.id',
                         'schedule_mobile_tower.tanggal_inspection',
                         'schedule_mobile_tower.actual_inspection',
-                        'inv_mobile_towers.mt_code AS device_code',
+                        'inv_mobile_towers.inventory_number AS device_code',
                         'inv_mobile_towers.site'
                     )
                     ->where('schedule_mobile_tower.site', $site)
@@ -436,7 +436,7 @@ class InspectionScheduleController extends Controller
                     'schedule_mobile_tower.actual_inspection',
                     'schedule_mobile_tower.bulan',
                     'schedule_mobile_tower.tahun',
-                    'inv_mobile_towers.mt_code',
+                    'inv_mobile_towers.inventory_number',
                     'inv_mobile_towers.site'
                 )
                 ->where('schedule_mobile_tower.site', $site)

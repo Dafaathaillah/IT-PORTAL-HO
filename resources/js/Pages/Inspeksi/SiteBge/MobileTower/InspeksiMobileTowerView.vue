@@ -562,12 +562,12 @@ const approved = () => {
                                                         <ul
                                                             v-if="
                                                                 parseFindings(
-                                                                    inspeksiMobileTowers.findings
+                                                                    inspeksiMobileTowers.findings,
                                                                 ).length > 0
                                                             "
                                                             :class="
                                                                 getBadgeClassStatusFindings(
-                                                                    inspeksiMobileTowers.findings
+                                                                    inspeksiMobileTowers.findings,
                                                                 )
                                                             "
                                                             class="list-decimal list-inside space-y-1 text-left"
@@ -576,7 +576,7 @@ const approved = () => {
                                                                 v-for="(
                                                                     item, index
                                                                 ) in parseFindings(
-                                                                    inspeksiMobileTowers.findings
+                                                                    inspeksiMobileTowers.findings,
                                                                 )"
                                                                 :key="index"
                                                             >
@@ -585,10 +585,16 @@ const approved = () => {
                                                         </ul>
 
                                                         <span
+                                                            v-else-if="
+                                                                inspeksiMobileTowers.inspection_status == '-'
+                                                            "
+                                                        ></span>
+
+                                                        <span
                                                             v-else
                                                             :class="
                                                                 getBadgeClassStatusFindings(
-                                                                    inspeksiMobileTowers.findings
+                                                                    inspeksiMobileTowers.findings,
                                                                 )
                                                             "
                                                         >
@@ -616,15 +622,18 @@ const approved = () => {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
+                                                            v-if="
+                                                                inspeksiMobileTowers.inspection_status != '-'
+                                                            "
                                                             :class="
                                                                 getBadgeClassStatusInspeksi(
-                                                                    inspeksiMobileTowers.inspection_status
+                                                                    inspeksiMobileTowers.inspection_status,
                                                                 )
                                                             "
                                                         >
                                                             {{
                                                                 getBadgeTextStatusInspeksi(
-                                                                    inspeksiMobileTowers.inspection_status
+                                                                    inspeksiMobileTowers.inspection_status,
                                                                 )
                                                             }}
                                                         </span>

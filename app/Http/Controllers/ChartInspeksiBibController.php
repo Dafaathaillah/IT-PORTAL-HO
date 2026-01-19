@@ -95,6 +95,7 @@ class ChartInspeksiBibController extends Controller
             $countAllDataInspeksiPrinter = InspeksiPrinter::where('site', $site)
                 ->where('year', $year)
                 ->where('month', $i)
+                ->where('inspection_status', '!=', '-')
                 ->count();
             $countSudahInspeksiPrinter = InspeksiPrinter::where('inspection_status', 'Y')
                 ->where('site', $site)
@@ -107,6 +108,8 @@ class ChartInspeksiBibController extends Controller
                 $percentPrinterSudahInspeksi = 0;
             }
 
+            // dd(round($percentPrinterSudahInspeksi, 2));
+
             $chartData['persenPrinter'][] = round($percentPrinterSudahInspeksi, 2);
         }
 
@@ -114,6 +117,7 @@ class ChartInspeksiBibController extends Controller
             $countAllDataInspeksiMT = InspeksiMobileTower::where('site', $site)
                 ->where('year', $year)
                 ->where('month', $i)
+                ->where('inspection_status', '!=', '-')
                 ->count();
             $countSudahInspeksiMT = InspeksiMobileTower::where('inspection_status', 'Y')
                 ->where('site', $site)

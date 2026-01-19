@@ -44,6 +44,7 @@ class insertScheduleMT extends Command
                 })
                 ->whereNull('schedule_mobile_tower.id_mobile_tower')
                 ->where('inv_mobile_towers.site', $site)
+                ->where('inv_mobile_towers.status', '!=', 'SCRAP')
                 ->select('inv_mobile_towers.id', 'inv_mobile_towers.mt_code', 'inv_mobile_towers.site')
                 ->orderBy('inv_mobile_towers.mt_code')
                 ->get();

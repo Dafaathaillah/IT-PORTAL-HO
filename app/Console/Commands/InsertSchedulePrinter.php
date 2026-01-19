@@ -47,6 +47,7 @@ class insertSchedulePrinter extends Command
                 })
                 ->whereNull('schedule_printer.id_printer')
                 ->where('inv_printers.site', $site)
+                ->where('inv_printers.status', '!=', 'SCRAP')
                 ->select('inv_printers.id', 'inv_printers.printer_code', 'inv_printers.department', 'inv_printers.site')
                 ->get();
 

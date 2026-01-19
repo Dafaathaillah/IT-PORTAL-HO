@@ -56,8 +56,8 @@ const mainMenu = ref("Inspeksi Mobile Tower");
 const page = usePage();
 
 const isIctGroupLeader = computed(() => {
-  console.log("tes");
-  return page.props.auth?.user?.role === "ict_group_leader";
+    console.log("tes");
+    return page.props.auth?.user?.role === "ict_group_leader";
 });
 
 // Fungsi untuk format tanggal
@@ -84,7 +84,7 @@ const mount = onMounted(() => {
         initComplete: function () {
             var btns = $(".dt-button");
             btns.addClass(
-                "text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                "text-white bg-gradient-to-r from-green-600 via-green-700 to-green-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2",
             );
             btns.removeClass("dt-button");
         },
@@ -140,7 +140,7 @@ watch([selectedMonth, year], ([newMonth, newYear]) => {
             {
                 preserveState: false,
                 replace: true,
-            }
+            },
         );
     }
 });
@@ -164,7 +164,7 @@ const sendRekapInspeksi = async () => {
         Swal.fire(
             "Tahun Tidak Valid!",
             "Tahun harus antara 2000–2500.",
-            "error"
+            "error",
         );
         return;
     }
@@ -331,14 +331,14 @@ const approved = () => {
                             month: selectedMonth.value.value,
                             year: year.value,
                         },
-                        Ziggy
+                        Ziggy,
                     ),
                     {
                         headers: {
                             "X-CSRF-TOKEN": csrfToken,
                             "X-Requested-With": "XMLHttpRequest",
                         },
-                    }
+                    },
                 )
                 .then((response) => {
                     Swal.fire({
@@ -526,7 +526,7 @@ const approved = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 processData(
-                                                                    inspeksiMobileTowers.id
+                                                                    inspeksiMobileTowers.id,
                                                                 )
                                                             "
                                                             v-if="
@@ -551,7 +551,8 @@ const approved = () => {
                                                         >
                                                             {{
                                                                 inspeksiMobileTowers
-                                                                    .mt.inventory_number
+                                                                    .mt
+                                                                    .inventory_number
                                                             }}
                                                         </p>
                                                     </td>
@@ -562,12 +563,12 @@ const approved = () => {
                                                         <ul
                                                             v-if="
                                                                 parseFindings(
-                                                                    inspeksiMobileTowers.findings
+                                                                    inspeksiMobileTowers.findings,
                                                                 ).length > 0
                                                             "
                                                             :class="
                                                                 getBadgeClassStatusFindings(
-                                                                    inspeksiMobileTowers.findings
+                                                                    inspeksiMobileTowers.findings,
                                                                 )
                                                             "
                                                             class="list-decimal list-inside space-y-1 text-left"
@@ -576,7 +577,7 @@ const approved = () => {
                                                                 v-for="(
                                                                     item, index
                                                                 ) in parseFindings(
-                                                                    inspeksiMobileTowers.findings
+                                                                    inspeksiMobileTowers.findings,
                                                                 )"
                                                                 :key="index"
                                                             >
@@ -585,10 +586,16 @@ const approved = () => {
                                                         </ul>
 
                                                         <span
+                                                            v-else-if="
+                                                                inspeksiMobileTowers.inspection_status == '-'
+                                                            "
+                                                        ></span>
+
+                                                        <span
                                                             v-else
                                                             :class="
                                                                 getBadgeClassStatusFindings(
-                                                                    inspeksiMobileTowers.findings
+                                                                    inspeksiMobileTowers.findings,
                                                                 )
                                                             "
                                                         >
@@ -607,7 +614,7 @@ const approved = () => {
                                                                 null
                                                                     ? "-"
                                                                     : formattedDate(
-                                                                          inspeksiMobileTowers.inspection_at
+                                                                          inspeksiMobileTowers.inspection_at,
                                                                       )
                                                             }}
                                                         </span>
@@ -616,15 +623,18 @@ const approved = () => {
                                                         class="p-2 text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent"
                                                     >
                                                         <span
+                                                            v-if="
+                                                                inspeksiMobileTowers.inspection_status != '-'
+                                                            "
                                                             :class="
                                                                 getBadgeClassStatusInspeksi(
-                                                                    inspeksiMobileTowers.inspection_status
+                                                                    inspeksiMobileTowers.inspection_status,
                                                                 )
                                                             "
                                                         >
                                                             {{
                                                                 getBadgeTextStatusInspeksi(
-                                                                    inspeksiMobileTowers.inspection_status
+                                                                    inspeksiMobileTowers.inspection_status,
                                                                 )
                                                             }}
                                                         </span>
@@ -637,7 +647,7 @@ const approved = () => {
                                                                 getBadgeClassStatusInventory(
                                                                     inspeksiMobileTowers
                                                                         .mt
-                                                                        .status
+                                                                        .status,
                                                                 )
                                                             "
                                                         >
@@ -645,7 +655,7 @@ const approved = () => {
                                                                 getBadgeTextStatusInventory(
                                                                     inspeksiMobileTowers
                                                                         .mt
-                                                                        .status
+                                                                        .status,
                                                                 )
                                                             }}
                                                         </span>
@@ -691,7 +701,7 @@ const approved = () => {
                                                         <NavLinkCustom
                                                             @click="
                                                                 detailData(
-                                                                    inspeksiMobileTowers.id
+                                                                    inspeksiMobileTowers.id,
                                                                 )
                                                             "
                                                             v-if="
@@ -712,7 +722,7 @@ const approved = () => {
                                                             "
                                                             @click="
                                                                 editData(
-                                                                    inspeksiMobileTowers.id
+                                                                    inspeksiMobileTowers.id,
                                                                 )
                                                             "
                                                             class="ml-3 mr-3 mb-0 text-sm font-semibold leading-tight dark:text-white dark:opacity-80"

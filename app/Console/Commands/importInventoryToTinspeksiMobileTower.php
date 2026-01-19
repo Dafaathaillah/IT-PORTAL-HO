@@ -45,7 +45,7 @@ class importInventoryToTinspeksiMobileTower extends Command
                     'created_date' => $currentDate->format('Y-m-d H:i:s'),
                     'month' => $currentDate->format('m'),
                     'year' => $currentDate->format('Y'),
-                    'inspection_status' => 'N',
+                    'inspection_status' => $inventory_mt->status === 'SCRAP' ? '-' : 'N',
                     'created_at' => $currentDate->format('Y-m-d H:i:s'),
                     'site' => $inventory_mt->site
                 ]);

@@ -95,6 +95,7 @@ class ChartInspeksiAmiController extends Controller
             $countAllDataInspeksiPrinter = InspeksiPrinter::where('site', $site)
                 ->where('year', $year)
                 ->where('month', $i)
+                ->where('inspection_status', '!=', '-')
                 ->count();
             $countSudahInspeksiPrinter = InspeksiPrinter::where('inspection_status', 'Y')
                 ->where('site', $site)
@@ -114,6 +115,7 @@ class ChartInspeksiAmiController extends Controller
             $countAllDataInspeksiMT = InspeksiMobileTower::where('site', $site)
                 ->where('year', $year)
                 ->where('month', $i)
+                ->where('inspection_status', '!=', '-')
                 ->count();
             $countSudahInspeksiMT = InspeksiMobileTower::where('inspection_status', 'Y')
                 ->where('site', $site)

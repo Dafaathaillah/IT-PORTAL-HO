@@ -154,64 +154,107 @@
             </thead>
             <tbody>
                 @foreach ($inspeksiPrinterAll as $item)
-                    <tr class="dataContent">
-                        <td>{{ $loop->iteration }}</td>
-                        <td style="font-size: 5px">{{ $item->printer->printer_code ?? '-' }}</td>
-                        <td style="font-size: 5px">{{ $item->printer->asset_ho_number ?? '-'}}</td>
-                        <td style="font-size: 5px">
-                            {{ $item->inspection_at ? \Carbon\Carbon::parse($item->inspection_at)->translatedFormat('d F Y H:i') : '-' }}
-                        </td>
-                        <td style="font-size: 5px">{{ $item->printer->printer_brand ?? '-' }}
-                            {{ $item->printer->printer_type ?? '-' }}
-                        </td>
-                        <td style="font-size: 5px">{{ $item->printer->department ?? '-' }}</td>
 
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->tinta_cyan == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->tinta_magenta == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->tinta_yellow == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->tinta_black == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->body_condition == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->usb_cable_condition == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->power_cable_condition == 'Y' ? '✔' : '✖' }}
-                        </td>
+                    @php
+                        $isScrap = $item->inspection_status == '-';
+                    @endphp
 
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->performing_physical_power_cleaning == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->performing_cleaning_on_the_printer_waste_box == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->performing_cleaning_head == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->performing_print_quality_test == 'Y' ? '✔' : '✖' }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif;">
-                            {{ $item->do_replacing_cable == 'Y' ? '✔' : '✖' }}
-                        </td>
+                    @if (!$isScrap)
+                        <tr class="dataContent">
+                            <td>{{ $loop->iteration }}</td>
+                            <td style="font-size: 5px">{{ $item->printer->printer_code ?? '-' }}</td>
+                            <td style="font-size: 5px">{{ $item->printer->asset_ho_number ?? '-'}}</td>
+                            <td style="font-size: 5px">
+                                {{ $item->inspection_at ? \Carbon\Carbon::parse($item->inspection_at)->translatedFormat('d F Y H:i') : '-' }}
+                            </td>
+                            <td style="font-size: 5px">{{ $item->printer->printer_brand ?? '-' }}
+                                {{ $item->printer->printer_type ?? '-' }}
+                            </td>
+                            <td style="font-size: 5px">{{ $item->printer->department ?? '-' }}</td>
 
-                        <td style="font-family: 'DejaVu Sans', sans-serif; font-size: 5px">{{ $item->condition }}</td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif; font-size: 5px">
-                            {{ $item->inventory_status }}
-                        </td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif; font-size: 5px">{{ $item->remarks }}</td>
-                        <td style="font-family: 'DejaVu Sans', sans-serif; font-size: 5px">{{ $item->inspector }}</td>
-                        {{-- <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->inspector }}</td> --}}
-                    </tr>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->tinta_cyan == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->tinta_magenta == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->tinta_yellow == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->tinta_black == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->body_condition == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->usb_cable_condition == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->power_cable_condition == 'Y' ? '✔' : '✖' }}
+                            </td>
+
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->performing_physical_power_cleaning == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->performing_cleaning_on_the_printer_waste_box == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->performing_cleaning_head == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->performing_print_quality_test == 'Y' ? '✔' : '✖' }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif;">
+                                {{ $item->do_replacing_cable == 'Y' ? '✔' : '✖' }}
+                            </td>
+
+                            <td style="font-family: 'DejaVu Sans', sans-serif; font-size: 5px">{{ $item->condition }}</td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif; font-size: 5px">
+                                {{ $item->inventory_status }}
+                            </td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif; font-size: 5px">{{ $item->remarks }}</td>
+                            <td style="font-family: 'DejaVu Sans', sans-serif; font-size: 5px">{{ $item->inspector }}</td>
+                            {{-- <td style="font-family: 'DejaVu Sans', sans-serif;">{{ $item->inspector }}</td> --}}
+                        </tr>
+                    @else
+                        <tr class="dataContent">
+                            <td>{{ $loop->iteration }}</td>
+                            <td style="font-size: 5px">{{ $item->printer->printer_code ?? '-' }}</td>
+                            <td style="font-size: 5px">{{ $item->printer->asset_ho_number ?? '-' }}</td>
+                            <td style="font-size: 5px">
+                                {{ $item->inspection_at
+                                ? \Carbon\Carbon::parse($item->inspection_at)->translatedFormat('d F Y H:i')
+                                : '-' }}
+                            </td>
+                            <td style="font-size: 5px">
+                                {{ $item->printer->printer_brand ?? '-' }}
+                                {{ $item->printer->printer_type ?? '-' }}
+                            </td>
+                            <td style="font-size: 5px">{{ $item->printer->department ?? '-' }}</td>
+
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+
+                            <td style="font-size: 5px">RUSAK</td>
+                            <td style="font-size: 5px">{{ $item->inventory_status }}</td>
+                            <td style="font-size: 5px">{{ $item->remarks }}</td>
+                            <td style="font-size: 5px">-</td>
+                        </tr>
+                    @endif
+
                 @endforeach
 
             </tbody>
