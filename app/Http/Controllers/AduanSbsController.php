@@ -341,6 +341,8 @@ class AduanSbsController extends Controller
                                 $categoryInput = strtolower($aduan->category_name);
                                 $invNumber = strtoupper($aduan->inventory_number); // biar aman case insensitive
 
+                                $id_perangkat = 'unknown ID';
+
                                 if ($categoryInput === 'pc/nb') {
                                     // Cek dari inventory_number
                                     if (str_contains($invNumber, '-NB-')) {
