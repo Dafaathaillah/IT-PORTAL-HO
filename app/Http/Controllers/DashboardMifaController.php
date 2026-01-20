@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Aduan;
 use App\Models\InspeksiComputer;
 use App\Models\InspeksiLaptop;
+use App\Models\InspeksiMobileTower;
+use App\Models\InspeksiPrinter;
 use App\Models\InvAp;
 use App\Models\InvCctv;
 use App\Models\InvComputer;
@@ -122,8 +124,55 @@ class DashboardMifaController extends Controller
             $percentComputerBelumInspeksi = 0;
         }
 
-        $sudahInspeksiArray = [$percentLaptopSudahInspeksi, $percentComputerSudahInspeksi];
-        $belumInspeksiArray = [$percentLaptopBelumInspeksi, $percentComputerBelumInspeksi];
+        $countAllDataInspeksiPrinter = InspeksiPrinter::where('site', 'MIFA')
+            ->where('year', Carbon::now()->year)
+            ->where('month', Carbon::now()->month)
+            ->where('inspection_status', '!=', '-')
+            ->count();
+        $countSudahInspeksiPrinter = InspeksiPrinter::where('inspection_status', 'Y')
+            ->where('site', 'MIFA')
+            ->where('month', Carbon::now()->month)
+            ->where('year', Carbon::now()->year)
+            ->count();
+        $countBelumInspeksiPrinter = InspeksiPrinter::where('inspection_status', 'N')
+            ->where('site', 'MIFA')
+            ->where('month', Carbon::now()->month)
+            ->where('year', Carbon::now()->year)
+            ->count();
+        if ($countAllDataInspeksiPrinter > 0) {
+            $percentPrinterSudahInspeksi = ($countSudahInspeksiPrinter / $countAllDataInspeksiPrinter) * 100;
+            $percentPrinterBelumInspeksi = ($countBelumInspeksiPrinter / $countAllDataInspeksiPrinter) * 100;
+        } else {
+            $percentPrinterSudahInspeksi = 0;
+            $percentPrinterBelumInspeksi = 0;
+        }
+
+
+        $countAllDataInspeksiMT = InspeksiMobileTower::where('site', 'MIFA')
+            ->where('year', Carbon::now()->year)
+            ->where('month', Carbon::now()->month)
+            ->where('inspection_status', '!=', '-')
+            ->count();
+        $countSudahInspeksiMT = InspeksiMobileTower::where('inspection_status', 'Y')
+            ->where('site', 'MIFA')
+            ->where('month', Carbon::now()->month)
+            ->where('year', Carbon::now()->year)
+            ->count();
+        $countBelumInspeksiMT = InspeksiMobileTower::where('inspection_status', 'N')
+            ->where('site', 'MIFA')
+            ->where('month', Carbon::now()->month)
+            ->where('year', Carbon::now()->year)
+            ->count();
+        if ($countAllDataInspeksiMT > 0) {
+            $percentMTSudahInspeksi = ($countSudahInspeksiMT / $countAllDataInspeksiMT) * 100;
+            $percentMTBelumInspeksi = ($countBelumInspeksiMT / $countAllDataInspeksiMT) * 100;
+        } else {
+            $percentMTSudahInspeksi = 0;
+            $percentMTBelumInspeksi = 0;
+        }
+
+        $sudahInspeksiArray = [$percentLaptopSudahInspeksi, $percentComputerSudahInspeksi, $percentMTSudahInspeksi, $percentPrinterSudahInspeksi];
+        $belumInspeksiArray = [$percentLaptopBelumInspeksi, $percentComputerBelumInspeksi, $percentMTBelumInspeksi, $percentPrinterBelumInspeksi];
 
         $bulanSekarang = Carbon::now()->month;
         $totalAduanAll = Aduan::where('site', 'MIFA')->whereMonth('created_at', $bulanSekarang)->count();

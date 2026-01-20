@@ -315,7 +315,7 @@ const initChartAchievementLight = () => {
             align: "left",
         },
         xAxis: {
-            categories: ["Laptop", "Komputer"],
+            categories: ["Laptop", "Komputer", "Mob. Tower", "Printer"],
             labels: {
                 style: {
                     // color: "#fff",
@@ -394,7 +394,7 @@ const initChartAchievementDark = () => {
             align: "left",
         },
         xAxis: {
-            categories: ["Laptop", "Komputer"],
+            categories: ["Laptop", "Komputer", "Mob. Tower", "Printer"],
             labels: {
                 style: {
                     color: "#fff",

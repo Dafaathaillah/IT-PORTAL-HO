@@ -127,6 +127,7 @@ class DashboardBibController extends Controller
         $countAllDataInspeksiPrinter = InspeksiPrinter::where('site', 'BIB')
             ->where('year', Carbon::now()->year)
             ->where('month', Carbon::now()->month)
+            ->where('inspection_status', '!=', '-')
             ->count();
         $countSudahInspeksiPrinter = InspeksiPrinter::where('inspection_status', 'Y')
             ->where('site', 'BIB')
@@ -150,6 +151,7 @@ class DashboardBibController extends Controller
         $countAllDataInspeksiMT = InspeksiMobileTower::where('site', 'BIB')
             ->where('year', Carbon::now()->year)
             ->where('month', Carbon::now()->month)
+            ->where('inspection_status', '!=', '-')
             ->count();
         $countSudahInspeksiMT = InspeksiMobileTower::where('inspection_status', 'Y')
             ->where('site', 'BIB')
