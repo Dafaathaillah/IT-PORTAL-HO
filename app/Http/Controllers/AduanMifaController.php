@@ -180,6 +180,11 @@ class AduanMifaController extends Controller
             return ['name' => $name];
         })->toArray();
 
+        $categories = DB::table('root_cause_categories')
+            ->select('id', 'category_root_cause')
+            ->where('breakdown', 1)
+            ->get();
+
                 // ambil root cause sesuai kategori aduan
         $rootCauses = RootCauseProblem::where('kategori_name', $aduan->category_name)
             ->get(['id_cause as id', 'root_cause_problem as name'])
@@ -189,6 +194,7 @@ class AduanMifaController extends Controller
             'aduan' => $aduan,
             'crew' => $crew,
             'rootCause' => $rootCauses,
+            'categories' => $categories,
         ]);
     }
 
@@ -232,29 +238,10 @@ class AduanMifaController extends Controller
 
     public function update_aduan_progress(Request $request)
     {
-
-        if ($request->startProgress == 'null' || $request->startProgress == null) {
-            $startProgress = null;
-        } else {
-            $startProgress = $request->startProgress;
-        }
-
-        if ($request->endProgress == 'null' || $request->endProgress == null) {
-            $endProgress = null;
-        } else {
-            $endProgress = $request->endProgress;
-        }
-
-        if ($request->startResponse == 'null' || $request->startResponse == null) {
-            $startResponse = null;
-        } else {
-            $startResponse = $request->startResponse;
-        }
-
         $task = Aduan::find($request->id);
-        $awal  = date_create($request->dateOfComplaint);
+        $awal = date_create($request->dateOfComplaint);
         $akhir = date_create($request->startResponse);
-        $diff  = date_diff($awal, $akhir);
+        $diff = date_diff($awal, $akhir);
         $hTotal = $diff->d * 24 + ($diff->h);
 
         $jaditotal = sprintf('%02s', $hTotal) . ':' . sprintf('%02s', $diff->i) . ':' . sprintf('%02s', $diff->s);
@@ -269,12 +256,14 @@ class AduanMifaController extends Controller
             'detail_location' => $request->detail_location,
             'complaint_note' => $request->complaint_note,
             'action_repair' => $request->actionRepair,
+            'inventory_number' => $request->inventoryNumber,
             'date_of_complaint' => $request->dateOfComplaint,
-            'start_response' => $startResponse,
-            'start_progress' => $startProgress,
-            'end_progress' => $endProgress,
+            'start_response' => $request->startResponse,
+            'start_progress' => $request->startProgress,
+            'end_progress' => $request->endProgress,
             'root_cause_id' => $request->rootCause,
         ];
+        // dd($data);
         if ($request->crew != null || $request->crew != '') {
             $data['crew'] = $request->crew;
         }
@@ -285,7 +274,7 @@ class AduanMifaController extends Controller
             $new_path_documentation_image = $path_documentation_image;
             $documentation_image->move($destinationPath, $new_path_documentation_image);
 
-            $data['repair_image'] =  url($new_path_documentation_image);
+            $data['repair_image'] = url($new_path_documentation_image);
         }
 
 
@@ -296,106 +285,85 @@ class AduanMifaController extends Controller
         // Jika status close → simpan ke perangkat_breakdown
         if ($request->status === 'CLOSED' && !empty($task->complaint_code)) {
 
-            // Daftar mapping kategori ke root cause (pakai nama root cause, bukan ID)
-            $validRootCauses = [
-                'PC/NB' => ['RAM', 'MONITOR', 'KABEL', 'OS', 'DRIVER', 'HARDISK', 'SOFTWARE', 'LAIN-LAIN'],
-                'TELKOMSEL' => ['LINK METRO', 'LINK BTS', 'POWER BTS', 'RECTIFIER', 'SECTORAL'],
-                'NETWORK' => ['LINK BACKBONE', 'ISP', 'POWER', 'KONFIGURASI', 'ACCESS POINT'],
-                'SERVER' => ['POWER', 'RAM', 'STORAGE', 'CPU', 'UPS', 'OS'],
-                'CCTV' => ['LINK/BACKBONE', 'CAMERA', 'SHORT CABLE', 'POWER', 'NVR'],
-                'PRINTER' => ['TINTA HABIS', 'TINTA BOCOR', 'PERLU RESET', 'SENSOR', 'KOMPONEN', 'LAIN-LAIN'],
-                'NETWORK MT' => ['BATRAI', 'SOLAR PANEL', 'MPPT', 'BACKBONE', 'ACCESS POINT', 'KABEL'],
-                'GPS' => ['POWER', 'KARTU', 'KUOTA', 'BATRAI GPS', 'UNIT GPS'],
+            // ambil root cause dari tabel berdasarkan ID
+            $rootCause = RootCauseProblem::find($request->rootCause);
+
+            $updateData = [
+                'pic' => $request->crew,
+                'end_time' => $request->endProgress ?? Carbon::now(),
+                'status' => 'CLOSED',
             ];
 
-            // cek apakah kategori ada di mapping
-            if (array_key_exists($task->category_name, $validRootCauses)) {
+            $perangkat = PerangkatBreakdown::where('id_report', $task->complaint_code)
+                ->where('status', 'OPEN')
+                ->latest('start_time')
+                ->first();
 
-                // ambil root cause dari tabel berdasarkan ID
-                $rootCause = RootCauseProblem::find($request->rootCause);
+            if ($perangkat) {
+                // update
+                $perangkat->update($updateData);
+            } else {
+                // ambil data aduan berdasarkan complaint_code
+                $aduan = Aduan::where('complaint_code', $task->complaint_code)->where('site', Auth::user()->site)->first();
 
-                if ($rootCause) {
-                    // cek apakah nama root cause ada di daftar valid untuk kategori tersebut
-                    if (in_array($rootCause->root_cause_problem, $validRootCauses[$task->category_name])) {
+                $deviceName = 'Unknown Device';
+                // $categoryBreakdown = 'Unknown Category';
+                $categoryInput = strtolower($aduan->category_name);
+                $invNumber = strtoupper($aduan->inventory_number); // biar aman case insensitive
 
-                        $updateData = [
-                            'pic' => $request->crew,
-                            'end_time' => $request->endProgress ?? Carbon::now(),
-                            'status' => 'CLOSED',
-                        ];
+                $id_perangkat = 'unknown ID';
 
-                        $perangkat = PerangkatBreakdown::where('id_report', $task->complaint_code)
-                            ->where('status', 'OPEN')
-                            ->latest('start_time')
-                            ->first();
-
-                        if ($perangkat) {
-                            // update
-                            $perangkat->update($updateData);
-                        } else {
-                            // ambil data aduan berdasarkan complaint_code
-                            $aduan = Aduan::where('complaint_code', $task->complaint_code)->where('site', Auth::user()->site)->first();
-
-                            if ($aduan) {
-                                $deviceName = 'Unknown Device';
-                                // $categoryBreakdown = 'Unknown Category';
-                                $categoryInput = strtolower($aduan->category_name);
-                                $invNumber = strtoupper($aduan->inventory_number); // biar aman case insensitive
-
-                                $id_perangkat = 'unknown ID';
-
-                                if ($categoryInput === 'pc/nb') {
-                                    // Cek dari inventory_number
-                                    if (str_contains($invNumber, '-NB-')) {
-                                        $inv = InvLaptop::where('laptop_code', $aduan->inventory_number)->first();
-                                        $categoryBreakdown = 'LAPTOP';
-                                        $deviceName = $inv ? $inv->laptop_name : $deviceName;
-                                        $id_perangkat = $inv ? $inv->id : 'unknown ID';
-                                    } elseif (str_contains($invNumber, '-PC-')) {
-                                        $inv = InvComputer::where('computer_code', $aduan->inventory_number)->first();
-                                        $categoryBreakdown = 'COMPUTER';
-                                        $id_perangkat = $inv ? $inv->id : 'unknown ID';
-                                        // dd($categoryBreakdown);
-                                        $deviceName = $inv ? $inv->computer_name : $deviceName;
-                                    }
-                                } elseif ($categoryInput === 'printer') {
-                                    $inv = InvPrinter::where('printer_code', $aduan->inventory_number)->first();
-                                    $id_perangkat = $inv ? $inv->id : 'unknown ID';
-                                    $categoryBreakdown = 'PRINTER';
-                                    $deviceName = $inv ? $inv->printer_brand : $deviceName;
-                                } elseif ($categoryInput === 'cctv') {
-                                    $inv = InvCctv::where('cctv_code', $aduan->inventory_number)->first();
-                                    $deviceName = $inv ? $inv->cctv_brand : $deviceName;
-                                }
-
-                                $now = Carbon::now();
-
-                                // siapkan data untuk insert
-                                $insertData = array_merge($updateData, [
-                                    'id_report' => $task->complaint_code,
-                                    'id_perangkat' => $id_perangkat,
-                                    'inventory_number' => $aduan->inventory_number,
-                                    'device_name' => $deviceName,
-                                    'category_breakdown' => $categoryBreakdown,
-                                    'device_category' => $aduan->category_name ?? null,
-                                    'pic' => $request->crew,
-                                    'start_time' => $aduan->date_of_complaint ?? Carbon::now(),
-                                    'created_date' => $now->toDateString(),  // hanya tanggal
-                                    'month' => $now->month,           // angka 1-12
-                                    'year' => $now->year,            // angka tahun
-                                    'root_cause' => $rootCause->root_cause_problem,            // angka tahun
-                                    'root_cause_category' => $aduan->category_name,            // angka tahun
-                                    'location' => $request->location,
-                                    'status' => $request->status,
-                                    'site' => Auth::user()->site,
-                                ]);
-
-                                PerangkatBreakdown::create($insertData);
-                            }
-                        }
+                if ($categoryInput === 'pc/nb') {
+                    // Cek dari inventory_number
+                    if (str_contains($invNumber, '-NB-')) {
+                        $inv = InvLaptop::where('laptop_code', $aduan->inventory_number)->first();
+                        $categoryBreakdown = 'LAPTOP';
+                        $deviceName = $inv ? $inv->laptop_name : $deviceName;
+                        $id_perangkat = $inv ? $inv->id : 'unknown ID';
+                    } elseif (str_contains($invNumber, '-PC-')) {
+                        $inv = InvComputer::where('computer_code', $aduan->inventory_number)->first();
+                        $categoryBreakdown = 'COMPUTER';
+                        $id_perangkat = $inv ? $inv->id : 'unknown ID';
+                        // dd($categoryBreakdown);
+                        $deviceName = $inv ? $inv->computer_name : $deviceName;
                     }
+                } elseif ($categoryInput === 'printer') {
+                    $inv = InvPrinter::where('printer_code', $aduan->inventory_number)->first();
+                    $id_perangkat = $inv ? $inv->id : 'unknown ID';
+                    $categoryBreakdown = 'PRINTER';
+                    $deviceName = $inv ? $inv->printer_brand : $deviceName;
+                } elseif ($categoryInput === 'cctv') {
+                    $inv = InvCctv::where('cctv_code', $aduan->inventory_number)->first();
+                    $deviceName = $inv ? $inv->cctv_brand : $deviceName;
                 }
 
+                if (!$aduan) {
+                    throw new \Exception("Aduan dengan complaint code {$task->complaint_code} tidak ditemukan");
+                }
+
+                $now = Carbon::now();
+
+                // siapkan data untuk insert
+                $insertData = array_merge($updateData, [
+                    'id_report' => $task->complaint_code,
+                    'id_perangkat' => $id_perangkat,
+                    'inventory_number' => $aduan->inventory_number,
+                    'device_name' => $deviceName,
+                    'category_breakdown' => $categoryBreakdown,
+                    'device_category' => $aduan->category_name ?? null,
+                    'pic' => $request->crew,
+                    'start_time' => $aduan->date_of_complaint ?? Carbon::now(),
+                    'created_date' => $now->toDateString(),  // hanya tanggal
+                    'month' => $now->month,           // angka 1-12
+                    'year' => $now->year,            // angka tahun
+                    'root_cause' => $rootCause->root_cause_problem,            // angka tahun
+                    'root_cause_category' => $aduan->category_name,            // angka tahun
+                    'location' => $request->location,
+                    'status' => $request->status,
+                    'site' => Auth::user()->site,
+                ]);
+
+                PerangkatBreakdown::create($insertData);
             }
         }
 

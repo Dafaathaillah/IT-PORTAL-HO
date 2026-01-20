@@ -281,7 +281,6 @@ class AduanBibController extends Controller
             'detail_location' => $request->detail_location,
             'complaint_note' => $request->complaint_note,
             'action_repair' => $request->actionRepair,
-            'action_repair' => $request->actionRepair,
             'inventory_number' => $request->inventoryNumber,
             'date_of_complaint' => $request->dateOfComplaint,
             'start_response' => $request->startResponse,
@@ -289,7 +288,7 @@ class AduanBibController extends Controller
             'end_progress' => $request->endProgress,
             'root_cause_id' => $request->rootCause,
         ];
-        dd($data);
+        // dd($data);
         if ($request->crew != null || $request->crew != '') {
             $data['crew'] = $request->crew;
         }

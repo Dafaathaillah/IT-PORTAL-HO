@@ -4,12 +4,12 @@ import AuthenticatedLayoutForm from "@/Layouts/AuthenticatedLayoutForm.vue";
 import { Link } from "@inertiajs/vue3";
 import { Head, useForm } from "@inertiajs/vue3";
 import Swal from "sweetalert2";
-import dayjs from "dayjs";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import axios from "axios";
 import VueMultiselect from "vue-multiselect";
 import { Inertia } from "@inertiajs/inertia";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 const props = defineProps({
     crew: {
@@ -21,6 +21,9 @@ const props = defineProps({
     rootCause: {
         type: Array,
     },
+    categories: {
+        type: Array,
+    },
 });
 const form = useForm({
     id: props.aduan.id,
@@ -28,49 +31,61 @@ const form = useForm({
     location_detail: props.aduan.detail_location,
     status: props.aduan.status,
     complaint_note: props.aduan.complaint_note,
-    actionRepair: props.aduan.action_repair,
+    actionRepair: props.aduan.actionRepair,
     repair_note: props.aduan.repair_note,
     root_cause_id: "", // awalnya kosong
+    inventory_number: "",
     category: props.aduan.category_name,
 });
 
 const isDisabled = ref(true);
 
 const file = ref(null);
+const inventoryNumberEnabled = ref(false);
 
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
 };
 
-const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-// Fungsi konversi dari WITA (Asia/Makassar) ke zona waktu lokal browser
-function toLocalTime(date) {
-    if (!date) return null;
-    return dayjs.tz(date, "Asia/Makassar").tz(userTimezone).toDate();
-}
-
-// Fungsi konversi balik ke WITA sebelum dikirim ke server
-function toServerTime(date) {
-    if (!date) return null;
-    return dayjs(date).tz("Asia/Makassar").format("YYYY-MM-DD HH:mm:ss");
-}
-const dateFormat = "yyyy-MM-dd HH:mm:ss";
-
 const dateOfComplaint = ref(props.aduan.date_of_complaint);
-const dateOfComplaintLocal = ref(null);
 const startResponse = ref(props.aduan.start_response);
-const startResponseLocal = ref(null);
 const startProgress = ref(null);
-const startProgressLocal = ref(null);
 const endProgress = ref(null);
-const endProgressLocal = ref(null);
 
 const isDateRequired = computed(() => props.aduan.start_response !== null);
 
 const selectedValues = ref([]); // Awalnya array kosong
+const selectedValuesCategoryBreakdown = ref([]); // Awalnya array kosong
+const optionsInventory = ref([]);
+const selectedInventory = ref(null);
 const crewString = computed(() => {
     return selectedValues.value.map((option) => option.name).join(", ");
+});
+
+watch(inventoryNumberEnabled, (enabled) => {
+    if (!enabled) {
+        form.inventory_number = "";
+    }
+});
+
+watch(selectedValuesCategoryBreakdown, async (val) => {
+    if (!val) {
+        optionsInventory.value = [];
+        selectedInventory.value = null;
+        return;
+    }
+
+    const response = await axios.get(
+        route("inventory.by-categoryBreakdown"),
+        {
+            params: {
+                category: val.category_root_cause // contoh: Laptop
+            }
+        }
+    );
+
+    console.log(response.data)
+    optionsInventory.value = response.data;
 });
 
 const customFormat = (date) => {
@@ -99,6 +114,7 @@ const updateProgress = () => {
     formData.append("crew", crewString.value);
     formData.append("image", file.value);
     formData.append("actionRepair", form.actionRepair);
+    formData.append("inventoryNumber", form.inventory_number);
     formData.append("dateOfComplaint", formattedDateDateOfComplaint);
     formData.append("startResponse", formattedDateStartResponse);
     formData.append("startProgress", formattedDateStartProgress);
@@ -138,6 +154,7 @@ function handleCategoryChange(event) {
     form.category_name = event.target.value;
 }
 const options = props.crew;
+const optionsCategory = props.categories;
 </script>
 
 <template>
@@ -329,18 +346,8 @@ const options = props.crew;
                                             >
                                             <VueDatePicker
                                                 required
-                                                v-model="dateOfComplaintLocal"
-                                                :model-value="
-                                                    toLocalTime(dateOfComplaint)
-                                                "
-                                                @update:model-value="
-                                                    (val) =>
-                                                        (dateOfComplaint =
-                                                            toServerTime(val))
-                                                "
-                                                :enable-time-picker="true"
-                                                :is-24="true"
-                                                :format="dateFormat"
+                                                v-model="dateOfComplaint"
+                                                :format="customFormat"
                                                 placeholder="Select a date and time"
                                             />
                                         </div>
@@ -350,7 +357,7 @@ const options = props.crew;
                                     >
                                         <div class="mb-4">
                                             <label
-                                                for="nvr-id"
+                                                for="status"
                                                 class="inline-block mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
                                             >
                                                 Status</label
@@ -380,6 +387,7 @@ const options = props.crew;
                                             </select>
                                         </div>
                                     </div>
+
                                     <!-- ROOT CAUSE -->
                                     <div
                                         v-if="form.status === 'CLOSED'"
@@ -417,8 +425,13 @@ const options = props.crew;
                                             </select>
                                         </div>
                                     </div>
+
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        :class="
+                                            form.status !== 'CLOSED'
+                                                ? 'w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0'
+                                                : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
+                                        "
                                     >
                                         <div class="mb-4">
                                             <label
@@ -428,24 +441,18 @@ const options = props.crew;
                                             >
                                             <VueDatePicker
                                                 required
-                                                v-model="startResponseLocal"
-                                                :model-value="
-                                                    toLocalTime(startResponse)
-                                                "
-                                                @update:model-value="
-                                                    (val) =>
-                                                        (startResponse =
-                                                            toServerTime(val))
-                                                "
-                                                :enable-time-picker="true"
-                                                :is-24="true"
-                                                :format="dateFormat"
+                                                v-model="startResponse"
+                                                :format="customFormat"
                                                 placeholder="Select Strat Response"
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        :class="
+                                            form.status !== 'CLOSED'
+                                                ? 'w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0'
+                                                : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
+                                        "
                                     >
                                         <div class="mb-4">
                                             <label
@@ -455,24 +462,18 @@ const options = props.crew;
                                             >
                                             <VueDatePicker
                                                 :required="isDateRequired"
-                                                v-model="startProgressLocal"
-                                                :model-value="
-                                                    toLocalTime(startProgress)
-                                                "
-                                                @update:model-value="
-                                                    (val) =>
-                                                        (startProgress =
-                                                            toServerTime(val))
-                                                "
-                                                :enable-time-picker="true"
-                                                :is-24="true"
-                                                :format="dateFormat"
+                                                v-model="startProgress"
+                                                :format="customFormat"
                                                 placeholder="Select Start Progress"
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
+                                        :class="
+                                            form.status !== 'CLOSED'
+                                                ? 'w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0'
+                                                : 'w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0'
+                                        "
                                     >
                                         <div class="mb-4">
                                             <label
@@ -482,24 +483,14 @@ const options = props.crew;
                                             >
                                             <VueDatePicker
                                                 :required="isDateRequired"
-                                                v-model="endProgressLocal"
-                                                :model-value="
-                                                    toLocalTime(endProgress)
-                                                "
-                                                @update:model-value="
-                                                    (val) =>
-                                                        (endProgress =
-                                                            toServerTime(val))
-                                                "
-                                                :enable-time-picker="true"
-                                                :is-24="true"
-                                                :format="dateFormat"
+                                                v-model="endProgress"
+                                                :format="customFormat"
                                                 placeholder="Select End Progress"
                                             />
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -519,7 +510,7 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -538,7 +529,7 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -559,7 +550,7 @@ const options = props.crew;
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                        class="w-full max-w-full px-3 shrink-0 md:w-3/12 md:flex-0"
                                     >
                                         <div class="mb-4">
                                             <label
@@ -593,6 +584,89 @@ const options = props.crew;
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
                                                 placeholder="2.4 / 5.8 Ghz"
                                                 @change="handleFileUpload"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                class="inline-flex mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                <span
+                                                    class="mr-2 text-sm text-slate-700 dark:text-white/80"
+                                                    >Enable Category and
+                                                    Inventory Number</span
+                                                >
+                                                <input
+                                                    type="checkbox"
+                                                    v-model="
+                                                        inventoryNumberEnabled
+                                                    "
+                                                    class="sr-only peer"
+                                                />
+                                                <div
+                                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                                ></div>
+                                            </label>
+                                            <VueMultiselect
+                                                v-model="
+                                                    selectedValuesCategoryBreakdown
+                                                "
+                                                :options="optionsCategory"
+                                                :multiple="false"
+                                                :close-on-select="true"
+                                                :disabled="
+                                                    !inventoryNumberEnabled
+                                                "
+                                                :class="
+                                                    !inventoryNumberEnabled
+                                                        ? 'multiselect-disabled'
+                                                        : ''
+                                                "
+                                                placeholder="Select Category"
+                                                track-by="id"
+                                                label="category_root_cause"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="w-full max-w-full px-3 shrink-0 md:w-4/12 md:flex-0"
+                                    >
+                                        <div class="mb-4">
+                                            <label
+                                                class="inline-flex mb-2 ml-1 text-sm text-slate-700 dark:text-white/80"
+                                            >
+                                                <span
+                                                    class="mr-2 text-sm text-slate-700 dark:text-white/80"
+                                                    >Inventory Number</span
+                                                >
+                                                <!-- <input
+                                                    type="checkbox"
+                                                    v-model="
+                                                        inventoryNumberEnabled
+                                                    "
+                                                    class="sr-only peer"
+                                                /> -->
+                                                <!-- <div
+                                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                                                ></div> -->
+                                            </label>
+                                            <VueMultiselect
+                                                v-model="selectedInventory"
+                                                :options="optionsInventory"
+                                                :class="
+                                                    !inventoryNumberEnabled
+                                                        ? 'multiselect-disabled'
+                                                        : ''
+                                                "
+                                                label="no_inv"
+                                                track-by="id"
+                                                placeholder="Select Inventory Number"
+                                                :disabled="
+                                                    !inventoryNumberEnabled
+                                                "
                                             />
                                         </div>
                                     </div>
