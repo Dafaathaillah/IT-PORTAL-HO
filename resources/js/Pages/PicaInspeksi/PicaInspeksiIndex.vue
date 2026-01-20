@@ -502,7 +502,7 @@ const exportPdf = () => {
 </script>
 
 <template>
-    <Head title="Inspeksi Laptop" />
+    <Head title="Pica Inspeksi" />
 
     <AuthenticatedLayout
         v-model:pages="pages"
