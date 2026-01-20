@@ -324,7 +324,7 @@ const sharedFields = ref({
 const currentDate = getTodayDate();
 
 function getTodayDate() {
-    return new Date().toISOString().split("T")[0];
+    return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' });
 }
 
 function addJob() {

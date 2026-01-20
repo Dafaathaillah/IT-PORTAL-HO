@@ -505,7 +505,7 @@ const form = useForm({
     category_job: props.job.category_job,
     crew: crewObjects,
     sarana: props.job.sarana,
-    shift: props.job.shift,    
+    shift: props.job.shift,
     start_progress: formatDateTimeLocal(props.job.start_progress),
     end_progress: formatDateTimeLocal(props.job.end_progress),
     category: props.job.category || "",
@@ -529,8 +529,10 @@ function submitJob() {
                 {
                     ...form.data(),
                     crew: form.crew.map((c) => c.id),
-                    inventory_number: selectedInventory.value.no_inv,
-                    category_breakdown: selectedValuesCategoryBreakdown.value.category_root_cause,
+                    inventory_number: selectedInventory.value?.no_inv ?? null,
+                    category_breakdown:
+                        selectedValuesCategoryBreakdown.value
+                            .category_root_cause,
                     assignment_code: props.job.code,
                 },
                 {

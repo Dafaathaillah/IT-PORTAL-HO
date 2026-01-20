@@ -527,7 +527,7 @@ const sharedFields = ref({
 const currentDate = getTodayDate();
 
 function getTodayDate() {
-    return new Date().toISOString().split("T")[0];
+    return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' });
 }
 
 function addJob() {
@@ -573,8 +573,8 @@ function submitJobs() {
             sarana: sharedFields.value.sarana,
             shift: sharedFields.value.shift,
             root_cause_problem: job.problem,
-            category_breakdown: job.category_breakdown.category_root_cause,
-            inventory: job.inventory.no_inv,
+            category_breakdown: job.category_breakdown?.category_root_cause ?? null,
+            inventory: job.inventory?.no_inv ?? null,
         })),
         shared: {
             crew: sharedFields.value.crew.map((c) => c.id),
