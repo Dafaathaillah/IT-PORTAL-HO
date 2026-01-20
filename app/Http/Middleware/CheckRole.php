@@ -15,6 +15,11 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string $role)
     {
+
+        if (!\Auth::check()) {
+            return abort(403, 'Sesi habis, Silakan login terlebih dahulu.');
+        }
+
         $roles = array_slice(func_get_args(), 2);
 
         $userRole = \Auth::user()->role;
