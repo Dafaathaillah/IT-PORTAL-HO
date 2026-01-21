@@ -1,0 +1,121 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\InvMobileTower;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class InvMobileTowerMacController extends Controller
+{
+    public function index()
+    {
+        $dataInventory = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', 'MAC')->get();
+        // dd($dataInventory);
+        $site = 'MAC';
+        $role = auth()->user()->role;
+
+        return Inertia::render('Inventory/MobileTower/mac/MobileTower', ['mobileTower' => $dataInventory, 'site' => $site, 'role' => $role]);
+    }
+    public function create()
+    {
+        $site = 'MAC';
+        $lastTower = InvMobileTower::orderBy('inventory_number', 'desc')->where('site', $site)->first();
+
+        // dd($lastTower);
+
+        if ($lastTower) {
+
+            $lastNumber = (int) substr($lastTower->inventory_number, -2);
+            $nextNumber = str_pad($lastNumber + 1, 2, '0', STR_PAD_LEFT);
+        } else {
+            $nextNumber = '01';
+        }
+
+        return Inertia::render('Inventory/MobileTower/mac/MobileTowerCreate', ['inventoryNumber' => $site . '-MT-' . $nextNumber]);
+    }
+
+    public function store(Request $request)
+    {
+
+        $params = $request->all();
+        $data = [
+            'inventory_number' => $params['inventory_number'],
+            'mt_code' => $params['kode_mt'],
+            'type_mt' => $params['tipe_mt'],
+            'location' => $params['lokasi_mt'],
+            'detail_location' => $params['detail_lokasi'],
+            'padlock_code' => $params['kode_gembok'],
+            'gps' => $params['gps'],
+            'led_lamp' => $params['lampu_led'],
+            'condition' => $params['kondisi'],
+            'status' => $params['status'],
+            'note' => $params['note'],
+            'site' => 'MAC'
+        ];
+        // DB::table('inv_aps')->insert($data);
+        InvMobileTower::create($data);
+        return redirect()->route('mobileTowerMac.page');
+    }
+
+    public function edit($id)
+    {
+        $mtData = InvMobileTower::find($id);
+        if (empty($mtData)) {
+            abort(404, 'Data not found');
+        }
+
+        return Inertia::render('Inventory/MobileTower/mac/MobileTowerEdit', [
+            'mtData' => $mtData,
+            'inventory_number' => session('inventory_number') ?? null,
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $params = $request->all();
+
+        $data = [
+            'inventory_number' => $params['inventory_number'],
+            'mt_code' => $params['kode_mt'],
+            'type_mt' => $params['tipe_mt'],
+            'location' => $params['lokasi_mt'],
+            'detail_location' => $params['detail_lokasi'],
+            'padlock_code' => $params['kode_gembok'],
+            'gps' => $params['gps'],
+            'led_lamp' => $params['lampu_led'],
+            'condition' => $params['kondisi'],
+            'status' => $params['status'],
+            'note' => $params['note'],
+            'site' => 'MAC'
+        ];
+        // DB::table('inv_aps')->insert($data);
+        InvMobileTower::firstWhere('id', $request->id)->update($data);
+        return redirect()->route('mobileTowerMac.page');
+    }
+
+    public function detail($id)
+    {
+        $mobileTower = InvMobileTower::where('id', $id)->first();
+        if (empty($mobileTower)) {
+            abort(404, 'Data not found');
+        }
+
+        return Inertia::render('Inventory/MobileTower/mac/MobileTowerDetail', [
+            'mobileTowers' => $mobileTower,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $mobileTower = InvMobileTower::find($id);
+        if (empty($mobileTower)) {
+            abort(404, 'Data not found');
+        }
+
+        // return response()->json(['ap' => $mobileTower]);
+        $mobileTower->delete();
+        return redirect()->back();
+    }
+}

@@ -10,6 +10,7 @@ use App\Http\Controllers\AduanBibController;
 use App\Http\Controllers\AduanController;
 use App\Http\Controllers\AduanHoController;
 use App\Http\Controllers\AduanIptController;
+use App\Http\Controllers\AduanMacController;
 use App\Http\Controllers\AduanMhuController;
 use App\Http\Controllers\AduanMifaController;
 use App\Http\Controllers\AduanMipController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\ChartInspeksiBgeController;
 use App\Http\Controllers\ChartInspeksiBibController;
 use App\Http\Controllers\ChartInspeksiController;
 use App\Http\Controllers\ChartInspeksiIptController;
+use App\Http\Controllers\ChartInspeksiMacController;
 use App\Http\Controllers\ChartInspeksiMhuController;
 use App\Http\Controllers\ChartInspeksiMifaController;
 use App\Http\Controllers\ChartInspeksiMipController;
@@ -46,6 +48,7 @@ use App\Http\Controllers\DashboardBaController;
 use App\Http\Controllers\DashboardBgeController;
 use App\Http\Controllers\DashboardBibController;
 use App\Http\Controllers\DashboardIptController;
+use App\Http\Controllers\DashboardMacController;
 use App\Http\Controllers\DashboardMhuController;
 use App\Http\Controllers\DashboardMifaController;
 use App\Http\Controllers\DashboardMipController;
@@ -74,6 +77,7 @@ use App\Http\Controllers\InspeksiComputerAmiController;
 use App\Http\Controllers\InspeksiComputerBaController;
 use App\Http\Controllers\InspeksiComputerBgeController;
 use App\Http\Controllers\InspeksiComputerBibController;
+use App\Http\Controllers\InspeksiComputerMacController;
 use App\Http\Controllers\InspeksiComputerWARAController;
 use App\Http\Controllers\InspeksiComputerController;
 use App\Http\Controllers\InspeksiComputerIptController;
@@ -89,6 +93,7 @@ use App\Http\Controllers\InspeksiLaptopAmiController;
 use App\Http\Controllers\InspeksiLaptopBaController;
 use App\Http\Controllers\InspeksiLaptopBgeController;
 use App\Http\Controllers\InspeksiLaptopBibController;
+use App\Http\Controllers\InspeksiLaptopMacController;
 use App\Http\Controllers\InspeksiLaptopWARAController;
 use App\Http\Controllers\InspeksiLaptopController;
 use App\Http\Controllers\InspeksiLaptopIptController;
@@ -107,6 +112,7 @@ use App\Http\Controllers\InspeksiMobileTowerBgeController;
 use App\Http\Controllers\InspeksiMobileTowerBibController;
 use App\Http\Controllers\InspeksiMobileTowerController;
 use App\Http\Controllers\InspeksiMobileTowerIptController;
+use App\Http\Controllers\InspeksiMobileTowerMacController;
 use App\Http\Controllers\InspeksiMobileTowerMhuController;
 use App\Http\Controllers\InspeksiMobileTowerMifaController;
 use App\Http\Controllers\InspeksiMobileTowerMipController;
@@ -122,6 +128,7 @@ use App\Http\Controllers\InspeksiPrinterBgeController;
 use App\Http\Controllers\InspeksiPrinterBibController;
 use App\Http\Controllers\InspeksiPrinterController;
 use App\Http\Controllers\InspeksiPrinterIptController;
+use App\Http\Controllers\InspeksiPrinterMacController;
 use App\Http\Controllers\InspeksiPrinterMhuController;
 use App\Http\Controllers\InspeksiPrinterMifaController;
 use App\Http\Controllers\InspeksiPrinterMipController;
@@ -134,6 +141,7 @@ use App\Http\Controllers\InvApAmiController;
 use App\Http\Controllers\InvApBaController;
 use App\Http\Controllers\InvApBgeController;
 use App\Http\Controllers\InvApBibController;
+use App\Http\Controllers\InvApMacController;
 use App\Http\Controllers\InvApWARAController;
 use App\Http\Controllers\InvApController;
 use App\Http\Controllers\InvApIptController;
@@ -150,6 +158,7 @@ use App\Http\Controllers\InvCctvAmiController;
 use App\Http\Controllers\InvCctvBaController;
 use App\Http\Controllers\InvCctvBgeController;
 use App\Http\Controllers\InvCctvBibController;
+use App\Http\Controllers\InvCctvMacController;
 use App\Http\Controllers\InvCctvWARAController;
 use App\Http\Controllers\InvCctvController;
 use App\Http\Controllers\InvCctvIptController;
@@ -166,6 +175,7 @@ use App\Http\Controllers\InvComputerAmiController;
 use App\Http\Controllers\InvComputerBaController;
 use App\Http\Controllers\InvComputerBgeController;
 use App\Http\Controllers\InvComputerBibController;
+use App\Http\Controllers\InvComputerMacController;
 use App\Http\Controllers\InvComputerWARAController;
 use App\Http\Controllers\InvComputerController;
 use App\Http\Controllers\InvComputerIptController;
@@ -182,6 +192,7 @@ use App\Http\Controllers\InvLaptopAmiController;
 use App\Http\Controllers\InvLaptopBaController;
 use App\Http\Controllers\InvLaptopBgeController;
 use App\Http\Controllers\InvLaptopBibController;
+use App\Http\Controllers\InvLaptopMacController;
 use App\Http\Controllers\InvLaptopWARAController;
 use App\Http\Controllers\InvLaptopController;
 use App\Http\Controllers\InvLaptopIptController;
@@ -202,6 +213,7 @@ use App\Http\Controllers\InvMobileTowerBgeController;
 use App\Http\Controllers\InvMobileTowerBibController;
 use App\Http\Controllers\InvMobileTowerController;
 use App\Http\Controllers\InvMobileTowerIptController;
+use App\Http\Controllers\InvMobileTowerMacController;
 use App\Http\Controllers\InvMobileTowerMhuController;
 use App\Http\Controllers\InvMobileTowerMifaController;
 use App\Http\Controllers\InvMobileTowerMipController;
@@ -214,6 +226,7 @@ use App\Http\Controllers\InvPrinterAmiController;
 use App\Http\Controllers\InvPrinterBaController;
 use App\Http\Controllers\InvPrinterBgeController;
 use App\Http\Controllers\InvPrinterBibController;
+use App\Http\Controllers\InvPrinterMacController;
 use App\Http\Controllers\InvPrinterWARAController;
 use App\Http\Controllers\InvPrinterController;
 use App\Http\Controllers\InvPrinterIptController;
@@ -230,6 +243,7 @@ use App\Http\Controllers\InvScannerAmiController;
 use App\Http\Controllers\InvScannerBaController;
 use App\Http\Controllers\InvScannerBgeController;
 use App\Http\Controllers\InvScannerBibController;
+use App\Http\Controllers\InvScannerMacController;
 use App\Http\Controllers\InvScannerWARAController;
 use App\Http\Controllers\InvScannerController;
 use App\Http\Controllers\InvScannerIptController;
@@ -248,6 +262,7 @@ use App\Http\Controllers\InvSwitchBaController;
 use App\Http\Controllers\InvSwitchBgeController;
 use App\Http\Controllers\InvSwitchBibController;
 use App\Http\Controllers\InvSwitchIptController;
+use App\Http\Controllers\InvSwitchMacController;
 use App\Http\Controllers\InvSwitchWARAController;
 use App\Http\Controllers\InvSwitchMhuController;
 use App\Http\Controllers\InvSwitchMifaController;
@@ -262,6 +277,7 @@ use App\Http\Controllers\InvWirellessAmiController;
 use App\Http\Controllers\InvWirellessBaController;
 use App\Http\Controllers\InvWirellessBgeController;
 use App\Http\Controllers\InvWirellessBibController;
+use App\Http\Controllers\InvWirellessMacController;
 use App\Http\Controllers\InvWirellessWARAController;
 use App\Http\Controllers\InvWirellessController;
 use App\Http\Controllers\InvWirellessIptController;
@@ -455,7 +471,7 @@ Route::middleware('auth')->group(function () {
     })->name('export.aduanData');
     Route::get('/export-pdf-aduan', [ExportAduanAllSiteController::class, 'exportPdf'])->name('export.aduan');
 
-    $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks'];
+    $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks', 'mac'];
 
     foreach ($sites as $site) {
         Route::group([
@@ -878,6 +894,28 @@ Route::middleware('auth')->group(function () {
         Route::post('/kpi-vhms-adw/feedback', [KpiVhmsWARAController::class, 'updateFeedback'])->name('kpi-vhms-adw.feedback');
     });
 
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MAC,ict_group_leader:MAC,ict_admin:MAC,ict_ho:HO'], function () {
+        Route::get("inspection-scheduler-all-mac/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-all-mac.rekap");
+
+        Route::get("inspection-scheduler-computer-mac/rekap/pdf", [InspectionScheduleComputerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-computer-mac.rekap");
+
+        Route::get("inspection-scheduler-laptop-mac/rekap/pdf", [InspectionScheduleController::class, 'exportPdf'])
+            ->name("inspection-scheduler-laptop-mac.rekap");
+
+        Route::get("inspection-scheduler-printer-mac/rekap/pdf", [InspectionSchedulePrinterController::class, 'exportPdf'])
+            ->name("inspection-scheduler-printer-mac.rekap");
+
+        Route::get("inspection-scheduler-mobileTower-mac/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
+            ->name("inspection-scheduler-mobileTower-mac.rekap");
+
+        Route::get('/kpi-vhms-mac', action: [KpiVhmsWARAController::class, 'index'])->name('kpi-mac.vhms');
+        Route::post('/kpi-vhms-mac-show', [KpiVhmsWARAController::class, 'countKpi'])->name('kpi-mac.vhmsShow');
+        Route::get('/kpi-vhms-mac/data-filter', [KpiVhmsWARAController::class, 'getDataFilter'])->name('kpi-vhms-mac.data.filter');
+        Route::post('/kpi-vhms-mac/feedback', [KpiVhmsWARAController::class, 'updateFeedback'])->name('kpi-vhms-mac.feedback');
+    });
+
     // Route::get('/inspection-scheduler-laptop', [InspectionScheduleController::class, 'index'])->name('inspection-schedule.index');
     // Route::put('/inspection-scheduler-laptop/{id}', [InspectionScheduleController::class, 'update'])->name('inspection-schedule.update');
 
@@ -1102,7 +1140,7 @@ Route::middleware('auth')->group(function () {
         })->name('developerDashboard');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE,ict_group_leader:MAC'], function () {
         Route::get('/groupLeaderDashboard', function () {
             $aduan = Aduan::orderBy('date_of_complaint', 'desc')->where('site', auth()->user()->site)->get();
             $countOpen = Aduan::where('status', 'OPEN')->where('site', auth()->user()->site)->count();
@@ -1182,7 +1220,7 @@ Route::middleware('auth')->group(function () {
         })->name('groupLeaderDashboard');
     });
 
-    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE,ict_admin:BIB,ict_admin:ADW,ict_admin:BA,ict_admin:MIFA,ict_admin:MHU,ict_admin:AMI,ict_admin:PIK,ict_admin:IPT,ict_admin:MLP,ict_admin:MIP,ict_admin:VIB,ict_admin:SBS,ict_admin:BGE,ict_technician:BIB,ict_technician:ADW,ict_technician:BA,ict_technician:MIFA,ict_technician:MHU,ict_technician:AMI,ict_technician:PIK,ict_technician:IPT,ict_technician:MLP,ict_technician:MIP,ict_technician:VIB,ict_technician:SBS,ict_technician:BGE'], function () {
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_group_leader:BIB,ict_group_leader:ADW,ict_group_leader:BA,ict_group_leader:MIFA,ict_group_leader:MHU,ict_group_leader:AMI,ict_group_leader:PIK,ict_group_leader:IPT,ict_group_leader:MLP,ict_group_leader:MIP,ict_group_leader:VIB,ict_group_leader:SBS,ict_group_leader:BGE,ict_group_leader:MAC,ict_admin:BIB,ict_admin:ADW,ict_admin:BA,ict_admin:MIFA,ict_admin:MHU,ict_admin:AMI,ict_admin:PIK,ict_admin:IPT,ict_admin:MLP,ict_admin:MIP,ict_admin:VIB,ict_admin:SBS,ict_admin:BGE,ict_admin:MAC,ict_technician:BIB,ict_technician:ADW,ict_technician:BA,ict_technician:MIFA,ict_technician:MHU,ict_technician:AMI,ict_technician:PIK,ict_technician:IPT,ict_technician:MLP,ict_technician:MIP,ict_technician:VIB,ict_technician:SBS,ict_technician:BGE,ict_technician:MAC'], function () {
         Route::get('/pica-inspeksi/{site}', [PicaInspeksiController::class, 'index'])->name('picaInspeksi.page');
         Route::get('/pica-inspeksi-by-device', [PicaInspeksiController::class, 'getDataPicaByDevice']);
         Route::get('/pica-inspeksi/{id}/edit', [PicaInspeksiController::class, 'edit'])->name('picaInspeksi.edit');
@@ -1206,12 +1244,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/aduan-ho/{id}/detail', [AduanHoController::class, 'detail'])->name('aduan-ho.detail');
     });
 
-    Route::group(['middleware' => 'checkRole:guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB,ict_developer:PIK'], function () {
+    Route::group(['middleware' => 'checkRole:guest:BIB,guest:AMI,guest:BA,guest:BGE,guest:IPT,guest:MHU,guest:MIFA,guest:MIP,guest:MLP,guest:PIK,guest:SBS,guest:SKS,guest:VALE,guest:ADW,guest:MAC,ict_developer:BIB,ict_developer:PIK'], function () {
         Route::get('/asetDashboard', [GuestAllController::class, 'index'])->name('asetDashboard');
         Route::get('/asetDashboard/pengajuanAkses', [GuestAllController::class, 'pengajuanAkses'])->name('pengajuanAkses');
     });
 
-    Route::group(['middleware' => 'checkRole:guest:HO,guest:BIB,guest:BA,guest:MIFA,guest:MHU,guest:ADW,guest:AMI,guest:PIK,guest:IPT,guest:MLP,guest:MIP,guest:VIB,guest:SBS,guest:SKS,ict_developer:BIB,ict_developer:PIK'], function () {
+    Route::group(['middleware' => 'checkRole:guest:HO,guest:BIB,guest:AMI,guest:BA,guest:BGE,guest:IPT,guest:MHU,guest:MIFA,guest:MIP,guest:MLP,guest:PIK,guest:SBS,guest:SKS,guest:VALE,guest:ADW,guest:MAC,ict_developer:BIB,ict_developer:PIK'], function () {
         Route::get('/complaint/dashboard', [GuestReportController::class, 'index'])->name('guestAduan.page');
         Route::get('/user-unrated-closed-complaints', [GuestReportController::class, 'unratedClosed'])->name('guestAduan.unratedClosed');
         Route::post('/complaints/rating', [GuestReportController::class, 'storeRating'])->name('guestAduan.storeRating');
@@ -3026,6 +3064,120 @@ Route::middleware('auth')->group(function () {
             Route::post('/uploadCsvCCTVWara', [InvCctvWARAController::class, 'uploadCsv'])->name('cctvWARA.import');
         });
 
+        Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MAC,ict_group_leader:MAC,ict_admin:MAC,ict_ho:HO'], function () {
+            Route::get('/dashboardSiteMac', [DashboardMacController::class, 'index'])->name('dashboardMac.page');
+
+            Route::get('/kpi-inspeksi-mac', [KpiInspeksiController::class, 'index'])->name('kpi.inspeksiMac');
+            Route::post('/kpi-inspeksi-mac-show', [KpiInspeksiController::class, 'countKpi'])->name('kpi.inspeksiShowMac');
+
+            Route::get('/kpi-response-time-mac', [KpiResponseTimeController::class, 'index'])->name('kpi.responseTimeMac');
+            Route::post('/kpi-response-time-mac-show', [KpiResponseTimeController::class, 'countKpi'])->name('kpi.responseTimeShowMac');
+
+            Route::get('/kpi-aduan-analysis-mac', [KpiAduanAnalysisController::class, 'index'])->name('kpi.jobAnalysisMac');
+            Route::post('/kpi-aduan-analysis-mac-show', [KpiAduanAnalysisController::class, 'complaintPerMonth'])->name('kpi.jobAnalysisShowMac');
+            Route::post('/kpi-aduan-analysis-mac-detail', [KpiAduanAnalysisController::class, 'getComplaintDetails'])->name('kpi.jobAnalysisMacDetail');
+
+            Route::get('/chart-inspeksi-mac', action: [ChartInspeksiMacController::class, 'index'])->name('chartMac.inspeksi');
+            Route::post('/chart-inspeksi-show-mac', [ChartInspeksiMacController::class, 'countKpi'])->name('chartMac.inspeksiShow');
+            Route::get('/chart-inspeksi/data-filter-mac', [ChartInspeksiMacController::class, 'getDataFilter'])->name('chartMac.inspeksi.data.filter');
+
+            Route::get('/mobile-tower-mac', [InvMobileTowerMacController::class, 'index'])->name('mobileTowerMac.page');
+            Route::get('/mobile-tower-mac/create', [InvMobileTowerMacController::class, 'create'])->name('mobileTowerMac.create');
+            Route::post('/mobile-tower-mac/create', [InvMobileTowerMacController::class, 'store'])->name('mobileTowerMac.store');
+            Route::post('/mobile-tower-mac/generate', [InvMobileTowerMacController::class, 'generateCode'])->name('mobileTowerMac.generate');
+            Route::post('/mobile-tower-mac/generate/edit', [InvMobileTowerMacController::class, 'generateCodeEdit'])->name('mobileTowerMac.generateEdit');
+            Route::get('/mobile-tower-mac/{id}/edit', [InvMobileTowerMacController::class, 'edit'])->name('mobileTowerMac.edit');
+            Route::put('/mobile-tower-mac/{id}/update', [InvMobileTowerMacController::class, 'update'])->name('mobileTowerMac.update');
+            Route::delete('/mobile-tower-mac/{id}/delete', [InvMobileTowerMacController::class, 'destroy'])->name('mobileTowerMac.delete');
+            Route::get('/mobile-tower-mac/{id}/detail', [InvMobileTowerMacController::class, 'detail'])->name('mobileTowerMac.detail');
+
+            Route::get('/accessPointSiteMac', [InvApMacController::class, 'index'])->name('accessPointMac.page');
+            Route::get('/accessPointSiteMac/create', [InvApMacController::class, 'create'])->name('accessPointMac.create');
+            Route::post('/accessPointSiteMac/create', [InvApMacController::class, 'store'])->name('accessPointMac.store');
+            Route::post('/accessPointSiteMac/generate', [InvApMacController::class, 'generateCode'])->name('accessPointMac.generate');
+            Route::post('/accessPointSiteMac/generate/edit', [InvApMacController::class, 'generateCodeEdit'])->name('accessPointMac.generateEdit');
+            Route::get('/accessPointSiteMac/{apId}/edit', [InvApMacController::class, 'edit'])->name('accessPointMac.edit');
+            Route::put('/accessPointSiteMac/{apId}/update', [InvApMacController::class, 'update'])->name('accessPointMac.update');
+            Route::delete('/accessPointSiteMac/{apId}/delete', [InvApMacController::class, 'destroy'])->name('accessPointMac.delete');
+            Route::get('/accessPointSiteMac/{id}/detail', [InvApMacController::class, 'detail'])->name('accessPointMac.detail');
+            Route::post('/uploadCsvApMac', [InvApMacController::class, 'uploadCsv'])->name('accessPointMac.import');
+
+            Route::get('/switchMac', [InvSwitchMacController::class, 'index'])->name('switchMac.page');
+            Route::get('/switchMac/create', [InvSwitchMacController::class, 'create'])->name('switchMac.create');
+            Route::post('/switchMac/create', [InvSwitchMacController::class, 'store'])->name('switchMac.store');
+            Route::post('/switchMac/generate', [InvSwitchMacController::class, 'generateCode'])->name('switchMac.generate');
+            Route::post('/switchMac/generate/edit', [InvSwitchMacController::class, 'generateCodeEdit'])->name('switchMac.generateEdit');
+            Route::get('/switchMac/{swId}/edit', [InvSwitchMacController::class, 'edit'])->name('switchMac.edit');
+            Route::put('/switchMac/{swId}/update', [InvSwitchMacController::class, 'update'])->name('switchMac.update');
+            Route::delete('/switchMac/{swId}/delete', [InvSwitchMacController::class, 'destroy'])->name('switchMac.delete');
+            Route::get('/switchMac/{id}/detail', [InvSwitchMacController::class, 'detail'])->name('switchMac.detail');
+            Route::post('/uploadCsvSwMac', [InvSwitchMacController::class, 'uploadCsv'])->name('switchMac.import');
+
+            Route::get('/wirellessMac', [InvWirellessMacController::class, 'index'])->name('wirellessMac.page');
+            Route::get('/wirellessMac/create', [InvWirellessMacController::class, 'create'])->name('wirellessMac.create');
+            Route::post('/wirellessMac/create', [InvWirellessMacController::class, 'store'])->name('wirellessMac.store');
+            Route::post('/wirellessMac/generate', [InvWirellessMacController::class, 'generateCode'])->name('wirellessMac.generate');
+            Route::post('/wirellessMac/generate/edit', [InvWirellessMacController::class, 'generateCodeEdit'])->name('wirellessMac.generateEdit');
+            Route::get('/wirellessMac/{id}/edit', [InvWirellessMacController::class, 'edit'])->name('wirellessMac.edit');
+            Route::put('/wirellessMac/{id}/update', [InvWirellessMacController::class, 'update'])->name('wirellessMac.update');
+            Route::delete('/wirellessMac/{id}/delete', [InvWirellessMacController::class, 'destroy'])->name('wirellessMac.delete');
+            Route::get('/wirellessMac/{id}/detail', [InvWirellessMacController::class, 'detail'])->name('wirellessMac.detail');
+            Route::post('/uploadCsvBbMac', [InvWirellessMacController::class, 'uploadCsv'])->name('wirellessMac.import');
+
+            Route::get('/laptopMac', [InvLaptopMacController::class, 'index'])->name('laptopMac.page');
+            Route::post('/laptopMac/generate', [InvLaptopMacController::class, 'generateCode'])->name('laptopMac.generate');
+            Route::get('/laptopMac/create', [InvLaptopMacController::class, 'create'])->name('laptopMac.create');
+            Route::post('/laptopMac/create', [InvLaptopMacController::class, 'store'])->name('laptopMac.store');
+            Route::get('/laptopMac/{id}/edit', [InvLaptopMacController::class, 'edit'])->name('laptopMac.edit');
+            Route::delete('/laptopMac/{id}/delete', [InvLaptopMacController::class, 'destroy'])->name('laptopMac.delete');
+            Route::post('/laptopMac/update', [InvLaptopMacController::class, 'update'])->name('laptopMac.update');
+            Route::get('/laptopMac/{id}/detail', [InvLaptopMacController::class, 'detail'])->name('laptopMac.detail');
+            Route::post('/uploadCsvNbMac', [InvLaptopMacController::class, 'uploadCsv'])->name('laptopMac.import');
+
+            Route::get('/komputerMac', [InvComputerMacController::class, 'index'])->name('komputerMac.page');
+            Route::post('/komputerMac/generate', [InvComputerMacController::class, 'generateCode'])->name('komputerMac.generate');
+            Route::get('/komputerMac/create', [InvComputerMacController::class, 'create'])->name('komputerMac.create');
+            Route::post('/komputerMac/create', [InvComputerMacController::class, 'store'])->name('komputerMac.store');
+            Route::get('/komputerMac/{id}/edit', [InvComputerMacController::class, 'edit'])->name('komputerMac.edit');
+            Route::delete('/komputerMac/{id}/delete', [InvComputerMacController::class, 'destroy'])->name('komputerMac.delete');
+            Route::post('/komputerMac/update', [InvComputerMacController::class, 'update'])->name('komputerMac.update');
+            Route::get('/komputerMac/{id}/detail', [InvComputerMacController::class, 'detail'])->name('komputerMac.detail');
+            Route::post('/uploadCsvCuMac', [InvComputerMacController::class, 'uploadCsv'])->name('komputerMac.import');
+
+            Route::get('/printerMac', [InvPrinterMacController::class, 'index'])->name(name: 'printerMac.page');
+            Route::get('/printerMac/create', [InvPrinterMacController::class, 'create'])->name('printerMac.create');
+            Route::post('/printerMac/create', [InvPrinterMacController::class, 'store'])->name('printerMac.store');
+            Route::post('/printerMac/generate', [InvPrinterMacController::class, 'generateCode'])->name('printerMac.generate');
+            Route::post('/printerMac/generate/edit', [InvPrinterMacController::class, 'generateCodeEdit'])->name('printerMac.generateEdit');
+            Route::get('/printerMac/{id}/edit', [InvPrinterMacController::class, 'edit'])->name('printerMac.edit');
+            Route::delete('/printerMac/{id}/delete', [InvPrinterMacController::class, 'destroy'])->name('printerMac.delete');
+            Route::post('/printerMac/update', [InvPrinterMacController::class, 'update'])->name('printerMac.update');
+            Route::get('/printerMac/{id}/detail', [InvPrinterMacController::class, 'detail'])->name('printerMac.detail');
+            Route::post('/uploadCsvPrtMac', [InvPrinterMacController::class, 'uploadCsv'])->name('printerMac.import');
+
+            Route::get('/scannerMac', [InvScannerMacController::class, 'index'])->name('scannerMac.page');
+            Route::get('/scannerMac/create', [InvScannerMacController::class, 'create'])->name('scannerMac.create');
+            Route::post('/scannerMac/create', [InvScannerMacController::class, 'store'])->name('scannerMac.store');
+            Route::post('/scannerMac/generate', [InvScannerMacController::class, 'generateCode'])->name('scannerMac.generate');
+            Route::post('/scannerMac/generate/edit', [InvScannerMacController::class, 'generateCodeEdit'])->name('scannerMac.generateEdit');
+            Route::get('/scannerMac/{id}/edit', [InvScannerMacController::class, 'edit'])->name('scannerMac.edit');
+            Route::delete('/scannerMac/{id}/delete', [InvScannerMacController::class, 'destroy'])->name('scannerMac.delete');
+            Route::post('/scannerMac/update', [InvScannerMacController::class, 'update'])->name('scannerMac.update');
+            Route::get('/scannerMac/{id}/detail', [InvScannerMacController::class, 'detail'])->name('scannerMac.detail');
+            Route::post('/uploadCsvScnMac', [InvScannerMacController::class, 'uploadCsv'])->name('scannerMac.import');
+
+            Route::get('/cctvMac', [InvCctvMacController::class, 'index'])->name('cctvMac.page');
+            Route::get('/cctvMac/create', [InvCctvMacController::class, 'create'])->name('cctvMac.create');
+            Route::post('/cctvMac/create', [InvCctvMacController::class, 'store'])->name('cctvMac.store');
+            Route::post('/cctvMac/generate', [InvcctvMacController::class, 'generateCode'])->name('cctvMac.generate');
+            Route::post('/cctvMac/generate/edit', [InvcctvMacController::class, 'generateCodeEdit'])->name('cctvMac.generateEdit');
+            Route::get('/cctvMac/{id}/edit', [InvCctvMacController::class, 'edit'])->name('cctvMac.edit');
+            Route::delete('/cctvMac/{id}/delete', [InvCctvMacController::class, 'destroy'])->name('cctvMac.delete');
+            Route::post('/cctvMac/update', [InvCctvMacController::class, 'update'])->name('cctvMac.update');
+            Route::get('/cctvMac/{id}/detail', [InvCctvMacController::class, 'detail'])->name('cctvMac.detail');
+            Route::post('/uploadCsvCCTVMac', [InvCctvMacController::class, 'uploadCsv'])->name('cctvMac.import');
+        });
+
         Route::prefix('itportal')->group(function () {
             Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK'], function () {
                 Route::get('/Management-User-Ict', [UserController::class, 'index'])->name('managementUserIct.page');
@@ -3671,6 +3823,44 @@ Route::middleware('auth')->group(function () {
                 Route::get('/inspeksi-printer-sks/{id}/detail', [InspeksiPrinterSksController::class, 'detail'])->name('inspeksiPrinterSks.detail');
                 Route::delete('inspeksi-printer-sks/{id}/delete', [InspeksiPrinterSksController::class, 'destroy'])->name('inspeksiPrinterSks.delete');
             });
+
+            Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MAC,ict_group_leader:MAC,ict_admin:MAC,ict_ho:HO'], function () {
+                Route::get('inspeksi-laptop-mac', [InspeksiLaptopMacController::class, 'index'])->name('inspeksiLaptopMac.page');
+                Route::get('inspeksi-laptop-mac/{id}/process', [InspeksiLaptopMacController::class, 'process'])->name('inspeksiLaptopMac.process');
+                Route::post('inspeksi-laptop-mac/process', [InspeksiLaptopMacController::class, 'store'])->name('inspeksiLaptopMac.store');
+                Route::post('inspeksi-laptop-mac/approval', [InspeksiLaptopMacController::class, 'approval'])->name('inspeksiLaptopMac.approval');
+                Route::get('inspeksi-laptop-mac/{id}/edit', [InspeksiLaptopMacController::class, 'edit'])->name('inspeksiLaptopMac.edit');
+                Route::post('inspeksi-laptop-mac/update', [InspeksiLaptopMacController::class, 'update'])->name('inspeksiLaptopMac.update');
+                Route::get('/inspeksi-laptop-mac/{id}/detail', [InspeksiLaptopMacController::class, 'detail'])->name('inspeksiLaptopMac.detail');
+                Route::delete('inspeksi-laptop-mac/{id}/delete', [InspeksiLaptopMacController::class, 'destroy'])->name('inspeksiLaptopMac.delete');
+
+                Route::get('inspeksi-komputer-mac', [InspeksiComputerMacController::class, 'index'])->name('inspeksiKomputerMac.page');
+                Route::get('inspeksi-komputer-mac/{id}/inspection', [InspeksiComputerMacController::class, 'doInspection'])->name('inspeksiKomputerMac.inspection');
+                Route::post('inspeksi-komputer-mac/inspection', [InspeksiComputerMacController::class, 'store'])->name('inspeksiKomputerMac.store');
+                Route::post('inspeksi-komputer-mac/approval', [InspeksiComputerMacController::class, 'approval'])->name('inspeksiKomputerMac.approval');
+                Route::get('inspeksi-komputer-mac/{id}/edit', [InspeksiComputerMacController::class, 'edit'])->name('inspeksiKomputerMac.edit');
+                Route::put('inspeksi-komputer-mac/{id}/update', [InspeksiComputerMacController::class, 'update'])->name('inspeksiKomputerMac.update');
+                Route::get('/inspeksi-komputer-mac/{id}/detail', [InspeksiComputerMacController::class, 'detail'])->name('inspeksiKomputerMac.detail');
+                Route::delete('inspeksi-komputer-mac/{id}/delete', [InspeksiComputerMacController::class, 'destroy'])->name('inspeksiKomputerMac.delete');
+
+                Route::get('inspeksi-mobile-tower-mac', [InspeksiMobileTowerMacController::class, 'index'])->name('inspeksiMobileTowerMac.page');
+                Route::get('inspeksi-mobile-tower-mac/{id}/process', [InspeksiMobileTowerMacController::class, 'process'])->name('inspeksiMobileTowerMac.process');
+                Route::post('inspeksi-mobile-tower-mac/process', [InspeksiMobileTowerMacController::class, 'store'])->name('inspeksiMobileTowerMac.store');
+                Route::post('inspeksi-mobile-tower-mac/approval', [InspeksiMobileTowerMacController::class, 'approval'])->name('inspeksiMobileTowerMac.approval');
+                Route::get('inspeksi-mobile-tower-mac/{id}/edit', [InspeksiMobileTowerMacController::class, 'edit'])->name('inspeksiMobileTowerMac.edit');
+                Route::post('inspeksi-mobile-tower-mac/update', [InspeksiMobileTowerMacController::class, 'update'])->name('inspeksiMobileTowerMac.update');
+                Route::get('/inspeksi-mobile-tower-mac/{id}/detail', [InspeksiMobileTowerMacController::class, 'detail'])->name('inspeksiMobileTowerMac.detail');
+                Route::delete('inspeksi-mobile-tower-mac/{id}/delete', [InspeksiMobileTowerMacController::class, 'destroy'])->name('inspeksiMobileTowerMac.delete');
+
+                Route::get('inspeksi-printer-mac', [InspeksiPrinterMacController::class, 'index'])->name('inspeksiPrinterMac.page');
+                Route::get('inspeksi-printer-mac/{id}/process', [InspeksiPrinterMacController::class, 'process'])->name('inspeksiPrinterMac.process');
+                Route::post('inspeksi-printer-mac/process', [InspeksiPrinterMacController::class, 'store'])->name('inspeksiPrinterMac.store');
+                Route::post('inspeksi-printer-mac/approval', [InspeksiPrinterMacController::class, 'approval'])->name('inspeksiPrinterMac.approval');
+                Route::get('inspeksi-printer-mac/{id}/edit', [InspeksiPrinterMacController::class, 'edit'])->name('inspeksiPrinterMac.edit');
+                Route::post('inspeksi-printer-mac/update', [InspeksiPrinterMacController::class, 'update'])->name('inspeksiPrinterMac.update');
+                Route::get('/inspeksi-printer-mac/{id}/detail', [InspeksiPrinterMacController::class, 'detail'])->name('inspeksiPrinterMac.detail');
+                Route::delete('inspeksi-printer-mac/{id}/delete', [InspeksiPrinterMacController::class, 'destroy'])->name('inspeksiPrinterMac.delete');
+            });
         });
     });
 });
@@ -3901,6 +4091,21 @@ Route::prefix('itportal')->group(function () {
         Route::post('/aduanBge/update', [AduanBgeController::class, 'update_aduan'])->name('aduanBge.update');
         Route::get('/aduanBge/{id}/detail', [AduanBgeController::class, 'detail'])->name('aduanBge.detail');
         Route::post('/aduanBge/update-urgency', [AduanBgeController::class, 'updateUrgency'])->name('aduanBge.updateUrgency');
+    });
+
+    Route::group(['middleware' => 'checkRole:ict_developer:BIB,ict_developer:PIK,ict_technician:MAC,ict_ho:HO,ict_group_leader:MAC,ict_admin:MAC'], function () {
+        Route::get('/admin/check-aduan/mac', [AduanMacController::class, 'checkAduan'])->name('aduanMac.check-aduan');
+        Route::get('/aduanMac', [AduanMacController::class, 'index'])->name('aduanMac.page');
+        Route::get('/aduanMac/create', [AduanMacController::class, 'create'])->name('aduanMac.create');
+        Route::post('/aduanMac/create', [AduanMacController::class, 'store'])->name('aduanMac.store');
+        Route::get('/aduanMac/{id}/edit', [AduanMacController::class, 'edit'])->name('aduanMac.edit');
+        Route::post('/aduanMac/updateProgress', [AduanMacController::class, 'update_aduan_progress'])->name('aduanMac.updateProgress');
+        Route::get('/aduanMac/{id}/progress', [AduanMacController::class, 'progress'])->name('aduanMac.progress');
+        Route::post('/aduanMac/{id}/accept', [AduanMacController::class, 'accept'])->name('aduanMac.accept');
+        Route::delete('/aduanMac/{id}/delete', [AduanMacController::class, 'destroy'])->name('aduanMac.delete');
+        Route::post('/aduanMac/update', [AduanMacController::class, 'update_aduan'])->name('aduanMac.update');
+        Route::get('/aduanMac/{id}/detail', [AduanMacController::class, 'detail'])->name('aduanMac.detail');
+        Route::post('/aduanMac/update-urgency', [AduanMacController::class, 'updateUrgency'])->name('aduanMac.updateUrgency');
     });
 
     Route::prefix('/recycleBin')->group(function () {
