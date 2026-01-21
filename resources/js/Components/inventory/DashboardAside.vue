@@ -467,6 +467,12 @@ const toggleLevel1Ho = () => {
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenHo.value) {
         level2OpenHo.value = false;
@@ -544,6 +550,7 @@ const toggleLevel2SettingHo = () => {
         level1OpenVale.value = false;
         level1OpenSbs.value = false;
         level1OpenSks.value = false;
+        level1OpenMac.value = false;
         level1OpenRcBin.value = false;
     }
     level2OpenSettingHo.value = !level2OpenSettingHo.value;
@@ -789,6 +796,12 @@ const toggleLevel1Ba = () => {
     level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
+
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBa.value) {
@@ -1138,6 +1151,12 @@ const toggleLevel1Mifa = () => {
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMifa.value) {
         level2OpenMifa.value = false;
@@ -1485,6 +1504,12 @@ const toggleLevel1Mhu = () => {
     level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
+
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMhu.value) {
@@ -1834,6 +1859,12 @@ const toggleLevel1WARA = () => {
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenWARA.value) {
         level2OpenWARA.value = false;
@@ -2182,6 +2213,12 @@ const toggleLevel1Bib = () => {
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBib.value) {
         level2OpenBib.value = false;
@@ -2529,6 +2566,12 @@ const toggleLevel1Ami = () => {
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenAmi.value) {
         level2OpenAmi.value = false;
@@ -2869,6 +2912,12 @@ const toggleLevel1Pik = () => {
     level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
+
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenPik.value) {
@@ -3227,6 +3276,12 @@ const toggleLevel1Bge = () => {
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenBge.value) {
         level2OpenBge.value = false;
@@ -3575,6 +3630,12 @@ const toggleLevel1Ipt = () => {
     level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
+
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenIpt.value) {
@@ -3925,6 +3986,12 @@ const toggleLevel1Mlp = () => {
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMlp.value) {
         level2OpenMlp.value = false;
@@ -4273,6 +4340,12 @@ const toggleLevel1Mip = () => {
     level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
+
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenMip.value) {
@@ -4623,6 +4696,12 @@ const toggleLevel1Vale = () => {
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
 
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
+
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenVale.value) {
         level2OpenVale.value = false;
@@ -4971,6 +5050,12 @@ const toggleLevel1Sbs = () => {
     level2OperationSks.value = false;
     level2OpenSettingSks.value = false;
     level2OpenInspeksiSks.value = false;
+
+    level1OpenMac.value = false;
+    level2OpenMac.value = false;
+    level2OperationMac.value = false;
+    level2OpenSettingMac.value = false;
+    level2OpenInspeksiMac.value = false;
 
     // Jika level1 ditutup, tutup juga level2
     if (!level1OpenSbs.value) {
@@ -5484,6 +5569,361 @@ const toggleLevel3ScannerSks = () => {
         level3CctvOpenSks.value = false;
     }
     level3ScannerOpenSks.value = !level3ScannerOpenSks.value;
+};
+
+// toggle MAC
+const level1OpenMac = ref(false);
+const level2OpenMac = ref(false);
+const level2PerformanceMac = ref(false);
+const level2OperationMac = ref(false);
+const level2OpenAduanMac = ref(false);
+const level2OpenSettingMac = ref(false);
+const level2OpenInspeksiMac = ref(false);
+const level3OpenMac = ref(false);
+const level3KomputerOpenMac = ref(false);
+const level3PrinterOpenMac = ref(false);
+const level3ScannerOpenMac = ref(false);
+const level3CctvOpenMac = ref(false);
+
+// Load initial state from localStorage
+onMounted(() => {
+    level1OpenMac.value = localStorage.getItem("level1OpenMac") === "true";
+    level2OpenMac.value = localStorage.getItem("level2OpenMac") === "true";
+    level2OpenAduanMac.value =
+        localStorage.getItem("level2OpenAduanMac") === "true";
+    level2PerformanceMac.value =
+        localStorage.getItem("level2PerformanceMac") === "true";
+    level2OperationMac.value =
+        localStorage.getItem("level2OperationMac") === "true";
+    level2OpenSettingMac.value =
+        localStorage.getItem("level2OpenSettingMac") === "true";
+    level2OpenInspeksiMac.value =
+        localStorage.getItem("level2OpenInspeksiMac") === "true";
+    level3OpenMac.value = localStorage.getItem("level3OpenMac") === "true";
+    level3PrinterOpenMac.value =
+        localStorage.getItem("level3PrinterOpenMac") === "true";
+    level3ScannerOpenMac.value =
+        localStorage.getItem("level3ScannerOpenMac") === "true";
+    level3KomputerOpenMac.value =
+        localStorage.getItem("level3KomputerOpenMac") === "true";
+    level3CctvOpenMac.value =
+        localStorage.getItem("level3CctvOpenMac") === "true";
+});
+
+// Watch changes and save to localStorage
+watch(
+    [
+        level1OpenMac,
+        level2OpenMac,
+        level2PerformanceMac,
+        level2OperationMac,
+        level2OpenSettingMac,
+        level2OpenInspeksiMac,
+        level2OpenAduanMac,
+        level3OpenMac,
+        level3PrinterOpenMac,
+        level3ScannerOpenMac,
+        level3KomputerOpenMac,
+        level3CctvOpenMac,
+    ],
+    () => {
+        localStorage.setItem("level1OpenMac", level1OpenMac.value);
+        localStorage.setItem("level2OpenMac", level2OpenMac.value);
+        localStorage.setItem("level2OpenAduanMac", level2OpenAduanMac.value);
+        localStorage.setItem(
+            "level2PerformanceMac",
+            level2PerformanceMac.value,
+        );
+        localStorage.setItem("level2OperationMac", level2OperationMac.value);
+        localStorage.setItem(
+            "level2OpenSettingMac",
+            level2OpenSettingMac.value,
+        );
+        localStorage.setItem(
+            "level2OpenInspeksiMac",
+            level2OpenInspeksiMac.value,
+        );
+        localStorage.setItem("level3OpenMac", level3OpenMac.value);
+        localStorage.setItem(
+            "level3KomputerOpenMac",
+            level3KomputerOpenMac.value,
+        );
+        localStorage.setItem(
+            "level3PrinterOpenMac",
+            level3PrinterOpenMac.value,
+        );
+        localStorage.setItem(
+            "level3ScannerOpenMac",
+            level3ScannerOpenMac.value,
+        );
+        localStorage.setItem("level3CctvOpenMac", level3CctvOpenMac.value);
+    },
+);
+
+// Toggle functions for each level
+const toggleLevel1Mac = () => {
+    level1OpenMac.value = !level1OpenMac.value;
+
+    level1OpenBge.value = false;
+    level2PerformanceBge.value = false;
+    level2OpenBge.value = false;
+    level2OpenSettingBge.value = false;
+    level2OpenInspeksiBge.value = false;
+
+    level1OpenHo.value = false;
+    level2PerformanceHo.value = false;
+    level2OpenHo.value = false;
+    level2OpenSettingHo.value = false;
+    level2OpenInspeksiHo.value = false;
+
+    level1OpenBa.value = false;
+    level2PerformanceBa.value = false;
+    level2OperationBa.value = false;
+    level2OpenBa.value = false;
+    level2OpenSettingBa.value = false;
+    level2OpenInspeksiBa.value = false;
+
+    level1OpenBib.value = false;
+    level2PerformanceBib.value = false;
+    level2OperationBib.value = false;
+    level2OpenBib.value = false;
+    level2OpenSettingBib.value = false;
+    level2OpenInspeksiBib.value = false;
+
+    level1OpenMifa.value = false;
+    level2PerformanceMifa.value = false;
+    level2OperationMifa.value = false;
+    level2OpenMifa.value = false;
+    level2OpenSettingMifa.value = false;
+    level2OpenInspeksiMifa.value = false;
+
+    level1OpenAmi.value = false;
+    level2PerformanceAmi.value = false;
+    level2OperationAmi.value = false;
+    level2OpenAmi.value = false;
+    level2OpenSettingAmi.value = false;
+    level2OpenInspeksiAmi.value = false;
+
+    level1OpenPik.value = false;
+    level2PerformancePik.value = false;
+    level2OperationPik.value = false;
+    level2OpenPik.value = false;
+    level2OpenSettingPik.value = false;
+    level2OpenInspeksiPik.value = false;
+
+    level1OpenMhu.value = false;
+    level2PerformanceMhu.value = false;
+    level2OperationMhu.value = false;
+    level2OpenMhu.value = false;
+    level2OpenSettingMhu.value = false;
+    level2OpenInspeksiMhu.value = false;
+
+    level1OpenWARA.value = false;
+    level2PerformanceWARA.value = false;
+    level2OperationWARA.value = false;
+    level2OpenWARA.value = false;
+    level2OpenSettingWARA.value = false;
+    level2OpenInspeksiWARA.value = false;
+
+    level1OpenIpt.value = false;
+    level2OpenIpt.value = false;
+    level2OperationIpt.value = false;
+    level2OpenSettingIpt.value = false;
+    level2OpenInspeksiIpt.value = false;
+
+    level1OpenMlp.value = false;
+    level2OpenMlp.value = false;
+    level2OperationMlp.value = false;
+    level2OpenSettingMlp.value = false;
+    level2OpenInspeksiMlp.value = false;
+
+    level1OpenMip.value = false;
+    level2OpenMip.value = false;
+    level2OperationMip.value = false;
+    level2OpenSettingMip.value = false;
+    level2OpenInspeksiMip.value = false;
+
+    level1OpenVale.value = false;
+    level2OpenVale.value = false;
+    level2OperationVale.value = false;
+    level2OpenSettingVale.value = false;
+    level2OpenInspeksiVale.value = false;
+
+    level1OpenSbs.value = false;
+    level2OpenSbs.value = false;
+    level2OperationSbs.value = false;
+    level2OpenSettingSbs.value = false;
+    level2OpenInspeksiSbs.value = false;
+
+    level1OpenSks.value = false;
+    level2OpenSks.value = false;
+    level2OperationSks.value = false;
+    level2OpenSettingSks.value = false;
+    level2OpenInspeksiSks.value = false;
+
+    // Jika level1 ditutup, tutup juga level2
+    if (!level1OpenMac.value) {
+        level2OpenMac.value = false;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+};
+
+const toggleLevel2Mac = () => {
+    console.log(level1OpenMac.value);
+    if (!level2OpenMac.value) {
+        level1OpenMac.value = true;
+        level2PerformanceMac.value = false;
+        level2OperationMac.value = false;
+        level2OpenSettingMac.value = false;
+        level2OpenInspeksiMac.value = false;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level2OpenMac.value = !level2OpenMac.value;
+};
+
+const toggleLevel2PerformanceMac = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2PerformanceMac.value) {
+        level1OpenMac.value = true;
+        level2OpenMac.value = false;
+        level2OpenSettingMac.value = false;
+        level2OpenInspeksiMac.value = false;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level2PerformanceMac.value = !level2PerformanceMac.value;
+};
+
+const toggleLevel2OperationMac = () => {
+    // console.log(level1OpenWARA.value);
+    if (!level2OperationMac.value) {
+        level1OpenMac.value = true;
+        level2OpenMac.value = false;
+        level2OpenSettingMac.value = false;
+        level2OpenInspeksiMac.value = false;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level2OperationMac.value = !level2OperationMac.value;
+};
+const toggleLevel2AduanMac = () => {
+    console.log(level1OpenMac.value);
+    if (!level2OpenAduanMac.value) {
+        level2PerformanceMac.value = false;
+        level2OperationMac.value = false;
+        level2OpenMac.value = false;
+        level2OpenSettingMac.value = false;
+        level2OpenInspeksiMac.value = false;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level2OpenAduanMac.value = !level2OpenAduanMac.value;
+};
+
+const toggleLevel2SettingMac = () => {
+    console.log(level1OpenMac.value);
+    if (!level2OpenSettingMac.value) {
+        level2PerformanceMac.value = false;
+        level2OperationMac.value = false;
+        level1OpenMac.value = true;
+        level2OpenMac.value = false;
+        level2OpenInspeksiMac.value = false;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level2OpenSettingMac.value = !level2OpenSettingMac.value;
+};
+
+const toggleLevel2InspeksiMac = () => {
+    console.log(level1OpenMac.value);
+    if (!level2OpenInspeksiMac.value) {
+        level2PerformanceMac.value = false;
+        level2OperationMac.value = false;
+        level1OpenMac.value = true;
+        level2OpenMac.value = false;
+        level2OpenSettingMac.value = false;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level2OpenInspeksiMac.value = !level2OpenInspeksiMac.value;
+};
+
+const toggleLevel3LaptopMac = () => {
+    if (!level3OpenMac.value) {
+        level2OpenMac.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level3OpenMac.value = !level3OpenMac.value;
+};
+
+const toggleLevel3KomputerMac = () => {
+    if (!level3KomputerOpenMac.value) {
+        level2OpenMac.value = true; // pastikan level 1 terbuka jika level 3 dibuka
+        level3OpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level3KomputerOpenMac.value = !level3KomputerOpenMac.value;
+};
+
+const toggleLevel3CctvMac = () => {
+    if (!level3CctvOpenMac.value) {
+        level2OpenMac.value = true;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+    }
+    level3CctvOpenMac.value = !level3CctvOpenMac.value;
+};
+
+const toggleLevel3PrinterMac = () => {
+    if (!level3PrinterOpenMac.value) {
+        level2OpenMac.value = true;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3ScannerOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level3PrinterOpenMac.value = !level3PrinterOpenMac.value;
+};
+
+const toggleLevel3ScannerMac = () => {
+    if (!level3ScannerOpenMac.value) {
+        level2OpenMac.value = true;
+        level3OpenMac.value = false;
+        level3KomputerOpenMac.value = false;
+        level3PrinterOpenMac.value = false;
+        level3CctvOpenMac.value = false;
+    }
+    level3ScannerOpenMac.value = !level3ScannerOpenMac.value;
 };
 </script>
 
@@ -20675,6 +21115,989 @@ const toggleLevel3ScannerSks = () => {
                             </ul>
                         </li>
                         <!-- end SKS -->
+
+                        <hr
+                            v-if="
+                                $page.props.auth.user.site == 'MAC' ||
+                                $page.props.auth.user.role == 'ict_developer' ||
+                                $page.props.auth.user.site == 'HO'
+                            "
+                            class="h-px mt-3 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent"
+                        />
+
+                        <!-- start MAC -->
+                        <li
+                            v-if="
+                                $page.props.auth.user.site == 'MAC' ||
+                                $page.props.auth.user.role == 'ict_developer' ||
+                                $page.props.auth.user.site == 'HO'
+                            "
+                        >
+                            <div
+                                @click="toggleLevel1Mac"
+                                style="cursor: pointer"
+                                class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                            >
+                                <div
+                                    class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                >
+                                    <i
+                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gem"
+                                    ></i>
+                                </div>
+                                <span
+                                    v-if="$page.props.auth.user.site == 'HO'"
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >Site MAC</span
+                                >
+                                <span
+                                    v-if="
+                                        $page.props.auth.user.site == 'MAC' ||
+                                        $page.props.auth.user.role ==
+                                            'ict_developer'
+                                    "
+                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                    >ICT - PPA MAC</span
+                                >
+                                <i
+                                    v-if="!level1OpenMac"
+                                    class="ms-3 fas fa-angle-right"
+                                ></i>
+                                <i v-else class="ms-3 fas fa-angle-down"></i>
+                            </div>
+                            <ul v-if="level1OpenMac">
+                                <li>
+                                    <NavLink
+                                        :href="route('dashboardMac.page')"
+                                        :active="
+                                            route().current('dashboardMac.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Dashboard</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        @click="toggleLevel2AduanMac"
+                                        :href="route('aduanMac.page')"
+                                        :active="
+                                            route().current('aduanMac.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-comments"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Aduan</span
+                                        >
+                                    </NavLink>
+
+                                    <div
+                                        v-if="
+                                            $page.props.auth.user.role !=
+                                            'soc_ho'
+                                        "
+                                        @click="toggleLevel2OperationMac"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-list-check"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Operation</span
+                                        >
+                                        <i
+                                            v-if="!level2OperationMac"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <ul v-if="level2OperationMac">
+                                        <NavLink
+                                            :href="
+                                                route(
+                                                    'monitoring-jobs.mac.index',
+                                                )
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'monitoring-jobs.mac.index',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-invoice"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Monitoring Jobs
+                                            </span>
+                                        </NavLink>
+                                        <NavLink
+                                            :href="
+                                                route('daily-jobs.mac.index')
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'daily-jobs.mac.index',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-lines"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Job Assignment
+                                            </span>
+                                        </NavLink>
+                                        <NavLink
+                                            :href="
+                                                route(
+                                                    'unschedule-jobs.mac.index',
+                                                )
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'unschedule-jobs.mac.index',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fa-solid fa-file-signature"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Job Unchedule</span
+                                            >
+                                        </NavLink>
+                                    </ul>
+
+                                    <div
+                                        v-if="
+                                            $page.props.auth.user.role !=
+                                            'soc_ho'
+                                        "
+                                        @click="toggleLevel2PerformanceMac"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-chart-line"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Performance</span
+                                        >
+                                        <i
+                                            v-if="!level2PerformanceMac"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <ul v-if="level2PerformanceMac">
+                                        <NavLink
+                                            :href="route('kpi.responseTimeMac')"
+                                            :active="
+                                                route().current(
+                                                    'kpi.responseTimeMac',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-gauge-high"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >KPI Response Time
+                                            </span>
+                                        </NavLink>
+                                        <NavLink
+                                            :href="route('kpi.inspeksiMac')"
+                                            :active="
+                                                route().current(
+                                                    'kpi.inspeksiMac',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-bar-chart"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >KPI Inspeksi</span
+                                            >
+                                        </NavLink>
+                                        <NavLink
+                                            :href="route('kpi-mac.vhms')"
+                                            :active="
+                                                route().current('kpi-mac.vhms')
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-hdd"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >KPI Vhms</span
+                                            >
+                                        </NavLink>
+                                        <!-- <NavLink
+                                        :href="route('wirellessWARA.page')"
+                                        :active="
+                                            route().current(
+                                                'wirellessWARA.page'
+                                            )
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >KPI Job Analisis</span
+                                        >
+                                    </NavLink> -->
+                                    </ul>
+
+                                    <div
+                                        v-if="
+                                            $page.props.auth.user.role !=
+                                            'soc_ho'
+                                        "
+                                        @click="toggleLevel2Mac"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-dolly-flatbed"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inventory</span
+                                        >
+                                        <i
+                                            v-if="!level2OpenMac"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <ul v-if="level2OpenMac">
+                                        <NavLink
+                                            :href="route('accessPointMac.page')"
+                                            :active="
+                                                route().current(
+                                                    'accessPointMac.page',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-ethernet"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Access Point</span
+                                            >
+                                        </NavLink>
+                                        <NavLink
+                                            :href="route('switchMac.page')"
+                                            :active="
+                                                route().current(
+                                                    'switchMac.page',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-project-diagram"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Switch</span
+                                            >
+                                        </NavLink>
+                                        <NavLink
+                                            :href="route('wirellessMac.page')"
+                                            :active="
+                                                route().current(
+                                                    'wirellessMac.page',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-wifi"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Wirelless</span
+                                            >
+                                        </NavLink>
+                                        <div
+                                            @click="toggleLevel3LaptopMac"
+                                            style="cursor: pointer"
+                                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Laptop</span
+                                            >
+                                            <i
+                                                v-if="!level3OpenMac"
+                                                class="ms-3 fas fa-angle-right"
+                                            ></i>
+                                            <i
+                                                v-else
+                                                class="ms-3 fas fa-angle-down"
+                                            ></i>
+                                        </div>
+                                        <li v-if="level3OpenMac">
+                                            <NavLink
+                                                :href="route('laptopMac.page')"
+                                                :active="
+                                                    route().current(
+                                                        'laptopMac.page',
+                                                    )
+                                                "
+                                            >
+                                                <div
+                                                    class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                                >
+                                                    <i
+                                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-code"
+                                                    ></i>
+                                                </div>
+                                                <span
+                                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                    >Laptop Fixed</span
+                                                >
+                                            </NavLink>
+                                        </li>
+
+                                        <div
+                                            @click="toggleLevel3KomputerMac"
+                                            style="cursor: pointer"
+                                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tv"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Komputer</span
+                                            >
+                                            <i
+                                                v-if="!level3KomputerOpenMac"
+                                                class="ms-3 fas fa-angle-right"
+                                            ></i>
+                                            <i
+                                                v-else
+                                                class="ms-3 fas fa-angle-down"
+                                            ></i>
+                                        </div>
+                                        <li v-if="level3KomputerOpenMac">
+                                            <NavLink
+                                                :href="
+                                                    route('komputerMac.page')
+                                                "
+                                                :active="
+                                                    route().current(
+                                                        'komputerMac.page',
+                                                    )
+                                                "
+                                            >
+                                                <div
+                                                    class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                                >
+                                                    <i
+                                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
+                                                    ></i>
+                                                </div>
+                                                <span
+                                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                    >Komputer Fixed</span
+                                                >
+                                            </NavLink>
+                                        </li>
+
+                                        <div
+                                            @click="toggleLevel3PrinterMac"
+                                            style="cursor: pointer"
+                                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Printer</span
+                                            >
+                                            <i
+                                                v-if="!level3PrinterOpenMac"
+                                                class="ms-3 fas fa-angle-right"
+                                            ></i>
+                                            <i
+                                                v-else
+                                                class="ms-3 fas fa-angle-down"
+                                            ></i>
+                                        </div>
+                                        <li v-if="level3PrinterOpenMac">
+                                            <NavLink
+                                                :href="route('printerMac.page')"
+                                                :active="
+                                                    route().current(
+                                                        'printerMac.page',
+                                                    )
+                                                "
+                                            >
+                                                <div
+                                                    class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                                >
+                                                    <i
+                                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                                    ></i>
+                                                </div>
+                                                <span
+                                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                    >Printer Fixed</span
+                                                >
+                                            </NavLink>
+                                        </li>
+
+                                        <div
+                                            @click="toggleLevel3ScannerMac"
+                                            style="cursor: pointer"
+                                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Scanner</span
+                                            >
+                                            <i
+                                                v-if="!level3ScannerOpenMac"
+                                                class="ms-3 fas fa-angle-right"
+                                            ></i>
+                                            <i
+                                                v-else
+                                                class="ms-3 fas fa-angle-down"
+                                            ></i>
+                                        </div>
+                                        <li v-if="level3ScannerOpenMac">
+                                            <NavLink
+                                                :href="route('scannerMac.page')"
+                                                :active="
+                                                    route().current(
+                                                        'scannerMac.page',
+                                                    )
+                                                "
+                                            >
+                                                <div
+                                                    class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                                >
+                                                    <i
+                                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                                    ></i>
+                                                </div>
+                                                <span
+                                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                    >Data Scanner</span
+                                                >
+                                            </NavLink>
+                                        </li>
+
+                                        <div
+                                            @click="toggleLevel3CctvMac"
+                                            style="cursor: pointer"
+                                            class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-camera-retro"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Cctv</span
+                                            >
+                                            <i
+                                                v-if="!level3CctvOpenMac"
+                                                class="ms-3 fas fa-angle-right"
+                                            ></i>
+                                            <i
+                                                v-else
+                                                class="ms-3 fas fa-angle-down"
+                                            ></i>
+                                        </div>
+                                        <li v-if="level3CctvOpenMac">
+                                            <NavLink
+                                                :href="route('cctvMac.page')"
+                                                :active="
+                                                    route().current(
+                                                        'cctvMac.page',
+                                                    )
+                                                "
+                                            >
+                                                <div
+                                                    class="ml-12 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                                >
+                                                    <i
+                                                        class="relative top-0 text-sm leading-normal text-slate-800 fas fa-video"
+                                                    ></i>
+                                                </div>
+                                                <span
+                                                    class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                    >Data Cctv</span
+                                                >
+                                            </NavLink>
+                                        </li>
+
+                                        <NavLink
+                                            :href="route('mobileTowerMac.page')"
+                                            :active="
+                                                route().current(
+                                                    'mobileTowerMac.page',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Mobile Tower</span
+                                            >
+                                        </NavLink>
+                                    </ul>
+
+                                    <div
+                                        v-if="
+                                            $page.props.auth.user.role !=
+                                            'soc_ho'
+                                        "
+                                        @click="toggleLevel2InspeksiMac"
+                                        style="cursor: pointer"
+                                        class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                    >
+                                        <div
+                                            class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-clipboard-list"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Inspeksi</span
+                                        >
+                                        <i
+                                            v-if="!level2OpenInspeksiMac"
+                                            class="ms-3 fas fa-angle-right"
+                                        ></i>
+                                        <i
+                                            v-else
+                                            class="ms-3 fas fa-angle-down"
+                                        ></i>
+                                    </div>
+                                    <ul v-if="level2OpenInspeksiMac">
+                                        <NavLink
+                                            :href="
+                                                route(
+                                                    'inspection-scheduler-all.mac.index',
+                                                )
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'inspection-scheduler-all.mac.index',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 far fa-calendar-alt"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Jadwal Inspeksi</span
+                                            >
+                                        </NavLink>
+
+                                        <NavLink
+                                            :href="route('chartMac.inspeksi')"
+                                            :active="
+                                                route().current(
+                                                    'chartMac.inspeksi',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 far fa-chart-bar"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Chart Inspeksi</span
+                                            >
+                                        </NavLink>
+
+                                        <NavLink
+                                            :href="
+                                                route('inspeksiLaptopMac.page')
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'inspeksiLaptopMac.page',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-laptop-medical"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Inspeksi Laptop</span
+                                            >
+                                        </NavLink>
+
+                                        <NavLink
+                                            :href="
+                                                route(
+                                                    'inspeksiKomputerMac.page',
+                                                )
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'inspeksiKomputerMac.page',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-desktop"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Inspeksi Komputer</span
+                                            >
+                                        </NavLink>
+
+                                        <NavLink
+                                            :href="
+                                                route(
+                                                    'inspeksiMobileTowerMac.page',
+                                                )
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'inspeksiMobileTowerMac.page',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-tower-cell"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Inspeksi Mobile Tower</span
+                                            >
+                                        </NavLink>
+
+                                        <NavLink
+                                            :href="
+                                                route('inspeksiPrinterMac.page')
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'inspeksiPrinterMac.page',
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fas fa-print"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Inspeksi Printer</span
+                                            >
+                                        </NavLink>
+
+                                        <NavLink
+                                            :href="
+                                                route('picaInspeksi.page', {
+                                                    site: 'MAC',
+                                                })
+                                            "
+                                            :active="
+                                                route().current(
+                                                    'picaInspeksi.page',
+                                                    { site: 'MAC' },
+                                                )
+                                            "
+                                        >
+                                            <div
+                                                class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                            >
+                                                <i
+                                                    class="relative top-0 text-sm leading-normal text-slate-800 fa-regular fa-images"
+                                                ></i>
+                                            </div>
+                                            <span
+                                                class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                                >Pica Inspeksi</span
+                                            >
+                                        </NavLink>
+                                    </ul>
+
+                                    <!-- <div
+                                    v-if="
+                                        $page.props.auth.user.role ===
+                                        'ict_developer'
+                                    "
+                                    @click="toggleLevel2SettingBib"
+                                    style="cursor: pointer"
+                                    class="dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                                >
+                                    <div
+                                        class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                    >
+                                        <i
+                                            class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cogs"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >Setting</span
+                                    >
+                                    <i
+                                        v-if="!level2OpenSettingBib"
+                                        class="ms-3 fas fa-angle-right"
+                                    ></i>
+                                    <i
+                                        v-else
+                                        class="ms-3 fas fa-angle-down"
+                                    ></i>
+                                </div>
+                                <ul v-if="level2OpenSettingBib">
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('pengguna.page')"
+                                        :active="
+                                            route().current('pengguna.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-users"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Pengguna</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('department.page')"
+                                        :active="
+                                            route().current('department.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-cog"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Setting Department</span
+                                        >
+                                    </NavLink>
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                            'ict_developer'
+                                        "
+                                        :href="route('akses.page')"
+                                        :active="route().current('akses.page')"
+                                    >
+                                        <div
+                                            class="ml-8 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fas fa-user-tag"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                            >Pengajuan Akses Role</span
+                                        >
+                                    </NavLink>
+                                </ul> -->
+
+                                    <NavLink
+                                        v-if="
+                                            $page.props.auth.user.role ===
+                                                'ict_group_leader' ||
+                                            $page.props.auth.user.role ===
+                                                'ict_developer'
+                                        "
+                                        :href="route('aduan-ho.page')"
+                                        :active="
+                                            route().current('aduan-ho.page')
+                                        "
+                                    >
+                                        <div
+                                            class="ml-4 mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                                        >
+                                            <i
+                                                class="relative top-0 text-sm leading-normal text-slate-800 fa-brands fa-buffer"
+                                            ></i>
+                                        </div>
+                                        <span
+                                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                                        >
+                                            Pengaduan HO</span
+                                        >
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- end MAC -->
                     </ul>
                 </div>
             </PerfectScrollbar>
