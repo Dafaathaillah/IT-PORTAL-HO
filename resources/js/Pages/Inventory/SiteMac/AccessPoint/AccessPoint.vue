@@ -89,7 +89,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("accessPointSks.delete", { id: id }), {
+            form.delete(route("accessPointMac.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -115,13 +115,13 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("accessPointSks.edit", { id: id }));
+            form.get(route("accessPointMac.edit", { id: id }));
         }
     });
 };
 
 const detailData = (id) => {
-    form.get(route("accessPointSks.detail", { id: id }));
+    form.get(route("accessPointMac.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -149,7 +149,7 @@ const submitCsv = () => {
         window.location.reload();
     }
 
-    formx.post(route("accessPointSks.import"), {
+    formx.post(route("accessPointMac.import"), {
         onSuccess: () => {
             // Ambil data flash dari Laravel setelah request berhasil
             const page = usePage();
@@ -255,7 +255,7 @@ const submitCsv = () => {
                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <Link
-                                    :href="route('accessPointSks.create')"
+                                    :href="route('accessPointMac.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                 >
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add

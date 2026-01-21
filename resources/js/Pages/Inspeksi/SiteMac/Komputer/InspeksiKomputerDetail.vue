@@ -103,7 +103,7 @@ const getEncryptedQuarter = () => {
                                 </h4>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('inspeksiKomputerSks.page')"
+                                    :href="route('inspeksiKomputerMac.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>

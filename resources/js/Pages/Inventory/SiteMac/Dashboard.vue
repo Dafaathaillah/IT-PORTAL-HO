@@ -495,7 +495,7 @@ const initChartAduanAnalysLight = () => {
                         customLabel = chart.options.chart.custom.label =
                             chart.renderer
                                 .label(
-                                    `Total Aduan<br/><strong>${props.totalAduan}</strong>`
+                                    `Total Aduan<br/><strong>${props.totalAduan}</strong>`,
                                 )
                                 .css({
                                     color: "#000",
@@ -527,7 +527,7 @@ const initChartAduanAnalysLight = () => {
             },
         },
         title: {
-            text: "Site SKS",
+            text: "Site MAC",
         },
         subtitle: {
             // text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">SSB</a>',
@@ -651,7 +651,7 @@ const initChartAduanAnalysDark = () => {
                         customLabel = chart.options.chart.custom.label =
                             chart.renderer
                                 .label(
-                                    `Total Aduan<br/><strong>${props.totalAduan}</strong>`
+                                    `Total Aduan<br/><strong>${props.totalAduan}</strong>`,
                                 )
                                 .css({
                                     color: "#000",
@@ -684,7 +684,7 @@ const initChartAduanAnalysDark = () => {
             },
         },
         title: {
-            text: "Site SKS",
+            text: "Site MAC",
             style: {
                 color: "#fff", // Mengubah warna title menjadi putih
                 fontWeight: "bold",
@@ -992,14 +992,14 @@ const initChartAduanAnalysDark = () => {
             <div
                 class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-12/12 lg:flex-none"
             >
-                <!-- Table Monitoring Device PPA Site SKS (Full Width) -->
+                <!-- Table Monitoring Device PPA Site MAC (Full Width) -->
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border"
                 >
                     <div class="p-4 pb-0 mb-0 rounded-t-4">
                         <div class="flex justify-between">
                             <h6 class="mb-2 dark:text-white">
-                                Table Monitoring Device PPA Site SKS
+                                Table Monitoring Device PPA Site MAC
                             </h6>
                         </div>
                     </div>
@@ -1020,7 +1020,8 @@ const initChartAduanAnalysDark = () => {
                         <div class="p-4 pb-0 mb-0 rounded-t-4">
                             <div class="flex justify-between">
                                 <h6 class="mb-2 dark:text-white">
-                                    Table Monitoring Achievement Inspeksi/Periode
+                                    Table Monitoring Achievement
+                                    Inspeksi/Periode
                                 </h6>
                             </div>
                         </div>

@@ -44,7 +44,7 @@ function formattedDate(date) {
                                     <h6 class="mb-4 mr-3 dark:text-white">
                                         Detail Switch
                                     </h6>
-                                    <NavLinkCustom class="text-red-700" :href="route('switchSks.page')">
+                                    <NavLinkCustom class="text-red-700" :href="route('switchMac.page')">
                                         Move to home page
                                     </NavLinkCustom>
 

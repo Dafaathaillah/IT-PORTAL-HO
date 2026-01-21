@@ -104,7 +104,7 @@ const getEncryptedYear = () => {
                                 </h4>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('inspeksiPrinterSks.page')"
+                                    :href="route('inspeksiPrinterMac.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>

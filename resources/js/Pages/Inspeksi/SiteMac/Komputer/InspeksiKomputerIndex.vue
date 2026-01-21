@@ -112,7 +112,7 @@ const showValidation = ref(false);
 const form = useForm({});
 
 const editData = (id) => {
-    form.get(route("inspeksiKomputerSks.inspection", { id: id }));
+    form.get(route("inspeksiKomputerMac.inspection", { id: id }));
 };
 
 const editDataInspeksi = (id) => {
@@ -127,7 +127,7 @@ const editDataInspeksi = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("inspeksiKomputerSks.edit", { id: id }));
+            form.get(route("inspeksiKomputerMac.edit", { id: id }));
         }
     });
 };
@@ -145,7 +145,7 @@ const validateYear = (event) => {
 watch([triwulan, year], ([newQuarter, newYear]) => {
     if (newQuarter && newYear) {
         router.get(
-            route("inspeksiKomputerSks.page"),
+            route("inspeksiKomputerMac.page"),
             {
                 quarter: newQuarter,
                 year: newYear,
@@ -240,7 +240,7 @@ const getEncryptedYear = () => {
         {
             year: selectedYear,
             quarter: selectedQuarter,
-            site: "SKS",
+            site: "MAC",
             pic: selectPic,
         },
         {
@@ -252,7 +252,7 @@ const getEncryptedYear = () => {
                         route("export.inspectionComputerAll", {
                             year: encryptedYear,
                             quarter: selectedQuarter,
-                            site: "SKS",
+                            site: "MAC",
                             pic: selectPic,
                         }),
                         "_blank"
@@ -278,7 +278,7 @@ const getEncryptedYear = () => {
 };
 
 const detailData = (id) => {
-    form.get(route("inspeksiKomputerSks.detail", { id: id }));
+    form.get(route("inspeksiKomputerMac.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -361,7 +361,7 @@ const approved = () => {
             });
 
             axios
-                .post(route('inspeksiKomputerSks.approval', {}, Ziggy), {
+                .post(route('inspeksiKomputerMac.approval', {}, Ziggy), {
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
                         'X-Requested-With': 'XMLHttpRequest',

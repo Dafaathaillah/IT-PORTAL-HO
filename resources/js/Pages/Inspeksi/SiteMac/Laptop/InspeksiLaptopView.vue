@@ -122,7 +122,7 @@ const validateYear = (event) => {
 watch([year], ([newYear]) => {
     if (newYear) {
         router.get(
-            route("inspeksiLaptopSks.page"),
+            route("inspeksiLaptopMac.page"),
             {
                 year: newYear,
             },
@@ -191,7 +191,7 @@ const getEncryptedYear = () => {
     // Kirim permintaan ke backend untuk enkripsi tahun
     router.post(
         route("encrypt.year"),
-        { year: selectedYear, site: "SKS", pic: selectPic },
+        { year: selectedYear, site: "MAC", pic: selectPic },
         {
             onSuccess: ({ props }) => {
                 const encryptedYear = props.encryptedYear;
@@ -200,7 +200,7 @@ const getEncryptedYear = () => {
                     window.open(
                         route("export.inspectionLaptop", {
                             year: encryptedYear,
-                            site: "SKS",
+                            site: "MAC",
                             pic: selectPic,
                         }),
                         "_blank"
@@ -237,7 +237,7 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("inspeksiLaptopSks.edit", { id: id }));
+            form.get(route("inspeksiLaptopMac.edit", { id: id }));
         }
     });
 };
@@ -293,11 +293,11 @@ const getBadgeTextStatusFindings = (temuan) => {
 };
 
 const detailData = (id) => {
-    form.get(route("inspeksiLaptopSks.detail", { id: id }));
+    form.get(route("inspeksiLaptopMac.detail", { id: id }));
 };
 
 const processData = (id) => {
-    form.get(route("inspeksiLaptopSks.process", { id: id }));
+    form.get(route("inspeksiLaptopMac.process", { id: id }));
 };
 
 function formatData(text) {
@@ -331,7 +331,7 @@ const approved = () => {
             });
 
             axios
-                .post(route("inspeksiLaptopSks.approval", {}, Ziggy), {
+                .post(route("inspeksiLaptopMac.approval", {}, Ziggy), {
                     headers: {
                         "X-CSRF-TOKEN": csrfToken,
                         "X-Requested-With": "XMLHttpRequest",

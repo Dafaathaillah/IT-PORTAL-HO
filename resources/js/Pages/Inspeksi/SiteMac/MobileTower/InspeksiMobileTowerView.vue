@@ -132,7 +132,7 @@ const validateYear = (event) => {
 watch([selectedMonth, year], ([newMonth, newYear]) => {
     if (newMonth && newYear) {
         router.get(
-            route("inspeksiMobileTowerSks.page"),
+            route("inspeksiMobileTowerMac.page"),
             {
                 month: newMonth.value,
                 year: newYear,
@@ -215,7 +215,7 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("inspeksiMobileTowerSks.edit", { id: id }));
+            form.get(route("inspeksiMobileTowerMac.edit", { id: id }));
         }
     });
 };
@@ -286,11 +286,11 @@ const parseFindings = (temuan) => {
 };
 
 const detailData = (id) => {
-    form.get(route("inspeksiMobileTowerSks.detail", { id: id }));
+    form.get(route("inspeksiMobileTowerMac.detail", { id: id }));
 };
 
 const processData = (id) => {
-    form.get(route("inspeksiMobileTowerSks.process", { id: id }));
+    form.get(route("inspeksiMobileTowerMac.process", { id: id }));
 };
 
 function formatData(text) {
@@ -326,7 +326,7 @@ const approved = () => {
             axios
                 .post(
                     route(
-                        "inspeksiMobileTowerSks.approval",
+                        "inspeksiMobileTowerMac.approval",
                         {
                             month: selectedMonth.value.value,
                             year: year.value,

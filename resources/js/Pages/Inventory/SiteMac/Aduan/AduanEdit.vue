@@ -104,7 +104,7 @@ const update = () => {
     formData.append("action_repair", form.action_repair);
     formData.append("repair_note", form.repair_note);
 
-    Inertia.post(route("aduanSks.update", props.aduan.id), formData, {
+    Inertia.post(route("aduanMac.update", props.aduan.id), formData, {
         // Use route name here
         onProgress: (progress) => {
             console.log(formData.append); // Track the upload progress
@@ -131,7 +131,7 @@ function handleCategoryChange(event) {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('aduanSks.page')"
+                        :href="route('aduanMac.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
@@ -586,7 +586,7 @@ function handleCategoryChange(event) {
                                 <div class="flex flex-nowrap mt-6 justify-between">
                                     
                                     <Link
-                                        :href="route('aduanSks.page')"
+                                        :href="route('aduanMac.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

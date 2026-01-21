@@ -152,7 +152,7 @@ const deleteData = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform the delete operation, e.g., by making a request to the server
-            form.delete(route("aduanSks.delete", { id: id }), {
+            form.delete(route("aduanMac.delete", { id: id }), {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Deleted!",
@@ -178,13 +178,13 @@ const editData = (id) => {
         confirmButtonText: "Yes!",
     }).then((result) => {
         if (result.isConfirmed) {
-            form.get(route("aduanSks.edit", { id: id }));
+            form.get(route("aduanMac.edit", { id: id }));
         }
     });
 };
 
 const progressAduan = (id) => {
-    form.get(route("aduanSks.progress", { id: id }));
+    form.get(route("aduanMac.progress", { id: id }));
 };
 
 const acceptAduan = (id) => {
@@ -216,7 +216,7 @@ const acceptAduan = (id) => {
     }).then((result) => {
         if (result.isConfirmed) {
             axios
-                .post(route("aduanSks.accept", { id: id }))
+                .post(route("aduanMac.accept", { id: id }))
                 .then((response) => {
                     Swal.fire({
                         icon: "success",
@@ -245,7 +245,7 @@ const acceptAduan = (id) => {
 
 onMounted(() => {
     // cek apakah sudah pernah ditampilkan di sessionStorage
-    if (!sessionStorage.getItem("guideShownSks")) {
+    if (!sessionStorage.getItem("guideShownMac")) {
         Swal.fire({
             title: "Panduan",
             html: `
@@ -264,13 +264,13 @@ onMounted(() => {
             buttonsStyling: false,
         }).then(() => {
             // simpan flag agar tidak tampil lagi selama sesi
-            sessionStorage.setItem("guideShownSks", "true");
+            sessionStorage.setItem("guideShownMac", "true");
         });
     }
 });
 
 const detailData = (id) => {
-    form.get(route("aduanSks.detail", { id: id }));
+    form.get(route("aduanMac.detail", { id: id }));
 };
 
 const file = ref(null);
@@ -282,7 +282,7 @@ const handleFileUpload = (event) => {
 const submitCsv = () => {
     const formData = new FormData();
     formData.append("file", file.value);
-    Inertia.post(route("aduanSks.import"), formData, {
+    Inertia.post(route("aduanMac.import"), formData, {
         forceFormData: true,
         onSuccess: () => {
             // Show SweetAlert2 success notification
@@ -325,7 +325,7 @@ function updateUrgency(id, value) {
         },
     });
     axios
-        .post(route("aduanSks.updateUrgency"), {
+        .post(route("aduanMac.updateUrgency"), {
             id: id,
             urgency: value,
         })
@@ -409,7 +409,7 @@ const exportPdf = () => {
         {
             startDate: customFormat(startDate.value),
             endDate: customFormat(endDate.value),
-            site: "SKS",
+            site: "MAC",
             pic: selectPic,
         },
         {
@@ -420,7 +420,7 @@ const exportPdf = () => {
                         route("export.aduan", {
                             startDate: customFormat(startDate.value),
                             endDate: customFormat(endDate.value),
-                            site: "SKS",
+                            site: "MAC",
                             pic: selectPic,
                         }),
                         "_blank"
@@ -659,7 +659,7 @@ const exportPdf = () => {
                                 class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent"
                             >
                                 <Link
-                                    :href="route('aduanSks.create')"
+                                    :href="route('aduanMac.create')"
                                     class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25"
                                 >
                                     <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add

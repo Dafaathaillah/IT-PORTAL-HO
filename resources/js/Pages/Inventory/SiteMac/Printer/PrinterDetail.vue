@@ -44,7 +44,7 @@ function formattedDate(date) {
                                     <h6 class="mb-4 mr-3 dark:text-white">
                                         Detail Printer
                                     </h6>
-                                    <NavLinkCustom class="text-red-700" :href="route('printerSks.page')">
+                                    <NavLinkCustom class="text-red-700" :href="route('printerMac.page')">
                                         Move to home page
                                     </NavLinkCustom>
 

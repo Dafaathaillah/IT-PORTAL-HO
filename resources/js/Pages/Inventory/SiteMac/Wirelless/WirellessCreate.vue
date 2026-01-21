@@ -49,7 +49,7 @@ watch(selectedOptionCompany, async (newVal) => {
     await nextTick(); // Menunggu Vue memperbarui DOM
 
     router.post(
-        route("wirellessSks.generate"),
+        route("wirellessMac.generate"),
         { company: newVal },
         {
             preserveState: true,
@@ -65,7 +65,7 @@ watch(selectedOptionCompany, async (newVal) => {
 const isDisabled = ref(true);
 
 const save = () => {
-    form.post(route("wirellessSks.store"), {
+    form.post(route("wirellessMac.store"), {
         onSuccess: () => {
             // Show SweetAlert2 success notification
             Swal.fire({
@@ -103,7 +103,7 @@ const save = () => {
                         <a class="text-white opacity-50">Pages</a>
                     </li>
                     <Link
-                        :href="route('wirellessSks.page')"
+                        :href="route('wirellessMac.page')"
                         class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
                         aria-current="page"
                     >
@@ -452,7 +452,7 @@ const save = () => {
                                 <div class="flex flex-nowrap mt-6 justify-between">
                                     
                                     <Link
-                                        :href="route('wirellessSks.page')"
+                                        :href="route('wirellessMac.page')"
                                         class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
                                     >
                                         <span

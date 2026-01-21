@@ -47,7 +47,7 @@ function formattedDate(date) {
                                     </h6>
                                     <NavLinkCustom
                                         class="text-red-700"
-                                        :href="route('wirellessSks.page')"
+                                        :href="route('wirellessMac.page')"
                                     >
                                         Move to home page
                                     </NavLinkCustom>

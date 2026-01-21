@@ -45,7 +45,7 @@ const searchData = async () => {
             props.site.slice(1).toLowerCase();
 
         // const routeName = `chart.inspeksiShow${site}`;
-        const routeName = `chartSks.inspeksiShow`;
+        const routeName = `chartMac.inspeksiShow`;
 
         const response = await axios.post(route(routeName), params);
         page.props.chartData = response.data.chartData;

@@ -49,7 +49,7 @@ const mount = onMounted(() => {
                                 </h6>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('laptopSks.page')"
+                                    :href="route('laptopMac.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>

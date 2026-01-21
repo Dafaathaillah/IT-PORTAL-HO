@@ -46,7 +46,7 @@ const mount = onMounted(() => {
                                 </h6>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('aduanSks.page')"
+                                    :href="route('aduanMac.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>

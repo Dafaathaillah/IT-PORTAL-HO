@@ -123,7 +123,7 @@ const exportHasilInspeksi = () => {
                                 </h4>
                                 <NavLinkCustom
                                     class="text-red-700"
-                                    :href="route('inspeksiMobileTowerSks.page')"
+                                    :href="route('inspeksiMobileTowerMac.page')"
                                 >
                                     Move to home page
                                 </NavLinkCustom>
