@@ -37,6 +37,7 @@ const form = useForm({
     complaint_note: "",
     location_detail: "",
     image: "",
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 });
 
 const notifyAdmin = () => {

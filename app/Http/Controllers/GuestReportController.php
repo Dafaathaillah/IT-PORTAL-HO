@@ -111,6 +111,8 @@ class GuestReportController extends Controller
 
     public function store(Request $request)
     {
+
+        // dd($request['timezone']);
         // dd($request);
         $maxId = Aduan::max('max_id');
         if (is_null($maxId)) {
@@ -124,7 +126,7 @@ class GuestReportController extends Controller
             'nrp' => $request['nrp'],
             'complaint_note' => $request['complaint_note'],
             'phone_number' => $request['phone_number'],
-            'date_of_complaint' => Carbon::now('Asia/Ujung_Pandang')->format('Y-m-d H:i:s'),
+            'date_of_complaint' => Carbon::now($request['timezone'])->format('Y-m-d H:i:s'),
             'location' => $request['location'],
             'urgency' => 'NORMAL',
             'detail_location' => $request['location_detail'],
