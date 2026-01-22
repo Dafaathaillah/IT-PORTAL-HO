@@ -298,6 +298,7 @@ use App\Http\Controllers\KpiVhmsBaController;
 use App\Http\Controllers\KpiVhmsBgeController;
 use App\Http\Controllers\KpiVhmsBibController;
 use App\Http\Controllers\KpiVhmsIptController;
+use App\Http\Controllers\KpiVhmsMacController;
 use App\Http\Controllers\KpiVhmsMhuController;
 use App\Http\Controllers\KpiVhmsMifaController;
 use App\Http\Controllers\KpiVhmsMipController;
@@ -910,10 +911,10 @@ Route::middleware('auth')->group(function () {
         Route::get("inspection-scheduler-mobileTower-mac/rekap/pdf", [InspectionScheduleMobileTowerController::class, 'exportPdf'])
             ->name("inspection-scheduler-mobileTower-mac.rekap");
 
-        Route::get('/kpi-vhms-mac', action: [KpiVhmsWARAController::class, 'index'])->name('kpi-mac.vhms');
-        Route::post('/kpi-vhms-mac-show', [KpiVhmsWARAController::class, 'countKpi'])->name('kpi-mac.vhmsShow');
-        Route::get('/kpi-vhms-mac/data-filter', [KpiVhmsWARAController::class, 'getDataFilter'])->name('kpi-vhms-mac.data.filter');
-        Route::post('/kpi-vhms-mac/feedback', [KpiVhmsWARAController::class, 'updateFeedback'])->name('kpi-vhms-mac.feedback');
+        Route::get('/kpi-vhms-mac', action: [KpiVhmsMacController::class, 'index'])->name('kpi-mac.vhms');
+        Route::post('/kpi-vhms-mac-show', [KpiVhmsMacController::class, 'countKpi'])->name('kpi-mac.vhmsShow');
+        Route::get('/kpi-vhms-mac/data-filter', [KpiVhmsMacController::class, 'getDataFilter'])->name('kpi-vhms-mac.data.filter');
+        Route::post('/kpi-vhms-mac/feedback', [KpiVhmsMacController::class, 'updateFeedback'])->name('kpi-vhms-mac.feedback');
     });
 
     // Route::get('/inspection-scheduler-laptop', [InspectionScheduleController::class, 'index'])->name('inspection-schedule.index');
@@ -1251,6 +1252,7 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => 'checkRole:guest:HO,guest:BIB,guest:AMI,guest:BA,guest:BGE,guest:IPT,guest:MHU,guest:MIFA,guest:MIP,guest:MLP,guest:PIK,guest:SBS,guest:SKS,guest:VALE,guest:ADW,guest:MAC,ict_developer:BIB,ict_developer:PIK'], function () {
         Route::get('/complaint/dashboard', [GuestReportController::class, 'index'])->name('guestAduan.page');
+        Route::get('/complaint/{id}/detail', [GuestReportController::class, 'detail'])->name('guestAduan.detail');
         Route::get('/user-unrated-closed-complaints', [GuestReportController::class, 'unratedClosed'])->name('guestAduan.unratedClosed');
         Route::post('/complaints/rating', [GuestReportController::class, 'storeRating'])->name('guestAduan.storeRating');
         Route::get('/complaint', [GuestReportController::class, 'create'])->name('guestAduan.create');
