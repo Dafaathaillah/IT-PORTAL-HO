@@ -335,6 +335,8 @@ class AduanMlpController extends Controller
                 } elseif ($categoryInput === 'cctv') {
                     $inv = InvCctv::where('cctv_code', $aduan->inventory_number)->first();
                     $deviceName = $inv ? $inv->cctv_brand : $deviceName;
+                } else {
+                    $categoryBreakdown = $aduan->category_name;
                 }
 
                 if (!$aduan) {
