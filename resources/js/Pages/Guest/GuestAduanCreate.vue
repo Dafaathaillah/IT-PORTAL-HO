@@ -72,7 +72,43 @@ const handleFileUpload = (event) => {
 const isSubmitting = ref(false);
 
 const save = () => {
-    if (!file.value) {
+    if (form.phone_number == "") {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Nomor Telpon tidak boleh kosong !",
+            confirmButtonColor: "#1e293b", // slate-800 (Tailwind hex)
+            confirmButtonText: "OK",
+        });
+        return;
+    } else if (form.category_name == "") {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Kategori aduan tidak boleh kosong !",
+            confirmButtonColor: "#1e293b", // slate-800 (Tailwind hex)
+            confirmButtonText: "OK",
+        });
+        return;
+    } else if (form.location == "") {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Lokasi tidak boleh kosong !",
+            confirmButtonColor: "#1e293b", // slate-800 (Tailwind hex)
+            confirmButtonText: "OK",
+        });
+        return;
+    } else if (form.complaint_note == "") {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Issue tidak boleh kosong !",
+            confirmButtonColor: "#1e293b", // slate-800 (Tailwind hex)
+            confirmButtonText: "OK",
+        });
+        return;
+    } else if (!file.value) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -286,11 +322,18 @@ const showAlertTrue = () => {
                                             >
                                             <input
                                                 required
-                                                type="text"
+                                                type="tel"
                                                 name="phone_number"
                                                 v-model="form.phone_number"
+                                                @input="
+                                                    form.phone_number =
+                                                        form.phone_number.replace(
+                                                            /[^0-9]/g,
+                                                            '',
+                                                        )
+                                                "
                                                 class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
-                                                placeholder="Nomer Hp"
+                                                placeholder="Nomor HP"
                                             />
                                         </div>
                                     </div>
