@@ -31,7 +31,7 @@ class insertScheduleMT extends Command
         $year = now()->year;
         $month = now()->month;
 
-        $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks', 'mac'];
+        $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks', 'mac', 'dmp'];
         // $sites = ['bib', 'mip'];
 
         foreach ($sites as $site) {

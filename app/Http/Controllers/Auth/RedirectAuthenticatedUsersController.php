@@ -39,6 +39,8 @@ class RedirectAuthenticatedUsersController extends Controller
             return redirect()->route('dashboardSks.page');
         } elseif (auth()->user()->role == 'ict_technician' && auth()->user()->site == 'MAC' || auth()->user()->role == 'ict_group_leader' && auth()->user()->site == 'MAC' || auth()->user()->role == 'ict_admin' && auth()->user()->site == 'MAC') {
             return redirect()->route('dashboardMac.page');
+        } elseif (auth()->user()->role == 'ict_technician' && auth()->user()->site == 'DMP' || auth()->user()->role == 'ict_group_leader' && auth()->user()->site == 'DMP' || auth()->user()->role == 'ict_admin' && auth()->user()->site == 'DMP') {
+            return redirect()->route('dashboardDmp.page');
         } elseif (auth()->user()->role == 'ict_group_leader' && auth()->user()->site == 'BGE' || auth()->user()->role == 'ict_technician' && auth()->user()->site == 'BGE') {
             return redirect()->route('dashboardBge.page');
         } elseif (auth()->user()->role == 'soc_ho') {

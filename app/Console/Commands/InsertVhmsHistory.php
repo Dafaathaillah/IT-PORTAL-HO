@@ -14,7 +14,7 @@ class InsertVhmsHistory extends Command
 
     public function handle()
     {
-        $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks', 'mac'];
+        $sites = ['ba', 'mifa', 'mhu', 'adw', 'ami', 'pik', 'bge', 'bib', 'ipt', 'mlp', 'mip', 'vib', 'sbs', 'sks', 'mac','dmp'];
         // $sites = ['ba', 'mifa', 'bib'];
 
         foreach ($sites as $site) {
